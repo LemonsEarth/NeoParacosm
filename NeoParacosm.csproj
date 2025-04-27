@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!-- Import tModLoader mod properties -->
+	<Import Project="..\tModLoader.targets" />
+
+	<!-- General -->
+	<PropertyGroup>
+		
+	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Biomes.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Buffs.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Items.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Keybinds.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.NPCs.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Projectiles.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Subworlds.hjson" />
+	  <None Remove="Localization\en-US\Mods.NeoParacosm.Tiles.hjson" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Common\Assets\Audio\Music\" />
+	  <Folder Include="Common\Assets\Audio\SFX\" />
+	  <Folder Include="Common\Assets\Textures\" />
+	  <Folder Include="Common\Conditions\" />
+	  <Folder Include="Content\Buffs\Debuff\Cooldowns\" />
+	  <Folder Include="Content\Buffs\GoodBuff\" />
+	  <Folder Include="Content\Items\Consumables\" />
+	  <Folder Include="Content\Items\Armor\" />
+	  <Folder Include="Content\Items\Accessories\" />
+	  <Folder Include="Content\Items\Materials\" />
+	  <Folder Include="Content\Items\Placeable\" />
+	  <Folder Include="Content\Items\Tools\" />
+	  <Folder Include="Content\Items\Weapons\Melee\" />
+	  <Folder Include="Content\Items\Weapons\Magic\" />
+	  <Folder Include="Content\Items\Weapons\Generic\" />
+	  <Folder Include="Content\Items\Weapons\Summon\" />
+	  <Folder Include="Content\Items\Weapons\Ranged\" />
+	  <Folder Include="Content\NPCs\Friendly\" />
+	  <Folder Include="Content\NPCs\Hostile\" />
+	  <Folder Include="Content\NPCs\Boss\" />
+	  <Folder Include="Content\Projectiles\Friendly\" />
+	  <Folder Include="Content\Projectiles\Hostile\" />
+	  <Folder Include="Content\World\Biomes\" />
+	  <Folder Include="Content\World\Tiles\" />
+	  <Folder Include="Core\Globals\GlobalItems\" />
+	  <Folder Include="Core\Globals\GlobalProjectiles\" />
+	  <Folder Include="Core\Globals\GlobalNPCs\" />
+	</ItemGroup>
+
+	<!-- References -->
+
+</Project>
