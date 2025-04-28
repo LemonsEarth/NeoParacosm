@@ -1,6 +1,6 @@
 ﻿namespace NeoParacosm.Core.Players;
 
-public class NeoParacosmPlayer : ModPlayer
+public partial class NeoParacosmPlayer : ModPlayer
 {
     public override void ResetEffects()
     {

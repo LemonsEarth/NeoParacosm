@@ -1,1 +1,9 @@
+FireOrb: {
+	DisplayName: Fire Orb
+	Tooltip: Increases critical strike chance by {0}% when inflicted with any fire debuff
+}
 
+PoisonOrb: {
+	DisplayName: Poison Orb
+	Tooltip: Increases critical strike chance by {0}% when inflicted with Poisoned or Venom
+}

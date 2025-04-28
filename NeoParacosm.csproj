@@ -26,7 +26,6 @@
 	  <Folder Include="Content\Buffs\GoodBuff\" />
 	  <Folder Include="Content\Items\Consumables\" />
 	  <Folder Include="Content\Items\Armor\" />
-	  <Folder Include="Content\Items\Accessories\" />
 	  <Folder Include="Content\Items\Materials\" />
 	  <Folder Include="Content\Items\Placeable\" />
 	  <Folder Include="Content\Items\Tools\" />
