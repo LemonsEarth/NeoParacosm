@@ -1,1 +1,9 @@
+KnockbackCooldown: {
+	DisplayName: Knockback Cooldown
+	Description: Your shield is being repaired!
+}
 
+ForestCrestBuff: {
+	DisplayName: Forest Crest
+	Description: Increased summon damage by {0}% and movement speed by {1}%
+}

@@ -1,5 +1,5 @@
-﻿using Terraria.Localization;
-using TerrorMod.Common.Utils;
+﻿using NeoParacosm.Common.Utils;
+using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat
 {
@@ -9,8 +9,8 @@ namespace NeoParacosm.Content.Items.Accessories.Combat
         public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(critBoost);
         public override void SetDefaults()
         {
-            Item.width = 64;
-            Item.height = 64;
+            Item.width = 32;
+            Item.height = 32;
             Item.accessory = true;
             Item.value = Item.buyPrice(0, 1);
             Item.rare = ItemRarityID.Green;

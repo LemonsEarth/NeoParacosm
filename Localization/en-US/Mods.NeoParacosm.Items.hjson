@@ -7,3 +7,27 @@ PoisonOrb: {
 	DisplayName: Poison Orb
 	Tooltip: Increases critical strike chance by {0}% when inflicted with Poisoned or Venom
 }
+
+RoundShield: {
+	DisplayName: Small Round Wooden Shield
+	Tooltip:
+		'''
+		Grants immunity to knockback
+		Breaks easily
+		'''
+}
+
+ForestCrest: {
+	DisplayName: Forest Crest
+	Tooltip:
+		'''
+		Increases maximum sentries by {0}
+		Increases movement speed by {1}%
+		Hitting enemies spawns small flowers that grants you further increased damage and movement speed when picked up
+		'''
+}
+
+SmallFlowerPickup: {
+	DisplayName: Small Flower
+	Tooltip: ""
+}

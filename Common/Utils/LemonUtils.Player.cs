@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Core.Players;
 
-namespace TerrorMod.Common.Utils
+namespace NeoParacosm.Common.Utils
 {
     public static partial class LemonUtils
     {     

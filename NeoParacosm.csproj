@@ -22,8 +22,6 @@
 	  <Folder Include="Common\Assets\Audio\SFX\" />
 	  <Folder Include="Common\Assets\Textures\" />
 	  <Folder Include="Common\Conditions\" />
-	  <Folder Include="Content\Buffs\Debuff\Cooldowns\" />
-	  <Folder Include="Content\Buffs\GoodBuff\" />
 	  <Folder Include="Content\Items\Consumables\" />
 	  <Folder Include="Content\Items\Armor\" />
 	  <Folder Include="Content\Items\Materials\" />
