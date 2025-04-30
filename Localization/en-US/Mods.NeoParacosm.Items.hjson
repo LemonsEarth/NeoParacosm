@@ -23,7 +23,7 @@ ForestCrest: {
 		'''
 		Increases maximum sentries by {0}
 		Increases movement speed by {1}%
-		Hitting enemies spawns small flowers that grants you further increased damage and movement speed when picked up
+		Hitting enemies spawns small flowers that grant you increased summon damage and movement speed when picked up
 		'''
 }
 
