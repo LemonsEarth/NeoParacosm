@@ -31,3 +31,13 @@ SmallFlowerPickup: {
 	DisplayName: Small Flower
 	Tooltip: ""
 }
+
+CorruptedLifeCrystal: {
+	DisplayName: Corrupted Life Crystal
+	Tooltip:
+	'''
+	Increases maximum life by 60
+	Increases health potion health restoration by 20
+	Disables life regeneration
+	'''
+}

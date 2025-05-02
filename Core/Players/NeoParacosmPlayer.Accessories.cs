@@ -9,10 +9,21 @@ public partial class NeoParacosmPlayer : ModPlayer
     public bool forestCrest { get; set; } = false;
     int forestCrestPickupCooldown = 0;
 
+    public bool corruptedLifeCrystal { get; set; } = false;
+
     void ResetAccessoryFields()
     {
         roundShield = false;
         forestCrest = false;
+        corruptedLifeCrystal = false;
+    }
+
+    public override void NaturalLifeRegen(ref float regen)
+    {
+        if (corruptedLifeCrystal)
+        {
+            regen *= 0;
+        }
     }
 
     public override void PostUpdateEquips()
@@ -22,7 +33,20 @@ public partial class NeoParacosmPlayer : ModPlayer
             Player.noKnockback = true;
         }
 
+        if (corruptedLifeCrystal)
+        {
+            Player.statLifeMax2 += 60;
+        }
+
         if (forestCrestPickupCooldown > 0) forestCrestPickupCooldown--;
+    }
+
+    public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
+    {
+        if (corruptedLifeCrystal)
+        {
+            healValue += 20;
+        }
     }
 
     public override void OnHitAnything(float x, float y, Entity victim)

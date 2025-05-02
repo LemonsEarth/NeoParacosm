@@ -25,14 +25,8 @@ public class RoundShield : ModItem
     {
         Recipe recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.Wood, 15);
-        recipe.AddIngredient(ItemID.LeadBar, 6);
+        recipe.AddRecipeGroup(RecipeGroupID.IronBar, 6);
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
-
-        Recipe recipe1 = CreateRecipe();
-        recipe1.AddIngredient(ItemID.Wood, 15);
-        recipe1.AddIngredient(ItemID.IronBar, 6);
-        recipe1.AddTile(TileID.WorkBenches);
-        recipe1.Register();
     }
 }
