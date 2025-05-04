@@ -5,7 +5,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 public class BundleOfDartsProj : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    bool pierce = false;
+    bool sharp = false;
 
     public override void SetStaticDefaults()
     {
@@ -33,20 +33,20 @@ public class BundleOfDartsProj : ModProjectile
         if (AITimer == 0)
         {
             Projectile.frame = Main.rand.Next(0, 3);
-            pierce = Main.rand.NextBool(3);
-            if (pierce)
+            sharp = Main.rand.NextBool(5);
+            if (sharp)
             {
                 Projectile.penetrate = 3;
             }
         }
 
-        if (pierce)
+        if (sharp)
         {
             var shineDust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond);
             shineDust.noGravity = true;
         }
 
-        if (AITimer > 20)
+        if (AITimer > 20 && !sharp)
         {
             Projectile.velocity.Y += 1;
         }
@@ -63,7 +63,7 @@ public class BundleOfDartsProj : ModProjectile
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (pierce)
+        if (sharp)
         {
             modifiers.DisableCrit();
             modifiers.ArmorPenetration += 5;

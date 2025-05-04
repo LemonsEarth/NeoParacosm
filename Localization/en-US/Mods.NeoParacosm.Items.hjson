@@ -51,3 +51,8 @@ BundleOfDarts: {
 		Sharper darts pierce through enemies, ignore 5 points of enemy defense and cannot crit
 		'''
 }
+
+TripleCrossbow: {
+	DisplayName: Triple Crossbow
+	Tooltip: ""
+}
