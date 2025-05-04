@@ -51,7 +51,7 @@ public partial class NeoParacosmPlayer : ModPlayer
 
     public override void OnHitAnything(float x, float y, Entity victim)
     {
-        if (victim is NPC npc)
+        if (victim is NPC npc && forestCrest)
         {
             if (Main.rand.NextBool(10) && forestCrestPickupCooldown == 0)
             {

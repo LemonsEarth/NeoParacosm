@@ -31,11 +31,9 @@
 	  <Folder Include="Content\Items\Weapons\Magic\" />
 	  <Folder Include="Content\Items\Weapons\Generic\" />
 	  <Folder Include="Content\Items\Weapons\Summon\" />
-	  <Folder Include="Content\Items\Weapons\Ranged\" />
 	  <Folder Include="Content\NPCs\Friendly\" />
 	  <Folder Include="Content\NPCs\Hostile\" />
 	  <Folder Include="Content\NPCs\Boss\" />
-	  <Folder Include="Content\Projectiles\Friendly\" />
 	  <Folder Include="Content\Projectiles\Hostile\" />
 	  <Folder Include="Content\World\Biomes\" />
 	  <Folder Include="Content\World\Tiles\" />

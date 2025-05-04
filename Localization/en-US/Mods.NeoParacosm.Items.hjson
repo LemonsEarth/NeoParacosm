@@ -35,9 +35,19 @@ SmallFlowerPickup: {
 CorruptedLifeCrystal: {
 	DisplayName: Corrupted Life Crystal
 	Tooltip:
-	'''
-	Increases maximum life by 60
-	Increases health potion health restoration by 20
-	Disables life regeneration
-	'''
+		'''
+		Increases maximum life by 60
+		Increases health potion health restoration by 20
+		Disables life regeneration
+		'''
+}
+
+BundleOfDarts: {
+	DisplayName: Handful of Darts
+	Tooltip:
+		'''
+		Throws a handful of darts
+		Each dart has a 33% chance to be sharper
+		Sharper darts pierce through enemies, ignore 5 points of enemy defense and cannot crit
+		'''
 }
