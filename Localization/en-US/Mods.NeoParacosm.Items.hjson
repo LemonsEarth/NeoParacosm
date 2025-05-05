@@ -54,5 +54,10 @@ BundleOfDarts: {
 
 TripleCrossbow: {
 	DisplayName: Triple Crossbow
+	Tooltip: Fires a burst of three arrows
+}
+
+ChainsawGun: {
+	DisplayName: Chainsaw Gun
 	Tooltip: ""
 }

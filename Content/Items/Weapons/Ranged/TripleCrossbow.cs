@@ -9,14 +9,15 @@ public class TripleCrossbow : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 14;
+        Item.damage = 28;
         Item.knockBack = 2f;
         Item.crit = 3;
         Item.DamageType = DamageClass.Ranged;
-        Item.width = 114;
-        Item.height = 60;
-        Item.useTime = 15;
-        Item.useAnimation = 45;
+        Item.width = 52;
+        Item.height = 30;
+        Item.useTime = 5;
+        Item.useAnimation = 15;
+        Item.reuseDelay = 30;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.value = Item.sellPrice(0, 2);
         Item.rare = ItemRarityID.LightRed;

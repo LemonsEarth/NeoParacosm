@@ -8,6 +8,7 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
+	  <None Remove="Content\Projectiles\Friendly\Melee\ChainsawGunHeldProjectile.png" />
 	  <None Remove="Localization\en-US\Mods.NeoParacosm.Biomes.hjson" />
 	  <None Remove="Localization\en-US\Mods.NeoParacosm.Buffs.hjson" />
 	  <None Remove="Localization\en-US\Mods.NeoParacosm.Items.hjson" />
@@ -27,7 +28,6 @@
 	  <Folder Include="Content\Items\Materials\" />
 	  <Folder Include="Content\Items\Placeable\" />
 	  <Folder Include="Content\Items\Tools\" />
-	  <Folder Include="Content\Items\Weapons\Melee\" />
 	  <Folder Include="Content\Items\Weapons\Magic\" />
 	  <Folder Include="Content\Items\Weapons\Generic\" />
 	  <Folder Include="Content\Items\Weapons\Summon\" />
