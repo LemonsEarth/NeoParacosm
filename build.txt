@@ -1,3 +1,5 @@
 displayName = NeoParacosm
 author = LemonEarth
 version = 0.1
+modReferences = StructureHelper
+buildIgnore = .vs\*, Properties\*, *.csproj, *.user, obj\*, bin\*, *.config, .git\*, .github\*, LICENSE, README.md, .editorconfig, .gitignore, .gitattributes

@@ -32,7 +32,6 @@
 	  <Folder Include="Content\Items\Weapons\Generic\" />
 	  <Folder Include="Content\Items\Weapons\Summon\" />
 	  <Folder Include="Content\NPCs\Friendly\" />
-	  <Folder Include="Content\NPCs\Hostile\" />
 	  <Folder Include="Content\NPCs\Boss\" />
 	  <Folder Include="Content\Projectiles\Hostile\" />
 	  <Folder Include="Content\World\Biomes\" />
@@ -40,6 +39,11 @@
 	  <Folder Include="Core\Globals\GlobalItems\" />
 	  <Folder Include="Core\Globals\GlobalProjectiles\" />
 	  <Folder Include="Core\Globals\GlobalNPCs\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Reference Include="StructureHelper">
+	    <HintPath>lib\StructureHelper.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 	<!-- References -->

@@ -56,7 +56,7 @@ public class SawProjectile : ModProjectile
             {
                 Projectile.velocity = Main.player[Projectile.owner].Center.DirectionTo(Main.MouseWorld) * 20f;
             }
-            Projectile.penetrate = 5;
+            Projectile.penetrate = 7;
             Projectile.netUpdate = true;
         }
         if (!Released)
@@ -69,6 +69,7 @@ public class SawProjectile : ModProjectile
             if (AITimer < 60)
             {
                 Projectile.scale = MathHelper.Lerp(0f, 1f, AITimer / 60f);
+                Projectile.damage = (int)MathHelper.Lerp(1, Projectile.originalDamage, AITimer / 60f);
             }
             Projectile.timeLeft = 300;
         }

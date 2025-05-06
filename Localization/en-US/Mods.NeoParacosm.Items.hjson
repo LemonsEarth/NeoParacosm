@@ -59,5 +59,9 @@ TripleCrossbow: {
 
 ChainsawGun: {
 	DisplayName: Chainsaw Gun
-	Tooltip: ""
+	Tooltip:
+		'''
+		Hold left click to charge up a saw, increasing its size and damage
+		Release to fire the saw
+		'''
 }

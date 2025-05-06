@@ -1,4 +1,6 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+using Terraria.GameContent.Generation;
+using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
@@ -11,7 +13,7 @@ public partial class NeoParacosmPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-       
+
     }
 
     public override void OnHurt(Player.HurtInfo info)
