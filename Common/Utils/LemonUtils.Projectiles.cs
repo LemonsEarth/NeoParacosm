@@ -20,9 +20,10 @@ public static partial class LemonUtils
     public static NPC GetClosestNPC(Projectile projectile, float minDistance = 0)
     {
         NPC closestEnemy = null;
+        if (minDistance == 0) minDistance = 99999;
         foreach (var npc in Main.ActiveNPCs)
         {
-            if (npc.CanBeChasedBy() && (minDistance > 0 && npc.Distance(projectile.Center) < minDistance))
+            if (npc.CanBeChasedBy() && (npc.Distance(projectile.Center) < minDistance))
             {
                 if (closestEnemy == null)
                 {
