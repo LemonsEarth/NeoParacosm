@@ -1,4 +1,5 @@
-BundleOfDartsProj.DisplayName: Bundle Of Darts Proj
-ChainsawGunHeldProjectile.DisplayName: Chainsaw Gun Held Projectile
-SawProjectile.DisplayName: Saw Projectile
+BundleOfDartsProj.DisplayName: Dart
+ChainsawGunHeldProjectile.DisplayName: Chainsaw Gun
+SawProjectile.DisplayName: Saw
 NatureBolt.DisplayName: Nature Bolt
+AshenBolt.DisplayName: Ashen Bolt
