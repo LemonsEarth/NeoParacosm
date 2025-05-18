@@ -25,4 +25,10 @@ public static partial class LemonUtils
         }
         return closestEnemy;
     }
+
+    public static Vector2 RandomPos(this NPC npc, float fluffX = 0, float fluffY = 0)
+    {
+        Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(-fluffX, npc.width + fluffX), Main.rand.NextFloat(-fluffY, npc.height + fluffY));
+        return pos;
+    }
 }

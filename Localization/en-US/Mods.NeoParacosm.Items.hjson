@@ -68,16 +68,10 @@ ChainsawGun: {
 
 NatureScepter: {
 	DisplayName: Nature Scepter
-	Tooltip:
-	'''
-	Fires several Nature Bolts which home in on nearby enemies after a short delay
-	'''
+	Tooltip: Fires several Nature Bolts which home in on nearby enemies after a short delay
 }
 
 AshenNatureScepter: {
 	DisplayName: Ashen Nature Scepter
-	Tooltip:
-	'''
-	Fires an Ashen Bolt that explodes into homing bolts on hit
-	'''
+	Tooltip: Fires an Ashen Bolt that explodes into homing bolts on hit
 }

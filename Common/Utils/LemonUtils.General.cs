@@ -97,4 +97,19 @@ public static partial class LemonUtils
 
         return finalPoint;
     }
+
+    public static void DebugPlayerCenter(Player player)
+    {
+        Main.NewText("Player Center: " + player.Center);
+    }
+
+    public static void DebugPlayerTileCoords(Player player)
+    {
+        Main.NewText("Player Tile Coords: " + player.Center.ToTileCoordinates());
+    }
+
+    public static Vector2 RandomUnitVector()
+    {
+        return Vector2.UnitY.RotatedByRandom(6.28f);
+    }
 }

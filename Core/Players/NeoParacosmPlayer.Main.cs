@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using Terraria.GameContent.Generation;
 using Terraria.WorldBuilding;
 
@@ -13,7 +14,8 @@ public partial class NeoParacosmPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-
+        //LemonUtils.DebugPlayerCenter(Player);
+        //Main.NewText("World Surface: " + (int)Main.worldSurface);
     }
 
     public override void OnHurt(Player.HurtInfo info)

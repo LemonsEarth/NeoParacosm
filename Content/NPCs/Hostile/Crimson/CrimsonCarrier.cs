@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Gores;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -61,6 +63,10 @@ namespace NeoParacosm.Content.NPCs.Hostile.Crimson
 
         public override void AI()
         {
+            if (Main.rand.NextBool(100))
+            {
+                Gore.NewGoreDirect(NPC.GetSource_FromThis("PeriodicSmoke"), NPC.RandomPos(), Main.rand.NextVector2Unit() * 2, ModContent.GoreType<RedSmokeGore>());
+            }
             AITimer++;
         }
 

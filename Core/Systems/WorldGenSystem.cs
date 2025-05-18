@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.IO;
 using Terraria.WorldBuilding;
+using Microsoft.Xna.Framework.Input;
 
 namespace NeoParacosm.Core.Systems;
 
@@ -55,5 +56,68 @@ public class WorldGenSystem : ModSystem
     {
         int corruptionStepIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Tile Cleanup"));
         tasks.Insert(corruptionStepIndex + 1, new PassLegacy("Crimson Village", GenerateCrimsonVillage));
+    }
+
+    public override void PostUpdateWorld()
+    {
+        
+
+        if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
+        {
+            GenerateVerticalOceanTunnels();
+            GenerateHorizontalOceanTunnels();
+        }
+    }
+
+    void GenerateVerticalOceanTunnels()
+    {
+        int distanceBetweenTunnels = 50;
+        int tunnelRepDistance = 20;
+        //int repFailChanceDenominator = 8;
+        for (int amountOfTunnels = 0; amountOfTunnels < 10; amountOfTunnels++)
+        {
+            for (int tunnelRepCount = 0; tunnelRepCount < 14; tunnelRepCount++)
+            {
+                /*if (Main.rand.NextBool(repFailChanceDenominator))
+                {
+                    repFailChanceDenominator = 16;
+                    continue;
+                }
+                repFailChanceDenominator /= 2;*/
+                int xStartPos = Main.maxTilesX - 300;
+                int tunnelXPos = xStartPos + (amountOfTunnels * distanceBetweenTunnels);
+
+                int yStartPos = ((int)Main.worldSurface - 100); // Ocean level isn't stored anywhere, literally just a guess
+                int tunnelYPos = yStartPos + tunnelRepCount * tunnelRepDistance;
+
+                WorldGen.digTunnel(tunnelXPos, tunnelYPos, 0, 3, 10, 8, true);
+            }
+        }
+    }
+
+    void GenerateHorizontalOceanTunnels()
+    {
+        int distanceBetweenTunnels = 75;
+        int tunnelRepDistance = 20;
+        //int repFailChanceDenominator = 4;
+        for (int amountOfTunnels = 0; amountOfTunnels < 4; amountOfTunnels++)
+        {
+            for (int tunnelRepCount = 0; tunnelRepCount < 16; tunnelRepCount++)
+            {
+                /*if (Main.rand.NextBool(repFailChanceDenominator))
+                {
+                    repFailChanceDenominator = 8;
+                    continue;
+                }
+                repFailChanceDenominator /= 2;*/
+                int xStartPos = Main.maxTilesX - 350;
+                int tunnelXPos = xStartPos + tunnelRepCount * tunnelRepDistance;
+
+                int yStartPos = ((int)Main.worldSurface - 50); // Ocean level isn't stored anywhere, literally just a guess
+                int tunnelYPos = yStartPos + (amountOfTunnels * distanceBetweenTunnels);
+
+                WorldGen.digTunnel(tunnelXPos, tunnelYPos, 3, 0, 10, 8, true);
+            }
+        }
     }
 }
