@@ -75,3 +75,8 @@ AshenNatureScepter: {
 	DisplayName: Ashen Nature Scepter
 	Tooltip: Fires an Ashen Bolt that explodes into homing bolts on hit
 }
+
+DepthStone: {
+	DisplayName: Depth Stone
+	Tooltip: ""
+}

@@ -5,6 +5,7 @@ using Terraria.GameContent.Generation;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 using Microsoft.Xna.Framework.Input;
+using NeoParacosm.Content.Tiles.Depths;
 
 namespace NeoParacosm.Core.Systems;
 
@@ -52,20 +53,34 @@ public class WorldGenSystem : ModSystem
         }
     }
 
+    void GenerateDepths(GenerationProgress progress, GameConfiguration config)
+    {
+        for (int yLevel = 0; yLevel < 4; yLevel++)
+        {
+            for (int xPos = 0; xPos < 5; xPos++)
+            {
+                WorldGen.TileRunner(Main.maxTilesX - 350 + xPos * 100, ((int)Main.worldSurface - 50) + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>(), overRide: true);
+            }
+        }
+        GenerateVerticalOceanTunnels();
+        GenerateHorizontalOceanTunnels();
+    }
+
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        int corruptionStepIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Tile Cleanup"));
-        tasks.Insert(corruptionStepIndex + 1, new PassLegacy("Crimson Village", GenerateCrimsonVillage));
+        int tileCleanupStep = tasks.FindIndex(genpass => genpass.Name.Equals("Tile Cleanup"));
+        tasks.Insert(tileCleanupStep + 1, new PassLegacy("Crimson Village", GenerateCrimsonVillage));
+
+        int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
+        tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
     }
 
     public override void PostUpdateWorld()
     {
-        
 
         if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
-            GenerateVerticalOceanTunnels();
-            GenerateHorizontalOceanTunnels();
+            
         }
     }
 
