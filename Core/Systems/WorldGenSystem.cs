@@ -1,11 +1,12 @@
-﻿using StructureHelper.API;
+﻿using Microsoft.Xna.Framework.Input;
+using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Tiles.Depths;
+using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.IO;
 using Terraria.WorldBuilding;
-using Microsoft.Xna.Framework.Input;
-using NeoParacosm.Content.Tiles.Depths;
 
 namespace NeoParacosm.Core.Systems;
 
@@ -25,7 +26,7 @@ public class WorldGenSystem : ModSystem
             int attemptCounter = 0;
             Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, Mod, i);
 
-            while (true)
+            while (attemptCounter < 1000000)
             {
                 int x = WorldGen.genRand.Next(0, Main.maxTilesX);
                 int y = WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceHigh);
@@ -55,15 +56,45 @@ public class WorldGenSystem : ModSystem
 
     void GenerateDepths(GenerationProgress progress, GameConfiguration config)
     {
-        for (int yLevel = 0; yLevel < 4; yLevel++)
+        int worldSize = LemonUtils.GetWorldSize();
+
+        int startTileX = Main.maxTilesX - 350;
+        int startTileY = ((int)Main.worldSurface - 100);
+
+        int endTileX = Main.maxTilesX;
+        int endTileY = startTileY + (4 * worldSize * 75);
+        for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
         {
             for (int xPos = 0; xPos < 5; xPos++)
             {
-                WorldGen.TileRunner(Main.maxTilesX - 350 + xPos * 100, ((int)Main.worldSurface - 50) + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>(), overRide: true);
+                WorldGen.OreRunner(startTileX + xPos * 100, startTileY + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
             }
         }
         GenerateVerticalOceanTunnels();
         GenerateHorizontalOceanTunnels();
+
+        for (int i = startTileX; i < endTileX; i++)
+        {
+            for (int j = startTileY; j < endTileY; j++)
+            {
+                if (WorldGen.InWorld(i, j))
+                {
+                    if (Main.tile[i, j].HasTile)
+                    {
+                        if (Main.tile[i, j].TileType != (ushort)ModContent.TileType<DepthStoneBlock>())
+                        {
+                            WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<DepthStoneBlock>(), forced: true);
+                        }
+
+                    }
+                    else
+                    {
+                        WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);
+                    }
+
+                }
+            }
+        }
     }
 
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
@@ -77,17 +108,29 @@ public class WorldGenSystem : ModSystem
 
     public override void PostUpdateWorld()
     {
-
+        int worldSize = LemonUtils.GetWorldSize();
         if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
-            
+            for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
+            {
+                for (int xPos = 0; xPos < 5; xPos++)
+                {
+                    WorldGen.OreRunner(Main.maxTilesX - 350 + xPos * 100, ((int)Main.worldSurface - 50) + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
+                }
+            }
+            GenerateVerticalOceanTunnels();
+            GenerateHorizontalOceanTunnels();
+
+            GenerateVerticalOceanTunnels();
+            GenerateHorizontalOceanTunnels();
         }
     }
 
     void GenerateVerticalOceanTunnels()
     {
+        int worldSize = LemonUtils.GetWorldSize();
         int distanceBetweenTunnels = 50;
-        int tunnelRepDistance = 20;
+        int tunnelRepDistance = 20 * worldSize;
         //int repFailChanceDenominator = 8;
         for (int amountOfTunnels = 0; amountOfTunnels < 10; amountOfTunnels++)
         {
@@ -115,7 +158,7 @@ public class WorldGenSystem : ModSystem
         int distanceBetweenTunnels = 75;
         int tunnelRepDistance = 20;
         //int repFailChanceDenominator = 4;
-        for (int amountOfTunnels = 0; amountOfTunnels < 4; amountOfTunnels++)
+        for (int amountOfTunnels = 0; amountOfTunnels < 4 * LemonUtils.GetWorldSize(); amountOfTunnels++)
         {
             for (int tunnelRepCount = 0; tunnelRepCount < 16; tunnelRepCount++)
             {
