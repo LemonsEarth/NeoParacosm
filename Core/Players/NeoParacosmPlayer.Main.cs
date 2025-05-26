@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Biomes.TheDeep;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using Terraria.GameContent.Generation;
 using Terraria.WorldBuilding;
@@ -16,6 +17,10 @@ public partial class NeoParacosmPlayer : ModPlayer
     {
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
+        if (Player.InModBiome<DeepHigh>())
+        {
+            
+        }
     }
 
     public override void OnHurt(Player.HurtInfo info)
