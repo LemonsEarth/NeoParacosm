@@ -2,7 +2,7 @@
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles;
 
-public class DepthStone : ModItem
+public class DepthStoneItem : ModItem
 {
     public override void SetStaticDefaults()
     {

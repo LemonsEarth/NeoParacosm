@@ -5,6 +5,7 @@ using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
+using Terraria.GameContent.RGB;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
@@ -57,7 +58,6 @@ public class WorldGenSystem : ModSystem
     void GenerateDepths(GenerationProgress progress, GameConfiguration config)
     {
         int worldSize = LemonUtils.GetWorldSize();
-
         int startTileX = Main.maxTilesX - 350;
         int startTileY = ((int)Main.worldSurface - 100);
 
@@ -79,6 +79,10 @@ public class WorldGenSystem : ModSystem
             {
                 if (WorldGen.InWorld(i, j))
                 {
+                    if (Main.rand.NextBool())
+                    {
+                        WorldGen.PlaceWall(i, j, ModContent.WallType<DepthStoneWallBlock>());
+                    }
                     if (Main.tile[i, j].HasTile)
                     {
                         if (Main.tile[i, j].TileType != (ushort)ModContent.TileType<DepthStoneBlock>())
@@ -108,22 +112,22 @@ public class WorldGenSystem : ModSystem
 
     public override void PostUpdateWorld()
     {
-        int worldSize = LemonUtils.GetWorldSize();
-        if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
-        {
-            for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
-            {
-                for (int xPos = 0; xPos < 5; xPos++)
-                {
-                    WorldGen.OreRunner(Main.maxTilesX - 350 + xPos * 100, ((int)Main.worldSurface - 50) + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
-                }
-            }
-            GenerateVerticalOceanTunnels();
-            GenerateHorizontalOceanTunnels();
+        //int worldSize = LemonUtils.GetWorldSize();
+        //if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
+        //{
+        //    for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
+        //    {
+        //        for (int xPos = 0; xPos < 5; xPos++)
+        //        {
+        //            WorldGen.OreRunner(Main.maxTilesX - 350 + xPos * 100, ((int)Main.worldSurface - 50) + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
+        //        }
+        //    }
+        //    GenerateVerticalOceanTunnels();
+        //    GenerateHorizontalOceanTunnels();
 
-            GenerateVerticalOceanTunnels();
-            GenerateHorizontalOceanTunnels();
-        }
+        //    GenerateVerticalOceanTunnels();
+        //    GenerateHorizontalOceanTunnels();
+        //}
     }
 
     void GenerateVerticalOceanTunnels()

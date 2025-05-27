@@ -13,7 +13,7 @@ public class DeepHigh : ModBiome
 
     public override bool IsBiomeActive(Player player)
     {
-        return player.ZoneRockLayerHeight && ModContent.GetInstance<BiomeTileCounts>().depthStoneTileCount >= 200;
+        return ModContent.GetInstance<BiomeTileCounts>().depthStoneTileCount >= 2000 && player.ZoneDirtLayerHeight;
     }
 }
 
