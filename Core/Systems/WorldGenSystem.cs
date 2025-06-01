@@ -79,10 +79,9 @@ public class WorldGenSystem : ModSystem
             {
                 if (WorldGen.InWorld(i, j))
                 {
-                    if (Main.rand.NextBool())
-                    {
-                        WorldGen.PlaceWall(i, j, ModContent.WallType<DepthStoneWallBlock>());
-                    }
+
+                    WorldGen.PlaceWall(i, j, ModContent.WallType<DepthStoneWallBlock>());
+
                     if (Main.tile[i, j].HasTile)
                     {
                         if (Main.tile[i, j].TileType != (ushort)ModContent.TileType<DepthStoneBlock>())
@@ -112,22 +111,51 @@ public class WorldGenSystem : ModSystem
 
     public override void PostUpdateWorld()
     {
-        //int worldSize = LemonUtils.GetWorldSize();
-        //if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
-        //{
-        //    for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
-        //    {
-        //        for (int xPos = 0; xPos < 5; xPos++)
-        //        {
-        //            WorldGen.OreRunner(Main.maxTilesX - 350 + xPos * 100, ((int)Main.worldSurface - 50) + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
-        //        }
-        //    }
-        //    GenerateVerticalOceanTunnels();
-        //    GenerateHorizontalOceanTunnels();
+        
+        /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
+        {
+            int worldSize = LemonUtils.GetWorldSize();
+            int startTileX = Main.maxTilesX - 350;
+            int startTileY = ((int)Main.worldSurface - 100);
 
-        //    GenerateVerticalOceanTunnels();
-        //    GenerateHorizontalOceanTunnels();
-        //}
+            int endTileX = Main.maxTilesX;
+            int endTileY = startTileY + (4 * worldSize * 75);
+            for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
+            {
+                for (int xPos = 0; xPos < 5; xPos++)
+                {
+                    WorldGen.OreRunner(startTileX + xPos * 100, startTileY + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
+                }
+            }
+            GenerateVerticalOceanTunnels();
+            GenerateHorizontalOceanTunnels();
+
+            for (int i = startTileX; i < endTileX; i++)
+            {
+                for (int j = startTileY; j < endTileY; j++)
+                {
+                    if (WorldGen.InWorld(i, j))
+                    {
+
+                        WorldGen.PlaceWall(i, j, ModContent.WallType<DepthStoneWallBlock>());
+
+                        if (Main.tile[i, j].HasTile)
+                        {
+                            if (Main.tile[i, j].TileType != (ushort)ModContent.TileType<DepthStoneBlock>())
+                            {
+                                WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<DepthStoneBlock>(), forced: true);
+                            }
+
+                        }
+                        else
+                        {
+                            WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);
+                        }
+
+                    }
+                }
+            }
+        }*/
     }
 
     void GenerateVerticalOceanTunnels()
@@ -147,11 +175,13 @@ public class WorldGenSystem : ModSystem
                 }
                 repFailChanceDenominator /= 2;*/
                 int xStartPos = Main.maxTilesX - 300;
-                int tunnelXPos = xStartPos + (amountOfTunnels * distanceBetweenTunnels);
+                int tunnelXPos = xStartPos + (amountOfTunnels * distanceBetweenTunnels) + Main.rand.Next(-4, 5);
 
                 int yStartPos = ((int)Main.worldSurface - 100); // Ocean level isn't stored anywhere, literally just a guess
                 int tunnelYPos = yStartPos + tunnelRepCount * tunnelRepDistance;
 
+                int steps = Main.rand.Next(8, 12);
+                int size = Main.rand.Next(8, 10);
                 WorldGen.digTunnel(tunnelXPos, tunnelYPos, 0, 3, 10, 8, true);
             }
         }
@@ -176,8 +206,10 @@ public class WorldGenSystem : ModSystem
                 int tunnelXPos = xStartPos + tunnelRepCount * tunnelRepDistance;
 
                 int yStartPos = ((int)Main.worldSurface - 50); // Ocean level isn't stored anywhere, literally just a guess
-                int tunnelYPos = yStartPos + (amountOfTunnels * distanceBetweenTunnels);
+                int tunnelYPos = yStartPos + (amountOfTunnels * distanceBetweenTunnels) + Main.rand.Next(-4, 5);
 
+                int steps = Main.rand.Next(8, 12);
+                int size = Main.rand.Next(8, 10);
                 WorldGen.digTunnel(tunnelXPos, tunnelYPos, 3, 0, 10, 8, true);
             }
         }

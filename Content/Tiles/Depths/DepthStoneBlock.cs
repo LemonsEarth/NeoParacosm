@@ -7,6 +7,7 @@ public class DepthStoneBlock : ModTile
         Main.tileSolid[Type] = true;
         Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
+        HitSound = SoundID.Tink;
 
         DustType = DustID.Obsidian;
 

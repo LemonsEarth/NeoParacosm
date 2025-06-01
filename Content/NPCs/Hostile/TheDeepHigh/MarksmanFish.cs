@@ -1,40 +1,34 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
-using System;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Biomes.TheDeep;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
+namespace NeoParacosm.Content.NPCs.Hostile.TheDeepHigh;
 
-namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
-
-public class CrimsonCarrier : ModNPC
+public class MarksmanFish : ModNPC
 {
     float AITimer = 0;
 
-    bool spawnedEnemies = false;
-
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[NPC.type] = 3;
+        Main.npcFrameCount[NPC.type] = 2;
     }
 
     public override void SetDefaults()
     {
-        NPC.width = 56;
-        NPC.height = 74;
+        NPC.width = 50;
+        NPC.height = 50;
         NPC.lifeMax = 70;
         NPC.defense = 15;
         NPC.damage = 20;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
+        NPC.friendly = false;
         NPC.value = 500;
-        NPC.aiStyle = NPCAIStyleID.Fighter;
+        NPC.aiStyle = NPCAIStyleID.Piranha;
+        AIType = NPCID.Shark;
         NPC.knockBackResist = 0.3f;
+        NPC.noGravity = true;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -46,26 +40,25 @@ public class CrimsonCarrier : ModNPC
     {
         bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>()
             {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
             });
     }
 
     public override void OnKill()
     {
-        if (spawnedEnemies) return;
-
-        spawnedEnemies = true;
-        if (Main.netMode != NetmodeID.MultiplayerClient)
-        {
-            NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<CrimsonCarrierHead>());
-        }
+        
     }
 
     public override void AI()
     {
-        if (Main.rand.NextBool(100))
+        NPC.spriteDirection = NPC.direction;
+        Player player = Main.player[NPC.target];
+        if (NPC.HasPlayerTarget && AITimer % 180 == 0 && NPC.Distance(player.Center) < 1000 && Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2))
         {
-            Gore.NewGoreDirect(NPC.GetSource_FromThis("PeriodicSmoke"), NPC.RandomPos(), Main.rand.NextVector2Unit() * 2, ModContent.GoreType<RedSmokeGore>());
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 24), ProjectileID.FrostBlastHostile);
+            }
         }
         AITimer++;
     }
@@ -78,7 +71,7 @@ public class CrimsonCarrier : ModNPC
         {
             NPC.frame.Y += frameHeight;
             NPC.frameCounter = 0;
-            if (NPC.frame.Y > 2 * frameHeight)
+            if (NPC.frame.Y > 1 * frameHeight)
             {
                 NPC.frame.Y = 0;
             }
@@ -87,20 +80,13 @@ public class CrimsonCarrier : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        if (!Main.bloodMoon)
-        {
-            return (spawnInfo.Player.ZoneCrimson) ? 0.1f : 0f;
-        }
-        else
-        {
-            return (spawnInfo.Player.ZoneOverworldHeight) ? 0.15f : 0f;
-        }
+        return spawnInfo.Player.InModBiome<DeepHigh>() && spawnInfo.Water ? 0.1f : 0;
 
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        //npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
     }
 
     public override bool? CanFallThroughPlatforms()
