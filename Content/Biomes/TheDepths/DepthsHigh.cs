@@ -1,8 +1,8 @@
 ﻿using NeoParacosm.Core.Systems;
 
-namespace NeoParacosm.Content.Biomes.TheDeep;
+namespace NeoParacosm.Content.Biomes.TheDepths;
 
-public class DeepHigh : ModBiome
+public class DepthsHigh : ModBiome
 {
     public override int Music => MusicID.Boss2;
     public override string BestiaryIcon => base.BestiaryIcon;
@@ -17,9 +17,9 @@ public class DeepHigh : ModBiome
     }
 }
 
-public class DeepHighUndergroundBackgroundStyle : ModUndergroundBackgroundStyle
+public class DepthsHighUndergroundBackgroundStyle : ModUndergroundBackgroundStyle
 {
-    string path = "Content/Biomes/TheDeep/DeepHigh_Background";
+    string path = "Content/Biomes/TheDepths/DepthsHigh_Background";
     public override void FillTextureArray(int[] textureSlots)
     {
         textureSlots[0] = BackgroundTextureLoader.GetBackgroundSlot(Mod, path + "0");

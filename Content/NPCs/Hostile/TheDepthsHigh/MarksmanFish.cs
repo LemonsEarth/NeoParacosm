@@ -1,9 +1,10 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Biomes.TheDeep;
+using NeoParacosm.Content.Biomes.TheDepths;
+using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-namespace NeoParacosm.Content.NPCs.Hostile.TheDeepHigh;
+namespace NeoParacosm.Content.NPCs.Hostile.TheDepthsHigh;
 
 public class MarksmanFish : ModNPC
 {
@@ -53,12 +54,15 @@ public class MarksmanFish : ModNPC
     {
         NPC.spriteDirection = NPC.direction;
         Player player = Main.player[NPC.target];
-        if (NPC.HasPlayerTarget && AITimer % 180 == 0 && NPC.Distance(player.Center) < 1000 && Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2))
+        int cooldown = NPC.wet ? 180 : 360;
+        if (NPC.HasPlayerTarget && AITimer % cooldown == 0 && AITimer > 0
+            && NPC.Distance(player.Center) < 1000 && Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2))
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 24), ProjectileID.FrostBlastHostile);
+                LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 24), ModContent.ProjectileType<MarksmanBolt>());
             }
+            NPC.direction = Math.Sign(NPC.Center.DirectionTo(player.Center).X);
         }
         AITimer++;
     }
@@ -78,9 +82,18 @@ public class MarksmanFish : ModNPC
         }
     }
 
+    public override void HitEffect(NPC.HitInfo hit)
+    {
+        if (NPC.life <= 0 && !Main.dedServ)
+        {
+            int goreType = Mod.Find<ModGore>("MarksmanFishGore").Type;
+            Gore.NewGore(NPC.GetSource_FromThis(), NPC.Center, Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), goreType);
+        }
+    }
+
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return spawnInfo.Player.InModBiome<DeepHigh>() && spawnInfo.Water ? 0.1f : 0;
+        return spawnInfo.Player.InModBiome<DepthsHigh>() && spawnInfo.Water ? 0.1f : 0;
 
     }
 

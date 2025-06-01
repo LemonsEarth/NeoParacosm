@@ -32,7 +32,6 @@
 	  <Folder Include="Content\Items\Weapons\Summon\" />
 	  <Folder Include="Content\NPCs\Friendly\" />
 	  <Folder Include="Content\NPCs\Boss\" />
-	  <Folder Include="Content\Projectiles\Hostile\" />
 	  <Folder Include="Content\World\Biomes\" />
 	  <Folder Include="Content\World\Tiles\" />
 	  <Folder Include="Core\Globals\GlobalItems\" />

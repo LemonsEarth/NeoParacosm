@@ -1,5 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Biomes.TheDeep;
+using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using Terraria.Graphics.Effects;
 using Terraria.GameContent.Generation;
@@ -23,7 +23,7 @@ public partial class NeoParacosmPlayer : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
-        if (Player.InModBiome<DeepHigh>())
+        if (Player.InModBiome<DepthsHigh>())
         {
             Filters.Scene.Activate("NeoParacosm:ScreenTintShader").GetShader().UseColor(new Color(102, 148, 255));
             Filters.Scene["NeoParacosm:ScreenTintShader"].GetShader().UseProgress(1);

@@ -29,6 +29,11 @@ public class AshenBolt : ModProjectile
         Projectile.localNPCHitCooldown = 30;
     }
 
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+        target.AddBuff(BuffID.OnFire3, 90);
+    }
+
     public override void AI()
     {
         for (int i = 0; i < 3; i++)
