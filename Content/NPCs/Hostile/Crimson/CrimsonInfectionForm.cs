@@ -70,6 +70,7 @@ public class CrimsonInfectionForm : ModNPC
             NPC.active = false;
             return false;
         }
+        NPC.spriteDirection = NPC.direction;
         NPC.Center = player.position + offset;
         NPC.rotation = NPC.Center.DirectionTo(player.Center).ToRotation();
         return false;
@@ -84,15 +85,6 @@ public class CrimsonInfectionForm : ModNPC
                 NPC.velocity = (-Vector2.UnitY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))) * Main.rand.NextFloat(12, 18);
             }
             NPC.netUpdate = true;
-        }
-
-        if (NPC.Center.DirectionTo(Main.player[NPC.target].Center).X < 0)
-        {
-            NPC.spriteDirection = -1;
-        }
-        else
-        {
-            NPC.spriteDirection = 1;
         }
 
         AITimer++;

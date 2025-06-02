@@ -82,11 +82,11 @@ DepthStone: {
 }
 
 DepthStoneItem: {
-	DisplayName: Depth Stone Item
+	DisplayName: Depth Stone
 	Tooltip: ""
 }
 
 DepthStoneWallItem: {
-	DisplayName: Depth Stone Wall Item
+	DisplayName: Depth Stone Wall
 	Tooltip: ""
 }

@@ -63,6 +63,7 @@ public class CrimsonCarrier : ModNPC
 
     public override void AI()
     {
+        NPC.spriteDirection = NPC.direction;
         if (Main.rand.NextBool(100))
         {
             Gore.NewGoreDirect(NPC.GetSource_FromThis("PeriodicSmoke"), NPC.RandomPos(), Main.rand.NextVector2Unit() * 2, ModContent.GoreType<RedSmokeGore>());

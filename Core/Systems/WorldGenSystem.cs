@@ -22,35 +22,39 @@ public class WorldGenSystem : ModSystem
             return;
         }
 
-        for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, Mod); i++)
+        for (int rep = 0; rep < LemonUtils.GetWorldSize(); rep++)
         {
-            int attemptCounter = 0;
-            Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, Mod, i);
-
-            while (attemptCounter < 1000000)
+            for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, Mod); i++)
             {
-                int x = WorldGen.genRand.Next(0, Main.maxTilesX);
-                int y = WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceHigh);
-                Tile tile = Main.tile[x, y];
-                if (!tile.HasTile ||
-                    (tile.TileType != TileID.Crimstone && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.Crimsand)
-                    || Main.tile[x, y - 1].HasTile)
-                {
-                    attemptCounter++;
-                    continue;
-                }
+                int attemptCounter = 0;
+                Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, Mod, i);
 
-                Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
-                if (!GenVars.structures.CanPlace(structureRect, 5))
+                while (attemptCounter < 100000000)
                 {
-                    attemptCounter++;
-                    continue;
-                }
+                    int x = WorldGen.genRand.Next(0, Main.maxTilesX);
+                    int y = WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceHigh);
+                    Tile tile = Main.tile[x, y];
+                    if (!tile.HasTile ||
+                        (tile.TileType != TileID.Crimstone && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.Crimsand)
+                        || Main.tile[x, y - 1].HasTile)
+                    {
+                        attemptCounter++;
+                        continue;
+                    }
 
-                Point16 point = new Point16(x, y);
-                MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, Mod);
-                GenVars.structures.AddProtectedStructure(structureRect, 5);
-                break;
+                    Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
+                    if (!GenVars.structures.CanPlace(structureRect, 5))
+                    {
+                        attemptCounter++;
+                        continue;
+                    }
+
+                    Point16 point = new Point16(x, y);
+                    MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, Mod);
+                    Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
+                    GenVars.structures.AddProtectedStructure(structureRect, 5);
+                    break;
+                }
             }
         }
     }
@@ -111,7 +115,7 @@ public class WorldGenSystem : ModSystem
 
     public override void PostUpdateWorld()
     {
-        
+
         /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
             int worldSize = LemonUtils.GetWorldSize();
