@@ -97,19 +97,6 @@ public class CrimsonCarrierHead : ModNPC
         }
     }
 
-    public override float SpawnChance(NPCSpawnInfo spawnInfo)
-    {
-        if (!Main.bloodMoon)
-        {
-            return (spawnInfo.Player.ZoneCrimson) ? 0.1f : 0f;
-        }
-        else
-        {
-            return (spawnInfo.Player.ZoneOverworldHeight) ? 0.15f : 0f;
-        }
-
-    }
-
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));

@@ -49,6 +49,8 @@ public class SawProjectile : ModProjectile
         }
         Projectile parent = Main.projectile[(int)ParentIndex];
 
+        if (Released && AITimer < 30) Projectile.Kill();
+
         if (!Main.player[Projectile.owner].channel && !Released)
         {
             Released = true;

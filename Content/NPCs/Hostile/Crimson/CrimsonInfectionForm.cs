@@ -86,6 +86,7 @@ public class CrimsonInfectionForm : ModNPC
             }
             NPC.netUpdate = true;
         }
+        NPC.spriteDirection = NPC.direction;
 
         AITimer++;
     }

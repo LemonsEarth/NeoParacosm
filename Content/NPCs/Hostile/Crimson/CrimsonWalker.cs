@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -34,8 +35,8 @@ public class CrimsonWalker : ModNPC
     {
         NPC.width = 50;
         NPC.height = 50;
-        NPC.lifeMax = 10;
-        NPC.defense = 1;
+        NPC.lifeMax = 50;
+        NPC.defense = 4;
         NPC.damage = 20;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
@@ -120,7 +121,19 @@ public class CrimsonWalker : ModNPC
 
     public override void HitEffect(NPC.HitInfo hit)
     {
+        close = true;
         int count = Main.rand.Next(1, 4);
+
+        int projCount = LemonUtils.GetDifficulty();
+
+        for (int i = 0; i < projCount; i++)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                LemonUtils.QuickProj(NPC, NPC.RandomPos(), Main.rand.NextVector2Unit() * Main.rand.NextFloat(1, 4), ProjectileID.GoldenShowerHostile, NPC.damage / 8);
+            }
+        }
+
         for (int i = 0; i < count; i++)
         {
             Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), ModContent.GoreType<RedGore>());
