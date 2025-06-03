@@ -90,9 +90,9 @@ public class CrimsonSentryForm : ModNPC
         Player player = Main.player[NPC.target];
         if (Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2))
         {
-            if (NPC.Center.Distance(player.Center) < 500 && AITimer % 90 == 0)
+            if (NPC.Center.Distance(player.Center) < 500)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (Main.netMode != NetmodeID.MultiplayerClient && AITimer % 90 == 0)
                 {
                     for (int i = 0; i < 5; i++)
                     {
