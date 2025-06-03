@@ -62,7 +62,7 @@ public class CrimsonWalker : ModNPC
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
     {
-
+        target.AddBuff(BuffID.Ichor, 180);
     }
 
     public override void AI()
@@ -83,7 +83,7 @@ public class CrimsonWalker : ModNPC
             SoundEngine.PlaySound(SoundID.ZombieMoan with { PitchRange = (-1f, 1f) });
         }
 
-        if (NPC.Center.Distance(player.Center) < 300)
+        if (NPC.Center.Distance(player.Center) < 500)
         {
             close = true;
         }
@@ -95,11 +95,11 @@ public class CrimsonWalker : ModNPC
 
         if (close)
         {
-            if (AITimer % 180 == 0 && AITimer > 0)
+            if (AITimer % 90 == 0 && AITimer > 0)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    NPC.velocity += NPC.Center.DirectionTo(player.Center) * Main.rand.NextFloat(7, 15);
+                    NPC.velocity += NPC.Center.DirectionTo(player.Center) * Main.rand.NextFloat(10, 20);
                 }
                 NPC.netUpdate = true;
             }
@@ -159,7 +159,8 @@ public class CrimsonWalker : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return (spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight) ? 0.1f : 0f;
+        int chanceBoost = NPC.downedBoss2 ? 2 : 1;
+        return (spawnInfo.Player.ZoneCrimson && spawnInfo.Player.ZoneOverworldHeight) ? 0.15f * chanceBoost : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -169,6 +170,10 @@ public class CrimsonWalker : ModNPC
 
     public override bool? CanFallThroughPlatforms()
     {
+        if (NPC.HasValidTarget)
+        {
+            return Main.player[NPC.target].Center.Y - 16 > NPC.Center.Y;
+        }
         return null;
     }
 }

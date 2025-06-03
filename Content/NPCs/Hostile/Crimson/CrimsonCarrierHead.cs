@@ -26,6 +26,7 @@ public class CrimsonCarrierHead : ModNPC
         {
             Hide = true
         };
+        NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
     }
 
     public override void SetDefaults()
@@ -49,10 +50,7 @@ public class CrimsonCarrierHead : ModNPC
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {
-        bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>()
-            {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
-            });
+        
     }
 
     public override void AI()

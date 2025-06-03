@@ -1,5 +1,9 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Items.Pickups;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
+using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Players;
 
@@ -11,11 +15,15 @@ public partial class NeoParacosmPlayer : ModPlayer
 
     public bool corruptedLifeCrystal { get; set; } = false;
 
+    public List<Projectile> CrimsonTendrils { get; set; } = new List<Projectile>();
+
     void ResetAccessoryFields()
     {
         roundShield = false;
         forestCrest = false;
         corruptedLifeCrystal = false;
+
+        CrimsonTendrils.RemoveAll(p => !p.active);
     }
 
     public override void NaturalLifeRegen(ref float regen)
@@ -39,6 +47,18 @@ public partial class NeoParacosmPlayer : ModPlayer
         }
 
         if (forestCrestPickupCooldown > 0) forestCrestPickupCooldown--;
+
+        if (Player.HasBuff(ModContent.BuffType<CrimsonTendrilBuff>()))
+        {
+            if (CrimsonTendrils.Count < 3)
+            {
+                if (Main.myPlayer == Player.whoAmI)
+                {
+                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonTendrilFriendly>(), 30, 2f, Player.whoAmI);
+                    CrimsonTendrils.Add(p);
+                }
+            }
+        }
     }
 
     public override void GetHealLife(Item item, bool quickHeal, ref int healValue)

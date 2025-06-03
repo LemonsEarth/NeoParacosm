@@ -29,7 +29,7 @@ public class CrimsonCatalyst : ModNPC
     {
         NPC.width = 44;
         NPC.height = 76;
-        NPC.lifeMax = 100;
+        NPC.lifeMax = 70;
         NPC.defense = 20;
         NPC.damage = 20;
         NPC.HitSound = SoundID.DD2_SkeletonDeath;
@@ -128,9 +128,14 @@ public class CrimsonCatalyst : ModNPC
         }
         if (storedPositions.Count > 0)
         {
+            if (choosePositionTimer % 30 == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.5f)}, NPC.Center);
+                LemonUtils.DustCircle(NPC.Center, 8, 8, DustID.GemRuby, choosePositionTimer / 100f);
+            }
             foreach (var pos in storedPositions)
             {
-                Dust.NewDustDirect(pos, 32, 2, DustID.Crimson, 0, -10).noGravity = true;
+                Dust.NewDustDirect(pos, 32, 2, DustID.Crimson, 0, -10, Scale: 1.5f).noGravity = true;
             }
         }
         Lighting.AddLight(NPC.Center, 3, 0, 0);
@@ -155,7 +160,8 @@ public class CrimsonCatalyst : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return (spawnInfo.Player.ZoneCrimson) ? 0.04f : 0f;
+        int chanceBoost = NPC.downedBoss2 ? 4 : 1;
+        return (spawnInfo.Player.ZoneCrimson) ? 0.05f * chanceBoost : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

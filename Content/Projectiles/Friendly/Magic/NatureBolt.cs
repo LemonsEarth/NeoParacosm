@@ -36,7 +36,7 @@ public class NatureBolt : ModProjectile
         }
         if (AITimer <= 0)
         {
-            closestNPC = LemonUtils.GetClosestNPC(Projectile, 400);
+            closestNPC = LemonUtils.GetClosestNPC(Projectile.Center, 400);
             if (closestNPC != null)
             {
                 speed += 0.3f;

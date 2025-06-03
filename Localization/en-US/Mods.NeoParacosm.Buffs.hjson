@@ -7,3 +7,8 @@ ForestCrestBuff: {
 	DisplayName: Forest Crest
 	Description: Increased summon damage by {0}% and movement speed by {1}%
 }
+
+CrimsonTendrilBuff: {
+	DisplayName: Crimson Tendril Buff
+	Description: Mods.NeoParacosm.Buffs.CrimsonTendrilBuff.Description
+}

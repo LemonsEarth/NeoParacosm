@@ -85,7 +85,7 @@ public class ChainsawGunHeldProjectile : ModProjectile
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                LemonUtils.QuickProj(Projectile, Projectile.Center + Projectile.velocity, Vector2.Zero, ModContent.ProjectileType<SawProjectile>(), owner: Projectile.owner, ai2: Projectile.whoAmI);
+                LemonUtils.QuickProj(Projectile, Projectile.Center + Projectile.velocity, Vector2.Zero, ModContent.ProjectileType<SawProjectile>(), owner: Projectile.owner, ai2: Projectile.whoAmI, knockback: 5);
             }
         }
 

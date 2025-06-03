@@ -17,20 +17,20 @@ public static partial class LemonUtils
         return Projectile.NewProjectileDirect(npc.GetSource_FromThis(), position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
     }
 
-    public static NPC GetClosestNPC(Projectile projectile, float minDistance = 0)
+    public static NPC GetClosestNPC(Vector2 pos, float minDistance = 0)
     {
         NPC closestEnemy = null;
         if (minDistance == 0) minDistance = 99999;
         foreach (var npc in Main.ActiveNPCs)
         {
-            if (npc.CanBeChasedBy() && (npc.Distance(projectile.Center) < minDistance))
+            if (npc.CanBeChasedBy() && (npc.Distance(pos) < minDistance))
             {
                 if (closestEnemy == null)
                 {
                     closestEnemy = npc;
                 }
-                float distanceToNPC = projectile.Center.Distance(npc.Center);
-                if (distanceToNPC < projectile.Center.Distance(closestEnemy.Center))
+                float distanceToNPC = pos.Distance(npc.Center);
+                if (distanceToNPC < pos.Distance(closestEnemy.Center))
                 {
                     closestEnemy = npc;
                 }

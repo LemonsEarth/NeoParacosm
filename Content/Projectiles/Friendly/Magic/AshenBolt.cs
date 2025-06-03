@@ -44,7 +44,7 @@ public class AshenBolt : ModProjectile
         {
             if (doBurst == 0)
             {
-                closestNPC = LemonUtils.GetClosestNPC(Projectile, 800);
+                closestNPC = LemonUtils.GetClosestNPC(Projectile.Center, 800);
                 if (closestNPC != null)
                 {
                     speed += 0.3f;

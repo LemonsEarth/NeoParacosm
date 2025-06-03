@@ -20,10 +20,6 @@ public class CrimsonInfectionForm : ModNPC
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 2;
-        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
-        {
-            Hide = true
-        };
     }
 
     public override void SetDefaults()

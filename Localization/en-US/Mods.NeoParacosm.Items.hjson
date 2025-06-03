@@ -76,11 +76,6 @@ AshenNatureScepter: {
 	Tooltip: Fires an Ashen Bolt that explodes into homing bolts on hit
 }
 
-DepthStone: {
-	DisplayName: Depth Stone
-	Tooltip: ""
-}
-
 DepthStoneItem: {
 	DisplayName: Depth Stone
 	Tooltip: ""
@@ -89,4 +84,9 @@ DepthStoneItem: {
 DepthStoneWallItem: {
 	DisplayName: Depth Stone Wall
 	Tooltip: ""
+}
+
+CommensalPathogen: {
+	DisplayName: Commensal Pathogen
+	Tooltip:
 }
