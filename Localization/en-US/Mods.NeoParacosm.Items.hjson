@@ -89,4 +89,10 @@ DepthStoneWallItem: {
 CommensalPathogen: {
 	DisplayName: Commensal Pathogen
 	Tooltip:
+		'''
+		Increases life regeneration by 2
+		Decreases damage reduction and defense by {0}%
+		Summons 3 Crimson Tendrils to defend you
+		Tendrils heal you for 10 hp when they kill an enemy
+		'''
 }

@@ -8,6 +8,7 @@ public static partial class LemonUtils
     public static Projectile QuickProj(Projectile proj, Vector2 position, Vector2 velocity, int type, float damage = -1, float knockback = 1, int owner = -1, int ai0 = 0, int ai1 = 0, int ai2 = 0)
     {
         if (damage == -1) damage = proj.damage;
+        if (owner == -1) owner = proj.owner;
         return Projectile.NewProjectileDirect(proj.GetSource_FromThis(), position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
     }
 

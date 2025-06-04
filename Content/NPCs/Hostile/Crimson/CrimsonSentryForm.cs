@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System;
@@ -125,6 +126,7 @@ public class CrimsonSentryForm : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CommensalPathogen>(), 50, 25));
     }
 
     public override bool? CanFallThroughPlatforms()

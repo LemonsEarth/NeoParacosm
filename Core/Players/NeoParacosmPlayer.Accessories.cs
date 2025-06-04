@@ -54,7 +54,7 @@ public partial class NeoParacosmPlayer : ModPlayer
             {
                 if (Main.myPlayer == Player.whoAmI)
                 {
-                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonTendrilFriendly>(), 30, 2f, Player.whoAmI);
+                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonTendrilFriendly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(30), 2f, Player.whoAmI);
                     CrimsonTendrils.Add(p);
                 }
             }

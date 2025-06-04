@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Tiles.Depths;
 using StructureHelper.API;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.GameContent.RGB;
@@ -54,6 +56,32 @@ public class WorldGenSystem : ModSystem
                     Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
                     GenVars.structures.AddProtectedStructure(structureRect, 5);
                     break;
+                }
+            }
+        }
+
+        for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
+        {
+            Chest chest = Main.chest[chestIndex];
+            if (chest == null) continue;
+            int x = chest.x;
+            int y = chest.y;
+
+            Tile chestTile = Main.tile[x, y];
+            if (chestTile.TileType != TileID.Containers || chestTile.TileFrameX != 14 * 36)
+            {
+                continue;
+            }
+
+            for (int inventoryIndex = 0; inventoryIndex < Chest.maxItems; inventoryIndex++)
+            {
+                if (chest.item[inventoryIndex].type == ItemID.None)
+                {
+                    if (WorldGen.genRand.NextBool(10))
+                    {
+                        chest.item[inventoryIndex].SetDefaults(ModContent.ItemType<ChainsawGun>());
+                    }
+                        break;
                 }
             }
         }
