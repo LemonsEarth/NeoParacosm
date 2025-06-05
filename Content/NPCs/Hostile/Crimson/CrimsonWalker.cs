@@ -50,6 +50,8 @@ public class CrimsonWalker : ModNPC
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
         NPC.damage = (int)(NPC.damage * balance * 0.5f);
+        int planteraMul = NPC.downedPlantBoss ? 3 : 1;
+        NPC.lifeMax = NPC.lifeMax * planteraMul;
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -95,11 +97,16 @@ public class CrimsonWalker : ModNPC
 
         if (close)
         {
-            if (AITimer % 90 == 0 && AITimer > 0)
+            int dashCD = Main.hardMode ? 60 : 90;
+            if (AITimer % dashCD == 0 && AITimer > 0)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     NPC.velocity += NPC.Center.DirectionTo(player.Center) * Main.rand.NextFloat(10, 20);
+                    if (Main.rand.NextBool(3))
+                    {
+                        NPC.velocity -= Vector2.UnitY * Main.rand.NextFloat(8, 16);
+                    }
                 }
                 NPC.netUpdate = true;
             }

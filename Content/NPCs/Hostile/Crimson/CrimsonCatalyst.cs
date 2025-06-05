@@ -4,6 +4,7 @@ using NeoParacosm.Content.Gores;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -19,6 +20,16 @@ public class CrimsonCatalyst : ModNPC
     int choosePositionTimer = 0;
 
     HashSet<Vector2> storedPositions = new();
+
+    static HashSet<int> PreHM_Enemies = new HashSet<int>()
+    {
+        NPCID.FaceMonster, NPCID.BloodCrawler, NPCID.Crimera, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>()
+    };
+
+    static HashSet<int> HM_Enemies = new HashSet<int>()
+    {
+        NPCID.Crimslime, NPCID.Herpling, NPCID.CrimsonAxe, NPCID.IchorSticker, NPCID.FloatyGross, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>(),ModContent.NPCType<CrimsonSentryForm>()
+    };
 
     public override void SetStaticDefaults()
     {
@@ -42,6 +53,11 @@ public class CrimsonCatalyst : ModNPC
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
         NPC.damage = (int)(NPC.damage * balance * 0.5f);
+        int planteraMul = NPC.downedPlantBoss ? 10 : 1;
+        NPC.lifeMax = NPC.lifeMax * planteraMul;
+        int planteraMulDF = NPC.downedPlantBoss ? 3 : 1;
+        NPC.defense *= planteraMulDF;
+
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -89,7 +105,9 @@ public class CrimsonCatalyst : ModNPC
 
     public override void AI()
     {
-        if (choosePositionTimer == 600)
+        int timerCD = Main.hardMode ? 300 : 600;
+        if (NPC.downedPlantBoss) timerCD = 180;
+        if (choosePositionTimer == timerCD)
         {
             if (storedPositions.Count == 0)
             {
@@ -118,7 +136,8 @@ public class CrimsonCatalyst : ModNPC
                 {
                     foreach (var pos in storedPositions)
                     {
-                        NPC.NewNPCDirect(NPC.GetSource_FromThis(), pos, Main.rand.NextFromList(NPCID.FaceMonster, NPCID.BloodCrawler, NPCID.Crimera, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>()));
+                        List<int> enemiesToSpawn = Main.hardMode ? HM_Enemies.ToList() : PreHM_Enemies.ToList();
+                        NPC.NewNPCDirect(NPC.GetSource_FromThis(), pos, Main.rand.NextFromCollection(enemiesToSpawn));
                     }
                 }
                 storedPositions.Clear();

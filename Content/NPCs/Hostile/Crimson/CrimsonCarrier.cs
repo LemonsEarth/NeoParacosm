@@ -34,6 +34,7 @@ public class CrimsonCarrier : ModNPC
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 500;
         NPC.aiStyle = NPCAIStyleID.Fighter;
+        AIType = NPCID.FaceMonster;
         NPC.knockBackResist = 0.3f;
     }
 

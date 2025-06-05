@@ -21,9 +21,17 @@ public class CrimsonThorn: ModProjectile
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
-        Projectile.penetrate = 1;
+        Projectile.penetrate = 3;
         Projectile.timeLeft = 300;
         Projectile.scale = 1f;
+    }
+
+    public override bool OnTileCollide(Vector2 oldVelocity)
+    {
+        if (!Main.hardMode) return true;
+        Projectile.velocity = oldVelocity.RotatedBy(-Math.Sign(oldVelocity.X) * MathHelper.PiOver2) * 0.9f;
+        Projectile.penetrate--;
+        return false;
     }
 
     public override void AI()

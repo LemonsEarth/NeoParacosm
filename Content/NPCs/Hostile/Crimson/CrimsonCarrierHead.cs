@@ -46,6 +46,8 @@ public class CrimsonCarrierHead : ModNPC
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
         NPC.damage = (int)(NPC.damage * balance * 0.5f);
+        int planteraMul = NPC.downedPlantBoss ? 3 : 1;
+        NPC.lifeMax = NPC.lifeMax * planteraMul;
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
