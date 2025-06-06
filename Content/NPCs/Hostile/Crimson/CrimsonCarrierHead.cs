@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Weapons.Magic;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -100,6 +101,7 @@ public class CrimsonCarrierHead : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RotPerfume>(), 10, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

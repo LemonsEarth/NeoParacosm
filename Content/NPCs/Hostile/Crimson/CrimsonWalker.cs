@@ -172,7 +172,8 @@ public class CrimsonWalker : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 0, maximumDropped: 2));
+        npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.Ichor, 2, 1, 3));
     }
 
     public override bool? CanFallThroughPlatforms()

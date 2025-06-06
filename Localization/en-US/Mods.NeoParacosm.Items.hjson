@@ -96,3 +96,8 @@ CommensalPathogen: {
 		Tendrils heal you for 10 hp when they kill an enemy
 		'''
 }
+
+RotPerfume: {
+	DisplayName: Rot Perfume
+	Tooltip: ""
+}

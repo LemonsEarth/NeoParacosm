@@ -40,4 +40,10 @@ public static partial class LemonUtils
         return closestEnemy;
     }
 
+    public static Vector2 RandomPos(this Projectile proj, float fluffX = 0, float fluffY = 0)
+    {
+        Vector2 pos = proj.position + new Vector2(Main.rand.NextFloat(-fluffX, proj.width + fluffX), Main.rand.NextFloat(-fluffY, proj.height + fluffY));
+        return pos;
+    }
+
 }
