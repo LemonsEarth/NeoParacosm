@@ -15,7 +15,7 @@ public class CorruptedLifeCrystal : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.Neo().corruptedLifeCrystal = true;
+        player.NPAccessoryPlayer().corruptedLifeCrystal = true;
     }
 
     public override void AddRecipes()

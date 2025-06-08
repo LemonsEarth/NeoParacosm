@@ -10,5 +10,13 @@ ForestCrestBuff: {
 
 CrimsonTendrilBuff: {
 	DisplayName: Crimson Tendril Buff
-	Description: Mods.NeoParacosm.Buffs.CrimsonTendrilBuff.Description
+	Description: 
+	'''
+	Don't get the wrong idea, the tendrils fight to protect only themselves
+	'''
+}
+
+CrimsonRotDebuff: {
+	DisplayName: Crimson Rot
+	Description: Lowers defense by 1 for every 10% life missing
 }

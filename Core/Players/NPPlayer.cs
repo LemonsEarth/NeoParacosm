@@ -7,11 +7,11 @@ using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
-public partial class NeoParacosmPlayer : ModPlayer
+public class NPPlayer : ModPlayer
 {
     public override void ResetEffects()
     {
-        ResetAccessoryFields();
+        
     }
 
     public override void PostUpdate()
@@ -31,14 +31,6 @@ public partial class NeoParacosmPlayer : ModPlayer
         else
         {
             Filters.Scene.Deactivate("NeoParacosm:ScreenTintShader");
-        }
-    }
-
-    public override void OnHurt(Player.HurtInfo info)
-    {
-        if (roundShield && !Player.HasBuff(ModContent.BuffType<KnockbackCooldown>()))
-        {
-            Player.AddBuff(ModContent.BuffType<KnockbackCooldown>(), 1800);
         }
     }
 }

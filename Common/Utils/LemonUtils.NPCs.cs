@@ -1,10 +1,18 @@
-﻿namespace NeoParacosm.Common.Utils;
+﻿using NeoParacosm.Core.Globals.GlobalNPCs;
+using NeoParacosm.Core.Players;
+
+namespace NeoParacosm.Common.Utils;
 
 /// <summary>
 /// Contains a lot of utillities and global usings
 /// </summary>
 public static partial class LemonUtils
 {
+    public static NPBuffNPC NPBuffNPC(this NPC npc)
+    {
+        return npc.GetGlobalNPC<NPBuffNPC>();
+    }
+
     public static NPC GetClosestNPC(NPC npc, float minDistance = 0)
     {
         NPC closestEnemy = null;

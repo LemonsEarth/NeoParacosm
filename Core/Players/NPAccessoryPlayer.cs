@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Players;
 
-public partial class NeoParacosmPlayer : ModPlayer
+public class NPAcessoryPlayer : ModPlayer
 {
     public bool roundShield { get; set; } = false;
     public bool forestCrest { get; set; } = false;
@@ -17,13 +17,21 @@ public partial class NeoParacosmPlayer : ModPlayer
 
     public List<Projectile> CrimsonTendrils { get; set; } = new List<Projectile>();
 
-    void ResetAccessoryFields()
+    public override void ResetEffects()
     {
         roundShield = false;
         forestCrest = false;
         corruptedLifeCrystal = false;
 
         CrimsonTendrils.RemoveAll(p => !p.active);
+    }
+
+    public override void OnHurt(Player.HurtInfo info)
+    {
+        if (roundShield && !Player.HasBuff(ModContent.BuffType<KnockbackCooldown>()))
+        {
+            Player.AddBuff(ModContent.BuffType<KnockbackCooldown>(), 1800);
+        }
     }
 
     public override void NaturalLifeRegen(ref float regen)

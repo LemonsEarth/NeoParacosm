@@ -23,7 +23,7 @@ public class ForestCrest : ModItem
     {
         player.maxTurrets += sentryBoost;
         player.moveSpeed += moveSpeedBoost / 100;
-        player.Neo().forestCrest = true;
+        player.NPAccessoryPlayer().forestCrest = true;
     }
 
     public override void AddRecipes()

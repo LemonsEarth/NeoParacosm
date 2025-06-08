@@ -4,9 +4,14 @@ namespace NeoParacosm.Common.Utils
 {
     public static partial class LemonUtils
     {     
-        public static NeoParacosmPlayer Neo(this Player player)
+        public static NPAcessoryPlayer NPAccessoryPlayer(this Player player)
         {
-            return player.GetModPlayer<NeoParacosmPlayer>();
+            return player.GetModPlayer<NPAcessoryPlayer>();
+        }
+
+        public static NPBuffPlayer NPBuffPlayer(this Player player)
+        {
+            return player.GetModPlayer<NPBuffPlayer>();
         }
 
         public static bool HasAnyFireDebuff(this Player player)

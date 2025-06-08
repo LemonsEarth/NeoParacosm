@@ -18,7 +18,7 @@ public class RoundShield : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.Neo().roundShield = true;
+        player.NPAccessoryPlayer().roundShield = true;
     }
 
     public override void AddRecipes()

@@ -36,7 +36,6 @@
 	  <Folder Include="Content\World\Tiles\" />
 	  <Folder Include="Core\Globals\GlobalItems\" />
 	  <Folder Include="Core\Globals\GlobalProjectiles\" />
-	  <Folder Include="Core\Globals\GlobalNPCs\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="StructureHelper">
