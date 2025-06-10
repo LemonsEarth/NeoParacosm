@@ -103,7 +103,7 @@ public class CrimsonWalker : ModNPC
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     NPC.velocity += NPC.Center.DirectionTo(player.Center) * Main.rand.NextFloat(10, 20);
-                    if (Main.rand.NextBool(3))
+                    if (Main.rand.NextBool(3) && Main.hardMode)
                     {
                         NPC.velocity -= Vector2.UnitY * Main.rand.NextFloat(8, 16);
                     }

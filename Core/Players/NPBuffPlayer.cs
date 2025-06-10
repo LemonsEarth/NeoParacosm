@@ -18,4 +18,19 @@ public class NPBuffPlayer : ModPlayer
             Player.statDefense -= (10 - (Player.statLife / Player.statLifeMax2 * 10)); ;
         }
     }
+
+    public override void UpdateBadLifeRegen()
+    {
+        if (Player.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
+        {
+            DOTDebuff(20);
+        }
+    }
+
+    void DOTDebuff(int damagePerSecond)
+    {
+        if (Player.lifeRegen > 0) Player.lifeRegen = 0;
+        Player.lifeRegenTime = 0;
+        Player.lifeRegen -= damagePerSecond * 2;
+    }
 }

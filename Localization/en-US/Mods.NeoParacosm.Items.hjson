@@ -100,9 +100,9 @@ CommensalPathogen: {
 RotPerfume: {
 	DisplayName: Rot Perfume
 	Tooltip:
-	'''
-	Releases clouds of rot gas
-	Enemies caught in the gas are inflicted with Crimson Rot
-	Crimson Rot lowers defense by 1 for every 10% life missing
-	'''
+		'''
+		Releases clouds of rot gas
+		Enemies caught in the gas are inflicted with Crimson Rot
+		Crimson Rot lowers defense by 1 for every 10% life missing
+		'''
 }

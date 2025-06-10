@@ -10,10 +10,7 @@ ForestCrestBuff: {
 
 CrimsonTendrilBuff: {
 	DisplayName: Crimson Tendril Buff
-	Description: 
-	'''
-	Don't get the wrong idea, the tendrils fight to protect only themselves
-	'''
+	Description: Don't get the wrong idea, the tendrils fight to protect only themselves
 }
 
 CrimsonRotDebuff: {

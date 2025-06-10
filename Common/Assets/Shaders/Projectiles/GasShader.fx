@@ -19,7 +19,7 @@ float4 GasShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 
     noiseColor *= color;
     float2 centeredCoords = coords * 2.0 - 1.0;
     float distanceToCenter = length(centeredCoords);
-    float4 finalColor = noiseColor * (1 - distanceToCenter) * (sin(uTime) + 7) * 0.1;
+    float4 finalColor = noiseColor * (1 - distanceToCenter + 0.2) * (sin(uTime) + 7) * 0.1;
     return finalColor;
 }
 

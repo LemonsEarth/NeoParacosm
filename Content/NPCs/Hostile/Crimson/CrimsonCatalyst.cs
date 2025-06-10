@@ -23,12 +23,12 @@ public class CrimsonCatalyst : ModNPC
 
     static HashSet<int> PreHM_Enemies = new HashSet<int>()
     {
-        NPCID.FaceMonster, NPCID.BloodCrawler, NPCID.Crimera, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>()
+        NPCID.FaceMonster, NPCID.BloodCrawler, NPCID.Crimera, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>(), ModContent.NPCType<RotPerfumeValve>()
     };
 
     static HashSet<int> HM_Enemies = new HashSet<int>()
     {
-        NPCID.Crimslime, NPCID.Herpling, NPCID.CrimsonAxe, NPCID.IchorSticker, NPCID.FloatyGross, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>(),ModContent.NPCType<CrimsonSentryForm>()
+        NPCID.Crimslime, NPCID.Herpling, NPCID.CrimsonAxe, NPCID.IchorSticker, NPCID.FloatyGross, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>(),ModContent.NPCType<CrimsonSentryForm>(), ModContent.NPCType<RotPerfumeValve>()
     };
 
     public override void SetStaticDefaults()
