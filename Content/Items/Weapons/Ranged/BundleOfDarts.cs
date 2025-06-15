@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Ranged;
+using NeoParacosm.Content.Tiles.Special;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
@@ -25,6 +26,7 @@ public class BundleOfDarts : ModItem
         Item.shootSpeed = 15;
         Item.noMelee = true;
         Item.noUseGraphic = true;
+        Item.createTile = ModContent.TileType<DragonRemainsTile>();
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
