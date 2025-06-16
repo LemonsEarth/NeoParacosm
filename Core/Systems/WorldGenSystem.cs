@@ -15,6 +15,8 @@ namespace NeoParacosm.Core.Systems;
 
 public class WorldGenSystem : ModSystem
 {
+    public static Point16 DragonRemainsTileEntityPos;
+
     readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
 
     void GenerateCrimsonVillage(GenerationProgress progress, GameConfiguration config)

@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Tiles.Depths;
+using NeoParacosm.Content.Tiles.Special;
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles;
 
@@ -12,7 +13,8 @@ public class DepthStoneItem : ModItem
 
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableTile(ModContent.TileType<DepthStoneBlock>());
+        //Item.DefaultToPlaceableTile(ModContent.TileType<DepthStoneBlock>());
+        Item.DefaultToPlaceableTile(ModContent.TileType<DragonRemainsTile>());
         Item.width = 16;
         Item.height = 16;
     }

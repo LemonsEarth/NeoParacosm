@@ -1,8 +1,9 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using Terraria.Graphics.Effects;
+using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
+using Terraria.Graphics.Effects;
 using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
@@ -18,7 +19,6 @@ public class NPPlayer : ModPlayer
     {
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
-        
     }
 
     public override void PostUpdateMiscEffects()
