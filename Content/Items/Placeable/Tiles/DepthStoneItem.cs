@@ -13,8 +13,7 @@ public class DepthStoneItem : ModItem
 
     public override void SetDefaults()
     {
-        //Item.DefaultToPlaceableTile(ModContent.TileType<DepthStoneBlock>());
-        Item.DefaultToPlaceableTile(ModContent.TileType<DragonRemainsTile>());
+        Item.DefaultToPlaceableTile(ModContent.TileType<DepthStoneBlock>());
         Item.width = 16;
         Item.height = 16;
     }

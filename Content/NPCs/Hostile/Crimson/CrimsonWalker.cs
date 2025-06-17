@@ -33,8 +33,8 @@ public class CrimsonWalker : ModNPC
 
     public override void SetDefaults()
     {
-        NPC.width = 50;
-        NPC.height = 50;
+        NPC.width = 54;
+        NPC.height = 64;
         NPC.lifeMax = 50;
         NPC.defense = 4;
         NPC.damage = 20;

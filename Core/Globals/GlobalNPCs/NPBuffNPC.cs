@@ -1,10 +1,22 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+using NeoParacosm.Content.Tiles.Special;
+using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;
 
 public class NPBuffNPC : GlobalNPC
 {
+    public override bool InstancePerEntity => true;
+
+    public Point16 dataCollectorTEPos { get; set; } = Point16.Zero;
+
+    public override void ResetEffects(NPC npc)
+    {
+        //dataCollectorTEPos = Point16.Zero;
+    }
+
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
         if (npc.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
@@ -28,6 +40,15 @@ public class NPBuffNPC : GlobalNPC
         if (damage < damagePerSecond)
         {
             damage = damagePerSecond;
+        }
+    }
+
+    public override void OnKill(NPC npc)
+    {
+        if (NPCLists.EvilEnemies.Contains(npc.type) && !npc.SpawnedFromStatue && dataCollectorTEPos != Point16.Zero 
+            && TileEntity.TryGet<DataCollectorTileEntity>(dataCollectorTEPos, out DataCollectorTileEntity dataCollector))
+        {
+            dataCollector.CollectData();
         }
     }
 }

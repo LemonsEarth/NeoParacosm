@@ -98,11 +98,16 @@ CommensalPathogen: {
 }
 
 RotPerfume: {
-	DisplayName: Rot Perfume
+	DisplayName: Rot Perfume Bottle
 	Tooltip:
 		'''
 		Releases clouds of rot gas
 		Enemies caught in the gas are inflicted with Crimson Rot
 		Crimson Rot lowers defense by 1 for every 10% life missing
 		'''
+}
+
+DataCollectorItem: {
+	DisplayName: Data Collector
+	Tooltip: Place in an evil biome and kill enemies near it to collect data
 }
