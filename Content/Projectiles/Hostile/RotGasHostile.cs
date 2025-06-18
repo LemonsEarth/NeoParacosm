@@ -32,8 +32,8 @@ public class RotGasHostile : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 24;
-        Projectile.height = 24;
+        Projectile.width = 18;
+        Projectile.height = 12;
         Projectile.friendly = false;
         Projectile.hostile = true;
         Projectile.timeLeft = 300;
@@ -45,7 +45,7 @@ public class RotGasHostile : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(ModContent.BuffType<CrimsonRotDebuff>(), 60);
+        target.AddBuff(ModContent.BuffType<CrimsonRotDebuff>(), 600);
     }
 
     public override void AI()

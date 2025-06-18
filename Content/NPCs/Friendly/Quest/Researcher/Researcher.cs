@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Gores;
+using NeoParacosm.Core.Systems;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -18,6 +19,12 @@ public class Researcher : ModNPC
 {
     int AITimer = 0;
 
+    int talkAmount = 0; // Amount of times talk has been pressed
+    Dictionary<int, int> progressTextAmount = new Dictionary<int, int>()
+    {
+        {0, 4},
+    };
+
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 5;
@@ -34,7 +41,7 @@ public class Researcher : ModNPC
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 500;
         NPC.knockBackResist = 0.3f;
-
+        NPC.dontTakeDamage = true;
         NPC.aiStyle = -1;
         NPC.townNPC = true;
         NPC.friendly = true;
@@ -49,8 +56,7 @@ public class Researcher : ModNPC
             "Gavo",
             "Ryuien",
             "Lage"
-        }
-        ;
+        };
     }
 
     public override string GetChat()
@@ -60,8 +66,11 @@ public class Researcher : ModNPC
         NPC.spriteDirection = NPC.direction;
         WeightedRandom<string> chat = new WeightedRandom<string>();
 
-        chat.Add("It is a lovely day");
-        chat.Add("The fields will run red.");
+        int msgCount = 4;
+        for (int i = 0; i < msgCount; i++)
+        {
+            chat.Add(this.GetLocalization("ChatInteractDialogue.T" + i).Value);
+        }
 
         string chosenChat = chat;
 
@@ -78,15 +87,15 @@ public class Researcher : ModNPC
     {
         if (firstButton)
         {
-            Main.npcChatText = "The infections are fascinating";
-        }
-        else
-        {
-            if (Main.LocalPlayer.HasItem(ItemID.TissueSample))
+            Main.npcChatText = this.GetLocalization("TalkDialogue.Progress.P" + WorldDataSystem.ResearcherQuestProgress + ".T" + talkAmount).Format(NPC.GivenName);
+            Main.npcChatText += "\n\n" + (talkAmount + 1) + "/" + progressTextAmount[WorldDataSystem.ResearcherQuestProgress];
+            if (talkAmount < progressTextAmount[WorldDataSystem.ResearcherQuestProgress] - 1)
             {
-                Main.npcChatText = "Thanks for that";
-                int index = Main.LocalPlayer.FindItem(ItemID.TissueSample);
-                Main.LocalPlayer.inventory[index].stack--;
+                talkAmount++;
+            }
+            else
+            {
+                talkAmount = 0;
             }
         }
     }

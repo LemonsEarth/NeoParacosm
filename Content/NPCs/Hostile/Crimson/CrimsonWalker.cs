@@ -16,6 +16,7 @@ namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 public class CrimsonWalker : ModNPC
 {
     float AITimer = 0;
+    int hitTimer = 0;
 
     enum State
     {
@@ -78,7 +79,7 @@ public class CrimsonWalker : ModNPC
             return;
         }
         Player player = Main.player[NPC.target];
-
+        if (hitTimer > 0) hitTimer--;
         if (Main.rand.NextBool(300))
         {
             SoundEngine.PlaySound(SoundID.Mummy with { PitchRange = (-1f, 1f) });
@@ -129,6 +130,11 @@ public class CrimsonWalker : ModNPC
     public override void HitEffect(NPC.HitInfo hit)
     {
         close = true;
+        if (hitTimer != 0)
+        {
+            return;
+        }
+        hitTimer = 60;
         int count = Main.rand.Next(1, 4);
 
         int projCount = LemonUtils.GetDifficulty();

@@ -15,6 +15,7 @@ public class DataCollectorTile : ModTile
         Main.tileLighted[Type] = true;
 
         MinPick = 50;
+        MineResist = 4f;
         AnimationFrameHeight = 90;
 
         TileID.Sets.DisableSmartCursor[Type] = true;

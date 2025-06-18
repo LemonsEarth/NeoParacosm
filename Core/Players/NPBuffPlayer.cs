@@ -13,9 +13,14 @@ public class NPBuffPlayer : ModPlayer
 
     public override void PostUpdateBuffs()
     {
+        
+    }
+
+    public override void UpdateEquips()
+    {
         if (Player.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
         {
-            Player.statDefense -= (10 - (Player.statLife / Player.statLifeMax2 * 10)); ;
+            Player.statDefense -= 10 - (int)(((float)Player.statLife / Player.statLifeMax2) * 10) + 1;
         }
     }
 

@@ -109,5 +109,9 @@ RotPerfume: {
 
 DataCollectorItem: {
 	DisplayName: Data Collector
-	Tooltip: Place in an evil biome and kill enemies near it to collect data
+	Tooltip:
+		'''
+		Place in an evil biome and kill enemies near it to collect data
+		Data collected is deleted if the collector is broken
+		'''
 }

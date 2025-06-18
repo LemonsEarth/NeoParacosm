@@ -17,3 +17,8 @@ CrimsonRotDebuff: {
 	DisplayName: Crimson Rot
 	Description: Lowers defense by 1 for every 10% life missing
 }
+
+ProvokedPresenceDebuff: {
+	DisplayName: Provoked Presence
+	Description: The hive has been provoked
+}

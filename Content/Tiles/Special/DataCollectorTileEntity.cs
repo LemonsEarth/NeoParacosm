@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Core.Systems;
 using Newtonsoft.Json.Linq;
 using Terraria.DataStructures;
@@ -11,18 +12,32 @@ public class DataCollectorTileEntity : ModTileEntity
 {
     int timer = 0;
 
-    int dataCollected = 0;
+    public int dataCollected { get; private set; } = 0;
 
-    public void CollectData()
+    int lastMessageSentID = -1;
+
+    bool droppedReward = false;
+
+    public void CollectData(int amount = 1)
     {
-        dataCollected++;
+        if (lastMessageSentID != -1) Main.popupText[lastMessageSentID].active = false;
+        dataCollected += amount;
         AdvancedPopupRequest t = new AdvancedPopupRequest();
         t.Color = Color.White;
         t.DurationInFrames = 60;
         t.Velocity = -Vector2.UnitY * 2;
         t.Text = dataCollected.ToString();
-        Vector2 pos = (CenterPos - new Point16(0, 2)).ToWorldCoordinates();
-        PopupText.NewText(t, pos);
+        Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
+        lastMessageSentID = PopupText.NewText(t, pos);
+
+        if (dataCollected >= 10 && !droppedReward)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemID.BloodButcherer, 1);
+            }
+            droppedReward = true;
+        }
     }
 
     public override bool IsTileValidForEntity(int x, int y)
@@ -41,15 +56,25 @@ public class DataCollectorTileEntity : ModTileEntity
             WorldGenSystem.DragonRemainsTileEntityPos = Position;
         }
 
-        foreach (var npc in Main.ActiveNPCs)
+        if (timer % 30 == 0)
         {
-            if (npc.Distance(Position.ToWorldCoordinates()) < distance)
+            foreach (var npc in Main.ActiveNPCs)
             {
-                npc.NPBuffNPC().dataCollectorTEPos = Position;
+                if (npc.Distance(Position.ToWorldCoordinates()) < distance)
+                {
+                    npc.NPBuffNPC().dataCollectorTEPos = Position;
+                }
             }
+
         }
 
-        Main.NewText(dataCollected);
+        foreach (var player in Main.ActivePlayers)
+        {
+            if (player.Distance(Position.ToWorldCoordinates()) < distance && (player.ZoneCorrupt || player.ZoneCrimson))
+            {
+                player.AddBuff(ModContent.BuffType<ProvokedPresenceDebuff>(), 2);
+            }
+        }
 
         for (int i = 0; i < 16; i++)
         {

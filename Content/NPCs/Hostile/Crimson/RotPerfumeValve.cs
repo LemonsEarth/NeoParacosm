@@ -43,7 +43,7 @@ public class RotPerfumeValve : ModNPC
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
-        NPC.damage = (int)(NPC.damage * balance * 0.5f);
+        NPC.damage = (int)(NPC.damage * balance * 0.3f);
         int planteraMul = NPC.downedPlantBoss ? 3 : 1;
         NPC.lifeMax = NPC.lifeMax * planteraMul;
     }
@@ -92,7 +92,7 @@ public class RotPerfumeValve : ModNPC
 
     public override void FindFrame(int frameHeight)
     {
-        int frameDur = 20;
+        int frameDur = 10;
         NPC.frameCounter += 1;
         if (NPC.frameCounter > frameDur)
         {

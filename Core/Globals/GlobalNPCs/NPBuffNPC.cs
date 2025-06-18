@@ -33,6 +33,15 @@ public class NPBuffNPC : GlobalNPC
         }
     }
 
+    public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+    {
+        if (player.HasBuff(ModContent.BuffType<ProvokedPresenceDebuff>()))
+        {
+            spawnRate /= 2;
+            maxSpawns *= 3;
+        }
+    }
+
     void DOTDebuff(NPC npc, int damagePerSecond, ref int damage)
     {
         if (npc.lifeRegen > 0) npc.lifeRegen = 0;
@@ -43,12 +52,20 @@ public class NPBuffNPC : GlobalNPC
         }
     }
 
+
     public override void OnKill(NPC npc)
     {
-        if (NPCLists.EvilEnemies.Contains(npc.type) && !npc.SpawnedFromStatue && dataCollectorTEPos != Point16.Zero 
+        if (!npc.SpawnedFromStatue && dataCollectorTEPos != Point16.Zero
             && TileEntity.TryGet<DataCollectorTileEntity>(dataCollectorTEPos, out DataCollectorTileEntity dataCollector))
         {
-            dataCollector.CollectData();
+            if (NPCLists.EvilEnemiesBonus.Contains(npc.type))
+            {
+                dataCollector.CollectData(3);
+            }
+            else if (NPCLists.EvilEnemies.Contains(npc.type))
+            {
+                dataCollector.CollectData();
+            }
         }
     }
 }

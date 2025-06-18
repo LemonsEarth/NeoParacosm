@@ -20,4 +20,44 @@ Researcher: {
 		LikeNPC_Princess: I like {NPCName}.
 		Princess_LovesNPC: I like {NPCName}.
 	}
+
+	ChatInteractDialogue: {
+		T0: I'm feeling sleepy.
+		T1: Need me some fresh air. You should try it some time.
+		T2: I hope there's nothing to worry about.
+		T3: The underground is fascinating.
+	}
+
+	TalkDialogue: {
+		Progress: {
+			P0: {
+				T0:
+					'''
+					Hey there! my name is {0}, I'm a researcher from... far away.
+					I arrived here after hearing a tale about an ancient dragon corpse laying deep underground in these lands, and lo and behold it is here!
+					There was a barrier that prevented me from investigating it, but now it is gone. I assume you had something to do with that?
+					'''
+				T1:
+					'''
+					Anyway, on the way here I noticed a strange ecosystem, with many gruesome creatures residing within.
+					Their appearance was grotesque and contorted. The way they moved and constantly looked around as if searching for something, it freaked me out.
+					I'm fairly certain one of them looked directly at me from hundreds of meters away, it looked... awfully humanoid.
+					You mind telling me what that is about?
+					'''
+				T2:
+					'''
+					The Corruption and the Crimson... fascinating. It's like one giant organism with an insatiable hunger...
+					I wasn't planning to stick around for long, but you've piqued my interest!
+					'''
+				T3:
+					'''
+					Say, you mind collecting some data for me?
+					You'll need to construct a [c/fc5eff: Data Collector] [i:NeoParacosm/DataCollectorItem] 
+					and place it in the appropriate location.
+					Killing some of the creatures there should be sufficient for collecting enough data.
+					Make sure you're geared up, the waves emitted by the machine are known to attract some creatures.
+					'''
+			}
+		}
+	}
 }
