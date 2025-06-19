@@ -9,7 +9,7 @@ public class ChainsawGun : ModItem
     public override void SetDefaults()
     {
         Item.damage = 18;
-        Item.crit = 10;
+        Item.crit = 4;
         Item.DamageType = DamageClass.Melee;
         Item.width = 48;
         Item.height = 42;
@@ -27,16 +27,5 @@ public class ChainsawGun : ModItem
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.channel = true;
-    }
-
-    public override void AddRecipes()
-    {
-        Recipe recipe1 = CreateRecipe();
-        //recipe1.AddIngredient(ItemID.RichMahogany, 50);
-        //recipe1.AddIngredient(ItemID.Stinger, 9);
-        //recipe1.AddIngredient(ItemID.SoulofFright, 5);
-        //recipe1.AddIngredient(ItemID.AdamantiteBar, 6);
-        //recipe1.AddTile(TileID.WorkBenches);
-        recipe1.Register();
     }
 }

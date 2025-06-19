@@ -115,3 +115,13 @@ DataCollectorItem: {
 		Data collected is deleted if the collector is broken
 		'''
 }
+
+AscendedRottedFork: {
+	DisplayName: Festered Fork
+	Tooltip:
+	'''
+	Hold to spin the weapon around you
+	While spinning additional forks will form
+	Release to fire all forks
+	'''
+}

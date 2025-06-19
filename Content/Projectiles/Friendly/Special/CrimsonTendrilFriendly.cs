@@ -102,7 +102,7 @@ public class CrimsonTendrilFriendly : ModProjectile
             closestNPC = LemonUtils.GetClosestNPC(Projectile.Center, 500);
             if (closestNPC != null && closestNPC.active)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (Main.myPlayer == player.whoAmI)
                 {
                     randomRangedAttack = Main.rand.NextBool() ? 1 : 0;
                     if (randomRangedAttack == 1)
@@ -161,7 +161,12 @@ public class CrimsonTendrilFriendly : ModProjectile
         float projDistanceToPlayer = Projectile.Center.Distance(player.Center);
         int maxSegments = (int)projDistanceToPlayer / 5;
         maxSegments = Math.Clamp(maxSegments, 1, 100);
-        Vector2 bezierControlPoint = Projectile.Center + Projectile.Center.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(45 * player.direction)) * 50;
+        float curveDirection = 1f;
+        if (closestNPC == null || !closestNPC.active)
+        {
+            curveDirection = player.direction;
+        }
+        Vector2 bezierControlPoint = Projectile.Center + Projectile.Center.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(45 * curveDirection)) * 50;
         Vector2 drawPosition = Projectile.Center;
 
         float posDistanceToPlayer = drawPosition.Distance(player.Center);

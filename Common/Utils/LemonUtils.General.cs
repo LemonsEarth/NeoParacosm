@@ -3,6 +3,7 @@ global using Terraria;
 global using Terraria.ID;
 global using Terraria.ModLoader;
 global using System;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -111,5 +112,11 @@ public static partial class LemonUtils
     public static Vector2 RandomUnitVector()
     {
         return Vector2.UnitY.RotatedByRandom(6.28f);
+    }
+
+    public static SpriteEffects SpriteDirectionToSpriteEffects(int spriteDirection)
+    {
+        if (spriteDirection == -1) return SpriteEffects.FlipHorizontally;
+        return SpriteEffects.None;
     }
 }

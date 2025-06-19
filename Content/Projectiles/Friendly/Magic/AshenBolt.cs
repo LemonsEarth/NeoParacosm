@@ -76,7 +76,7 @@ public class AshenBolt : ModProjectile
     {
         if (doBurst == 1)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (Main.myPlayer == Projectile.owner)
             {
                 for (int i = 0; i < 3; i++)
                 {
