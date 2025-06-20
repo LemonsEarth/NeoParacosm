@@ -3,6 +3,7 @@ using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Gores;
+using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.GameContent;
@@ -15,14 +16,6 @@ public class RotGasHostile : ModProjectile
     ref float AITimer => ref Projectile.ai[0];
     ref float RandomRot => ref Projectile.ai[1];
     int despawnTimer = 0;
-
-    const string NoisePath = "NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture";
-    static Asset<Texture2D> Noise;
-
-    public override void Load()
-    {
-        Noise = ModContent.Request<Texture2D>(NoisePath);
-    }
 
     public override void SetStaticDefaults()
     {
@@ -90,7 +83,7 @@ public class RotGasHostile : ModProjectile
         shader.Shader.Parameters["velocityX"].SetValue(-Projectile.velocity.X);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = Noise.Value;
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(Projectile.scale * 2, Projectile.scale), SpriteEffects.None, 0);
         Main.spriteBatch.End();

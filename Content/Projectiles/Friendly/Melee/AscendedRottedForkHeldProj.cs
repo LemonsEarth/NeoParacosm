@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.NPCs.Hostile.Crimson;
+using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.IO;
 using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 
@@ -27,6 +31,21 @@ public class AscendedRottedForkHeldProj : ModProjectile
         }
     }
 
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+        if (released)
+        {
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
+        }
+        else
+        {
+            if (Main.rand.NextBool(10))
+            {
+                target.AddBuff(BuffID.Ichor, 120);
+            }
+        }
+    }
+
     public override void Load()
     {
         trailTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/Projectiles/Friendly/Melee/AscendedRottedForkTrail");
@@ -42,8 +61,8 @@ public class AscendedRottedForkHeldProj : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 84;
-        Projectile.height = 84;
+        Projectile.width = 88;
+        Projectile.height = 88;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
@@ -72,7 +91,8 @@ public class AscendedRottedForkHeldProj : ModProjectile
             player.SetDummyItemTime(2);
             Projectile.velocity = Vector2.Zero;
             Projectile.Center = playerCenter;
-            Projectile.rotation = MathHelper.ToRadians(AITimer * 15 * player.direction);
+            float rotSpeed = addsLeft >= 0 ? Math.Clamp(AITimer / 180f, 0f, 1f) : 15;
+            Projectile.rotation = MathHelper.ToRadians(AITimer * 15 * rotSpeed * player.direction);
             Projectile.spriteDirection = -player.direction;
             SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
 
@@ -83,7 +103,7 @@ public class AscendedRottedForkHeldProj : ModProjectile
                     if (Main.myPlayer == Projectile.owner)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f) });
-                        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, Type, Projectile.damage / (addsLeft + 1), ai0: -addsLeft);
+                        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, Type, Projectile.damage / ((addsLeft + 1) * 0.5f), ai0: -addsLeft);
                     }
                     addsLeft--;
                 }
@@ -113,6 +133,7 @@ public class AscendedRottedForkHeldProj : ModProjectile
                 if (addsLeft >= 0)
                 {
                     Projectile.velocity = dirToMouse * (5 * (5 - addsLeft));
+                    Projectile.damage -= (int)(addsLeft * (0.2f * Projectile.damage));
                 }
                 else
                 {
@@ -131,13 +152,34 @@ public class AscendedRottedForkHeldProj : ModProjectile
     {
         if (addsLeft >= 0)
         {
-            return true;
+            Texture2D originalTexture = TextureAssets.Projectile[ProjectileID.TheRottedFork].Value;
+            Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            float colorChangeRate = (addsLeft + 1) * 4;
+            float greenSin = ((float)Math.Sin(AITimer / colorChangeRate) + 1) * 0.5f;
+            Color glowColor = new Color(1, greenSin, 0, 1);
+            Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+            var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
+            shader.Shader.Parameters["uTime"].SetValue(AITimer + Main.rand.NextFloat(1, 10));
+            shader.Shader.Parameters["color"].SetValue(glowColor.ToVector4());
+            shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+            Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+            shader.Apply();
+            Main.EntitySpriteDraw(glowTexture, drawPos, null, Color.White, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+            return false;
         }
 
         Color color = Color.Red * (-addsLeft * 0.25f);
         color.A = 255;
 
-        Main.EntitySpriteDraw(trailTexture.Value, Projectile.Center - Main.screenPosition, null, color * Projectile.Opacity, Projectile.rotation, trailTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+        if (released)
+        {
+            Main.EntitySpriteDraw(trailTexture.Value, Projectile.Center - Main.screenPosition, null, color * Projectile.Opacity, Projectile.rotation, trailTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+        }
         return false;
     }
 }

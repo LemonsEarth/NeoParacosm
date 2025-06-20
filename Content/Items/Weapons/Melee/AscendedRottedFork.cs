@@ -1,16 +1,23 @@
-﻿using NeoParacosm.Common.Utils;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Melee;
+using NeoParacosm.Core.Systems;
+using ReLogic.Graphics;
+using System.Threading;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class AscendedRottedFork : ModItem
 {
+    int timer = 0;
     public override void SetDefaults()
     {
-        Item.damage = 36;
+        Item.damage = 20;
         Item.DamageType = DamageClass.Melee;
-        Item.width = 52;
-        Item.height = 58;
+        Item.width = 56;
+        Item.height = 62;
         Item.useTime = 60;
         Item.useAnimation = 60;
         Item.reuseDelay = 30;
@@ -25,6 +32,20 @@ public class AscendedRottedFork : ModItem
         Item.noMelee = true;
         Item.noUseGraphic = true;
         Item.channel = true;
+    }
+
+    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+    {
+        timer++;
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.TheRottedFork, position, scale, timer, frame, spriteBatch, Color.Yellow);
+        return false;
+    }
+
+    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+    {
+        timer++;
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.TheRottedFork, rotation, scale, timer, spriteBatch, Color.Yellow);
+        return false;
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

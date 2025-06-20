@@ -15,5 +15,8 @@ public class NeoParacosm : Mod
 
         Asset<Effect> gasShader = Assets.Request<Effect>("Common/Assets/Shaders/Projectiles/GasShader");
         GameShaders.Misc["NeoParacosm:GasShader"] = new MiscShaderData(gasShader, "GasShader");
+
+        Asset<Effect> ascendedWeaponGlowShader = Assets.Request<Effect>("Common/Assets/Shaders/Items/AscendedWeaponGlow");
+        GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"] = new MiscShaderData(ascendedWeaponGlowShader, "AscendedWeaponGlow");
     }
 }
