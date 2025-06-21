@@ -125,3 +125,12 @@ AscendedRottedFork: {
 		Release to fire all forks
 		'''
 }
+
+AscendedBloodButcherer: {
+	DisplayName: Sanguine Slaughterer
+	Tooltip:
+	'''
+	Hold to charge up the blade, increasing its size
+	Release to swing, creating projectiles on hit
+	'''
+}

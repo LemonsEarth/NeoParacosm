@@ -12,12 +12,10 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 
 public class AscendedRottedForkHeldProj : ModProjectile
 {
-    static Asset<Texture2D> trailTexture;
-
     int AITimer = 0;
+    int releasedTimer = 0;
     ref float addsLeft => ref Projectile.ai[0];
     bool released = false;
-
     Vector2 savedMousePos
     {
         get
@@ -46,12 +44,6 @@ public class AscendedRottedForkHeldProj : ModProjectile
         }
     }
 
-    public override void Load()
-    {
-        trailTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/Projectiles/Friendly/Melee/AscendedRottedForkTrail");
-    }
-
-
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
@@ -75,18 +67,19 @@ public class AscendedRottedForkHeldProj : ModProjectile
         Projectile.localNPCHitCooldown = 10;
     }
 
+    int releasedDuration = 90;
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
-
+        if (player == null || player.dead || !player.active) Projectile.Kill();
         if (AITimer < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
         if (Projectile.timeLeft < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 30f);
 
         if (player.channel && !released)
         {
             Dust.NewDustPerfect(Projectile.Center + new Vector2(-1, -1).RotatedBy(Projectile.rotation) * Projectile.height * 0.5f, DustID.Crimson).noGravity = true;
-            Projectile.timeLeft = 60;
+            Projectile.timeLeft = 180;
             player.heldProj = Projectile.whoAmI;
             player.SetDummyItemTime(2);
             Projectile.velocity = Vector2.Zero;
@@ -113,8 +106,10 @@ public class AscendedRottedForkHeldProj : ModProjectile
         {
             released = true;
         }
+
         if (released)
         {
+            releasedTimer++;
             Projectile.localNPCHitCooldown = 30;
             if (AITimer % 3 == 0 && addsLeft >= 0)
             {
@@ -132,17 +127,32 @@ public class AscendedRottedForkHeldProj : ModProjectile
                 Vector2 dirToMouse = player.Center.DirectionTo(savedMousePos);
                 if (addsLeft >= 0)
                 {
-                    Projectile.velocity = dirToMouse * (5 * (5 - addsLeft));
+                    Projectile.velocity = dirToMouse * (10 * (5 - addsLeft));
                     Projectile.damage -= (int)(addsLeft * (0.2f * Projectile.damage));
                 }
                 else
                 {
-                    Projectile.velocity = dirToMouse * (5 * -addsLeft);
+                    Projectile.velocity = dirToMouse * (10 * -addsLeft);
                 }
                 Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
                 Projectile.spriteDirection = -1;
                 Projectile.timeLeft = 120;
             }
+
+            if (releasedTimer > releasedDuration)
+            {
+                Projectile.velocity = Projectile.DirectionTo(playerCenter) * (releasedTimer - 90);
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4 + MathHelper.Pi;
+                if (Projectile.Center.Distance(playerCenter) < 30)
+                {
+                    Projectile.Kill();
+                }
+            }
+            else
+            {
+                Projectile.velocity *= 0.9f;
+            }
+
         }
 
         AITimer++;
@@ -150,10 +160,10 @@ public class AscendedRottedForkHeldProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
         if (addsLeft >= 0)
         {
             Texture2D originalTexture = TextureAssets.Projectile[ProjectileID.TheRottedFork].Value;
-            Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             float colorChangeRate = (addsLeft + 1) * 4;
             float greenSin = ((float)Math.Sin(AITimer / colorChangeRate) + 1) * 0.5f;
@@ -178,7 +188,7 @@ public class AscendedRottedForkHeldProj : ModProjectile
 
         if (released)
         {
-            Main.EntitySpriteDraw(trailTexture.Value, Projectile.Center - Main.screenPosition, null, color * Projectile.Opacity, Projectile.rotation, trailTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+            Main.EntitySpriteDraw(glowTexture, Projectile.Center - Main.screenPosition, null, color * Projectile.Opacity, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         }
         return false;
     }

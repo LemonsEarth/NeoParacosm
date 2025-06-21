@@ -9,14 +9,14 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
-public class AscendedRottedFork : ModItem
+public class AscendedBloodButcherer : ModItem
 {
     int timer = 0;
     public override void SetDefaults()
     {
         Item.damage = 20;
         Item.DamageType = DamageClass.Melee;
-        Item.width = 56;
+        Item.width = 54;
         Item.height = 62;
         Item.useTime = 60;
         Item.useAnimation = 60;
@@ -27,7 +27,7 @@ public class AscendedRottedFork : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedRottedForkHeldProj>();
+        Item.shoot = ModContent.ProjectileType<AscendedBloodButchererHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
@@ -42,14 +42,14 @@ public class AscendedRottedFork : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.TheRottedFork, position, scale, timer, frame, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.BloodButcherer, position, scale, timer, frame, spriteBatch, Color.Yellow);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.TheRottedFork, rotation, scale, timer, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.BloodButcherer, rotation, scale, timer, spriteBatch, Color.Yellow);
         return false;
     }
 
