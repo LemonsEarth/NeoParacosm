@@ -144,3 +144,12 @@ AscendedCrimsonRod: {
 		Release to shrink the storm, firing lightning upon being destroyed
 		'''
 }
+
+AscendedUndertaker: {
+	DisplayName: Overtaker
+	Tooltip:
+	'''
+	Summon a stationary gun at your position that fires towards your cursor
+	After 6 shots, the gun hurls itself towards your cursor
+	'''
+}
