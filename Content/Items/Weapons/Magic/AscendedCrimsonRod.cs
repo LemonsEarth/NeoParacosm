@@ -16,7 +16,7 @@ public class AscendedCrimsonRod : ModItem
     public override void SetDefaults()
     {
         Item.damage = 35;
-        Item.DamageType = DamageClass.Melee;
+        Item.DamageType = DamageClass.Magic;
         Item.width = 54;
         Item.height = 62;
         Item.useTime = 60;
