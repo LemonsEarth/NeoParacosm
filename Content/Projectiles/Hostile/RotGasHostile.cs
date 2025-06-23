@@ -78,9 +78,10 @@ public class RotGasHostile : ModProjectile
 
         //Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
         var shader = GameShaders.Misc["NeoParacosm:GasShader"];
-        shader.Shader.Parameters["uTime"].SetValue(AITimer + Main.rand.NextFloat(1, 10));
+        shader.Shader.Parameters["uTime"].SetValue(AITimer);
+        shader.Shader.Parameters["distance"].SetValue(1);
         shader.Shader.Parameters["color"].SetValue(new Vector4(1, 0, 0, Projectile.Opacity));
-        shader.Shader.Parameters["velocityX"].SetValue(-Projectile.velocity.X);
+        shader.Shader.Parameters["velocity"].SetValue(new Vector2(-Projectile.velocity.X * 0.001f, 0.5f));
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;

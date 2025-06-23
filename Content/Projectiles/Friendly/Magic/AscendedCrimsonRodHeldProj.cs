@@ -1,0 +1,120 @@
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Gores;
+using NeoParacosm.Content.NPCs.Hostile.Crimson;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
+using NeoParacosm.Core.Systems;
+using ReLogic.Content;
+using System.IO;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
+using Terraria.Graphics.Shaders;
+
+namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
+
+public class AscendedCrimsonRodHeldProj : ModProjectile
+{
+    int AITimer = 0;
+    ref float chargeAmount => ref Projectile.ai[0];
+    bool released = false;
+    int shotprojID = -1;
+
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+
+    }
+
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
+        ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+        Main.projFrames[Type] = 1;
+    }
+
+    public override void SetDefaults()
+    {
+        Projectile.width = 42;
+        Projectile.height = 42;
+        Projectile.hostile = false;
+        Projectile.friendly = false;
+        Projectile.ignoreWater = false;
+        Projectile.tileCollide = false;
+        Projectile.penetrate = -1;
+        Projectile.timeLeft = 60;
+        Projectile.DamageType = DamageClass.Magic;
+        Projectile.Opacity = 0f;
+        Projectile.usesLocalNPCImmunity = true;
+        Projectile.localNPCHitCooldown = 300;
+    }
+
+    public override void AI()
+    {
+        Player player = Main.player[Projectile.owner];
+        Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
+        player.heldProj = Projectile.whoAmI;
+        player.SetDummyItemTime(2);
+        if (AITimer == 0)
+        {
+            if (Main.myPlayer == player.whoAmI)
+            {
+                shotprojID = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonCloud>(), Projectile.damage, 1f, Projectile.owner);
+            }
+        }
+        if (AITimer < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
+        if (Projectile.timeLeft < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 30f);
+        if (player.channel)
+        {
+            Projectile.timeLeft = 2;
+            SetPositionRotationDirection(player, player.Center.DirectionTo(Main.projectile[shotprojID].Center).ToRotation());
+            Projectile.Center = player.Center + player.Center.DirectionTo(Main.projectile[shotprojID].Center) * 28;
+            if (AITimer % 10 == 0)
+            {
+                player.CheckMana(player.HeldItem.mana, true);
+            }
+        }
+        else
+        {
+            Projectile.Kill();
+        }
+        AITimer++;
+    }
+
+    const float ThreePiOverFour = MathHelper.Pi - MathHelper.PiOver4; // dumb rotation and sprite direction stuff
+    void SetPositionRotationDirection(Player player, float movedRotation = 0)
+    {
+        Vector2 pos = player.Center + (new Vector2(-player.direction * 21, -21) * Projectile.scale).RotatedBy(movedRotation * player.direction);
+        float rot = player.Center.DirectionTo(pos).ToRotation();
+        float rotValue = player.direction == 1 ? MathHelper.PiOver4 : -ThreePiOverFour;
+        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rot * player.direction + rotValue);
+        Projectile.Center = pos;
+        float projRotValue = player.direction == 1 ? MathHelper.Pi : 0;
+        Projectile.rotation = rot * player.direction + projRotValue;
+        //Projectile.spriteDirection = player.direction;
+        Projectile.spriteDirection = 1;
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
+
+        Texture2D originalTexture = TextureAssets.Item[ItemID.CrimsonRod].Value;
+        Vector2 drawPos = Projectile.Center - Main.screenPosition;
+
+        Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
+        shader.Shader.Parameters["uTime"].SetValue(AITimer);
+        shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4());
+        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        shader.Apply();
+        Main.EntitySpriteDraw(glowTexture, drawPos, null, Color.White, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        return false;
+
+    }
+}

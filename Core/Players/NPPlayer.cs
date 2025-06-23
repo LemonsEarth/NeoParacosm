@@ -21,6 +21,7 @@ public class NPPlayer : ModPlayer
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
         //Main.NewText(Player.HandPosition - Player.position);
+        
     }
 
     public override void PostUpdateMiscEffects()

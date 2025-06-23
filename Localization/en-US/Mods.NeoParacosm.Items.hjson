@@ -129,8 +129,18 @@ AscendedRottedFork: {
 AscendedBloodButcherer: {
 	DisplayName: Sanguine Slaughterer
 	Tooltip:
-	'''
-	Hold to charge up the blade, increasing its size
-	Release to swing, creating projectiles on hit
-	'''
+		'''
+		Hold to charge up the blade, increasing its size
+		Release to swing, creating projectiles on hit
+		'''
+}
+
+AscendedCrimsonRod: {
+	DisplayName: Blightning Rod
+	Tooltip:
+		'''
+		Summons a storm that follows your cursor and damages enemies
+		The storm grows in size as you hold attack
+		Release to shrink the storm, firing lightning upon being destroyed
+		'''
 }

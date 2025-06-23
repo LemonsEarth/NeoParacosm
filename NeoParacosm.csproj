@@ -33,8 +33,6 @@
 	  <Folder Include="Content\NPCs\Boss\" />
 	  <Folder Include="Content\World\Biomes\" />
 	  <Folder Include="Content\World\Tiles\" />
-	  <Folder Include="Core\Globals\GlobalItems\" />
-	  <Folder Include="Core\Globals\GlobalProjectiles\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="StructureHelper">

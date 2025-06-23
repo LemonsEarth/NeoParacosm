@@ -170,7 +170,7 @@ public class AscendedRottedForkHeldProj : ModProjectile
             Color glowColor = new Color(1, greenSin, 0, 1);
             Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
             var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-            shader.Shader.Parameters["uTime"].SetValue(AITimer + Main.rand.NextFloat(1, 10));
+            shader.Shader.Parameters["uTime"].SetValue(AITimer);
             shader.Shader.Parameters["color"].SetValue(glowColor.ToVector4());
             shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
             Main.spriteBatch.End();

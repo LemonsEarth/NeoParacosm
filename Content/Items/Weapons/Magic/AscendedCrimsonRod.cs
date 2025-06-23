@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Friendly.Melee;
 using NeoParacosm.Core.Systems;
 using ReLogic.Graphics;
@@ -7,14 +8,14 @@ using System.Threading;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-namespace NeoParacosm.Content.Items.Weapons.Melee;
+namespace NeoParacosm.Content.Items.Weapons.Magic;
 
-public class AscendedBloodButcherer : ModItem
+public class AscendedCrimsonRod : ModItem
 {
     int timer = 0;
     public override void SetDefaults()
     {
-        Item.damage = 20;
+        Item.damage = 35;
         Item.DamageType = DamageClass.Melee;
         Item.width = 54;
         Item.height = 62;
@@ -27,10 +28,11 @@ public class AscendedBloodButcherer : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedBloodButchererHeldProj>();
+        Item.shoot = ModContent.ProjectileType<AscendedCrimsonRodHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
+        Item.mana = 3;
         Item.channel = true;
     }
 
@@ -42,14 +44,14 @@ public class AscendedBloodButcherer : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.BloodButcherer, position, scale, timer, frame, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.CrimsonRod, position, scale, timer, frame, spriteBatch, Color.Yellow);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.BloodButcherer, rotation, scale, timer, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.CrimsonRod, rotation, scale, timer, spriteBatch, Color.Yellow);
         return false;
     }
 

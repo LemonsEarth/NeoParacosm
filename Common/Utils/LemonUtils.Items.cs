@@ -22,7 +22,7 @@ public static partial class LemonUtils
         Vector2 drawPos = item.Center - Main.screenPosition;
         spriteBatch.Draw(origTexture, drawPos, null, Color.White, rotation, origTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        shader.Shader.Parameters["uTime"].SetValue(timer + Main.rand.NextFloat(1, 10));
+        shader.Shader.Parameters["uTime"].SetValue(timer);
         shader.Shader.Parameters["color"].SetValue(color.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         spriteBatch.End();
@@ -40,7 +40,7 @@ public static partial class LemonUtils
         Texture2D glowTexture = TextureAssets.Item[item.type].Value;
         spriteBatch.Draw(origTexture, position, frame, Color.White, 0f, origTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        shader.Shader.Parameters["uTime"].SetValue(timer + Main.rand.NextFloat(1, 10));
+        shader.Shader.Parameters["uTime"].SetValue(timer);
         shader.Shader.Parameters["color"].SetValue(color.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         spriteBatch.End();
