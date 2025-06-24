@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using Terraria;
 
@@ -8,12 +9,12 @@ public class NPBuffPlayer : ModPlayer
 {
     public override void ResetEffects()
     {
-        
+
     }
 
     public override void PostUpdateBuffs()
     {
-        
+
     }
 
     public override void UpdateEquips()
@@ -21,6 +22,23 @@ public class NPBuffPlayer : ModPlayer
         if (Player.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
         {
             Player.statDefense -= 10 - (int)(((float)Player.statLife / Player.statLifeMax2) * 10) + 1;
+        }
+
+        if (Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        {
+            if (Player.numMinions > 0)
+            {
+                foreach (var proj in Main.ActiveProjectiles)
+                {
+                    if (proj.minion && proj.owner == Player.whoAmI)
+                    {
+                        LemonUtils.DustCircle(proj.Center, 8, 8, DustID.Crimson, 2f);
+                    }
+                }
+                LemonUtils.DustCircle(Player.Center, 8, 8, DustID.Crimson, 2f);
+            }
+            Player.maxMinions = 0;
+            Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.Crimson).noGravity = true;
         }
     }
 
@@ -30,6 +48,24 @@ public class NPBuffPlayer : ModPlayer
         {
             DOTDebuff(20);
         }
+
+        if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        {
+            Player.lifeRegen -= 2;
+        }
+    }
+
+    public override void UpdateLifeRegen()
+    {
+        if (Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        {
+            Player.lifeRegen += 60;
+        }
+    }
+
+    public override void NaturalLifeRegen(ref float regen)
+    {
+        
     }
 
     void DOTDebuff(int damagePerSecond)

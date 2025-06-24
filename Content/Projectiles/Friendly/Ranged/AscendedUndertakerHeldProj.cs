@@ -74,7 +74,7 @@ public class AscendedUndertakerHeldProj : ModProjectile
                     Vector2 pos = Projectile.Center + Projectile.Center.DirectionTo(Main.MouseWorld) * 5;
                     LemonUtils.QuickProj(Projectile, pos, dir * Main.rand.NextFloat(5, 16), ProjectileID.IchorBullet);
                 }
-                SoundEngine.PlaySound(SoundID.Item11 with { SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 }, Projectile.Center);
+                SoundEngine.PlaySound(ParacosmSFX.UndertakerGunshot with { Volume = 0.4f, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 }, Projectile.Center);
                 rot += -player.direction * MathHelper.ToRadians(15);
                 shotCount++;
             }

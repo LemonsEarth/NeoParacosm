@@ -6,6 +6,7 @@ using NeoParacosm.Content.Gores;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -83,7 +84,6 @@ public class CrimsonCloud : ModProjectile
         if (AITimer < 30)
         {
             Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
-
         }
         AITimer++;
     }
@@ -128,6 +128,7 @@ public class CrimsonCloud : ModProjectile
         {
             Projectile.NewProjectile(Projectile.GetSource_FromAI("CrimsonCloud"), Projectile.RandomPos(), Vector2.UnitY * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
         }
+        SoundEngine.PlaySound(SoundID.Thunder, Projectile.Center);
         //LemonUtils.QuickProj(Projectile, Projectile.RandomPos(), Vector2.UnitY * 10, ProjectileID.CultistBossLightningOrbArc, ai0: Main.rand.NextFloat(0, 6.28f));
     }
 }

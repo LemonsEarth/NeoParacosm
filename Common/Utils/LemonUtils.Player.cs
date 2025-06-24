@@ -14,6 +14,11 @@ namespace NeoParacosm.Common.Utils
             return player.GetModPlayer<NPBuffPlayer>();
         }
 
+        public static NPArmorPlayer NPArmorPlayer(this Player player)
+        {
+            return player.GetModPlayer<NPArmorPlayer>();
+        }
+
         public static bool HasAnyFireDebuff(this Player player)
         {
             return player.HasBuff(BuffID.OnFire) || player.HasBuff(BuffID.Burning) || player.HasBuff(BuffID.OnFire3) 

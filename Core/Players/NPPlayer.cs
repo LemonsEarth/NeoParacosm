@@ -15,7 +15,7 @@ public class NPPlayer : ModPlayer
     {
         
     }
-
+    
     public override void PostUpdate()
     {
         //LemonUtils.DebugPlayerCenter(Player);

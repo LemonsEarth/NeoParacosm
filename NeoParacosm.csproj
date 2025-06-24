@@ -21,11 +21,9 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Common\Assets\Audio\Music\" />
-	  <Folder Include="Common\Assets\Audio\SFX\" />
 	  <Folder Include="Common\Assets\Textures\" />
 	  <Folder Include="Common\Conditions\" />
 	  <Folder Include="Content\Items\Consumables\" />
-	  <Folder Include="Content\Items\Armor\" />
 	  <Folder Include="Content\Items\Materials\" />
 	  <Folder Include="Content\Items\Tools\" />
 	  <Folder Include="Content\Items\Weapons\Generic\" />

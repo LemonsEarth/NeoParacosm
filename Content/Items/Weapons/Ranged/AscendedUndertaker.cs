@@ -13,8 +13,8 @@ public class AscendedUndertaker : ModItem
         Item.DamageType = DamageClass.Ranged;
         Item.width = 50;
         Item.height = 28;
-        Item.useTime = 2;
-        Item.useAnimation = 2;
+        Item.useTime = 10;
+        Item.useAnimation = 10;
         Item.UseSound = SoundID.Item1;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.knockBack = 2;

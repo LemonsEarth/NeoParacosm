@@ -9,7 +9,7 @@ ForestCrestBuff: {
 }
 
 CrimsonTendrilBuff: {
-	DisplayName: Crimson Tendril Buff
+	DisplayName: Crimson Tendrils
 	Description: Don't get the wrong idea, the tendrils fight to protect only themselves
 }
 
@@ -21,4 +21,14 @@ CrimsonRotDebuff: {
 ProvokedPresenceDebuff: {
 	DisplayName: Provoked Presence
 	Description: The hive has been provoked
+}
+
+CrimsonSacrificeCooldown: {
+	DisplayName: Sacrifice Aftermath
+	Description: Reduced defense, movement speed and life regen
+}
+
+CrimsonSacrificeDebuff: {
+	DisplayName: Crimson Sacrifice
+	Description: Increased damage, attack speed and life regen
 }

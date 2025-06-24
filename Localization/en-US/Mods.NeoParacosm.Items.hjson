@@ -148,8 +148,49 @@ AscendedCrimsonRod: {
 AscendedUndertaker: {
 	DisplayName: Overtaker
 	Tooltip:
-	'''
-	Summon a stationary gun at your position that fires towards your cursor
-	After 6 shots, the gun hurls itself towards your cursor
-	'''
+		'''
+		Summon a stationary gun at your position that fires towards your cursor
+		After 6 shots, the gun hurls itself towards your cursor
+		'''
+}
+
+AscendedCrimsonHelmet: {
+	SetBonus:
+		'''
+		{$CommonItemTooltip.PercentIncreasedSummonDamage}
+		{$CommonItemTooltip.IncreasesMaxManaBy@1}
+		{$CommonItemTooltip.IncreasesMaxSentriesBy@2}
+		Reduces non-summon damage by {3}%
+		Press the "Crimson Sacrifice" key to grant yourself the Crimson Sacrifice buff
+		Crimson Sacrifice:
+		Destroys all your minions for the duration
+		Increases all damage by 35%
+		Increases all attack speed by 20%
+		Massively increases life regeneration
+		After the buff wears off, your defense, life regen and movement speed is reduced
+		'''
+	DisplayName: Ascended Crimson Helmet
+	Tooltip:
+		'''
+		{$CommonItemTooltip.PercentIncreasedSummonDamage}
+		{$CommonItemTooltip.IncreasesMaxSentriesBy@1}
+		'''
+}
+
+AscendedCrimsonGreaves: {
+	DisplayName: Ascended Crimson Greaves
+	Tooltip:
+		'''
+		{$CommonItemTooltip.PercentIncreasedMovementSpeed}
+		{$CommonItemTooltip.IncreasesMaxMinionsBy@1}
+		'''
+}
+
+AscendedCrimsonScalemail: {
+	DisplayName: Ascended Crimson Scalemail
+	Tooltip:
+		'''
+		{$CommonItemTooltip.PercentIncreasedSummonDamage}
+		{$CommonItemTooltip.IncreasesMaxMinionsBy@1}
+		'''
 }
