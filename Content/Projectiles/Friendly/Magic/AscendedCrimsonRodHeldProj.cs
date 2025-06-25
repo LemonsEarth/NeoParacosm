@@ -97,19 +97,21 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
 
+        Texture2D originalTexture = TextureAssets.Item[ItemID.CrimsonRod].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
+        Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
-        shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
+        shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
+        Main.EntitySpriteDraw(glowTexture, drawPos, null, Color.White, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         return false;

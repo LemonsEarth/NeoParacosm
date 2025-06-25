@@ -42,14 +42,14 @@ public class AscendedRottedFork : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, position, scale, timer, frame, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.TheRottedFork, position, scale, timer, frame, spriteBatch, Color.Yellow);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, rotation, scale, timer, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.TheRottedFork, rotation, scale, timer, spriteBatch, Color.Yellow);
         return false;
     }
 
