@@ -194,3 +194,8 @@ AscendedCrimsonScalemail: {
 		{$CommonItemTooltip.IncreasesMaxMinionsBy@1}
 		'''
 }
+
+AscendedWeaponGlowDummyArmorDye: {
+	DisplayName: Ascended Weapon Glow Dummy Armor Dye
+	Tooltip: ""
+}

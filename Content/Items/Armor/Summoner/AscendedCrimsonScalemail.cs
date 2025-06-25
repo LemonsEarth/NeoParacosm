@@ -30,14 +30,14 @@ namespace NeoParacosm.Content.Items.Armor.Summoner
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             timer++;
-            LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.CrimsonScalemail, position, scale, timer, frame, spriteBatch, Color.Yellow);
+            LemonUtils.DrawAscendedWeaponGlowInInventory(Item, position, scale, timer, frame, spriteBatch, Color.Yellow);
             return false;
         }
 
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             timer++;
-            LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.CrimsonScalemail, rotation, scale, timer, spriteBatch, Color.Yellow);
+            LemonUtils.DrawAscendedWeaponGlowInWorld(Item, rotation, scale, timer, spriteBatch, Color.Yellow);
             return false;
         }
     }

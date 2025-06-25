@@ -19,7 +19,6 @@ public class AscendedUndertakerHeldProj : ModProjectile
     int AITimer = 0;
     ref float shotCount => ref Projectile.ai[0];
     bool thrown = false;
-    float recoilRot = 0;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -49,8 +48,6 @@ public class AscendedUndertakerHeldProj : ModProjectile
         Projectile.localNPCHitCooldown = 300;
     }
 
-    float goalRotation = 270;
-    float lerpT = 4f / 60f;
     float attackRate = 10;
     public override void AI()
     {
@@ -124,22 +121,6 @@ public class AscendedUndertakerHeldProj : ModProjectile
         int xGlowOrigin = Projectile.spriteDirection == 1 ? 0 : glowTexture.Width;
         Vector2 origOrigin = new Vector2(xOrigin, originalTexture.Height * 0.5f);
         Vector2 glowOrigin = new Vector2(xGlowOrigin, glowTexture.Height * 0.5f);
-
-        //if (thrown) //afterimages
-        //{
-        //    for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-        //    {
-        //        Vector2 afterimagePos = Projectile.oldPos[k] - Main.screenPosition + glowTexture.Size() * 0.5f + new Vector2(0, Projectile.gfxOffY);
-        //        Color color = new Color(70, 0, 0, 255) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-        //        color.A /= 2;
-        //        SpriteEffects spriteEffects = SpriteEffects.None;
-        //        if (Projectile.oldSpriteDirection[k] == -1)
-        //        {
-        //            spriteEffects = SpriteEffects.FlipHorizontally;
-        //        }
-        //        Main.EntitySpriteDraw(glowTexture, drawPos, null, color, Projectile.oldRot[k], glowTexture.Size() * 0.5f, Projectile.scale, spriteEffects, 0);
-        //    }
-        //}
 
         Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, origOrigin, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
