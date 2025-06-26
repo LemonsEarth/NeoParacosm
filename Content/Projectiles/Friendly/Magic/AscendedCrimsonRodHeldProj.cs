@@ -1,15 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
-using ReLogic.Content;
-using System.IO;
-using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;

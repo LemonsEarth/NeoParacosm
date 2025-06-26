@@ -1,12 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Melee;
-using NeoParacosm.Core.Systems;
-using ReLogic.Graphics;
-using System.Threading;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class AscendedBloodButcherer : ModItem

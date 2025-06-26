@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
@@ -9,7 +8,7 @@ public class MarksmanBolt : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        
+
     }
 
     public override void SetDefaults()
@@ -34,9 +33,9 @@ public class MarksmanBolt : ModProjectile
 
         if (AITimer == 0)
         {
-            SoundEngine.PlaySound(SoundID.Item21 with { PitchRange = (-0.2f, 0.2f)}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item21 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         }
-        
+
         AITimer++;
     }
 

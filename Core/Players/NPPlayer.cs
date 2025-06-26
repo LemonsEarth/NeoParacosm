@@ -1,11 +1,8 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Biomes.TheDepths;
-using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
+﻿using NeoParacosm.Content.Biomes.TheDepths;
+using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.UI.ResearcherUI;
 using Terraria.Graphics.Effects;
-using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
@@ -13,15 +10,19 @@ public class NPPlayer : ModPlayer
 {
     public override void ResetEffects()
     {
-        
+
     }
-    
+
     public override void PostUpdate()
     {
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
-        //Main.NewText(Player.HandPosition - Player.position);
-        
+        //Main.NewText(WorldDataSystem.ResearcherQuestProgress);
+        if (Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Researcher>())].Distance(Player.Center) > 500)
+        {
+            ResearcherUISystem UISystem = ModContent.GetInstance<ResearcherUISystem>();
+            UISystem.HideUI();
+        }
     }
 
     public override void PostUpdateMiscEffects()

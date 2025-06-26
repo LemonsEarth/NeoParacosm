@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
 public class CrimsonThornFriendly : ModProjectile
 {
@@ -30,7 +28,7 @@ public class CrimsonThornFriendly : ModProjectile
     {
         if (AITimer == 0)
         {
-            
+
         }
 
         Lighting.AddLight(Projectile.Center, 1, 1, 0);
@@ -47,6 +45,6 @@ public class CrimsonThornFriendly : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        
+
     }
 }

@@ -3,7 +3,7 @@
 namespace NeoParacosm.Common.Utils
 {
     public static partial class LemonUtils
-    {     
+    {
         public static NPAcessoryPlayer NPAccessoryPlayer(this Player player)
         {
             return player.GetModPlayer<NPAcessoryPlayer>();
@@ -21,7 +21,7 @@ namespace NeoParacosm.Common.Utils
 
         public static bool HasAnyFireDebuff(this Player player)
         {
-            return player.HasBuff(BuffID.OnFire) || player.HasBuff(BuffID.Burning) || player.HasBuff(BuffID.OnFire3) 
+            return player.HasBuff(BuffID.OnFire) || player.HasBuff(BuffID.Burning) || player.HasBuff(BuffID.OnFire3)
                 || player.HasBuff(BuffID.Frostburn) || player.HasBuff(BuffID.Frostburn2) || player.HasBuff(BuffID.ShadowFlame);
         }
 

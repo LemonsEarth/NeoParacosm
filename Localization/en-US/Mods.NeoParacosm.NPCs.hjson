@@ -30,7 +30,9 @@ Researcher: {
 
 	TalkDialogue: {
 		Progress: {
-			P0: {
+			P0.T0: I'm not supposed to be here
+
+			P1: {
 				T0:
 					'''
 					Hey there! my name is {0}, I'm a researcher from... far away.
@@ -58,6 +60,8 @@ Researcher: {
 					Make sure you're geared up, the waves emitted by the machine are known to attract some creatures.
 					'''
 			}
+
+			P2.T0: Zamn
 		}
 	}
 }

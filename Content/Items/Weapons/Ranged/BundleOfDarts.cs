@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Ranged;
-using NeoParacosm.Content.Tiles.Special;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 

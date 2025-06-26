@@ -1,8 +1,4 @@
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.Audio;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Core.Systems;
 

@@ -1,8 +1,6 @@
-﻿using NeoParacosm.Common.Utils;
+﻿namespace NeoParacosm.Content.Projectiles.Hostile;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
-
-public class CrimsonThorn: ModProjectile
+public class CrimsonThorn : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
 
@@ -38,7 +36,7 @@ public class CrimsonThorn: ModProjectile
     {
         if (AITimer == 0)
         {
-            
+
         }
 
         Lighting.AddLight(Projectile.Center, 1, 1, 0);

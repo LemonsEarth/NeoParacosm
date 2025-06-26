@@ -1,5 +1,4 @@
 ﻿using Terraria.DataStructures;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Gores;
 
@@ -7,7 +6,7 @@ public class RedGore : ModGore
 {
     public override void SetStaticDefaults()
     {
-        
+
     }
 
     public override void OnSpawn(Gore gore, IEntitySource source)

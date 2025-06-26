@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using Terraria;
 
 namespace NeoParacosm.Core.Players;
 
@@ -65,7 +64,7 @@ public class NPBuffPlayer : ModPlayer
 
     public override void NaturalLifeRegen(ref float regen)
     {
-        
+
     }
 
     void DOTDebuff(int damagePerSecond)

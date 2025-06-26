@@ -1,16 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
-using System;
+﻿using NeoParacosm.Common.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 
@@ -149,7 +143,7 @@ public class CrimsonCatalyst : ModNPC
         {
             if (choosePositionTimer % 30 == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.5f)}, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.5f) }, NPC.Center);
                 LemonUtils.DustCircle(NPC.Center, 8, 8, DustID.GemRuby, choosePositionTimer / 100f);
             }
             foreach (var pos in storedPositions)

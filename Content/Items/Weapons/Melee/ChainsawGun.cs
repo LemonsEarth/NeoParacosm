@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Melee;
-using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class ChainsawGun : ModItem

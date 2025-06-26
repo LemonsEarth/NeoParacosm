@@ -1,11 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Tiles.Special;
-using StructureHelper.Content.GUI;
-using System.Collections.Generic;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Globals.GlobalProjectiles;
 
@@ -44,6 +37,6 @@ public class LightningFriendly : GlobalProjectile
 
     public override void AI(Projectile projectile)
     {
-        
+
     }
 }

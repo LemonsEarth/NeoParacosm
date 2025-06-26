@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
 public class BundleOfDartsProj : ModProjectile
 {

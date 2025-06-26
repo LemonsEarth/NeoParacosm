@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.GoodBuffs;
+﻿using NeoParacosm.Content.Buffs.GoodBuffs;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat

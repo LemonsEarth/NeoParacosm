@@ -1,15 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
-using ReLogic.Content;
-using System.IO;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
@@ -19,7 +12,6 @@ public class AscendedUndertakerHeldProj : ModProjectile
     int AITimer = 0;
     ref float shotCount => ref Projectile.ai[0];
     bool thrown = false;
-    float recoilRot = 0;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -48,9 +40,6 @@ public class AscendedUndertakerHeldProj : ModProjectile
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 300;
     }
-
-    float goalRotation = 270;
-    float lerpT = 4f / 60f;
     float attackRate = 10;
     public override void AI()
     {

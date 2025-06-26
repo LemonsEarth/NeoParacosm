@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Core.Globals.GlobalNPCs;
-using NeoParacosm.Core.Players;
 
 namespace NeoParacosm.Common.Utils;
 

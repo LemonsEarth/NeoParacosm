@@ -3,7 +3,6 @@ using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 namespace NeoParacosm.Content.NPCs.Hostile.TheDepthsHigh;
 
 public class MarksmanFish : ModNPC
@@ -47,7 +46,7 @@ public class MarksmanFish : ModNPC
 
     public override void OnKill()
     {
-        
+
     }
 
     public override void AI()

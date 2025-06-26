@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using NeoParacosm.Content.Gores;
 using NeoParacosm.Core.Systems;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent;

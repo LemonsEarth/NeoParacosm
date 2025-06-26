@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Items.Pickups;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using System.Collections.Generic;

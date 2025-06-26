@@ -1,6 +1,4 @@
-﻿using Terraria.Localization;
-
-namespace NeoParacosm.Content.Buffs.GoodBuffs;
+﻿namespace NeoParacosm.Content.Buffs.GoodBuffs;
 
 public class CrimsonTendrilBuff : ModBuff
 {
@@ -16,6 +14,6 @@ public class CrimsonTendrilBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        
+
     }
 }

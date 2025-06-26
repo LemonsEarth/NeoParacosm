@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class CrimsonRotDebuff : ModBuff
 {
@@ -13,11 +11,11 @@ public class CrimsonRotDebuff : ModBuff
 
     public override void Update(NPC npc, ref int buffIndex)
     {
-        
+
     }
 
     public override void Update(Player player, ref int buffIndex)
     {
-        
+
     }
 }

@@ -1,14 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
+﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Items.Weapons.Magic;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 
@@ -53,7 +46,7 @@ public class CrimsonCarrierHead : ModNPC
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {
-        
+
     }
 
     public override void AI()
@@ -85,7 +78,7 @@ public class CrimsonCarrierHead : ModNPC
         if (spawnedEnemies) return;
         for (int i = 0; i < 4; i++)
         {
-            Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(3, 8), Main.rand.NextFromList(952 ,953, 954, 955, 237, 238, 239, 668, 669, 670, 671, 672));
+            Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(3, 8), Main.rand.NextFromList(952, 953, 954, 955, 237, 238, 239, 668, 669, 670, 671, 672));
         }
         spawnedEnemies = true;
         if (Main.netMode != NetmodeID.MultiplayerClient)

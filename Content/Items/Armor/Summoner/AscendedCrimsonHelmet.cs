@@ -3,10 +3,8 @@ using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Core.Systems;
-using System.Reflection.PortableExecutable;
 using Terraria.Audio;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Items.Armor.Summoner
 {

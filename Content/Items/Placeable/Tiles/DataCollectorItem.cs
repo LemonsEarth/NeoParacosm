@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Tiles.Depths;
-using NeoParacosm.Content.Tiles.Special;
+﻿using NeoParacosm.Content.Tiles.Special;
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles;
 

@@ -1,10 +1,7 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Core.Systems;
-using Newtonsoft.Json.Linq;
 using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.ObjectData;
 
 namespace NeoParacosm.Content.Tiles.Special;
 
@@ -22,6 +19,7 @@ public class DataCollectorTileEntity : ModTileEntity
     {
         if (lastMessageSentID != -1) Main.popupText[lastMessageSentID].active = false;
         dataCollected += amount;
+
         AdvancedPopupRequest t = new AdvancedPopupRequest();
         t.Color = Color.White;
         t.DurationInFrames = 60;
@@ -30,8 +28,9 @@ public class DataCollectorTileEntity : ModTileEntity
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
 
-        if (dataCollected >= 10 && !droppedReward)
+        if (dataCollected >= 10 && !droppedReward && WorldDataSystem.ResearcherQuestProgress < WorldDataSystem.ResearcherQuestProgressState.CollectedData)
         {
+            WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemID.BloodButcherer, 1);

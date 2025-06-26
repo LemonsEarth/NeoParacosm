@@ -67,7 +67,7 @@ public class SawProjectile : ModProjectile
             if (Main.myPlayer == Projectile.owner)
             {
                 Projectile.Center = parent.Center + Main.player[Projectile.owner].Center.DirectionTo(Main.MouseWorld) * 32;
-            }   
+            }
             if (AITimer < 60)
             {
                 Projectile.scale = MathHelper.Lerp(0f, 1f, AITimer / 60f);

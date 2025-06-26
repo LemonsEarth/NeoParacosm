@@ -1,6 +1,5 @@
 ﻿using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace NeoParacosm.Content.Tiles.Special;

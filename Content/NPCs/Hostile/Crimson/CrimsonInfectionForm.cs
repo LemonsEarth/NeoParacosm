@@ -1,12 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
+﻿using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 

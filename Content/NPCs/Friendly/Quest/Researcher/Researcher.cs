@@ -1,16 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
-using NeoParacosm.Core.Systems;
-using System;
+﻿using NeoParacosm.Content.Items.Armor.Summoner;
+using NeoParacosm.Content.Items.Weapons.Magic;
+using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Content.Items.Weapons.Ranged;
+using NeoParacosm.Core.UI.ResearcherUI;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.Utilities;
+using static NeoParacosm.Core.Systems.WorldDataSystem;
 
 namespace NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 
@@ -22,12 +18,24 @@ public class Researcher : ModNPC
     int talkAmount = 0; // Amount of times talk has been pressed
     Dictionary<int, int> progressTextAmount = new Dictionary<int, int>()
     {
-        {0, 4},
+        {0, 1},
+        {1, 4},
+        {2, 1},
     };
-
+    public static Dictionary<int, int> AscendableItems { get; private set; }
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 5;
+        AscendableItems = new Dictionary<int, int>()
+        {
+            { ItemID.BloodButcherer, ModContent.ItemType<AscendedBloodButcherer>() },
+            { ItemID.CrimsonRod, ModContent.ItemType<AscendedCrimsonRod>() },
+            { ItemID.TheUndertaker, ModContent.ItemType<AscendedUndertaker>() },
+            { ItemID.TheRottedFork, ModContent.ItemType<AscendedRottedFork>() },
+            { ItemID.CrimsonHelmet, ModContent.ItemType<AscendedCrimsonHelmet>() },
+            { ItemID.CrimsonScalemail, ModContent.ItemType<AscendedCrimsonScalemail>() },
+            { ItemID.CrimsonGreaves, ModContent.ItemType<AscendedCrimsonGreaves>() },
+        };
     }
 
     public override void SetDefaults()
@@ -61,7 +69,6 @@ public class Researcher : ModNPC
 
     public override string GetChat()
     {
-        Main.npcChatCornerItem = ItemID.TissueSample;
         NPC.direction = Math.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X);
         NPC.spriteDirection = NPC.direction;
         WeightedRandom<string> chat = new WeightedRandom<string>();
@@ -80,23 +87,36 @@ public class Researcher : ModNPC
     public override void SetChatButtons(ref string button, ref string button2)
     {
         button = "Talk";
-        button2 = "Quest";
+        if (ResearcherQuestProgress < ResearcherQuestProgressState.CollectedData)
+        {
+            button2 = "";
+        }
+        else
+        {
+            button2 = "Ascend";
+        }
     }
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
+        if (talkAmount >= progressTextAmount[(int)ResearcherQuestProgress])
+        {
+            talkAmount = 0;
+        }
         if (firstButton)
         {
-            Main.npcChatText = this.GetLocalization("TalkDialogue.Progress.P" + WorldDataSystem.ResearcherQuestProgress + ".T" + talkAmount).Format(NPC.GivenName);
-            Main.npcChatText += "\n\n" + (talkAmount + 1) + "/" + progressTextAmount[WorldDataSystem.ResearcherQuestProgress];
-            if (talkAmount < progressTextAmount[WorldDataSystem.ResearcherQuestProgress] - 1)
+            Main.npcChatText = this.GetLocalization($"TalkDialogue.Progress.P{(int)ResearcherQuestProgress}.T{talkAmount}").Format(NPC.GivenName);
+            Main.npcChatText += "\n\n" + $"{talkAmount + 1}/{progressTextAmount[(int)ResearcherQuestProgress]}"; // dialogue left
+            talkAmount++;
+        }
+        else
+        {
+            ResearcherUISystem UISystem = ModContent.GetInstance<ResearcherUISystem>();
+            if (UISystem.userInterface.CurrentState == null)
             {
-                talkAmount++;
+                UISystem.ShowUI();
             }
-            else
-            {
-                talkAmount = 0;
-            }
+            Main.CloseNPCChatOrSign();
         }
     }
 

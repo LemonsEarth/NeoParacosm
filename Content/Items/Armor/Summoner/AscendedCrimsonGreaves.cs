@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
-using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Items.Armor.Summoner
 {

@@ -1,13 +1,10 @@
-﻿using Microsoft.Xna.Framework.Input;
-using NeoParacosm.Common.Utils;
+﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Tiles.Depths;
 using StructureHelper.API;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
-using Terraria.GameContent.RGB;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
@@ -83,7 +80,7 @@ public class WorldGenSystem : ModSystem
                     {
                         chest.item[inventoryIndex].SetDefaults(ModContent.ItemType<ChainsawGun>());
                     }
-                        break;
+                    break;
                 }
             }
         }

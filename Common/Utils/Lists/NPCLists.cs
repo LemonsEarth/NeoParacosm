@@ -1,12 +1,7 @@
-﻿global using Microsoft.Xna.Framework;
-global using Terraria;
-global using Terraria.ID;
-global using Terraria.ModLoader;
-global using System;
+﻿using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using System.Collections.Generic;
 using static Terraria.ID.NPCID;
 using static Terraria.ModLoader.ModContent;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
 
 namespace NeoParacosm.Common.Utils;
 
