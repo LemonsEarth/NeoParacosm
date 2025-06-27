@@ -10,7 +10,7 @@ public class ResearcherUIState : UIState
     UIPanel MainPanel;
     InItemPanel InItemPanel;
     OutItemPanel OutItemPanel;
-    UIPanel CloseButton;
+    UIImageButton CloseButton;
     public override void OnInitialize()
     {
         MainPanel = new UIPanel();
@@ -25,6 +25,12 @@ public class ResearcherUIState : UIState
         InItemPanel.Height.Set(64, 0f);
         InItemPanel.HAlign = 0.25f;
         InItemPanel.VAlign = 0.5f;
+
+        UIText InText = new UIText("In");
+        InText.HAlign = 0.5f;
+        InText.VAlign = 0.5f;
+        InItemPanel.Append(InText);
+
         MainPanel.Append(InItemPanel);
 
         OutItemPanel = new OutItemPanel();
@@ -32,9 +38,15 @@ public class ResearcherUIState : UIState
         OutItemPanel.Height.Set(64, 0f);
         OutItemPanel.HAlign = 0.75f;
         OutItemPanel.VAlign = 0.5f;
+
+        UIText OutText = new UIText("Out");
+        OutText.HAlign = 0.5f;
+        OutText.VAlign = 0.5f;
+        OutItemPanel.Append(OutText);
+
         MainPanel.Append(OutItemPanel);
 
-        CloseButton = new UIPanel();
+        CloseButton = new UIImageButton(ModContent.Request<Texture2D>("NeoParacosm/Core/UI/ResearcherUI/CloseButton"));
         CloseButton.Width.Set(32, 0f);
         CloseButton.Height.Set(32, 0f);
         CloseButton.VAlign = 0.5f;
@@ -50,11 +62,11 @@ public class ResearcherUIState : UIState
 
     public override void Update(GameTime gameTime)
     {
-        /*if (InItemPanel.itemSlot.Item.type != 0 && !InItemPanel.itemSlot.Item.IsAir && OutItemPanel.itemSlot.Item.IsAir)
+        if (!InItemPanel.itemSlot.Item.IsAir && OutItemPanel.itemSlot.Item.IsAir)
         {
-            OutItemPanel.itemSlot.Item = new Item(Researcher.AscendableItems[InItemPanel.Item.type]);
+            OutItemPanel.itemSlot.Item = new Item(Researcher.AscendableItems[InItemPanel.itemSlot.Item.type]);
             InItemPanel.itemSlot.Item.TurnToAir();
-        }*/
+        }
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -4,7 +4,9 @@ using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Core.UI.ResearcherUI;
 using System.Collections.Generic;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using Terraria.Localization;
 using Terraria.Utilities;
 using static NeoParacosm.Core.Systems.WorldDataSystem;
 
@@ -16,16 +18,21 @@ public class Researcher : ModNPC
     int AITimer = 0;
 
     int talkAmount = 0; // Amount of times talk has been pressed
-    Dictionary<int, int> progressTextAmount = new Dictionary<int, int>()
-    {
-        {0, 1},
-        {1, 4},
-        {2, 1},
-    };
+    public static Dictionary<int, int> progressTextAmount { get; private set; }
+
     public static Dictionary<int, int> AscendableItems { get; private set; }
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 5;
+
+        progressTextAmount = new Dictionary<int, int>()
+        {
+            {0, 1},
+            {1, 4},
+            {2, 3},
+            {3, 1},
+        };
+
         AscendableItems = new Dictionary<int, int>()
         {
             { ItemID.BloodButcherer, ModContent.ItemType<AscendedBloodButcherer>() },
@@ -87,7 +94,7 @@ public class Researcher : ModNPC
     public override void SetChatButtons(ref string button, ref string button2)
     {
         button = "Talk";
-        if (ResearcherQuestProgress < ResearcherQuestProgressState.CollectedData)
+        if (ResearcherQuestProgress < ResearcherQuestProgressState.TalkedAfterCollectingData)
         {
             button2 = "";
         }
@@ -99,6 +106,12 @@ public class Researcher : ModNPC
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
+        if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
+        {
+            ResearcherQuestProgress++;
+            SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
+            talkAmount = 0;
+        }
         if (talkAmount >= progressTextAmount[(int)ResearcherQuestProgress])
         {
             talkAmount = 0;
@@ -108,6 +121,7 @@ public class Researcher : ModNPC
             Main.npcChatText = this.GetLocalization($"TalkDialogue.Progress.P{(int)ResearcherQuestProgress}.T{talkAmount}").Format(NPC.GivenName);
             Main.npcChatText += "\n\n" + $"{talkAmount + 1}/{progressTextAmount[(int)ResearcherQuestProgress]}"; // dialogue left
             talkAmount++;
+
         }
         else
         {
@@ -116,7 +130,6 @@ public class Researcher : ModNPC
             {
                 UISystem.ShowUI();
             }
-            Main.CloseNPCChatOrSign();
         }
     }
 

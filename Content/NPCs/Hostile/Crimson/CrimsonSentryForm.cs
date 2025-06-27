@@ -123,7 +123,6 @@ public class CrimsonSentryForm : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
-        npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CommensalPathogen>(), 50, 25));
         npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemID.Ichor, 2, 1, 2));
     }
 

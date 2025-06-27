@@ -27,7 +27,7 @@ internal class OutItemPanel : ItemSlotWrapper
     {
         if (itemSlot.Item.IsAir) return;
 
-        //Main.LocalPlayer.QuickSpawnItem(new EntitySource_DropAsItem(itemSlot.Item), itemSlot.Item, itemSlot.Item.stack);
+        Main.LocalPlayer.QuickSpawnItem(new EntitySource_DropAsItem(itemSlot.Item), itemSlot.Item, itemSlot.Item.stack);
         itemSlot.Item.TurnToAir();
     }
 

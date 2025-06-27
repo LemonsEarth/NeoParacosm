@@ -23,6 +23,7 @@ public class DataCollectorItem : ModItem
         recipe.AddRecipeGroup("NeoParacosm:AnyGoldBar", 12);
         recipe.AddRecipeGroup("NeoParacosm:AnyEvilMaterial", 10);
         recipe.AddIngredient(ItemID.Diamond, 3);
+        recipe.AddIngredient(ItemID.Bone, 30);
         recipe.AddTile(TileID.HeavyWorkBench);
         recipe.Register();
     }

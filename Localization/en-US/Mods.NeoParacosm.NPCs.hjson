@@ -61,7 +61,32 @@ Researcher: {
 					'''
 			}
 
-			P2.T0: Zamn
+			P2: {
+				T0:
+					'''
+					Ah, there you are! I received the data you collected and the things I learned are most fascinating.
+					This... infection, it's not the parasite I envisioned it to be. It appears as if every creature which was infected by it shares a single mind,
+					and is working towards a common goal.
+					'''
+				T1:
+					'''
+					What I said may have been a bit misleading - none of the infected creatures are alive and therefore possess no mind. 
+					The sounds they produce, the way they move, watch and listen... it's not like that of a creature who's goal is to survive.
+					It's more like an imitation, but... for what purpose?
+					'''
+				T2:
+					'''
+					The giant spiders, worms, fallen warriors... all will literally throw themselves at anything that moves regardless of how threatening it is.
+					What's worse is that this disease getting stronger. It adapts, the gear you have now will become obsolete as you go on.
+					...Unless we can modify it.
+					'''
+			}
+
+			P3.T0:
+				'''
+				With the data you've collected, I was able to grasp the nature of these beasts; how they function, what keeps them going even in the face of death.
+				If you can bring me some equipment originating from these vile regions, I can alter them to be better suited for combat against the infection.
+				'''
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Core.Systems;
 using Terraria.DataStructures;
 
@@ -33,7 +34,7 @@ public class DataCollectorTileEntity : ModTileEntity
             WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemID.BloodButcherer, 1);
+                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ModContent.ItemType<CommensalPathogen>(), 1);
             }
             droppedReward = true;
         }
