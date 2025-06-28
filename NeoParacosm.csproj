@@ -21,7 +21,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Common\Assets\Audio\Music\" />
-	  <Folder Include="Common\Assets\Textures\" />
 	  <Folder Include="Common\Conditions\" />
 	  <Folder Include="Content\Items\Consumables\" />
 	  <Folder Include="Content\Items\Materials\" />

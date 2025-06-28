@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Core.Systems;
+﻿using NeoParacosm.Content.Projectiles.None;
+using NeoParacosm.Core.Systems;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Tiles.Special;
@@ -32,10 +33,12 @@ public class DragonRemainsTileEntity : ModTileEntity
                     player.RemoveAllGrapplingHooks();
                 }
             }
-            for (int i = 0; i < 32; i++)
+            if (timer % 600 == 0)
             {
-                Vector2 pos = CenterPos.ToWorldCoordinates() + (Vector2.UnitY * distance).RotatedBy(i * (MathHelper.ToRadians(360f / 32f)));
-                Dust.NewDust(pos, 2, 2, DustID.HallowedTorch);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(new EntitySource_TileEntity(this, "Shield Pulse"), CenterPos.ToWorldCoordinates(), Vector2.Zero, ModContent.ProjectileType<DragonRemainsPulseShield>(), 0, 0, Main.myPlayer);
+                }
             }
         }
         timer++;

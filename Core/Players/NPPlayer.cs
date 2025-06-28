@@ -3,6 +3,7 @@ using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Core.Players;
 

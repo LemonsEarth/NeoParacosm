@@ -13,6 +13,9 @@ public class NeoParacosm : Mod
         Asset<Effect> filterShader = Assets.Request<Effect>("Common/Assets/Shaders/ScreenTintShader");
         Filters.Scene["NeoParacosm:ScreenTintShader"] = new Filter(new ScreenShaderData(filterShader, "ScreenTint"), EffectPriority.Medium);
 
+        Asset<Effect> shieldPulseShader = Assets.Request<Effect>("Common/Assets/Shaders/ShieldPulseShader");
+        GameShaders.Misc["NeoParacosm:ShieldPulseShader"] = new MiscShaderData(shieldPulseShader, "ShieldPulseShader");
+
         Asset<Effect> gasShader = Assets.Request<Effect>("Common/Assets/Shaders/Projectiles/GasShader");
         GameShaders.Misc["NeoParacosm:GasShader"] = new MiscShaderData(gasShader, "GasShader");
 

@@ -16,6 +16,8 @@ public class DataCollectorTileEntity : ModTileEntity
 
     bool droppedReward = false;
 
+    int killAmount = 50;
+
     public void CollectData(int amount = 1)
     {
         if (lastMessageSentID != -1) Main.popupText[lastMessageSentID].active = false;
@@ -29,7 +31,7 @@ public class DataCollectorTileEntity : ModTileEntity
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
 
-        if (dataCollected >= 10 && !droppedReward && WorldDataSystem.ResearcherQuestProgress < WorldDataSystem.ResearcherQuestProgressState.CollectedData)
+        if (dataCollected >= killAmount && !droppedReward && WorldDataSystem.ResearcherQuestProgress < WorldDataSystem.ResearcherQuestProgressState.CollectedData)
         {
             WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -51,11 +53,6 @@ public class DataCollectorTileEntity : ModTileEntity
 
     public override void Update()
     {
-        if (timer == 0)
-        {
-            WorldGenSystem.DragonRemainsTileEntityPos = Position;
-        }
-
         if (timer % 30 == 0)
         {
             foreach (var npc in Main.ActiveNPCs)

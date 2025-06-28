@@ -1,5 +1,12 @@
-﻿using Terraria.DataStructures;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Common.Utils;
+using NeoParacosm.Core.Systems;
+using ReLogic.Content;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ObjectData;
 
 namespace NeoParacosm.Content.Tiles.Special;

@@ -14,7 +14,7 @@ public class ResearcherUIState : UIState
     public override void OnInitialize()
     {
         MainPanel = new UIPanel();
-        MainPanel.Width.Set(0, 0.2f);
+        MainPanel.Width.Set(0, 0.1f);
         MainPanel.Height.Set(0, 0.1f);
         MainPanel.HAlign = 0.5f;
         MainPanel.VAlign = 0.4f;
