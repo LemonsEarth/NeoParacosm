@@ -41,7 +41,7 @@ public class EvilGlobalNPC : GlobalNPC
 
     public override void SetStaticDefaults()
     {
-
+        
     }
 
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
@@ -49,34 +49,44 @@ public class EvilGlobalNPC : GlobalNPC
         return lateInstantiation && (EvilEnemies.Contains(entity.type) || EvilEnemiesBonus.Contains(entity.type));
     }
 
+    int maxDamageResistance = 50;
+    int damageResistancePerHit = 5;
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
-        modifiers.FinalDamage.Base -= (int)(modifiers.FinalDamage.Base * (ClassAdaptation[modifiers.DamageType] / 100f));
+        if (!EvoActive) return;
         if (ClassAdaptation.ContainsKey(modifiers.DamageType))
         {
-            if (ClassAdaptation[modifiers.DamageType] < 100)
+            if (ClassAdaptation[modifiers.DamageType] < maxDamageResistance)
             {
-                ClassAdaptation[modifiers.DamageType] += 5;
+                ClassAdaptation[modifiers.DamageType] += damageResistancePerHit;
             }
-            Main.NewText(modifiers.FinalDamage.Base);
+            modifiers.FinalDamage *= (100 - ClassAdaptation[modifiers.DamageType]) / 100f;
+            
+            foreach (var key in ClassAdaptation.Keys)
+            {
+                if (key != modifiers.DamageType)
+                {
+                    if (ClassAdaptation[key] >= damageResistancePerHit) ClassAdaptation[key] -= damageResistancePerHit;
+                }
+            }
         }
         else
         {
-            if (ClassAdaptation[DamageClass.Generic] < 100)
+            if (ClassAdaptation[DamageClass.Generic] < maxDamageResistance)
             {
-                ClassAdaptation[DamageClass.Generic] += 5;
+                ClassAdaptation[DamageClass.Generic] += damageResistancePerHit;
             }
-            modifiers.FinalDamage.Base -= (int)(modifiers.FinalDamage.Base * (ClassAdaptation[DamageClass.Generic] / 100f));
+            modifiers.FinalDamage *= (100 - ClassAdaptation[DamageClass.Generic]) / 100f;
         }
     }
 
     public override void PostAI(NPC npc)
     {
-        /*foreach(KeyValuePair<DamageClass, int> kvp in ClassAdaptation)
-        {
-            Main.NewText(kvp.Key + ": " + kvp.Value);
-        }*/
-        if (EvoActive && AITimer % 60 == 0)
+        //foreach(KeyValuePair<DamageClass, int> kvp in ClassAdaptation)
+        //{
+        //    Main.NewText(kvp.Key + ": " + kvp.Value);
+        //}
+        if (EvoActive && AITimer % 180 == 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -92,9 +102,9 @@ public class EvilGlobalNPC : GlobalNPC
 
             foreach (DamageClass key in ClassAdaptation.Keys)
             {
-                if (ClassAdaptation[key] > 0)
+                if (ClassAdaptation[key] >= damageResistancePerHit)
                 {
-                    ClassAdaptation[key] -= 1;
+                    ClassAdaptation[key] -= damageResistancePerHit;
                 }
             }
         }

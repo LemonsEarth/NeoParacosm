@@ -33,6 +33,7 @@ public class CrimsonCloud : ModProjectile
         Projectile.hide = true;
         Projectile.scale = 1;
         Projectile.tileCollide = false;
+        Projectile.DamageType = DamageClass.Magic;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
