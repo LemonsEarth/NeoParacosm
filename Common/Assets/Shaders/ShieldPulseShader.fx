@@ -22,7 +22,7 @@ float4 ShieldPulseShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0)
     {
         fadeOut = 1;
     }
-    return finalColor * color * fadeOut;
+    return finalColor * fadeOut * color;
 }
 
 technique Tech1

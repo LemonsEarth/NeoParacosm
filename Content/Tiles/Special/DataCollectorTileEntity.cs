@@ -16,7 +16,7 @@ public class DataCollectorTileEntity : ModTileEntity
 
     bool droppedReward = false;
 
-    int killAmount = 50;
+    int killAmount = 100;
 
     public void CollectData(int amount = 1)
     {
@@ -24,7 +24,7 @@ public class DataCollectorTileEntity : ModTileEntity
         dataCollected += amount;
 
         AdvancedPopupRequest t = new AdvancedPopupRequest();
-        t.Color = Color.White;
+        t.Color = dataCollected >= killAmount ? Color.Yellow : Color.White;
         t.DurationInFrames = 60;
         t.Velocity = -Vector2.UnitY * 2;
         t.Text = dataCollected.ToString();

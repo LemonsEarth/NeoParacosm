@@ -67,6 +67,12 @@ public class RotGas : ModProjectile
         AITimer++;
     }
 
+    public override bool OnTileCollide(Vector2 oldVelocity)
+    {
+        Projectile.velocity *= 0.8f;
+        return false;
+    }
+
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;

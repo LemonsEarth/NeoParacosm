@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI;
 using Terraria.Graphics.Effects;
@@ -19,6 +20,12 @@ public class NPPlayer : ModPlayer
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
         //Main.NewText(WorldDataSystem.ResearcherQuestProgress);
+        //WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
+        /*foreach (var npc in EvilGlobalNPC.EvilEnemiesBonus)
+        {
+            Main.NewText(ContentSamples.NpcsByNetId[npc]);
+        }*/
+
         //WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
         if (NPC.FindFirstNPC(ModContent.NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Researcher>())].Distance(Player.Center) > 500)
         {

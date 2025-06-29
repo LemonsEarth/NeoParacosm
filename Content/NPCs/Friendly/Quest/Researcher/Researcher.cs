@@ -31,6 +31,7 @@ public class Researcher : ModNPC
             {1, 4},
             {2, 3},
             {3, 1},
+            {4, 3},
         };
 
         AscendableItems = new Dictionary<int, int>()
@@ -108,7 +109,7 @@ public class Researcher : ModNPC
     {
         if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
         {
-            ResearcherQuestProgress++;
+            ResearcherQuestProgress = ResearcherQuestProgressState.TalkedAfterCollectingData;
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
             talkAmount = 0;
         }
@@ -121,7 +122,6 @@ public class Researcher : ModNPC
             Main.npcChatText = this.GetLocalization($"TalkDialogue.Progress.P{(int)ResearcherQuestProgress}.T{talkAmount}").Format(NPC.GivenName);
             Main.npcChatText += "\n\n" + $"{talkAmount + 1}/{progressTextAmount[(int)ResearcherQuestProgress]}"; // dialogue left
             talkAmount++;
-
         }
         else
         {

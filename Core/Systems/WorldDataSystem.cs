@@ -12,6 +12,7 @@ public class WorldDataSystem : ModSystem
         DownedEvilBoss,
         CollectedData,
         TalkedAfterCollectingData,
+        AscendedItem,
     }
 
     public override void ClearWorld()

@@ -43,12 +43,12 @@ Researcher: {
 					'''
 					Anyway, on the way here I noticed a strange ecosystem, with many gruesome creatures residing within.
 					Their appearance was grotesque and contorted. The way they moved and constantly looked around as if searching for something, it freaked me out.
-					I'm fairly certain one of them looked directly at me from hundreds of meters away, it looked... awfully humanoid.
+					I'm fairly certain one of them looked directly at me from hundreds of meters away. It looked... awfully humanoid.
 					You mind telling me what that is about?
 					'''
 				T2:
 					'''
-					The Corruption and the Crimson... fascinating. It's like one giant organism with an insatiable hunger...
+					The Corruption and the Crimson... fascinating.
 					I wasn't planning to stick around for long, but you've piqued my interest!
 					'''
 				T3:
@@ -57,7 +57,7 @@ Researcher: {
 					You'll need to construct a [c/fc5eff: Data Collector] [i:NeoParacosm/DataCollectorItem] 
 					and place it in the appropriate location.
 					Killing some of the creatures there should be sufficient for collecting enough data.
-					Make sure you're geared up, the waves emitted by the machine are known to attract some creatures.
+					Make sure you're geared up, the waves emitted by the machine are known to attract various creatures.
 					'''
 			}
 
@@ -70,23 +70,45 @@ Researcher: {
 					'''
 				T1:
 					'''
-					What I said may have been a bit misleading - none of the infected creatures are alive and therefore possess no mind. 
+					What I said may have been a bit misleading - none of the infected creatures are alive and therefore possess no mind. They're more like puppets. 
 					The sounds they produce, the way they move, watch and listen... it's not like that of a creature who's goal is to survive.
-					It's more like an imitation, but... for what purpose?
+					It's more like an imitation, but... for what purpose? Pure destruction?
 					'''
 				T2:
 					'''
 					The giant spiders, worms, fallen warriors... all will literally throw themselves at anything that moves regardless of how threatening it is.
-					What's worse is that this disease getting stronger. It adapts, the gear you have now will become obsolete as you go on.
+					What's worse is that this disease is getting stronger. It adapts; the gear you have now will become obsolete as you go on.
 					...Unless we can modify it.
 					'''
 			}
 
 			P3.T0:
 				'''
-				With the data you've collected, I was able to grasp the nature of these beasts; how they function, what keeps them going even in the face of death.
+				With the data you collected, I got some insight on the nature of these beasts; how they function, what keeps them going even in the face of death.
 				If you can bring me some equipment originating from these vile regions, I can alter them to be better suited for combat against the infection.
 				'''
+
+			P4: {
+				T0:
+					'''
+					I've noticed an odd pattern in their recent behaviour. 
+					Their evolution has slowed down dramatically, and their regeneration has also taken a hit?
+					Did we have something to do with that? Seems like too big of a coincidence...
+					Has the disease taken note of what we have been doing?
+					'''
+				T1:
+					'''
+					Up until now I've struggled to comprehend the true capabilities of this disease.
+					Its intelligence is what worries me most... We are playing cards against a potential deity of affliction!
+					If we don't find a way to stop it for good, then this land... no - the whole universe is doomed!
+					'''
+				T2:
+					'''
+					What's worse, I haven't been able to extract anything from this pile of bones! It's like nothing can break through it!
+					And yet... I have a feeling it holds the key to stopping this madness...
+					I'll continue trying to make something of it. Feel free to come up with your own solutions.
+					'''
+			}
 		}
 	}
 }

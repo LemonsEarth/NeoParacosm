@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Core.Systems;
+using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -14,7 +16,7 @@ public class ResearcherUIState : UIState
     public override void OnInitialize()
     {
         MainPanel = new UIPanel();
-        MainPanel.Width.Set(0, 0.1f);
+        MainPanel.Width.Set(0, 0.2f);
         MainPanel.Height.Set(0, 0.1f);
         MainPanel.HAlign = 0.5f;
         MainPanel.VAlign = 0.4f;
@@ -66,6 +68,12 @@ public class ResearcherUIState : UIState
         {
             OutItemPanel.itemSlot.Item = new Item(Researcher.AscendableItems[InItemPanel.itemSlot.Item.type]);
             InItemPanel.itemSlot.Item.TurnToAir();
+            SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
+            SoundEngine.PlaySound(SoundID.Item29);
+            if (WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.TalkedAfterCollectingData)
+            {
+                WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.AscendedItem;
+            }
         }
     }
 

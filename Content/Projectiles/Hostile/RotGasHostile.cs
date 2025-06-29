@@ -37,6 +37,12 @@ public class RotGasHostile : ModProjectile
         target.AddBuff(ModContent.BuffType<CrimsonRotDebuff>(), 600);
     }
 
+    public override bool OnTileCollide(Vector2 oldVelocity)
+    {
+        Projectile.velocity *= 0.8f;
+        return false;
+    }
+
     public override void AI()
     {
         /*if (AITimer % 10 == 0)

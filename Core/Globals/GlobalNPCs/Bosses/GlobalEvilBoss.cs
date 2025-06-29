@@ -16,7 +16,7 @@ public class GlobalEvilBoss : GlobalNPC
 
     public override void OnKill(NPC npc)
     {
-        if (!NPC.downedBoss2 || !npc.boss || spawnedNPC || WorldGenSystem.DragonRemainsTileEntityPos == Point16.Zero) return;
+        if (NPC.downedBoss2 || !npc.boss || spawnedNPC || WorldGenSystem.DragonRemainsTileEntityPos == Point16.Zero) return;
         spawnedNPC = true;
 
         Vector2 remainsPos = WorldGenSystem.DragonRemainsTileEntityPos.ToWorldCoordinates();
