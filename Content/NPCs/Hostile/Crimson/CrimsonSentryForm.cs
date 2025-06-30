@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;

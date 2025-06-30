@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Items.Weapons.Magic;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 

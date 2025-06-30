@@ -1,9 +1,7 @@
-﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
+﻿using NeoParacosm.Content.NPCs.Hostile.Crimson;
+using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
-using Terraria.DataStructures;
-using Terraria.Graphics;
 using static Terraria.ID.NPCID;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs.Evil;
@@ -22,7 +20,7 @@ public class EvilGlobalNPC : GlobalNPC
 
     public static HashSet<int> EvilEnemiesBonus { get; private set; } = new HashSet<int>()
         {
-            BigMimicCorruption, BigMimicCrimson, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonSentryForm>(), ModContent.NPCType<CrimsonWalker>(), ModContent.NPCType<RotPerfumeValve>()
+            BigMimicCorruption, BigMimicCrimson, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonSentryForm>(), ModContent.NPCType<CrimsonWalker>(), ModContent.NPCType<RotPerfumeValve>(), ModContent.NPCType<Marauder>()
         };
 
     int AITimer = 0;
@@ -41,7 +39,7 @@ public class EvilGlobalNPC : GlobalNPC
 
     public override void SetStaticDefaults()
     {
-        
+
     }
 
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
@@ -61,7 +59,7 @@ public class EvilGlobalNPC : GlobalNPC
                 ClassAdaptation[modifiers.DamageType] += damageResistancePerHit;
             }
             modifiers.FinalDamage *= (100 - ClassAdaptation[modifiers.DamageType]) / 100f;
-            
+
             foreach (var key in ClassAdaptation.Keys)
             {
                 if (key != modifiers.DamageType)
@@ -86,7 +84,7 @@ public class EvilGlobalNPC : GlobalNPC
         //{
         //    Main.NewText(kvp.Key + ": " + kvp.Value);
         //}
-        if (EvoActive && AITimer % 180 == 0)
+        if (EvoActive && AITimer % 180 == 0 && npc.life != npc.lifeMax)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
@@ -95,6 +93,7 @@ public class EvilGlobalNPC : GlobalNPC
                 {
                     healValue = npc.lifeMax - npc.life;
                 }
+                if (healValue > 150) healValue = 150;
                 npc.life += healValue;
                 npc.HealEffect(healValue);
             }

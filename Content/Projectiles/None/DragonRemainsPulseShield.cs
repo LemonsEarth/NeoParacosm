@@ -1,7 +1,5 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Core.Systems;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -26,8 +24,8 @@ public class DragonRemainsPulseShield : ModProjectile
         Projectile.height = 120;
         Projectile.hostile = false;
         Projectile.friendly = false;
-        Projectile.ignoreWater = false;
-        Projectile.tileCollide = true;
+        Projectile.ignoreWater = true;
+        Projectile.tileCollide = false;
         Projectile.penetrate = -1;
         Projectile.timeLeft = 600;
     }
@@ -38,7 +36,7 @@ public class DragonRemainsPulseShield : ModProjectile
         {
             Projectile.Kill();
         }
-   
+        Projectile.velocity = Vector2.Zero;
         AITimer++;
     }
 

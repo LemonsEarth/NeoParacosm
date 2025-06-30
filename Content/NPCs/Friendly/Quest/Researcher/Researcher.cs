@@ -6,7 +6,6 @@ using NeoParacosm.Core.UI.ResearcherUI;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.Localization;
 using Terraria.Utilities;
 using static NeoParacosm.Core.Systems.WorldDataSystem;
 

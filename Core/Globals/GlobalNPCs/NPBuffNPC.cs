@@ -1,5 +1,5 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Content.Tiles.Special;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using Terraria.DataStructures;
@@ -35,7 +35,7 @@ public class NPBuffNPC : GlobalNPC
 
     public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
     {
-        if (player.HasBuff(ModContent.BuffType<ProvokedPresenceDebuff>()))
+        if (player.HasBuff(ModContent.BuffType<ProvokedPresenceDebuff>()) && !NPC.AnyNPCs(ModContent.NPCType<Marauder>()))
         {
             spawnRate /= 3;
             maxSpawns *= 4;
