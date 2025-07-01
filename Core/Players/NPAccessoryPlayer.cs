@@ -1,8 +1,11 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+﻿using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Items.Pickups;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
+using NeoParacosm.Content.Projectiles.None;
 using System.Collections.Generic;
+using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
@@ -13,6 +16,7 @@ public class NPAcessoryPlayer : ModPlayer
     int forestCrestPickupCooldown = 0;
 
     public bool corruptedLifeCrystal { get; set; } = false;
+    public bool skullOfAvarice { get; set; } = false;
 
     public List<Projectile> CrimsonTendrils { get; set; } = new List<Projectile>();
 
@@ -21,6 +25,7 @@ public class NPAcessoryPlayer : ModPlayer
         roundShield = false;
         forestCrest = false;
         corruptedLifeCrystal = false;
+        skullOfAvarice = false;
 
         CrimsonTendrils.RemoveAll(p => !p.active);
     }
@@ -30,6 +35,43 @@ public class NPAcessoryPlayer : ModPlayer
         if (roundShield && !Player.HasBuff(ModContent.BuffType<KnockbackCooldown>()))
         {
             Player.AddBuff(ModContent.BuffType<KnockbackCooldown>(), 1800);
+        }
+    }
+
+    void SkullOfAvariceEffect(ref Player.HurtModifiers modifiers)
+    {
+        if (skullOfAvarice)
+        {
+            if (Main.rand.NextBool(3))
+            {
+                modifiers.FinalDamage *= 2f;
+                foreach (int buff in Player.buffType)
+                {
+                    if (buff > 0 && !Main.debuff[buff])
+                    {
+                        Player.ClearBuff(buff);
+                    }
+                }
+                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<SkullOfAvariceProjectile>(), 1, 1, Main.myPlayer);
+            }
+        }
+    }
+
+    public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
+    {
+        SkullOfAvariceEffect(ref modifiers);
+    }
+
+    public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
+    {
+        SkullOfAvariceEffect(ref modifiers);
+    }
+
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+        if (skullOfAvarice)
+        {
+            target.AddBuff(ModContent.BuffType<SkullOfAvariceDebuff>(), 180);
         }
     }
 

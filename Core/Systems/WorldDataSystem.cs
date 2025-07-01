@@ -13,6 +13,15 @@ public class WorldDataSystem : ModSystem
         CollectedData,
         TalkedAfterCollectingData,
         AscendedItem,
+        Hardmode,
+    }
+
+    public override void PostUpdateWorld()
+    {
+        if (Main.hardMode && ResearcherQuestProgress == ResearcherQuestProgressState.AscendedItem)
+        {
+            ResearcherQuestProgress = ResearcherQuestProgressState.Hardmode;
+        }
     }
 
     public override void ClearWorld()

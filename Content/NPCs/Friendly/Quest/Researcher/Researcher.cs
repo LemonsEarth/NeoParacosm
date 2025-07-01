@@ -31,6 +31,7 @@ public class Researcher : ModNPC
             {2, 3},
             {3, 1},
             {4, 3},
+            {5, 3},
         };
 
         AscendableItems = new Dictionary<int, int>()

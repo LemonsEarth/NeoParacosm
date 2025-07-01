@@ -109,6 +109,30 @@ Researcher: {
 					I'll continue trying to make something of it. Feel free to come up with your own solutions.
 					'''
 			}
+
+			P5: {
+				T0:
+					'''
+					Well hello there my friend!
+					This land has experienced quite the shift hasn't it? I have no idea what you have been up to...
+					I spotted loads of new creatures roaming around, including ghosts and flying turtles!
+					It's like we're in some sort of hard-mode...
+					This will have devastating effects on local ecosystems!
+					'''
+				T1:
+					'''
+					Half-jokes aside, this new world truly is a wonder to behold.
+					I certainly hope you're ready to take care of the hell you let loose. Everything has gotten stronger.
+					The blight of the world isn't an exception; in fact, it seems to have gotten even more powerful compared to everything else.
+					'''
+				T2:
+					'''
+					I've tried analyzing the newborn horrors myself, but the data we already have has been rendered useless by this sudden scourge.
+					I'm gonna need you to collect more data.
+					For this, the normal data collector won't suffice, we need something better.
+					I've noticed some new metals lying around, you should definitely try making use of those.
+					'''
+			}
 		}
 	}
 }

@@ -6,15 +6,16 @@ public class DataCollectorItem : ModItem
 {
     public override void SetStaticDefaults()
     {
-        ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.StoneBlock;
+        ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Furnace;
         Item.ResearchUnlockCount = 3;
     }
 
     public override void SetDefaults()
     {
         Item.DefaultToPlaceableTile(ModContent.TileType<DataCollectorTile>());
-        Item.width = 80;
-        Item.height = 80;
+        Item.width = 40;
+        Item.height = 40;
+        Item.rare = ItemRarityID.Orange;
     }
 
     public override void AddRecipes()

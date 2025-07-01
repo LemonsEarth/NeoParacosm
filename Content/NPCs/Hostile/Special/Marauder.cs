@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Items.Accessories.Misc;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,8 @@ public class Marauder : ModNPC
         NPC.aiStyle = -1;
         NPC.knockBackResist = 0f;
         NPC.noGravity = true;
+        NPC.noTileCollide = true;
+        NPC.hide = true;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -144,10 +147,20 @@ public class Marauder : ModNPC
                     break;
             }
             AttackTimer++;
+            if (AITimer % stage + 4 == 0)
+            {
+                var dust = Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.TintableDust, newColor: new Color(0f, 0f, 0f, 1f), Scale: 3f);
+                dust.noGravity = true;
+            }
+            Lighting.AddLight(NPC.Center, 3, 0, 0);
         }
 
-        Lighting.AddLight(NPC.Center, 3, 0, 0);
         AITimer++;
+    }
+
+    public override void DrawBehind(int index)
+    {
+        Main.instance.DrawCacheNPCsOverPlayers.Add(index);
     }
 
     public override void FindFrame(int frameHeight)
@@ -162,7 +175,7 @@ public class Marauder : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullOfAvarice>(), minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

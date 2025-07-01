@@ -11,6 +11,7 @@ public class NPBuffNPC : GlobalNPC
     public override bool InstancePerEntity => true;
 
     public Point16 dataCollectorTEPos { get; set; } = Point16.Zero;
+    public Point16 dataCollectorEXTEPos { get; set; } = Point16.Zero;
 
     public override void ResetEffects(NPC npc)
     {
@@ -52,11 +53,21 @@ public class NPBuffNPC : GlobalNPC
         }
     }
 
-
+    bool avariceLootBonus = false;
     public override void OnKill(NPC npc)
     {
-        if (!npc.SpawnedFromStatue && dataCollectorTEPos != Point16.Zero
-            && TileEntity.TryGet<DataCollectorTileEntity>(dataCollectorTEPos, out DataCollectorTileEntity dataCollector))
+        if (npc.SpawnedFromStatue) return;
+
+        if (Main.rand.NextBool(5) && !avariceLootBonus && npc.HasBuff(ModContent.BuffType<SkullOfAvariceDebuff>()))
+        {
+            avariceLootBonus = true;
+            for (int i = 0; i < 4; i++)
+            {
+                npc.NPCLoot();
+            }
+        }
+
+        if (dataCollectorTEPos != Point16.Zero && TileEntity.TryGet<DataCollectorTileEntity>(dataCollectorTEPos, out DataCollectorTileEntity dataCollector))
         {
             if (EvilGlobalNPC.EvilEnemiesBonus.Contains(npc.type))
             {
@@ -65,6 +76,18 @@ public class NPBuffNPC : GlobalNPC
             else if (EvilGlobalNPC.EvilEnemies.Contains(npc.type))
             {
                 dataCollector.CollectData();
+            }
+        }
+
+        if (dataCollectorTEPos != Point16.Zero && TileEntity.TryGet<DataCollectorEXTileEntity>(dataCollectorTEPos, out DataCollectorEXTileEntity dataCollectorEX))
+        {
+            if (EvilGlobalNPC.EvilEnemiesBonus.Contains(npc.type))
+            {
+                dataCollectorEX.CollectData(3);
+            }
+            else if (EvilGlobalNPC.EvilEnemies.Contains(npc.type))
+            {
+                dataCollectorEX.CollectData();
             }
         }
     }

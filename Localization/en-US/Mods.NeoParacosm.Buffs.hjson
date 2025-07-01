@@ -32,3 +32,8 @@ CrimsonSacrificeDebuff: {
 	DisplayName: Crimson Sacrifice
 	Description: Increased damage, attack speed and life regen
 }
+
+SkullOfAvariceDebuff: {
+	DisplayName: Skull Of Avarice Debuff
+	Description: Mods.NeoParacosm.Buffs.SkullOfAvariceDebuff.Description
+}

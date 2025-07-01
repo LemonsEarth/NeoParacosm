@@ -194,3 +194,22 @@ AscendedCrimsonScalemail: {
 		{$CommonItemTooltip.IncreasesMaxMinionsBy@1}
 		'''
 }
+
+SkullOfAvarice: {
+	DisplayName: Skull Of Avarice
+	Tooltip:
+		'''
+		Enemies have a 20% chance to drop 5x loot
+		You have a 33% chance to be critically striked when hit
+		Critical strikes deal double damage and remove buffs
+		'''
+}
+
+DataCollectorEXItem: {
+	DisplayName: Advanced Data Collector
+	Tooltip:
+		'''
+		Place in an evil biome and kill enemies near it to collect data
+		Data collected is deleted if the collector is broken
+		'''
+}
