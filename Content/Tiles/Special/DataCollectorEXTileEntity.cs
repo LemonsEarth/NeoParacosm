@@ -59,7 +59,7 @@ public class DataCollectorEXTileEntity : ModTileEntity
             {
                 if (npc.Distance(Position.ToWorldCoordinates()) < distance)
                 {
-                    npc.NPBuffNPC().dataCollectorTEPos = Position;
+                    npc.NPBuffNPC().dataCollectorEXTEPos = Position;
                 }
             }
 

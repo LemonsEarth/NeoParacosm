@@ -79,7 +79,7 @@ public class NPBuffNPC : GlobalNPC
             }
         }
 
-        if (dataCollectorTEPos != Point16.Zero && TileEntity.TryGet<DataCollectorEXTileEntity>(dataCollectorTEPos, out DataCollectorEXTileEntity dataCollectorEX))
+        if (dataCollectorEXTEPos != Point16.Zero && TileEntity.TryGet<DataCollectorEXTileEntity>(dataCollectorEXTEPos, out DataCollectorEXTileEntity dataCollectorEX))
         {
             if (EvilGlobalNPC.EvilEnemiesBonus.Contains(npc.type))
             {
