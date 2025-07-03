@@ -35,6 +35,7 @@ namespace NeoParacosm.Content.Items.Armor.Summoner
             return false;
         }
 
+
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             timer++;

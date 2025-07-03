@@ -14,8 +14,6 @@ public class DataCollectorTileEntity : ModTileEntity
 
     int lastMessageSentID = -1;
 
-    bool droppedReward = false;
-
     int killAmount = 100;
 
     public void CollectData(int amount = 1)
@@ -31,14 +29,14 @@ public class DataCollectorTileEntity : ModTileEntity
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
 
-        if (dataCollected >= killAmount && !droppedReward && WorldDataSystem.ResearcherQuestProgress < WorldDataSystem.ResearcherQuestProgressState.CollectedData)
+        if (dataCollected >= killAmount && WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.DownedEvilBoss)
         {
             WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ModContent.ItemType<CommensalPathogen>(), 1);
+                int rewardID = WorldGen.crimson ? ModContent.ItemType<CommensalPathogen>() : ModContent.ItemType<BaneflyHive>();
+                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), rewardID, 1);
             }
-            droppedReward = true;
         }
     }
 

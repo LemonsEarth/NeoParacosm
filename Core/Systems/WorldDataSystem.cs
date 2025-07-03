@@ -14,6 +14,7 @@ public class WorldDataSystem : ModSystem
         TalkedAfterCollectingData,
         AscendedItem,
         Hardmode,
+        CollectedData2,
     }
 
     public override void PostUpdateWorld()

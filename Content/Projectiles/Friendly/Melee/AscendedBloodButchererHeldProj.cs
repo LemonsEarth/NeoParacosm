@@ -142,7 +142,7 @@ public class AscendedBloodButchererHeldProj : ModProjectile
         shader.Shader.Parameters["color"].SetValue(glowColor.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
         Main.EntitySpriteDraw(glowTexture, drawPos, null, Color.White, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
@@ -150,5 +150,11 @@ public class AscendedBloodButchererHeldProj : ModProjectile
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         return false;
 
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

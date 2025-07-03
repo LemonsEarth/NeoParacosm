@@ -26,7 +26,7 @@ public static partial class LemonUtils
         shader.Shader.Parameters["color"].SetValue(color.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
         spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
@@ -44,7 +44,7 @@ public static partial class LemonUtils
         shader.Shader.Parameters["color"].SetValue(color.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.UIScaleMatrix);
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.UIScaleMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
         spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);

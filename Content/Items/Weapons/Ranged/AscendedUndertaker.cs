@@ -9,7 +9,7 @@ public class AscendedUndertaker : ModItem
     int timer = 0;
     public override void SetDefaults()
     {
-        Item.damage = 48;
+        Item.damage = 24;
         Item.DamageType = DamageClass.Ranged;
         Item.width = 50;
         Item.height = 28;

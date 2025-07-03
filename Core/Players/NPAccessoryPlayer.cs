@@ -11,6 +11,8 @@ namespace NeoParacosm.Core.Players;
 
 public class NPAcessoryPlayer : ModPlayer
 {
+    int timer = 0;
+
     public bool roundShield { get; set; } = false;
     public bool forestCrest { get; set; } = false;
     int forestCrestPickupCooldown = 0;
@@ -35,6 +37,11 @@ public class NPAcessoryPlayer : ModPlayer
         if (roundShield && !Player.HasBuff(ModContent.BuffType<KnockbackCooldown>()))
         {
             Player.AddBuff(ModContent.BuffType<KnockbackCooldown>(), 1800);
+        }
+
+        if (Player.HasBuff(ModContent.BuffType<BaneflyHiveBuff>()))
+        {
+            Player.AddBuff(BuffID.CursedInferno, 120);
         }
     }
 
@@ -103,11 +110,26 @@ public class NPAcessoryPlayer : ModPlayer
             {
                 if (Main.myPlayer == Player.whoAmI)
                 {
-                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonTendrilFriendly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(30), 2f, Player.whoAmI);
+                    int damage = Main.hardMode ? 60 : 30;
+                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonTendrilFriendly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 2f, Player.whoAmI);
                     CrimsonTendrils.Add(p);
                 }
             }
         }
+
+        if (Player.HasBuff(ModContent.BuffType<BaneflyHiveBuff>()))
+        {
+            if (timer % 300 == 0 && Main.myPlayer == Player.whoAmI)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    int damage = Main.hardMode ? 20 : 10;
+                    Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<Banefly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 0.5f, Player.whoAmI);
+                }
+            }
+        }
+
+        timer++;
     }
 
     public override void GetHealLife(Item item, bool quickHeal, ref int healValue)

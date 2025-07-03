@@ -40,6 +40,20 @@ public static partial class LemonUtils
         return closestEnemy;
     }
 
+    public static void StandardAnimation(this Projectile proj, int frameDuration, int maxFrames)
+    {
+        proj.frameCounter++;
+        if (proj.frameCounter == frameDuration)
+        {
+            proj.frame++;
+            proj.frameCounter = 0;
+            if (proj.frame >= maxFrames)
+            {
+                proj.frame = 0;
+            }
+        }
+    }
+
     public static Vector2 RandomPos(this Projectile proj, float fluffX = 0, float fluffY = 0)
     {
         Vector2 pos = proj.position + new Vector2(Main.rand.NextFloat(-fluffX, proj.width + fluffX), Main.rand.NextFloat(-fluffY, proj.height + fluffY));

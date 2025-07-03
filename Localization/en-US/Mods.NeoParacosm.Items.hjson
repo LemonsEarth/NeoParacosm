@@ -94,6 +94,7 @@ CommensalPathogen: {
 		Decreases damage reduction and defense by {0}%
 		Summons 3 Crimson Tendrils to defend you
 		Tendrils heal you for 10 hp when they kill an enemy
+		Tendrils are stronger in hardmode
 		'''
 }
 
@@ -211,5 +212,15 @@ DataCollectorEXItem: {
 		'''
 		Place in an evil biome and kill enemies near it to collect data
 		Data collected is deleted if the collector is broken
+		'''
+}
+
+BaneflyHive: {
+	DisplayName: Banefly Hive
+	Tooltip:
+		'''
+		Periodically summon Baneflies that follow your cursor and inflict Cursed Inferno
+		Taking damage inflicts you with Cursed Inferno
+		Baneflies are stronger in hardmode
 		'''
 }
