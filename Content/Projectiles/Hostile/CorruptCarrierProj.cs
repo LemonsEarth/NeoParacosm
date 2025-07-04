@@ -70,7 +70,7 @@ public class CorruptCarrierProj : ModProjectile
             Projectile.alpha -= 7;
         }
 
-        LemonUtils.DustCircle(Projectile.Center, 4, 3, DustID.Crimson);
+        LemonUtils.DustCircle(Projectile.Center, 4, 3, DustID.Corruption);
         Projectile.rotation = MathHelper.ToRadians(AITimer * 6);
         Projectile.velocity *= 1.05f;
         AITimer++;
@@ -87,7 +87,7 @@ public class CorruptCarrierProj : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (Main.dedServ) return true;
-        PrimHelper.DrawBasicProjectilePrimTrail(Projectile, 12, Color.DarkRed, Color.Black * 0.5f, BasicEffect, GraphicsDevice);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, 12, Color.Purple, Color.Black * 0f, BasicEffect, GraphicsDevice);
 
         return true;
     }

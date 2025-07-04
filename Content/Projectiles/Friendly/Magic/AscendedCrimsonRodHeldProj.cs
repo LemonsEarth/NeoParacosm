@@ -60,7 +60,6 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
         {
             Projectile.timeLeft = 2;
             SetPositionRotationDirection(player, player.Center.DirectionTo(Main.projectile[shotprojID].Center).ToRotation());
-            Projectile.Center = player.Center + player.Center.DirectionTo(Main.projectile[shotprojID].Center) * 28;
             if (AITimer % 10 == 0)
             {
                 player.CheckMana(player.HeldItem.mana, true);
@@ -73,17 +72,18 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
         AITimer++;
     }
 
-    const float ThreePiOverFour = MathHelper.Pi - MathHelper.PiOver4; // dumb rotation and sprite direction stuff
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
-        Vector2 pos = player.Center + (new Vector2(-player.direction * 21, -21) * Projectile.scale).RotatedBy(movedRotation * player.direction);
-        float rot = player.Center.DirectionTo(pos).ToRotation();
-        float rotValue = player.direction == 1 ? MathHelper.PiOver4 : -ThreePiOverFour;
-        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rot * player.direction + rotValue);
-        Projectile.Center = pos;
-        float projRotValue = player.direction == 1 ? MathHelper.Pi : 0;
-        Projectile.rotation = rot * player.direction + projRotValue;
-        //Projectile.spriteDirection = player.direction;
+        Vector2 dir = player.Center.DirectionTo(Main.projectile[shotprojID].Center);
+        float armRotValue = player.direction == 1 ? -MathHelper.PiOver2 : -MathHelper.PiOver2;
+        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation + armRotValue);
+        Projectile.Center = player.Center + dir * 28;
+        float projRotValue = player.direction == 1 ? MathHelper.PiOver4 : MathHelper.PiOver4;
+        Projectile.rotation = movedRotation + projRotValue;
+        if (dir.X != 0 && !dir.HasNaNs())
+        {
+            player.ChangeDir(Math.Sign(dir.X));
+        }
         Projectile.spriteDirection = 1;
     }
 

@@ -224,3 +224,8 @@ BaneflyHive: {
 		Baneflies are stronger in hardmode
 		'''
 }
+
+CorruptStaff: {
+	DisplayName: Corrupt Staff
+	Tooltip: ""
+}
