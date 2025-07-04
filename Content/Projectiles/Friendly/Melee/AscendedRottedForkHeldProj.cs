@@ -68,8 +68,11 @@ public class AscendedRottedForkHeldProj : ModProjectile
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
+        if (player == null || player.dead || player.ghost || !player.active)
+        {
+            Projectile.Kill();
+        }
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
-        if (player == null || player.dead || !player.active) Projectile.Kill();
         if (AITimer < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
         if (Projectile.timeLeft < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 30f);
 

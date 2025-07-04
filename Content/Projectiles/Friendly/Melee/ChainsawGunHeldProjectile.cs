@@ -32,6 +32,10 @@ public class ChainsawGunHeldProjectile : ModProjectile
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
+        if (player == null || player.dead || player.ghost || !player.active)
+        {
+            Projectile.Kill();
+        }
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
 
         Projectile.timeLeft = 60;

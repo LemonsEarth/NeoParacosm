@@ -1,4 +1,6 @@
-﻿using NeoParacosm.Common.Utils;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Common.Utils;
+using NeoParacosm.Common.Utils.Prim;
 using Terraria.Audio;
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -7,9 +9,35 @@ public class CorruptBolt : ModProjectile
     ref float AITimer => ref Projectile.ai[0];
     ref float angle => ref Projectile.ai[1];
 
+    static BasicEffect BasicEffect;
+    GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
+
+    public override void Load()
+    {
+        if (Main.dedServ) return;
+        Main.RunOnMainThread(() =>
+        {
+            BasicEffect = new BasicEffect(GraphicsDevice)
+            {
+                TextureEnabled = true,
+                VertexColorEnabled = true,
+            };
+        });
+    }
+
+    public override void Unload()
+    {
+        if (Main.dedServ) return;
+        Main.RunOnMainThread(() =>
+        {
+            BasicEffect?.Dispose();
+            BasicEffect = null;
+        });
+    }
+
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
     }
 
@@ -18,8 +46,9 @@ public class CorruptBolt : ModProjectile
         Projectile.width = 24;
         Projectile.height = 24;
         Projectile.friendly = true;
+        Projectile.hostile = false;
         Projectile.timeLeft = 90;
-        Projectile.penetrate = 2;
+        Projectile.penetrate = 3;
         Projectile.Opacity = 0f;
         Projectile.tileCollide = true;
         Projectile.usesLocalNPCImmunity = true;
@@ -40,18 +69,23 @@ public class CorruptBolt : ModProjectile
 
         for (int i = 0; i < 3; i++)
         {
-            Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Corruption, Scale: 1.5f, newColor: Color.Purple).noGravity = true;
+            Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Corruption, Scale: 1.5f).noGravity = true;
         }
 
         Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * MathHelper.ToRadians(angle);
+        //Main.NewText(AITimer);
+        AITimer++;
+    }
 
-        AITimer--;
+    public override bool PreDraw(ref Color lightColor)
+    {
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, 3, Color.Purple, Color.Black * 0, BasicEffect, GraphicsDevice);
+        return false;
     }
 
     public override void OnKill(int timeLeft)
     {
-        
         //SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.Corruption, 4f, color: Color.Purple);
+        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.Corruption, 4f);
     }
 }

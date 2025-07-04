@@ -44,6 +44,10 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
+        if (player == null || player.dead || player.ghost || !player.active)
+        {
+            Projectile.Kill();
+        }
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
@@ -78,13 +82,12 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
         float armRotValue = player.direction == 1 ? -MathHelper.PiOver2 : -MathHelper.PiOver2;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation + armRotValue);
         Projectile.Center = player.Center + dir * 28;
-        float projRotValue = player.direction == 1 ? MathHelper.PiOver4 : MathHelper.PiOver4;
-        Projectile.rotation = movedRotation + projRotValue;
-        if (dir.X != 0 && !dir.HasNaNs())
+        Projectile.rotation = movedRotation + MathHelper.PiOver4;
+        Projectile.spriteDirection = 1;
+        if (!dir.HasNaNs())
         {
             player.ChangeDir(Math.Sign(dir.X));
         }
-        Projectile.spriteDirection = 1;
     }
 
     public override bool PreDraw(ref Color lightColor)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Systems;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -40,21 +41,28 @@ public class CorruptStaffHeldProj : ModProjectile
         Vector2 dir = player.Center.DirectionTo(Main.MouseWorld);
         float armRotValue = player.direction == 1 ? -MathHelper.PiOver2 : -MathHelper.PiOver2;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation + armRotValue);
-        Projectile.Center = player.Center + dir * 48;
+        Projectile.Center = player.Center + dir * 28;
         Projectile.rotation = movedRotation + MathHelper.PiOver4;
-        if (dir.X != 0 && !dir.HasNaNs())
+        Projectile.spriteDirection = 1;
+        if (!dir.HasNaNs())
         {
             player.ChangeDir(Math.Sign(dir.X));
         }
-        Projectile.spriteDirection = 1;
     }
 
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
+        if (player == null || player.dead || player.ghost || !player.active)
+        {
+            Projectile.Kill();
+        }
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
-        player.SetDummyItemTime(2);
+
+        player.SetDummyItemTime(30);
+
+
         Projectile.timeLeft = 2;
 
         if (AITimer == 0)
@@ -66,9 +74,7 @@ public class CorruptStaffHeldProj : ModProjectile
         {
             Vector2 mouseDir = player.Center.DirectionTo(Main.MouseWorld);
             SetPositionRotationDirection(player, mouseDir.ToRotation());
-            player.ChangeDir(Math.Sign(mouseDir.X));
         }
-        Main.NewText(Projectile.Center);
         if (player.channel && !released)
         {
             if (chargeAmount == 99)
@@ -78,6 +84,9 @@ public class CorruptStaffHeldProj : ModProjectile
             }
             if (chargeAmount < 100)
             {
+                Vector2 randomPos = Projectile.Center + Main.rand.NextVector2CircularEdge(50, 50);
+                var dust = Dust.NewDustPerfect(randomPos, DustID.Corruption, randomPos.DirectionTo(Projectile.Center) * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(1, 3));
+                dust.noGravity = true;
                 chargeAmount++;
             }
         }
@@ -90,11 +99,10 @@ public class CorruptStaffHeldProj : ModProjectile
         {
             if (releasedTimer % 10 == 0 && chargeAmount > 0)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (player.CheckMana(player.HeldItem.mana, true) && Main.myPlayer == Projectile.owner)
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), playerCenter, playerCenter.DirectionTo(Main.MouseWorld) * 25, ModContent.ProjectileType<CorruptBolt>(), Projectile.damage, Projectile.knockBack, Projectile.whoAmI, ai1: Main.rand.NextFloat(-90, 90));
                 }
-                player.CheckMana(player.HeldItem.mana, true);
                 chargeAmount -= 10;
             }
 

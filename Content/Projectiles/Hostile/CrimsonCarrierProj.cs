@@ -27,7 +27,6 @@ public class CrimsonCarrierProj : ModProjectile
                 VertexColorEnabled = true,
             };
         });
-
     }
 
     public override void Unload()

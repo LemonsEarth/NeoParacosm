@@ -56,6 +56,10 @@ public class AscendedBloodButchererHeldProj : ModProjectile
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
+        if (player == null || player.dead || player.ghost || !player.active)
+        {
+            Projectile.Kill();
+        }
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
@@ -104,11 +108,10 @@ public class AscendedBloodButchererHeldProj : ModProjectile
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
         Vector2 pos = player.Center + (new Vector2(-player.direction * 28, -28) * Projectile.scale).RotatedBy(movedRotation * player.direction);
-        float rot = player.Center.DirectionTo(pos).ToRotation();
-        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rot - MathHelper.PiOver2);
+        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation * player.direction + player.direction * ThreePiOverFour);
         Projectile.Center = pos;
-        float spriteRot = player.direction == 1 ? MathHelper.PiOver4 : ThreePiOverFour;
-        Projectile.rotation = rot + spriteRot;
+        float projRotValue = player.direction == 1 ? 0 : 0;
+        Projectile.rotation = movedRotation * player.direction + MathHelper.PiOver2 * -player.direction;
         Projectile.spriteDirection = player.direction;
     }
 
