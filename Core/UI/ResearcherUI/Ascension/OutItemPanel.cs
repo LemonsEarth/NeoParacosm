@@ -2,7 +2,7 @@
 using Terraria.DataStructures;
 using Terraria.UI;
 
-namespace NeoParacosm.Core.UI.ResearcherUI;
+namespace NeoParacosm.Core.UI.ResearcherUI.Ascension;
 
 internal class OutItemPanel : ItemSlotWrapper
 {

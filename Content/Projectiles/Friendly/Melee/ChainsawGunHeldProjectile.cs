@@ -32,7 +32,7 @@ public class ChainsawGunHeldProjectile : ModProjectile
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
-        if (player == null || player.dead || player.ghost || !player.active)
+        if (!player.Alive())
         {
             Projectile.Kill();
         }

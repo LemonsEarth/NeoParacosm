@@ -5,9 +5,9 @@ using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
-namespace NeoParacosm.Core.UI.ResearcherUI;
+namespace NeoParacosm.Core.UI.ResearcherUI.Ascension;
 
-public class ResearcherUIState : UIState
+public class AscensionUIState : UIState
 {
     UIPanel MainPanel;
     InItemPanel InItemPanel;
@@ -48,7 +48,7 @@ public class ResearcherUIState : UIState
 
         MainPanel.Append(OutItemPanel);
 
-        CloseButton = new UIImageButton(ModContent.Request<Texture2D>("NeoParacosm/Core/UI/ResearcherUI/CloseButton"));
+        CloseButton = new UIImageButton(ModContent.Request<Texture2D>("NeoParacosm/Common/Assets/Textures/UI/CloseButton"));
         CloseButton.Width.Set(32, 0f);
         CloseButton.Height.Set(32, 0f);
         CloseButton.VAlign = 0.5f;
@@ -59,7 +59,7 @@ public class ResearcherUIState : UIState
 
     private void OnButtonClick(UIMouseEvent evt, UIElement listeningElement)
     {
-        ModContent.GetInstance<ResearcherUISystem>().HideUI();
+        ModContent.GetInstance<AscensionUISystem>().HideUI();
     }
 
     public override void Update(GameTime gameTime)

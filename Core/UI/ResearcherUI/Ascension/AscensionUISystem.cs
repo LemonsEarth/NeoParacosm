@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Terraria.UI;
 
-namespace NeoParacosm.Core.UI.ResearcherUI;
+namespace NeoParacosm.Core.UI.ResearcherUI.Ascension;
 
-public class ResearcherUISystem : ModSystem
+public class AscensionUISystem : ModSystem
 {
     internal UserInterface userInterface;
-    internal ResearcherUIState UI;
+    internal AscensionUIState UI;
 
     GameTime lastUpdateGameTime;
 
@@ -15,7 +15,7 @@ public class ResearcherUISystem : ModSystem
         if (!Main.dedServ)
         {
             userInterface = new UserInterface();
-            UI = new ResearcherUIState();
+            UI = new AscensionUIState();
             UI.Activate();
         }
     }

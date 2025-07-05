@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
-using NeoParacosm.Core.UI.ResearcherUI;
+using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using Terraria.Graphics.Effects;
 
 namespace NeoParacosm.Core.Players;
@@ -23,11 +23,10 @@ public class NPPlayer : ModPlayer
         {
             Main.NewText(ContentSamples.NpcsByNetId[npc]);
         }*/
-
         //WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
         if (NPC.FindFirstNPC(ModContent.NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Researcher>())].Distance(Player.Center) > 500)
         {
-            ResearcherUISystem UISystem = ModContent.GetInstance<ResearcherUISystem>();
+            AscensionUISystem UISystem = ModContent.GetInstance<AscensionUISystem>();
             UISystem.HideUI();
         }
 

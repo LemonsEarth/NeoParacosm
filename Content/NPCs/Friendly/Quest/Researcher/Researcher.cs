@@ -1,9 +1,12 @@
-﻿using NeoParacosm.Content.Items.Armor.Summoner;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Armor.Summoner;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Core.UI.ResearcherUI;
+using NeoParacosm.Core.UI.ResearcherUI.Ascension;
+using NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.Utilities;
@@ -59,7 +62,7 @@ public class Researcher : ModNPC
         NPC.knockBackResist = 0.3f;
         NPC.dontTakeDamage = true;
         NPC.aiStyle = -1;
-        NPC.townNPC = true;
+        //NPC.townNPC = true;
         NPC.friendly = true;
     }
 
@@ -125,7 +128,7 @@ public class Researcher : ModNPC
         }
         else
         {
-            ResearcherUISystem UISystem = ModContent.GetInstance<ResearcherUISystem>();
+            AscensionUISystem UISystem = ModContent.GetInstance<AscensionUISystem>();
             if (UISystem.userInterface.CurrentState == null)
             {
                 UISystem.ShowUI();
@@ -141,10 +144,24 @@ public class Researcher : ModNPC
             });
     }
 
-
+    float talkDistance = 150;
     public override void AI()
     {
-
+        ResearcherDialogueUISystem dialogueSystem = ModContent.GetInstance<ResearcherDialogueUISystem>();
+        if (Main.LocalPlayer.Alive() && NPC.Hitbox.Contains(Main.MouseWorld.ToPoint()) && Main.LocalPlayer.Distance(NPC.Center) < talkDistance 
+            && Main.mouseRight && Main.mouseRightRelease)
+        {
+            NPC.direction = Math.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X);
+            NPC.spriteDirection = NPC.direction;
+            if (dialogueSystem.userInterface.CurrentState == null)
+            {
+                dialogueSystem.ShowUI();
+            }
+            else
+            {
+                dialogueSystem.HideUI();
+            }
+        }
         AITimer++;
     }
 
