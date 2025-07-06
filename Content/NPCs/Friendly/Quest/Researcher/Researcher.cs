@@ -20,6 +20,12 @@ public class Researcher : ModNPC
     int AITimer = 0;
 
     public static Dictionary<int, int> AscendableItems { get; private set; }
+
+    public override bool NeedSaving()
+    {
+        return true;
+    }
+
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 5;
@@ -95,9 +101,9 @@ public class Researcher : ModNPC
         }
     }*/
 
-    public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+    /*public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
-        /*if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
+        if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
         {
             ResearcherQuestProgress = ResearcherQuestProgressState.TalkedAfterCollectingData;
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
@@ -120,8 +126,8 @@ public class Researcher : ModNPC
             {
                 UISystem.ShowUI();
             }
-        }*/
-    }
+        }
+    }*/
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {

@@ -229,3 +229,8 @@ CorruptStaff: {
 	DisplayName: Corrupt Staff
 	Tooltip: ""
 }
+
+DragonRemainsPlacer: {
+	DisplayName: Dragon Remains Placer
+	Tooltip: ""
+}
