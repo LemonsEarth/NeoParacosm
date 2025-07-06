@@ -19,23 +19,10 @@ public class Researcher : ModNPC
 {
     int AITimer = 0;
 
-    int talkAmount = 0; // Amount of times talk has been pressed
-    public static Dictionary<int, int> progressTextAmount { get; private set; }
-
     public static Dictionary<int, int> AscendableItems { get; private set; }
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 5;
-
-        progressTextAmount = new Dictionary<int, int>()
-        {
-            {0, 1},
-            {1, 4},
-            {2, 3},
-            {3, 1},
-            {4, 3},
-            {5, 3},
-        };
 
         AscendableItems = new Dictionary<int, int>()
         {
@@ -66,7 +53,7 @@ public class Researcher : ModNPC
         NPC.friendly = true;
     }
 
-    public override List<string> SetNPCNameList()
+    /*public override List<string> SetNPCNameList()
     {
         return new List<string>()
         {
@@ -76,9 +63,9 @@ public class Researcher : ModNPC
             "Ryuien",
             "Lage"
         };
-    }
+    }*/
 
-    public override string GetChat()
+    /*public override string GetChat()
     {
         NPC.direction = Math.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X);
         NPC.spriteDirection = NPC.direction;
@@ -93,9 +80,9 @@ public class Researcher : ModNPC
         string chosenChat = chat;
 
         return chosenChat;
-    }
+    }*/
 
-    public override void SetChatButtons(ref string button, ref string button2)
+    /*public override void SetChatButtons(ref string button, ref string button2)
     {
         button = "Talk";
         if (ResearcherQuestProgress < ResearcherQuestProgressState.TalkedAfterCollectingData)
@@ -106,11 +93,11 @@ public class Researcher : ModNPC
         {
             button2 = "Ascend";
         }
-    }
+    }*/
 
     public override void OnChatButtonClicked(bool firstButton, ref string shopName)
     {
-        if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
+        /*if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
         {
             ResearcherQuestProgress = ResearcherQuestProgressState.TalkedAfterCollectingData;
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
@@ -133,7 +120,7 @@ public class Researcher : ModNPC
             {
                 UISystem.ShowUI();
             }
-        }
+        }*/
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
