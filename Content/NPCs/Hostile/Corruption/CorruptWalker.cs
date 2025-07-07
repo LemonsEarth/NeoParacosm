@@ -82,8 +82,11 @@ public class CorruptWalker : ModNPC
 
         if (AITimer > 600 && !wasHit)
         {
-            NPC.velocity.X = -NPC.velocity.X;
-            if (NPC.velocity.X == 0) NPC.velocity.X = 3;
+            if (AITimer % 2 == 0)
+            {
+                NPC.velocity.X = -NPC.velocity.X;
+                if (NPC.velocity.X == 0) NPC.velocity.X = 2;
+            }
         }
         if (wasHit)
         {
