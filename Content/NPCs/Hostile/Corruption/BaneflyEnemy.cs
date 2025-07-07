@@ -63,7 +63,7 @@ public class BaneflyEnemy : ModNPC
         NPC.spriteDirection = -NPC.direction;
         NPC parent = Main.npc[(int)ParentIndex];
 
-        if (NPC.HasValidTarget && (NPC.Distance(Main.player[NPC.target].Center) < 500 || foundPlayer))
+        if (NPC.HasValidTarget && (NPC.Distance(Main.player[NPC.target].Center) < 800 || foundPlayer))
         {
             NPC.MoveToPos(Main.player[NPC.target].Center, Main.rand.NextFloat(0.04f, 0.1f), Main.rand.NextFloat(0.04f, 0.1f), Main.rand.NextFloat(0.1f, 0.2f), Main.rand.NextFloat(0.1f, 0.2f));
             foundPlayer = true;

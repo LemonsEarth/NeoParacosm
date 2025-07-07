@@ -100,7 +100,10 @@ public class CorruptWalker : ModNPC
             }
         }
 
-        Main.NewText(AITimer);
+        if (NPC.velocity.Length() > 5)
+        {
+            Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.Corruption, Scale: 1.5f).noGravity = true;
+        }
 
         if (AITimer > 1200)
         {

@@ -76,6 +76,7 @@ public class Marauder : ModNPC
     }
 
     int CarrierProj => WorldGen.crimson ? ModContent.ProjectileType<CrimsonCarrierProj>() : ModContent.ProjectileType<CorruptCarrierProj>();
+    int GasProj => WorldGen.crimson ? ModContent.ProjectileType<RotGasHostile>() : ModContent.ProjectileType<DecayGasHostile>();
     int stage => NPC.GetLifePercent() != 0 ? 4 - (int)Math.Ceiling(NPC.GetLifePercent() / 0.25f) : 3;
     public override void AI()
     {
@@ -135,7 +136,7 @@ public class Marauder : ModNPC
                         {
                             for (int i = 0; i < 2; i++)
                             {
-                                LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ModContent.ProjectileType<RotGasHostile>(), NPC.damage / 4);
+                                LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, GasProj, NPC.damage / 4);
                             }
                         }
                     }
