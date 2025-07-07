@@ -80,7 +80,7 @@ public class CorruptCarrierProj : ModProjectile
     {
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
-            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero), ProjectileID.ViciousPowder, 0, 1);
+            Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero), ProjectileID.VilePowder, 0, 1);
         }
     }
 
