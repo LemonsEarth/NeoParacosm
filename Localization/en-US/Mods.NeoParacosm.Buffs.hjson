@@ -42,3 +42,8 @@ BaneflyHiveBuff: {
 	DisplayName: Banefly Hive Buff
 	Description: Mods.NeoParacosm.Buffs.BaneflyHiveBuff.Description
 }
+
+CorruptDecayDebuff: {
+	DisplayName: Corrupt Decay Debuff
+	Description: Mods.NeoParacosm.Buffs.CorruptDecayDebuff.Description
+}

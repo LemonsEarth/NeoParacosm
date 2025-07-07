@@ -7,7 +7,7 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
-public class RotGasHostile : ModProjectile
+public class DecayGasHostile : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     int despawnTimer = 0;
@@ -24,7 +24,7 @@ public class RotGasHostile : ModProjectile
         Projectile.height = 12;
         Projectile.friendly = false;
         Projectile.hostile = true;
-        Projectile.timeLeft = 300;
+        Projectile.timeLeft = 600;
         Projectile.penetrate = 6;
         Projectile.Opacity = 0f;
         Projectile.hide = true;
@@ -33,7 +33,7 @@ public class RotGasHostile : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(ModContent.BuffType<CrimsonRotDebuff>(), 600);
+        target.AddBuff(ModContent.BuffType<CorruptDecayDebuff>(), 600);
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)
@@ -52,15 +52,15 @@ public class RotGasHostile : ModProjectile
             }
         }*/
         Projectile.velocity *= 0.98f;
-        if (Projectile.timeLeft < 30)
+        if (Projectile.timeLeft < 15)
         {
             despawnTimer++;
-            Projectile.Opacity = MathHelper.Lerp(1, 0, despawnTimer / 30f);
+            Projectile.Opacity = MathHelper.Lerp(1, 0, despawnTimer / 15f);
         }
 
-        if (AITimer < 30)
+        if (AITimer < 15)
         {
-            Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
+            Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 15f);
 
         }
         //Projectile.rotation += MathHelper.ToRadians(RandomRot);
@@ -77,7 +77,7 @@ public class RotGasHostile : ModProjectile
         var shader = GameShaders.Misc["NeoParacosm:GasShader"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["distance"].SetValue(1);
-        shader.Shader.Parameters["color"].SetValue(new Vector4(1, 0, 0, Projectile.Opacity));
+        shader.Shader.Parameters["color"].SetValue(new Vector4(1, 0, 1, Projectile.Opacity));
         shader.Shader.Parameters["velocity"].SetValue(new Vector2(-Projectile.velocity.X * 0.001f, 0.5f));
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

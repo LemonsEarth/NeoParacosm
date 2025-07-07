@@ -29,7 +29,7 @@ public class BaneflyHiveEnemy : ModNPC
         NPC.aiStyle = -1;
         NPC.knockBackResist = 0f;
         NPC.noGravity = true;
-        NPC.noTileCollide = true;
+        NPC.noTileCollide = false;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

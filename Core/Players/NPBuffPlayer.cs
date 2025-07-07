@@ -41,11 +41,24 @@ public class NPBuffPlayer : ModPlayer
         }
     }
 
+    public override void PostUpdateRunSpeeds()
+    {
+        if (Player.HasBuff(ModContent.BuffType<CorruptDecayDebuff>()))
+        {
+            Player.runAcceleration *= 0.5f;
+        }
+    }
+
     public override void UpdateBadLifeRegen()
     {
         if (Player.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
         {
             DOTDebuff(20);
+        }
+
+        if (Player.HasBuff(ModContent.BuffType<CorruptDecayDebuff>()))
+        {
+            DOTDebuff(14);
         }
 
         if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))

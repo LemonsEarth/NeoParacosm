@@ -74,6 +74,13 @@ public class BaneflyEnemy : ModNPC
             {
                 NPC.MoveToPos(parent.Center, Main.rand.NextFloat(0.04f, 0.1f), Main.rand.NextFloat(0.04f, 0.1f), Main.rand.NextFloat(0.1f, 0.2f), Main.rand.NextFloat(0.1f, 0.2f));
             }
+            else
+            {
+                if (AITimer % 20 == 0)
+                {
+                    NPC.velocity = Main.rand.NextVector2Circular(5, 5);
+                }
+            }
         }
         AITimer++;
     }
