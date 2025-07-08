@@ -51,6 +51,11 @@ public class ResearcherDialogueUISystem : ModSystem
         }
     }
 
+    public override void ClearWorld()
+    {
+        HideUI();
+    }
+
     internal void ShowUI()
     {
         userInterface?.SetState(UI);

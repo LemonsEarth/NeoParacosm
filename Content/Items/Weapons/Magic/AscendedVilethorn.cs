@@ -4,15 +4,15 @@ using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 
-public class AscendedCrimsonRod : ModItem
+public class AscendedVilethorn : ModItem
 {
     int timer = 0;
     public override void SetDefaults()
     {
-        Item.damage = 35;
+        Item.damage = 12;
         Item.DamageType = DamageClass.Magic;
-        Item.width = 54;
-        Item.height = 62;
+        Item.width = 36;
+        Item.height = 36;
         Item.useTime = 60;
         Item.useAnimation = 60;
         Item.reuseDelay = 30;
@@ -22,12 +22,13 @@ public class AscendedCrimsonRod : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedCrimsonRodHeldProj>();
+        Item.shoot = ModContent.ProjectileType<AscendedVilethornHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
-        Item.mana = 6;
+        Item.mana = 15;
         Item.channel = true;
+        Item.ArmorPenetration = 10;
     }
 
     public override bool CanUseItem(Player player)
@@ -38,14 +39,14 @@ public class AscendedCrimsonRod : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.CrimsonRod, position, scale, timer, frame, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Vilethorn, position, scale, timer, frame, spriteBatch, Color.Lime);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.CrimsonRod, rotation, scale, timer, spriteBatch, Color.Yellow);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Vilethorn, rotation, scale, timer, spriteBatch, new Color(200, 255, 0));
         return false;
     }
 

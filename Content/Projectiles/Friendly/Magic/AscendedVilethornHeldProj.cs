@@ -1,17 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Core.Systems;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class AscendedCrimsonRodHeldProj : ModProjectile
+public class AscendedVilethornHeldProj : ModProjectile
 {
     int AITimer = 0;
-    ref float chargeAmount => ref Projectile.ai[0];
     bool released = false;
-    int shotprojID = -1;
+    Vector2 trackingPos;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -27,8 +27,8 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 42;
-        Projectile.height = 42;
+        Projectile.width = 36;
+        Projectile.height = 36;
         Projectile.hostile = false;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -53,21 +53,36 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
         player.SetDummyItemTime(2);
         if (AITimer == 0)
         {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                shotprojID = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonCloud>(), Projectile.damage, 1f, Projectile.owner);
-            }
+            trackingPos = Projectile.Center;
         }
         if (player.channel)
         {
             Projectile.timeLeft = 2;
-            SetPositionRotationDirection(player, player.Center.DirectionTo(Main.projectile[shotprojID].Center).ToRotation());
-            if (AITimer % 10 == 0)
+            SetPositionRotationDirection(player, player.Center.DirectionTo(Main.MouseWorld).ToRotation());
+            if (AITimer % 30 == 0)
             {
                 if (!player.CheckMana(player.HeldItem.mana, true))
                 {
                     Projectile.Kill();
                 }
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    if (Main.rand.NextBool(5))
+                    {
+                        LemonUtils.DustCircle(trackingPos, 8, 5, DustID.ScourgeOfTheCorruptor, 3f);
+                        SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, trackingPos);
+                        for (int i = 0; i < 8; i++)
+                        {
+                            LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ModContent.ProjectileType<VilethornFriendly>());
+                        }
+                    }
+                }
+            }
+            trackingPos += trackingPos.DirectionTo(Main.MouseWorld) * 5;
+            Dust.NewDustPerfect(trackingPos, DustID.GemEmerald, Scale: 2f).noGravity = true;
+            if (trackingPos.Distance(Main.MouseWorld) < 12)
+            {
+                Projectile.Kill();
             }
         }
         else
@@ -77,9 +92,14 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
         AITimer++;
     }
 
+    public override void OnKill(int timeLeft)
+    {
+        LemonUtils.QuickProj(Projectile, trackingPos + Vector2.UnitY * 200, -Vector2.UnitY * 40, ModContent.ProjectileType<VilethornFriendly>());
+    }
+
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
-        Vector2 dir = player.Center.DirectionTo(Main.projectile[shotprojID].Center);
+        Vector2 dir = player.Center.DirectionTo(Main.MouseWorld);
         float armRotValue = player.direction == 1 ? -MathHelper.PiOver2 : -MathHelper.PiOver2;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation + armRotValue);
         Projectile.Center = player.Center + dir * 28;
@@ -95,13 +115,13 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
     {
         Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
 
-        Texture2D originalTexture = TextureAssets.Item[ItemID.CrimsonRod].Value;
+        Texture2D originalTexture = TextureAssets.Item[ItemID.Vilethorn].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
         Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
-        shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4());
+        shader.Shader.Parameters["color"].SetValue(Color.Green.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

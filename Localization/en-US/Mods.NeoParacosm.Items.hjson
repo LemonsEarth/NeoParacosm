@@ -227,13 +227,20 @@ BaneflyHive: {
 
 CorruptStaff: {
 	DisplayName: Corrupt Staff
-	Tooltip:
-	'''
-	Hold attack to charge and release to fire a barrage of corrupt bolts
-	'''
+	Tooltip: Hold attack to charge and release to fire a barrage of corrupt bolts
 }
 
 DragonRemainsPlacer: {
 	DisplayName: Dragon Remains Placer
 	Tooltip: ""
+}
+
+AscendedVilethorn: {
+	DisplayName: Foulthorn
+	Tooltip:
+		'''
+		Fires a spark that travels towards your cursor
+		When the spark reaches your cursor, a vilethorn spawns below it
+		Chance to spawn a burst of vilethorns while traveling
+		'''
 }

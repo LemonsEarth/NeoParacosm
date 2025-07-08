@@ -51,6 +51,11 @@ public class AscensionUISystem : ModSystem
         }
     }
 
+    public override void ClearWorld()
+    {
+        HideUI();
+    }
+
     internal void ShowUI()
     {
         userInterface?.SetState(UI);
