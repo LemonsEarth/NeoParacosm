@@ -227,7 +227,10 @@ BaneflyHive: {
 
 CorruptStaff: {
 	DisplayName: Corrupt Staff
-	Tooltip: ""
+	Tooltip:
+	'''
+	Hold attack to charge and release to fire a barrage of corrupt bolts
+	'''
 }
 
 DragonRemainsPlacer: {

@@ -15,12 +15,13 @@ CrimsonCloud.DisplayName: Crimson Cloud
 AscendedCrimsonRodHeldProj.DisplayName: Ascended Crimson Rod
 LightningClone.DisplayName: Lightning
 AscendedUndertakerHeldProj.DisplayName: Ascended Undertaker
-DragonRemainsPulseShield.DisplayName: Dragon Remains Pulse Shield
-CorruptCarrierProj.DisplayName: Corrupt Carrier Proj
-CrimsonCarrierProj.DisplayName: Crimson Carrier Proj
-SkullOfAvariceProjectile.DisplayName: Skull Of Avarice Projectile
+DragonRemainsPulseShield.DisplayName: Pulse Shield
+CorruptCarrierProj.DisplayName: Corrupt Bomb
+CrimsonCarrierProj.DisplayName: Crimson Bomb
+SkullOfAvariceProjectile.DisplayName: Skull Of Avarice
 Banefly.DisplayName: Banefly
 CorruptBolt.DisplayName: Corrupt Bolt
-CorruptStaffHeldProj.DisplayName: Corrupt Staff Held Proj
-DecayGasHostile.DisplayName: Decay Gas Hostile
-VilethornHostile.DisplayName: Vilethorn Hostile
+CorruptStaffHeldProj.DisplayName: Corrupt Staff
+DecayGasHostile.DisplayName: Decay Gas
+VilethornHostile.DisplayName: Vilethorn
+CursedDecayFire.DisplayName: Cursed Decay Fire

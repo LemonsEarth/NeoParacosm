@@ -34,16 +34,16 @@ CrimsonSacrificeDebuff: {
 }
 
 SkullOfAvariceDebuff: {
-	DisplayName: Skull Of Avarice Debuff
-	Description: Mods.NeoParacosm.Buffs.SkullOfAvariceDebuff.Description
+	DisplayName: Skull Of Avarice
+	Description: Are you sure it's worth it?
 }
 
 BaneflyHiveBuff: {
-	DisplayName: Banefly Hive Buff
-	Description: Mods.NeoParacosm.Buffs.BaneflyHiveBuff.Description
+	DisplayName: Banefly Hive
+	Description: The hive protects you, for now...
 }
 
 CorruptDecayDebuff: {
-	DisplayName: Corrupt Decay Debuff
-	Description: Mods.NeoParacosm.Buffs.CorruptDecayDebuff.Description
+	DisplayName: Corrupt Decay
+	Description: Reduced acceleration
 }
