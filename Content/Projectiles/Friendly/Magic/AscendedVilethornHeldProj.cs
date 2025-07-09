@@ -121,7 +121,7 @@ public class AscendedVilethornHeldProj : ModProjectile
         Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
-        shader.Shader.Parameters["color"].SetValue(Color.Green.ToVector4());
+        shader.Shader.Parameters["color"].SetValue(Color.YellowGreen.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

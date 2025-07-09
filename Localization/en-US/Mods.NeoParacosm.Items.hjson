@@ -244,3 +244,12 @@ AscendedVilethorn: {
 		Chance to spawn a burst of vilethorns while traveling
 		'''
 }
+
+AscendedMusket: {
+	DisplayName: The Green Gun
+	Tooltip:
+	'''
+	Fire a high velocity tracer round that inflicts Cursed Inferno on hit
+	Chance for the gun to malfunction, firing rapidly and inflicting you with Cursed Inferno
+	'''
+}

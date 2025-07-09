@@ -72,7 +72,7 @@ public class VilethornFriendly : ModProjectile
     {
         float _ = float.NaN;
         Vector2 endPos = StartPos + StartPos.DirectionTo(Projectile.Center) * StartPos.Distance(Projectile.Center);
-        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), StartPos, endPos, Projectile.width, ref _); ;
+        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), StartPos, endPos, Projectile.width, ref _);
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -100,7 +100,7 @@ public class VilethornFriendly : ModProjectile
         return false;
     }
 
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
 
     }
