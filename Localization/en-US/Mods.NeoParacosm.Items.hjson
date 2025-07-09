@@ -248,8 +248,13 @@ AscendedVilethorn: {
 AscendedMusket: {
 	DisplayName: The Green Gun
 	Tooltip:
-	'''
-	Fire a high velocity tracer round that inflicts Cursed Inferno on hit
-	Chance for the gun to malfunction, firing rapidly and inflicting you with Cursed Inferno
-	'''
+		'''
+		Fire a high velocity tracer round that inflicts Cursed Inferno on hit
+		Chance for the gun to malfunction, firing rapidly and inflicting you with Cursed Inferno
+		'''
+}
+
+AscendedLightsBane: {
+	DisplayName: Light's Torment
+	Tooltip: Right click after hitting up to 3 enemies to devastate them
 }

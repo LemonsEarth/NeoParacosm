@@ -24,7 +24,7 @@ public static partial class LemonUtils
         for (int i = 0; i < amount; i++)
         {
             var dust = Dust.NewDustPerfect(position, dustID, newColor: color, Scale: scale);
-            dust.velocity = new Vector2(0, -speed).RotatedBy(MathHelper.ToRadians(i * (360 / amount))).RotatedByRandom(MathHelper.Pi);
+            dust.velocity = new Vector2(0, -speed).RotatedBy(MathHelper.ToRadians(i * (360 / amount)));
             if (noGrav)
             {
                 dust.noGravity = true;

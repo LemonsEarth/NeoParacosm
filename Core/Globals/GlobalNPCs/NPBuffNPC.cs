@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Content.Tiles.Special;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
@@ -10,12 +11,33 @@ public class NPBuffNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
+    int timer = 0;
+
     public Point16 dataCollectorTEPos { get; set; } = Point16.Zero;
     public Point16 dataCollectorEXTEPos { get; set; } = Point16.Zero;
 
     public override void ResetEffects(NPC npc)
     {
         //dataCollectorTEPos = Point16.Zero;
+    }
+
+    public override void PostAI(NPC npc)
+    {
+        if (npc.HasBuff(ModContent.BuffType<LightsBaneDebuff>()))
+        {
+            if (timer % 5 == 0)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.RandomPos(16, 16), Main.rand.NextVector2Unit(), ProjectileID.LightsBane, 30, 0f, Main.myPlayer, Main.rand.NextFloat(0.75f, 1.25f));
+                }
+            }
+            timer++;
+        }
+        else
+        {
+            timer = 0;
+        }
     }
 
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)

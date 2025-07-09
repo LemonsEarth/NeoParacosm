@@ -60,7 +60,7 @@ public class CorruptStaffHeldProj : ModProjectile
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
 
-        player.SetDummyItemTime(30);
+        player.SetDummyItemTime(2);
 
 
         Projectile.timeLeft = 2;

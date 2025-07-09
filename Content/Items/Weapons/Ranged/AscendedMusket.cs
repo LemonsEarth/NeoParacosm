@@ -14,8 +14,8 @@ public class AscendedMusket : ModItem
         Item.DamageType = DamageClass.Ranged;
         Item.width = 60;
         Item.height = 22;
-        Item.useTime = 60;
-        Item.useAnimation = 60;
+        Item.useTime = 30;
+        Item.useAnimation = 30;
         Item.UseSound = SoundID.Item1;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.knockBack = 2;

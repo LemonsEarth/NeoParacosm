@@ -13,9 +13,8 @@ public class AscendedBloodButcherer : ModItem
         Item.DamageType = DamageClass.Melee;
         Item.width = 54;
         Item.height = 62;
-        Item.useTime = 60;
-        Item.useAnimation = 60;
-        Item.reuseDelay = 30;
+        Item.useTime = 20;
+        Item.useAnimation = 20;
         Item.UseSound = SoundID.Item1;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.knockBack = 2;

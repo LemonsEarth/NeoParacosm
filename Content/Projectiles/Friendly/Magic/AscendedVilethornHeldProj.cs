@@ -50,7 +50,6 @@ public class AscendedVilethornHeldProj : ModProjectile
         }
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
-        player.SetDummyItemTime(2);
         if (AITimer == 0)
         {
             trackingPos = Projectile.Center;

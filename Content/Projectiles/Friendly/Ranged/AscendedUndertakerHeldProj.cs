@@ -56,7 +56,7 @@ public class AscendedUndertakerHeldProj : ModProjectile
         if (shotCount < 6)
         {
             player.heldProj = Projectile.whoAmI;
-            player.SetDummyItemTime(20);
+            player.SetDummyItemTime(2);
             Projectile.timeLeft = 180;
             if (AITimer % attackRate == 0)
             {

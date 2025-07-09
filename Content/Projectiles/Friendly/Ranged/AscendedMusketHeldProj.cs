@@ -57,7 +57,7 @@ public class AscendedMusketHeldProj : ModProjectile
         if (AITimer == 0) rot = player.direction == 1 ? normRot : oppRot;
 
         player.heldProj = Projectile.whoAmI;
-        player.SetDummyItemTime(20);
+        player.SetDummyItemTime(2);
         if (AITimer == 0)
         {
             if (Main.myPlayer == Projectile.owner)

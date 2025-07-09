@@ -47,3 +47,8 @@ CorruptDecayDebuff: {
 	DisplayName: Corrupt Decay
 	Description: Reduced acceleration
 }
+
+LightsBaneDebuff: {
+	DisplayName: Lights Bane Debuff
+	Description: Mods.NeoParacosm.Buffs.LightsBaneDebuff.Description
+}

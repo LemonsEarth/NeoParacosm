@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Biomes.TheDepths;
+using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
