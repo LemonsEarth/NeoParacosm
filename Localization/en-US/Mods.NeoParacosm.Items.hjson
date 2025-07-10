@@ -258,3 +258,13 @@ AscendedLightsBane: {
 	DisplayName: Light's Torment
 	Tooltip: Right click after hitting up to 3 enemies to devastate them
 }
+
+AscendedBallOHurt: {
+	DisplayName: Bruise Ball
+	Tooltip:
+	'''
+	Hold left click to spin and charge
+	Release to swing the ball
+	Charged ball strikes foes with lightning
+	'''
+}

@@ -67,6 +67,12 @@ public class AscendedLightsBaneHeldProj : ModProjectile
         Projectile.timeLeft = 3;
         Projectile.velocity = Vector2.Zero;
 
+        if (speedBoost > 1)
+        {
+            Vector2 pos = Projectile.Center - Vector2.UnitY * (Projectile.height / 2f);
+            Dust.NewDustPerfect(pos, DustID.GemDiamond, Scale: 2f).noGravity = true;
+        }
+
         SetPositionRotationDirection(player, 0);
 
         rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpT * speedBoost * player.GetAttackSpeed(DamageClass.Melee));

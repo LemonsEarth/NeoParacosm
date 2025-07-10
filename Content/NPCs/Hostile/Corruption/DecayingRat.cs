@@ -75,7 +75,7 @@ public class DecayingRat : ModNPC
         {
             Player player = Main.player[NPC.target];
             Vector2 TileCheckPos = NPC.Center + Vector2.UnitX * NPC.direction * (NPC.width / 2);
-            bool TileCheck = Main.tile[TileCheckPos.ToTileCoordinates()].HasTile;
+            bool TileCheck = Collision.SolidTiles(TileCheckPos, 2, 2);
             if (Collision.CanHitLine(NPC.Center, 16, 16, player.Center, 16, 16) && !TileCheck)
             {
                 NPC.noTileCollide = false;

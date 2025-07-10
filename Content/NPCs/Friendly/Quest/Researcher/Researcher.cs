@@ -42,6 +42,8 @@ public class Researcher : ModNPC
 
             { ItemID.Vilethorn, ModContent.ItemType<AscendedVilethorn>() },
             { ItemID.Musket, ModContent.ItemType<AscendedMusket>() },
+            { ItemID.LightsBane, ModContent.ItemType<AscendedLightsBane>() },
+            { ItemID.BallOHurt, ModContent.ItemType<AscendedBallOHurt>() },
         };
     }
 

@@ -123,9 +123,8 @@ public class CrimsonCloud : ModProjectile
     {
         for (int i = 0; i < savedScale; i++)
         {
-            Projectile.NewProjectile(Projectile.GetSource_FromAI("CrimsonCloud"), Projectile.RandomPos(), Vector2.UnitY * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
+            Projectile.NewProjectile(Projectile.GetSource_FromAI("Friendly"), Projectile.RandomPos(), Vector2.UnitY * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
         }
-        SoundEngine.PlaySound(SoundID.Thunder, Projectile.Center);
         //LemonUtils.QuickProj(Projectile, Projectile.RandomPos(), Vector2.UnitY * 10, ProjectileID.CultistBossLightningOrbArc, ai0: Main.rand.NextFloat(0, 6.28f));
     }
 }
