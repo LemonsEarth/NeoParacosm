@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using Terraria.Audio;
@@ -50,7 +51,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         Main.projFrames[Type] = 1;
     }
@@ -170,7 +171,6 @@ public class AscendedBallOHurtHeldProj : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
-
         Texture2D originalTexture = TextureAssets.Projectile[ProjectileID.BallOHurt].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));

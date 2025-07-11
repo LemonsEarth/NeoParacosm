@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Armor.Ranged;
 using NeoParacosm.Content.Items.Armor.Summoner;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Melee;
@@ -44,6 +45,9 @@ public class Researcher : ModNPC
             { ItemID.Musket, ModContent.ItemType<AscendedMusket>() },
             { ItemID.LightsBane, ModContent.ItemType<AscendedLightsBane>() },
             { ItemID.BallOHurt, ModContent.ItemType<AscendedBallOHurt>() },
+            { ItemID.ShadowHelmet, ModContent.ItemType<AscendedShadowHelmet>() },
+            { ItemID.ShadowScalemail, ModContent.ItemType<AscendedShadowScalemail>() },
+            { ItemID.ShadowGreaves, ModContent.ItemType<AscendedShadowGreaves>() },
         };
     }
 
