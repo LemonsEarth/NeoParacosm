@@ -2,3 +2,8 @@ DepthsHigh: {
 	DisplayName: Depths High
 	TownNPCDialogueName: the Depths High
 }
+
+DeadForestBiome: {
+	DisplayName: Dead Forest Biome
+	TownNPCDialogueName: the Dead Forest Biome
+}

@@ -271,32 +271,32 @@ AscendedBallOHurt: {
 
 AscendedShadowHelmet: {
 	SetBonus:
-	'''
-	Shadow Orbs spawn around hit enemies
-	Destroy them to unleash several tiny eaters
-	'''
+		'''
+		Shadow Orbs spawn around hit enemies
+		Destroy them to unleash several tiny eaters
+		'''
 	DisplayName: Ascended Shadow Helmet
 	Tooltip:
-	'''
-	{$CommonItemTooltip.PercentIncreasedRangedDamage}
-	{$CommonItemTooltip.PercentIncreasedRangedCritChance@1}
-	'''
+		'''
+		{$CommonItemTooltip.PercentIncreasedRangedDamage}
+		{$CommonItemTooltip.PercentIncreasedRangedCritChance@1}
+		'''
 }
 
 AscendedShadowGreaves: {
 	DisplayName: Ascended Shadow Greaves
 	Tooltip:
-	'''
-	{$CommonItemTooltip.PercentIncreasedMovementSpeed}
-	{$CommonItemTooltip.PercentIncreasedRangedCritChance@1}
-	'''
+		'''
+		{$CommonItemTooltip.PercentIncreasedMovementSpeed}
+		{$CommonItemTooltip.PercentIncreasedRangedCritChance@1}
+		'''
 }
 
 AscendedShadowScalemail: {
 	DisplayName: Ascended Shadow Scalemail
 	Tooltip:
-	'''
-	{$CommonItemTooltip.PercentIncreasedRangedDamage}
-	Reduces damage taken by {1}%
-	'''
+		'''
+		{$CommonItemTooltip.PercentIncreasedRangedDamage}
+		Reduces damage taken by {1}%
+		'''
 }

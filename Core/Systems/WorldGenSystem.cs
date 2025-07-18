@@ -1,5 +1,8 @@
-﻿using NeoParacosm.Common.Utils;
+﻿using Microsoft.Xna.Framework.Input;
+using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Content.Projectiles.None;
+using NeoParacosm.Content.Tiles.DeadForest;
 using NeoParacosm.Content.Tiles.Depths;
 using StructureHelper.API;
 using System.Collections.Generic;
@@ -14,6 +17,7 @@ public class WorldGenSystem : ModSystem
 {
     public static Point16 DragonRemainsTileEntityPos;
 
+    int worldSize => LemonUtils.GetWorldSize();
     readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
 
     void GenerateCrimsonVillage(GenerationProgress progress, GameConfiguration config)
@@ -23,7 +27,7 @@ public class WorldGenSystem : ModSystem
             return;
         }
 
-        for (int rep = 0; rep < LemonUtils.GetWorldSize(); rep++)
+        for (int rep = 0; rep < worldSize; rep++)
         {
             for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, Mod); i++)
             {
@@ -86,9 +90,38 @@ public class WorldGenSystem : ModSystem
         }
     }
 
+    void GenerateDeadForest(GenerationProgress progress, GameConfiguration config)
+    {
+        int Radius = 200 * worldSize;
+        Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30);
+        //LemonUtils.DustCircle(startPos.ToWorldCoordinates(), 8, 8, DustID.Granite, 10);
+        for (int i = -Radius; i < Radius; i++)
+        {
+            for (int j = -Radius; j < Radius; j++)
+            {
+                Point pos = startPos + new Point(i, j);
+                if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > Radius * 16)
+                {
+                    continue;
+                }
+                Tile tile = Main.tile[pos];
+                //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ModContent.ProjectileType<DragonRemainsPulseShield>(), 1, 1);
+                if (tile.HasTile)
+                {
+                    switch (tile.TileType)
+                    {
+                        case TileID.Dirt or TileID.ClayBlock or TileID.Grass or TileID.Sand or TileID.CorruptGrass or TileID.CrimsonGrass or TileID.Ebonsand or TileID.Crimsand:
+                            //WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
+                            WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
     void GenerateDepths(GenerationProgress progress, GameConfiguration config)
     {
-        int worldSize = LemonUtils.GetWorldSize();
         int startTileX = Main.maxTilesX - 350;
         int startTileY = ((int)Main.worldSurface - 100);
 
@@ -133,65 +166,56 @@ public class WorldGenSystem : ModSystem
 
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        int tileCleanupStep = tasks.FindIndex(genpass => genpass.Name.Equals("Tile Cleanup"));
-        tasks.Insert(tileCleanupStep + 1, new PassLegacy("Crimson Village", GenerateCrimsonVillage));
+        InsertAfterTask(tasks, "Tile Cleanup", "Crimson Village", GenerateCrimsonVillage);
+        InsertAfterTask(tasks, "Planting Trees", "Dead Forest", GenerateDeadForest);
 
-        int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
-        tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
+        //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
+        //tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
     }
 
     public override void PostUpdateWorld()
     {
 
-        /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
+        if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
-            int worldSize = LemonUtils.GetWorldSize();
-            int startTileX = Main.maxTilesX - 350;
-            int startTileY = ((int)Main.worldSurface - 100);
-
-            int endTileX = Main.maxTilesX;
-            int endTileY = startTileY + (4 * worldSize * 75);
-            for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
+            /*int Radius = 100 * worldSize;
+            Point startPos = new Point(Main.maxTilesX / 2, (int)GenVars.worldSurfaceLow + 100);
+            //LemonUtils.DustCircle(startPos.ToWorldCoordinates(), 8, 8, DustID.Granite, 10);
+            for (int i = -Radius; i < Radius; i++)
             {
-                for (int xPos = 0; xPos < 5; xPos++)
+                for (int j = -Radius; j < Radius; j++)
                 {
-                    WorldGen.OreRunner(startTileX + xPos * 100, startTileY + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
-                }
-            }
-            GenerateVerticalOceanTunnels();
-            GenerateHorizontalOceanTunnels();
-
-            for (int i = startTileX; i < endTileX; i++)
-            {
-                for (int j = startTileY; j < endTileY; j++)
-                {
-                    if (WorldGen.InWorld(i, j))
+                    Point pos = startPos + new Point(i, j);
+                    if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > Radius * 16)
                     {
-
-                        WorldGen.PlaceWall(i, j, ModContent.WallType<DepthStoneWallBlock>());
-
-                        if (Main.tile[i, j].HasTile)
+                        continue;
+                    }
+                    Tile tile = Main.tile[pos];
+                    //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ModContent.ProjectileType<DragonRemainsPulseShield>(), 1, 1);
+                    if (tile.HasTile)
+                    {
+                        switch (tile.TileType)
                         {
-                            if (Main.tile[i, j].TileType != (ushort)ModContent.TileType<DepthStoneBlock>())
-                            {
-                                WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<DepthStoneBlock>(), forced: true);
-                            }
-
-                        }
-                        else
-                        {
-                            WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);
+                            case TileID.Dirt or TileID.ClayBlock or TileID.Grass:
+                                //WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
+                                WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
+                                break;
                         }
 
                     }
                 }
-            }
-        }*/
+            }*/
+        }
+    }
+
+    void InsertAfterTask(List<GenPass> tasks, string genpassName, string newGenPassName, WorldGenLegacyMethod method)
+    {
+        int step = tasks.FindIndex(genpass => genpass.Name.Equals(genpassName));
+        tasks.Insert(step + 1, new PassLegacy(newGenPassName, method));
     }
 
     void GenerateVerticalOceanTunnels()
     {
-        int worldSize = LemonUtils.GetWorldSize();
         int distanceBetweenTunnels = 50;
         int tunnelRepDistance = 20 * worldSize;
         //int repFailChanceDenominator = 8;
@@ -223,7 +247,7 @@ public class WorldGenSystem : ModSystem
         int distanceBetweenTunnels = 75;
         int tunnelRepDistance = 20;
         //int repFailChanceDenominator = 4;
-        for (int amountOfTunnels = 0; amountOfTunnels < 4 * LemonUtils.GetWorldSize(); amountOfTunnels++)
+        for (int amountOfTunnels = 0; amountOfTunnels < 4 * worldSize; amountOfTunnels++)
         {
             for (int tunnelRepCount = 0; tunnelRepCount < 16; tunnelRepCount++)
             {

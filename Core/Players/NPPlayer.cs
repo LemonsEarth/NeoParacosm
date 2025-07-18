@@ -1,9 +1,11 @@
-﻿using NeoParacosm.Content.Biomes.TheDepths;
+﻿using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using Terraria.Graphics.Effects;
+using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
