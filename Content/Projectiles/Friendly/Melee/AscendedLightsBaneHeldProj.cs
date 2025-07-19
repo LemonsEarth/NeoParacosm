@@ -99,7 +99,6 @@ public class AscendedLightsBaneHeldProj : ModProjectile
         Texture2D originalTexture = TextureAssets.Item[ItemID.LightsBane].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
-
         /*for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
         {
             Vector2 afterimagePos = Projectile.oldPos[k] - Main.screenPosition + glowTexture.Size() * 0.5f + new Vector2(0, Projectile.gfxOffY);

@@ -2,7 +2,7 @@ sampler uImage0 : register(s0);
 float3 uColor;
 float uProgress;
 
-float4 ScreenTint(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
+float4 ScreenTintShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
     color.rgb *= (uColor / uProgress);
@@ -11,8 +11,8 @@ float4 ScreenTint(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLO
 
 technique Tech1
 {
-    pass ScreenTint
+    pass ScreenTintShader
     {
-        PixelShader = compile ps_2_0 ScreenTint();
+        PixelShader = compile ps_2_0 ScreenTintShader();
     }
 }

@@ -5,12 +5,15 @@ using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
 public class NPPlayer : ModPlayer
 {
+    float desaturateEffectOpacity = 0f;
+    float desaturateEffectOpacityTimer = 0f;
     public override void ResetEffects()
     {
 
@@ -43,8 +46,30 @@ public class NPPlayer : ModPlayer
         }*/
     }
 
+    float maxDesaturateValue = 0.8f;
     public override void PostUpdateMiscEffects()
     {
+        if (Player.InModBiome<DeadForestBiome>())
+        {
+            desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);
+            if (desaturateEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;
+            ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DesaturateShader").GetShader();
+            data.UseProgress(desaturateEffectOpacity);
+        }
+        else
+        {
+            desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);
+            if (desaturateEffectOpacityTimer > 0) desaturateEffectOpacityTimer--;
+            if (desaturateEffectOpacityTimer <= 0)
+            {
+                Filters.Scene.Deactivate("NeoParacosm:DesaturateShader");
+            }
+            else
+            {
+                Filters.Scene["NeoParacosm:DesaturateShader"].GetShader().UseProgress(desaturateEffectOpacity);
+            }
+        }
+
         if (Player.InModBiome<DepthsHigh>())
         {
             Filters.Scene.Activate("NeoParacosm:ScreenTintShader").GetShader().UseColor(new Color(102, 148, 255));

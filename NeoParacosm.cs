@@ -10,16 +10,23 @@ public class NeoParacosm : Mod
 {
     public override void Load()
     {
-        Asset<Effect> filterShader = Assets.Request<Effect>("Common/Assets/Shaders/ScreenTintShader");
-        Filters.Scene["NeoParacosm:ScreenTintShader"] = new Filter(new ScreenShaderData(filterShader, "ScreenTint"), EffectPriority.Medium);
+        LoadFilterShader("ScreenTintShader", "Common/Assets/Shaders/ScreenTintShader", EffectPriority.Medium);
+        LoadFilterShader("DesaturateShader", "Common/Assets/Shaders/DesaturateShader", EffectPriority.Medium);
 
-        Asset<Effect> shieldPulseShader = Assets.Request<Effect>("Common/Assets/Shaders/ShieldPulseShader");
-        GameShaders.Misc["NeoParacosm:ShieldPulseShader"] = new MiscShaderData(shieldPulseShader, "ShieldPulseShader");
+        LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader");
+        LoadMiscShader("GasShader", "Common/Assets/Shaders/Projectiles/GasShader");
+        LoadMiscShader("AscendedWeaponGlow", "Common/Assets/Shaders/Items/AscendedWeaponGlow");
+    }
 
-        Asset<Effect> gasShader = Assets.Request<Effect>("Common/Assets/Shaders/Projectiles/GasShader");
-        GameShaders.Misc["NeoParacosm:GasShader"] = new MiscShaderData(gasShader, "GasShader");
+    void LoadFilterShader(string name, string path, EffectPriority priority)
+    {
+        Asset<Effect> filter = Assets.Request<Effect>(path);
+        Filters.Scene[$"NeoParacosm:{name}"] = new Filter(new ScreenShaderData(filter, name), priority);
+    }
 
-        Asset<Effect> ascendedWeaponGlowShader = Assets.Request<Effect>("Common/Assets/Shaders/Items/AscendedWeaponGlow");
-        GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"] = new MiscShaderData(ascendedWeaponGlowShader, "AscendedWeaponGlow");
+    void LoadMiscShader(string name, string path)
+    {
+        Asset<Effect> shader = Assets.Request<Effect>(path);
+        GameShaders.Misc[$"NeoParacosm:{name}"] = new MiscShaderData(shader, name);
     }
 }
