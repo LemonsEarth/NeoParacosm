@@ -42,7 +42,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
     {
         if (chargeCount >= 2 && released)
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < chargeCount; i++)
             {
                 Vector2 pos = target.Center + new Vector2(Main.rand.NextFloat(-100, 100), -500);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ModContent.ProjectileType<Lightning>(), Projectile.damage / 4, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);

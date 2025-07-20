@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
@@ -22,6 +25,8 @@ public class Lightning : ModProjectile
             Projectile.ai[2] = value.Y;
         }
     }
+
+    Vector2 originalPos = Vector2.Zero;
 
     static BasicEffect BasicEffect;
     GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
@@ -63,7 +68,7 @@ public class Lightning : ModProjectile
         Projectile.width = 24;
         Projectile.height = 24;
         Projectile.friendly = true;
-        Projectile.timeLeft = 60;
+        Projectile.timeLeft = 30;
         Projectile.penetrate = -1;
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
@@ -79,7 +84,12 @@ public class Lightning : ModProjectile
     {
         if (AITimer == 0)
         {
-            SoundEngine.PlaySound(SoundID.Thunder);
+            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
+            Main.instance.CameraModifiers.Add(mod1);
+            originalPos = Projectile.Center;
+            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f) });
+            SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f) });
+            SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f) });
             Vector2 projToPos = targetPos - Projectile.Center;
             float spacing = projToPos.Length() / (20 / 2);
             bool flip = true;
@@ -96,23 +106,36 @@ public class Lightning : ModProjectile
             }
         }
         Projectile.velocity = Vector2.Zero;
-        if (Projectile.timeLeft < 30)
+        if (Projectile.timeLeft < 15)
         {
-            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 30f);
+            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 15f);
         }
         AITimer++;
+    }
+
+    public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+    {
+        float _ = float.NaN;
+        Vector2 endPos = Projectile.Center;
+        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), originalPos, endPos, Projectile.width, ref _);
     }
 
     public override void OnKill(int timeLeft)
     {
 
-        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 7f, color: Color.Orange);
+        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.DarkSlateBlue);
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
         int quadCount = positions.Count / 2 - 1;
-        VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[(positions.Count / 2 - 1) * 6];
+        if (quadCount <= 0) return false;
+        VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
+        VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
+        {
+            Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
+            return new VertexPositionColorTexture(new Vector3(pos, 0), color * Projectile.Opacity, Vector2.Zero);
+        }
         for (int i = 0; i < quadCount; i += 1)
         {
             Vector2 left0 = positions[2 * i];
@@ -120,11 +143,6 @@ public class Lightning : ModProjectile
             Vector2 left1 = positions[2 * i + 2];
             Vector2 right1 = positions[2 * i + 3];
 
-            VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
-            {
-                Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
-            return new VertexPositionColorTexture(new Vector3(pos, 0), color * Projectile.Opacity, Vector2.Zero);
-            }
 
             vertices[6 * i] = QuickVertexPCT(left0);
             vertices[6 * i + 1] = QuickVertexPCT(right0);
@@ -158,6 +176,16 @@ public class Lightning : ModProjectile
         GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
         BasicEffect.CurrentTechnique.Passes[0].Apply();
         GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
+
+        for (int i = 0; i < 2; i++)
+        {
+            float circleOpacity = Projectile.Opacity + 0.2f;
+            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, originalPos - Main.screenPosition, null, Color.DarkSlateBlue * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 2f, SpriteEffects.None);
+            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, originalPos - Main.screenPosition, null, Color.Black * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 1f, SpriteEffects.None);
+            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, positions.Last() - Main.screenPosition, null, Color.Black * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 1f, SpriteEffects.None);
+            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, positions.Last() - Main.screenPosition, null, Color.DarkSlateBlue * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 0.5f, SpriteEffects.None);
+        }
+
 
         return false;
     }
