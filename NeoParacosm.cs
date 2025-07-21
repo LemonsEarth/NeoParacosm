@@ -16,6 +16,7 @@ public class NeoParacosm : Mod
         LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader");
         LoadMiscShader("GasShader", "Common/Assets/Shaders/Projectiles/GasShader");
         LoadMiscShader("AscendedWeaponGlow", "Common/Assets/Shaders/Items/AscendedWeaponGlow");
+        LoadMiscShader("DeathbirdWingShader", "Common/Assets/Shaders/NPCs/DeathbirdWingShader");
     }
 
     void LoadFilterShader(string name, string path, EffectPriority priority)
