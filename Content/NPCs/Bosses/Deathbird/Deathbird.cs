@@ -4,8 +4,10 @@ using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
@@ -53,12 +55,12 @@ public class Deathbird : ModNPC
 
     public enum Attacks
     {
-        
+
     }
 
     public enum Attacks2
     {
-        
+
     }
 
     public override void Load()
@@ -96,8 +98,8 @@ public class Deathbird : ModNPC
 
     public override void SetDefaults()
     {
-        NPC.width = 200;
-        NPC.height = 250;
+        NPC.width = 250;
+        NPC.height = 200;
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
@@ -121,7 +123,7 @@ public class Deathbird : ModNPC
 
     public override void FindFrame(int frameHeight)
     {
-        int frameDur = 12;
+        int frameDur = 6;
         NPC.frameCounter += 1;
         if (NPC.frameCounter > frameDur)
         {
@@ -136,7 +138,11 @@ public class Deathbird : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return 0;
+        if (!DownedBossSystem.downedDeathbird && !NPC.AnyNPCs(ModContent.NPCType<Deathbird>()))
+        {
+            return 1f;
+        }
+        return 0f;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -145,6 +151,8 @@ public class Deathbird : ModNPC
         NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
     }
 
+    int INTRO_DURATION = 300;
+    int TRANSITION_DURATION = 300;
     public override void AI()
     {
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -155,11 +163,19 @@ public class Deathbird : ModNPC
 
         DespawnCheck();
 
+        if (AITimer < INTRO_DURATION)
+        {
+            Intro();
+            AITimer++;
+            return;
+        }
+        if (!phaseTransition) NPC.dontTakeDamage = false;
+
         if (NPC.life < NPC.lifeMax / 2 && !phase2Reached)
         {
             phaseTransition = true;
             phase2Reached = true;
-            AttackTimer = 600;
+            AttackTimer = 0;
         }
 
         if (phaseTransition)
@@ -197,23 +213,67 @@ public class Deathbird : ModNPC
         }
     }
 
+    void Intro()
+    {
+        NPC.dontTakeDamage = true;
+        NPC.velocity = Vector2.Zero;
+        if (AITimer == 0)
+        {
+            SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen);
+        }
+
+        if (AITimer < INTRO_DURATION - 120)
+        {
+            NPC.Opacity = 0f;
+            for (int i = 0; i < 2; i++)
+            {
+                Dust.NewDustDirect(NPC.RandomPos(16, 16), 2, 2, DustID.Ash, Scale: Main.rand.NextFloat(1f, 4f)).noGravity = true; ;
+            }
+        }
+        else if (AITimer == INTRO_DURATION - 120)
+        {
+            NPC.Opacity = 1f;
+            for (int i = 0; i < 4; i++)
+            {
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));
+            }
+            PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 90, 1000f, FullName);
+            Main.instance.CameraModifiers.Add(mod1);
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f)}, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f)}, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f)}, NPC.Center);
+        }
+    }
+
     float wingScale = 1.05f;
     float darkColorBoost = 0f;
-
     void PhaseTransition()
     {
-        switch(AttackTimer)
+        NPC.dontTakeDamage = true;
+        switch (AttackTimer)
         {
-            case > 0:
-                wingScale = MathHelper.Lerp(1.5f, 1f, AttackTimer / 600f);
-                darkColorBoost = MathHelper.Lerp(1f, 0f, AttackTimer / 600f);
+            case < 120:
+                if (AttackTimer % 10 == 0)
+                {
+                    LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));
+                }
                 break;
-            case 0:
+            case 120:
+                wingScale = 1.25f;
+                darkColorBoost = 1f;
+                LemonUtils.DustCircle(NPC.Center, 24, 24, DustID.GemDiamond, 8f);
+                PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 90, 1000f, FullName);
+                Main.instance.CameraModifiers.Add(mod1);
+                SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+                break;
+            case 300:
                 phase = 2;
                 phaseTransition = false;
                 return;
         }
-        AttackTimer--;
+        AttackTimer++;
     }
 
     public override void OnKill()
@@ -223,12 +283,12 @@ public class Deathbird : ModNPC
 
     public override void HitEffect(NPC.HitInfo hit)
     {
-        
+
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        
+
     }
 
     public override bool? CanFallThroughPlatforms()
@@ -238,6 +298,10 @@ public class Deathbird : ModNPC
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
+        if (NPC.Opacity < 1)
+        {
+            return true;
+        }
         var shader = GameShaders.Misc["NeoParacosm:DeathbirdWingShader"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["tolerance"].SetValue(0.5f);
@@ -248,7 +312,7 @@ public class Deathbird : ModNPC
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
-        Vector2 drawPos = NPC.Center + Vector2.UnitY * 35;
+        Vector2 drawPos = NPC.Center;
         Main.EntitySpriteDraw(wingTexture.Value, drawPos - Main.screenPosition, wingTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, NPC.rotation, wingTexture.Frame(1, 5, 0, 0).Size() * 0.5f, NPC.scale * wingScale, SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

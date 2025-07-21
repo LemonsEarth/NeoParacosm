@@ -1,6 +1,8 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Biomes.TheDepths;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
@@ -12,6 +14,8 @@ namespace NeoParacosm.Core.Players;
 
 public class NPPlayer : ModPlayer
 {
+    int timer = 0;
+
     float desaturateEffectOpacity = 0f;
     float desaturateEffectOpacityTimer = 0f;
     public override void ResetEffects()
@@ -44,6 +48,7 @@ public class NPPlayer : ModPlayer
                 UISystem.ShowUI();
             }
         }*/
+        timer++;
     }
 
     float maxDesaturateValue = 0.8f;
@@ -55,6 +60,8 @@ public class NPPlayer : ModPlayer
             if (desaturateEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DesaturateShader").GetShader();
             data.UseProgress(desaturateEffectOpacity);
+            
+            Player.AddBuff(ModContent.BuffType<DeadForestDebuff>(), 2);
         }
         else
         {

@@ -52,3 +52,8 @@ LightsBaneDebuff: {
 	DisplayName: Lights Bane Debuff
 	Description: Mods.NeoParacosm.Buffs.LightsBaneDebuff.Description
 }
+
+DeadForestDebuff: {
+	DisplayName: Dead Forest Debuff
+	Description: Mods.NeoParacosm.Buffs.DeadForestDebuff.Description
+}
