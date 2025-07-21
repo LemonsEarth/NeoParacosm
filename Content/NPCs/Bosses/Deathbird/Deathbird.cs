@@ -1,22 +1,32 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using static Terraria.ModLoader.ModContent;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Deathbird;
 
 [AutoloadBossHead]
 public class Deathbird : ModNPC
 {
-    static Asset<Texture2D> wingTexture;
+    static Asset<Texture2D> headTexture;
+    static Asset<Texture2D> bodyTexture;
+    static Asset<Texture2D> leftLeg1Texture;
+    static Asset<Texture2D> leftLeg2Texture;
+    static Asset<Texture2D> rightLeg1Texture;
+    static Asset<Texture2D> rightLeg2Texture;
+    static Asset<Texture2D> wingsRightTexture;
+    static Asset<Texture2D> wingsLeftTexture;
 
     ref float AITimer => ref NPC.ai[0];
     public float Attack
@@ -65,7 +75,14 @@ public class Deathbird : ModNPC
 
     public override void Load()
     {
-        wingTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/Deathbird_Wings");
+        headTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdHead");
+        bodyTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdBody");
+        wingsLeftTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdWingsLeft");
+        wingsRightTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdWingsRight");
+        leftLeg1Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegLeft1");
+        leftLeg2Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegLeft2");
+        rightLeg1Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegRight1");
+        rightLeg2Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegRight2");
     }
 
     public override void SetStaticDefaults()
@@ -98,8 +115,8 @@ public class Deathbird : ModNPC
 
     public override void SetDefaults()
     {
-        NPC.width = 250;
-        NPC.height = 200;
+        NPC.width = 40;
+        NPC.height = 40;
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
@@ -138,7 +155,7 @@ public class Deathbird : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        if (!DownedBossSystem.downedDeathbird && !NPC.AnyNPCs(ModContent.NPCType<Deathbird>()))
+        if (!DownedBossSystem.downedDeathbird && spawnInfo.Player.InModBiome<DeadForestBiome>() && !NPC.AnyNPCs(NPCType<Deathbird>()))
         {
             return 1f;
         }
@@ -162,7 +179,6 @@ public class Deathbird : ModNPC
         player = Main.player[NPC.target];
 
         DespawnCheck();
-
         if (AITimer < INTRO_DURATION)
         {
             Intro();
@@ -185,7 +201,71 @@ public class Deathbird : ModNPC
             return;
         }
 
+        body.pos = NPC.Center;
+        head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
+        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
+        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
+        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
+        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
+
+        NPC.velocity.X = (float)Math.Sin(AITimer / 24) * 8;
+
+        head.rot = Utils.AngleLerp(head.rot, MathHelper.ToRadians(NPC.velocity.X * 6), 1 / 20f); ;
+        body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(NPC.velocity.X * 3), 1 / 20f); ;
+
+        leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+
+        rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
         AITimer++;
+    }
+
+    void DefaultBody()
+    {
+        body.pos = NPC.Center;
+        body.origin = bodyTexture.Size() * 0.5f;
+        body.rot = NPC.rotation;
+    }
+    void DefaultHead()
+    {
+        head.pos = body.pos - Vector2.UnitY.RotatedBy(NPC.rotation) * bodyTexture.Height() * 0.5f;
+        head.origin = headTexture.Size() * 0.5f;
+        head.rot = NPC.rotation;
+    }
+    void DefaultLeftLeg1()
+    {
+        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(NPC.rotation) * bodyTexture.Height() * 0.4f;
+        leftLeg1.origin = new Vector2(leftLeg1Texture.Width(), 0);
+        leftLeg1.rot = NPC.rotation;
+    }
+    void DefaultLeftLeg2()
+    {
+        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
+        leftLeg2.origin = new Vector2(leftLeg2Texture.Width(), 0);
+        leftLeg2.rot = NPC.rotation;
+    }
+    void DefaultRightLeg1()
+    {
+        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(NPC.rotation) * bodyTexture.Height() * 0.4f;
+        rightLeg1.origin = Vector2.Zero;
+        rightLeg1.rot = NPC.rotation;
+    }
+    void DefaultRightLeg2()
+    {
+        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
+        rightLeg2.origin = Vector2.Zero;
+        rightLeg2.rot = NPC.rotation;
+    }
+
+    void SetDefaultBodyPartValues()
+    {
+        DefaultBody();
+        DefaultHead();
+        DefaultLeftLeg1();
+        DefaultLeftLeg2();
+        DefaultRightLeg1();
+        DefaultRightLeg2();
     }
 
     void SwitchAttacks()
@@ -219,6 +299,7 @@ public class Deathbird : ModNPC
         NPC.velocity = Vector2.Zero;
         if (AITimer == 0)
         {
+            SetDefaultBodyPartValues();
             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen);
         }
 
@@ -239,9 +320,9 @@ public class Deathbird : ModNPC
             }
             PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 90, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f)}, NPC.Center);
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f)}, NPC.Center);
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f)}, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f) }, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f) }, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
         }
     }
 
@@ -250,6 +331,8 @@ public class Deathbird : ModNPC
     void PhaseTransition()
     {
         NPC.dontTakeDamage = true;
+        SetDefaultBodyPartValues();
+        NPC.velocity = Vector2.Zero;
         switch (AttackTimer)
         {
             case < 120:
@@ -296,31 +379,80 @@ public class Deathbird : ModNPC
         return true;
     }
 
+    struct BodyPart
+    {
+        public Vector2 pos = Vector2.Zero;
+        public Vector2 origin = Vector2.Zero;
+        public float rot = 0;
+
+        public BodyPart(Vector2 pos, Vector2 origin, float rot)
+        {
+            this.pos = pos;
+            this.origin = origin;
+            this.rot = rot;
+        }
+    }
+
+    BodyPart body = new BodyPart();
+    BodyPart head = new BodyPart();
+    BodyPart leftLeg1 = new BodyPart();
+    BodyPart leftLeg2 = new BodyPart();
+    BodyPart rightLeg1 = new BodyPart();
+    BodyPart rightLeg2 = new BodyPart();
+
+    Color defaultColor => Color.White * NPC.Opacity;
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         if (NPC.Opacity < 1)
         {
-            return true;
+            return false;
         }
+
+        // Setting up positions and origin
+
+        //NPC.rotation += MathHelper.ToRadians(1);
+        NPC.rotation = 0;
+
+        // Wings
         var shader = GameShaders.Misc["NeoParacosm:DeathbirdWingShader"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["tolerance"].SetValue(0.5f);
         shader.Shader.Parameters["darkColorBoost"].SetValue(darkColorBoost);
         shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.75f);
+
+        // First the "outline"/afterimage/effect wings
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
-        Vector2 drawPos = NPC.Center;
-        Main.EntitySpriteDraw(wingTexture.Value, drawPos - Main.screenPosition, wingTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, NPC.rotation, wingTexture.Frame(1, 5, 0, 0).Size() * 0.5f, NPC.scale * wingScale, SpriteEffects.None, 0);
+        Vector2 wingLeftPos = body.pos;
+        Vector2 wingLeftOrigin = new Vector2(wingsLeftTexture.Frame(1, 5, 0, 0).Width, wingsLeftTexture.Frame(1, 5, 0, 0).Height / 2);
+        Vector2 wingRightPos = body.pos;
+        Vector2 wingRightOrigin = new Vector2(0, wingsRightTexture.Frame(1, 5, 0, 0).Height / 2);
+        Main.EntitySpriteDraw(wingsLeftTexture.Value, wingLeftPos - Main.screenPosition, wingsLeftTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingLeftOrigin, NPC.scale * wingScale, SpriteEffects.None, 0);
+        shader.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
+        Main.EntitySpriteDraw(wingsRightTexture.Value, wingRightPos - Main.screenPosition, wingsRightTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingRightOrigin, NPC.scale * wingScale, SpriteEffects.None, 0);
         Main.spriteBatch.End();
+
+        // Actual wings
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        Main.EntitySpriteDraw(wingTexture.Value, drawPos - Main.screenPosition, wingTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, NPC.rotation, wingTexture.Frame(1, 5, 0, 0).Size() * 0.5f, NPC.scale, SpriteEffects.None, 0);
+        shader.Shader.Parameters["moveSpeed"].SetValue(0.75f);
+        Main.EntitySpriteDraw(wingsLeftTexture.Value, wingLeftPos - Main.screenPosition, wingsLeftTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingLeftOrigin, NPC.scale, SpriteEffects.None, 0);
+        shader.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
+        Main.EntitySpriteDraw(wingsRightTexture.Value, wingRightPos - Main.screenPosition, wingsRightTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingRightOrigin, NPC.scale, SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        return true;
+
+
+        // Body
+        Main.EntitySpriteDraw(bodyTexture.Value, body.pos - Main.screenPosition, null, defaultColor, body.rot, body.origin, NPC.scale, SpriteEffects.None);
+        Main.EntitySpriteDraw(headTexture.Value, head.pos - Main.screenPosition, null, defaultColor, head.rot, head.origin, NPC.scale, SpriteEffects.None);
+        Main.EntitySpriteDraw(leftLeg1Texture.Value, leftLeg1.pos - Main.screenPosition, null, defaultColor, leftLeg1.rot, leftLeg1.origin, NPC.scale, SpriteEffects.None);
+        Main.EntitySpriteDraw(leftLeg2Texture.Value, leftLeg2.pos - Main.screenPosition, null, defaultColor, leftLeg2.rot, leftLeg2.origin, NPC.scale, SpriteEffects.None);
+        Main.EntitySpriteDraw(rightLeg1Texture.Value, rightLeg1.pos - Main.screenPosition, null, defaultColor, rightLeg1.rot, rightLeg1.origin, NPC.scale, SpriteEffects.None);
+        Main.EntitySpriteDraw(rightLeg2Texture.Value, rightLeg2.pos - Main.screenPosition, null, defaultColor, rightLeg2.rot, rightLeg2.origin, NPC.scale, SpriteEffects.None);
+        return false;
     }
 }

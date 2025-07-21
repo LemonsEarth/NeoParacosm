@@ -17,15 +17,11 @@ float4 DeathbirdWingShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD
     float2 centeredCoords = float2(framedCoords.x * 2 - 1, framedCoords.y * 2 - 0.2);
     float lightValue = 1 + length(centeredCoords);
     float darkValue = darkColorBoost + length(centeredCoords);
-    if (framedCoords.x < 0.5)
-    {
-        noiseColor = tex2D(uImage1, float2(framedCoords.x + uTime * moveSpeed, framedCoords.y * 10 + uTime * moveSpeed));
-    }
-    else
-    {
-        noiseColor = tex2D(uImage1, float2(framedCoords.x + -uTime * moveSpeed, framedCoords.y * 10 + uTime * moveSpeed));
-    }
+
+    noiseColor = tex2D(uImage1, float2(framedCoords.x + uTime * moveSpeed, framedCoords.y * 10 + uTime * sign(moveSpeed) * moveSpeed));
+    
     float4 finalColor;
+    
     if (any(textureColor))
     {
         if (noiseColor.r < tolerance)
