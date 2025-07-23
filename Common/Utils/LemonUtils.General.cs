@@ -94,6 +94,25 @@ public static partial class LemonUtils
         return finalPoint;
     }
 
+    public static Vector2 RandomVector2Circular(float circleHalfWidth, float circleHalfHeight, float minWidth = 0, float minHeight = 0)
+    {
+        float width = 0;
+        float height = 0;
+        do
+        {
+            width = Main.rand.NextFloat(-circleHalfWidth, circleHalfWidth);
+        }
+        while (Math.Abs(width) <= minWidth);
+
+        do
+        {
+            height = Main.rand.NextFloat(-circleHalfHeight, circleHalfHeight);
+        }
+        while (Math.Abs(height) <= minHeight);
+
+        return new Vector2(width, height);
+    }
+
     public static void DebugPlayerCenter(Player player)
     {
         Main.NewText("Player Center: " + player.Center);
@@ -102,11 +121,6 @@ public static partial class LemonUtils
     public static void DebugPlayerTileCoords(Player player)
     {
         Main.NewText("Player Tile Coords: " + player.Center.ToTileCoordinates());
-    }
-
-    public static Vector2 RandomUnitVector()
-    {
-        return Vector2.UnitY.RotatedByRandom(6.28f);
     }
 
     public static SpriteEffects SpriteDirectionToSpriteEffects(int spriteDirection)

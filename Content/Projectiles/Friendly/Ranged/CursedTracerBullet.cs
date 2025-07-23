@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Common.Utils;
 using SteelSeries.GameSense.DeviceZone;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -105,10 +106,6 @@ public class CursedTracerBullet : ModProjectile
 
         while (segmentsDrawn < segmentCount)
         {
-            if (drawPos.Distance(Projectile.Center) < 800)
-            {
-                Dust.NewDustPerfect(drawPos, DustID.GemEmerald, Scale: 1.5f).noGravity = true;
-            }
             drawPos += StartToProj * 32;
             Main.EntitySpriteDraw(Texture, drawPos - Main.screenPosition, null, Color.White * Projectile.Opacity, Projectile.rotation, new Vector2(8, 8), Projectile.scale, SpriteEffects.None);
             segmentsDrawn++;
@@ -123,5 +120,6 @@ public class CursedTracerBullet : ModProjectile
     {
         int duration = hit.Crit ? 300 : 60;
         target.AddBuff(BuffID.CursedInferno, duration);
+        LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemEmerald, 2f);
     }
 }

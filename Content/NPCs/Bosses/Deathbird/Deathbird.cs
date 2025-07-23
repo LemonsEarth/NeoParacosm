@@ -5,6 +5,7 @@ using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -58,14 +59,14 @@ public class Deathbird : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 480, 480, 900, 1200, 600 };
+    int[] attackDurations = { 900, 480, 900, 1200, 600 };
     int[] attackDurations2 = { 900, 900, 720, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
     public enum Attacks
     {
-
+        HomingDeathflameBalls,
     }
 
     public enum Attacks2
@@ -138,11 +139,11 @@ public class Deathbird : ModNPC
         }
     }
 
+    int frameDuration = 6;
     public override void FindFrame(int frameHeight)
     {
-        int frameDur = 6;
         NPC.frameCounter += 1;
-        if (NPC.frameCounter > frameDur)
+        if (NPC.frameCounter > frameDuration)
         {
             NPC.frame.Y += frameHeight;
             NPC.frameCounter = 0;
@@ -178,6 +179,13 @@ public class Deathbird : ModNPC
         }
         player = Main.player[NPC.target];
 
+        body.pos = NPC.Center;
+        head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
+        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
+        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
+        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
+        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
+
         DespawnCheck();
         if (AITimer < INTRO_DURATION)
         {
@@ -201,23 +209,26 @@ public class Deathbird : ModNPC
             return;
         }
 
-        body.pos = NPC.Center;
-        head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
-        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
-        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
-        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
-        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
+        if (phase == 1)
+        {
+            switch (Attack)
+            {
+                case (int)Attacks.HomingDeathflameBalls:
+                    HomingDeathfireBalls();
+                    break;
+            }
+        }
+        else if (phase == 2)
+        {
 
-        NPC.velocity.X = (float)Math.Sin(AITimer / 24) * 8;
+        }
 
-        head.rot = Utils.AngleLerp(head.rot, MathHelper.ToRadians(NPC.velocity.X * 6), 1 / 20f); ;
-        body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(NPC.velocity.X * 3), 1 / 20f); ;
+        attackDuration--;
+        if (attackDuration <= 0)
+        {
+            SwitchAttacks();
+        }
 
-        leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
-        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
-
-        rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
-        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
         AITimer++;
     }
 
@@ -257,7 +268,6 @@ public class Deathbird : ModNPC
         rightLeg2.origin = Vector2.Zero;
         rightLeg2.rot = NPC.rotation;
     }
-
     void SetDefaultBodyPartValues()
     {
         DefaultBody();
@@ -267,12 +277,24 @@ public class Deathbird : ModNPC
         DefaultRightLeg1();
         DefaultRightLeg2();
     }
+    void BasicMovementAnimation()
+    {
+        head.rot = Utils.AngleLerp(head.rot, MathHelper.ToRadians(NPC.velocity.X * 6), 1 / 20f);
+        body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(NPC.velocity.X * 3), 1 / 20f);
+
+        leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+
+        rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+    }
 
     void SwitchAttacks()
     {
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
             Attack++;
+            Attack = 0;
             if (phase == 1) attackDuration = attackDurations[(int)Attack];
             else attackDuration = attackDurations2[(int)Attack];
 
@@ -281,6 +303,68 @@ public class Deathbird : ModNPC
             NPC.Opacity = 1f;
         }
         NPC.netUpdate = true;
+    }
+
+    const int HomingDeathfireBallsDuration = 330;
+    const int HomingDeathfireBallsMoveTime = 240;
+    const int HomingDeathfireBallsFireTime = 150;
+    void HomingDeathfireBalls()
+    {
+        Main.NewText(AttackTimer);
+        Main.NewText("Duration: " + attackDuration);
+        BasicMovementAnimation();
+        switch (AttackTimer)
+        {
+            case HomingDeathfireBallsDuration:
+                int minYValue = AttackCount % 2 == 0 ? -500 : -250;
+                int maxYValue = AttackCount % 2 == 0 ? 250 : 500;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    targetPosition = NPC.Center + new Vector2(Main.rand.Next(-250, 250), Main.rand.Next(minYValue, maxYValue));
+                }
+                AttackCount++;
+                NPC.netUpdate = true;
+                break;
+            case > HomingDeathfireBallsMoveTime:
+                frameDuration = 6;
+                NPC.MoveToPos(targetPosition, 0.3f, 0.3f, 0.2f, 0.2f);
+                break;
+            case > HomingDeathfireBallsFireTime:
+                frameDuration = 24;
+                NPC.velocity *= 0.99f;
+                if (AttackTimer % 60 == 0)
+                {
+                    foreach (var pl in Main.ActivePlayers)
+                    {
+                        if (pl.Distance(NPC.Center) < 2000)
+                        {
+                            pl.velocity += pl.DirectionTo(NPC.Center) * pl.Distance(NPC.Center) / 50f;
+                        }
+                    }
+                }
+                break;
+            case HomingDeathfireBallsFireTime:   
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < 3 * LemonUtils.GetDifficulty(); i++)
+                    {
+                        Vector2 velocity = Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(2, 5);
+                        LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), ai0: 60, ai1: NPC.target);
+                    }
+                }
+                break;
+            case > HomingDeathfireBallsFireTime - 90:
+                NPC.velocity *= 0.98f;
+                frameDuration = 999;
+                break;
+            case > 0:
+                frameDuration = 6;
+                break;
+            case 0:
+                AttackTimer = HomingDeathfireBallsDuration;
+                return;
+        }
+        AttackTimer--;
     }
 
     void DespawnCheck()
@@ -324,6 +408,7 @@ public class Deathbird : ModNPC
             SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f) }, NPC.Center);
             SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
         }
+        attackDuration = attackDurations[(int)Attack];
     }
 
     float wingScale = 1.05f;
