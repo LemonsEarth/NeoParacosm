@@ -24,7 +24,7 @@ public class DeathflameBall : ModProjectile
         Projectile.ignoreWater = false;
         Projectile.tileCollide = false;
         Projectile.penetrate = 3;
-        Projectile.timeLeft = 360;
+        Projectile.timeLeft = 240;
         Projectile.scale = 1f;
         Projectile.aiStyle = 0;
     }
@@ -38,6 +38,7 @@ public class DeathflameBall : ModProjectile
         {
             maxSpeed = Projectile.velocity.Length() * 2;
             currentSpeed = Projectile.velocity.Length();
+            LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 3f);
         }
         Player player = Main.player[(int)playerID];
         if (player.Alive() && AITimer > WaitTime)
@@ -52,8 +53,8 @@ public class DeathflameBall : ModProjectile
 
         for (float i = 0; i < 1 + Projectile.velocity.Length() / 3f; i++)
         {
-            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
-            Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 2f).noGravity = true;
+            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(1, 2), newColor: Color.Black).noGravity = true;
+            Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
         }
         AITimer++;
     }

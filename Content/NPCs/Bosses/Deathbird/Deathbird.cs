@@ -59,7 +59,7 @@ public class Deathbird : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 900, 480, 900, 1200, 600 };
+    int[] attackDurations = { 900, 900, 900, 1200, 600 };
     int[] attackDurations2 = { 900, 900, 720, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
@@ -67,6 +67,7 @@ public class Deathbird : ModNPC
     public enum Attacks
     {
         HomingDeathflameBalls,
+        HoverLingeringFlame,
     }
 
     public enum Attacks2
@@ -116,8 +117,8 @@ public class Deathbird : ModNPC
 
     public override void SetDefaults()
     {
-        NPC.width = 40;
-        NPC.height = 40;
+        NPC.width = 80;
+        NPC.height = 80;
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
@@ -216,6 +217,9 @@ public class Deathbird : ModNPC
                 case (int)Attacks.HomingDeathflameBalls:
                     HomingDeathfireBalls();
                     break;
+                case (int)Attacks.HoverLingeringFlame:
+                    HoverLingeringFlame();
+                    break;
             }
         }
         else if (phase == 2)
@@ -291,10 +295,10 @@ public class Deathbird : ModNPC
 
     void SwitchAttacks()
     {
+        SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.8f, 1f) }, NPC.Center);
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
             Attack++;
-            Attack = 0;
             if (phase == 1) attackDuration = attackDurations[(int)Attack];
             else attackDuration = attackDurations2[(int)Attack];
 
@@ -310,8 +314,6 @@ public class Deathbird : ModNPC
     const int HomingDeathfireBallsFireTime = 150;
     void HomingDeathfireBalls()
     {
-        Main.NewText(AttackTimer);
-        Main.NewText("Duration: " + attackDuration);
         BasicMovementAnimation();
         switch (AttackTimer)
         {
@@ -343,7 +345,7 @@ public class Deathbird : ModNPC
                     }
                 }
                 break;
-            case HomingDeathfireBallsFireTime:   
+            case HomingDeathfireBallsFireTime:
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < 3 * LemonUtils.GetDifficulty(); i++)
@@ -362,6 +364,49 @@ public class Deathbird : ModNPC
                 break;
             case 0:
                 AttackTimer = HomingDeathfireBallsDuration;
+                return;
+        }
+        AttackTimer--;
+    }
+
+    const int HoverLingeringFlameDuration = 300;
+    const int HoverLingeringFlameInterval = 20;
+    void HoverLingeringFlame()
+    {
+        BasicMovementAnimation();
+        switch (AttackTimer)
+        {
+            case HoverLingeringFlameDuration:
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
+                NPC.Center = player.Center - Vector2.UnitY * 300;
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = -8; i <= 8; i++)
+                    {
+                        Vector2 pos = NPC.Center + Vector2.UnitX * i * 100;
+                        LemonUtils.QuickProj(NPC, pos, Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), ai0: player.whoAmI);
+                    }
+                }
+                break;
+            case > HoverLingeringFlameDuration - 60:
+                NPC.velocity = Vector2.Zero;
+                break;
+            case > 0:
+                NPC.MoveToPos(player.Center - Vector2.UnitY * 300, 0.2f, 0.2f, 0.2f, 0.2f);
+                if (AttackTimer % HoverLingeringFlameInterval == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>());
+                        }
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = HoverLingeringFlameDuration;
                 return;
         }
         AttackTimer--;
@@ -398,10 +443,7 @@ public class Deathbird : ModNPC
         else if (AITimer == INTRO_DURATION - 120)
         {
             NPC.Opacity = 1f;
-            for (int i = 0; i < 4; i++)
-            {
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));
-            }
+            LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));
             PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 90, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
             SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f) }, NPC.Center);

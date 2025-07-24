@@ -90,7 +90,7 @@ public class ShadowOrbNPC : ModNPC
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
     {
-        savedDamage = hit.Damage * 2;
+        savedDamage = hit.Damage;
         crit = hit.Crit;
     }
 
