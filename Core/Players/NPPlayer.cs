@@ -51,7 +51,7 @@ public class NPPlayer : ModPlayer
         timer++;
     }
 
-    float maxDesaturateValue = 0.8f;
+    float maxDesaturateValue = 0.6f;
     public override void PostUpdateMiscEffects()
     {
         if (Player.InModBiome<DeadForestBiome>())

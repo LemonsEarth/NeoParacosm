@@ -3,13 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.None;
+namespace NeoParacosm.Content.Projectiles.Hostile;
 
-public class DragonRemainsPulseShield : ModProjectile
+public class SuckyProjectile : ModProjectile
 {
     public override string Texture => "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
 
-    ref float AITimer => ref Projectile.ai[0];
+    int AITimer = 0;
+    ref float distance => ref Projectile.ai[0];
+    ref float strengthDenominator => ref Projectile.ai[1];
+    ref float duration => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -32,25 +35,37 @@ public class DragonRemainsPulseShield : ModProjectile
 
     public override void AI()
     {
-        if (NPC.downedBoss2)
+        if (AITimer <= duration)
         {
-            Projectile.Kill();
+            foreach (var pl in Main.ActivePlayers)
+            {
+                if (pl.Distance(Projectile.Center) < distance)
+                {
+                    pl.velocity += pl.DirectionTo(Projectile.Center) * pl.Distance(Projectile.Center) / strengthDenominator;
+                }
+            }
         }
         Projectile.velocity = Vector2.Zero;
         AITimer++;
     }
 
+    float speed = -2f;
+    float cycleDuration = 100f;
     public override bool PreDraw(ref Color lightColor)
     {
+        if (AITimer > cycleDuration / Math.Abs(speed))
+        {
+            return false;
+        }
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
-        shader.Shader.Parameters["time"].SetValue(0.99f); // constant size of shield
-        shader.Shader.Parameters["alwaysVisible"].SetValue(true);
-        shader.Shader.Parameters["speed"].SetValue(1f);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(1f);
+        shader.Shader.Parameters["time"].SetValue(AITimer / cycleDuration); // constant size of shield
+        shader.Shader.Parameters["alwaysVisible"].SetValue(false);
+        shader.Shader.Parameters["speed"].SetValue(speed);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(2f);
         float sinValue = ((float)Math.Sin(AITimer / 24) + 2) * 0.25f; // fades in and out on repeat
-        shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4() * sinValue);
+        shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4() * sinValue);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();

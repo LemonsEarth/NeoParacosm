@@ -53,7 +53,7 @@ public class DeathflameBall : ModProjectile
 
         for (float i = 0; i < 1 + Projectile.velocity.Length() / 3f; i++)
         {
-            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(1, 2), newColor: Color.Black).noGravity = true;
+            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
             Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
         }
         AITimer++;
@@ -66,11 +66,6 @@ public class DeathflameBall : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(BuffID.Bleeding, 600);
-
-        if (Main.rand.NextBool(3))
-        {
-            target.AddBuff(BuffID.Ichor, 300);
-        }
+        
     }
 }

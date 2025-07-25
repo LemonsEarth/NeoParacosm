@@ -5,7 +5,7 @@ float uProgress;
 float4 DesaturateShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    float luminance = dot(color.rgb, float3(0.299 / 2, 0.587 / 2, 0.114 / 2));
+    float luminance = dot(color.rgb, float3(0.299, 0.587, 0.114));
     float3 gray = float3(luminance, luminance, luminance);
     float4 desaturatedColor = float4(0, 0, 0, 1);
     desaturatedColor.rgb = lerp(color.rgb, gray, uProgress);

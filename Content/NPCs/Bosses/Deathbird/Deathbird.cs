@@ -125,7 +125,7 @@ public class Deathbird : ModNPC
         NPC.lifeMax = 12000;
         NPC.defense = 13;
         NPC.damage = 40;
-        NPC.HitSound = SoundID.NPCHit1;
+        NPC.HitSound = SoundID.DD2_SkeletonHurt;
         NPC.DeathSound = SoundID.NPCDeath52;
         NPC.value = 150000;
         NPC.noTileCollide = true;
@@ -295,7 +295,7 @@ public class Deathbird : ModNPC
 
     void SwitchAttacks()
     {
-        SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.8f, 1f) }, NPC.Center);
+        PlayRoar();
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
             Attack++;
@@ -336,12 +336,10 @@ public class Deathbird : ModNPC
                 NPC.velocity *= 0.99f;
                 if (AttackTimer % 60 == 0)
                 {
-                    foreach (var pl in Main.ActivePlayers)
+                    SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (pl.Distance(NPC.Center) < 2000)
-                        {
-                            pl.velocity += pl.DirectionTo(NPC.Center) * pl.Distance(NPC.Center) / 50f;
-                        }
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), ai0: 1500, ai1: 50, ai2: 0);
                     }
                 }
                 break;
@@ -374,18 +372,20 @@ public class Deathbird : ModNPC
     void HoverLingeringFlame()
     {
         BasicMovementAnimation();
+        frameDuration = 6;
         switch (AttackTimer)
         {
             case HoverLingeringFlameDuration:
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
                 NPC.Center = player.Center - Vector2.UnitY * 300;
                 LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
+                SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = -8; i <= 8; i++)
                     {
                         Vector2 pos = NPC.Center + Vector2.UnitX * i * 100;
-                        LemonUtils.QuickProj(NPC, pos, Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), ai0: player.whoAmI);
+                        LemonUtils.QuickProj(NPC, pos, new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(2, 4)), ProjectileType<LingeringDeathflame>(), ai0: player.whoAmI);
                     }
                 }
                 break;
@@ -429,7 +429,7 @@ public class Deathbird : ModNPC
         if (AITimer == 0)
         {
             SetDefaultBodyPartValues();
-            SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen);
+            SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen with { PitchRange = (0.2f, 0.5f) }, NPC.Center);
         }
 
         if (AITimer < INTRO_DURATION - 120)
@@ -437,18 +437,20 @@ public class Deathbird : ModNPC
             NPC.Opacity = 0f;
             for (int i = 0; i < 2; i++)
             {
-                Dust.NewDustDirect(NPC.RandomPos(16, 16), 2, 2, DustID.Ash, Scale: Main.rand.NextFloat(1f, 4f)).noGravity = true; ;
+                Dust.NewDustDirect(NPC.RandomPos(16, 16), 2, 2, DustID.Ash, Scale: Main.rand.NextFloat(1f, 4f), newColor: Color.Black).noGravity = true;
+                Dust.NewDustDirect(NPC.RandomPos(16, 16), 2, 2, DustID.GemDiamond, Scale: Main.rand.NextFloat(1f, 4f), newColor: Color.White).noGravity = true;
             }
         }
         else if (AITimer == INTRO_DURATION - 120)
         {
             NPC.Opacity = 1f;
-            LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));
+            for (int i = 0; i < 3; i++)
+            {
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(2f, 4f));
+            }
             PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 90, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f) }, NPC.Center);
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f) }, NPC.Center);
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+            PlayRoar();
         }
         attackDuration = attackDurations[(int)Attack];
     }
@@ -474,9 +476,7 @@ public class Deathbird : ModNPC
                 LemonUtils.DustCircle(NPC.Center, 24, 24, DustID.GemDiamond, 8f);
                 PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 90, 1000f, FullName);
                 Main.instance.CameraModifiers.Add(mod1);
-                SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.1f, 0f) }, NPC.Center);
-                SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.6f, 0.9f) }, NPC.Center);
-                SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+                PlayRoar();
                 break;
             case 300:
                 phase = 2;
@@ -504,6 +504,13 @@ public class Deathbird : ModNPC
     public override bool? CanFallThroughPlatforms()
     {
         return true;
+    }
+
+    void PlayRoar()
+    {
+        SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0f, 1f) }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.2f, 0.4f) }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.5f, 0.7f) }, NPC.Center);
     }
 
     struct BodyPart
