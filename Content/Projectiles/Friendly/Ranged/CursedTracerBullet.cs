@@ -96,6 +96,7 @@ public class CursedTracerBullet : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        if (AITimer < 2) return false;
         Texture2D Texture = TextureAssets.Projectile[Type].Value;
 
         Vector2 drawPos = StartPos;

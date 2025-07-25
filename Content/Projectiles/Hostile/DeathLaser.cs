@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
-public class DoomLaser : ModProjectile
+public class DeathLaser : ModProjectile
 {
     int AITimer = 0;
     ref float Size => ref Projectile.ai[0];
@@ -98,6 +98,7 @@ public class DoomLaser : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        if (AITimer < 2) return false;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(texture.Size().X / 2, 0f);
         Vector2 drawPos = Projectile.Center;

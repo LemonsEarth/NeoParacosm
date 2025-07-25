@@ -11,7 +11,6 @@ float darkColorBoost;
 float4 DeathbirdWingShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
     float2 framedCoords = float2(coords.x, coords.y * 0.2);
-    float2 noiseCoords = uImageSize1 / uImageSize1.y;
     float4 textureColor = tex2D(uImage0, coords);
     float4 noiseColor = float4(0, 0, 0, 0);
     float2 centeredCoords = float2(framedCoords.x * 2 - 1, framedCoords.y * 2 - 0.2);
