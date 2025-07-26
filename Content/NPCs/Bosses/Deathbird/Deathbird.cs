@@ -5,6 +5,7 @@ using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -40,7 +41,7 @@ public class Deathbird : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 2 : 3;
+            int maxVal = phase == 1 ? 3 : 3;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -59,7 +60,7 @@ public class Deathbird : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 900, 900, 720, 1200, 600 };
+    int[] attackDurations = { 900, 900, 720, 600, 600 };
     int[] attackDurations2 = { 900, 900, 720, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
@@ -71,6 +72,7 @@ public class Deathbird : ModNPC
         HomingDeathflameBalls,
         HoverLingeringFlame,
         LaserFeathers,
+        Grab,
     }
 
     public enum Attacks2
@@ -174,7 +176,6 @@ public class Deathbird : ModNPC
     }
 
     int INTRO_DURATION = 300;
-    int TRANSITION_DURATION = 300;
     public override void AI()
     {
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -225,6 +226,9 @@ public class Deathbird : ModNPC
                     break;
                 case (int)Attacks.LaserFeathers:
                     LaserFeathers();
+                    break;
+                case (int)Attacks.Grab:
+                    Grab();
                     break;
             }
         }
@@ -461,6 +465,109 @@ public class Deathbird : ModNPC
                 return;
         }
 
+        AttackTimer--;
+    }
+
+    int grabProjIdentity = -1;
+
+    const int GrabDuration = 600;
+    const int GrabPrepTime = 480;
+    const int GrabEndTime = 450;
+    Vector2 grabOffset => Vector2.UnitY.RotatedBy(body.rot - MathHelper.PiOver2) * bodyTexture.Height();
+    void Grab()
+    {
+        switch (AttackTimer)
+        {
+            case GrabDuration:
+                SetDefaultBodyPartValues();
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
+                NPC.Center = player.Center - Vector2.UnitY * 300;
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
+                SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
+                break;
+            case > GrabPrepTime:
+                targetPosition = player.DirectionTo(NPC.Center);
+                NPC.velocity = targetPosition * 2;
+
+                head.rot = Utils.AngleLerp(head.rot, targetPosition.ToRotation() + MathHelper.PiOver2, 1 / 20f);
+                body.rot = Utils.AngleLerp(body.rot, targetPosition.ToRotation() + MathHelper.PiOver2, 1 / 20f);
+
+                leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, body.rot + MathHelper.ToRadians(24), 1 / 40f);
+                leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, body.rot + MathHelper.ToRadians(20), 1 / 40f);
+
+                rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, body.rot + MathHelper.ToRadians(-24), 1 / 40f);
+                rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, body.rot + MathHelper.ToRadians(-20), 1 / 40f);
+                break;
+            case GrabPrepTime:
+                PlayRoar();
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    grabProjIdentity = LemonUtils.QuickProj(NPC, NPC.Center + grabOffset, Vector2.Zero, ProjectileType<DeathbirdGrab>(), 1, ai0: NPC.whoAmI).identity;
+                }
+                NPC.netUpdate = true;
+                break;
+            case > 300:
+                Projectile grabProj = Main.projectile.FirstOrDefault(p => p.identity == grabProjIdentity);
+                grabProj.Center = NPC.Center + grabOffset.RotatedBy(MathHelper.PiOver2);
+                if (AttackTimer > GrabEndTime)
+                {
+                    head.rot = Utils.AngleLerp(head.rot, targetPosition.ToRotation() + MathHelper.PiOver2, 1 / 20f);
+                    body.rot = Utils.AngleLerp(body.rot, targetPosition.ToRotation() + MathHelper.PiOver2, 1 / 20f);
+
+                    leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, -body.rot, 1 / 20f);
+                    leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, body.rot + MathHelper.ToRadians(-60), 1 / 20f);
+
+                    rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, body.rot, 1 / 20f);
+                    rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, body.rot + MathHelper.ToRadians(60), 1 / 20f);
+                    NPC.velocity = -targetPosition * 25; // target position = playerToNPC
+                }
+                else
+                {
+                    NPC.velocity *= 0.9f;
+                    head.rot = Utils.AngleLerp(head.rot, MathHelper.ToRadians(NPC.velocity.X * 6), 1 / 20f);
+                    body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(NPC.velocity.X * 3), 1 / 20f);
+
+                    leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+                    leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, body.rot + MathHelper.ToRadians(-60), 1 / 20f);
+
+                    rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(NPC.velocity.X * 10), 1 / 20f);
+                    rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, body.rot + MathHelper.ToRadians(60), 1 / 20f);
+
+                    if (AITimer % 15 == 0)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            for (int i = 0; i < LemonUtils.GetDifficulty(); i++)
+                            {
+                                Vector2 velocity = Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2);
+                                LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 20, ai1: NPC.target);
+                            }
+                        }
+                    }
+                }
+                break;
+            case 300:
+                SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.7f, 1f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.4f, 0.9f) }, NPC.Center);
+                break;
+            case > 0:
+                BasicMovementAnimation();
+                if (AITimer % 30 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        for (int i = 0; i < 2 * LemonUtils.GetDifficulty(); i++)
+                        {
+                            Vector2 velocity = Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(8, 10);
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 9999, ai1: NPC.target);
+                        }
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = GrabDuration;
+                return;
+        }
         AttackTimer--;
     }
 

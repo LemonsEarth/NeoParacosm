@@ -6,9 +6,16 @@ namespace NeoParacosm.Core.Players;
 
 public class NPBuffPlayer : ModPlayer
 {
+    public bool grabbed { get; set; } = false;
+
+    public override bool CanUseItem(Item item)
+    {
+        return !grabbed;
+    }
+
     public override void ResetEffects()
     {
-
+        grabbed = false;
     }
 
     public override void PostUpdateBuffs()
