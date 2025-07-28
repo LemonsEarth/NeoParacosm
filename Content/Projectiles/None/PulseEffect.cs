@@ -3,16 +3,16 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.None;
 
-public class SuckyProjectile : ModProjectile
+public class PulseEffect : ModProjectile
 {
     public override string Texture => "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
 
     int AITimer = 0;
-    ref float distance => ref Projectile.ai[0];
-    ref float strengthDenominator => ref Projectile.ai[1];
-    ref float duration => ref Projectile.ai[2];
+    ref float Speed => ref Projectile.ai[0];
+    ref float Scale => ref Projectile.ai[1];
+    ref float ColorMult => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -35,40 +35,27 @@ public class SuckyProjectile : ModProjectile
 
     public override void AI()
     {
-        if (AITimer <= duration)
-        {
-            foreach (var pl in Main.ActivePlayers)
-            {
-                if (pl.Distance(Projectile.Center) < distance)
-                {
-                    pl.velocity += pl.DirectionTo(Projectile.Center) * pl.Distance(Projectile.Center) / strengthDenominator;
-                }
-            }
-        }
+        if (Scale == 0) Scale = 1;
+        if (Speed == 0) Speed = 1;
         Projectile.velocity = Vector2.Zero;
+        if (AITimer > 60 / Speed) Projectile.Kill();
         AITimer++;
     }
 
-    float speed = -2f;
-    float cycleDuration = 100f;
     public override bool PreDraw(ref Color lightColor)
     {
-        if (AITimer > cycleDuration / Math.Abs(speed))
-        {
-            return false;
-        }
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
-        shader.Shader.Parameters["time"].SetValue(AITimer / cycleDuration); // constant size of shield
+        shader.Shader.Parameters["time"].SetValue(AITimer / 60f); // constant size of shield
         shader.Shader.Parameters["alwaysVisible"].SetValue(false);
-        shader.Shader.Parameters["speed"].SetValue(speed);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(2f);
+        shader.Shader.Parameters["speed"].SetValue(Speed);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(ColorMult);
         shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 10, SpriteEffects.None, 0);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         return false;

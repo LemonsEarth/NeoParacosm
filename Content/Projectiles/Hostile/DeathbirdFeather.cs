@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Core.Systems;
+using System.Linq;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -61,6 +62,12 @@ public class DeathbirdFeather : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
+
+        // Indicator
+        Vector2 indicatorOrigin = new Vector2(texture.Width * 0.5f, texture.Height);
+        float indicatorPercentComplete = AITimer / TimeToFire;
+        float indicatorScale = indicatorPercentComplete * 5;
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White * indicatorPercentComplete * 0.35f, Projectile.rotation, indicatorOrigin, new Vector2(1, indicatorScale), SpriteEffects.None, 0);
 
         var shader = GameShaders.Misc["NeoParacosm:DeathbirdWingShader"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
