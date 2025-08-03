@@ -72,7 +72,7 @@ public class AscendedVilethornHeldProj : ModProjectile
                         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, trackingPos);
                         for (int i = 0; i < 8; i++)
                         {
-                            LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ModContent.ProjectileType<VilethornFriendly>());
+                            LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ModContent.ProjectileType<VilethornFriendly>(), Projectile.damage / 2);
                         }
                     }
                 }

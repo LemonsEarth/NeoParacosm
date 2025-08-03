@@ -8,6 +8,11 @@ namespace NeoParacosm;
 // Please read https://github.com/tModLoader/tModLoader/wiki/Basic-tModLoader-Modding-Guide#mod-skeleton-contents for more information about the various files in a mod.
 public class NeoParacosm : Mod
 {
+    public NeoParacosm()
+    {
+        MusicSkipsVolumeRemap = true;
+    }
+
     public override void Load()
     {
         LoadFilterShader("ScreenTintShader", "Common/Assets/Shaders/ScreenTintShader", EffectPriority.Medium);

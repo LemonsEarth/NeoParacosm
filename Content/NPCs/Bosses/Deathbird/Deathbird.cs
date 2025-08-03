@@ -163,7 +163,7 @@ public class Deathbird : ModNPC
 
         if (!Main.dedServ)
         {
-            //Music = MusicLoader.GetMusicSlot(Mod, "Content/Audio/Music/AnotherSamePlace");
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/Gravefield");
         }
     }
 
@@ -256,7 +256,7 @@ public class Deathbird : ModNPC
         }
         else if (phase == 2)
         {
-
+            darkColorBoost = (float)Math.Sin(AITimer / 20f) * 0.5f + 1f;
         }
 
         attackDuration--;
@@ -318,14 +318,15 @@ public class Deathbird : ModNPC
         float headRot = MathHelper.Clamp(NPC.velocity.X * 6, -90, 90);
         float bodyRot = MathHelper.Clamp(NPC.velocity.X * 3, -60, 60);
         float legRot = MathHelper.Clamp(NPC.velocity.X * 10, -75, 75);
+        float leg2Rot = MathHelper.Clamp(NPC.velocity.X * 10, -90, 90);
         head.rot = Utils.AngleLerp(head.rot, MathHelper.ToRadians(headRot), 1 / 20f);
         body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(bodyRot), 1 / 20f);
 
         leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(legRot), 1 / 20f);
-        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(legRot), 1 / 20f);
+        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 15f);
 
         rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(legRot), 1 / 20f);
-        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(legRot), 1 / 20f);
+        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 15f);
     }
 
     void SwitchAttacks()

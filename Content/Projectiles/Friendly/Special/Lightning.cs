@@ -89,7 +89,6 @@ public class Lightning : ModProjectile
             originalPos = Projectile.Center;
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f) });
             SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f) });
-            SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f) });
             Vector2 projToPos = targetPos - Projectile.Center;
             float spacing = projToPos.Length() / (20 / 2);
             bool flip = true;

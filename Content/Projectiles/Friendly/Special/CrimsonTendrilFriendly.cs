@@ -149,41 +149,36 @@ public class CrimsonTendrilFriendly : ModProjectile
 
     }
 
+    float controlPointDirection = 1;
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D tendrilTexture = TextureAssets.Projectile[Type].Value;
         Texture2D bodyTex = bodyTexture.Value;
         Player player = Main.player[Projectile.owner];
-        int halfHeight = 9;
-        Vector2 drawOrigin = new Vector2(halfHeight, halfHeight);
-        Vector2 drawOriginBody = new Vector2(5, 5);
 
-        float projDistanceToPlayer = Projectile.Center.Distance(player.Center);
-        int maxSegments = (int)projDistanceToPlayer / 5;
-        maxSegments = Math.Clamp(maxSegments, 1, 100);
-        float curveDirection = 1f;
-        if (closestNPC == null || !closestNPC.active)
-        {
-            curveDirection = player.direction;
-        }
-        Vector2 bezierControlPoint = Projectile.Center + Projectile.Center.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(45 * curveDirection)) * 50;
-        Vector2 drawPosition = Projectile.Center;
-
-        float posDistanceToPlayer = drawPosition.Distance(player.Center);
-        int segmentCount = 1;
-
-        segmentCount += maxSegments / 10;
-
+        Vector2 playerToProj = player.Center.DirectionTo(Projectile.Center);
+        Vector2 drawPos = player.Center;
+        float maxDistance = player.Distance(Projectile.Center);
+        float distanceLeft = maxDistance;
+        float segmentCount = 0;
+        int maxSegments = (int)(maxDistance / (bodyTex.Size().Length() * 0.3f));
+        int goalControlPointDirection = playerToProj.X >= 0 ? 1 : -1;
+        controlPointDirection = MathHelper.Lerp(controlPointDirection, goalControlPointDirection, 1 / 20f);
+        Vector2 bezierControlPoint = player.Center + playerToProj.RotatedBy(MathHelper.ToRadians(45 * controlPointDirection)) * (maxDistance / 2);
         while (segmentCount < maxSegments)
         {
-            drawPosition = LemonUtils.BezierCurve(Projectile.Center, player.Center, bezierControlPoint, (float)segmentCount / maxSegments);
-            Vector2 nextPosition = LemonUtils.BezierCurve(Projectile.Center, player.Center, bezierControlPoint, (float)segmentCount + 1 / maxSegments);
+            float segmentProgress = segmentCount / maxSegments;
+            float nextSegmentProgress = (segmentCount + 1) / maxSegments;
+            distanceLeft -= bodyTex.Height;
+            drawPos = LemonUtils.BezierCurve(player.Center, Projectile.Center, bezierControlPoint, segmentProgress);
+            Vector2 nextPos = LemonUtils.BezierCurve(player.Center, Projectile.Center, bezierControlPoint, nextSegmentProgress);
+            float rotation = drawPos.DirectionTo(nextPos).ToRotation() + MathHelper.PiOver2;
+            float scale = Math.Clamp(segmentCount, 0, maxSegments / 3) / (maxSegments / 3);
+            Main.EntitySpriteDraw(bodyTex, drawPos - Main.screenPosition, null, Color.White, rotation + MathHelper.PiOver2, bodyTex.Size() * 0.5f, Projectile.scale, SpriteEffects.None);
             segmentCount++;
-            posDistanceToPlayer = drawPosition.Distance(player.Center);
-            Main.EntitySpriteDraw(bodyTex, drawPosition - Main.screenPosition, null, lightColor * segmentCount, drawPosition.DirectionTo(nextPosition).ToRotation() + MathHelper.Pi, drawOriginBody, Projectile.scale, SpriteEffects.None);
         }
-        Vector2 secondPos = LemonUtils.BezierCurve(Projectile.Center, player.Center, bezierControlPoint, 2f / maxSegments); // used for rotation
-        Main.EntitySpriteDraw(tendrilTexture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.Center.DirectionTo(secondPos).ToRotation() + MathHelper.Pi, drawOrigin, Projectile.scale, SpriteEffects.None);
+        Vector2 secondPos = LemonUtils.BezierCurve(player.Center, Projectile.Center, bezierControlPoint, 1.2f);
+        Main.EntitySpriteDraw(tendrilTexture, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.DirectionTo(secondPos).ToRotation(), tendrilTexture.Size() * 0.5f, Projectile.scale, SpriteEffects.None);
 
         return false;
     }
