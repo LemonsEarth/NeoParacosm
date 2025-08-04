@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.None;
 using NeoParacosm.Core.Systems;
@@ -63,7 +64,7 @@ public class Deathbird : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 3 : 3;
+            int maxVal = phase == 1 ? 3 : 0;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -83,7 +84,7 @@ public class Deathbird : ModNPC
 
     float attackDuration = 0;
     int[] attackDurations = { 900, 900, 720, 600, 600 };
-    int[] attackDurations2 = { 900, 900, 720, 720, 900, 1080, 960 };
+    int[] attackDurations2 = { 1200, 600, 720, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
@@ -99,7 +100,7 @@ public class Deathbird : ModNPC
 
     public enum Attacks2
     {
-
+        FeatherRain,
     }
 
     public override void Load()
@@ -149,8 +150,8 @@ public class Deathbird : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
-        NPC.lifeMax = 12000;
-        NPC.defense = 13;
+        NPC.lifeMax = 10000;
+        NPC.defense = 15;
         NPC.damage = 40;
         NPC.HitSound = SoundID.DD2_SkeletonHurt;
         NPC.DeathSound = SoundID.NPCDeath52;
@@ -257,6 +258,12 @@ public class Deathbird : ModNPC
         else if (phase == 2)
         {
             darkColorBoost = (float)Math.Sin(AITimer / 20f) * 0.5f + 1f;
+            switch (Attack)
+            {
+                case (int)Attacks2.FeatherRain:
+                    FeatherRain();
+                    break;
+            }
         }
 
         attackDuration--;
@@ -323,10 +330,10 @@ public class Deathbird : ModNPC
         body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(bodyRot), 1 / 20f);
 
         leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(legRot), 1 / 20f);
-        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 15f);
+        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 10f);
 
         rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(legRot), 1 / 20f);
-        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 15f);
+        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 10f);
     }
 
     void SwitchAttacks()
@@ -598,6 +605,52 @@ public class Deathbird : ModNPC
         AttackTimer--;
     }
 
+    const int FeatherRainDuration = 600;
+    const int FeatherRainWindUpTime = 480;
+    const int FeatherRainUpTime = 360;
+    const int FeatherRainRainTime = 60;
+    void FeatherRain()
+    {
+        BasicMovementAnimation();
+
+        switch (AttackTimer)
+        {
+            case FeatherRainDuration:
+                NPC.velocity = Vector2.Zero;
+                frameDuration = 12;
+                break;
+            case FeatherRainWindUpTime:
+                PlayRoar();
+                frameDuration = 999;
+                break;
+            case > FeatherRainUpTime:
+                if (AttackTimer % 5 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.RandomPos(), -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(50, 60), ProjectileType<DeathbirdFeatherFX>());
+                    }
+                }
+                NPC.velocity.X = (float)Math.Sin(AttackTimer / 30f) * 5;
+                break;
+            case > FeatherRainRainTime:
+                NPC.velocity *= 0.9f;
+                frameDuration = 6;
+                if (AttackTimer % 15 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        LemonUtils.QuickProj(NPC, player.Center + new Vector2(Main.rand.Next(-500, 500), -800), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(25, 35), ProjectileType<DeathbirdFeather>(), projDamage, ai0: 75 - (LemonUtils.GetDifficulty() * 5), ai1: 3);
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = FeatherRainDuration;
+                return;
+        }
+        AttackTimer--;
+    }
+
     void DespawnCheck()
     {
         if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 5000)
@@ -675,6 +728,15 @@ public class Deathbird : ModNPC
                 }
                 break;
             case < PhaseTransitionDuration:
+                if (AITimer % 20 == 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 pos = NPC.Center - (Vector2.UnitY * 300).RotatedBy(i * MathHelper.ToRadians(120));
+                        LemonUtils.DustCircle(pos, 8, 8, DustID.Ash, 4f);
+                    }
+                }
+
                 if (AttackTimer <= PhaseTransitionDuration - 150 && AttackTimer % 10 == 0)
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -684,8 +746,19 @@ public class Deathbird : ModNPC
                 }
                 break;
             case PhaseTransitionDuration:
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 pos = NPC.Center - (Vector2.UnitY * 300).RotatedBy(i * MathHelper.ToRadians(120));
+                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos, NPCType<GiantUndead>(), ai3: NPC.whoAmI);
+                    }
+                }
                 phase = 2;
                 phaseTransition = false;
+                Attack = 0;
+                AttackTimer = 0;
+                attackDuration = attackDurations2[(int)Attack];
                 return;
         }
         AttackTimer++;

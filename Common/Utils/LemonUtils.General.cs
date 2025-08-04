@@ -33,6 +33,18 @@ public static partial class LemonUtils
         }
     }
 
+    public static void DustLine(Vector2 pos1, Vector2 pos2, int type, float scale = 1, Color color = default)
+    {
+        Vector2 dir = pos1.DirectionTo(pos2);
+        Vector2 currentPos = pos1;
+
+        while (currentPos.Distance(pos2) > 64)
+        {
+            Dust.NewDustPerfect(currentPos, type, Scale: scale, newColor: color).noGravity = true;
+            currentPos += dir * 32 * scale;
+        }
+    }
+
     /// <summary>
     /// Accelerates an entity towards a position
     /// </summary>

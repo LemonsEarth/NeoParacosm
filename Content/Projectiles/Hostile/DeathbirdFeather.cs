@@ -13,6 +13,7 @@ public class DeathbirdFeather : ModProjectile
 {
     int AITimer = 0;
     ref float TimeToFire => ref Projectile.ai[0];
+    ref float IndicatorLength => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
     {
@@ -38,6 +39,7 @@ public class DeathbirdFeather : ModProjectile
     {
         if (AITimer == 0)
         {
+            if (IndicatorLength == 0) IndicatorLength = 1;
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
             SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0f, 0.2f) }, Projectile.Center);
         }
@@ -66,7 +68,7 @@ public class DeathbirdFeather : ModProjectile
         // Indicator
         Vector2 indicatorOrigin = new Vector2(texture.Width * 0.5f, texture.Height);
         float indicatorPercentComplete = AITimer / TimeToFire;
-        float indicatorScale = indicatorPercentComplete * 5;
+        float indicatorScale = indicatorPercentComplete * 5 * IndicatorLength;
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White * indicatorPercentComplete * 0.35f, Projectile.rotation, indicatorOrigin, new Vector2(1, indicatorScale), SpriteEffects.None, 0);
 
         var shader = GameShaders.Misc["NeoParacosm:DeathbirdWingShader"];

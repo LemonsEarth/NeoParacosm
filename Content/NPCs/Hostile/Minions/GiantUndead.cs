@@ -2,7 +2,9 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.Accessories.Misc;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile;
+using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
 using System.IO;
@@ -11,19 +13,23 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Minions;
 
 public class GiantUndead : ModNPC
 {
-    ref float AITimer => ref NPC.ai[0];
+    int AITimer = 0;
+    ref float AttackInterval => ref NPC.ai[0];
     ref float AttackTimer => ref NPC.ai[1];
+    ref float Attack => ref NPC.ai[2];
+    ref float DeathbirdIndex => ref NPC.ai[3];
     Vector2 startPos = Vector2.Zero;
     Vector2 randomPos = Vector2.Zero;
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[NPC.type] = 1;
+        Main.npcFrameCount[NPC.type] = 2;
         NPCID.Sets.DontDoHardmodeScaling[Type] = true;
     }
 
@@ -37,9 +43,9 @@ public class GiantUndead : ModNPC
     {
         NPC.width = 100;
         NPC.height = 100;
-        NPC.lifeMax = 300;
-        NPC.defense = 10;
-        NPC.damage = 40;
+        NPC.lifeMax = 600;
+        NPC.defense = 15;
+        NPC.damage = 80;
         NPC.HitSound = SoundID.DD2_SkeletonDeath;
         NPC.DeathSound = SoundID.DD2_SkeletonSummoned;
         NPC.value = 100;
@@ -49,9 +55,15 @@ public class GiantUndead : ModNPC
         NPC.noTileCollide = true;
     }
 
+    public override bool CheckActive()
+    {
+        return false;
+    }
+
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
         NPC.damage = (int)(NPC.damage * balance * 0.5f);
+        NPC.lifeMax = (Main.expertMode ? 1000 : 600) * ((numPlayers / 2) + 1);
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -88,10 +100,23 @@ public class GiantUndead : ModNPC
     public override void AI()
     {
         NPC.TargetClosest(true);
-
+        if (!Main.npc[(int)DeathbirdIndex].active || Main.npc[(int)DeathbirdIndex].type != ModContent.NPCType<Deathbird>())
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                Dust.NewDustPerfect(NPC.RandomPos(16, 16), DustID.Ash, Scale: 3f).noGravity = true;
+            }
+            NPC.active = false;
+        }
         if (AITimer == 0)
         {
             startPos = NPC.position;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                AttackInterval = Main.rand.Next(150, 210);
+            }
+            NPC.netUpdate = true;
+            SoundEngine.PlaySound(SoundID.Zombie105 with { PitchRange = (0, 0.5f) }, NPC.Center);
         }
         Dust.NewDustDirect(startPos, 32, 32, DustID.Ash, Scale: 3f).noGravity = true;
 
@@ -103,6 +128,12 @@ public class GiantUndead : ModNPC
 
         Player player = Main.player[NPC.target];
 
+        Vector2 dirToPlayer = NPC.DirectionTo(player.Center);
+
+        NPC.spriteDirection = -NPC.direction;
+        float angleCorrection = NPC.spriteDirection == 1 ? MathHelper.Pi : 0;
+        NPC.rotation = dirToPlayer.ToRotation() + angleCorrection;
+
         if (AITimer % 180 == 0)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -111,35 +142,66 @@ public class GiantUndead : ModNPC
             }
             NPC.netUpdate = true;
         }
-
         if (randomPos != Vector2.Zero)
         {
-            NPC.MoveToPos(randomPos, 0.05f, 0.05f, 0.3f, 0.3f);
+            NPC.MoveToPos(randomPos, 0.2f, 0.2f, 0.2f, 0.2f);
         }
         else
         {
-            NPC.MoveToPos(startPos, 0.1f, 0.1f, 0.2f, 0.2f);
+            NPC.MoveToPos(startPos, 0.2f, 0.2f, 0.1f, 0.1f);
         }
 
-        Vector2 dirToPlayer = NPC.DirectionTo(player.Center);
-
-        NPC.spriteDirection = -NPC.direction;
-        float angleCorrection = NPC.spriteDirection == 1 ? MathHelper.Pi : 0;
-        NPC.rotation = dirToPlayer.ToRotation() + angleCorrection;
-        
-
-
-        if (NPC.Distance(player.Center) < 700)
+        if (NPC.Distance(player.Center) < 700 && AITimer > 120)
         {
+            if (AttackTimer % AttackInterval == 0)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Attack = Main.rand.Next(0, 2);
+                }
+                NPC.netUpdate = true;
+            }
 
+            if (Attack == 0)
+            {
+                if (AttackTimer % (AttackInterval / 3) == 0)
+                {
+                    NPC.velocity = NPC.DirectionTo(player.Center) * 20;
+                }
+            }
+            else if (Attack == 1)
+            {
+                if (AttackTimer % (AttackInterval - 60) == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.Center.DirectionTo(player.Center) * 10, ModContent.ProjectileType<DeathflameBall>(), NPC.damage / 4, ai0: 9999, ai1: NPC.target);
+                    }
+                    SoundEngine.PlaySound(SoundID.NPCDeath6 with { PitchRange = (0, 0.5f) }, NPC.Center);
+                }
+            }
+            AttackTimer++;
         }
         else
         {
+            if (AITimer % 120 == 0)
+            {
+                if (Main.npc[(int)DeathbirdIndex].life <= Main.npc[(int)DeathbirdIndex].lifeMax * 0.6f)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        Main.npc[(int)DeathbirdIndex].HealEffect((int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f));
+                        Main.npc[(int)DeathbirdIndex].life += (int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f);
+                    }
+                }
+                LemonUtils.DustLine(NPC.Center, Main.npc[(int)DeathbirdIndex].Center, DustID.Ash, 3f);
 
+            }
         }
 
         AITimer++;
     }
+
     float controlPointDirection = 0;
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
@@ -164,17 +226,17 @@ public class GiantUndead : ModNPC
             Vector2 nextPos = LemonUtils.BezierCurve(startPos, NPC.Center, bezierControlPoint, nextSegmentProgress);
             float rotation = drawPos.DirectionTo(nextPos).ToRotation() + MathHelper.PiOver2;
             float scale = Math.Clamp(segmentCount, 0, maxSegments / 3) / (maxSegments / 3);
-            Main.EntitySpriteDraw(neckTex, drawPos - Main.screenPosition, null, Color.White * segmentProgress, rotation, neckTex.Size() * 0.5f, scale, LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection));
+            Main.EntitySpriteDraw(neckTex, drawPos - Main.screenPosition, null, Color.White, rotation, neckTex.Size() * 0.5f, scale, LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection));
             segmentCount++;
         }
 
-        Main.EntitySpriteDraw(texture, NPC.Center - Main.screenPosition, null, Color.White, NPC.rotation, texture.Size() * 0.5f, NPC.scale, LemonUtils.SpriteDirectionToSpriteEffects(NPC.spriteDirection));
+        Main.EntitySpriteDraw(texture, NPC.Center - Main.screenPosition, texture.Frame(1, 2, 0, (int)Attack), Color.White, NPC.rotation, new Vector2(46, 60), NPC.scale, LemonUtils.SpriteDirectionToSpriteEffects(NPC.spriteDirection));
         return false;
     }
 
     public override void FindFrame(int frameHeight)
     {
-
+        NPC.frame.Y = frameHeight * (int)Attack;
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)

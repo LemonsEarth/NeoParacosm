@@ -41,7 +41,7 @@ public class CursedTracerBullet : ModProjectile
         Projectile.tileCollide = true;
         Projectile.penetrate = 8;
         Projectile.stopsDealingDamageAfterPenetrateHits = true;
-        Projectile.timeLeft = 600;
+        Projectile.timeLeft = 200;
         Projectile.scale = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 10;
@@ -76,9 +76,9 @@ public class CursedTracerBullet : ModProjectile
         /*var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.ScourgeOfTheCorruptor);
         dust.noGravity = true;*/
 
-        if (Projectile.timeLeft < 360)
+        if (Projectile.timeLeft < 180)
         {
-            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 360f);
+            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 180f);
         }
 
         AITimer++;
