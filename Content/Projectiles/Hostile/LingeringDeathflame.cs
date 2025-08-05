@@ -10,7 +10,8 @@ public class LingeringDeathflame : ModProjectile
     int AITimer = 0;
     bool landed = false;
 
-    ref float playedID => ref Projectile.ai[0];
+    ref float playerID => ref Projectile.ai[0];
+    ref float duration => ref Projectile.ai[1];
 
     static BasicEffect BasicEffect;
     GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
@@ -55,7 +56,7 @@ public class LingeringDeathflame : ModProjectile
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
         Projectile.penetrate = -1;
-        Projectile.timeLeft = 420;
+        Projectile.timeLeft = 3600;
         Projectile.scale = 1f;
         Projectile.Opacity = 1f;
     }
@@ -76,11 +77,14 @@ public class LingeringDeathflame : ModProjectile
         if (Projectile.velocity.Y == 0)
         {
             landed = true;
-            for (int i = 0; i < 3; i++)
+            if (AITimer % 2 == 0)
             {
-                Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
-                Dust.NewDustPerfect(randomPos, DustID.Ash, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), Scale: 2, newColor: Color.Black).noGravity = true;
-                Dust.NewDustPerfect(randomPos, DustID.GemDiamond, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), Scale: 1f, newColor: Color.White).noGravity = true;
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
+                    Dust.NewDustPerfect(randomPos, DustID.Ash, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), Scale: 2.5f, newColor: Color.Black).noGravity = true;
+                    Dust.NewDustPerfect(randomPos, DustID.GemDiamond, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), Scale: 1.5f, newColor: Color.White).noGravity = true;
+                }
             }
             Projectile.velocity.X = 0;
             Projectile.width = 32;
@@ -96,6 +100,11 @@ public class LingeringDeathflame : ModProjectile
         }
 
         Lighting.AddLight(Projectile.Center, 0, 1, 0);
+
+        if (AITimer > duration)
+        {
+            Projectile.Kill();
+        }
 
         Projectile.velocity.Y += 0.1f;
 
@@ -118,7 +127,7 @@ public class LingeringDeathflame : ModProjectile
             fallThrough = false;
             return true;
         }
-        fallThrough = Main.player[(int)playedID].Alive() && (Main.player[(int)playedID].Bottom.Y > Projectile.Center.Y + 16);
+        fallThrough = Main.player[(int)playerID].Alive() && (Main.player[(int)playerID].Bottom.Y > Projectile.Center.Y + 16);
         return true;
     }
 

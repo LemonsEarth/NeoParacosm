@@ -64,7 +64,7 @@ public class Deathbird : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 3 : 0;
+            int maxVal = phase == 1 ? 3 : 1;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -84,11 +84,15 @@ public class Deathbird : ModNPC
 
     float attackDuration = 0;
     int[] attackDurations = { 900, 900, 720, 600, 600 };
-    int[] attackDurations2 = { 1200, 600, 720, 720, 900, 1080, 960 };
+    int[] attackDurations2 = { 1200, 720, 720, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
     float projDamage => NPC.damage / 2;
+
+    float wingOutlineScale = 1f;
+    float wingScale = 0.9f;
+    float darkColorBoost = 0f;
 
     public enum Attacks
     {
@@ -101,6 +105,7 @@ public class Deathbird : ModNPC
     public enum Attacks2
     {
         FeatherRain,
+        LingeringFlameRain,
     }
 
     public override void Load()
@@ -206,7 +211,6 @@ public class Deathbird : ModNPC
             NPC.TargetClosest(false);
         }
         player = Main.player[NPC.target];
-
         body.pos = NPC.Center;
         head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
         leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
@@ -262,6 +266,9 @@ public class Deathbird : ModNPC
             {
                 case (int)Attacks2.FeatherRain:
                     FeatherRain();
+                    break;
+                case (int)Attacks2.LingeringFlameRain:
+                    LingeringFlameRain();
                     break;
             }
         }
@@ -428,7 +435,7 @@ public class Deathbird : ModNPC
                     for (int i = -8; i <= 8; i++)
                     {
                         Vector2 pos = NPC.Center + Vector2.UnitX * i * 100;
-                        LemonUtils.QuickProj(NPC, pos, new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(2, 4)), ProjectileType<LingeringDeathflame>(), projDamage, ai0: player.whoAmI);
+                        LemonUtils.QuickProj(NPC, pos, new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(2, 4)), ProjectileType<LingeringDeathflame>(), projDamage, ai0: player.whoAmI, ai1: 420);
                     }
                 }
                 break;
@@ -443,7 +450,7 @@ public class Deathbird : ModNPC
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), projDamage);
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), projDamage, ai0: player.whoAmI, ai1: 360);
                         }
                     }
                 }
@@ -621,14 +628,13 @@ public class Deathbird : ModNPC
                 break;
             case FeatherRainWindUpTime:
                 PlayRoar();
-                frameDuration = 999;
                 break;
             case > FeatherRainUpTime:
                 if (AttackTimer % 5 == 0)
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        LemonUtils.QuickProj(NPC, NPC.RandomPos(), -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(50, 60), ProjectileType<DeathbirdFeatherFX>());
+                        LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 32), -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(50, 60), ProjectileType<DeathbirdFeatherFX>());
                     }
                 }
                 NPC.velocity.X = (float)Math.Sin(AttackTimer / 30f) * 5;
@@ -646,6 +652,50 @@ public class Deathbird : ModNPC
                 break;
             case 0:
                 AttackTimer = FeatherRainDuration;
+                return;
+        }
+        AttackTimer--;
+    }
+
+    const int LingeringFlameRainDuration = 180;
+    const int LingeringFlameRainMoveToPosTime = 120;
+    const int LingeringFlameRainMoveToPosTime2 = 30;
+    void LingeringFlameRain()
+    {
+        frameDuration = 6;
+        BasicMovementAnimation();
+        int direction = AttackCount % 2 == 0 ? -1 : 1;
+        switch (AttackTimer)
+        {
+            case LingeringFlameRainDuration:
+                targetPosition = player.Center + new Vector2(direction * 600, -200);
+                break;
+            case > LingeringFlameRainMoveToPosTime:
+                NPC.MoveToPos(targetPosition, 0.3f, 0.2f, 0.5f, 0.3f);
+                break;
+            case LingeringFlameRainMoveToPosTime:
+                targetPosition = NPC.Center + -direction * 1000 * Vector2.UnitX;
+                AttackCount++;
+                break;
+            case > LingeringFlameRainMoveToPosTime2:
+                NPC.MoveToPos(targetPosition, 0.3f, 0.1f, 0.5f, 0.1f);
+                if (AttackTimer % 10 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        int count = NPC.CountNPCS(NPCType<GiantUndead>()) > 0 ? 1 : 3;
+                        for (int i = 0; i < count; i++)
+                        {
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 32), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), projDamage, ai0: NPC.target, ai1: 600);
+                        }
+                    }
+                }
+                break;
+            case > 0:
+                NPC.velocity *= 0.9f;
+                break;
+            case 0:
+                AttackTimer = LingeringFlameRainDuration;
                 return;
         }
         AttackTimer--;
@@ -694,11 +744,8 @@ public class Deathbird : ModNPC
         attackDuration = attackDurations[(int)Attack];
     }
 
-    float wingOutlineScale = 1f;
-    float wingScale = 0.9f;
-    float darkColorBoost = 0f;
-
-    const int PhaseTransitionDuration = 300;
+    const int PhaseTransitionDuration = 240;
+    float maxRainingValue = 0.7f;
     void PhaseTransition()
     {
         NPC.dontTakeDamage = true;
@@ -707,6 +754,12 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case < 120:
+                if (AttackTimer == 0)
+                {
+                    Main.StartRain();
+                }
+                Main.maxRaining = MathHelper.Lerp(Main.maxRaining, maxRainingValue, AttackTimer / 120f);
+                Main.cloudAlpha = MathHelper.Lerp(Main.cloudAlpha, maxRainingValue, AttackTimer / 120f);
                 if (AttackTimer % 10 == 0)
                 {
                     LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));

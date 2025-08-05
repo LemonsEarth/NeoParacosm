@@ -26,6 +26,7 @@ public class GiantUndead : ModNPC
     ref float DeathbirdIndex => ref NPC.ai[3];
     Vector2 startPos = Vector2.Zero;
     Vector2 randomPos = Vector2.Zero;
+    Vector2 randomPos2 = Vector2.Zero;
 
     public override void SetStaticDefaults()
     {
@@ -129,7 +130,19 @@ public class GiantUndead : ModNPC
         Player player = Main.player[NPC.target];
 
         Vector2 dirToPlayer = NPC.DirectionTo(player.Center);
+        if (AITimer % AttackInterval - 30 == 0)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                randomPos2 = startPos + startPos.DirectionTo(player.Center) * Main.rand.NextFloat(32, 128);
+            }
+            NPC.netUpdate = true;
+        }
 
+        if (randomPos2 != Vector2.Zero)
+        {
+            startPos = Vector2.Lerp(startPos, randomPos2, 1 / 30f);
+        }
         NPC.spriteDirection = -NPC.direction;
         float angleCorrection = NPC.spriteDirection == 1 ? MathHelper.Pi : 0;
         NPC.rotation = dirToPlayer.ToRotation() + angleCorrection;
@@ -194,7 +207,7 @@ public class GiantUndead : ModNPC
                         Main.npc[(int)DeathbirdIndex].life += (int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f);
                     }
                 }
-                LemonUtils.DustLine(NPC.Center, Main.npc[(int)DeathbirdIndex].Center, DustID.Ash, 3f);
+                LemonUtils.DustLine(NPC.Center, Main.npc[(int)DeathbirdIndex].Center, DustID.Ash, 16, 3f);
 
             }
         }
