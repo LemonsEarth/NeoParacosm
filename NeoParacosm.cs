@@ -17,6 +17,7 @@ public class NeoParacosm : Mod
     {
         LoadFilterShader("ScreenTintShader", "Common/Assets/Shaders/ScreenTintShader", EffectPriority.Medium);
         LoadFilterShader("DesaturateShader", "Common/Assets/Shaders/DesaturateShader", EffectPriority.Medium);
+        LoadFilterShader("DeathbirdArenaShader", "Common/Assets/Shaders/NPCs/DeathbirdArenaShader", EffectPriority.High);
 
         LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader");
         LoadMiscShader("GasShader", "Common/Assets/Shaders/Projectiles/GasShader");

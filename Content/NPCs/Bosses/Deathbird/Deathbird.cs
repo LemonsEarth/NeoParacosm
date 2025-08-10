@@ -64,7 +64,7 @@ public class Deathbird : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 3 : 1;
+            int maxVal = phase == 1 ? 3 : 2;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -84,7 +84,7 @@ public class Deathbird : ModNPC
 
     float attackDuration = 0;
     int[] attackDurations = { 900, 900, 720, 600, 600 };
-    int[] attackDurations2 = { 1200, 720, 720, 720, 900, 1080, 960 };
+    int[] attackDurations2 = { 1200, 720, 1200, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
@@ -106,6 +106,7 @@ public class Deathbird : ModNPC
     {
         FeatherRain,
         LingeringFlameRain,
+        ArenaDeathflame,
     }
 
     public override void Load()
@@ -155,8 +156,8 @@ public class Deathbird : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
-        NPC.lifeMax = 10000;
-        NPC.defense = 15;
+        NPC.lifeMax = 8000;
+        NPC.defense = 5;
         NPC.damage = 40;
         NPC.HitSound = SoundID.DD2_SkeletonHurt;
         NPC.DeathSound = SoundID.NPCDeath52;
@@ -270,6 +271,9 @@ public class Deathbird : ModNPC
                 case (int)Attacks2.LingeringFlameRain:
                     LingeringFlameRain();
                     break;
+                case (int)Attacks2.ArenaDeathflame:
+                    ArenaDeathflame();
+                    break;
             }
         }
 
@@ -346,17 +350,15 @@ public class Deathbird : ModNPC
     void SwitchAttacks()
     {
         PlayRoar();
-        if (Main.netMode != NetmodeID.MultiplayerClient)
-        {
-            Attack++;
-            if (phase == 1) attackDuration = attackDurations[(int)Attack];
-            else attackDuration = attackDurations2[(int)Attack];
+        Terraria.Graphics.Effects.Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
 
-            AttackCount = 0;
-            AttackTimer = 0;
-            NPC.Opacity = 1f;
-        }
-        NPC.netUpdate = true;
+        Attack++;
+        if (phase == 1) attackDuration = attackDurations[(int)Attack];
+        else attackDuration = attackDurations2[(int)Attack];
+
+        AttackCount = 0;
+        AttackTimer = 0;
+        NPC.Opacity = 1f;
     }
 
     const int HomingDeathfireBallsDuration = 330;
@@ -426,10 +428,7 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case HoverLingeringFlameDuration:
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
-                NPC.Center = player.Center - Vector2.UnitY * 300;
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
-                SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
+                TeleportAbovePlayer();
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = -8; i <= 8; i++)
@@ -521,10 +520,7 @@ public class Deathbird : ModNPC
         {
             case GrabDuration:
                 SetDefaultBodyPartValues();
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
-                NPC.Center = player.Center - Vector2.UnitY * 300;
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
-                SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
+                TeleportAbovePlayer();
                 break;
             case > GrabPrepTime:
                 targetPosition = player.DirectionTo(NPC.Center);
@@ -701,6 +697,38 @@ public class Deathbird : ModNPC
         AttackTimer--;
     }
 
+    const int ArenaDeathflameDuration = 1200;
+    int arenaProgressTimer = 0;
+    void ArenaDeathflame()
+    {
+        ScreenShaderData data = Terraria.Graphics.Effects.Filters.Scene.Activate("NeoParacosm:DeathbirdArenaShader").GetShader();
+        data.UseImage(ParacosmTextures.NoiseTexture, 1);
+        data.UseTargetPosition(NPC.Center);
+        data.Shader.Parameters["time"].SetValue(AITimer / 60f);
+        data.UseProgress(arenaProgressTimer / 60f);
+        BasicMovementAnimation();
+        frameDuration = 6;
+        switch (AttackTimer)
+        {
+            case ArenaDeathflameDuration:
+                TeleportAbovePlayer();
+                break;
+            case > ArenaDeathflameDuration - 60:
+                NPC.velocity = Vector2.Zero;
+                arenaProgressTimer++;
+                break;
+            case > 60:
+                break;
+            case > 0:
+                arenaProgressTimer--;
+                break;
+            case 0:
+                AttackTimer = ArenaDeathflameDuration;
+                return;
+        }
+        AttackTimer--;
+    }
+
     void DespawnCheck()
     {
         if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 5000)
@@ -835,6 +863,14 @@ public class Deathbird : ModNPC
     public override bool? CanFallThroughPlatforms()
     {
         return true;
+    }
+
+    void TeleportAbovePlayer()
+    {
+        LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
+        NPC.Center = player.Center - Vector2.UnitY * 300;
+        LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
+        SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
     }
 
     void PlayRoar()

@@ -86,5 +86,13 @@ public class NPPlayer : ModPlayer
         {
             Filters.Scene.Deactivate("NeoParacosm:ScreenTintShader");
         }
+
+        if (timer % 10 == 0)
+        {
+            if (!NPC.AnyNPCs(ModContent.NPCType<Deathbird>()))
+            {
+                Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
+            }
+        }
     }
 }
