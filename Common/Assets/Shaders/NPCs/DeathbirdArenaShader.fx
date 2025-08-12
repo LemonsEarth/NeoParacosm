@@ -5,6 +5,7 @@ float2 uImageSize1;
 float4 uSourceRect;
 float2 desiredPos;
 float2 uTargetPosition;
+float2 targetPosition2;
 float2 uScreenPosition;
 float2 uScreenResolution;
 float uProgress;
@@ -18,14 +19,15 @@ float4 DeathbirdArenaShader(float4 sampleColor : COLOR0, float2 coords : TEXCOOR
     float4 noiseColor = tex2D(uImage1, coords * noiseScale * normalizedPixelCoords + float2(0, time * 0.5));
     float2 centeredCoords = coords * 2.0 - 1.0;
     float2 targetPos = (uTargetPosition - uScreenPosition) / uScreenResolution;
+    float2 targetPos2 = (targetPosition2 - uScreenPosition) / uScreenResolution;
+    float arenaDistance = distance(targetPos, targetPos2);
     float2 coordsToPos = (targetPos - coords) * normalizedPixelCoords;
     float distanceToPos = length(coordsToPos);
-    float threshold = 0.5;
     float luminosity = (noiseColor.r + noiseColor.g + noiseColor.b) / 3;
-    if (distanceToPos > threshold && distanceToPos < 3)
+    if (distanceToPos > arenaDistance && distanceToPos < 3)
     {
         float sinValue = (sin(time * 2) + 1) * 0.1;
-        float colorMult = (distanceToPos - threshold - sinValue);
+        float colorMult = (distanceToPos - arenaDistance - sinValue);
         return baseColor + ((1 + noiseColor.r) * colorMult) * uProgress;
     }
     return baseColor;

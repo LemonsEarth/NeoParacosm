@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.None;
@@ -83,7 +84,7 @@ public class Deathbird : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 900, 900, 720, 600, 600 };
+    int[] attackDurations = { 990, 900, 720, 600, 600 };
     int[] attackDurations2 = { 1200, 720, 1200, 720, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
@@ -212,12 +213,7 @@ public class Deathbird : ModNPC
             NPC.TargetClosest(false);
         }
         player = Main.player[NPC.target];
-        body.pos = NPC.Center;
-        head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
-        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
-        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
-        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
-        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
+        SetBodyPartPositions();
 
         DespawnCheck();
         if (AITimer < IntroDuration)
@@ -359,6 +355,11 @@ public class Deathbird : ModNPC
         AttackCount = 0;
         AttackTimer = 0;
         NPC.Opacity = 1f;
+
+        drawClone = false;
+        clonePos = Vector2.Zero;
+        cloneOpacity = 0f;
+        cloneScale = 1f;
     }
 
     const int HomingDeathfireBallsDuration = 330;
@@ -410,6 +411,12 @@ public class Deathbird : ModNPC
                 frameDuration = 999;
                 break;
             case > 0:
+                if (attackDuration < 60)
+                {
+                    // This attack repeats multiple times before attackDuration is up, so we check attackDuration 
+                    // to make sure its the last rep
+                    DrawClone(player.Center - Vector2.UnitY * 300, 0.01f, 2f);
+                }
                 frameDuration = 6;
                 break;
             case 0:
@@ -428,7 +435,7 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case HoverLingeringFlameDuration:
-                TeleportAbovePlayer();
+                TeleportToPos(player.Center - Vector2.UnitY * 300);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = -8; i <= 8; i++)
@@ -480,6 +487,10 @@ public class Deathbird : ModNPC
                 NPC.MoveToPos(targetPosition, 0.2f, 0.2f, 0.1f, 0.1f);
                 break;
             case > 0:
+                if (attackDuration < 120)
+                {
+                    DrawClone(player.Center - Vector2.UnitY * 300, 0.005f, 2f);
+                }
                 NPC.velocity = Vector2.Zero;
                 frameDuration = 9999;
                 int cd = 20 - ((LemonUtils.GetDifficulty() - 1) * 5);
@@ -520,7 +531,7 @@ public class Deathbird : ModNPC
         {
             case GrabDuration:
                 SetDefaultBodyPartValues();
-                TeleportAbovePlayer();
+                TeleportToPos(player.Center - Vector2.UnitY * 300);
                 break;
             case > GrabPrepTime:
                 targetPosition = player.DirectionTo(NPC.Center);
@@ -634,6 +645,7 @@ public class Deathbird : ModNPC
                     }
                 }
                 NPC.velocity.X = (float)Math.Sin(AttackTimer / 30f) * 5;
+                NPC.velocity += NPC.DirectionTo(player.Center - Vector2.UnitY * 200) * 0.2f;
                 break;
             case > FeatherRainRainTime:
                 NPC.velocity *= 0.9f;
@@ -674,6 +686,10 @@ public class Deathbird : ModNPC
                 AttackCount++;
                 break;
             case > LingeringFlameRainMoveToPosTime2:
+                if (attackDuration < 120)
+                {
+                    DrawClone(player.Center - Vector2.UnitY * 300, 0.008f, 2f);
+                }
                 NPC.MoveToPos(targetPosition, 0.3f, 0.1f, 0.5f, 0.1f);
                 if (AttackTimer % 10 == 0)
                 {
@@ -688,6 +704,10 @@ public class Deathbird : ModNPC
                 }
                 break;
             case > 0:
+                if (attackDuration < 120)
+                {
+                    DrawClone(player.Center - Vector2.UnitY * 300, 0.008f, 2f);
+                }
                 NPC.velocity *= 0.9f;
                 break;
             case 0:
@@ -699,11 +719,24 @@ public class Deathbird : ModNPC
 
     const int ArenaDeathflameDuration = 1200;
     int arenaProgressTimer = 0;
+    int baseArenaDistance = 1000;
+    int arenaDistance = 1000;
     void ArenaDeathflame()
     {
+        if (AttackTimer % 10 == 0)
+        {
+            foreach (var p in Main.ActivePlayers)
+            {
+                if (p.Distance(NPC.Center) > arenaDistance)
+                {
+                    p.AddBuff(BuffType<DeathflameDebuff>(), 15);
+                }
+            }
+        }
         ScreenShaderData data = Terraria.Graphics.Effects.Filters.Scene.Activate("NeoParacosm:DeathbirdArenaShader").GetShader();
         data.UseImage(ParacosmTextures.NoiseTexture, 1);
         data.UseTargetPosition(NPC.Center);
+        data.Shader.Parameters["targetPosition2"].SetValue(NPC.Center + Vector2.UnitX * arenaDistance);
         data.Shader.Parameters["time"].SetValue(AITimer / 60f);
         data.UseProgress(arenaProgressTimer / 60f);
         BasicMovementAnimation();
@@ -711,19 +744,38 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case ArenaDeathflameDuration:
-                TeleportAbovePlayer();
+                TeleportToPos(player.Center - Vector2.UnitY * 300);
                 break;
             case > ArenaDeathflameDuration - 60:
                 NPC.velocity = Vector2.Zero;
                 arenaProgressTimer++;
                 break;
             case > 60:
+                if (AttackTimer % 120 == 0)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 7, ProjectileType<DeathbirdFeatherSharp>(), projDamage, ai0: NPC.target, ai1: 60, ai2: 60);
+                    }
+                    switch (AttackCount)
+                    {
+                        case 0:
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                
+                            }
+                            break;
+                    }
+                    AttackCount++;
+                }
                 break;
             case > 0:
                 arenaProgressTimer--;
+                arenaDistance += 5;
                 break;
             case 0:
                 AttackTimer = ArenaDeathflameDuration;
+                arenaDistance = baseArenaDistance;
                 return;
         }
         AttackTimer--;
@@ -779,6 +831,7 @@ public class Deathbird : ModNPC
         NPC.dontTakeDamage = true;
         SetDefaultBodyPartValues();
         NPC.velocity = Vector2.Zero;
+        drawClone = false;
         switch (AttackTimer)
         {
             case < 120:
@@ -865,12 +918,22 @@ public class Deathbird : ModNPC
         return true;
     }
 
-    void TeleportAbovePlayer()
+    void TeleportToPos(Vector2 pos)
     {
         LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
-        NPC.Center = player.Center - Vector2.UnitY * 300;
+        NPC.Center = pos;
         LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
         SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
+    }
+
+    void SetBodyPartPositions()
+    {
+        body.pos = NPC.Center;
+        head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
+        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
+        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
+        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
+        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
     }
 
     void PlayRoar()
@@ -881,6 +944,18 @@ public class Deathbird : ModNPC
     }
 
     Color defaultColor => Color.White * NPC.Opacity;
+    bool drawClone = false;
+    Vector2 clonePos = Vector2.Zero;
+    float cloneOpacity = 0f;
+    float cloneScale = 1f;
+    void DrawClone(Vector2 pos, float opacityIncrementValue, float scale)
+    {
+        drawClone = true;
+        clonePos = pos;
+        cloneOpacity += opacityIncrementValue;
+        cloneScale = scale;
+    }
+
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         if (NPC.Opacity < 1)
@@ -933,6 +1008,12 @@ public class Deathbird : ModNPC
         Main.EntitySpriteDraw(leftLeg2Texture.Value, leftLeg2.pos - Main.screenPosition, null, defaultColor, leftLeg2.rot, leftLeg2.origin, NPC.scale, SpriteEffects.None);
         Main.EntitySpriteDraw(rightLeg1Texture.Value, rightLeg1.pos - Main.screenPosition, null, defaultColor, rightLeg1.rot, rightLeg1.origin, NPC.scale, SpriteEffects.None);
         Main.EntitySpriteDraw(rightLeg2Texture.Value, rightLeg2.pos - Main.screenPosition, null, defaultColor, rightLeg2.rot, rightLeg2.origin, NPC.scale, SpriteEffects.None);
+
+        // Clone
+        if (drawClone && clonePos != Vector2.Zero)
+        {
+            Main.EntitySpriteDraw(headTexture.Value, clonePos - Main.screenPosition, null, Color.White * cloneOpacity, 0f, head.origin, cloneScale, SpriteEffects.None);
+        }
         return false;
     }
 }

@@ -57,3 +57,8 @@ DeadForestDebuff: {
 	DisplayName: Dead Forest Debuff
 	Description: Mods.NeoParacosm.Buffs.DeadForestDebuff.Description
 }
+
+DeathflameDebuff: {
+	DisplayName: Deathflame Debuff
+	Description: Mods.NeoParacosm.Buffs.DeathflameDebuff.Description
+}

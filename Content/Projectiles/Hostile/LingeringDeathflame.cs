@@ -2,6 +2,7 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Common.Utils.Prim;
 using Terraria.Audio;
+using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
@@ -13,44 +14,17 @@ public class LingeringDeathflame : ModProjectile
     ref float playerID => ref Projectile.ai[0];
     ref float duration => ref Projectile.ai[1];
 
-    static BasicEffect BasicEffect;
-    GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
-
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 13;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 1;
+        Main.projFrames[Type] = 4;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 16;
-        Projectile.height = 16;
+        Projectile.width = 32;
+        Projectile.height = 32;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -87,7 +61,6 @@ public class LingeringDeathflame : ModProjectile
                 }
             }
             Projectile.velocity.X = 0;
-            Projectile.width = 32;
         }
         else
         {
@@ -96,7 +69,6 @@ public class LingeringDeathflame : ModProjectile
                 Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ash, 0, 0, Scale: 1.5f, newColor: Color.Black).noGravity = true;
                 Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemDiamond, 0, 0, Scale: 1.25f, newColor: Color.White).noGravity = true;
             }
-            Projectile.width = 16;
         }
 
         Lighting.AddLight(Projectile.Center, 0, 1, 0);
@@ -108,16 +80,18 @@ public class LingeringDeathflame : ModProjectile
 
         Projectile.velocity.Y += 0.1f;
 
-        Projectile.rotation = Projectile.velocity.ToRotation();
+        Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+        Projectile.StandardAnimation(6, 4);
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        if (Main.dedServ) return true;
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, 12, Color.Black, Color.White * 0.5f, BasicEffect, GraphicsDevice);
-
-        return true;
+        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        Vector2 drawOrigin = new Vector2(16, 0);
+        Vector2 scale = new Vector2(1, 1 + Projectile.velocity.Y * 0.2f);
+        Main.EntitySpriteDraw(texture, Projectile.Bottom - Main.screenPosition, texture.Frame(1, 4, 0, Projectile.frame), Color.White, Projectile.rotation, drawOrigin, scale, SpriteEffects.None);
+        return false;
     }
 
     public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)

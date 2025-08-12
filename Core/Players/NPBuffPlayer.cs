@@ -30,6 +30,11 @@ public class NPBuffPlayer : ModPlayer
             Player.statDefense -= 10 - (int)(((float)Player.statLife / Player.statLifeMax2) * 10) + 1;
         }
 
+        if (Player.HasBuff(ModContent.BuffType<DeathflameDebuff>()))
+        {
+            Player.statDefense -= 15;
+        }
+
         if (Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
         {
             if (Player.numMinions > 0)
@@ -66,6 +71,11 @@ public class NPBuffPlayer : ModPlayer
         if (Player.HasBuff(ModContent.BuffType<CorruptDecayDebuff>()))
         {
             DOTDebuff(14);
+        }
+
+        if (Player.HasBuff(ModContent.BuffType<DeathflameDebuff>()))
+        {
+            DOTDebuff((int)(Player.statLifeMax2 * 0.07f));
         }
 
         if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
