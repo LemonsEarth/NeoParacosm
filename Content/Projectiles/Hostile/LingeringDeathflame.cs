@@ -53,6 +53,20 @@ public class LingeringDeathflame : ModProjectile
             landed = true;
             if (AITimer % 2 == 0)
             {
+                foreach (var projectile in Main.ActiveProjectiles) // killing oldest Lingering Deathflame on the same (ish) position
+                {
+                    if (projectile.type == Type && projectile != Projectile && Projectile.Distance(projectile.Center) < 32)
+                    {
+                        if (Projectile.timeLeft < projectile.timeLeft)
+                        {
+                            Projectile.Kill();
+                        }
+                        else
+                        {
+                            projectile.Kill();
+                        }
+                    }
+                }
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
@@ -96,12 +110,12 @@ public class LingeringDeathflame : ModProjectile
 
     public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
     {
-        if (landed)
+        if (landed || playerID == -1)
         {
             fallThrough = false;
             return true;
         }
-        fallThrough = Main.player[(int)playerID].Alive() && (Main.player[(int)playerID].Bottom.Y > Projectile.Center.Y + 16);
+        fallThrough = Main.player[(int)playerID].Alive() && (Main.player[(int)playerID].Bottom.Y > Projectile.Center.Y + 32);
         return true;
     }
 

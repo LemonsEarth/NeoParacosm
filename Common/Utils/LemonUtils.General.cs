@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -139,5 +140,10 @@ public static partial class LemonUtils
     {
         if (spriteDirection == -1) return SpriteEffects.FlipHorizontally;
         return SpriteEffects.None;
+    }
+
+    public static void DrawGlow(Vector2 position, Color color, float opacity, float scale)
+    {
+        Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, position - Main.screenPosition, null, color * opacity, 0f, ParacosmTextures.GlowBallTexture.Size() * 0.5f, scale, SpriteEffects.None);
     }
 }

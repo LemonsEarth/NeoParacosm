@@ -60,7 +60,7 @@ public class SuckyProjectile : ModProjectile
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
-        shader.Shader.Parameters["time"].SetValue(AITimer / cycleDuration); // constant size of shield
+        shader.Shader.Parameters["time"].SetValue(AITimer / cycleDuration);
         shader.Shader.Parameters["alwaysVisible"].SetValue(false);
         shader.Shader.Parameters["speed"].SetValue(speed);
         shader.Shader.Parameters["colorMultiplier"].SetValue(2f);

@@ -65,7 +65,7 @@ public class Deathbird : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 3 : 2;
+            int maxVal = phase == 1 ? 3 : 3;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -84,8 +84,8 @@ public class Deathbird : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 990, 900, 720, 600, 600 };
-    int[] attackDurations2 = { 1200, 720, 1200, 720, 900, 1080, 960 };
+    int[] attackDurations = { 990, 900, 720, 600 };
+    int[] attackDurations2 = { 1200, 720, 1200, 900, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
@@ -108,6 +108,7 @@ public class Deathbird : ModNPC
         FeatherRain,
         LingeringFlameRain,
         ArenaDeathflame,
+        DeathflameKamikaze,
     }
 
     public override void Load()
@@ -270,6 +271,9 @@ public class Deathbird : ModNPC
                 case (int)Attacks2.ArenaDeathflame:
                     ArenaDeathflame();
                     break;
+                case (int)Attacks2.DeathflameKamikaze:
+                    DeathflameKamikaze();
+                    break;
             }
         }
 
@@ -360,6 +364,8 @@ public class Deathbird : ModNPC
         clonePos = Vector2.Zero;
         cloneOpacity = 0f;
         cloneScale = 1f;
+
+        arenaProgressTimer = 0;
     }
 
     const int HomingDeathfireBallsDuration = 330;
@@ -371,11 +377,9 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case HomingDeathfireBallsDuration:
-                int minYValue = AttackCount % 2 == 0 ? -500 : -250;
-                int maxYValue = AttackCount % 2 == 0 ? 250 : 500;
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    targetPosition = NPC.Center + new Vector2(Main.rand.Next(-250, 250), Main.rand.Next(minYValue, maxYValue));
+                    targetPosition = NPC.Center + new Vector2(Main.rand.Next(-250, 250), Main.rand.Next(-250, 250));
                 }
                 AttackCount++;
                 NPC.netUpdate = true;
@@ -631,6 +635,10 @@ public class Deathbird : ModNPC
         {
             case FeatherRainDuration:
                 NPC.velocity = Vector2.Zero;
+                if (Main.netMode != NetmodeID.MultiplayerClient && (Main.masterMode || Main.getGoodWorld))
+                {
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 500, ai2: 15);
+                }
                 frameDuration = 12;
                 break;
             case FeatherRainWindUpTime:
@@ -757,15 +765,6 @@ public class Deathbird : ModNPC
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 7, ProjectileType<DeathbirdFeatherSharp>(), projDamage, ai0: NPC.target, ai1: 60, ai2: 60);
                     }
-                    switch (AttackCount)
-                    {
-                        case 0:
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                
-                            }
-                            break;
-                    }
                     AttackCount++;
                 }
                 break;
@@ -776,6 +775,75 @@ public class Deathbird : ModNPC
             case 0:
                 AttackTimer = ArenaDeathflameDuration;
                 arenaDistance = baseArenaDistance;
+                return;
+        }
+        AttackTimer--;
+    }
+
+    const int DeathflameKamikazeDuration = 180;
+    void DeathflameKamikaze()
+    {
+        BasicMovementAnimation();
+        frameDuration = 6;
+        switch (AttackTimer)
+        {
+            case DeathflameKamikazeDuration:
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    targetPosition = player.Center + Main.rand.NextVector2Circular(300, 300);
+                }
+                AttackCount = 0;
+                NPC.netUpdate = true;
+                break;
+            case > 60:
+                AttackCount++;
+                float angle = MathHelper.ToRadians(45 - AttackCount);
+                float distance = 800 - AttackCount * 20;
+                if (distance < 0) distance = 0;
+                Vector2 dustOffset = Vector2.UnitY.RotatedBy(angle) * distance;
+                if (AttackTimer % 2 == 0)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Vector2 dustPos = targetPosition + dustOffset.RotatedBy(MathHelper.PiOver2 * i);
+                        Dust.NewDustPerfect(dustPos, DustID.GemDiamond, Vector2.Zero, newColor: Color.Black, Scale: 3f).noGravity = true;
+                    }
+                }
+                NPC.MoveToPos(targetPosition, 0.6f, 0.6f, 0.4f, 0.4f);
+                break;
+            case 60:
+                PlayRoar();
+                if (Main.netMode != NetmodeID.MultiplayerClient && (Main.masterMode || Main.getGoodWorld))
+                {
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 60, ai2: 0);
+                }
+                NPC.velocity = Vector2.Zero;
+                for (int i = 0; i < 5; i++)
+                {
+                    int dustID = i % 2 != 0 ? DustID.GemDiamond : DustID.Ash;
+                    Color dustColor = i % 2 != 0 ? Color.White : Color.Black;
+                    LemonUtils.DustCircle(NPC.Center, 8, (i + 1) * 6, dustID, (i + 2), color: dustColor);
+                }
+
+                int projAmount = LemonUtils.GetDifficulty() * 12;
+                for (int i = 0; i < projAmount; i++)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        float randomAngle = MathHelper.ToRadians(Main.rand.Next(-15, 15));
+                        Vector2 velocity = Vector2.UnitY.RotatedBy(i * (MathHelper.TwoPi / projAmount)).RotatedBy(randomAngle) * Main.rand.NextFloat(10, 17);
+                        LemonUtils.QuickProj(NPC, NPC.Center, velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 999, ai1: NPC.target);
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(6, 10), ProjectileType<LingeringDeathflame>(), projDamage, ai0: -1, ai1: 300);
+                    }
+
+                }
+                SoundEngine.PlaySound(SoundID.Item62, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Zombie93, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Zombie103, NPC.Center);
+                SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
+                break;
+            case 0:
+                AttackTimer = DeathflameKamikazeDuration;
                 return;
         }
         AttackTimer--;

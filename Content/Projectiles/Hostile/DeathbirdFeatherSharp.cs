@@ -98,6 +98,7 @@ public class DeathbirdFeatherSharp : ModProjectile
         for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
         {
             Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
+            LemonUtils.DrawGlow(drawPos, Color.White, Projectile.Opacity, Projectile.scale * 0.4f);
             Color color = i == 0 ? Color.Black : Color.White;
             Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, color * ((14 - i) / (float)Projectile.oldPos.Length) * Projectile.Opacity, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
         }

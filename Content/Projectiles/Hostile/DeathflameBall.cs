@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Core.Systems;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
@@ -27,6 +28,7 @@ public class DeathflameBall : ModProjectile
         Projectile.timeLeft = 240;
         Projectile.scale = 1f;
         Projectile.aiStyle = 0;
+        Projectile.Opacity = 0.5f;
     }
 
     float maxSpeed = 0;
@@ -61,6 +63,7 @@ public class DeathflameBall : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
     }
 

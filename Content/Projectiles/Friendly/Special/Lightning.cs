@@ -132,8 +132,8 @@ public class Lightning : ModProjectile
         VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
         VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
         {
-            Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
-            return new VertexPositionColorTexture(new Vector3(pos, 0), color * Projectile.Opacity, Vector2.Zero);
+            //Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
+            return new VertexPositionColorTexture(new Vector3(pos, 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
         }
         for (int i = 0; i < quadCount; i += 1)
         {
@@ -179,12 +179,11 @@ public class Lightning : ModProjectile
         for (int i = 0; i < 2; i++)
         {
             float circleOpacity = Projectile.Opacity + 0.2f;
-            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, originalPos - Main.screenPosition, null, Color.DarkSlateBlue * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 2f, SpriteEffects.None);
-            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, originalPos - Main.screenPosition, null, Color.Black * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 1f, SpriteEffects.None);
-            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, positions.Last() - Main.screenPosition, null, Color.Black * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 1f, SpriteEffects.None);
-            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, positions.Last() - Main.screenPosition, null, Color.DarkSlateBlue * circleOpacity, Projectile.rotation, ParacosmTextures.GlowBallTexture.Value.Size() * 0.5f, 0.5f, SpriteEffects.None);
+            LemonUtils.DrawGlow(originalPos, Color.DarkSlateBlue, circleOpacity, 2f);
+            LemonUtils.DrawGlow(originalPos, Color.Black, circleOpacity, 1f);
+            LemonUtils.DrawGlow(positions.Last(), Color.DarkSlateBlue, circleOpacity, 0.5f);
+            LemonUtils.DrawGlow(positions.Last(), Color.Black, circleOpacity, 1f);
         }
-
 
         return false;
     }
