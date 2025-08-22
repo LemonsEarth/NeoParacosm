@@ -34,5 +34,11 @@ namespace NeoParacosm.Common.Utils
         {
             return player.HasBuff(BuffID.Poisoned) || player.HasBuff(BuffID.Venom);
         }
+
+        public static bool IsGrounded(this Player player)
+        {
+            Tile tileBelow = Main.tile[(int)(player.Center.X / 16), (int)(player.Center.Y / 16) + 2];
+            return (Main.tileSolid[tileBelow.TileType] || Main.tileSolid[tileBelow.TileType]) && player.velocity.Y == 0;
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace NeoParacosm.Content.Gores;
 
-public class CorruptWalkerGore : ModGore
+public class DeathbirdGore : ModGore
 {
     public override void SetStaticDefaults()
     {
@@ -11,9 +11,8 @@ public class CorruptWalkerGore : ModGore
 
     public override void OnSpawn(Gore gore, IEntitySource source)
     {
-        gore.numFrames = 3;
-        gore.frame = (byte)Main.rand.Next(0, 3);
+        gore.numFrames = 2;
+        gore.frame = (byte)Main.rand.Next(0, 2);
         gore.sticky = true;
-        UpdateType = GoreID.ZombieMerman1;
     }
 }

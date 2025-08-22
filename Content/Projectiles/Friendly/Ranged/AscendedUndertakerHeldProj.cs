@@ -65,7 +65,7 @@ public class AscendedUndertakerHeldProj : ModProjectile
                     Vector2 dir = Projectile.Center.DirectionTo(Main.MouseWorld).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-5, 5)));
                     player.PickAmmo(player.HeldItem, out int proj, out float _, out int damage, out float knockback, out int usedAmmoItemID);
                     Vector2 pos = Projectile.Center + Projectile.Center.DirectionTo(Main.MouseWorld) * 5;
-                    LemonUtils.QuickProj(Projectile, pos, dir * Main.rand.NextFloat(5, 16), ProjectileID.IchorBullet);
+                    LemonUtils.QuickProj(Projectile, pos, dir * Main.rand.NextFloat(10, 16), ProjectileID.IchorBullet);
                 }
                 SoundEngine.PlaySound(ParacosmSFX.UndertakerGunshot with { Volume = 0.4f, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 }, Projectile.Center);
                 rot += -player.direction * MathHelper.ToRadians(15);

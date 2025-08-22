@@ -45,7 +45,7 @@ public class GiantUndead : ModNPC
         NPC.width = 100;
         NPC.height = 100;
         NPC.lifeMax = 600;
-        NPC.defense = 15;
+        NPC.defense = 10;
         NPC.damage = 80;
         NPC.HitSound = SoundID.DD2_SkeletonDeath;
         NPC.DeathSound = SoundID.DD2_SkeletonSummoned;

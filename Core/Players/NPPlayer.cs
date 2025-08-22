@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Biomes.DeadForest;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.Weapons.Melee;
@@ -21,11 +22,12 @@ public class NPPlayer : ModPlayer
     float maxDesaturateValue = 0.6f;
     public override void ResetEffects()
     {
-
+        
     }
 
     public override void PostUpdate()
     {
+        
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
         //Main.NewText(WorldDataSystem.ResearcherQuestProgress);

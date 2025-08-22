@@ -300,3 +300,8 @@ AscendedShadowScalemail: {
 		Reduces damage taken by {1}%
 		'''
 }
+
+Gravesword: {
+	DisplayName: Gravesword
+	Tooltip: ""
+}

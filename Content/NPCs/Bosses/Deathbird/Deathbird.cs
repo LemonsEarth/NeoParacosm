@@ -2,6 +2,7 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.None;
@@ -159,7 +160,7 @@ public class Deathbird : ModNPC
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
         NPC.lifeMax = 8000;
-        NPC.defense = 5;
+        NPC.defense = 10;
         NPC.damage = 40;
         NPC.HitSound = SoundID.DD2_SkeletonHurt;
         NPC.DeathSound = SoundID.NPCDeath52;
@@ -652,6 +653,18 @@ public class Deathbird : ModNPC
                         LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 32), -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(50, 60), ProjectileType<DeathbirdFeatherFX>());
                     }
                 }
+
+                if (AttackTimer % 60 == 0)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        for (int i = -3; i <= 3; i++)
+                        {
+                            Vector2 direction = NPC.DirectionTo(player.Center).RotatedBy(i * (MathHelper.Pi / 12));
+                            LemonUtils.QuickProj(NPC, NPC.Center, direction * 12, ProjectileType<DeathbirdFeatherSharp>(), projDamage, ai0: NPC.target, ai1: 1, ai2: 9999);
+                        }
+                    }
+                }
                 NPC.velocity.X = (float)Math.Sin(AttackTimer / 30f) * 5;
                 NPC.velocity += NPC.DirectionTo(player.Center - Vector2.UnitY * 200) * 0.2f;
                 break;
@@ -735,7 +748,7 @@ public class Deathbird : ModNPC
         {
             foreach (var p in Main.ActivePlayers)
             {
-                if (p.Distance(NPC.Center) > arenaDistance)
+                if (p.Distance(NPC.Center) > arenaDistance - 200)
                 {
                     p.AddBuff(BuffType<DeathflameDebuff>(), 15);
                 }
@@ -797,7 +810,7 @@ public class Deathbird : ModNPC
                 break;
             case > 60:
                 AttackCount++;
-                float angle = MathHelper.ToRadians(45 - AttackCount);
+                float angle = MathHelper.ToRadians(45 - AttackCount * 3);
                 float distance = 800 - AttackCount * 20;
                 if (distance < 0) distance = 0;
                 Vector2 dustOffset = Vector2.UnitY.RotatedBy(angle) * distance;
@@ -973,7 +986,19 @@ public class Deathbird : ModNPC
 
     public override void HitEffect(NPC.HitInfo hit)
     {
-
+        if (Main.dedServ) return;
+        if (NPC.life <= 0)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(2f, 4f));
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<DeathbirdGore>());
+            }
+            Gore.NewGore(NPC.GetSource_FromThis(), head.pos, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<DeathbirdHeadGore>());
+        }
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

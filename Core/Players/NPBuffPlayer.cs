@@ -7,6 +7,7 @@ namespace NeoParacosm.Core.Players;
 public class NPBuffPlayer : ModPlayer
 {
     public bool grabbed { get; set; } = false;
+    public bool fastFall { get; set; } = false;
 
     public override bool CanUseItem(Item item)
     {
@@ -15,7 +16,14 @@ public class NPBuffPlayer : ModPlayer
 
     public override void ResetEffects()
     {
+        if (fastFall)
+        {
+            Player.maxFallSpeed *= 3;
+            Player.velocity.Y = 20;
+            Player.velocity.X = 0;
+        }
         grabbed = false;
+        fastFall = false;
     }
 
     public override void PostUpdateBuffs()
@@ -51,6 +59,11 @@ public class NPBuffPlayer : ModPlayer
             Player.maxMinions = 0;
             Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.Crimson).noGravity = true;
         }
+    }
+
+    public override void PostUpdateEquips()
+    {
+
     }
 
     public override void PostUpdateRunSpeeds()
