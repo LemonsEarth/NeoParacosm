@@ -21,7 +21,7 @@ public class AscendedBloodButcherer : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedBloodButchererHeldProj>();
+        Item.shoot = ProjectileType<AscendedBloodButchererHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;

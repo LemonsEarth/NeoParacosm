@@ -56,7 +56,7 @@ public class CrimsonCarrier : ModNPC
         spawnedEnemies = true;
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
-            NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<CrimsonCarrierHead>());
+            NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, NPCType<CrimsonCarrierHead>());
         }
     }
 
@@ -65,7 +65,7 @@ public class CrimsonCarrier : ModNPC
         NPC.spriteDirection = NPC.direction;
         if (Main.rand.NextBool(100))
         {
-            Gore.NewGoreDirect(NPC.GetSource_FromThis("PeriodicSmoke"), NPC.RandomPos(), Main.rand.NextVector2Unit() * 2, ModContent.GoreType<RedSmokeGore>());
+            Gore.NewGoreDirect(NPC.GetSource_FromThis("PeriodicSmoke"), NPC.RandomPos(), Main.rand.NextVector2Unit() * 2, GoreType<RedSmokeGore>());
         }
         AITimer++;
     }

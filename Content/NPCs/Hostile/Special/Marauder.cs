@@ -75,8 +75,8 @@ public class Marauder : ModNPC
 
     }
 
-    int CarrierProj => WorldGen.crimson ? ModContent.ProjectileType<CrimsonCarrierProj>() : ModContent.ProjectileType<CorruptCarrierProj>();
-    int GasProj => WorldGen.crimson ? ModContent.ProjectileType<RotGasHostile>() : ModContent.ProjectileType<DecayGasHostile>();
+    int CarrierProj => WorldGen.crimson ? ProjectileType<CrimsonCarrierProj>() : ProjectileType<CorruptCarrierProj>();
+    int GasProj => WorldGen.crimson ? ProjectileType<RotGasHostile>() : ProjectileType<DecayGasHostile>();
     int stage => NPC.GetLifePercent() != 0 ? 4 - (int)Math.Ceiling(NPC.GetLifePercent() / 0.25f) : 3;
     public override void AI()
     {
@@ -171,12 +171,12 @@ public class Marauder : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return (spawnInfo.Player.HasBuff(ModContent.BuffType<ProvokedPresenceDebuff>()) && Main.hardMode) ? 0.05f : 0f;
+        return (spawnInfo.Player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && Main.hardMode) ? 0.05f : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<SkullOfAvarice>(), minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.Common(ItemType<SkullOfAvarice>(), minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

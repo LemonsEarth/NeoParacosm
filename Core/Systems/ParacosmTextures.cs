@@ -10,8 +10,8 @@ public class ParacosmTextures : ModSystem
     public static Asset<Texture2D> GlowBallTexture { get; private set; }
     public override void Load()
     {
-        NoiseTexture = ModContent.Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture");
-        TransparentNoiseTexture = ModContent.Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Noise/TransparentNoise");
-        GlowBallTexture = ModContent.Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Misc/GlowBall");
+        NoiseTexture = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture");
+        TransparentNoiseTexture = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Noise/TransparentNoise");
+        GlowBallTexture = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Misc/GlowBall");
     }
 }

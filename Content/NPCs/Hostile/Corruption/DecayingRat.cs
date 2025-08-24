@@ -106,7 +106,7 @@ public class DecayingRat : ModNPC
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Vector2 dir = -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15)));
-                LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir * Main.rand.NextFloat(2, 6), ModContent.ProjectileType<CursedDecayFire>());
+                LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir * Main.rand.NextFloat(2, 6), ProjectileType<CursedDecayFire>());
             }
         }
         if (Main.rand.NextBool(100))

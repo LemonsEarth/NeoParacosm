@@ -68,14 +68,21 @@ public class GraveswordHeldProj : ModProjectile
 
         if (special != 0)
         {
+            player.StopExtraJumpInProgress();
             if (player.IsGrounded())
             {
+                SoundEngine.PlaySound(SoundID.Item62, playerCenter);
                 if (Main.myPlayer == Projectile.owner)
                 {
                     for (int i = -2; i <= 2; i++)
                     {
-                        LemonUtils.QuickProj(Projectile, player.Center + Vector2.UnitX * 48 * i, Vector2.UnitY * 2, ModContent.ProjectileType<LingeringDeathflameFriendly>(), Projectile.damage / 2, ai0: 1, ai1: 300, ai2: 1 + Math.Abs(i) / 3f);
+                        LemonUtils.QuickProj(Projectile, player.Center + Vector2.UnitX * 48 * i, Vector2.UnitY * 2, ProjectileType<LingeringDeathflameFriendly>(), Projectile.damage / 2, ai0: 1, ai1: 90 + AITimer * 2, ai2: 1 + Math.Abs(i) / 3f);
                     }
+                }
+                for (int i = -4; i <= 4; i++)
+                {
+                    Dust.NewDustPerfect(player.Center + Vector2.UnitX * Main.rand.NextFloat(20, 28) * i, DustID.GemDiamond, -Vector2.UnitY * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+                    Dust.NewDustPerfect(player.Center + Vector2.UnitX * Main.rand.NextFloat(20, 28) * i, DustID.Ash, -Vector2.UnitY * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 4f), newColor: Color.Black).noGravity = true;
                 }
                 Projectile.Kill();
             }
@@ -119,7 +126,7 @@ public class GraveswordHeldProj : ModProjectile
     const float ThreePiOverFour = MathHelper.Pi - MathHelper.PiOver4; // dumb rotation and sprite direction stuff
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
-        Vector2 pos = player.Center + new Vector2(-player.direction * 40, -50).RotatedBy(movedRotation * player.direction);
+        Vector2 pos = player.Center + new Vector2(-player.direction * 40, -50).RotatedBy(movedRotation * player.direction) * Projectile.scale;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation * player.direction + player.direction * ThreePiOverFour);
         Projectile.Center = pos;
         if (direction == -1)

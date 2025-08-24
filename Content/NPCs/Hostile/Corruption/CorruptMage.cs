@@ -78,7 +78,7 @@ public class CorruptMage : ModNPC
                     Vector2 belowPos = !Main.hardMode ? player.Center + belowOffset : player.Center + belowOffset.RotatedBy(randomAngle);
                     LemonUtils.DustCircle(belowPos, 8, 8, DustID.Corruption, scale: 2f);
                     Vector2 dir = belowPos.DirectionTo(player.Center);
-                    LemonUtils.QuickProj(NPC, belowPos, dir * 20, ModContent.ProjectileType<VilethornHostile>());
+                    LemonUtils.QuickProj(NPC, belowPos, dir * 20, ProjectileType<VilethornHostile>());
                 }
             }
 

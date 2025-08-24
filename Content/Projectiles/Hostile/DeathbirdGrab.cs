@@ -13,6 +13,7 @@ public class DeathbirdGrab : ModProjectile
 
     int AITimer = 0;
     ref float DeathbirdID => ref Projectile.ai[0];
+    ref float duration => ref Projectile.ai[1];
 
     HashSet<Player> hitPlayers = new HashSet<Player>();
 
@@ -32,7 +33,7 @@ public class DeathbirdGrab : ModProjectile
         Projectile.ignoreWater = true;
         Projectile.tileCollide = false;
         Projectile.penetrate = -1;
-        Projectile.timeLeft = 45;
+        Projectile.timeLeft = 999;
         Projectile.scale = 1f;
     }
 
@@ -48,9 +49,14 @@ public class DeathbirdGrab : ModProjectile
 
         }
 
+        if (AITimer > duration)
+        {
+            Projectile.Kill();
+        }
+
         Projectile.damage = 1;
 
-        if (Main.npc[(int)DeathbirdID].type != ModContent.NPCType<Deathbird>() || !Main.npc[(int)DeathbirdID].active || Main.npc[(int)DeathbirdID].life <= 0 || Main.npc[(int)DeathbirdID].dontTakeDamage)
+        if (Main.npc[(int)DeathbirdID].type != NPCType<Deathbird>() || !Main.npc[(int)DeathbirdID].active || Main.npc[(int)DeathbirdID].life <= 0 || Main.npc[(int)DeathbirdID].dontTakeDamage)
         {
             Projectile.Kill();
             return;

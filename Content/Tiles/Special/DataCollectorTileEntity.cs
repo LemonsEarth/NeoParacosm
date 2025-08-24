@@ -34,7 +34,7 @@ public class DataCollectorTileEntity : ModTileEntity
             WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int rewardID = WorldGen.crimson ? ModContent.ItemType<CommensalPathogen>() : ModContent.ItemType<BaneflyHive>();
+                int rewardID = WorldGen.crimson ? ItemType<CommensalPathogen>() : ItemType<BaneflyHive>();
                 Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), rewardID, 1);
             }
         }
@@ -43,7 +43,7 @@ public class DataCollectorTileEntity : ModTileEntity
     public override bool IsTileValidForEntity(int x, int y)
     {
         Tile tile = Main.tile[x, y];
-        return tile.HasTile && tile.TileType == ModContent.TileType<DataCollectorTile>();
+        return tile.HasTile && tile.TileType == TileType<DataCollectorTile>();
     }
 
     Point16 CenterPos => (Position + new Point16(2, 2));
@@ -67,7 +67,7 @@ public class DataCollectorTileEntity : ModTileEntity
         {
             if (player.Distance(Position.ToWorldCoordinates()) < distance && (player.ZoneCorrupt || player.ZoneCrimson))
             {
-                player.AddBuff(ModContent.BuffType<ProvokedPresenceDebuff>(), 2);
+                player.AddBuff(BuffType<ProvokedPresenceDebuff>(), 2);
             }
         }
 

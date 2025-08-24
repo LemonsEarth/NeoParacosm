@@ -26,7 +26,7 @@ public class DeathLaser : ModProjectile
 
     public override void Load()
     {
-        Noise = ModContent.Request<Texture2D>(NoisePath);
+        Noise = Request<Texture2D>(NoisePath);
     }
 
     public override void SetStaticDefaults()

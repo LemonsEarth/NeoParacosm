@@ -22,7 +22,7 @@ public class AscendedVilethorn : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedVilethornHeldProj>();
+        Item.shoot = ProjectileType<AscendedVilethornHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;

@@ -29,8 +29,8 @@ public class DeathbirdFeatherSharp : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 16;
-        Projectile.height = 16;
+        Projectile.width = 34;
+        Projectile.height = 34;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;

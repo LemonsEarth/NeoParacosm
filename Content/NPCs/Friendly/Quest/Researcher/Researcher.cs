@@ -33,21 +33,21 @@ public class Researcher : ModNPC
 
         AscendableItems = new Dictionary<int, int>()
         {
-            { ItemID.BloodButcherer, ModContent.ItemType<AscendedBloodButcherer>() },
-            { ItemID.CrimsonRod, ModContent.ItemType<AscendedCrimsonRod>() },
-            { ItemID.TheUndertaker, ModContent.ItemType<AscendedUndertaker>() },
-            { ItemID.TheRottedFork, ModContent.ItemType<AscendedRottedFork>() },
-            { ItemID.CrimsonHelmet, ModContent.ItemType<AscendedCrimsonHelmet>() },
-            { ItemID.CrimsonScalemail, ModContent.ItemType<AscendedCrimsonScalemail>() },
-            { ItemID.CrimsonGreaves, ModContent.ItemType<AscendedCrimsonGreaves>() },
+            { ItemID.BloodButcherer, ItemType<AscendedBloodButcherer>() },
+            { ItemID.CrimsonRod, ItemType<AscendedCrimsonRod>() },
+            { ItemID.TheUndertaker, ItemType<AscendedUndertaker>() },
+            { ItemID.TheRottedFork, ItemType<AscendedRottedFork>() },
+            { ItemID.CrimsonHelmet, ItemType<AscendedCrimsonHelmet>() },
+            { ItemID.CrimsonScalemail, ItemType<AscendedCrimsonScalemail>() },
+            { ItemID.CrimsonGreaves, ItemType<AscendedCrimsonGreaves>() },
 
-            { ItemID.Vilethorn, ModContent.ItemType<AscendedVilethorn>() },
-            { ItemID.Musket, ModContent.ItemType<AscendedMusket>() },
-            { ItemID.LightsBane, ModContent.ItemType<AscendedLightsBane>() },
-            { ItemID.BallOHurt, ModContent.ItemType<AscendedBallOHurt>() },
-            { ItemID.ShadowHelmet, ModContent.ItemType<AscendedShadowHelmet>() },
-            { ItemID.ShadowScalemail, ModContent.ItemType<AscendedShadowScalemail>() },
-            { ItemID.ShadowGreaves, ModContent.ItemType<AscendedShadowGreaves>() },
+            { ItemID.Vilethorn, ItemType<AscendedVilethorn>() },
+            { ItemID.Musket, ItemType<AscendedMusket>() },
+            { ItemID.LightsBane, ItemType<AscendedLightsBane>() },
+            { ItemID.BallOHurt, ItemType<AscendedBallOHurt>() },
+            { ItemID.ShadowHelmet, ItemType<AscendedShadowHelmet>() },
+            { ItemID.ShadowScalemail, ItemType<AscendedShadowScalemail>() },
+            { ItemID.ShadowGreaves, ItemType<AscendedShadowGreaves>() },
         };
     }
 
@@ -130,7 +130,7 @@ public class Researcher : ModNPC
         }
         else
         {
-            AscensionUISystem UISystem = ModContent.GetInstance<AscensionUISystem>();
+            AscensionUISystem UISystem = GetInstance<AscensionUISystem>();
             if (UISystem.userInterface.CurrentState == null)
             {
                 UISystem.ShowUI();
@@ -149,7 +149,7 @@ public class Researcher : ModNPC
     float talkDistance = 150;
     public override void AI()
     {
-        ResearcherDialogueUISystem dialogueSystem = ModContent.GetInstance<ResearcherDialogueUISystem>();
+        ResearcherDialogueUISystem dialogueSystem = GetInstance<ResearcherDialogueUISystem>();
         if (Main.LocalPlayer.Alive() && NPC.Hitbox.Contains(Main.MouseWorld.ToPoint()) && Main.LocalPlayer.Distance(NPC.Center) < talkDistance 
             && Main.mouseRight && Main.mouseRightRelease)
         {

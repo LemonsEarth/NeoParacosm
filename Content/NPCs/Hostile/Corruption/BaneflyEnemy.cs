@@ -70,7 +70,7 @@ public class BaneflyEnemy : ModNPC
         }
         else
         {
-            if (parent != null && parent.active && parent.type == ModContent.NPCType<BaneflyHiveEnemy>())
+            if (parent != null && parent.active && parent.type == NPCType<BaneflyHiveEnemy>())
             {
                 NPC.MoveToPos(parent.Center, Main.rand.NextFloat(0.04f, 0.1f), Main.rand.NextFloat(0.04f, 0.1f), Main.rand.NextFloat(0.1f, 0.2f), Main.rand.NextFloat(0.1f, 0.2f));
             }

@@ -10,7 +10,7 @@ public class DragonRemainsTileEntity : ModTileEntity
     public override bool IsTileValidForEntity(int x, int y)
     {
         Tile tile = Main.tile[x, y];
-        return tile.HasTile && tile.TileType == ModContent.TileType<DragonRemainsTile>();
+        return tile.HasTile && tile.TileType == TileType<DragonRemainsTile>();
     }
 
     Point16 CenterPos => (Position + new Point16(7, 4));
@@ -37,7 +37,7 @@ public class DragonRemainsTileEntity : ModTileEntity
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(new EntitySource_TileEntity(this, "Shield Pulse"), CenterPos.ToWorldCoordinates(), Vector2.Zero, ModContent.ProjectileType<DragonRemainsPulseShield>(), 0, 0, Main.myPlayer);
+                    Projectile.NewProjectile(new EntitySource_TileEntity(this, "Shield Pulse"), CenterPos.ToWorldCoordinates(), Vector2.Zero, ProjectileType<DragonRemainsPulseShield>(), 0, 0, Main.myPlayer);
                 }
             }
         }

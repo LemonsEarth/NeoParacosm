@@ -11,7 +11,7 @@ public class BiomeSystem : ModSystem
 
     public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
     {
-        depthStoneTileCount = tileCounts[ModContent.TileType<DepthStoneBlock>()];
-        deadDirtTileCount = tileCounts[ModContent.TileType<DeadDirtBlock>()];
+        depthStoneTileCount = tileCounts[TileType<DepthStoneBlock>()];
+        deadDirtTileCount = tileCounts[TileType<DeadDirtBlock>()];
     }
 }

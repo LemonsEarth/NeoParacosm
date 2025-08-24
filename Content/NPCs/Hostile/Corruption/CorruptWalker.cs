@@ -66,12 +66,12 @@ public class CorruptWalker : ModNPC
 
         for (int i = 0; i < 6; i++)
         {
-            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Main.rand.NextVector2Circular(3, 3), ModContent.ProjectileType<DecayGasHostile>());
+            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Main.rand.NextVector2Circular(3, 3), ProjectileType<DecayGasHostile>());
         }
 
         for (int i = 0; i < 4; i++)
         {
-            NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.RandomPos(), ModContent.NPCType<BaneflyEnemy>(), ai0: NPC.whoAmI);
+            NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.RandomPos(), NPCType<BaneflyEnemy>(), ai0: NPC.whoAmI);
         }
     }
 
@@ -128,7 +128,7 @@ public class CorruptWalker : ModNPC
         {
             for (int i = 0; i < 5; i++)
             {
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), ModContent.GoreType<CorruptWalkerGore>());
+                Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<CorruptWalkerGore>());
             }
         }
     }

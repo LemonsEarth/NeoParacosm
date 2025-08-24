@@ -38,7 +38,7 @@ public class CrimsonCloud : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        //target.AddBuff(ModContent.BuffType<CrimsonRotDebuff>(), 300);
+        //target.AddBuff(BuffType<CrimsonRotDebuff>(), 300);
     }
 
     float savedScale = 1f;

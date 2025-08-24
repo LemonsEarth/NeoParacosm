@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Buffs.Debuffs;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -33,6 +34,11 @@ public class LingeringDeathflame : ModProjectile
         Projectile.timeLeft = 3600;
         Projectile.scale = 1f;
         Projectile.Opacity = 1f;
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo info)
+    {
+        target.AddBuff(BuffType<DeathflameDebuff>(), 60);
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)
@@ -117,10 +123,5 @@ public class LingeringDeathflame : ModProjectile
         }
         fallThrough = Main.player[(int)playerID].Alive() && (Main.player[(int)playerID].Bottom.Y > Projectile.Center.Y + 32);
         return true;
-    }
-
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
-    {
-
     }
 }

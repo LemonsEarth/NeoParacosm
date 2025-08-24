@@ -33,7 +33,7 @@ public class DecayGasHostile : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(ModContent.BuffType<CorruptDecayDebuff>(), 600);
+        target.AddBuff(BuffType<CorruptDecayDebuff>(), 600);
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)
@@ -48,7 +48,7 @@ public class DecayGasHostile : ModProjectile
         {
             for (int i = 0; i < 2; i++)
             {
-                Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2), ModContent.GoreType<RedSmokeGore>(), Main.rand.NextFloat(0.8f, 1.2f));
+                Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2), GoreType<RedSmokeGore>(), Main.rand.NextFloat(0.8f, 1.2f));
             }
         }*/
         Projectile.velocity *= 0.98f;

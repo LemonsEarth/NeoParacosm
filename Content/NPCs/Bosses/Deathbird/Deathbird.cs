@@ -391,9 +391,11 @@ public class Deathbird : ModNPC
                 break;
             case > HomingDeathfireBallsFireTime:
                 frameDuration = 24;
-                NPC.velocity *= 0.99f;
+                NPC.velocity.X *= 0.95f;
+                NPC.velocity.Y += 0.1f;
                 if (AttackTimer % 60 == 0)
                 {
+                    NPC.velocity.Y -= 5;
                     SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
@@ -413,6 +415,7 @@ public class Deathbird : ModNPC
                 break;
             case > HomingDeathfireBallsFireTime - 90:
                 NPC.velocity *= 0.98f;
+                NPC.velocity.Y += 0.05f;
                 frameDuration = 999;
                 break;
             case > 0:
@@ -912,6 +915,8 @@ public class Deathbird : ModNPC
         NPC.dontTakeDamage = true;
         SetDefaultBodyPartValues();
         NPC.velocity = Vector2.Zero;
+        frameDuration = 6;
+        BasicMovementAnimation();
         drawClone = false;
         switch (AttackTimer)
         {

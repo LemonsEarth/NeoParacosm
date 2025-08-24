@@ -46,7 +46,7 @@ namespace NeoParacosm.Content.Items.Armor.Summoner
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ModContent.ItemType<AscendedCrimsonScalemail>() && legs.type == ModContent.ItemType<AscendedCrimsonGreaves>();
+            return body.type == ItemType<AscendedCrimsonScalemail>() && legs.type == ItemType<AscendedCrimsonGreaves>();
         }
 
         public override void UpdateArmorSet(Player player)
@@ -57,11 +57,11 @@ namespace NeoParacosm.Content.Items.Armor.Summoner
             player.statManaMax2 += setBonusMana;
             player.maxTurrets += setBonusSentryBoost;
 
-            if (Main.myPlayer == player.whoAmI && KeybindSystem.CrimsonSacrifice.JustPressed && !player.HasBuff(ModContent.BuffType<CrimsonSacrificeCooldown>()))
+            if (Main.myPlayer == player.whoAmI && KeybindSystem.CrimsonSacrifice.JustPressed && !player.HasBuff(BuffType<CrimsonSacrificeCooldown>()))
             {
                 SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f) }, player.Center);
-                player.AddBuff(ModContent.BuffType<CrimsonSacrificeDebuff>(), 600);
-                player.AddBuff(ModContent.BuffType<CrimsonSacrificeCooldown>(), 3600);
+                player.AddBuff(BuffType<CrimsonSacrificeDebuff>(), 600);
+                player.AddBuff(BuffType<CrimsonSacrificeCooldown>(), 3600);
             }
         }
 

@@ -12,7 +12,7 @@ public class DataCollectorEXItem : ModItem
 
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableTile(ModContent.TileType<DataCollectorEXTile>());
+        Item.DefaultToPlaceableTile(TileType<DataCollectorEXTile>());
         Item.width = 40;
         Item.height = 40;
         Item.rare = ItemRarityID.LightRed;
@@ -21,7 +21,7 @@ public class DataCollectorEXItem : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<DataCollectorItem>(), 1);
+        recipe.AddIngredient(ItemType<DataCollectorItem>(), 1);
         recipe.AddRecipeGroup("NeoParacosm:AnyTitaniumBar", 12);
         recipe.AddRecipeGroup("NeoParacosm:AnyMythrilBar", 6);
         recipe.AddRecipeGroup("NeoParacosm:AnyEvilMaterial2", 10);

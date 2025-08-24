@@ -37,7 +37,7 @@ public class GiantUndead : ModNPC
     static Asset<Texture2D> neckTexture;
     public override void Load()
     {
-        neckTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/NPCs/Hostile/Minions/GiantUndeadNeck");
+        neckTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Hostile/Minions/GiantUndeadNeck");
     }
 
     public override void SetDefaults()
@@ -101,7 +101,7 @@ public class GiantUndead : ModNPC
     public override void AI()
     {
         NPC.TargetClosest(true);
-        if (!Main.npc[(int)DeathbirdIndex].active || Main.npc[(int)DeathbirdIndex].type != ModContent.NPCType<Deathbird>())
+        if (!Main.npc[(int)DeathbirdIndex].active || Main.npc[(int)DeathbirdIndex].type != NPCType<Deathbird>())
         {
             for (int i = 0; i < 16; i++)
             {
@@ -188,7 +188,7 @@ public class GiantUndead : ModNPC
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.Center.DirectionTo(player.Center) * 10, ModContent.ProjectileType<DeathflameBall>(), NPC.damage / 4, ai0: 9999, ai1: NPC.target);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.Center.DirectionTo(player.Center) * 10, ProjectileType<DeathflameBall>(), NPC.damage / 4, ai0: 9999, ai1: NPC.target);
                     }
                     SoundEngine.PlaySound(SoundID.NPCDeath6 with { PitchRange = (0, 0.5f) }, NPC.Center);
                 }

@@ -21,7 +21,7 @@ public class ChainsawGun : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Green;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<ChainsawGunHeldProjectile>();
+        Item.shoot = ProjectileType<ChainsawGunHeldProjectile>();
         Item.shootSpeed = 15;
         Item.noMelee = true;
         Item.noUseGraphic = true;

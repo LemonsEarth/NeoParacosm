@@ -72,7 +72,7 @@ public class AscendedVilethornHeldProj : ModProjectile
                         SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, trackingPos);
                         for (int i = 0; i < 8; i++)
                         {
-                            LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ModContent.ProjectileType<VilethornFriendly>(), Projectile.damage / 2);
+                            LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ProjectileType<VilethornFriendly>(), Projectile.damage / 2);
                         }
                     }
                 }
@@ -93,7 +93,7 @@ public class AscendedVilethornHeldProj : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.QuickProj(Projectile, trackingPos + Vector2.UnitY * 200, -Vector2.UnitY * 40, ModContent.ProjectileType<VilethornFriendly>());
+        LemonUtils.QuickProj(Projectile, trackingPos + Vector2.UnitY * 200, -Vector2.UnitY * 40, ProjectileType<VilethornFriendly>());
     }
 
     void SetPositionRotationDirection(Player player, float movedRotation = 0)

@@ -48,7 +48,7 @@ public class AscensionUIState : UIState
 
         MainPanel.Append(OutItemPanel);
 
-        CloseButton = new UIImageButton(ModContent.Request<Texture2D>("NeoParacosm/Common/Assets/Textures/UI/CloseButton"));
+        CloseButton = new UIImageButton(Request<Texture2D>("NeoParacosm/Common/Assets/Textures/UI/CloseButton"));
         CloseButton.Width.Set(32, 0f);
         CloseButton.Height.Set(32, 0f);
         CloseButton.VAlign = 0.5f;
@@ -59,7 +59,7 @@ public class AscensionUIState : UIState
 
     private void OnButtonClick(UIMouseEvent evt, UIElement listeningElement)
     {
-        ModContent.GetInstance<AscensionUISystem>().HideUI();
+        GetInstance<AscensionUISystem>().HideUI();
     }
 
     public override void Update(GameTime gameTime)

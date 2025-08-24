@@ -55,7 +55,7 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                shotprojID = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonCloud>(), Projectile.damage, 1f, Projectile.owner);
+                shotprojID = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<CrimsonCloud>(), Projectile.damage, 1f, Projectile.owner);
             }
         }
         if (player.channel)

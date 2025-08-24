@@ -82,7 +82,7 @@ public class WorldGenSystem : ModSystem
                 {
                     if (WorldGen.genRand.NextBool(10))
                     {
-                        chest.item[inventoryIndex].SetDefaults(ModContent.ItemType<ChainsawGun>());
+                        chest.item[inventoryIndex].SetDefaults(ItemType<ChainsawGun>());
                     }
                     break;
                 }
@@ -105,14 +105,14 @@ public class WorldGenSystem : ModSystem
                     continue;
                 }
                 Tile tile = Main.tile[pos];
-                //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ModContent.ProjectileType<DragonRemainsPulseShield>(), 1, 1);
+                //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ProjectileType<DragonRemainsPulseShield>(), 1, 1);
                 if (tile.HasTile)
                 {
                     switch (tile.TileType)
                     {
                         case TileID.Dirt or TileID.ClayBlock or TileID.Grass or TileID.Sand or TileID.CorruptGrass or TileID.CrimsonGrass or TileID.Ebonsand or TileID.Crimsand:
-                            //WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
-                            WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
+                            //WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
+                            WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
                             break;
                     }
                 }
@@ -131,7 +131,7 @@ public class WorldGenSystem : ModSystem
         {
             for (int xPos = 0; xPos < 5; xPos++)
             {
-                WorldGen.OreRunner(startTileX + xPos * 100, startTileY + yLevel * 100, 200, 10, (ushort)ModContent.TileType<DepthStoneBlock>());
+                WorldGen.OreRunner(startTileX + xPos * 100, startTileY + yLevel * 100, 200, 10, (ushort)TileType<DepthStoneBlock>());
             }
         }
         GenerateVerticalOceanTunnels();
@@ -144,13 +144,13 @@ public class WorldGenSystem : ModSystem
                 if (WorldGen.InWorld(i, j))
                 {
 
-                    WorldGen.PlaceWall(i, j, ModContent.WallType<DepthStoneWallBlock>());
+                    WorldGen.PlaceWall(i, j, WallType<DepthStoneWallBlock>());
 
                     if (Main.tile[i, j].HasTile)
                     {
-                        if (Main.tile[i, j].TileType != (ushort)ModContent.TileType<DepthStoneBlock>())
+                        if (Main.tile[i, j].TileType != (ushort)TileType<DepthStoneBlock>())
                         {
-                            WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<DepthStoneBlock>(), forced: true);
+                            WorldGen.PlaceTile(i, j, (ushort)TileType<DepthStoneBlock>(), forced: true);
                         }
 
                     }
@@ -191,14 +191,14 @@ public class WorldGenSystem : ModSystem
                         continue;
                     }
                     Tile tile = Main.tile[pos];
-                    //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ModContent.ProjectileType<DragonRemainsPulseShield>(), 1, 1);
+                    //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ProjectileType<DragonRemainsPulseShield>(), 1, 1);
                     if (tile.HasTile)
                     {
                         switch (tile.TileType)
                         {
                             case TileID.Dirt or TileID.ClayBlock or TileID.Grass:
-                                //WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
-                                WorldGen.ConvertTile(pos.X, pos.Y, ModContent.TileType<DeadDirtBlock>());
+                                //WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
+                                WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
                                 break;
                         }
 

@@ -1,9 +1,4 @@
-﻿global using Microsoft.Xna.Framework;
-global using System;
-global using Terraria;
-global using Terraria.ID;
-global using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Systems;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;

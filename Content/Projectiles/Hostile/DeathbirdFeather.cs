@@ -53,7 +53,7 @@ public class DeathbirdFeather : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ModContent.ProjectileType<DeathLaser>(), ai0: 0.1f, ai1: Projectile.velocity.ToRotation() - MathHelper.PiOver2);
+        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<DeathLaser>(), ai0: 0.1f, ai1: Projectile.velocity.ToRotation() - MathHelper.PiOver2);
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)

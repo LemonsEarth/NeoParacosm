@@ -17,13 +17,13 @@ public class EvilGlobalNPC : GlobalNPC
             FaceMonster, FloatyGross, BloodCrawler, BloodCrawlerWall, Crimera, Crimslime, CrimsonAxe, CrimsonBunny, CrimsonPenguin, CrimsonGoldfish,
             EaterofSouls, DevourerHead, Clinger, Slimer, IchorSticker,
             DarkMummy, BloodMummy, DesertGhoulCrimson, DesertGhoulCorruption, DesertLamiaDark, SandsharkCorrupt, SandsharkCrimson,
-            ModContent.NPCType<CrimsonInfectionForm>(), ModContent.NPCType<BaneflyEnemy>(), ModContent.NPCType<DecayingRat>()
+            NPCType<CrimsonInfectionForm>(), NPCType<BaneflyEnemy>(), NPCType<DecayingRat>()
         };
 
     public static HashSet<int> EvilEnemiesBonus { get; private set; } = new HashSet<int>()
         {
-            BigMimicCorruption, BigMimicCrimson, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonSentryForm>(),
-            ModContent.NPCType<CrimsonWalker>(), ModContent.NPCType<RotPerfumeValve>(), ModContent.NPCType<Marauder>(), ModContent.NPCType<CorruptMage>(), ModContent.NPCType<CorruptWalker>(), ModContent.NPCType<BaneflyHiveEnemy>()
+            BigMimicCorruption, BigMimicCrimson, NPCType<CrimsonCarrier>(), NPCType<CrimsonSentryForm>(),
+            NPCType<CrimsonWalker>(), NPCType<RotPerfumeValve>(), NPCType<Marauder>(), NPCType<CorruptMage>(), NPCType<CorruptWalker>(), NPCType<BaneflyHiveEnemy>()
         };
 
     int AITimer = 0;

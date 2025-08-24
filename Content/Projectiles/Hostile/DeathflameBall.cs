@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Core.Systems;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
@@ -29,6 +30,11 @@ public class DeathflameBall : ModProjectile
         Projectile.scale = 1f;
         Projectile.aiStyle = 0;
         Projectile.Opacity = 0.5f;
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo info)
+    {
+        target.AddBuff(BuffType<DeathflameDebuff>(), 60);
     }
 
     float maxSpeed = 0;
@@ -65,10 +71,5 @@ public class DeathflameBall : ModProjectile
     {
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
-    }
-
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
-    {
-        
     }
 }

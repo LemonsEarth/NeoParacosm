@@ -37,15 +37,15 @@ public class NPPlayer : ModPlayer
             Main.NewText(ContentSamples.NpcsByNetId[npc]);
         }*/
         //WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
-        if (NPC.FindFirstNPC(ModContent.NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<Researcher>())].Distance(Player.Center) > 500)
+        if (NPC.FindFirstNPC(NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Researcher>())].Distance(Player.Center) > 500)
         {
-            AscensionUISystem UISystem = ModContent.GetInstance<AscensionUISystem>();
+            AscensionUISystem UISystem = GetInstance<AscensionUISystem>();
             UISystem.HideUI();
         }
 
         /*if (KeybindSystem.CrimsonSacrifice.JustReleased)
         {
-            ResearcherUISystem UISystem = ModContent.GetInstance<ResearcherUISystem>();
+            ResearcherUISystem UISystem = GetInstance<ResearcherUISystem>();
             if (UISystem.userInterface.CurrentState == null)
             {
                 UISystem.ShowUI();
@@ -63,7 +63,7 @@ public class NPPlayer : ModPlayer
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DesaturateShader").GetShader();
             data.UseProgress(desaturateEffectOpacity);
             
-            Player.AddBuff(ModContent.BuffType<DeadForestDebuff>(), 2);
+            Player.AddBuff(BuffType<DeadForestDebuff>(), 2);
         }
         else
         {
@@ -91,7 +91,7 @@ public class NPPlayer : ModPlayer
 
         if (timer % 10 == 0)
         {
-            if (!NPC.AnyNPCs(ModContent.NPCType<Deathbird>()))
+            if (!NPC.AnyNPCs(NPCType<Deathbird>()))
             {
                 Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
             }

@@ -20,7 +20,7 @@ namespace NeoParacosm.Content.Items.Accessories.Combat
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddBuff(ModContent.BuffType<CrimsonTendrilBuff>(), 2);
+            player.AddBuff(BuffType<CrimsonTendrilBuff>(), 2);
             player.endurance -= enduranceDecrease / 100;
             player.statDefense *= 0.9f;
         }

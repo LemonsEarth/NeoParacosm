@@ -29,7 +29,7 @@ public class DataCollectorTile : ModTile
         TileObjectData.newTile.CoordinatePadding = 2;
         //TileObjectData.newTile.Origin = new Point16(0, 5);
         //TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Platform, 5, 0);
-        TileObjectData.newTile.HookPostPlaceMyPlayer = ModContent.GetInstance<DataCollectorTileEntity>().Generic_HookPostPlaceMyPlayer;
+        TileObjectData.newTile.HookPostPlaceMyPlayer = GetInstance<DataCollectorTileEntity>().Generic_HookPostPlaceMyPlayer;
         TileObjectData.addTile(Type);
 
         AddMapEntry(new Color(255, 50, 50));
@@ -63,6 +63,6 @@ public class DataCollectorTile : ModTile
 
     public override void KillMultiTile(int i, int j, int frameX, int frameY)
     {
-        ModContent.GetInstance<DataCollectorTileEntity>().Kill(i, j);
+        GetInstance<DataCollectorTileEntity>().Kill(i, j);
     }
 }

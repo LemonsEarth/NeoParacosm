@@ -71,7 +71,7 @@ public class RotPerfumeValve : ModNPC
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(2, 8), ModContent.ProjectileType<RotGasHostile>());
+                LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(2, 8), ProjectileType<RotGasHostile>());
             }
         }
 
@@ -80,7 +80,7 @@ public class RotPerfumeValve : ModNPC
 
     public override void HitEffect(NPC.HitInfo hit)
     {
-        Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), ModContent.GoreType<RedGore>());
+        Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<RedGore>());
     }
 
     public override void FindFrame(int frameHeight)
@@ -107,7 +107,7 @@ public class RotPerfumeValve : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 0, maximumDropped: 2));
-        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RotPerfume>(), 20, minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.Common(ItemType<RotPerfume>(), 20, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

@@ -17,10 +17,10 @@ namespace NeoParacosm.Content.Tiles.DeadForest
 
         public override void SetStaticDefaults()
         {
-            GrowsOnTileId = [ModContent.TileType<DeadDirtBlock>()];
-            treeTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree");
-            topsTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Tops");
-            branchTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Branches");
+            GrowsOnTileId = [TileType<DeadDirtBlock>()];
+            treeTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree");
+            topsTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Tops");
+            branchTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Branches");
         }
 
         public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
@@ -35,7 +35,7 @@ namespace NeoParacosm.Content.Tiles.DeadForest
         public override int SaplingGrowthType(ref int style)
         {
             style = 0;
-            return ModContent.TileType<DeadTreeSapling>();
+            return TileType<DeadTreeSapling>();
         }
 
         public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)

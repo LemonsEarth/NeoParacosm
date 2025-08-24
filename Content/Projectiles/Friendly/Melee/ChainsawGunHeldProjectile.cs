@@ -89,7 +89,7 @@ public class ChainsawGunHeldProjectile : ModProjectile
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                LemonUtils.QuickProj(Projectile, Projectile.Center + Projectile.velocity, Vector2.Zero, ModContent.ProjectileType<SawProjectile>(), owner: Projectile.owner, ai2: Projectile.whoAmI, knockback: 5);
+                LemonUtils.QuickProj(Projectile, Projectile.Center + Projectile.velocity, Vector2.Zero, ProjectileType<SawProjectile>(), owner: Projectile.owner, ai2: Projectile.whoAmI, knockback: 5);
             }
         }
 

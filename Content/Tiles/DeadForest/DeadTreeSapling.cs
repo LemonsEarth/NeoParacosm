@@ -23,7 +23,7 @@ public class DeadTreeSapling : ModTile
         TileObjectData.newTile.CoordinateHeights = [16, 18];
         TileObjectData.newTile.CoordinateWidth = 16;
         TileObjectData.newTile.CoordinatePadding = 2;
-        TileObjectData.newTile.AnchorValidTiles = [ModContent.TileType<DeadDirtBlock>()];
+        TileObjectData.newTile.AnchorValidTiles = [TileType<DeadDirtBlock>()];
         TileObjectData.newTile.StyleHorizontal = true;
         TileObjectData.newTile.DrawFlipHorizontal = true;
         TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
@@ -32,7 +32,7 @@ public class DeadTreeSapling : ModTile
         TileObjectData.newTile.StyleMultiplier = 3;
 
         //TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
-        //TileObjectData.newSubTile.AnchorValidTiles = [ModContent.TileType<ExampleSand>()];
+        //TileObjectData.newSubTile.AnchorValidTiles = [TileType<ExampleSand>()];
         //TileObjectData.addSubTile(1);
 
         TileObjectData.addTile(Type);

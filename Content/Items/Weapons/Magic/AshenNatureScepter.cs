@@ -29,7 +29,7 @@ public class AshenNatureScepter : ModItem
         Item.UseSound = SoundID.Item8;
         Item.autoReuse = true;
         Item.mana = 12;
-        Item.shoot = ModContent.ProjectileType<AshenBolt>();
+        Item.shoot = ProjectileType<AshenBolt>();
         Item.shootSpeed = 10;
         Item.noMelee = true;
     }
@@ -46,7 +46,7 @@ public class AshenNatureScepter : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ModContent.ItemType<NatureScepter>());
+        recipe.AddIngredient(ItemType<NatureScepter>());
         recipe.AddIngredient(ItemID.HellstoneBar, 10);
         recipe.AddTile(TileID.Hellforge);
         recipe.Register();

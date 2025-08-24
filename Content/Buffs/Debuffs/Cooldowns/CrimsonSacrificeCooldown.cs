@@ -11,7 +11,7 @@ public class CrimsonSacrificeCooldown : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        if (!player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        if (!player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
         {
             player.statDefense -= 10;
             player.moveSpeed -= 0.5f;

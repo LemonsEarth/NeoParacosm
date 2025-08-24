@@ -26,7 +26,7 @@ public class RotPerfume : ModItem
         Item.UseSound = SoundID.Item45;
         Item.autoReuse = true;
         Item.mana = 12;
-        Item.shoot = ModContent.ProjectileType<RotGas>();
+        Item.shoot = ProjectileType<RotGas>();
         Item.shootSpeed = 2;
         Item.noMelee = true;
     }

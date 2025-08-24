@@ -35,7 +35,7 @@ public class RotGas : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(ModContent.BuffType<CrimsonRotDebuff>(), 300);
+        target.AddBuff(BuffType<CrimsonRotDebuff>(), 300);
     }
 
     public override void AI()
@@ -44,7 +44,7 @@ public class RotGas : ModProjectile
         {
             for (int i = 0; i < 2; i++)
             {
-                Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2), ModContent.GoreType<RedSmokeGore>(), Main.rand.NextFloat(0.8f, 1.2f));
+                Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2), GoreType<RedSmokeGore>(), Main.rand.NextFloat(0.8f, 1.2f));
             }
         }*/
         if (AITimer == 0)

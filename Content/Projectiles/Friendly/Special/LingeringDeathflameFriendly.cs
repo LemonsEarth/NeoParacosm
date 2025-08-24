@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Buffs.Debuffs;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -30,7 +31,7 @@ public class LingeringDeathflameFriendly : ModProjectile
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
-        Projectile.penetrate = -1;
+        Projectile.penetrate = 10;
         Projectile.timeLeft = 3600;
         Projectile.scale = 1f;
         Projectile.Opacity = 1f;
@@ -120,8 +121,8 @@ public class LingeringDeathflameFriendly : ModProjectile
         return true;
     }
 
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-
+        target.AddBuff(BuffType<DeathflameDebuff>(), 240);
     }
 }

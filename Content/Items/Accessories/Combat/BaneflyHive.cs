@@ -19,7 +19,7 @@ namespace NeoParacosm.Content.Items.Accessories.Combat
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.AddBuff(ModContent.BuffType<BaneflyHiveBuff>(), 2);
+            player.AddBuff(BuffType<BaneflyHiveBuff>(), 2);
         }
     }
 }

@@ -29,7 +29,7 @@ public class CrimsonTendrilFriendly : ModProjectile
 
     public override void Load()
     {
-        bodyTexture = ModContent.Request<Texture2D>("NeoParacosm/Content/Projectiles/Friendly/Special/CrimsonTendrilBody");
+        bodyTexture = Request<Texture2D>("NeoParacosm/Content/Projectiles/Friendly/Special/CrimsonTendrilBody");
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -83,7 +83,7 @@ public class CrimsonTendrilFriendly : ModProjectile
             }
             Projectile.netUpdate = true;
         }
-        if (player == null || !player.active || player.dead || player.ghost || !player.HasBuff(ModContent.BuffType<CrimsonTendrilBuff>()))
+        if (player == null || !player.active || player.dead || player.ghost || !player.HasBuff(BuffType<CrimsonTendrilBuff>()))
         {
             Projectile.Kill();
         }
@@ -107,7 +107,7 @@ public class CrimsonTendrilFriendly : ModProjectile
                     randomRangedAttack = Main.rand.NextBool() ? 1 : 0;
                     if (randomRangedAttack == 1)
                     {
-                        LemonUtils.QuickProj(Projectile, Projectile.Center, Projectile.DirectionTo(closestNPC.Center) * Main.rand.NextFloat(10, 16), ModContent.ProjectileType<CrimsonThornFriendly>(), Projectile.damage / 2);
+                        LemonUtils.QuickProj(Projectile, Projectile.Center, Projectile.DirectionTo(closestNPC.Center) * Main.rand.NextFloat(10, 16), ProjectileType<CrimsonThornFriendly>(), Projectile.damage / 2);
                     }
                     else
                     {

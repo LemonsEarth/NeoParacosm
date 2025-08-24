@@ -17,12 +17,12 @@ public class CrimsonCatalyst : ModNPC
 
     static HashSet<int> PreHM_Enemies = new HashSet<int>()
     {
-        NPCID.FaceMonster, NPCID.BloodCrawler, NPCID.Crimera, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>(), ModContent.NPCType<RotPerfumeValve>()
+        NPCID.FaceMonster, NPCID.BloodCrawler, NPCID.Crimera, NPCType<CrimsonCarrier>(), NPCType<CrimsonWalker>(), NPCType<RotPerfumeValve>()
     };
 
     static HashSet<int> HM_Enemies = new HashSet<int>()
     {
-        NPCID.Crimslime, NPCID.Herpling, NPCID.CrimsonAxe, NPCID.IchorSticker, NPCID.FloatyGross, ModContent.NPCType<CrimsonCarrier>(), ModContent.NPCType<CrimsonWalker>(),ModContent.NPCType<CrimsonSentryForm>(), ModContent.NPCType<RotPerfumeValve>()
+        NPCID.Crimslime, NPCID.Herpling, NPCID.CrimsonAxe, NPCID.IchorSticker, NPCID.FloatyGross, NPCType<CrimsonCarrier>(), NPCType<CrimsonWalker>(),NPCType<CrimsonSentryForm>(), NPCType<RotPerfumeValve>()
     };
 
     public override void SetStaticDefaults()
@@ -73,7 +73,7 @@ public class CrimsonCatalyst : ModNPC
         {
             if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(10))
             {
-                NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<CrimsonInfectionForm>());
+                NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, NPCType<CrimsonInfectionForm>());
             }
         }
     }

@@ -41,7 +41,7 @@ namespace NeoParacosm.Content.Items.Armor.Ranged
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
         {
-            return body.type == ModContent.ItemType<AscendedShadowScalemail>() && legs.type == ModContent.ItemType<AscendedShadowGreaves>();
+            return body.type == ItemType<AscendedShadowScalemail>() && legs.type == ItemType<AscendedShadowGreaves>();
         }
 
         public override void UpdateArmorSet(Player player)

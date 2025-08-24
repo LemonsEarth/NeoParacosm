@@ -44,7 +44,7 @@ namespace NeoParacosm.Content.Items.Pickups
 
         public override bool OnPickup(Player player)
         {
-            player.AddBuff(ModContent.BuffType<ForestCrestBuff>(), 300);
+            player.AddBuff(BuffType<ForestCrestBuff>(), 300);
             SoundEngine.PlaySound(SoundID.Grab, player.Center);
             return false;
         }

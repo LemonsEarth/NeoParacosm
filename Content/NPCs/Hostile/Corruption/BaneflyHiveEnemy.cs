@@ -64,7 +64,7 @@ public class BaneflyHiveEnemy : ModNPC
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.RandomPos(), ModContent.NPCType<BaneflyEnemy>(), ai0: NPC.whoAmI);
+                    NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.RandomPos(), NPCType<BaneflyEnemy>(), ai0: NPC.whoAmI);
                 }
             }
         }

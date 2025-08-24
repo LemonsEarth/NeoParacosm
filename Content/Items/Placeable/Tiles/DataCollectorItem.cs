@@ -12,7 +12,7 @@ public class DataCollectorItem : ModItem
 
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableTile(ModContent.TileType<DataCollectorTile>());
+        Item.DefaultToPlaceableTile(TileType<DataCollectorTile>());
         Item.width = 40;
         Item.height = 40;
         Item.rare = ItemRarityID.Orange;

@@ -23,7 +23,7 @@ public class NPBuffNPC : GlobalNPC
 
     public override void PostAI(NPC npc)
     {
-        if (npc.HasBuff(ModContent.BuffType<LightsBaneDebuff>()))
+        if (npc.HasBuff(BuffType<LightsBaneDebuff>()))
         {
             if (timer % 5 == 0)
             {
@@ -42,7 +42,7 @@ public class NPBuffNPC : GlobalNPC
 
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
-        if (npc.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
+        if (npc.HasBuff(BuffType<CrimsonRotDebuff>()))
         {
             modifiers.Defense.Flat -= (10 - (npc.life / npc.lifeMax * 10));
         }
@@ -50,28 +50,35 @@ public class NPBuffNPC : GlobalNPC
 
     public override void UpdateLifeRegen(NPC npc, ref int damage)
     {
-        if (npc.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
+        if (npc.HasBuff(BuffType<CrimsonRotDebuff>()))
         {
             DOTDebuff(npc, 24, ref damage);
+        }
+
+        if (npc.HasBuff(BuffType<DeathflameDebuff>()))
+        {
+            float damagePerSecond = npc.lifeMax * 0.005f + 10;
+            if (damagePerSecond > 50) damagePerSecond = 50;
+			DOTDebuff(npc, damagePerSecond, ref damage);
         }
     }
 
     public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
     {
-        if (player.HasBuff(ModContent.BuffType<ProvokedPresenceDebuff>()) && !NPC.AnyNPCs(ModContent.NPCType<Marauder>()))
+        if (player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && !NPC.AnyNPCs(NPCType<Marauder>()))
         {
             spawnRate /= 3;
             maxSpawns *= 4;
         }
     }
 
-    void DOTDebuff(NPC npc, int damagePerSecond, ref int damage)
+    void DOTDebuff(NPC npc, float damagePerSecond, ref int damage)
     {
         if (npc.lifeRegen > 0) npc.lifeRegen = 0;
-        npc.lifeRegen -= damagePerSecond * 2;
+        npc.lifeRegen -= (int)(damagePerSecond * 2);
         if (damage < damagePerSecond)
         {
-            damage = damagePerSecond;
+            damage = (int)damagePerSecond;
         }
     }
 
@@ -80,7 +87,7 @@ public class NPBuffNPC : GlobalNPC
     {
         if (npc.SpawnedFromStatue) return;
 
-        if (Main.rand.NextBool(5) && !avariceLootBonus && npc.HasBuff(ModContent.BuffType<SkullOfAvariceDebuff>()))
+        if (Main.rand.NextBool(5) && !avariceLootBonus && npc.HasBuff(BuffType<SkullOfAvariceDebuff>()))
         {
             avariceLootBonus = true;
             for (int i = 0; i < 4; i++)

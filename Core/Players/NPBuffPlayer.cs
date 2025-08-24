@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+using Terraria;
 
 namespace NeoParacosm.Core.Players;
 
@@ -18,6 +19,8 @@ public class NPBuffPlayer : ModPlayer
     {
         if (fastFall)
         {
+            Player.noKnockback = true;
+            Player.blockExtraJumps = true;
             Player.maxFallSpeed *= 3;
             Player.velocity.Y = 20;
             Player.velocity.X = 0;
@@ -33,17 +36,17 @@ public class NPBuffPlayer : ModPlayer
 
     public override void UpdateEquips()
     {
-        if (Player.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
+        if (Player.HasBuff(BuffType<CrimsonRotDebuff>()))
         {
             Player.statDefense -= 10 - (int)(((float)Player.statLife / Player.statLifeMax2) * 10) + 1;
         }
 
-        if (Player.HasBuff(ModContent.BuffType<DeathflameDebuff>()))
+        if (Player.HasBuff(BuffType<DeathflameDebuff>()))
         {
             Player.statDefense -= 15;
         }
 
-        if (Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        if (Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
         {
             if (Player.numMinions > 0)
             {
@@ -68,7 +71,7 @@ public class NPBuffPlayer : ModPlayer
 
     public override void PostUpdateRunSpeeds()
     {
-        if (Player.HasBuff(ModContent.BuffType<CorruptDecayDebuff>()))
+        if (Player.HasBuff(BuffType<CorruptDecayDebuff>()))
         {
             Player.runAcceleration *= 0.5f;
         }
@@ -76,22 +79,22 @@ public class NPBuffPlayer : ModPlayer
 
     public override void UpdateBadLifeRegen()
     {
-        if (Player.HasBuff(ModContent.BuffType<CrimsonRotDebuff>()))
+        if (Player.HasBuff(BuffType<CrimsonRotDebuff>()))
         {
             DOTDebuff(20);
         }
 
-        if (Player.HasBuff(ModContent.BuffType<CorruptDecayDebuff>()))
+        if (Player.HasBuff(BuffType<CorruptDecayDebuff>()))
         {
             DOTDebuff(14);
         }
 
-        if (Player.HasBuff(ModContent.BuffType<DeathflameDebuff>()))
+        if (Player.HasBuff(BuffType<DeathflameDebuff>()))
         {
             DOTDebuff((int)(Player.statLifeMax2 * 0.07f));
         }
 
-        if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
         {
             Player.lifeRegen -= 2;
         }
@@ -99,7 +102,7 @@ public class NPBuffPlayer : ModPlayer
 
     public override void UpdateLifeRegen()
     {
-        if (Player.HasBuff(ModContent.BuffType<CrimsonSacrificeDebuff>()))
+        if (Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
         {
             Player.lifeRegen += 60;
         }

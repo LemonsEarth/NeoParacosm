@@ -59,7 +59,7 @@ public class MarksmanFish : ModNPC
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 24), ModContent.ProjectileType<MarksmanBolt>());
+                LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 24), ProjectileType<MarksmanBolt>());
             }
             NPC.direction = Math.Sign(NPC.Center.DirectionTo(player.Center).X);
         }

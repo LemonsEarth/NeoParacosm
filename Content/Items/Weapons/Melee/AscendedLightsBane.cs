@@ -28,7 +28,7 @@ public class AscendedLightsBane : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedLightsBaneHeldProj>();
+        Item.shoot = ProjectileType<AscendedLightsBaneHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
@@ -44,7 +44,7 @@ public class AscendedLightsBane : ModItem
             {
                 if (npc.CanBeChasedBy())
                 {
-                    npc.AddBuff(ModContent.BuffType<LightsBaneDebuff>(), 60);
+                    npc.AddBuff(BuffType<LightsBaneDebuff>(), 60);
                 }
             }
             hitNPCs.Clear();

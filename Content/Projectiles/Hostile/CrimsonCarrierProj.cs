@@ -43,7 +43,7 @@ public class CrimsonCarrierProj : ModProjectile
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 15;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        GlowMask = ModContent.Request<Texture2D>(GlowMask_Path);
+        GlowMask = Request<Texture2D>(GlowMask_Path);
     }
 
     public override void SetDefaults()

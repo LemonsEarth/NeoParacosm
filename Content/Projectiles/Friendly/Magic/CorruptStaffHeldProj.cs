@@ -101,7 +101,7 @@ public class CorruptStaffHeldProj : ModProjectile
             {
                 if (player.CheckMana(player.HeldItem.mana, true) && Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), playerCenter, playerCenter.DirectionTo(Main.MouseWorld) * 25, ModContent.ProjectileType<CorruptBolt>(), Projectile.damage, Projectile.knockBack, player.whoAmI, ai1: Main.rand.NextFloat(-90, 90));
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), playerCenter, playerCenter.DirectionTo(Main.MouseWorld) * 25, ProjectileType<CorruptBolt>(), Projectile.damage, Projectile.knockBack, player.whoAmI, ai1: Main.rand.NextFloat(-90, 90));
                 }
                 chargeAmount -= 10;
             }

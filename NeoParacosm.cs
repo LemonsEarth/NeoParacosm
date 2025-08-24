@@ -1,3 +1,10 @@
+global using Microsoft.Xna.Framework;
+global using System;
+global using Terraria;
+global using Terraria.ID;
+global using Terraria.ModLoader;
+global using static Terraria.ModLoader.ModContent;
+
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Graphics.Effects;

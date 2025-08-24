@@ -92,7 +92,7 @@ public class AscendedMusketHeldProj : ModProjectile
         Vector2 dir = Projectile.Center.DirectionTo(Main.MouseWorld);
         player.PickAmmo(player.HeldItem, out int proj, out float _, out int damage, out float knockback, out int usedAmmoItemID);
         Vector2 pos = Projectile.Center + Projectile.Center.DirectionTo(Main.MouseWorld) * 5;
-        LemonUtils.QuickProj(Projectile, pos, dir * player.HeldItem.shootSpeed, ModContent.ProjectileType<CursedTracerBullet>());
+        LemonUtils.QuickProj(Projectile, pos, dir * player.HeldItem.shootSpeed, ProjectileType<CursedTracerBullet>());
         SoundEngine.PlaySound(ParacosmSFX.UndertakerGunshot with { Volume = 0.4f, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 }, Projectile.Center);
         rot += -player.direction * MathHelper.ToRadians(45);
     }

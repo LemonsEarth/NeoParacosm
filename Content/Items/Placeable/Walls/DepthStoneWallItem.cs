@@ -8,12 +8,12 @@ public class DepthStoneWallItem : ModItem
     public override void SetStaticDefaults()
     {
         Item.ResearchUnlockCount = 400;
-        //ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ParastoneWallUnsafeItem>();
+        //ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<ParastoneWallUnsafeItem>();
     }
 
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableWall(ModContent.WallType<DepthStoneWallBlock>());
+        Item.DefaultToPlaceableWall(WallType<DepthStoneWallBlock>());
         Item.width = 32;
         Item.height = 32;
     }
@@ -21,7 +21,7 @@ public class DepthStoneWallItem : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe(4);
-        recipe.AddIngredient(ModContent.ItemType<DepthStoneItem>());
+        recipe.AddIngredient(ItemType<DepthStoneItem>());
         recipe.AddTile(TileID.Anvils);
         recipe.Register();
     }

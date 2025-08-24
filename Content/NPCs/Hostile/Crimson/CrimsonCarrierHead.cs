@@ -85,7 +85,7 @@ public class CrimsonCarrierHead : ModNPC
             int count = Main.rand.Next(3, 8);
             for (int i = 0; i < count; i++)
             {
-                NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, ModContent.NPCType<CrimsonInfectionForm>());
+                NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, NPCType<CrimsonInfectionForm>());
             }
         }
     }

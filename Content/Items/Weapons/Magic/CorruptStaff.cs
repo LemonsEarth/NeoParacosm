@@ -25,7 +25,7 @@ public class CorruptStaff : ModItem
         Item.UseSound = SoundID.Item8;
         Item.autoReuse = true;
         Item.mana = 18;
-        Item.shoot = ModContent.ProjectileType<CorruptStaffHeldProj>();
+        Item.shoot = ProjectileType<CorruptStaffHeldProj>();
         Item.shootSpeed = 10;
         Item.noMelee = true;
         Item.channel = true;

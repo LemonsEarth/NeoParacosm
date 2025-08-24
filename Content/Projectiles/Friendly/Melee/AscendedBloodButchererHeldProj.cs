@@ -23,7 +23,7 @@ public class AscendedBloodButchererHeldProj : ModProjectile
         if (hitTimer != 0) return;
         for (int i = 0; i < 2 * Projectile.scale; i++)
         {
-            LemonUtils.QuickProj(Projectile, Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * 8, ModContent.ProjectileType<CrimsonThornFriendly>(), Projectile.damage / 3);
+            LemonUtils.QuickProj(Projectile, Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * 8, ProjectileType<CrimsonThornFriendly>(), Projectile.damage / 3);
         }
         hitTimer = 60;
     }
@@ -83,8 +83,8 @@ public class AscendedBloodButchererHeldProj : ModProjectile
                 SoundEngine.PlaySound(SoundID.DD2_DrakinShot, Projectile.Center);
                 for (int i = 0; i < 3 * Projectile.scale; i++)
                 {
-                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), ModContent.GoreType<RedGore>());
-                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), ModContent.GoreType<RedSmokeGore>());
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<RedGore>());
+                    Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<RedSmokeGore>());
                 }
             }
         }

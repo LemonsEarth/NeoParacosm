@@ -34,12 +34,12 @@ public class NPAcessoryPlayer : ModPlayer
 
     public override void OnHurt(Player.HurtInfo info)
     {
-        if (roundShield && !Player.HasBuff(ModContent.BuffType<KnockbackCooldown>()))
+        if (roundShield && !Player.HasBuff(BuffType<KnockbackCooldown>()))
         {
-            Player.AddBuff(ModContent.BuffType<KnockbackCooldown>(), 1800);
+            Player.AddBuff(BuffType<KnockbackCooldown>(), 1800);
         }
 
-        if (Player.HasBuff(ModContent.BuffType<BaneflyHiveBuff>()))
+        if (Player.HasBuff(BuffType<BaneflyHiveBuff>()))
         {
             Player.AddBuff(BuffID.CursedInferno, 120);
         }
@@ -59,7 +59,7 @@ public class NPAcessoryPlayer : ModPlayer
                         Player.ClearBuff(buff);
                     }
                 }
-                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<SkullOfAvariceProjectile>(), 1, 1, Main.myPlayer);
+                Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<SkullOfAvariceProjectile>(), 1, 1, Main.myPlayer);
             }
         }
     }
@@ -78,7 +78,7 @@ public class NPAcessoryPlayer : ModPlayer
     {
         if (skullOfAvarice)
         {
-            target.AddBuff(ModContent.BuffType<SkullOfAvariceDebuff>(), 180);
+            target.AddBuff(BuffType<SkullOfAvariceDebuff>(), 180);
         }
     }
 
@@ -92,7 +92,7 @@ public class NPAcessoryPlayer : ModPlayer
 
     public override void PostUpdateEquips()
     {
-        if (roundShield && !Player.HasBuff(ModContent.BuffType<KnockbackCooldown>())) // On Hurt code is in Main
+        if (roundShield && !Player.HasBuff(BuffType<KnockbackCooldown>())) // On Hurt code is in Main
         {
             Player.noKnockback = true;
         }
@@ -104,27 +104,27 @@ public class NPAcessoryPlayer : ModPlayer
 
         if (forestCrestPickupCooldown > 0) forestCrestPickupCooldown--;
 
-        if (Player.HasBuff(ModContent.BuffType<CrimsonTendrilBuff>()))
+        if (Player.HasBuff(BuffType<CrimsonTendrilBuff>()))
         {
             if (CrimsonTendrils.Count < 3)
             {
                 if (Main.myPlayer == Player.whoAmI)
                 {
                     int damage = Main.hardMode ? 60 : 30;
-                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<CrimsonTendrilFriendly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 2f, Player.whoAmI);
+                    Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<CrimsonTendrilFriendly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 2f, Player.whoAmI);
                     CrimsonTendrils.Add(p);
                 }
             }
         }
 
-        if (Player.HasBuff(ModContent.BuffType<BaneflyHiveBuff>()))
+        if (Player.HasBuff(BuffType<BaneflyHiveBuff>()))
         {
             if (timer % 300 == 0 && Main.myPlayer == Player.whoAmI)
             {
                 for (int i = 0; i < 4; i++)
                 {
                     int damage = Main.hardMode ? 20 : 10;
-                    Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ModContent.ProjectileType<Banefly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 0.5f, Player.whoAmI);
+                    Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<Banefly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 0.5f, Player.whoAmI);
                 }
             }
         }
@@ -146,7 +146,7 @@ public class NPAcessoryPlayer : ModPlayer
         {
             if (Main.rand.NextBool(10) && forestCrestPickupCooldown == 0)
             {
-                Item item = Player.QuickSpawnItemDirect(Player.GetSource_OnHit(victim, "Forest Crest Hit"), ModContent.ItemType<SmallFlowerPickup>(), 1);
+                Item item = Player.QuickSpawnItemDirect(Player.GetSource_OnHit(victim, "Forest Crest Hit"), ItemType<SmallFlowerPickup>(), 1);
                 item.position = new Vector2(x, y);
                 NetMessage.SendData(MessageID.SyncItem, number: item.whoAmI, number2: 0);
                 forestCrestPickupCooldown = 30;

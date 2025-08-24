@@ -22,7 +22,7 @@ public class AscendedMusket : ModItem
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Orange;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<AscendedMusketHeldProj>();
+        Item.shoot = ProjectileType<AscendedMusketHeldProj>();
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;

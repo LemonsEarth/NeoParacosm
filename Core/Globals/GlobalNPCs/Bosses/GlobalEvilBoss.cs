@@ -23,7 +23,7 @@ public class GlobalEvilBoss : GlobalNPC
 
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
-            NPC.NewNPCDirect(npc.GetSource_FromThis(), remainsPos + new Vector2(500, 0), ModContent.NPCType<Researcher>());
+            NPC.NewNPCDirect(npc.GetSource_FromThis(), remainsPos + new Vector2(500, 0), NPCType<Researcher>());
         }
         if (WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.NotDownedEvilBoss)
         {

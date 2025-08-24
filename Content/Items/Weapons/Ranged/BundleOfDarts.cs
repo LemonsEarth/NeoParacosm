@@ -21,7 +21,7 @@ public class BundleOfDarts : ModItem
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Green;
         Item.autoReuse = true;
-        Item.shoot = ModContent.ProjectileType<BundleOfDartsProj>();
+        Item.shoot = ProjectileType<BundleOfDartsProj>();
         Item.shootSpeed = 15;
         Item.noMelee = true;
         Item.noUseGraphic = true;

@@ -30,7 +30,7 @@ public class NatureScepter : ModItem
         Item.UseSound = SoundID.Item8;
         Item.autoReuse = true;
         Item.mana = 12;
-        Item.shoot = ModContent.ProjectileType<NatureBolt>();
+        Item.shoot = ProjectileType<NatureBolt>();
         Item.shootSpeed = 10;
         Item.noMelee = true;
     }

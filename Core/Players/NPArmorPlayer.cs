@@ -44,11 +44,11 @@ public class NPArmorPlayer : ModPlayer
 
     public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (ascendedShadowArmor && target.CanBeChasedBy() && shadowTimer == 0 && !Main.npc.Any(n => n.active && n.type == ModContent.NPCType<ShadowOrbNPC>() && n.ai[0] == Player.whoAmI))
+        if (ascendedShadowArmor && target.CanBeChasedBy() && shadowTimer == 0 && !Main.npc.Any(n => n.active && n.type == NPCType<ShadowOrbNPC>() && n.ai[0] == Player.whoAmI))
         {
             for (int i = 0; i < 2; i++)
             {
-                NPC.NewNPCDirect(Player.GetSource_FromThis(), target.Center + Main.rand.NextVector2Circular(300, 300), ModContent.NPCType<ShadowOrbNPC>(), ai0: Player.whoAmI);
+                NPC.NewNPCDirect(Player.GetSource_FromThis(), target.Center + Main.rand.NextVector2Circular(300, 300), NPCType<ShadowOrbNPC>(), ai0: Player.whoAmI);
             }
             shadowTimer = 600;
         }

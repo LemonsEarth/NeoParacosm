@@ -157,7 +157,7 @@ public class ResearcherDialogueUIState : UIState
         {
             return;
         }
-        AscensionUISystem AscensionUI = ModContent.GetInstance<AscensionUISystem>();
+        AscensionUISystem AscensionUI = GetInstance<AscensionUISystem>();
         if (AscensionUI.userInterface.CurrentState == null)
         {
             AscensionUI.ShowUI();
@@ -171,7 +171,7 @@ public class ResearcherDialogueUIState : UIState
 
     private void OnExitButtonClick(UIMouseEvent evt, UIElement listeningElement)
     {
-        ModContent.GetInstance<ResearcherDialogueUISystem>().HideUI();
+        GetInstance<ResearcherDialogueUISystem>().HideUI();
     }
 
 

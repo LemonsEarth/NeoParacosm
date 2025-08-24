@@ -27,7 +27,7 @@ public class DragonRemainsTile : ModTile
         TileObjectData.newTile.CoordinatePadding = 2;
         TileObjectData.newTile.Origin = new Point16(7, 5);
         TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.None | AnchorType.Platform, 15, 0);
-        TileObjectData.newTile.HookPostPlaceMyPlayer = ModContent.GetInstance<DragonRemainsTileEntity>().Generic_HookPostPlaceMyPlayer;
+        TileObjectData.newTile.HookPostPlaceMyPlayer = GetInstance<DragonRemainsTileEntity>().Generic_HookPostPlaceMyPlayer;
         TileObjectData.addTile(Type);
 
         AddMapEntry(new Color(5, 1, 66));
@@ -40,6 +40,6 @@ public class DragonRemainsTile : ModTile
 
     public override void KillMultiTile(int i, int j, int frameX, int frameY)
     {
-        ModContent.GetInstance<DragonRemainsTileEntity>().Kill(i, j);
+        GetInstance<DragonRemainsTileEntity>().Kill(i, j);
     }
 }

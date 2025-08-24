@@ -94,7 +94,7 @@ public class CrimsonSentryForm : ModNPC
                     for (int i = 0; i < 5; i++)
                     {
                         Vector2 dir = NPC.Center.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(Main.rand.Next(-30, 30))) * Main.rand.NextFloat(5, 10);
-                        LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir, ModContent.ProjectileType<CrimsonThorn>());
+                        LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir, ProjectileType<CrimsonThorn>());
                     }
                 }
             }
@@ -105,7 +105,7 @@ public class CrimsonSentryForm : ModNPC
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 dir = NPC.Center.DirectionTo(player.Center).RotatedBy(MathHelper.ToRadians(Main.rand.Next(-8, 8))) * Main.rand.NextFloat(20, 25);
-                        LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir, ModContent.ProjectileType<CrimsonThorn>());
+                        LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir, ProjectileType<CrimsonThorn>());
                     }
                 }
             }

@@ -6,7 +6,7 @@ namespace NeoParacosm.Content.Biomes.DeadForest;
 public class DeadForestBiome : ModBiome
 {
     public override int Music => MusicID.Graveyard;
-    public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<DeadForestSurfaceBackgroundStyle>();
+    public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<DeadForestSurfaceBackgroundStyle>();
     //public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
     public override string BestiaryIcon => base.BestiaryIcon;
     public override string BackgroundPath => base.BackgroundPath;
@@ -17,7 +17,7 @@ public class DeadForestBiome : ModBiome
 
     public override bool IsBiomeActive(Player player)
     {
-        return ModContent.GetInstance<BiomeSystem>().deadDirtTileCount >= 1000 && player.ZoneOverworldHeight;
+        return GetInstance<BiomeSystem>().deadDirtTileCount >= 1000 && player.ZoneOverworldHeight;
     }
 }
 

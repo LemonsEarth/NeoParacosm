@@ -20,7 +20,7 @@ public class NPGlobalNPC : GlobalNPC
             pool.Clear();
             if (!DownedBossSystem.downedDeathbird)
             {
-                pool.Add(ModContent.NPCType<Deathbird>(), 1f);
+                pool.Add(NPCType<Deathbird>(), 1f);
             }
         }
     }
