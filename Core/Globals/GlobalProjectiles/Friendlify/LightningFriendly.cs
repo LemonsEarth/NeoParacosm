@@ -1,7 +1,7 @@
 ﻿using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace NeoParacosm.Core.Globals.GlobalProjectiles;
+namespace NeoParacosm.Core.Globals.GlobalProjectiles.Friendlify;
 
 public class LightningFriendly : GlobalProjectile
 {

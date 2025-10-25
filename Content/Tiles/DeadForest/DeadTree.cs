@@ -7,60 +7,59 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.GameContent;
 
-namespace NeoParacosm.Content.Tiles.DeadForest
+namespace NeoParacosm.Content.Tiles.DeadForest;
+
+public class DeadTree : ModTree
 {
-    public class DeadTree : ModTree
+    static Asset<Texture2D> treeTexture;
+    private Asset<Texture2D> topsTexture;
+    private Asset<Texture2D> branchTexture;
+
+    public override void SetStaticDefaults()
     {
-        static Asset<Texture2D> treeTexture;
-        private Asset<Texture2D> topsTexture;
-        private Asset<Texture2D> branchTexture;
+        GrowsOnTileId = [TileType<DeadDirtBlock>()];
+        treeTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree");
+        topsTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Tops");
+        branchTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Branches");
+    }
 
-        public override void SetStaticDefaults()
-        {
-            GrowsOnTileId = [TileType<DeadDirtBlock>()];
-            treeTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree");
-            topsTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Tops");
-            branchTexture = Request<Texture2D>("NeoParacosm/Content/Tiles/DeadForest/DeadTree_Branches");
-        }
+    public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
+    {
+        UseSpecialGroups = true,
+        SpecialGroupMinimalHueValue = 11f / 72f,
+        SpecialGroupMaximumHueValue = 0.25f,
+        SpecialGroupMinimumSaturationValue = 0.88f,
+        SpecialGroupMaximumSaturationValue = 1f
+    };
 
-        public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings
-        {
-            UseSpecialGroups = true,
-            SpecialGroupMinimalHueValue = 11f / 72f,
-            SpecialGroupMaximumHueValue = 0.25f,
-            SpecialGroupMinimumSaturationValue = 0.88f,
-            SpecialGroupMaximumSaturationValue = 1f
-        };
+    public override int SaplingGrowthType(ref int style)
+    {
+        style = 0;
+        return TileType<DeadTreeSapling>();
+    }
 
-        public override int SaplingGrowthType(ref int style)
-        {
-            style = 0;
-            return TileType<DeadTreeSapling>();
-        }
+    public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
+    {
+        
+    }
 
-        public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-        {
-            
-        }
+    public override Asset<Texture2D> GetBranchTextures()
+    {
+        return branchTexture;
+    }
 
-        public override Asset<Texture2D> GetBranchTextures()
-        {
-            return branchTexture;
-        }
+    public override Asset<Texture2D> GetTopTextures()
+    {
+        return topsTexture;
+    }
 
-        public override Asset<Texture2D> GetTopTextures()
-        {
-            return topsTexture;
-        }
+    public override Asset<Texture2D> GetTexture()
+    {
+        return treeTexture;
+    }
 
-        public override Asset<Texture2D> GetTexture()
-        {
-            return treeTexture;
-        }
-
-        public override int DropWood()
-        {
-            return ItemID.None;
-        }
+    public override int DropWood()
+    {
+        return ItemID.None;
     }
 }

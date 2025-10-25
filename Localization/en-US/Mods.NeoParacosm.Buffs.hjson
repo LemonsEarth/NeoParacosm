@@ -62,3 +62,8 @@ DeathflameDebuff: {
 	DisplayName: Deathflame Debuff
 	Description: Mods.NeoParacosm.Buffs.DeathflameDebuff.Description
 }
+
+BranchedOfLifedBuff: {
+	DisplayName: Branched Of Lifed Buff
+	Description: Mods.NeoParacosm.Buffs.BranchedOfLifedBuff.Description
+}

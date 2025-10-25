@@ -27,7 +27,6 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
         //Main.NewText(WorldDataSystem.ResearcherQuestProgress);

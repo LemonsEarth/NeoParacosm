@@ -304,27 +304,72 @@ AscendedShadowScalemail: {
 Gravesword: {
 	DisplayName: Gravesword
 	Tooltip:
-	'''
-	Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
-	[c/AAAAAA:"We birthed the ember of death, a flame that can burn the Gods."]
-	'''
+		'''
+		Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
+		[c/AAAAAA:"We birthed the ember of death, a flame that can burn the Gods."]
+		'''
 }
 
 DeathTolls: {
 	DisplayName: Death Tolls
 	Tooltip:
-	'''
-	Fires homing Deathflame Balls
-	[c/AAAAAA:"The Foundry. The Forge. The Bell tolls."]
-	'''
+		'''
+		Fires homing Deathflame Balls
+		[c/AAAAAA:"The Foundry. The Forge. The Bell tolls."]
+		'''
 }
 
 LamentOfTheLate: {
 	DisplayName: Lament Of The Late
 	Tooltip:
-	'''
-	Fires an arrow into the sky
-	A barrage of arrows soon falls around your mouse cursor
-	[c/AAAAAA:"We will fight together, die together, cry together, until they meet us here."]
-	'''
+		'''
+		Fires an arrow into the sky
+		A barrage of arrows soon falls around your mouse cursor
+		[c/AAAAAA:"We will fight together, die together, cry together, until they meet us here."]
+		'''
+}
+
+BlinkrootBusterStaff: {
+	DisplayName: Blinkroot Buster Staff
+	Tooltip: ""
+}
+
+BranchOfLife: {
+	DisplayName: Branch Of Life
+	Tooltip: ""
+}
+
+DeathseederStaff: {
+	DisplayName: Deathseeder Staff
+	Tooltip: ""
+}
+
+FireBloomStaff: {
+	DisplayName: Fire Bloom Staff
+	Tooltip: ""
+}
+
+GiantShiverthornStaff: {
+	DisplayName: Giant Shiverthorn Staff
+	Tooltip: ""
+}
+
+MoonBurstStaff: {
+	DisplayName: Moon Burst Staff
+	Tooltip: ""
+}
+
+PoisonBloomStaff: {
+	DisplayName: Poison Bloom Staff
+	Tooltip: ""
+}
+
+ShadowflowerStaff: {
+	DisplayName: Shadowflower Staff
+	Tooltip: ""
+}
+
+WaterfallerStaff: {
+	DisplayName: Waterfaller Staff
+	Tooltip: ""
 }
