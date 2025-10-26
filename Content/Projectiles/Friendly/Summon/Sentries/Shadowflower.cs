@@ -18,7 +18,7 @@ public class Shadowflower : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 50;
+        Projectile.width = 60;
         Projectile.height = 56;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;

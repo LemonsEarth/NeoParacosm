@@ -11,8 +11,8 @@ public class BranchOfLife : ModItem
 {
     public override void SetDefaults()
     {
-        Item.width = 44;
-        Item.height = 44;
+        Item.width = 72;
+        Item.height = 72;
         Item.mana = 20;
         Item.noMelee = true;
         Item.damage = 77;

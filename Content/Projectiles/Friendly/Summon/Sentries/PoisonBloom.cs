@@ -15,7 +15,7 @@ public class PoisonBloom : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 50;
+        Projectile.width = 60;
         Projectile.height = 50;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
