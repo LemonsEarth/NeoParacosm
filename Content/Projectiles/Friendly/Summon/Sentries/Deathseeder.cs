@@ -18,8 +18,8 @@ public class Deathseeder : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 60;
-        Projectile.height = 50;
+        Projectile.width = 54;
+        Projectile.height = 60;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
         Projectile.tileCollide = true;
