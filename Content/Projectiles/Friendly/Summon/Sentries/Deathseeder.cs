@@ -1,4 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -19,7 +23,7 @@ public class Deathseeder : ModProjectile
     public override void SetDefaults()
     {
         Projectile.width = 54;
-        Projectile.height = 60;
+        Projectile.height = 56;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
         Projectile.tileCollide = true;
@@ -33,14 +37,21 @@ public class Deathseeder : ModProjectile
         closestEnemy = GetClosestNPC(1000);
 
         Projectile.velocity.Y = 10f;
-        if (closestEnemy != null)
+        if (AITimer % 600 == 0 && AITimer > 0)
         {
-            if (AttackTimer == 30)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
+            }
+        }
+
+       /* if (closestEnemy != null)
+        {
+            if (AttackTimer == 90)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Vector2 offset = new Vector2(Main.rand.NextFloat(-20, 20), closestEnemy.height + 10);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), closestEnemy.Center + offset, -Vector2.UnitY * 30, ProjectileID.VilethornBase, Projectile.damage, 1f, Projectile.owner);
+                    LemonUtils.QuickProj(Projectile, closestEnemy.Center + Vector2.UnitY * 100, -Vector2.UnitY * 20, ProjectileType<VilethornFriendly>());
                 }
                 SoundEngine.PlaySound(SoundID.Item43 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
 
@@ -51,7 +62,12 @@ public class Deathseeder : ModProjectile
         else
         {
             AttackTimer = 0;
-        }
+        }*/
+
+        /*if (AITimer % 60 == 0)
+        {
+            LemonUtils.QuickProj(Projectile, Projectile.RandomPos(16, 16), Main.rand.NextVector2Circular(2, 2), ProjectileType<RotGas>());
+        }*/
 
         Projectile.frameCounter++;
         if (Projectile.frameCounter == 20)

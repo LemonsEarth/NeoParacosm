@@ -77,6 +77,10 @@ public class VilethornFriendly : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        if (StartPos == Vector2.Zero)
+        {
+            return false;
+        }
         Texture2D Texture = TextureAssets.Projectile[Type].Value;
         Rectangle TipTexture = Texture.Frame(1, 3, 0, 0);
         Rectangle BodyTexture1 = Texture.Frame(1, 3, 0, 1);

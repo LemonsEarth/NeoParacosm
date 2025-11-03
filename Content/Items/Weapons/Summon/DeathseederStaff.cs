@@ -15,7 +15,7 @@ public class DeathseederStaff : ModItem
         Item.height = 40;
         Item.mana = 10;
         Item.noMelee = true;
-        Item.damage = 15;
+        Item.damage = 8;
         Item.DamageType = DamageClass.Summon;
         Item.useStyle = ItemUseStyleID.Swing;
         Item.useTime = 20;

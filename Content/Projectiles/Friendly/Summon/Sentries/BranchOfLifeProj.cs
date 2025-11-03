@@ -75,7 +75,11 @@ public class BranchOfLifeProj : ModProjectile
         }
 
         drawColor = Color.Lerp(drawColor, desiredColor, AITimer / 60);
-
+        Projectile.friendly = false;
+        if (Projectile.timeLeft < 2)
+        {
+            Projectile.friendly = true;
+        }
         AITimer++;
     }
 

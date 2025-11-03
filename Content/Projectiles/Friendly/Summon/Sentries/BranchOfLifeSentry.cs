@@ -15,13 +15,13 @@ public class BranchOfLifeSentry : ModProjectile
     const int BUFF_DISTANCE = 400;
     public override void SetStaticDefaults()
     {
-        Main.projFrames[Projectile.type] = 2;
+        Main.projFrames[Projectile.type] = 4;
     }
 
     public override void SetDefaults()
     {
         Projectile.width = 116;
-        Projectile.height = 90;
+        Projectile.height = 64;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
         Projectile.tileCollide = true;
@@ -73,11 +73,11 @@ public class BranchOfLifeSentry : ModProjectile
         AttackTimer++;
 
         Projectile.frameCounter++;
-        if (Projectile.frameCounter == 20)
+        if (Projectile.frameCounter >= 16)
         {
             Projectile.frameCounter = 0;
             Projectile.frame++;
-            if (Projectile.frame >= 2)
+            if (Projectile.frame >= 4)
             {
                 Projectile.frame = 0;
             }

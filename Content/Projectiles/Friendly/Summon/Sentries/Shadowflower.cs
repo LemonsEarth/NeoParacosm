@@ -13,7 +13,7 @@ public class Shadowflower : ModProjectile
     NPC closestEnemy;
     public override void SetStaticDefaults()
     {
-        Main.projFrames[Projectile.type] = 4;
+        Main.projFrames[Projectile.type] = 5;
     }
 
     public override void SetDefaults()
@@ -59,7 +59,7 @@ public class Shadowflower : ModProjectile
         {
             Projectile.frameCounter = 0;
             Projectile.frame++;
-            if (Projectile.frame >= 4)
+            if (Projectile.frame >= 5)
             {
                 Projectile.frame = 0;
             }
