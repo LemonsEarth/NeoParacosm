@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Projectiles.None;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -32,12 +34,6 @@ public class BranchOfLifeSentry : ModProjectile
 
     public override void AI()
     {
-        for (int i = 0; i < 64; i++)
-        {
-            Vector2 dustPos = Projectile.Center + (Vector2.UnitY * BUFF_DISTANCE).RotatedBy(MathHelper.ToRadians(i * 360f / 64f));
-            Dust dust = Dust.NewDustDirect(dustPos, 1, 1, DustID.GemDiamond);
-            dust.noGravity = true;
-        }
 
         if (AITimer % 30 == 0)
         {
@@ -69,7 +65,13 @@ public class BranchOfLifeSentry : ModProjectile
                     AttackTimer = 0;
                 }
             }
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 8, ai2: 2);
+            }
         }
+
         AttackTimer++;
 
         Projectile.frameCounter++;

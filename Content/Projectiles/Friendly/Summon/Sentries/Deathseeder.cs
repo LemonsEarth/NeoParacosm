@@ -37,11 +37,16 @@ public class Deathseeder : ModProjectile
         closestEnemy = GetClosestNPC(1000);
 
         Projectile.velocity.Y = 10f;
-        if (AITimer % 600 == 0 && AITimer > 0)
+        if (AITimer % 300 == 0 && AITimer > 0)
         {
+            LemonUtils.DustCircle(Projectile.Top, 16, 8, DustID.Shadowflame, 2f);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
+                NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
+                npc.damage = Projectile.damage;
+                npc.lifeMax = Main.player[Projectile.owner].statLifeMax2 / 2;
+                npc.defense = Main.player[Projectile.owner].statDefense / 2;
+                NetMessage.SendData(MessageID.SyncNPC);
             }
         }
 

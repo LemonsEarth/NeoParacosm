@@ -42,6 +42,7 @@ public class InvisibleProjectileFriendly : ModProjectile
         Projectile.width = (int)Width;
         Projectile.height = (int)Height;
         Projectile.position = Main.npc[(int)FollowNPCID].position;
+        Projectile.velocity = Vector2.Zero;
 
         AITimer++;
     }

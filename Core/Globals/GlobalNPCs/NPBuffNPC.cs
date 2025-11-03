@@ -13,12 +13,15 @@ public class NPBuffNPC : GlobalNPC
 
     int timer = 0;
 
+    public bool hitByRuneOfExtinction { get; set; } = false;
+
     public Point16 dataCollectorTEPos { get; set; } = Point16.Zero;
     public Point16 dataCollectorEXTEPos { get; set; } = Point16.Zero;
 
     public override void ResetEffects(NPC npc)
     {
         //dataCollectorTEPos = Point16.Zero;
+       
     }
 
     public override void PostAI(NPC npc)

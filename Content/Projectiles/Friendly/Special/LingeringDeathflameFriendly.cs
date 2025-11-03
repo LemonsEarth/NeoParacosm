@@ -108,6 +108,10 @@ public class LingeringDeathflameFriendly : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        if (Projectile.velocity.Y == 0)
+        {
+            return false;
+        }
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(16, 0);
         Vector2 scale = new Vector2(1, 1 + Projectile.velocity.Y * 0.2f);

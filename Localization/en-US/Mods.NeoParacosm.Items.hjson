@@ -306,7 +306,9 @@ Gravesword: {
 	Tooltip:
 		'''
 		Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
-		[c/AAAAAA:"We birthed the ember of death, a flame that can burn the Gods."]
+		[c/666666:A dull blade, made out of shattered tombstone, imbued with deathflame.]
+		[c/666666:It is said that tombstones hold the spirits of those who passed.]
+		[c/666666:Within that pale stone, deathflame may burn eternally.]
 		'''
 }
 
@@ -315,7 +317,10 @@ DeathTolls: {
 	Tooltip:
 		'''
 		Fires homing Deathflame Balls
-		[c/AAAAAA:"The Foundry. The Forge. The Bell tolls."]
+		[c/666666:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
+		[c/666666:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
+		[c/666666:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
+		[c/666666:Death does not follow rules an individual imposes, mortal or Divine.]
 		'''
 }
 
@@ -325,51 +330,88 @@ LamentOfTheLate: {
 		'''
 		Fires an arrow into the sky
 		A barrage of arrows soon falls around your mouse cursor
-		[c/AAAAAA:"We will fight together, die together, cry together, until they meet us here."]
+		[c/666666:A bow comprised of two arms and an unknown, string-like material.]
+		[c/666666:Its origins are unknown, though it appears to have been created prior to the collapse.]
+		[c/666666:The two arms have been identified to belong to different people, possibly of divine heritage.]
+		[c/666666:Symbolizes an inseparable bond, beyond space, time and death.]
 		'''
 }
 
 BlinkrootBusterStaff: {
 	DisplayName: Blinkroot Buster Staff
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a stationary flower that creates blinkroot spores on nearby enemies
+		Blinkroot spores light up nearby areas temporarily
+		'''
 }
 
 BranchOfLife: {
 	DisplayName: Branch Of Life
-	Tooltip: ""
+	Tooltip: '''"The source of all that is living"'''
 }
 
 DeathseederStaff: {
 	DisplayName: Deathseeder Staff
-	Tooltip: ""
+	Tooltip: Summons a stationary flower that calls forth friendly confused skeletons
 }
 
 FireBloomStaff: {
 	DisplayName: Fire Bloom Staff
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a stationary flower that shoots fireballs around itself
+		Fires faster the closer enemies are to it
+		'''
 }
 
 GiantShiverthornStaff: {
 	DisplayName: Giant Shiverthorn Staff
-	Tooltip: ""
+	Tooltip: Summons a stationary flower that fires homing icicles at enemies
 }
 
 MoonBurstStaff: {
 	DisplayName: Moon Burst Staff
-	Tooltip: ""
+	Tooltip:
+		'''
+		Summons a stationary flower that fires moon blasts at enemies
+		Moon blast splits into more moon blasts on contact with enemies
+		'''
 }
 
 PoisonBloomStaff: {
 	DisplayName: Poison Bloom Staff
-	Tooltip: ""
+	Tooltip: Summons a stationary flower that fires poisonous petals at enemies
 }
 
 ShadowflowerStaff: {
 	DisplayName: Shadowflower Staff
-	Tooltip: ""
+	Tooltip: Summons a stationary flower that fires a spread of shadow fireballs at enemies
 }
 
 WaterfallerStaff: {
 	DisplayName: Waterfaller Staff
-	Tooltip: ""
+	Tooltip: Summons a stationary flower that rains ricocheting water drops at enemies
+}
+
+StarecrowStaff: {
+	DisplayName: Aberrant Deathbird Staff
+	Tooltip: 
+	'''
+	Summons Starecrows to fight for you
+	[c/666666:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
+	[c/666666:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
+	[c/666666:Aberrant Deathbirds are the last of these flighted terrors.]
+	[c/666666:Also known as Starecrows, due to their curious behaviour.]
+	'''
+}
+
+RuneOfExtinction: {
+	DisplayName: Rune Of Extinction
+	Tooltip:
+	'''
+	Killing an enemy heals you for 20 hp
+	This effect has a 0.5s cooldown
+	Each enemy kill contributes 2x banner progress
+	'''
 }

@@ -196,7 +196,7 @@ public class ResearcherDialogueUIState : UIState
         int trueCharInterval = Main.mouseLeft ? 1 : charInterval;
         if (timer % trueCharInterval == 0 && charIndex < TextToDisplay.Length)
         {
-            SoundEngine.PlaySound(SoundID.PlayerHit with { SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 });
+            //SoundEngine.PlaySound(SoundID.Zombie103 with { SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 });
 
             if (TextToDisplay[charIndex] == '[') // Skipping colored text n shi
             {

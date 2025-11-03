@@ -55,15 +55,24 @@ LightsBaneDebuff: {
 
 DeadForestDebuff: {
 	DisplayName: Dead Forest Debuff
-	Description: Mods.NeoParacosm.Buffs.DeadForestDebuff.Description
+	Description: It's quiet...
 }
 
 DeathflameDebuff: {
 	DisplayName: Deathflame Debuff
-	Description: Mods.NeoParacosm.Buffs.DeathflameDebuff.Description
+	Description: Your soul is on fire...
 }
 
 BranchedOfLifedBuff: {
-	DisplayName: Branched Of Lifed Buff
-	Description: Mods.NeoParacosm.Buffs.BranchedOfLifedBuff.Description
+	DisplayName: Blessing of the jungle heart
+	Description:
+		'''
+		Improved damage, critical strike chance, life regeneration and reduced mana cost
+		Periodically grants the player random buffs
+		'''
+}
+
+StarecrowBuff: {
+	DisplayName: Starecrow
+	Description: Starecrows stare away enemies...
 }

@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
+using NeoParacosm.Content.Buffs.GoodBuffs;
 using Terraria;
 
 namespace NeoParacosm.Core.Players;
@@ -9,6 +10,8 @@ public class NPBuffPlayer : ModPlayer
 {
     public bool grabbed { get; set; } = false;
     public bool fastFall { get; set; } = false;
+
+    int bofBuffTimer = 0;
 
     public override bool CanUseItem(Item item)
     {
@@ -61,6 +64,37 @@ public class NPBuffPlayer : ModPlayer
             }
             Player.maxMinions = 0;
             Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.Crimson).noGravity = true;
+        }
+
+        if (Player.HasBuff(BuffType<BranchedOfLifedBuff>()))
+        {
+            Player.GetDamage(DamageClass.Generic) += 12f / 100f;
+            Player.GetCritChance(DamageClass.Generic) += 8f / 100f;
+            Player.manaCost *= 0.8f;
+            Player.lifeRegen += 2;
+
+            if (bofBuffTimer <= 0)
+            {
+                if (Player.whoAmI == Main.myPlayer)
+                {
+                    int buffID = Main.rand.Next(0, 5) switch
+                    {   
+                        0 => BuffID.WellFed3,
+                        1 => BuffID.Endurance,
+                        2 => BuffID.Lifeforce,
+                        3 => BuffID.Wrath,
+                        4 => BuffID.Rage,
+                        _ => BuffID.Ironskin
+                    };
+                    Player.AddBuff(buffID, 1200);
+                }
+                bofBuffTimer = 300;
+
+            }
+        }
+        if (bofBuffTimer > 0)
+        {
+            bofBuffTimer--;
         }
     }
 

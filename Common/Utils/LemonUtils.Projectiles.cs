@@ -18,6 +18,12 @@ public static partial class LemonUtils
         return Projectile.NewProjectileDirect(npc.GetSource_FromThis(), position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
     }
 
+    /// <summary>
+    /// Gets closest chaseable NPC to a position under minDistance, returns null if none found
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="minDistance"></param>
+    /// <returns></returns>
     public static NPC GetClosestNPC(Vector2 pos, float minDistance = 0)
     {
         NPC closestEnemy = null;

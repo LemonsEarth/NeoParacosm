@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Items.Pickups;
@@ -17,6 +18,9 @@ public class NPAcessoryPlayer : ModPlayer
     public bool forestCrest { get; set; } = false;
     int forestCrestPickupCooldown = 0;
 
+    public bool runeOfExtinction { get; set; } = false;
+    int runeOfExtinctionTimer = 0;
+
     public bool corruptedLifeCrystal { get; set; } = false;
     public bool skullOfAvarice { get; set; } = false;
 
@@ -28,6 +32,7 @@ public class NPAcessoryPlayer : ModPlayer
         forestCrest = false;
         corruptedLifeCrystal = false;
         skullOfAvarice = false;
+        runeOfExtinction = false;
 
         CrimsonTendrils.RemoveAll(p => !p.active);
     }
@@ -80,6 +85,23 @@ public class NPAcessoryPlayer : ModPlayer
         {
             target.AddBuff(BuffType<SkullOfAvariceDebuff>(), 180);
         }
+
+        if (runeOfExtinction)
+        {
+
+            target.NPBuffNPC().hitByRuneOfExtinction = true;
+            if (target.life <= 0 && !target.friendly && !target.SpawnedFromStatue)
+            {
+                if (runeOfExtinctionTimer <= 0)
+                {
+                    Player.Heal(20);
+                    runeOfExtinctionTimer = 30;
+                }
+
+                NPC.killCount[Item.NPCtoBanner(target.type)] += 1;
+            }
+        }
+
     }
 
     public override void NaturalLifeRegen(ref float regen)
@@ -127,6 +149,11 @@ public class NPAcessoryPlayer : ModPlayer
                     Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<Banefly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 0.5f, Player.whoAmI);
                 }
             }
+        }
+
+        if (runeOfExtinction && runeOfExtinctionTimer > 0)
+        {
+            runeOfExtinctionTimer--;
         }
 
         timer++;
