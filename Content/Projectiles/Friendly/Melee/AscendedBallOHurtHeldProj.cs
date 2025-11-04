@@ -113,7 +113,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
             {
                 chargeCount++;
                 LemonUtils.DustCircle(playerCenter, 8, 8, DustID.Corruption, chargeCount + 1);
-                SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f) });
+                SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
                 Projectile.scale += Projectile.scale / 2;
                 Projectile.Resize(Projectile.width + Projectile.width / 2, Projectile.height + Projectile.height / 2);
             }

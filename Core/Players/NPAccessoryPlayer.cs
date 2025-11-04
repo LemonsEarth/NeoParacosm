@@ -6,6 +6,7 @@ using NeoParacosm.Content.Items.Pickups;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Content.Projectiles.None;
 using System.Collections.Generic;
+using Terraria.DataStructures;
 using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
@@ -19,6 +20,7 @@ public class NPAcessoryPlayer : ModPlayer
     int forestCrestPickupCooldown = 0;
 
     public bool runeOfExtinction { get; set; } = false;
+    public bool runeOfPeridition { get; set; } = false;
     int runeOfExtinctionTimer = 0;
 
     public bool corruptedLifeCrystal { get; set; } = false;
@@ -33,6 +35,7 @@ public class NPAcessoryPlayer : ModPlayer
         corruptedLifeCrystal = false;
         skullOfAvarice = false;
         runeOfExtinction = false;
+        runeOfPeridition = false;
 
         CrimsonTendrils.RemoveAll(p => !p.active);
     }
@@ -95,13 +98,27 @@ public class NPAcessoryPlayer : ModPlayer
                 if (runeOfExtinctionTimer <= 0)
                 {
                     Player.Heal(20);
-                    runeOfExtinctionTimer = 30;
+                    runeOfExtinctionTimer = 15;
                 }
 
                 NPC.killCount[Item.NPCtoBanner(target.type)] += 1;
             }
         }
 
+    }
+
+    public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+    {
+        if (runeOfPeridition)
+        {
+            foreach (Player player in Main.ActivePlayers)
+            {
+                if (player.team == Player.team)
+                {
+                    player.Heal(player.statLifeMax2 / 3);
+                }
+            }
+        }
     }
 
     public override void NaturalLifeRegen(ref float regen)
@@ -154,6 +171,12 @@ public class NPAcessoryPlayer : ModPlayer
         if (runeOfExtinction && runeOfExtinctionTimer > 0)
         {
             runeOfExtinctionTimer--;
+        }
+
+        if (runeOfPeridition)
+        {
+            Player.aggro += 600;
+            Player.statDefense *= 0.9f;
         }
 
         timer++;

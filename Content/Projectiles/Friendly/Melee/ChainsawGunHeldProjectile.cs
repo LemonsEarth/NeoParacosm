@@ -62,11 +62,11 @@ public class ChainsawGunHeldProjectile : ModProjectile
         {
             if (Main.rand.NextBool())
             {
-                SoundEngine.PlaySound(SoundID.Item22);
+                SoundEngine.PlaySound(SoundID.Item22, Projectile.Center);
             }
             else
             {
-                SoundEngine.PlaySound(SoundID.Item23);
+                SoundEngine.PlaySound(SoundID.Item23, Projectile.Center);
 
             }
         }

@@ -16,7 +16,7 @@ public class StarecrowStaff : ModItem
         Item.height = 64;
         Item.mana = 12;
         Item.noMelee = true;
-        Item.damage = 12;
+        Item.damage = 15;
         Item.DamageType = DamageClass.Summon;
         Item.useStyle = ItemUseStyleID.Swing;
         Item.useTime = 30;

@@ -396,22 +396,41 @@ WaterfallerStaff: {
 
 StarecrowStaff: {
 	DisplayName: Aberrant Deathbird Staff
-	Tooltip: 
-	'''
-	Summons Starecrows to fight for you
-	[c/666666:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
-	[c/666666:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
-	[c/666666:Aberrant Deathbirds are the last of these flighted terrors.]
-	[c/666666:Also known as Starecrows, due to their curious behaviour.]
-	'''
+	Tooltip:
+		'''
+		Summons Starecrows to fight for you
+		[c/666666:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
+		[c/666666:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
+		[c/666666:Aberrant Deathbirds are the last of these flighted terrors.]
+		[c/666666:Also known as Starecrows, due to their curious behaviour.]
+		'''
 }
 
 RuneOfExtinction: {
 	DisplayName: Rune Of Extinction
 	Tooltip:
-	'''
-	Killing an enemy heals you for 20 hp
-	This effect has a 0.5s cooldown
-	Each enemy kill contributes 2x banner progress
-	'''
+		'''
+		Killing an enemy heals you for 20 hp
+		This effect has a 0.25s cooldown
+		Each enemy kill contributes 2x banner progress
+		[c/666666:One of the sacred runes granted to powerful beings.]
+		[c/666666:This rune was entrusted to those who were tasked with extermination of large populations.]
+		[c/666666:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
+		[c/666666:And so they were aptly named "Vessels of Extinction".]
+		'''
+}
+
+RuneOfPeridition: {
+	DisplayName: Rune Of Peridition
+	Tooltip:
+		'''
+		Dying heals players on your team for 33% of their max life
+		Increases damage by 10%
+		Reduces defense by 10%
+		Increases aggro
+		[c/666666:A fragment of a sacred rune granted to powerful beings.]
+		[c/666666:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
+		[c/666666:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
+		[c/666666:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
+		'''
 }

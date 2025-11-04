@@ -33,6 +33,7 @@ public class DecayingRat : ModNPC
         NPC.knockBackResist = 1f;
         NPC.noGravity = false;
         NPC.noTileCollide = false;
+        NPC.hide = true;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -74,12 +75,13 @@ public class DecayingRat : ModNPC
         if (NPC.HasValidTarget)
         {
             Player player = Main.player[NPC.target];
-            Vector2 TileCheckPos = NPC.Center + Vector2.UnitX * NPC.direction * (NPC.width / 2);
+            Vector2 TileCheckPos = NPC.Center + Vector2.UnitX * NPC.direction * (NPC.width / 2 + 16);
             bool TileCheck = Collision.SolidTiles(TileCheckPos, 2, 2);
             if (Collision.CanHitLine(NPC.Center, 16, 16, player.Center, 16, 16) && !TileCheck)
             {
                 NPC.noTileCollide = false;
                 NPC.noGravity = false;
+                NPC.velocity.Y += 2;
                 return true;
             }
             else
@@ -129,6 +131,11 @@ public class DecayingRat : ModNPC
                 NPC.frame.Y = 0;
             }
         }
+    }
+
+    public override void DrawBehind(int index)
+    {
+       Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)

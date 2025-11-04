@@ -104,7 +104,15 @@ public class Starecrow : ModProjectile
             {
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.velocity += Projectile.DirectionTo(currentTarget.Center).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi/6, MathHelper.Pi/6)) * 10;
+                    Projectile.velocity += Projectile.DirectionTo(currentTarget.Center).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2)) * 10;
+                }
+                Projectile.netUpdate = true;
+            }
+            if (AITimer % 300 == 0)
+            {
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Projectile.velocity += -Projectile.DirectionTo(currentTarget.Center) * 15;
                 }
                 Projectile.netUpdate = true;
             }
