@@ -28,7 +28,7 @@ public class ResearcherDialogueUIState : UIState
 
     int talkAmount = 0; // Amount of times talk has been pressed
     string TextToDisplay = "";
-    public static Dictionary<int, int> progressTextAmount { get; private set; } = new Dictionary<int, int>()
+    public static Dictionary<int, int> ProgressTextAmount { get; private set; } = new Dictionary<int, int>()
     {
         {0, 1},
         {1, 4},
@@ -36,6 +36,7 @@ public class ResearcherDialogueUIState : UIState
         {3, 1},
         {4, 3},
         {5, 3},
+        {6, 5},
     };
 
     public override void OnInitialize()
@@ -120,13 +121,13 @@ public class ResearcherDialogueUIState : UIState
             talkAmount = 0;
         }
 
-        if (talkAmount >= progressTextAmount[(int)ResearcherQuestProgress])
+        if (talkAmount >= ProgressTextAmount[(int)ResearcherQuestProgress])
         {
             talkAmount = 0;
         }
 
         TextToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.TalkDialogue.Progress.P{(int)ResearcherQuestProgress}.T{talkAmount}");
-        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{progressTextAmount[(int)ResearcherQuestProgress]}"; // dialogue left
+        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)ResearcherQuestProgress]}"; // dialogue left
         talkAmount++;
     }
 
@@ -135,7 +136,7 @@ public class ResearcherDialogueUIState : UIState
         timer = 0;
         charIndex = 0;
         DialogueText.SetText(string.Empty);
-        NameText.SetText("Sav", CalculateTextSize(), true);
+        NameText.SetText("Sav", CalculateTextSize() * 1.2f, true);
     }
 
     private void OnTalkButtonClick(UIMouseEvent evt, UIElement listeningElement)
@@ -177,6 +178,7 @@ public class ResearcherDialogueUIState : UIState
 
     public override void OnActivate()
     {
+        talkAmount = 0;
         ProgressDialogue();
         ResetVars();
     }
@@ -192,11 +194,12 @@ public class ResearcherDialogueUIState : UIState
     public override void Update(GameTime gameTime)
     {
         SpecialButtonDisplay();
+        //Main.NewText(talkAmount);
         DialogueText.SetText(TextToDisplay[..charIndex], CalculateTextSize(), true);
         int trueCharInterval = Main.mouseLeft ? 1 : charInterval;
         if (timer % trueCharInterval == 0 && charIndex < TextToDisplay.Length)
         {
-            //SoundEngine.PlaySound(SoundID.Zombie103 with { SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 1 });
+            SoundEngine.PlaySound(SoundID.Mech with {PitchRange = (0f, 0.2f), SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 10, Volume = 0.2f });
 
             if (TextToDisplay[charIndex] == '[') // Skipping colored text n shi
             {
@@ -213,15 +216,22 @@ public class ResearcherDialogueUIState : UIState
             }
             else
             {
-                charIndex++;
+                if (charIndex + 2 < TextToDisplay.Length)
+                {
+                    charIndex += 2;
+                }
+                else
+                {
+                    charIndex += 1;
+                }
             }
         }
         timer++;
     }
 
-    const float baseTextSize = 0.5f;
-    const float baseScreenWidth = 1920;
-    const float textSizeConstant = baseTextSize / (baseScreenWidth * 0.8f); // // 0.8 is the width UIText ui element takes up
+    float baseTextSize = 0.5f;
+    float baseScreenWidth = 1920;
+    float textSizeConstant => baseTextSize / (baseScreenWidth * 0.8f); // // 0.8 is the width UIText ui element takes up
     float CalculateTextSize() => textSizeConstant * 0.8f * Main.screenWidth; // 0.8 is the width UIText ui element takes up
 
     void SpecialButtonDisplay()
@@ -232,7 +242,7 @@ public class ResearcherDialogueUIState : UIState
         }
         else
         {
-            SpecialOption.SetText("Ascend");
+            SpecialOption.SetText("[c/FFFF00:Ascend]");
         }
     }
 

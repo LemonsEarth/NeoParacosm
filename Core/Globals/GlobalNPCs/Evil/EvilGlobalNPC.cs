@@ -54,7 +54,7 @@ public class EvilGlobalNPC : GlobalNPC
     int damageResistancePerHit = 5;
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
-        if (!EvoActive) return;
+        if (!EvoActive || modifiers.DamageType == null) return;
         if (ClassAdaptation.ContainsKey(modifiers.DamageType))
         {
             if (ClassAdaptation[modifiers.DamageType] < maxDamageResistance)

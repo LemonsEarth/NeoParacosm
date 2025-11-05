@@ -8,7 +8,7 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class CrimsonCloud : ModProjectile
+public class SupremeCrimsonCloud : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     int despawnTimer = 0;
@@ -25,7 +25,7 @@ public class CrimsonCloud : ModProjectile
         Projectile.width = 24;
         Projectile.height = 24;
         Projectile.friendly = true;
-        Projectile.timeLeft = 180;
+        Projectile.timeLeft = 90;
         Projectile.penetrate = -1;
         Projectile.Opacity = 0f;
         Projectile.usesIDStaticNPCImmunity = true;
@@ -50,7 +50,7 @@ public class CrimsonCloud : ModProjectile
 
         if (player.channel && !released)
         {
-            Projectile.timeLeft = 180;
+            Projectile.timeLeft = 90;
             if (Main.myPlayer == Projectile.owner)
             {
                 Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld) * Projectile.Distance(Main.MouseWorld) / (8 * (Projectile.scale + 1));
@@ -59,17 +59,28 @@ public class CrimsonCloud : ModProjectile
             {
                 Projectile.netUpdate = true;
             }
-            float aiTimerClamped = MathHelper.Clamp(AITimer, 0, 300);
-            Projectile.scale = MathHelper.Lerp(0.1f, 8f, aiTimerClamped / 300f);
+            float aiTimerClamped = MathHelper.Clamp(AITimer, 0, 180);
+            Projectile.scale = MathHelper.Lerp(0.1f, 10f, aiTimerClamped / 180f);
             Projectile.Resize((int)(Projectile.scale * 24), (int)(Projectile.scale * 24));
             savedScale = Projectile.scale;
         }
 
+        if (Projectile.scale > 2f)
+        {
+            if (AITimer % 20 == 0)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI("Friendly"), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage / 2, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
+                }
+            }
+        }
+
         if (released)
         {
-            Projectile.scale = MathHelper.Lerp(savedScale, 0f, (180 - Projectile.timeLeft) / 180f);
+            Projectile.scale = MathHelper.Lerp(savedScale, 0f, (90 - Projectile.timeLeft) / 90f);
             Projectile.Resize((int)(Projectile.scale * 24), (int)(Projectile.scale * 24));
-            Projectile.velocity *= 0.99f;
+            Projectile.velocity *= 0.96f;
         }
 
         if (Projectile.timeLeft < 30)
@@ -100,12 +111,13 @@ public class CrimsonCloud : ModProjectile
         {
             shader.Shader.Parameters["uTime"].SetValue(AITimer);
             shader.Shader.Parameters["distance"].SetValue(0.8f);
-            shader.Shader.Parameters["tolerance"].SetValue(0.05f);
-            shader.Shader.Parameters["velocity"].SetValue(new Vector2(0.4f * i, 0));
+            float tolerance = (MathF.Sin(AITimer / 16) + 2) * 0.05f;
+            shader.Shader.Parameters["tolerance"].SetValue(tolerance);
+            shader.Shader.Parameters["velocity"].SetValue(new Vector2(0.7f * i, 0));
             shader.Shader.Parameters["color"].SetValue(new Vector4(0.33f * i, 0, 0, Projectile.Opacity));
             shader.Apply();
-            float sinValue = ((float)Math.Sin(AITimer / 24) + 8) * 0.2f;
-            float cosValue = ((float)Math.Cos(AITimer / 24) + 8) * 0.25f;
+            float sinValue = ((float)Math.Sin(AITimer / 16) + 8) * 0.2f;
+            float cosValue = ((float)Math.Cos(AITimer / 16) + 8) * 0.25f;
             Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(Projectile.scale * 1.5f * sinValue, Projectile.scale * 1 * cosValue), SpriteEffects.None, 0);
         }
         Main.spriteBatch.End();
@@ -123,7 +135,7 @@ public class CrimsonCloud : ModProjectile
     {
         for (int i = 0; i < savedScale; i++)
         {
-            Projectile.NewProjectile(Projectile.GetSource_FromAI("Friendly"), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
+            Projectile.NewProjectile(Projectile.GetSource_FromAI("Friendly"), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage / 2, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
         }
         //LemonUtils.QuickProj(Projectile, Projectile.RandomPos(), Vector2.UnitY * 10, ProjectileID.CultistBossLightningOrbArc, ai0: Main.rand.NextFloat(0, 6.28f));
     }

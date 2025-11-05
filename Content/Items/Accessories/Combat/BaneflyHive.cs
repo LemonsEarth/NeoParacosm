@@ -7,6 +7,11 @@ namespace NeoParacosm.Content.Items.Accessories.Combat;
 public class BaneflyHive : ModItem
 {
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
+
+    public override void SetStaticDefaults()
+    {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<CommensalPathogen>();
+    }
     public override void SetDefaults()
     {
         Item.width = 58;

@@ -76,3 +76,13 @@ StarecrowBuff: {
 	DisplayName: Starecrow
 	Description: Starecrows stare away enemies...
 }
+
+ReducedSpawns: {
+	DisplayName: Reduced Spawns
+	Description: Mods.NeoParacosm.Buffs.ReducedSpawns.Description
+}
+
+LightsBaneDebuff2: {
+	DisplayName: Lights Bane Debuff2
+	Description: Mods.NeoParacosm.Buffs.LightsBaneDebuff2.Description
+}

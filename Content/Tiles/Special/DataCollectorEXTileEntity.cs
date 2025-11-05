@@ -28,13 +28,13 @@ public class DataCollectorEXTileEntity : ModTileEntity
         t.Text = dataCollected.ToString();
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
-
+        Main.NewText(WorldDataSystem.ResearcherQuestProgress);
         if (dataCollected >= killAmount && WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.Hardmode)
         {
             WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemType<CommensalPathogen>(), 1);
+                Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemType<SealOfAffliction>(), 1);
             }
         }
     }
@@ -42,7 +42,7 @@ public class DataCollectorEXTileEntity : ModTileEntity
     public override bool IsTileValidForEntity(int x, int y)
     {
         Tile tile = Main.tile[x, y];
-        return tile.HasTile && tile.TileType == TileType<DataCollectorTile>();
+        return tile.HasTile && tile.TileType == TileType<DataCollectorEXTile>();
     }
 
     Point16 CenterPos => (Position + new Point16(3, 4));

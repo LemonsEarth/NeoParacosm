@@ -40,5 +40,6 @@ public class LightningFriendly : GlobalProjectile
         {
             SoundEngine.PlaySound(SoundID.Thunder, projectile.Center);
         }
+        AITimer++;
     }
 }

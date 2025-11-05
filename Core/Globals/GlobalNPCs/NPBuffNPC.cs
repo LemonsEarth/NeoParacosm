@@ -37,6 +37,17 @@ public class NPBuffNPC : GlobalNPC
             }
             timer++;
         }
+        else if (npc.HasBuff(BuffType<LightsBaneDebuff2>()))
+        {
+            if (timer % 5 == 0)
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(npc.GetSource_FromThis(), npc.RandomPos(16, 16), Main.rand.NextVector2Unit(), ProjectileID.LightsBane, 60, 0f, Main.myPlayer, Main.rand.NextFloat(0.75f, 1.25f));
+                }
+            }
+            timer++;
+        }
         else
         {
             timer = 0;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
@@ -64,9 +65,19 @@ public class AscensionUIState : UIState
 
     public override void Update(GameTime gameTime)
     {
-        if (!InItemPanel.itemSlot.Item.IsAir && OutItemPanel.itemSlot.Item.IsAir)
+        Item inItem = InItemPanel.itemSlot.Item;
+        Item outItem = OutItemPanel.itemSlot.Item;
+        if (!inItem.IsAir && outItem.IsAir)
         {
-            OutItemPanel.itemSlot.Item = new Item(Researcher.AscendableItems[InItemPanel.itemSlot.Item.type]);
+            if (Researcher.AscendableItems2.TryGetValue(inItem.type, out int value) 
+                && WorldDataSystem.ResearcherQuestProgress >= WorldDataSystem.ResearcherQuestProgressState.CollectedData2)
+            {
+                OutItemPanel.itemSlot.Item = new Item(value);
+            }
+            else
+            {
+                OutItemPanel.itemSlot.Item = new Item(Researcher.AscendableItems[InItemPanel.itemSlot.Item.type]);
+            }
             InItemPanel.itemSlot.Item.TurnToAir();
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
             SoundEngine.PlaySound(SoundID.Item29);

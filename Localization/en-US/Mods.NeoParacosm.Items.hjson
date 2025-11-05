@@ -434,3 +434,48 @@ RuneOfPeridition: {
 		[c/666666:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
 		'''
 }
+
+SealOfAffliction: {
+	DisplayName: Seal Of Affliction
+	Tooltip: Increases damage by {0}% for each active debuff
+}
+
+SupremeCrimsonRod: {
+	DisplayName: Blood-Red Fury Tornado
+	Tooltip: '''"Weather Forecast: Storm"'''
+}
+
+SupremeVilethorn: {
+	DisplayName: Forest of Thorns
+	Tooltip: '''"There is no escape..."'''
+}
+
+SupremeBallOHurt: {
+	DisplayName: Thunder Meteor Impact
+	Tooltip: '''"Weather Forecast: The End"'''
+}
+
+SupremeBloodButcherer: {
+	DisplayName: Beheader of Giants
+	Tooltip: '''"Fall and Maul"'''
+}
+
+SupremeLightsBane: {
+	DisplayName: Angel's Demise
+	Tooltip: '''"Nothing Personal..."'''
+}
+
+SupremeRottedFork: {
+	DisplayName: Hell's Flesh Blender
+	Tooltip: '''"One to a million"'''
+}
+
+SupremeMusket: {
+	DisplayName: Frenzied God's Hand Cannon
+	Tooltip: '''"No turning back..."'''
+}
+
+SupremeUndertaker: {
+	DisplayName: Enemy of Machines
+	Tooltip: '''"Last Stand"'''
+}

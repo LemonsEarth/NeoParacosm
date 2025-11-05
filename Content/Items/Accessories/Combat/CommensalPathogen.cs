@@ -8,6 +8,11 @@ public class CommensalPathogen : ModItem
     readonly float enduranceDecrease = 10;
     readonly float defenseDecrease = 10;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(enduranceDecrease, defenseDecrease);
+
+    public override void SetStaticDefaults()
+    {
+        ItemID.Sets.ShimmerTransformToItem[Type] = ItemType<BaneflyHive>();
+    }
     public override void SetDefaults()
     {
         Item.width = 64;

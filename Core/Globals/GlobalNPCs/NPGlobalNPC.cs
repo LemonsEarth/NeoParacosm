@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Hostile.Corruption;
 using NeoParacosm.Content.NPCs.Hostile.Crimson;
@@ -22,6 +23,15 @@ public class NPGlobalNPC : GlobalNPC
             {
                 pool.Add(NPCType<Deathbird>(), 1f);
             }
+        }
+    }
+
+    public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
+    {
+        if (player.HasBuff<ReducedSpawns>())
+        {
+            spawnRate = (int)(spawnRate * 5f);
+            maxSpawns = (int)(maxSpawns * 0.5f);
         }
     }
 }

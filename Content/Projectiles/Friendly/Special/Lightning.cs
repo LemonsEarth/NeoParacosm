@@ -78,6 +78,7 @@ public class Lightning : ModProjectile
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         //target.AddBuff(BuffID.OnFire3, 90);
+        Projectile.damage /= 2;
     }
 
     public override void AI()

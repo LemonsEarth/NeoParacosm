@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Core.Systems;
 using Terraria.DataStructures;
 using Terraria.UI;
 
@@ -13,7 +14,9 @@ internal class InItemPanel : ItemSlotWrapper
     {
         itemSlot = new ItemSlotWrapper(ItemSlot.Context.BankItem, 0.85f)
         {
-            ValidItemFunc = item => item.IsAir || Researcher.AscendableItems.ContainsKey(item.type)
+            ValidItemFunc = item => item.IsAir 
+            || Researcher.AscendableItems.ContainsKey(item.type) 
+            || (WorldDataSystem.ResearcherQuestProgress >= WorldDataSystem.ResearcherQuestProgressState.CollectedData2 && Researcher.AscendableItems2.ContainsKey(item.type))
         };
 
         itemSlot.HAlign = 0.5f;

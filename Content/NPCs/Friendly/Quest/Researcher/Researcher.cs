@@ -21,6 +21,7 @@ public class Researcher : ModNPC
     int AITimer = 0;
 
     public static Dictionary<int, int> AscendableItems { get; private set; }
+    public static Dictionary<int, int> AscendableItems2 { get; private set; }
 
     public override bool NeedSaving()
     {
@@ -48,6 +49,20 @@ public class Researcher : ModNPC
             { ItemID.ShadowHelmet, ItemType<AscendedShadowHelmet>() },
             { ItemID.ShadowScalemail, ItemType<AscendedShadowScalemail>() },
             { ItemID.ShadowGreaves, ItemType<AscendedShadowGreaves>() },
+        };
+
+        AscendableItems2 = new Dictionary<int, int>()
+        {
+            { ItemType<AscendedCrimsonRod>() , ItemType<SupremeCrimsonRod>() },
+            { ItemType<AscendedBloodButcherer>() , ItemType<SupremeBloodButcherer>() },
+            { ItemType<AscendedRottedFork>() , ItemType<SupremeRottedFork>() },
+            { ItemType<AscendedUndertaker>() , ItemType<SupremeUndertaker>() },
+
+            { ItemType<AscendedBallOHurt>() , ItemType<SupremeBallOHurt>() },
+            { ItemType<AscendedLightsBane>() , ItemType<SupremeLightsBane>() },
+            { ItemType<AscendedVilethorn>() , ItemType<SupremeVilethorn>() },
+            { ItemType<AscendedMusket>() , ItemType<SupremeMusket>() },
+
         };
     }
 

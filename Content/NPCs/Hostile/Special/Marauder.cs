@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Items.Accessories.Misc;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
@@ -90,6 +91,11 @@ public class Marauder : ModNPC
 
         Player player = Main.player[NPC.target];
 
+        foreach (var p in Main.ActivePlayers)
+        {
+            p.AddBuff(BuffType<ReducedSpawns>(), 60);
+        }
+
         if (AITimer < 540)
         {
             NPC.Opacity = 0;
@@ -171,12 +177,12 @@ public class Marauder : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return (spawnInfo.Player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && Main.hardMode) ? 0.05f : 0f;
+        return (spawnInfo.Player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && Main.hardMode) ? 0.025f : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ItemType<SkullOfAvarice>(), minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<SkullOfAvarice>(), 4, 2));
     }
 
     public override bool? CanFallThroughPlatforms()
