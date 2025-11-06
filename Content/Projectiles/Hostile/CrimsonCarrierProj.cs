@@ -86,7 +86,7 @@ public class CrimsonCarrierProj : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (Main.dedServ) return true;
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, 12, Color.DarkRed, Color.Black * 0f, BasicEffect, GraphicsDevice);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.DarkRed, Color.Transparent, BasicEffect);
 
         return true;
     }

@@ -2,7 +2,9 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Common.Utils.Prim;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria.Audio;
+using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
@@ -70,7 +72,7 @@ public class CorruptCarrierProj : ModProjectile
             Projectile.alpha -= 7;
         }
 
-        LemonUtils.DustCircle(Projectile.Center, 4, 3, DustID.Corruption);
+        //LemonUtils.DustCircle(Projectile.Center, 4, 3, DustID.Corruption);
         Projectile.rotation = MathHelper.ToRadians(AITimer * 6);
         Projectile.velocity *= 1.05f;
         AITimer++;
@@ -87,9 +89,9 @@ public class CorruptCarrierProj : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (Main.dedServ) return true;
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, 12, Color.Purple, Color.Black * 0f, BasicEffect, GraphicsDevice);
+        PrimHelper.DrawBasicProjectilePrimTrailRectangular(Projectile, Color.DarkMagenta, Color.Transparent, BasicEffect);
 
-        return true;
+        return false;
     }
 
     public override void PostDraw(Color lightColor)

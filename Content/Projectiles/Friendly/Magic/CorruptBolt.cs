@@ -79,7 +79,7 @@ public class CorruptBolt : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, 3, Color.Purple, Color.Black * 0, BasicEffect, GraphicsDevice);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.Purple, Color.Transparent, BasicEffect);
         return false;
     }
 
