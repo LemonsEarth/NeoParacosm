@@ -16,14 +16,13 @@ public class CorruptCarrierProj : ModProjectile
     ref float AITimer => ref Projectile.ai[0];
 
     static BasicEffect BasicEffect;
-    GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
 
     public override void Load()
     {
         if (Main.dedServ) return;
         Main.RunOnMainThread(() =>
         {
-            BasicEffect = new BasicEffect(GraphicsDevice)
+            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
             {
                 TextureEnabled = true,
                 VertexColorEnabled = true,
@@ -74,7 +73,8 @@ public class CorruptCarrierProj : ModProjectile
 
         //LemonUtils.DustCircle(Projectile.Center, 4, 3, DustID.Corruption);
         Projectile.rotation = MathHelper.ToRadians(AITimer * 6);
-        Projectile.velocity *= 1.05f;
+        //Projectile.velocity *= 1.05f;
+        Projectile.velocity.Y += 0.1f;
         AITimer++;
     }
 
@@ -91,7 +91,7 @@ public class CorruptCarrierProj : ModProjectile
         if (Main.dedServ) return true;
         PrimHelper.DrawBasicProjectilePrimTrailRectangular(Projectile, Color.DarkMagenta, Color.Transparent, BasicEffect);
 
-        return false;
+        return true;
     }
 
     public override void PostDraw(Color lightColor)

@@ -93,7 +93,7 @@ public class SupremeRottedForkHeldProj : ModProjectile
                     if (Main.myPlayer == Projectile.owner)
                     {
                         SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-                        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, Type, Projectile.damage / ((addsLeft + 1) * 0.5f), ai0: -addsLeft);
+                        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, Type, Projectile.damage / ((addsLeft + 1) * 0.4f), ai0: -addsLeft);
                     }
                     addsLeft--;
                 }

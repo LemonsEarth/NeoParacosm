@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
@@ -19,14 +21,38 @@ public class GraveswordHeldProj : ModProjectile
     ref float special => ref Projectile.ai[0];
     ref float direction => ref Projectile.ai[1];
 
+    static BasicEffect BasicEffect;
+    public override void Load()
+    {
+        if (Main.dedServ) return;
+        Main.RunOnMainThread(() =>
+        {
+            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
+            {
+                TextureEnabled = true,
+                VertexColorEnabled = true,
+            };
+        });
+    }
+
+    public override void Unload()
+    {
+        if (Main.dedServ) return;
+        Main.RunOnMainThread(() =>
+        {
+            BasicEffect?.Dispose();
+            BasicEffect = null;
+        });
+    }
+
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        
+
     }
 
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         Main.projFrames[Type] = 1;
     }
@@ -114,7 +140,6 @@ public class GraveswordHeldProj : ModProjectile
         if (direction == 1 && rotValue > goalRotation - 10) Projectile.Kill();
         else if (direction == -1 && rotValue < goalRotation + 10) Projectile.Kill();
         SetPositionRotationDirection(player, MathHelper.ToRadians(rotValue));
-
         AITimer++;
     }
 
@@ -139,9 +164,21 @@ public class GraveswordHeldProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        Texture2D texture = TextureAssets.Projectile[Type].Value;
-
+        Player player = Main.player[Projectile.owner];
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
+        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        float topRotOffset = player.direction == 1 ? -MathHelper.PiOver4 : -3 * MathHelper.PiOver4;
+        float botRotOffset = player.direction == 1 ? 3 * MathHelper.PiOver4 : MathHelper.PiOver4;
+        if (direction == -1)
+        {
+            topRotOffset += MathHelper.PiOver2 * player.direction;
+            botRotOffset += MathHelper.PiOver2 * player.direction;
+        }
+
+        if (special == 0)
+        {
+            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.White, BasicEffect, topRotOffset, botRotOffset);
+        }
         for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
         {
             Vector2 afterimagePos = Projectile.oldPos[k] + texture.Size() * 0.5f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY);

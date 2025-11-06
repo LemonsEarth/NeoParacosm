@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
 using Terraria.Audio;
@@ -71,7 +72,12 @@ public class SupremeCrimsonCloud : ModProjectile
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI("Friendly"), Projectile.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * 10, ProjectileID.CultistBossLightningOrbArc, Projectile.damage / 2, 1f, Projectile.owner, Main.rand.NextFloat(0, 6.28f));
+                    Vector2 rPos = Projectile.RandomPos(-64, -64);
+                    Vector2 pos = rPos + Main.rand.NextVector2Circular(120 * Projectile.scale, 120 * Projectile.scale);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), rPos, Vector2.Zero,
+                        ProjectileType<RedLightning>(), Projectile.damage, 1f, Projectile.owner, 
+                        ai1: pos.X,
+                        ai2: pos.Y);
                 }
             }
         }

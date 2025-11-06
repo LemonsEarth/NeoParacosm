@@ -39,7 +39,10 @@ public class NPBuffNPC : GlobalNPC
         }
         else if (npc.HasBuff(BuffType<LightsBaneDebuff2>()))
         {
-            if (timer % 5 == 0)
+            int attackInterval = 30;
+            if (timer >= 45) attackInterval = 10;
+            if (timer >= 75) attackInterval = 3;
+            if (timer % attackInterval == 0)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {

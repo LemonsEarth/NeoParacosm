@@ -44,7 +44,7 @@ public class SupremeLightsBane : ModItem
             {
                 if (npc.CanBeChasedBy())
                 {
-                    npc.AddBuff(BuffType<LightsBaneDebuff2>(), 60);
+                    npc.AddBuff(BuffType<LightsBaneDebuff2>(), 120);
                 }
             }
             hitNPCs.Clear();

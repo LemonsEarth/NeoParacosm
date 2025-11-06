@@ -14,14 +14,13 @@ public class CrimsonCarrierProj : ModProjectile
     ref float AITimer => ref Projectile.ai[0];
 
     static BasicEffect BasicEffect;
-    GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
 
     public override void Load()
     {
         if (Main.dedServ) return;
         Main.RunOnMainThread(() =>
         {
-            BasicEffect = new BasicEffect(GraphicsDevice)
+            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
             {
                 TextureEnabled = true,
                 VertexColorEnabled = true,
