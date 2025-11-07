@@ -146,4 +146,16 @@ public static partial class LemonUtils
     {
         Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, position - Main.screenPosition, null, color * opacity, 0f, ParacosmTextures.GlowBallTexture.Size() * 0.5f, scale, SpriteEffects.None);
     }
+
+    public static float ClosenessToMidpoint(int length, int index)
+    {
+        if (index >= length || index < 0)
+        {
+            throw new IndexOutOfRangeException();
+        }
+        int mid = length / 2;
+        int distanceToMid = (int)MathF.Abs(index - mid);
+        int closeness = 1 - (distanceToMid / mid);
+        return closeness;
+    }
 }

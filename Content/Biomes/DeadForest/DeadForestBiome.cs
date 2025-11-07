@@ -14,7 +14,6 @@ public class DeadForestBiome : ModBiome
     public override string MapBackground => BackgroundPath;
     public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
-
     public override bool IsBiomeActive(Player player)
     {
         return GetInstance<BiomeSystem>().deadDirtTileCount >= 1000 && player.ZoneOverworldHeight;

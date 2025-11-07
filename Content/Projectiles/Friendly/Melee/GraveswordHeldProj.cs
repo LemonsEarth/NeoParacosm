@@ -52,7 +52,7 @@ public class GraveswordHeldProj : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 4;
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         Main.projFrames[Type] = 1;
     }
@@ -135,8 +135,8 @@ public class GraveswordHeldProj : ModProjectile
                 goalRotation = 0;
             }
         }
-
-        rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpT * player.GetAttackSpeed(DamageClass.Melee));
+        Projectile.extraUpdates = 3;
+        rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpT / 4 * player.GetAttackSpeed(DamageClass.Melee));
         if (direction == 1 && rotValue > goalRotation - 10) Projectile.Kill();
         else if (direction == -1 && rotValue < goalRotation + 10) Projectile.Kill();
         SetPositionRotationDirection(player, MathHelper.ToRadians(rotValue));
@@ -177,7 +177,7 @@ public class GraveswordHeldProj : ModProjectile
 
         if (special == 0)
         {
-            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.White, BasicEffect, topRotOffset, botRotOffset);
+            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.Transparent, BasicEffect, topRotOffset, botRotOffset);
         }
         for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
         {

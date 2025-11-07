@@ -3,6 +3,12 @@ using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Gores;
+using NeoParacosm.Content.Items.BossBags;
+using NeoParacosm.Content.Items.Placeable.Relics;
+using NeoParacosm.Content.Items.Weapons.Magic;
+using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Content.Items.Weapons.Ranged;
+using NeoParacosm.Content.Items.Weapons.Summon;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.None;
@@ -18,6 +24,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 using static Terraria.ModLoader.ModContent;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Deathbird;
@@ -1008,7 +1015,11 @@ public class Deathbird : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-
+        LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
+        classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DeathTolls>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
+        npcLoot.Add(classicRule);
+        npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathbirdTreasureBag>()));
+        npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DeathbirdRelicItem>()));
     }
 
     public override bool? CanFallThroughPlatforms()

@@ -129,7 +129,7 @@ public class RedLightning : ModProjectile
         int quadCount = positions.Count / 2 - 1;
         if (quadCount <= 0) return false;
         VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
-        VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
+        VertexPositionColorTexture QuickVertexPCT(Vector2 pos, int index)
         {
             //Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
             return new VertexPositionColorTexture(new Vector3(pos, 0), Color.Red * Projectile.Opacity, Vector2.Zero);
@@ -142,13 +142,13 @@ public class RedLightning : ModProjectile
             Vector2 right1 = positions[2 * i + 3];
 
 
-            vertices[6 * i] = QuickVertexPCT(left0);
-            vertices[6 * i + 1] = QuickVertexPCT(right0);
-            vertices[6 * i + 2] = QuickVertexPCT(left1);
+            vertices[6 * i] = QuickVertexPCT(left0, 6 * i);
+            vertices[6 * i + 1] = QuickVertexPCT(right0, 6 * i + 1);
+            vertices[6 * i + 2] = QuickVertexPCT(left1, 6 * i + 2);
 
-            vertices[6 * i + 3] = QuickVertexPCT(left1);
-            vertices[6 * i + 4] = QuickVertexPCT(right0);
-            vertices[6 * i + 5] = QuickVertexPCT(right1);
+            vertices[6 * i + 3] = QuickVertexPCT(left1, 6 * i + 3);
+            vertices[6 * i + 4] = QuickVertexPCT(right0, 6 * i + 4);
+            vertices[6 * i + 5] = QuickVertexPCT(right1, 6 * i + 5);
         }
         //for (int i = 0; i < positions.Length; i += 1)
         //{

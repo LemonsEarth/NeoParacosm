@@ -479,3 +479,13 @@ SupremeUndertaker: {
 	DisplayName: Enemy of Machines
 	Tooltip: '''"Last Stand"'''
 }
+
+DeathbirdTreasureBag: {
+	DisplayName: Treasure Bag (Deathbird)
+	Tooltip: ""
+}
+
+DeathbirdRelicItem: {
+	DisplayName: Deathbird Relic
+	Tooltip: ""
+}
