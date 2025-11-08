@@ -4,7 +4,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.None;
+namespace NeoParacosm.Content.Projectiles.Effect;
 
 public class SkullOfAvariceProjectile : ModProjectile
 {

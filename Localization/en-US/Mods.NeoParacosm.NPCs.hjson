@@ -167,6 +167,29 @@ Researcher: {
 			}
 		}
 	}
+
+	ResearcherNoteMessage:
+		'''
+		-----------------------------------------------------------------------------------------
+		Hello friend!
+
+		I have just discovered something not too far away from here.
+		It's a massive structure, looks something like a monolith or shrine.
+		Up until now it seems to have been veiled by some sort of magic...
+		Or maybe someone was just very hardworking (I certainly hope this isn't just another one of your... towers) (LOL)
+
+		This structure is definitely not a natural formation, far from it. It's vile and grotesque, yet it resembles a place of worship... 
+		It's entirely the opposite of what one would consider nature.
+
+		This may seem sudden, but I am going to investigate this one on my own.
+		I've been bugging you for quite some time now, so I figured you could use a break.
+		If my presumptions about this are correct, our battle with the infections could be approaching its end.
+
+		I sincerely wish you best of luck in your future endeavors, and I hope to see you soon.
+
+		Sav
+		-----------------------------------------------------------------------------------------
+		'''
 }
 
 Marauder.DisplayName: Marauder

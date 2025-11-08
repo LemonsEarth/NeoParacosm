@@ -6,10 +6,14 @@ using Terraria.ModLoader.IO;
 
 namespace NeoParacosm.Core.Systems;
 
+/// <summary>
+/// Contains data related to the Researcher Quest
+/// Researcher NPC, Dialogue and Ascension UI can be found in their respective files
+/// </summary>
 public class ResearcherQuest : ModSystem
 {
     public static Point16 DragonRemainsTileEntityPos = Point16.Zero;
-    public static ProgressState QuestProgress = 0;
+    public static ProgressState Progress = 0;
     public enum ProgressState
     {
         NotDownedEvilBoss, // NPC doesn't exist yet, Dragon Remains has a barrier
@@ -26,33 +30,33 @@ public class ResearcherQuest : ModSystem
 
     public override void PostUpdateWorld()
     {
-        if (QuestProgress == ProgressState.NotDownedEvilBoss && NPC.downedBoss2)
+        if (Progress == ProgressState.NotDownedEvilBoss && NPC.downedBoss2)
         {
             Vector2 remainsPos = DragonRemainsTileEntityPos.ToWorldCoordinates();
             NPC.NewNPCDirect(new EntitySource_Misc("ResearcherEvilBossSpawn"), remainsPos + new Vector2(500, 0), NPCType<Researcher>());
-            QuestProgress = ProgressState.DownedEvilBoss;
+            Progress = ProgressState.DownedEvilBoss;
         }
 
-        if (QuestProgress == ProgressState.CollectedData2 && NPC.downedMechBossAny)
+        if (Progress == ProgressState.CollectedData2 && NPC.downedMechBossAny)
         {
-            QuestProgress = ProgressState.DownedMechBoss;
+            Progress = ProgressState.DownedMechBoss;
         }
 
-        if (Main.hardMode && QuestProgress == ProgressState.AscendedItem)
+        if (Main.hardMode && Progress == ProgressState.AscendedItem)
         {
-            QuestProgress = ProgressState.Hardmode;
+            Progress = ProgressState.Hardmode;
         }
     }
 
     public override void ClearWorld()
     {
-        QuestProgress = ProgressState.NotDownedEvilBoss;
+        Progress = ProgressState.NotDownedEvilBoss;
         DragonRemainsTileEntityPos = Point16.Zero;
     }
 
     public override void LoadWorldData(TagCompound tag)
     {
-        QuestProgress = (ProgressState)tag.GetInt("ResearcherQuestProgress");
+        Progress = (ProgressState)tag.GetInt("ResearcherQuestProgress");
         if (tag.ContainsKey("DragonRemainsTileEntityPos"))
         {
             tag["DragonRemainsTileEntityPos"] = DragonRemainsTileEntityPos;
@@ -61,7 +65,7 @@ public class ResearcherQuest : ModSystem
 
     public override void SaveWorldData(TagCompound tag)
     {
-        tag["ResearcherQuestProgress"] = (int)QuestProgress;
+        tag["ResearcherQuestProgress"] = (int)Progress;
         if (DragonRemainsTileEntityPos != Point16.Zero)
         {
             tag["DragonRemainsTileEntityPos"] = DragonRemainsTileEntityPos;
@@ -70,7 +74,7 @@ public class ResearcherQuest : ModSystem
 
     public override void NetSend(BinaryWriter writer)
     {
-        writer.Write((int)QuestProgress);
+        writer.Write((int)Progress);
     }
 
     public override void NetReceive(BinaryReader reader)

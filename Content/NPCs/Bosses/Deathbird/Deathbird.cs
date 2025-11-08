@@ -11,7 +11,7 @@ using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Items.Weapons.Summon;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Hostile;
-using NeoParacosm.Content.Projectiles.None;
+using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;

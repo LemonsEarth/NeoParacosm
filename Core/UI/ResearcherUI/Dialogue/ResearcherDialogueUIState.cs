@@ -114,20 +114,20 @@ public class ResearcherDialogueUIState : UIState
 
     void ProgressDialogue()
     {
-        if (QuestProgress == ProgressState.CollectedData && talkAmount == 3)
+        if (Progress == ProgressState.CollectedData && talkAmount == 3)
         {
-            QuestProgress = ProgressState.TalkedAfterCollectingData;
+            Progress = ProgressState.TalkedAfterCollectingData;
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
             talkAmount = 0;
         }
 
-        if (talkAmount >= ProgressTextAmount[(int)QuestProgress])
+        if (talkAmount >= ProgressTextAmount[(int)Progress])
         {
             talkAmount = 0;
         }
 
-        TextToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.TalkDialogue.Progress.P{(int)QuestProgress}.T{talkAmount}");
-        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)QuestProgress]}"; // dialogue left
+        TextToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.TalkDialogue.Progress.P{(int)Progress}.T{talkAmount}");
+        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)Progress]}"; // dialogue left
         talkAmount++;
     }
 
@@ -154,7 +154,7 @@ public class ResearcherDialogueUIState : UIState
 
     private void OnSpecialButtonClick(UIMouseEvent evt, UIElement listeningElement)
     {
-        if (QuestProgress < ProgressState.TalkedAfterCollectingData)
+        if (Progress < ProgressState.TalkedAfterCollectingData)
         {
             return;
         }
@@ -236,7 +236,7 @@ public class ResearcherDialogueUIState : UIState
 
     void SpecialButtonDisplay()
     {
-        if (QuestProgress < ProgressState.TalkedAfterCollectingData)
+        if (Progress < ProgressState.TalkedAfterCollectingData)
         {
             SpecialOption.SetText(string.Empty);
         }

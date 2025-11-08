@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Projectiles.None;
+using NeoParacosm.Content.Projectiles.Effect;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

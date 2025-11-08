@@ -16,7 +16,7 @@ internal class InItemPanel : ItemSlotWrapper
         {
             ValidItemFunc = item => item.IsAir
             || Researcher.AscendableItems.ContainsKey(item.type)
-            || (ResearcherQuest.QuestProgress >= ResearcherQuest.ProgressState.CollectedData2 && Researcher.AscendableItems2.ContainsKey(item.type))
+            || (ResearcherQuest.Progress >= ResearcherQuest.ProgressState.CollectedData2 && Researcher.AscendableItems2.ContainsKey(item.type))
         };
 
         itemSlot.HAlign = 0.5f;

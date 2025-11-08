@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.None;
+﻿using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems;
 using Terraria.DataStructures;
 
@@ -23,7 +23,7 @@ public class DragonRemainsTileEntity : ModTileEntity
         {
             ResearcherQuest.DragonRemainsTileEntityPos = Position;
         }
-        if (ResearcherQuest.QuestProgress <= ResearcherQuest.ProgressState.NotDownedEvilBoss)
+        if (ResearcherQuest.Progress <= ResearcherQuest.ProgressState.NotDownedEvilBoss)
         {
             foreach (var player in Main.ActivePlayers)
             {

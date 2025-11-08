@@ -50,7 +50,7 @@ public class NPPlayer : ModPlayer
                 UISystem.ShowUI();
             }
         }*/
-        Main.NewText(ResearcherQuest.DragonRemainsTileEntityPos - (Player.Center / 16).ToPoint16());
+        //Main.NewText(ResearcherQuest.DragonRemainsTileEntityPos - (Player.Center / 16).ToPoint16());
         timer++;
     }
 

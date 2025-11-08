@@ -3,16 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.None;
+namespace NeoParacosm.Content.Projectiles.Effect;
 
-public class PulseEffect : ModProjectile
+public class DragonRemainsPulseShield : ModProjectile
 {
     public override string Texture => "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
 
-    int AITimer = 0;
-    ref float Speed => ref Projectile.ai[0];
-    ref float Scale => ref Projectile.ai[1];
-    ref float ColorMult => ref Projectile.ai[2];
+    ref float AITimer => ref Projectile.ai[0];
 
     public override void SetStaticDefaults()
     {
@@ -35,10 +32,11 @@ public class PulseEffect : ModProjectile
 
     public override void AI()
     {
-        if (Scale == 0) Scale = 1;
-        if (Speed == 0) Speed = 1;
+        if (NPC.downedBoss2)
+        {
+            Projectile.Kill();
+        }
         Projectile.velocity = Vector2.Zero;
-        if (AITimer > 60 / Speed) Projectile.Kill();
         AITimer++;
     }
 
@@ -47,15 +45,16 @@ public class PulseEffect : ModProjectile
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
-        shader.Shader.Parameters["time"].SetValue(AITimer / 60f); // constant size of shield
-        shader.Shader.Parameters["alwaysVisible"].SetValue(false);
-        shader.Shader.Parameters["speed"].SetValue(Speed);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(ColorMult);
-        shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
+        shader.Shader.Parameters["time"].SetValue(0.99f); // constant size of shield
+        shader.Shader.Parameters["alwaysVisible"].SetValue(true);
+        shader.Shader.Parameters["speed"].SetValue(1f);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(1f);
+        float sinValue = ((float)Math.Sin(AITimer / 24) + 2) * 0.25f; // fades in and out on repeat
+        shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4() * sinValue);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 10, SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         return false;

@@ -26,9 +26,9 @@ public class GlobalEvilBoss : GlobalNPC
         {
             NPC.NewNPCDirect(npc.GetSource_FromThis(), remainsPos + new Vector2(500, 0), NPCType<Researcher>());
         }
-        if (ResearcherQuest.QuestProgress == ResearcherQuest.ProgressState.NotDownedEvilBoss)
+        if (ResearcherQuest.Progress == ResearcherQuest.ProgressState.NotDownedEvilBoss)
         {
-            ResearcherQuest.QuestProgress = ResearcherQuest.ProgressState.DownedEvilBoss;
+            ResearcherQuest.Progress = ResearcherQuest.ProgressState.DownedEvilBoss;
         }
     }
 }

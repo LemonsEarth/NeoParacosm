@@ -4,6 +4,7 @@ using NeoParacosm.Content.Items.Armor.Summoner;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
+using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 using System.Collections.Generic;
@@ -179,6 +180,12 @@ public class Researcher : ModNPC
                 dialogueSystem.HideUI();
             }
         }
+
+        if (Progress == ProgressState.DownedMechBoss)
+        {
+            NPC.active = false;
+        }
+
         AITimer++;
     }
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Input;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Projectiles.None;
 using NeoParacosm.Content.Tiles.DeadForest;
 using NeoParacosm.Content.Tiles.Depths;
 using StructureHelper.API;
