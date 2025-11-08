@@ -29,9 +29,9 @@ public class DataCollectorTileEntity : ModTileEntity
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
 
-        if (dataCollected >= killAmount && WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.DownedEvilBoss)
+        if (dataCollected >= killAmount && ResearcherQuest.QuestProgress == ResearcherQuest.ProgressState.DownedEvilBoss)
         {
-            WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData;
+            ResearcherQuest.QuestProgress = ResearcherQuest.ProgressState.CollectedData;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int rewardID = WorldGen.crimson ? ItemType<CommensalPathogen>() : ItemType<BaneflyHive>();

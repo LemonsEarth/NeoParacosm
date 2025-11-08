@@ -15,8 +15,6 @@ namespace NeoParacosm.Core.Systems;
 
 public class WorldGenSystem : ModSystem
 {
-    public static Point16 DragonRemainsTileEntityPos;
-
     int worldSize => LemonUtils.GetWorldSize();
     readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
 

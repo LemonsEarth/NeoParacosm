@@ -69,8 +69,8 @@ public class AscensionUIState : UIState
         Item outItem = OutItemPanel.itemSlot.Item;
         if (!inItem.IsAir && outItem.IsAir)
         {
-            if (Researcher.AscendableItems2.TryGetValue(inItem.type, out int value) 
-                && WorldDataSystem.ResearcherQuestProgress >= WorldDataSystem.ResearcherQuestProgressState.CollectedData2)
+            if (Researcher.AscendableItems2.TryGetValue(inItem.type, out int value)
+                && ResearcherQuest.QuestProgress >= ResearcherQuest.ProgressState.CollectedData2)
             {
                 OutItemPanel.itemSlot.Item = new Item(value);
             }
@@ -81,9 +81,9 @@ public class AscensionUIState : UIState
             InItemPanel.itemSlot.Item.TurnToAir();
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
             SoundEngine.PlaySound(SoundID.Item29);
-            if (WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.TalkedAfterCollectingData)
+            if (ResearcherQuest.QuestProgress == ResearcherQuest.ProgressState.TalkedAfterCollectingData)
             {
-                WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.AscendedItem;
+                ResearcherQuest.QuestProgress = ResearcherQuest.ProgressState.AscendedItem;
             }
         }
     }

@@ -87,7 +87,7 @@ public class RedLightning : ModProjectile
         {
             originalPos = Projectile.Center;
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Thunder with {Volume = 0.75f,  PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Thunder with { Volume = 0.75f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
             Vector2 projToPos = targetPos - Projectile.Center;
             float spacing = projToPos.Length() / (20 / 2);
             bool flip = true;

@@ -56,7 +56,7 @@ public class CorruptBolt : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        
+
     }
 
     public override void AI()

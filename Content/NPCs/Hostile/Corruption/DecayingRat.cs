@@ -92,7 +92,7 @@ public class DecayingRat : ModNPC
                 SoundEngine.PlaySound(SoundID.WormDig with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
                 return false;
             }
-        }       
+        }
 
         NPC.noTileCollide = false;
         NPC.noGravity = false;
@@ -135,7 +135,7 @@ public class DecayingRat : ModNPC
 
     public override void DrawBehind(int index)
     {
-       Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
+        Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)

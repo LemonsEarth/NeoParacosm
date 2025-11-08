@@ -195,6 +195,6 @@ public class GraveswordHeldProj : ModProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        
+
     }
 }

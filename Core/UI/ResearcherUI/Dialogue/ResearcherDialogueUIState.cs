@@ -8,7 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
-using static NeoParacosm.Core.Systems.WorldDataSystem;
+using static NeoParacosm.Core.Systems.ResearcherQuest;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 
@@ -114,20 +114,20 @@ public class ResearcherDialogueUIState : UIState
 
     void ProgressDialogue()
     {
-        if (ResearcherQuestProgress == ResearcherQuestProgressState.CollectedData && talkAmount == 3)
+        if (QuestProgress == ProgressState.CollectedData && talkAmount == 3)
         {
-            ResearcherQuestProgress = ResearcherQuestProgressState.TalkedAfterCollectingData;
+            QuestProgress = ProgressState.TalkedAfterCollectingData;
             SoundEngine.PlaySound(SoundID.Chat with { Pitch = 1f });
             talkAmount = 0;
         }
 
-        if (talkAmount >= ProgressTextAmount[(int)ResearcherQuestProgress])
+        if (talkAmount >= ProgressTextAmount[(int)QuestProgress])
         {
             talkAmount = 0;
         }
 
-        TextToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.TalkDialogue.Progress.P{(int)ResearcherQuestProgress}.T{talkAmount}");
-        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)ResearcherQuestProgress]}"; // dialogue left
+        TextToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.TalkDialogue.Progress.P{(int)QuestProgress}.T{talkAmount}");
+        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)QuestProgress]}"; // dialogue left
         talkAmount++;
     }
 
@@ -154,7 +154,7 @@ public class ResearcherDialogueUIState : UIState
 
     private void OnSpecialButtonClick(UIMouseEvent evt, UIElement listeningElement)
     {
-        if (ResearcherQuestProgress < ResearcherQuestProgressState.TalkedAfterCollectingData)
+        if (QuestProgress < ProgressState.TalkedAfterCollectingData)
         {
             return;
         }
@@ -199,7 +199,7 @@ public class ResearcherDialogueUIState : UIState
         int trueCharInterval = Main.mouseLeft ? 1 : charInterval;
         if (timer % trueCharInterval == 0 && charIndex < TextToDisplay.Length)
         {
-            SoundEngine.PlaySound(SoundID.Mech with {PitchRange = (0f, 0.2f), SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 10, Volume = 0.2f });
+            SoundEngine.PlaySound(SoundID.Mech with { PitchRange = (0f, 0.2f), SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest, MaxInstances = 10, Volume = 0.2f });
 
             if (TextToDisplay[charIndex] == '[') // Skipping colored text n shi
             {
@@ -236,7 +236,7 @@ public class ResearcherDialogueUIState : UIState
 
     void SpecialButtonDisplay()
     {
-        if (ResearcherQuestProgress < ResearcherQuestProgressState.TalkedAfterCollectingData)
+        if (QuestProgress < ProgressState.TalkedAfterCollectingData)
         {
             SpecialOption.SetText(string.Empty);
         }

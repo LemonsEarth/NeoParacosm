@@ -74,7 +74,7 @@ public class BaneflyHiveEnemy : ModNPC
 
     public override void FindFrame(int frameHeight)
     {
-        
+
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)

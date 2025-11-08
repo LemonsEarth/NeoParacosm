@@ -28,7 +28,7 @@ public class DeathseederNPC : GlobalNPC
 
     public override void SetStaticDefaults()
     {
-        
+
     }
 
     public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)

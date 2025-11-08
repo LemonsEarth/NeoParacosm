@@ -14,6 +14,6 @@ public class GlobalWoF : GlobalNPC
 
     public override void OnKill(NPC npc)
     {
-        
+
     }
 }

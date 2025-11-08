@@ -78,7 +78,7 @@ public class NPBuffPlayer : ModPlayer
                 if (Player.whoAmI == Main.myPlayer)
                 {
                     int buffID = Main.rand.Next(0, 5) switch
-                    {   
+                    {
                         0 => BuffID.WellFed3,
                         1 => BuffID.Endurance,
                         2 => BuffID.Lifeforce,

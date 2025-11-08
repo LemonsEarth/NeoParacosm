@@ -28,8 +28,8 @@ public class EvilGlobalNPC : GlobalNPC
 
     int AITimer = 0;
 
-    bool EvoActive => WorldDataSystem.ResearcherQuestProgress >= WorldDataSystem.ResearcherQuestProgressState.DownedEvilBoss
-                   && WorldDataSystem.ResearcherQuestProgress < WorldDataSystem.ResearcherQuestProgressState.AscendedItem;
+    bool EvoActive => ResearcherQuest.QuestProgress >= ResearcherQuest.ProgressState.DownedEvilBoss
+                   && ResearcherQuest.QuestProgress < ResearcherQuest.ProgressState.AscendedItem;
 
     Dictionary<DamageClass, int> ClassAdaptation = new Dictionary<DamageClass, int>
         {

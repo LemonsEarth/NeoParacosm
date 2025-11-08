@@ -4,7 +4,7 @@ using NeoParacosm.Content.Projectiles.Friendly.Melee;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
-public class AscendedBallOHurt: ModItem
+public class AscendedBallOHurt : ModItem
 {
     int timer = 0;
     public override void SetDefaults()

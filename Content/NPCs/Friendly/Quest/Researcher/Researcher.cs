@@ -11,7 +11,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.Utilities;
-using static NeoParacosm.Core.Systems.WorldDataSystem;
+using static NeoParacosm.Core.Systems.ResearcherQuest;
 
 namespace NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 
@@ -165,7 +165,7 @@ public class Researcher : ModNPC
     public override void AI()
     {
         ResearcherDialogueUISystem dialogueSystem = GetInstance<ResearcherDialogueUISystem>();
-        if (Main.LocalPlayer.Alive() && NPC.Hitbox.Contains(Main.MouseWorld.ToPoint()) && Main.LocalPlayer.Distance(NPC.Center) < talkDistance 
+        if (Main.LocalPlayer.Alive() && NPC.Hitbox.Contains(Main.MouseWorld.ToPoint()) && Main.LocalPlayer.Distance(NPC.Center) < talkDistance
             && Main.mouseRight && Main.mouseRightRelease)
         {
             NPC.direction = Math.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X);

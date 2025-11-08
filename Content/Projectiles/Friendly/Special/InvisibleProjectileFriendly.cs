@@ -35,7 +35,7 @@ public class InvisibleProjectileFriendly : ModProjectile
         {
 
         }
-        if (FollowNPCID <=-1 || Main.npc[(int)FollowNPCID] == null || !Main.npc[(int)FollowNPCID].active)
+        if (FollowNPCID <= -1 || Main.npc[(int)FollowNPCID] == null || !Main.npc[(int)FollowNPCID].active)
         {
             Projectile.Kill();
         }

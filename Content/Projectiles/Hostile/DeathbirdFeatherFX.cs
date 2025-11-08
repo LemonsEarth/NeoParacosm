@@ -48,12 +48,12 @@ public class DeathbirdFeatherFX : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        
+
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-       
+
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -71,6 +71,6 @@ public class DeathbirdFeatherFX : ModProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        
+
     }
 }

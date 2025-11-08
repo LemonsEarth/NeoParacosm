@@ -16,7 +16,7 @@ public class NPArmorPlayer : ModPlayer
 
     public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo)
     {
-        
+
     }
 
     public override void OnHurt(Player.HurtInfo info)

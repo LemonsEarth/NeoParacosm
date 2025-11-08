@@ -85,7 +85,7 @@ public class ShadowOrbNPC : ModNPC
 
     public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
     {
-        
+
     }
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -96,7 +96,7 @@ public class ShadowOrbNPC : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        
+
     }
 
     public override bool? CanFallThroughPlatforms()

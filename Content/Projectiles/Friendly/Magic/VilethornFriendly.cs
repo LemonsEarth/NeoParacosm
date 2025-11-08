@@ -89,7 +89,7 @@ public class VilethornFriendly : ModProjectile
         Vector2 drawPos = StartPos;
         int segmentCount = (int)(Projectile.Center.Distance(StartPos) / Texture.Width);
         int segmentsDrawn = 0;
-        
+
         Vector2 StartToProj = StartPos.DirectionTo(Projectile.Center);
 
         while (segmentsDrawn < segmentCount)

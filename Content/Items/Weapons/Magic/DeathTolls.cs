@@ -44,7 +44,7 @@ public class DeathTolls : ModItem
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        SoundEngine.PlaySound(ParacosmSFX.ChurchBell with { PitchRange = (-0.7f, -0.4f)}, player.Center);
+        SoundEngine.PlaySound(ParacosmSFX.ChurchBell with { PitchRange = (-0.7f, -0.4f) }, player.Center);
         for (int i = 0; i < 3; i++)
         {
             Vector2 vel = -Vector2.UnitY.RotateRandom(Main.rand.NextFloat(-MathHelper.PiOver2, MathHelper.PiOver2)) * velocity.Length();

@@ -21,7 +21,7 @@ public class NPBuffNPC : GlobalNPC
     public override void ResetEffects(NPC npc)
     {
         //dataCollectorTEPos = Point16.Zero;
-       
+
     }
 
     public override void PostAI(NPC npc)
@@ -76,7 +76,7 @@ public class NPBuffNPC : GlobalNPC
         {
             float damagePerSecond = npc.lifeMax * 0.005f + 10;
             if (damagePerSecond > 50) damagePerSecond = 50;
-			DOTDebuff(npc, damagePerSecond, ref damage);
+            DOTDebuff(npc, damagePerSecond, ref damage);
         }
     }
 

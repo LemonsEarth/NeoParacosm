@@ -22,7 +22,7 @@ public class NPPlayer : ModPlayer
     float maxDesaturateValue = 0.6f;
     public override void ResetEffects()
     {
-        
+
     }
 
     public override void PostUpdate()
@@ -50,6 +50,7 @@ public class NPPlayer : ModPlayer
                 UISystem.ShowUI();
             }
         }*/
+        Main.NewText(ResearcherQuest.DragonRemainsTileEntityPos - (Player.Center / 16).ToPoint16());
         timer++;
     }
 
@@ -61,7 +62,7 @@ public class NPPlayer : ModPlayer
             if (desaturateEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DesaturateShader").GetShader();
             data.UseProgress(desaturateEffectOpacity);
-            
+
             Player.AddBuff(BuffType<DeadForestDebuff>(), 2);
         }
         else

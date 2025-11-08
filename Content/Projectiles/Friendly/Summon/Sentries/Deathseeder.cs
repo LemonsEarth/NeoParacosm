@@ -50,24 +50,24 @@ public class Deathseeder : ModProjectile
             }
         }
 
-       /* if (closestEnemy != null)
-        {
-            if (AttackTimer == 90)
-            {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
-                {
-                    LemonUtils.QuickProj(Projectile, closestEnemy.Center + Vector2.UnitY * 100, -Vector2.UnitY * 20, ProjectileType<VilethornFriendly>());
-                }
-                SoundEngine.PlaySound(SoundID.Item43 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+        /* if (closestEnemy != null)
+         {
+             if (AttackTimer == 90)
+             {
+                 if (Main.netMode != NetmodeID.MultiplayerClient)
+                 {
+                     LemonUtils.QuickProj(Projectile, closestEnemy.Center + Vector2.UnitY * 100, -Vector2.UnitY * 20, ProjectileType<VilethornFriendly>());
+                 }
+                 SoundEngine.PlaySound(SoundID.Item43 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
 
-                AttackTimer = 0;
-            }
-            AttackTimer++;
-        }
-        else
-        {
-            AttackTimer = 0;
-        }*/
+                 AttackTimer = 0;
+             }
+             AttackTimer++;
+         }
+         else
+         {
+             AttackTimer = 0;
+         }*/
 
         /*if (AITimer % 60 == 0)
         {

@@ -28,10 +28,10 @@ public class DataCollectorEXTileEntity : ModTileEntity
         t.Text = dataCollected.ToString();
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
-        Main.NewText(WorldDataSystem.ResearcherQuestProgress);
-        if (dataCollected >= killAmount && WorldDataSystem.ResearcherQuestProgress == WorldDataSystem.ResearcherQuestProgressState.Hardmode)
+        Main.NewText(ResearcherQuest.QuestProgress);
+        if (dataCollected >= killAmount && ResearcherQuest.QuestProgress == ResearcherQuest.ProgressState.Hardmode)
         {
-            WorldDataSystem.ResearcherQuestProgress = WorldDataSystem.ResearcherQuestProgressState.CollectedData2;
+            ResearcherQuest.QuestProgress = ResearcherQuest.ProgressState.CollectedData2;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemType<SealOfAffliction>(), 1);

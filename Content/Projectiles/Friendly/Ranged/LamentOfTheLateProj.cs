@@ -46,7 +46,7 @@ public class LamentOfTheLateProj : ModProjectile
         }
 
         Projectile.velocity = Vector2.Zero;
-        
+
         AITimer++;
     }
 
@@ -57,11 +57,11 @@ public class LamentOfTheLateProj : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        
+
     }
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        
+
     }
 }

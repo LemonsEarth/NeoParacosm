@@ -19,6 +19,6 @@ public class DeadForestDebuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        
+
     }
 }

@@ -65,7 +65,7 @@ public class DeathLaser : ModProjectile
 
     public override void OnSpawn(IEntitySource source)
     {
-        
+
     }
 
     public override void AI()

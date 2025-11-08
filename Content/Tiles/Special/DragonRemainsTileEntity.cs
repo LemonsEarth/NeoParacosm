@@ -21,9 +21,9 @@ public class DragonRemainsTileEntity : ModTileEntity
     {
         if (timer == 0)
         {
-            WorldGenSystem.DragonRemainsTileEntityPos = Position;
+            ResearcherQuest.DragonRemainsTileEntityPos = Position;
         }
-        if (!NPC.downedBoss2)
+        if (ResearcherQuest.QuestProgress <= ResearcherQuest.ProgressState.NotDownedEvilBoss)
         {
             foreach (var player in Main.ActivePlayers)
             {

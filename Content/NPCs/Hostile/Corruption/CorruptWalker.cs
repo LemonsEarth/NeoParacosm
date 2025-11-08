@@ -93,9 +93,9 @@ public class CorruptWalker : ModNPC
             if (AITimer % 30 == 0)
             {
                 //SoundEngine.PlaySound(SoundID.Zombie1 with { PitchRange = (0.6f, 1f)},NPC.Center);
-                SoundEngine.PlaySound(SoundID.Zombie87 with { PitchRange = (0.1f, 0.2f)},NPC.Center);
-                SoundEngine.PlaySound(SoundID.Zombie74 with { PitchRange = (0.1f, 0.2f)},NPC.Center);
-                SoundEngine.PlaySound(SoundID.Zombie69 with { PitchRange = (0.1f, 0.2f)},NPC.Center);
+                SoundEngine.PlaySound(SoundID.Zombie87 with { PitchRange = (0.1f, 0.2f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Zombie74 with { PitchRange = (0.1f, 0.2f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Zombie69 with { PitchRange = (0.1f, 0.2f) }, NPC.Center);
                 if (NPC.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     NPC.velocity += NPC.Center.DirectionTo(Main.player[NPC.target].Center) * Main.rand.NextFloat(30, 40);
