@@ -75,13 +75,7 @@ public class PrimHelper
             return;
         }
 
-        BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
-        BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
-        GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-        BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GDViewport.Width, GDViewport.Height, 0, -1, 10);
-        GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-        BasicEffect.CurrentTechnique.Passes[0].Apply();
-        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
+        DrawPrimitives(BasicEffect, vertices);
     }
 
     /// <summary>
@@ -133,24 +127,12 @@ public class PrimHelper
             vertices.Add(oldTopVPCT);
         }
 
-        if (vertices.Count == 0)
-        {
-            return;
-        }
-
-        BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
-        BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
-        GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-        BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GDViewport.Width, GDViewport.Height, 0, -1, 10);
-        GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-        BasicEffect.CurrentTechnique.Passes[0].Apply();
-        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
+        DrawPrimitives(BasicEffect, vertices);
     }
 
     public static void DrawHeldProjectilePrimTrailRectangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float topVertexRotationOffset, float bottomVertexRotationOffset, int? topDistance = null, int? bottomDistance = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
-        Vector2 moveDirection = projectile.velocity.SafeNormalize(Vector2.Zero);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < projectile.oldPos.Length; i++)
         {
@@ -192,18 +174,7 @@ public class PrimHelper
             vertices.Add(oldTopVPCT);
         }
 
-        if (vertices.Count == 0)
-        {
-            return;
-        }
-
-        BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
-        BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
-        GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-        BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GDViewport.Width, GDViewport.Height, 0, -1, 10);
-        GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-        BasicEffect.CurrentTechnique.Passes[0].Apply();
-        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
+        DrawPrimitives(BasicEffect, vertices);
     }
 
     public static void DrawHeldProjectilePrimTrailTriangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float topVertexRotationOffset, float bottomVertexRotationOffset, int? topDistance = null, int? bottomDistance = null)
@@ -253,6 +224,38 @@ public class PrimHelper
             vertices.Add(oldTopVPCT);
         }
 
+        DrawPrimitives(BasicEffect, vertices);
+    }
+
+
+    public static VertexPositionColorTexture QuickVertexPositionColorTexture(Vector2 position, Color color, Vector2 textureCoords)
+    {
+        return new VertexPositionColorTexture(new Vector3(position, 0), color, textureCoords);
+    }
+
+    public static VertexPositionColorTexture QuickVertexPositionColorTexture(Vector2 position, Color color)
+    {
+        return new VertexPositionColorTexture(new Vector3(position, 0), color, Vector2.Zero);
+    }
+
+    public static void DrawPrimitives(BasicEffect BasicEffect, VertexPositionColorTexture[] vertices)
+    {
+        if (vertices.Length == 0)
+        {
+            return;
+        }
+
+        BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
+        BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
+        GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+        BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, GDViewport.Width, GDViewport.Height, 0, -1, 10);
+        GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+        BasicEffect.CurrentTechnique.Passes[0].Apply();
+        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
+    }
+
+    public static void DrawPrimitives(BasicEffect BasicEffect, List<VertexPositionColorTexture> vertices)
+    {
         if (vertices.Count == 0)
         {
             return;
@@ -265,10 +268,5 @@ public class PrimHelper
         GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
         BasicEffect.CurrentTechnique.Passes[0].Apply();
         GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices.ToArray(), 0, vertices.Count / 3);
-    }
-
-    public static VertexPositionColorTexture QuickVertexPositionColorTexture(Vector2 position, Color color)
-    {
-        return new VertexPositionColorTexture(new Vector3(position, 0), color, Vector2.Zero);
     }
 }

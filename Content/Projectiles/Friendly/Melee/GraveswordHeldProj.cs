@@ -177,8 +177,11 @@ public class GraveswordHeldProj : ModProjectile
 
         if (special == 0)
         {
-            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.Transparent, BasicEffect, topRotOffset, botRotOffset);
+            Main.spriteBatch.End(); // Restarting spritebatch around Primitive Drawing to fix some layering issues
+            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.Transparent, BasicEffect, topRotOffset, botRotOffset, (int)(Projectile.height * 0.75f), (int)(Projectile.height * 0.75f));
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
+
         for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
         {
             Vector2 afterimagePos = Projectile.oldPos[k] + texture.Size() * 0.5f - Main.screenPosition + new Vector2(0, Projectile.gfxOffY);
@@ -186,6 +189,12 @@ public class GraveswordHeldProj : ModProjectile
             Main.EntitySpriteDraw(texture, afterimagePos, null, color, Projectile.oldRot[k], texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.oldSpriteDirection[k]), 0);
         }
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+
         return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        
     }
 }
