@@ -7,7 +7,6 @@ using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using System.Collections.Generic;
 using Terraria.DataStructures;
-using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 

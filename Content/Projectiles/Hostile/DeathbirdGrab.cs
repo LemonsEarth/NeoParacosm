@@ -1,8 +1,5 @@
-﻿
-using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
+﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;

@@ -124,7 +124,7 @@ public class Marauder : ModNPC
                     NPC.rotation = MathHelper.Lerp(NPC.rotation, MathHelper.ToRadians(15) * NPC.direction, 1f / 30f);
                     if (AttackTimer % (60 / (stage + 1)) == 0)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (LemonUtils.NotClient())
                         {
                             for (int i = -1; i <= 1; i++)
                             {
@@ -138,7 +138,7 @@ public class Marauder : ModNPC
                     NPC.rotation = MathHelper.ToRadians(AITimer * 12);
                     if (AttackTimer % (60 / (stage + 1)) == 0)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (LemonUtils.NotClient())
                         {
                             for (int i = 0; i < 2; i++)
                             {

@@ -1,13 +1,8 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using NeoParacosm.Content.NPCs.Hostile.Corruption;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
-using NeoParacosm.Content.NPCs.Hostile.Special;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
-using static Terraria.ID.NPCID;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;
 

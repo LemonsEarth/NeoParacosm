@@ -1,15 +1,12 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Biomes.DeadForest;
+﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Core.Systems;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
-using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
@@ -51,6 +48,7 @@ public class NPPlayer : ModPlayer
             }
         }*/
         //Main.NewText(ResearcherQuest.DragonRemainsTileEntityPos - (Player.Center / 16).ToPoint16());
+        //Main.NewText(ResearcherQuest.DragonRemainsTileEntityPos);
         timer++;
     }
 

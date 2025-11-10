@@ -1,9 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.NPCs.Hostile.Corruption;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
-using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;
@@ -76,7 +72,7 @@ public class DeathseederNPC : GlobalNPC
 
         if (AITimer % 1000 == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 LemonUtils.QuickProj(npc, npc.position, Vector2.Zero, ProjectileType<InvisibleProjectileFriendly>(), npc.damage, (1 - npc.knockBackResist) * 6, -1, npc.whoAmI, npc.width, npc.height);
             }

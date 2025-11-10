@@ -10,22 +10,17 @@ using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Items.Weapons.Summon;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
-using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.Effect;
+using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Core.Systems;
 using ReLogic.Content;
 using System.Collections.Generic;
 using System.Linq;
-using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
-using static Terraria.GameContent.Animations.IL_Actions.NPCs;
-using static Terraria.ModLoader.ModContent;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Deathbird;
 
@@ -385,7 +380,7 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case HomingDeathfireBallsDuration:
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     targetPosition = NPC.Center + new Vector2(Main.rand.Next(-250, 250), Main.rand.Next(-250, 250));
                 }
@@ -404,14 +399,14 @@ public class Deathbird : ModNPC
                 {
                     NPC.velocity.Y -= 5;
                     SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 50, ai2: 0);
                     }
                 }
                 break;
             case HomingDeathfireBallsFireTime:
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     for (int i = 0; i < 3 * LemonUtils.GetDifficulty(); i++)
                     {
@@ -451,7 +446,7 @@ public class Deathbird : ModNPC
         {
             case HoverLingeringFlameDuration:
                 TeleportToPos(player.Center - Vector2.UnitY * 300);
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     for (int i = -8; i <= 8; i++)
                     {
@@ -467,7 +462,7 @@ public class Deathbird : ModNPC
                 NPC.MoveToPos(player.Center - Vector2.UnitY * 300, 0.2f, 0.2f, 0.2f, 0.2f);
                 if (AttackTimer % HoverLingeringFlameInterval == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         for (int i = 0; i < 3; i++)
                         {
@@ -491,7 +486,7 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case LaserFeathersDuration:
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     targetPosition = NPC.Center + Main.rand.NextVector2Circular(400, 400);
                 }
@@ -511,7 +506,7 @@ public class Deathbird : ModNPC
                 int cd = 20 - ((LemonUtils.GetDifficulty() - 1) * 5);
                 if (AttackTimer % cd == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         for (int i = -1; i <= 1; i += 2)
                         {
@@ -563,7 +558,7 @@ public class Deathbird : ModNPC
                 break;
             case GrabPrepTime:
                 PlayRoar();
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     grabProjIdentity = LemonUtils.QuickProj(NPC, NPC.Center + grabOffset, Vector2.Zero, ProjectileType<DeathbirdGrab>(), 1, ai0: NPC.whoAmI).identity;
                 }
@@ -598,7 +593,7 @@ public class Deathbird : ModNPC
 
                     if (AITimer % 15 == 0)
                     {
-                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        if (LemonUtils.NotClient())
                         {
                             for (int i = 0; i < LemonUtils.GetDifficulty(); i++)
                             {
@@ -617,7 +612,7 @@ public class Deathbird : ModNPC
                 BasicMovementAnimation();
                 if (AITimer % 30 == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         for (int i = 0; i < 2 * LemonUtils.GetDifficulty(); i++)
                         {
@@ -646,7 +641,7 @@ public class Deathbird : ModNPC
         {
             case FeatherRainDuration:
                 NPC.velocity = Vector2.Zero;
-                if (Main.netMode != NetmodeID.MultiplayerClient && (Main.masterMode || Main.getGoodWorld))
+                if (LemonUtils.NotClient() && (Main.masterMode || Main.getGoodWorld))
                 {
                     LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 500, ai2: 15);
                 }
@@ -658,7 +653,7 @@ public class Deathbird : ModNPC
             case > FeatherRainUpTime:
                 if (AttackTimer % 5 == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 32), -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(50, 60), ProjectileType<DeathbirdFeatherFX>());
                     }
@@ -666,7 +661,7 @@ public class Deathbird : ModNPC
 
                 if (AttackTimer % 60 == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         for (int i = -3; i <= 3; i++)
                         {
@@ -683,7 +678,7 @@ public class Deathbird : ModNPC
                 frameDuration = 6;
                 if (AttackTimer % 15 == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         LemonUtils.QuickProj(NPC, player.Center + new Vector2(Main.rand.Next(-500, 500), -800), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(25, 35), ProjectileType<DeathbirdFeather>(), projDamage, ai0: 75 - (LemonUtils.GetDifficulty() * 5), ai1: 3);
                     }
@@ -724,7 +719,7 @@ public class Deathbird : ModNPC
                 NPC.MoveToPos(targetPosition, 0.3f, 0.1f, 0.5f, 0.1f);
                 if (AttackTimer % 10 == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         int count = NPC.CountNPCS(NPCType<GiantUndead>()) > 0 ? 1 : 3;
                         for (int i = 0; i < count; i++)
@@ -811,7 +806,7 @@ public class Deathbird : ModNPC
         switch (AttackTimer)
         {
             case DeathflameKamikazeDuration:
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     targetPosition = player.Center + Main.rand.NextVector2Circular(300, 300);
                 }
@@ -836,7 +831,7 @@ public class Deathbird : ModNPC
                 break;
             case 60:
                 PlayRoar();
-                if (Main.netMode != NetmodeID.MultiplayerClient && (Main.masterMode || Main.getGoodWorld))
+                if (LemonUtils.NotClient() && (Main.masterMode || Main.getGoodWorld))
                 {
                     LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 60, ai2: 0);
                 }
@@ -851,7 +846,7 @@ public class Deathbird : ModNPC
                 int projAmount = LemonUtils.GetDifficulty() * 12;
                 for (int i = 0; i < projAmount; i++)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         float randomAngle = MathHelper.ToRadians(Main.rand.Next(-15, 15));
                         Vector2 velocity = Vector2.UnitY.RotatedBy(i * (MathHelper.TwoPi / projAmount)).RotatedBy(randomAngle) * Main.rand.NextFloat(10, 17);
@@ -949,7 +944,7 @@ public class Deathbird : ModNPC
                 PunchCameraModifier mod2 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 30, 1000f, FullName);
                 Main.instance.CameraModifiers.Add(mod2);
                 PlayRoar();
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 20, ai2: 2);
                 }
@@ -966,14 +961,14 @@ public class Deathbird : ModNPC
 
                 if (AttackTimer <= PhaseTransitionDuration - 150 && AttackTimer % 10 == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 20, ai2: 2);
                     }
                 }
                 break;
             case PhaseTransitionDuration:
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     for (int i = 0; i < 3; i++)
                     {

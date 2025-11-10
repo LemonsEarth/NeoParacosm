@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Core.Systems;
-using Terraria.Graphics.Capture;
 
 namespace NeoParacosm.Content.Biomes.DeadForest;
 

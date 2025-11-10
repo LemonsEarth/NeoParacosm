@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Common.Utils;
-using SteelSeries.GameSense;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
@@ -37,7 +36,7 @@ public class LamentOfTheLateProj : ModProjectile
             if (AITimer % ProjInterval == 0)
             {
                 SoundEngine.PlaySound(SoundID.Item5, Projectile.Center);
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Vector2 pos = Projectile.Center + new Vector2(Main.rand.NextFloat(-Projectile.width / 2, Projectile.width / 2), -600);
                     LemonUtils.QuickProj(Projectile, pos, Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 12, MathHelper.Pi / 12)) * 16, (int)ProjType).extraUpdates = 1;

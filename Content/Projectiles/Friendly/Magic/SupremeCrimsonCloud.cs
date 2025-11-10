@@ -3,7 +3,6 @@ using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -70,7 +69,7 @@ public class SupremeCrimsonCloud : ModProjectile
         {
             if (AITimer % 20 == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Vector2 rPos = Projectile.RandomPos(-64, -64);
                     Vector2 pos = rPos + Main.rand.NextVector2Circular(120 * Projectile.scale, 120 * Projectile.scale);

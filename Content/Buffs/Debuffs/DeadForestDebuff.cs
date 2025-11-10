@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using NeoParacosm.Core.Systems;
-
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class DeadForestDebuff : ModBuff
 {

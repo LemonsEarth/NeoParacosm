@@ -32,7 +32,7 @@ public class DataCollectorTileEntity : ModTileEntity
         if (dataCollected >= killAmount && ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedEvilBoss)
         {
             ResearcherQuest.Progress = ResearcherQuest.ProgressState.CollectedData;
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 int rewardID = WorldGen.crimson ? ItemType<CommensalPathogen>() : ItemType<BaneflyHive>();
                 Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), rewardID, 1);

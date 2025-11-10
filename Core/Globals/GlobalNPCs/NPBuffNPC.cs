@@ -30,7 +30,7 @@ public class NPBuffNPC : GlobalNPC
         {
             if (timer % 5 == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.RandomPos(16, 16), Main.rand.NextVector2Unit(), ProjectileID.LightsBane, 30, 0f, Main.myPlayer, Main.rand.NextFloat(0.75f, 1.25f));
                 }
@@ -44,7 +44,7 @@ public class NPBuffNPC : GlobalNPC
             if (timer >= 75) attackInterval = 3;
             if (timer % attackInterval == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Projectile.NewProjectile(npc.GetSource_FromThis(), npc.RandomPos(16, 16), Main.rand.NextVector2Unit(), ProjectileID.LightsBane, 60, 0f, Main.myPlayer, Main.rand.NextFloat(0.75f, 1.25f));
                 }

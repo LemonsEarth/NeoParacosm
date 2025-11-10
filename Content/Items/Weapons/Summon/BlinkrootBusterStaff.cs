@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
-using Terraria;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
 

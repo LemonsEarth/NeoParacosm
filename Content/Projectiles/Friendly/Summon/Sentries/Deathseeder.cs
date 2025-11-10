@@ -1,12 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using System.Linq;
-using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
@@ -40,7 +34,7 @@ public class Deathseeder : ModProjectile
         if (AITimer % 300 == 0 && AITimer > 0)
         {
             LemonUtils.DustCircle(Projectile.Top, 16, 8, DustID.Shadowflame, 2f);
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
                 npc.damage = Projectile.damage;
@@ -54,7 +48,7 @@ public class Deathseeder : ModProjectile
          {
              if (AttackTimer == 90)
              {
-                 if (Main.netMode != NetmodeID.MultiplayerClient)
+                 if (LemonUtils.NotClient())
                  {
                      LemonUtils.QuickProj(Projectile, closestEnemy.Center + Vector2.UnitY * 100, -Vector2.UnitY * 20, ProjectileType<VilethornFriendly>());
                  }

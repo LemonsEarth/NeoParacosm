@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,8 +85,8 @@ public class RedLightning : ModProjectile
         if (AITimer == 0)
         {
             originalPos = Projectile.Center;
-            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Thunder with { Volume = 0.75f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f) });
+            SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f) });
             Vector2 projToPos = targetPos - Projectile.Center;
             float spacing = projToPos.Length() / (20 / 2);
             bool flip = true;
@@ -129,9 +128,9 @@ public class RedLightning : ModProjectile
         int quadCount = positions.Count / 2 - 1;
         if (quadCount <= 0) return false;
         VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
-        VertexPositionColorTexture QuickVertexPCT(Vector2 pos, int index)
+        VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
         {
-            //Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
+            //Color color = Main.rand.NextBool(10) ? Color.White : Color.Red;
             return new VertexPositionColorTexture(new Vector3(pos, 0), Color.Red * Projectile.Opacity, Vector2.Zero);
         }
         for (int i = 0; i < quadCount; i += 1)
@@ -142,28 +141,28 @@ public class RedLightning : ModProjectile
             Vector2 right1 = positions[2 * i + 3];
 
 
-            vertices[6 * i] = QuickVertexPCT(left0, 6 * i);
-            vertices[6 * i + 1] = QuickVertexPCT(right0, 6 * i + 1);
-            vertices[6 * i + 2] = QuickVertexPCT(left1, 6 * i + 2);
+            vertices[6 * i] = QuickVertexPCT(left0);
+            vertices[6 * i + 1] = QuickVertexPCT(right0);
+            vertices[6 * i + 2] = QuickVertexPCT(left1);
 
-            vertices[6 * i + 3] = QuickVertexPCT(left1, 6 * i + 3);
-            vertices[6 * i + 4] = QuickVertexPCT(right0, 6 * i + 4);
-            vertices[6 * i + 5] = QuickVertexPCT(right1, 6 * i + 5);
+            vertices[6 * i + 3] = QuickVertexPCT(left1);
+            vertices[6 * i + 4] = QuickVertexPCT(right0);
+            vertices[6 * i + 5] = QuickVertexPCT(right1);
         }
         //for (int i = 0; i < positions.Length; i += 1)
         //{
-        //    Color color = i % 2 == 0 ? Color.DarkSlateBlue : new Color(130, 120, 200, 255);
+        //    Color color = i % 2 == 0 ? Color.Red : new Color(130, 120, 200, 255);
         //    if (i < 3)
         //    {
-        //        vertices[i] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 1] = new VertexPositionColorTexture(new Vector3(positions[i + 1], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 2] = new VertexPositionColorTexture(new Vector3(positions[i + 2], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i + 1] = new VertexPositionColorTexture(new Vector3(positions[i + 1], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i + 2] = new VertexPositionColorTexture(new Vector3(positions[i + 2], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
         //    }
         //    else
         //    {
-        //        vertices[i * 3] = new VertexPositionColorTexture(new Vector3(positions[i - 2], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 1] = new VertexPositionColorTexture(new Vector3(positions[i - 1], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 2] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i * 3] = new VertexPositionColorTexture(new Vector3(positions[i - 2], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i * 3 + 1] = new VertexPositionColorTexture(new Vector3(positions[i - 1], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i * 3 + 2] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
         //    }
         //}
         BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));

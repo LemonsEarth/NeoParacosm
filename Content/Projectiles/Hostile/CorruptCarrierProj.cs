@@ -2,9 +2,7 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Common.Utils.Prim;
 using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria.Audio;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 
@@ -80,7 +78,7 @@ public class CorruptCarrierProj : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        if (Main.netMode != NetmodeID.MultiplayerClient)
+        if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero), ProjectileID.VilePowder, 0, 1);
         }

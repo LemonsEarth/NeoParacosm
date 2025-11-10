@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Core.Systems;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Core.Globals.GlobalNPCs.Bosses;
+﻿namespace NeoParacosm.Core.Globals.GlobalNPCs.Bosses;
 
 public class GlobalWoF : GlobalNPC
 {

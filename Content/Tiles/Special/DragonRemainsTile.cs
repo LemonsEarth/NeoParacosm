@@ -33,6 +33,11 @@ public class DragonRemainsTile : ModTile
         AddMapEntry(new Color(5, 1, 66));
     }
 
+    public override bool CanDrop(int i, int j)
+    {
+        return false;
+    }
+
     public override void NumDust(int i, int j, bool fail, ref int num)
     {
         num = fail ? 3 : 1;

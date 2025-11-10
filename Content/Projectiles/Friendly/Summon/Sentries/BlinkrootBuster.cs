@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
@@ -37,7 +33,7 @@ public class BlinkrootBuster : ModProjectile
         {
             if (AttackTimer == 120)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     for (int i = 0; i < 3; i++)
                     {

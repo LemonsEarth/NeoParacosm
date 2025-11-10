@@ -57,7 +57,7 @@ public class MarksmanFish : ModNPC
         if (NPC.HasPlayerTarget && AITimer % cooldown == 0 && AITimer > 0
             && NPC.Distance(player.Center) < 1000 && Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2))
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 24), ProjectileType<MarksmanBolt>());
             }

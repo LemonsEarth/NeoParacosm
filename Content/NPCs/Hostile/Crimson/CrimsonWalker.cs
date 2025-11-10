@@ -95,7 +95,7 @@ public class CrimsonWalker : ModNPC
             int dashCD = Main.hardMode ? 60 : 90;
             if (AITimer % dashCD == 0 && AITimer > 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     NPC.velocity += NPC.Center.DirectionTo(player.Center) * Main.rand.NextFloat(10, 20);
                     if (Main.rand.NextBool(3) && Main.hardMode)
@@ -135,7 +135,7 @@ public class CrimsonWalker : ModNPC
 
         for (int i = 0; i < projCount; i++)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 LemonUtils.QuickProj(NPC, NPC.RandomPos(), Main.rand.NextVector2Unit() * Main.rand.NextFloat(1, 4), ProjectileID.GoldenShowerHostile, NPC.damage / 8);
             }

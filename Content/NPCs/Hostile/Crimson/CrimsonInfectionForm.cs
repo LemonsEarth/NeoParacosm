@@ -71,7 +71,7 @@ public class CrimsonInfectionForm : ModNPC
     {
         if (AITimer == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 NPC.velocity = (-Vector2.UnitY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))) * Main.rand.NextFloat(12, 18);
             }

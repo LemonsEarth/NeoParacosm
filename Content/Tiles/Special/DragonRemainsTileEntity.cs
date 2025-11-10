@@ -35,11 +35,16 @@ public class DragonRemainsTileEntity : ModTileEntity
             }
             if (timer % 600 == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Projectile.NewProjectile(new EntitySource_TileEntity(this, "Shield Pulse"), CenterPos.ToWorldCoordinates(), Vector2.Zero, ProjectileType<DragonRemainsPulseShield>(), 0, 0, Main.myPlayer);
                 }
             }
+        }
+
+        if (ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedPlantera)
+        {
+            WorldGen.KillTile(Position.X, Position.Y, false, false, true);
         }
         timer++;
     }

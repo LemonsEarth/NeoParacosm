@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SteelSeries.GameSense.DeviceZone;
 using Terraria.Audio;
 using Terraria.GameContent;
 

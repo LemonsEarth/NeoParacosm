@@ -71,7 +71,7 @@ public class CrimsonCatalyst : ModNPC
     {
         if (Main.expertMode)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(10))
+            if (LemonUtils.NotClient() && Main.rand.NextBool(10))
             {
                 NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, NPCType<CrimsonInfectionForm>());
             }
@@ -105,7 +105,7 @@ public class CrimsonCatalyst : ModNPC
         {
             if (storedPositions.Count == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     for (int i = 0; i < LemonUtils.GetDifficulty() * 2; i++)
                     {
@@ -126,7 +126,7 @@ public class CrimsonCatalyst : ModNPC
             }
             else
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     foreach (var pos in storedPositions)
                     {

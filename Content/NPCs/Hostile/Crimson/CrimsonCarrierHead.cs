@@ -52,7 +52,7 @@ public class CrimsonCarrierHead : ModNPC
     {
         if (AITimer == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 NPC.velocity = (-Vector2.UnitY).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-45, 45))) * Main.rand.NextFloat(12, 18);
             }
@@ -80,7 +80,7 @@ public class CrimsonCarrierHead : ModNPC
             Gore.NewGore(NPC.GetSource_FromThis(), NPC.position, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(3, 8), Main.rand.NextFromList(952, 953, 954, 955, 237, 238, 239, 668, 669, 670, 671, 672));
         }
         spawnedEnemies = true;
-        if (Main.netMode != NetmodeID.MultiplayerClient)
+        if (LemonUtils.NotClient())
         {
             int count = Main.rand.Next(3, 8);
             for (int i = 0; i < count; i++)

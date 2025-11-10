@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using SteelSeries.GameSense.DeviceZone;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;

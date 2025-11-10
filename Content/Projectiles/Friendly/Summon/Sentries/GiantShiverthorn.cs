@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using NeoParacosm.Common.Utils;
 using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
@@ -37,7 +34,7 @@ public class GiantShiverthorn : ModProjectile
         {
             if (AttackTimer == 90)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.Center.DirectionTo(closestEnemy.Center) * 10, ProjectileType<IceProjectile>(), Projectile.damage, 1f, Projectile.owner);
                 }

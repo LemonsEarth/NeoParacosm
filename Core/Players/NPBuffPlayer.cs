@@ -2,7 +2,6 @@
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Buffs.GoodBuffs;
-using Terraria;
 
 namespace NeoParacosm.Core.Players;
 

@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class LightsBaneDebuff : ModBuff
 {

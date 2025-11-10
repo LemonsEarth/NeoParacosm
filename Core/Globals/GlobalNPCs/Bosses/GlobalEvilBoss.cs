@@ -22,7 +22,7 @@ public class GlobalEvilBoss : GlobalNPC
 
         Vector2 remainsPos = ResearcherQuest.DragonRemainsTileEntityPos.ToWorldCoordinates();
 
-        if (Main.netMode != NetmodeID.MultiplayerClient)
+        if (LemonUtils.NotClient())
         {
             NPC.NewNPCDirect(npc.GetSource_FromThis(), remainsPos + new Vector2(500, 0), NPCType<Researcher>());
         }

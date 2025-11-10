@@ -1,11 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
+﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Projectiles.Effect;
-using Terraria;
 using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
@@ -53,7 +49,7 @@ public class BranchOfLifeSentry : ModProjectile
             {
                 if (npc.CanBeChasedBy() && Vector2.Distance(Projectile.Center, npc.Center) < BUFF_DISTANCE + 200)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         for (int i = 0; i < 3; i++)
                         {
@@ -66,7 +62,7 @@ public class BranchOfLifeSentry : ModProjectile
                 }
             }
 
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 8, ai2: 2);
             }

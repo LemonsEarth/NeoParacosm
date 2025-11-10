@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Common.Utils;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using NeoParacosm.Common.Utils;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 

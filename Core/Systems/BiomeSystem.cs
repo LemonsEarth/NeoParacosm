@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Tiles.DeadForest;
+﻿using NeoParacosm.Content.Tiles.DeadForest;
 using NeoParacosm.Content.Tiles.Depths;
 
 namespace NeoParacosm.Core.Systems;

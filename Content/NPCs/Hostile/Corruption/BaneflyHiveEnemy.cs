@@ -1,9 +1,7 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
 
@@ -60,7 +58,7 @@ public class BaneflyHiveEnemy : ModNPC
         NPC.Center += Vector2.UnitY * (float)Math.Sin(AITimer / 24f);
         if (AITimer % 600 == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 for (int i = 0; i < 4; i++)
                 {

@@ -38,4 +38,16 @@ public static partial class LemonUtils
         Vector2 pos = npc.position + new Vector2(Main.rand.NextFloat(-fluffX, npc.width + fluffX), Main.rand.NextFloat(-fluffY, npc.height + fluffY));
         return pos;
     }
+
+    /// <summary>
+    /// Used by custom NPCs such as the Researcher which don't use normal NPC interact behavior
+    /// </summary>
+    /// <returns>Whether the *local player* can talk to the NPC or not</returns>
+    public static bool CanTalkToNPC(NPC npc, float maxTalkDistance)
+    {
+        return Main.LocalPlayer.Alive()
+        && npc.Hitbox.Contains(Main.MouseWorld.ToPoint())
+        && Main.LocalPlayer.Distance(npc.Center) < maxTalkDistance
+        && Main.mouseRight && Main.mouseRightRelease;
+    }
 }

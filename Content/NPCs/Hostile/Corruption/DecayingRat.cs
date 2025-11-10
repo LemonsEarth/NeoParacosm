@@ -1,11 +1,8 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
 
@@ -105,7 +102,7 @@ public class DecayingRat : ModNPC
         NPC.spriteDirection = -NPC.direction;
         if (AITimer % 120 == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 Vector2 dir = -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15)));
                 LemonUtils.QuickProj(NPC, NPC.RandomPos(), dir * Main.rand.NextFloat(2, 6), ProjectileType<CursedDecayFire>());

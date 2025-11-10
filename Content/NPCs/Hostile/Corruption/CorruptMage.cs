@@ -1,11 +1,8 @@
 ﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Projectiles.Hostile;
-using rail;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
 
@@ -72,7 +69,7 @@ public class CorruptMage : ModNPC
 
             if (AttackTimer >= 300 && AttackTimer <= 600 && AttackTimer % 60 == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     float randomAngle = MathHelper.ToRadians(Main.rand.NextFloat(-45, 45));
                     Vector2 belowPos = !Main.hardMode ? player.Center + belowOffset : player.Center + belowOffset.RotatedBy(randomAngle);

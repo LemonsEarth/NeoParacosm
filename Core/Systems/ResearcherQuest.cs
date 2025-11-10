@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using System.IO;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
@@ -37,14 +36,19 @@ public class ResearcherQuest : ModSystem
             Progress = ProgressState.DownedEvilBoss;
         }
 
+        if (Main.hardMode && Progress == ProgressState.AscendedItem)
+        {
+            Progress = ProgressState.Hardmode;
+        }
+
         if (Progress == ProgressState.CollectedData2 && NPC.downedMechBossAny)
         {
             Progress = ProgressState.DownedMechBoss;
         }
 
-        if (Main.hardMode && Progress == ProgressState.AscendedItem)
+        if (Progress == ProgressState.DownedMechBoss && NPC.downedPlantBoss)
         {
-            Progress = ProgressState.Hardmode;
+            Progress = ProgressState.DownedPlantera;
         }
     }
 
@@ -59,7 +63,7 @@ public class ResearcherQuest : ModSystem
         Progress = (ProgressState)tag.GetInt("ResearcherQuestProgress");
         if (tag.ContainsKey("DragonRemainsTileEntityPos"))
         {
-            tag["DragonRemainsTileEntityPos"] = DragonRemainsTileEntityPos;
+            DragonRemainsTileEntityPos = tag.Get<Point16>("DragonRemainsTileEntityPos");
         }
     }
 

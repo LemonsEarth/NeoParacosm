@@ -158,4 +158,6 @@ public static partial class LemonUtils
         int closeness = 1 - (distanceToMid / mid);
         return closeness;
     }
+
+    public static bool NotClient() => Main.netMode != NetmodeID.MultiplayerClient;
 }

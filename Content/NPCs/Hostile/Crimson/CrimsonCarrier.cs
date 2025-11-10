@@ -54,7 +54,7 @@ public class CrimsonCarrier : ModNPC
         if (spawnedEnemies) return;
 
         spawnedEnemies = true;
-        if (Main.netMode != NetmodeID.MultiplayerClient)
+        if (LemonUtils.NotClient())
         {
             NPC.NewNPCDirect(NPC.GetSource_FromThis(), NPC.Center, NPCType<CrimsonCarrierHead>());
         }

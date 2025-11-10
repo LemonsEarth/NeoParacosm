@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using NeoParacosm.Common.Utils;
 using Terraria.Audio;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
@@ -37,7 +34,7 @@ public class Shadowflower : ModProjectile
         {
             if (AttackTimer == 90)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     for (int i = -2; i < 3; i++)
                     {

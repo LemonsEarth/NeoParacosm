@@ -4,14 +4,9 @@ using NeoParacosm.Content.Items.Armor.Summoner;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Core.Systems;
-using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.Utilities;
 using static NeoParacosm.Core.Systems.ResearcherQuest;
 
 namespace NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
@@ -166,8 +161,7 @@ public class Researcher : ModNPC
     public override void AI()
     {
         ResearcherDialogueUISystem dialogueSystem = GetInstance<ResearcherDialogueUISystem>();
-        if (Main.LocalPlayer.Alive() && NPC.Hitbox.Contains(Main.MouseWorld.ToPoint()) && Main.LocalPlayer.Distance(NPC.Center) < talkDistance
-            && Main.mouseRight && Main.mouseRightRelease)
+        if (LemonUtils.CanTalkToNPC(NPC, talkDistance))
         {
             NPC.direction = Math.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X);
             NPC.spriteDirection = NPC.direction;
@@ -183,6 +177,10 @@ public class Researcher : ModNPC
 
         if (Progress == ProgressState.DownedMechBoss)
         {
+            if (LemonUtils.NotClient())
+            {
+                NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, NPCType<ResearcherNote>());
+            }
             NPC.active = false;
         }
 

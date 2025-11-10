@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Core.Systems;
 
 namespace NeoParacosm.Content.Projectiles.Hostile;
 

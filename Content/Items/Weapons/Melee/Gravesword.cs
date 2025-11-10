@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Melee;
-using System.Collections.Generic;
-using Terraria.Audio;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 

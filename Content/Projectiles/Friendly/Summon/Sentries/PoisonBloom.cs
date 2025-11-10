@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ModLoader;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
 public class PoisonBloom : ModProjectile
 {

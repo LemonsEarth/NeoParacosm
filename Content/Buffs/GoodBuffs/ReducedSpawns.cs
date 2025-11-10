@@ -1,7 +1,4 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-
-namespace NeoParacosm.Content.Buffs.GoodBuffs;
+﻿namespace NeoParacosm.Content.Buffs.GoodBuffs;
 
 public class ReducedSpawns : ModBuff
 {

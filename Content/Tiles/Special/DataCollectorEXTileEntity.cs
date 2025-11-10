@@ -32,7 +32,7 @@ public class DataCollectorEXTileEntity : ModTileEntity
         if (dataCollected >= killAmount && ResearcherQuest.Progress == ResearcherQuest.ProgressState.Hardmode)
         {
             ResearcherQuest.Progress = ResearcherQuest.ProgressState.CollectedData2;
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 Item.NewItem(new EntitySource_TileEntity(this, "Reached data goal"), CenterPos.ToWorldCoordinates(), ItemType<SealOfAffliction>(), 1);
             }

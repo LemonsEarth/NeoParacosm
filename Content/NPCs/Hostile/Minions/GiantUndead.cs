@@ -1,19 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Items.Accessories.Misc;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile;
-using NeoParacosm.Core.Systems;
 using ReLogic.Content;
-using System.Collections.Generic;
 using System.IO;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Minions;
 
@@ -112,7 +105,7 @@ public class GiantUndead : ModNPC
         if (AITimer == 0)
         {
             startPos = NPC.position;
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 AttackInterval = Main.rand.Next(150, 210);
             }
@@ -132,7 +125,7 @@ public class GiantUndead : ModNPC
         Vector2 dirToPlayer = NPC.DirectionTo(player.Center);
         if (AITimer % AttackInterval - 30 == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 randomPos2 = startPos + startPos.DirectionTo(player.Center) * Main.rand.NextFloat(32, 128);
             }
@@ -149,7 +142,7 @@ public class GiantUndead : ModNPC
 
         if (AITimer % 180 == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 randomPos = startPos + Main.rand.NextVector2CircularEdge(100, 100);
             }
@@ -168,7 +161,7 @@ public class GiantUndead : ModNPC
         {
             if (AttackTimer % AttackInterval == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     Attack = Main.rand.Next(0, 2);
                 }
@@ -186,7 +179,7 @@ public class GiantUndead : ModNPC
             {
                 if (AttackTimer % (AttackInterval - 60) == 0)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center, NPC.Center.DirectionTo(player.Center) * 10, ProjectileType<DeathflameBall>(), NPC.damage / 4, ai0: 9999, ai1: NPC.target);
                     }
@@ -201,7 +194,7 @@ public class GiantUndead : ModNPC
             {
                 if (Main.npc[(int)DeathbirdIndex].life <= Main.npc[(int)DeathbirdIndex].lifeMax * 0.6f)
                 {
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (LemonUtils.NotClient())
                     {
                         Main.npc[(int)DeathbirdIndex].HealEffect((int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f));
                         Main.npc[(int)DeathbirdIndex].life += (int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f);

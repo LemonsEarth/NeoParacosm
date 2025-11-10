@@ -489,3 +489,8 @@ DeathbirdRelicItem: {
 	DisplayName: Deathbird Relic
 	Tooltip: ""
 }
+
+ResearcherNoteItem: {
+	DisplayName: Researcher's Note
+	Tooltip: Use item to read the note
+}

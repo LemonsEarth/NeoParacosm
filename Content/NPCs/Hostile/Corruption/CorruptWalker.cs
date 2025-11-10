@@ -2,11 +2,8 @@
 using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Projectiles.Hostile;
 using System.Collections.Generic;
-using System.Linq;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
 
@@ -96,7 +93,7 @@ public class CorruptWalker : ModNPC
                 SoundEngine.PlaySound(SoundID.Zombie87 with { PitchRange = (0.1f, 0.2f) }, NPC.Center);
                 SoundEngine.PlaySound(SoundID.Zombie74 with { PitchRange = (0.1f, 0.2f) }, NPC.Center);
                 SoundEngine.PlaySound(SoundID.Zombie69 with { PitchRange = (0.1f, 0.2f) }, NPC.Center);
-                if (NPC.HasValidTarget && Main.netMode != NetmodeID.MultiplayerClient)
+                if (NPC.HasValidTarget && LemonUtils.NotClient())
                 {
                     NPC.velocity += NPC.Center.DirectionTo(Main.player[NPC.target].Center) * Main.rand.NextFloat(30, 40);
                 }

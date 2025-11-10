@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
 using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using NeoParacosm.Content.NPCs.Hostile.Special;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems;
 using System.Collections.Generic;
 using static Terraria.ID.NPCID;
@@ -89,7 +88,7 @@ public class EvilGlobalNPC : GlobalNPC
         //}
         if (EvoActive && AITimer % 180 == 0 && npc.life != npc.lifeMax)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 int healValue = npc.lifeMax / 10;
                 if (npc.life + healValue > npc.lifeMax)

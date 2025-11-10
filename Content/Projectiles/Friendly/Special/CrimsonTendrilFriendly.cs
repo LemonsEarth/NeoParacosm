@@ -77,7 +77,7 @@ public class CrimsonTendrilFriendly : ModProjectile
 
         if (AITimer == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 randomAttackTime = Main.rand.Next(45, 90);
             }
@@ -90,7 +90,7 @@ public class CrimsonTendrilFriendly : ModProjectile
 
         if (AITimer % 20 == 0 || (closestNPC != null && closestNPC.Distance(player.Center) > 500))
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 randomPos = player.Center + new Vector2(-player.direction * Main.rand.Next(20, 50), Main.rand.Next(-30, 10));
             }

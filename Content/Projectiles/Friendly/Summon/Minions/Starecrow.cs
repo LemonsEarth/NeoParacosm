@@ -1,7 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Content.Projectiles.Hostile;
-using Terraria.Utilities.Terraria.Utilities;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;
 
@@ -76,7 +74,7 @@ public class Starecrow : ModProjectile
         {
             if (AITimer % 300 == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     randomPos = Main.rand.NextVector2Circular(300, 300);
                 }
@@ -95,7 +93,7 @@ public class Starecrow : ModProjectile
         {
             if (AITimer % 60 == 0)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient)
+                if (LemonUtils.NotClient())
                 {
                     LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY * 5, ProjectileType<LingeringDeathflameFriendly>(), ai0: 0, ai1: 90, ai2: 1.2f);
                 }

@@ -69,7 +69,7 @@ public class RotPerfumeValve : ModNPC
         int cd = NPC.downedPlantBoss ? 30 : 60;
         if (AITimer % cd == 0)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+            if (LemonUtils.NotClient())
             {
                 LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(2, 8), ProjectileType<RotGasHostile>());
             }

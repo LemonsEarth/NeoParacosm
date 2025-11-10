@@ -1,7 +1,4 @@
 ﻿using NeoParacosm.Common.Utils;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 

@@ -1,8 +1,4 @@
-﻿
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
+﻿using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Effect;
 

@@ -89,7 +89,7 @@ public class CrimsonSentryForm : ModNPC
         {
             if (NPC.Center.Distance(player.Center) < 500)
             {
-                if (Main.netMode != NetmodeID.MultiplayerClient && AITimer % 90 == 0)
+                if (LemonUtils.NotClient() && AITimer % 90 == 0)
                 {
                     for (int i = 0; i < 5; i++)
                     {

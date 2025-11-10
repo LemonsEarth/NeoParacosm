@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Misc;
 

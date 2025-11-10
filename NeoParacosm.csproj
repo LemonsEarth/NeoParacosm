@@ -32,6 +32,7 @@
 	  <Folder Include="Content\Items\Materials\" />
 	  <Folder Include="Content\Items\Tools\" />
 	  <Folder Include="Content\Items\Weapons\Generic\" />
+	  <Folder Include="Content\Projectiles\Interactable\" />
 	  <Folder Include="Content\World\Biomes\" />
 	  <Folder Include="Content\World\Tiles\" />
 	</ItemGroup>

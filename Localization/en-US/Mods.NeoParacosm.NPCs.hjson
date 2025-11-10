@@ -170,7 +170,6 @@ Researcher: {
 
 	ResearcherNoteMessage:
 		'''
-		-----------------------------------------------------------------------------------------
 		Hello friend!
 
 		I have just discovered something not too far away from here.
@@ -186,9 +185,6 @@ Researcher: {
 		If my presumptions about this are correct, our battle with the infections could be approaching its end.
 
 		I sincerely wish you best of luck in your future endeavors, and I hope to see you soon.
-
-		Sav
-		-----------------------------------------------------------------------------------------
 		'''
 }
 
@@ -201,3 +197,4 @@ DecayingRat.DisplayName: Decaying Rat
 ShadowOrbNPC.DisplayName: Shadow Orb
 Deathbird.DisplayName: Deathbird
 GiantUndead.DisplayName: Giant Undead
+ResearcherNote.DisplayName: Researcher Note
