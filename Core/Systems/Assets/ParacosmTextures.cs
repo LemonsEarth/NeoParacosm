@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 
-namespace NeoParacosm.Core.Systems;
+namespace NeoParacosm.Core.Systems.Assets;
 
 public class ParacosmTextures : ModSystem
 {

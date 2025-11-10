@@ -47,7 +47,7 @@ public class ResearcherNoteUIState : UIState
     public override void OnActivate()
     {
         brightness = 1f;
-        ChatHelper.DisplayMessageOnClient(NetworkText.FromLiteral("Message opened. Double click to close."), Color.Orange, Main.myPlayer);
+        ChatHelper.DisplayMessageOnClient(NetworkText.FromLiteral("Mods.NeoParacosm.NPCs.Researcher.NoteCloseMessage"), Color.Orange, Main.myPlayer);
     }
 
     public override void OnDeactivate()

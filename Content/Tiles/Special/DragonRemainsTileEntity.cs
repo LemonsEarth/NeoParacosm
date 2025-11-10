@@ -1,5 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Effect;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Tiles.Special;
@@ -44,7 +44,7 @@ public class DragonRemainsTileEntity : ModTileEntity
 
         if (ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedPlantera)
         {
-            WorldGen.KillTile(Position.X, Position.Y, false, false, true);
+            //WorldGen.KillTile(Position.X, Position.Y, false, false, true);
         }
         timer++;
     }

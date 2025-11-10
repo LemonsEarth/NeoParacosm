@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Assets;
 
 namespace NeoParacosm.Common.Utils;
 

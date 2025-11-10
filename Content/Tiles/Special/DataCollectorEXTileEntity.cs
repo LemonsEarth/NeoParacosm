@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.Accessories.Combat;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Tiles.Special;

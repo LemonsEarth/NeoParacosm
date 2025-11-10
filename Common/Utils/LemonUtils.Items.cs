@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -12,6 +12,7 @@ public static partial class LemonUtils
 {
     public static void DrawAscendedWeaponGlowInWorld(Item item, int originalItemID, float rotation, float scale, int timer, SpriteBatch spriteBatch, Color color)
     {
+        Main.instance.LoadItem(originalItemID);
         Texture2D origTexture = TextureAssets.Item[originalItemID].Value;
         Texture2D glowTexture = TextureAssets.Item[item.type].Value;
         Vector2 drawPos = item.Center - Main.screenPosition;
@@ -31,6 +32,7 @@ public static partial class LemonUtils
 
     public static void DrawAscendedWeaponGlowInInventory(Item item, int originalItemID, Vector2 position, float scale, int timer, Rectangle frame, SpriteBatch spriteBatch, Color color)
     {
+        Main.instance.LoadItem(originalItemID);
         Texture2D origTexture = TextureAssets.Item[originalItemID].Value;
         Texture2D glowTexture = TextureAssets.Item[item.type].Value;
         spriteBatch.Draw(origTexture, position, null, Color.White, 0f, origTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);

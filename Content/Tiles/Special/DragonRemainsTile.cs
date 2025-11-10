@@ -12,6 +12,11 @@ public class DragonRemainsTile : ModTile
         Main.tileSolid[Type] = false;
         Main.tileNoAttach[Type] = true;
 
+        TileID.Sets.GeneralPlacementTiles[Type] = false;
+        TileID.Sets.PreventsSandfall[Type] = true;
+        TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+        TileID.Sets.PreventsTileReplaceIfOnTopOfIt[Type] = true;
+
         MinPick = 9999;
 
         TileID.Sets.DisableSmartCursor[Type] = true;
@@ -26,11 +31,12 @@ public class DragonRemainsTile : ModTile
         TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 16, 16, 16, 16, 16, 16 };
         TileObjectData.newTile.CoordinatePadding = 2;
         TileObjectData.newTile.Origin = new Point16(7, 5);
+        TileObjectData.newTile.LavaDeath = false;
         TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.None | AnchorType.Platform, 15, 0);
         TileObjectData.newTile.HookPostPlaceMyPlayer = GetInstance<DragonRemainsTileEntity>().Generic_HookPostPlaceMyPlayer;
         TileObjectData.addTile(Type);
 
-        AddMapEntry(new Color(5, 1, 66));
+        AddMapEntry(new Color(175, 125, 0));
     }
 
     public override bool CanDrop(int i, int j)

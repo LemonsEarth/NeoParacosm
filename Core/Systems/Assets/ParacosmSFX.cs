@@ -1,6 +1,6 @@
 using Terraria.Audio;
 
-namespace NeoParacosm.Core.Systems;
+namespace NeoParacosm.Core.Systems.Assets;
 
 public class ParacosmSFX : ModSystem
 {

@@ -5,7 +5,7 @@ using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
-using static NeoParacosm.Core.Systems.ResearcherQuest;
+using static NeoParacosm.Core.Systems.Data.ResearcherQuest;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 

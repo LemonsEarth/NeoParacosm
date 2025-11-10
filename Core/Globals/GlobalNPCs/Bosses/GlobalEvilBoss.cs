@@ -1,5 +1,5 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs.Bosses;

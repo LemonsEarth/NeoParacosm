@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;

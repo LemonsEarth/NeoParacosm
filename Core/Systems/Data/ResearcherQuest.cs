@@ -1,9 +1,11 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using System.IO;
+using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
-namespace NeoParacosm.Core.Systems;
+namespace NeoParacosm.Core.Systems.Data;
 
 /// <summary>
 /// Contains data related to the Researcher Quest
@@ -34,6 +36,8 @@ public class ResearcherQuest : ModSystem
             Vector2 remainsPos = DragonRemainsTileEntityPos.ToWorldCoordinates();
             NPC.NewNPCDirect(new EntitySource_Misc("ResearcherEvilBossSpawn"), remainsPos + new Vector2(500, 0), NPCType<Researcher>());
             Progress = ProgressState.DownedEvilBoss;
+
+            ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Mods.NeoParacosm.NPCs.Researcher.ResearcherAlert"), Color.Orange);
         }
 
         if (Main.hardMode && Progress == ProgressState.AscendedItem)

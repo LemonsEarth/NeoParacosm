@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.Tiles.DeadForest;
 using NeoParacosm.Content.Tiles.Depths;
 
-namespace NeoParacosm.Core.Systems;
+namespace NeoParacosm.Core.Systems.World;
 
 public class BiomeSystem : ModSystem
 {

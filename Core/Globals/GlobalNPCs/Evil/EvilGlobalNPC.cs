@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
 using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using NeoParacosm.Content.NPCs.Hostile.Special;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using static Terraria.ID.NPCID;
 

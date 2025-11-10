@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 

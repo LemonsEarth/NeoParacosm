@@ -2,7 +2,7 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Misc;
 using Terraria.Audio;
 using Terraria.Localization;
 

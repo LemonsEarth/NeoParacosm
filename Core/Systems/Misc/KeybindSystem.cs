@@ -1,4 +1,4 @@
-﻿namespace NeoParacosm.Core.Systems;
+﻿namespace NeoParacosm.Core.Systems.Misc;
 
 public class KeybindSystem : ModSystem
 {

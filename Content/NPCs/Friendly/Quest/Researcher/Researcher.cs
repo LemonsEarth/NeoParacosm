@@ -7,7 +7,7 @@ using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
-using static NeoParacosm.Core.Systems.ResearcherQuest;
+using static NeoParacosm.Core.Systems.Data.ResearcherQuest;
 
 namespace NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 

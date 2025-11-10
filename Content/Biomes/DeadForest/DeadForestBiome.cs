@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Core.Systems;
+﻿using NeoParacosm.Core.Systems.World;
 
 namespace NeoParacosm.Content.Biomes.DeadForest;
 

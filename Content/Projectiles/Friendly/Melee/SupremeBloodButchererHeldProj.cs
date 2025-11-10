@@ -2,7 +2,7 @@
 using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;

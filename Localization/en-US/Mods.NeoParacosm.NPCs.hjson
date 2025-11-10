@@ -168,6 +168,8 @@ Researcher: {
 		}
 	}
 
+	ResearcherAlert: Unknown signal detected! A mark has been made on the map.
+	NoteCloseMessage: Message opened. Double click to close.
 	ResearcherNoteMessage:
 		'''
 		Hello friend!

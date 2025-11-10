@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Terraria.ModLoader.IO;
 
-namespace NeoParacosm.Core.Systems;
+namespace NeoParacosm.Core.Systems.Data;
 
 public class DownedBossSystem : ModSystem
 {

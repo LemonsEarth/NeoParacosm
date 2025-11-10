@@ -5,17 +5,21 @@ using NeoParacosm.Content.Tiles.DeadForest;
 using NeoParacosm.Content.Tiles.Depths;
 using StructureHelper.API;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
-namespace NeoParacosm.Core.Systems;
+namespace NeoParacosm.Core.Systems.World;
 
 public class WorldGenSystem : ModSystem
 {
-    int worldSize => LemonUtils.GetWorldSize();
+    int WorldSize => LemonUtils.GetWorldSize();
     readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
+    readonly string DragonRemainsPath = "Common/Assets/Structures/DragonRemainsSanctuary";
+
+    static int UnderworldDepth => Main.maxTilesY - 200;
 
     void GenerateCrimsonVillage(GenerationProgress progress, GameConfiguration config)
     {
@@ -24,38 +28,54 @@ public class WorldGenSystem : ModSystem
             return;
         }
 
-        for (int rep = 0; rep < worldSize; rep++)
+        bool IsCrimsonTile(int tileType)
         {
+            return tileType == TileID.Crimstone || tileType == TileID.CrimsonGrass || tileType == TileID.Crimsand;
+        }
+
+        for (int rep = 0; rep < WorldSize; rep++)
+        {
+            int startX = 0;
+            int endX = Main.maxTilesX;
+            int startY = 0;
+            int endY = (int)GenVars.worldSurfaceHigh;
             for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, Mod); i++)
             {
                 int attemptCounter = 0;
                 Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, Mod, i);
 
-                while (attemptCounter < 100000000)
+
+                while (attemptCounter < 100000)
                 {
-                    int x = WorldGen.genRand.Next(0, Main.maxTilesX);
-                    int y = WorldGen.genRand.Next(0, (int)GenVars.worldSurfaceHigh);
+                    int x = WorldGen.genRand.Next(startX, endX);
+                    int y = WorldGen.genRand.Next(startY, endY);
                     Tile tile = Main.tile[x, y];
-                    if (!tile.HasTile ||
-                        (tile.TileType != TileID.Crimstone && tile.TileType != TileID.CrimsonGrass && tile.TileType != TileID.Crimsand)
-                        || Main.tile[x, y - 1].HasTile)
+                    Tile tileAbove = Main.tile[x, Math.Clamp(y - 1, 0, Main.maxTilesY)];
+
+                    if (tile.HasTile && IsCrimsonTile(tile.TileType) && !tileAbove.HasTile)
                     {
-                        attemptCounter++;
-                        continue;
+                        startX = Math.Clamp(x - 150, 0, Main.maxTilesX);
+                        endX = Math.Clamp(x + 150, 0, Main.maxTilesX);
+
+                        startY = Math.Clamp(y - 150, 0, Main.maxTilesY);
+                        endY = Math.Clamp(y + 150, 0, Main.maxTilesY);
+                        Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
+
+                        if (!GenVars.structures.CanPlace(structureRect, 5))
+                        {
+                            attemptCounter++;
+                            continue;
+                        }
+                        Point16 point = new Point16(x, y);
+                        MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, Mod);
+                        Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
+                        GenVars.structures.AddProtectedStructure(structureRect, 5);
+                        break;
                     }
 
-                    Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
-                    if (!GenVars.structures.CanPlace(structureRect, 5))
-                    {
-                        attemptCounter++;
-                        continue;
-                    }
 
-                    Point16 point = new Point16(x, y);
-                    MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, Mod);
-                    Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
-                    GenVars.structures.AddProtectedStructure(structureRect, 5);
-                    break;
+                    attemptCounter++;
+                    continue;
                 }
             }
         }
@@ -89,7 +109,7 @@ public class WorldGenSystem : ModSystem
 
     void GenerateDeadForest(GenerationProgress progress, GameConfiguration config)
     {
-        int Radius = 200 * worldSize;
+        int Radius = 200 * WorldSize;
         Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30);
         //LemonUtils.DustCircle(startPos.ToWorldCoordinates(), 8, 8, DustID.Granite, 10);
         for (int i = -Radius; i < Radius; i++)
@@ -97,6 +117,7 @@ public class WorldGenSystem : ModSystem
             for (int j = -Radius; j < Radius; j++)
             {
                 Point pos = startPos + new Point(i, j);
+                pos = new Point(Math.Clamp(pos.X, 0, Main.maxTilesX), Math.Clamp(pos.Y, 0, Main.maxTilesY));
                 if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > Radius * 16)
                 {
                     continue;
@@ -117,14 +138,51 @@ public class WorldGenSystem : ModSystem
         }
     }
 
+    void GenerateDragonRemains(GenerationProgress progress, GameConfiguration config)
+    {
+        int attemptCount = 0;
+        int maxAttempts = 1000000;
+        Point16 structureDims = Generator.GetStructureDimensions(DragonRemainsPath, Mod);
+        while (attemptCount < maxAttempts)
+        {
+            bool conflict = false;
+            int x = WorldGen.genRand.Next((int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesX * 0.66f));
+            int y = WorldGen.genRand.Next((int)GenVars.rockLayerHigh, UnderworldDepth - 100 - structureDims.Y);
+            Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
+            for (int i = 0; i < structureDims.X; i++)
+            {
+                if (conflict) break;
+                for (int j = 0; j < structureDims.Y; j++)
+                {
+                    Tile tile = Main.tile[x + i, y + j];
+                    bool cantPlace = !GenVars.structures.CanPlace(structureRect, 0);
+                    bool isSpecialBrick = IsDungeonBrick(tile.TileType) || tile.TileType == TileID.LihzahrdBrick;
+                    if (cantPlace || (tile.HasTile && isSpecialBrick))
+                    {
+                        attemptCount++;
+                        conflict = true;
+                        break;
+                    }
+                }
+            }
+            if (!conflict)
+            {
+                GenVars.structures.AddProtectedStructure(structureRect, 0);
+                Generator.GenerateStructure(DragonRemainsPath, new Point16(x, y), Mod);
+                Mod.Logger.Info($"Generated Dragon Remains At ({x}, {y})");
+                break;
+            }
+        }
+    }
+
     void GenerateDepths(GenerationProgress progress, GameConfiguration config)
     {
         int startTileX = Main.maxTilesX - 350;
-        int startTileY = ((int)Main.worldSurface - 100);
+        int startTileY = (int)Main.worldSurface - 100;
 
         int endTileX = Main.maxTilesX;
-        int endTileY = startTileY + (4 * worldSize * 75);
-        for (int yLevel = 0; yLevel < 4 * worldSize; yLevel++)
+        int endTileY = startTileY + 4 * WorldSize * 75;
+        for (int yLevel = 0; yLevel < 4 * WorldSize; yLevel++)
         {
             for (int xPos = 0; xPos < 5; xPos++)
             {
@@ -165,6 +223,7 @@ public class WorldGenSystem : ModSystem
     {
         InsertAfterTask(tasks, "Tile Cleanup", "Crimson Village", GenerateCrimsonVillage);
         InsertAfterTask(tasks, "Planting Trees", "Dead Forest", GenerateDeadForest);
+        InsertAfterTask(tasks, "Micro Biomes", "Dragon Remains", GenerateDragonRemains);
 
         //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
         //tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
@@ -208,13 +267,13 @@ public class WorldGenSystem : ModSystem
     void InsertAfterTask(List<GenPass> tasks, string genpassName, string newGenPassName, WorldGenLegacyMethod method)
     {
         int step = tasks.FindIndex(genpass => genpass.Name.Equals(genpassName));
-        tasks.Insert(step + 1, new PassLegacy(newGenPassName, method));
+        tasks.Insert(step + 1, new PassLegacy($"[c/AA00FF:NeoParacosm: {newGenPassName}]", method));
     }
 
     void GenerateVerticalOceanTunnels()
     {
         int distanceBetweenTunnels = 50;
-        int tunnelRepDistance = 20 * worldSize;
+        int tunnelRepDistance = 20 * WorldSize;
         //int repFailChanceDenominator = 8;
         for (int amountOfTunnels = 0; amountOfTunnels < 10; amountOfTunnels++)
         {
@@ -227,9 +286,9 @@ public class WorldGenSystem : ModSystem
                 }
                 repFailChanceDenominator /= 2;*/
                 int xStartPos = Main.maxTilesX - 300;
-                int tunnelXPos = xStartPos + (amountOfTunnels * distanceBetweenTunnels) + Main.rand.Next(-4, 5);
+                int tunnelXPos = xStartPos + amountOfTunnels * distanceBetweenTunnels + Main.rand.Next(-4, 5);
 
-                int yStartPos = ((int)Main.worldSurface - 100); // Ocean level isn't stored anywhere, literally just a guess
+                int yStartPos = (int)Main.worldSurface - 100; // Ocean level isn't stored anywhere, literally just a guess
                 int tunnelYPos = yStartPos + tunnelRepCount * tunnelRepDistance;
 
                 int steps = Main.rand.Next(8, 12);
@@ -244,7 +303,7 @@ public class WorldGenSystem : ModSystem
         int distanceBetweenTunnels = 75;
         int tunnelRepDistance = 20;
         //int repFailChanceDenominator = 4;
-        for (int amountOfTunnels = 0; amountOfTunnels < 4 * worldSize; amountOfTunnels++)
+        for (int amountOfTunnels = 0; amountOfTunnels < 4 * WorldSize; amountOfTunnels++)
         {
             for (int tunnelRepCount = 0; tunnelRepCount < 16; tunnelRepCount++)
             {
@@ -257,13 +316,18 @@ public class WorldGenSystem : ModSystem
                 int xStartPos = Main.maxTilesX - 350;
                 int tunnelXPos = xStartPos + tunnelRepCount * tunnelRepDistance;
 
-                int yStartPos = ((int)Main.worldSurface - 50); // Ocean level isn't stored anywhere, literally just a guess
-                int tunnelYPos = yStartPos + (amountOfTunnels * distanceBetweenTunnels) + Main.rand.Next(-4, 5);
+                int yStartPos = (int)Main.worldSurface - 50; // Ocean level isn't stored anywhere, literally just a guess
+                int tunnelYPos = yStartPos + amountOfTunnels * distanceBetweenTunnels + Main.rand.Next(-4, 5);
 
                 int steps = Main.rand.Next(8, 12);
                 int size = Main.rand.Next(8, 10);
                 WorldGen.digTunnel(tunnelXPos, tunnelYPos, 3, 0, 10, 8, true);
             }
         }
+    }
+
+    public static bool IsDungeonBrick(int tileID)
+    {
+        return tileID == TileID.BlueDungeonBrick || tileID == TileID.GreenDungeonBrick || tileID == TileID.PinkDungeonBrick;
     }
 }

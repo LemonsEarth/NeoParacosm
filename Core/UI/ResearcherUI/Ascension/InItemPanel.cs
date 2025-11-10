@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;
 using Terraria.UI;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils;
-using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
