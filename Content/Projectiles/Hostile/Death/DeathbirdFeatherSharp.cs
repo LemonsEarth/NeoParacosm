@@ -4,7 +4,7 @@ using NeoParacosm.Common.Utils;
 using Terraria.Audio;
 using Terraria.GameContent;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
 public class DeathbirdFeatherSharp : ModProjectile
 {
@@ -56,7 +56,7 @@ public class DeathbirdFeatherSharp : ModProjectile
             {
                 Projectile.velocity = Vector2.Zero;
                 float t = (AITimer - retargetInterval) / rotDuration;
-                Projectile.rotation = Utils.AngleLerp(savedVelocity.ToRotation(), Projectile.DirectionTo(player.Center).ToRotation(), t) + MathHelper.PiOver2;
+                Projectile.rotation = savedVelocity.ToRotation().AngleLerp(Projectile.DirectionTo(player.Center).ToRotation(), t) + MathHelper.PiOver2;
             }
         }
         else if (AITimer >= retargetInterval + rotDuration)

@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.Debuffs;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
 public class DeathflameBall : ModProjectile
 {

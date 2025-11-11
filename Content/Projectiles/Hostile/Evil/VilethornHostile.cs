@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
 public class VilethornHostile : ModProjectile
 {

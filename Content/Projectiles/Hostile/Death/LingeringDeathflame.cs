@@ -4,7 +4,7 @@ using NeoParacosm.Content.Buffs.Debuffs;
 using Terraria.Audio;
 using Terraria.GameContent;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
 public class LingeringDeathflame : ModProjectile
 {
@@ -120,7 +120,7 @@ public class LingeringDeathflame : ModProjectile
             fallThrough = false;
             return true;
         }
-        fallThrough = Main.player[(int)playerID].Alive() && (Main.player[(int)playerID].Bottom.Y > Projectile.Center.Y + 32);
+        fallThrough = Main.player[(int)playerID].Alive() && Main.player[(int)playerID].Bottom.Y > Projectile.Center.Y + 32;
         return true;
     }
 }

@@ -4,7 +4,7 @@ using NeoParacosm.Common.Utils.Prim;
 using ReLogic.Content;
 using Terraria.Audio;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
 public class CrimsonCarrierProj : ModProjectile
 {

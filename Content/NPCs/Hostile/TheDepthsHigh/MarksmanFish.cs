@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Biomes.TheDepths;
-using NeoParacosm.Content.Projectiles.Hostile;
+using NeoParacosm.Content.Projectiles.Hostile.Depths;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
 namespace NeoParacosm.Content.NPCs.Hostile.TheDepthsHigh;

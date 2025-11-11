@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Common.Utils;
+﻿using Terraria;
+
+namespace NeoParacosm.Common.Utils;
 
 /// <summary>
 /// Contains a lot of utillities and global usings
@@ -44,6 +46,28 @@ public static partial class LemonUtils
             }
         }
         return closestEnemy;
+    }
+
+    public static Player GetClosestPlayer(Vector2 pos, float minDistance = 0)
+    {
+        Player closestPlayer = null;
+        if (minDistance == 0) minDistance = 99999;
+        foreach (var player in Main.ActivePlayers)
+        {
+            if (player.Alive() && (player.Distance(pos) < minDistance))
+            {
+                if (closestPlayer == null)
+                {
+                    closestPlayer = player;
+                }
+                float distanceToNPC = pos.Distance(player.Center);
+                if (distanceToNPC < pos.Distance(closestPlayer.Center))
+                {
+                    closestPlayer = player;
+                }
+            }
+        }
+        return closestPlayer;
     }
 
     public static void StandardAnimation(this Projectile proj, int frameDuration, int maxFrames)

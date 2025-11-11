@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Common.Utils;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
 public class CursedDecayFire : ModProjectile
 {

@@ -175,6 +175,26 @@ public class Researcher : ModNPC
             }
         }
 
+        if (dialogueSystem.userInterface.CurrentState == null)
+        {
+            NPC.frame.Y = 0;
+        }
+        else
+        {
+            if (AITimer <= 20)
+            {
+                NPC.frame.Y = 2;
+            }
+            else if (AITimer <= 40)
+            {
+                NPC.frame.Y = 3;
+            }
+            else
+            {
+                AITimer = 0;
+            }
+        }
+
         if (Progress == ProgressState.DownedMechBoss)
         {
             if (LemonUtils.NotClient())

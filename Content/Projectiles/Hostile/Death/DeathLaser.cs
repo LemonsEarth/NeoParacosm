@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
 public class DeathLaser : ModProjectile
 {
@@ -73,7 +73,7 @@ public class DeathLaser : ModProjectile
             if (Size == 0) Size = 1;
         }
         Projectile.velocity = Vector2.Zero;
-        scale = (AITimer / 5f) * Size;
+        scale = AITimer / 5f * Size;
         Projectile.rotation = Rotation;
         Rotation += RotPerSecond;
         Vector2 dustPos = Projectile.Center + -Vector2.UnitY.RotatedBy(Rotation) * 16 + Main.rand.NextVector2Circular(16, 16);
@@ -81,7 +81,7 @@ public class DeathLaser : ModProjectile
         Dust.NewDustPerfect(dustPos, DustID.GemDiamond, Vector2.UnitY.RotatedBy(Rotation) * Main.rand.NextFloat(9, 15), Scale: Main.rand.NextFloat(2f, 3f), newColor: Color.White).noGravity = true;
         if (Projectile.timeLeft < 15)
         {
-            scale = (Projectile.timeLeft * Size) / 5f;
+            scale = Projectile.timeLeft * Size / 5f;
         }
         scale = MathHelper.Clamp(scale, 0f, Size);
         AITimer++;

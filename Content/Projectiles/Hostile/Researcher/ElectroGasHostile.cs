@@ -2,12 +2,13 @@
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Researcher;
 
-public class RotGasHostile : ModProjectile
+public class ElectroGasHostile : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     int despawnTimer = 0;
@@ -33,7 +34,12 @@ public class RotGasHostile : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(BuffType<CrimsonRotDebuff>(), 600);
+        
+    }
+
+    public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+    {
+        modifiers.ArmorPenetration += 100;
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)
@@ -63,6 +69,13 @@ public class RotGasHostile : ModProjectile
             Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
 
         }
+
+        Dust.NewDustPerfect(Projectile.RandomPos(16, 16), DustID.Electric).noGravity = true;
+
+        if (AITimer % 60 == 0)
+        {
+            SoundEngine.PlaySound(SoundID.Item34 with { Pitch = 1f, Volume = 0.3f, MaxInstances = 2 }, Projectile.Center);
+        }
         //Projectile.rotation += MathHelper.ToRadians(RandomRot);
         AITimer++;
     }
@@ -77,7 +90,7 @@ public class RotGasHostile : ModProjectile
         var shader = GameShaders.Misc["NeoParacosm:GasShader"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["distance"].SetValue(1);
-        shader.Shader.Parameters["color"].SetValue(new Vector4(1, 0, 0, Projectile.Opacity));
+        shader.Shader.Parameters["color"].SetValue(new Vector4(0.5f, 0.8f, 1f, Projectile.Opacity));
         shader.Shader.Parameters["velocity"].SetValue(new Vector2(-Projectile.velocity.X * 0.001f, 0.5f));
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

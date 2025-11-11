@@ -1,4 +1,4 @@
-﻿namespace NeoParacosm.Content.Projectiles.Hostile;
+﻿namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
 public class CrimsonThorn : ModProjectile
 {

@@ -2,7 +2,7 @@
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using System.Collections.Generic;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
 public class DeathbirdGrab : ModProjectile
 {

@@ -1,6 +1,6 @@
 ﻿using Terraria.Audio;
 
-namespace NeoParacosm.Content.Projectiles.Hostile;
+namespace NeoParacosm.Content.Projectiles.Hostile.Depths;
 
 public class MarksmanBolt : ModProjectile
 {
