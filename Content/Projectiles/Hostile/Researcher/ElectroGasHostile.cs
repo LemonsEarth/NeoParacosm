@@ -25,7 +25,7 @@ public class ElectroGasHostile : ModProjectile
         Projectile.height = 12;
         Projectile.friendly = false;
         Projectile.hostile = true;
-        Projectile.timeLeft = 300;
+        Projectile.timeLeft = 540;
         Projectile.penetrate = 6;
         Projectile.Opacity = 0f;
         Projectile.hide = true;

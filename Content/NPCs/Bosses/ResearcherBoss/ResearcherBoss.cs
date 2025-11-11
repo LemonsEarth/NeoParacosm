@@ -12,6 +12,7 @@ using NeoParacosm.Content.Items.Weapons.Summon;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Content.Projectiles.Hostile;
+using NeoParacosm.Content.Projectiles.Hostile.Researcher;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
@@ -41,7 +42,7 @@ public class ResearcherBoss : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 3 : 3;
+            int maxVal = phase == 1 ? 1 : 0;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -60,17 +61,20 @@ public class ResearcherBoss : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 600, 900, 720, 600 };
+    int[] attackDurations = { 600, 600, 600 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
     float gunRotation = 0;
-    
- 
+
+
 
     public enum Attacks
     {
-        
+        SavBlastDirect,
+        RocketSpam,
+        SavBlastBurst,
+        RocketSpam2
     }
 
     public override void Load()
@@ -133,7 +137,7 @@ public class ResearcherBoss : ModNPC
 
     public override void FindFrame(int frameHeight)
     {
-        
+
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -152,30 +156,201 @@ public class ResearcherBoss : ModNPC
         player = Main.player[NPC.target];
 
         DespawnCheck();
+        NPCGunDirectionAndRotation();
+        Dust.NewDustPerfect(NPC.Center + Vector2.UnitX * (Main.rand.NextFloat(8, 16) * -NPC.direction), DustID.IceTorch, Vector2.UnitY * Main.rand.NextFloat(1, 3));
         if (AITimer < IntroDuration)
         {
             Intro();
             AITimer++;
             return;
         }
-        if (!phaseTransition) NPC.dontTakeDamage = false;
+        if (phaseTransition || AITimer < IntroDuration || Collision.SolidTiles(NPC.position, NPC.width, NPC.height))
+        {
+            NPC.dontTakeDamage = true;
+        }
+        else
+        {
+            NPC.dontTakeDamage = false;
+        }
+
 
         targetPosition = player.Center;
 
-        NPCGunDirectionAndRotation();
 
         if (phase == 1)
         {
-            
+            switch (Attack)
+            {
+                case (int)Attacks.SavBlastDirect:
+                    SavBlastDirect();
+                    break;
+                case (int)Attacks.RocketSpam:
+                    RocketSpam();
+                    break;
+            }
         }
 
         attackDuration--;
         if (attackDuration <= 0)
         {
-            //SwitchAttacks();
+            SwitchAttacks();
         }
 
         AITimer++;
+    }
+
+    Vector2 GetRandomPos(int width, int height)
+    {
+        int attemptCount = 1000;
+        if (LemonUtils.NotClient())
+        {
+            while (attemptCount > 0)
+            {
+                int i = (int)(player.Center.X / 16) + Main.rand.Next(-width, width);
+                int j = (int)(player.Center.Y / 16) + Main.rand.Next(-height, height);
+                Vector2 worldVector = new Vector2(i, j).ToWorldCoordinates();
+                if (!WorldGen.InWorld(i, j))
+                {
+                    attemptCount--;
+                    continue;
+                }
+
+                if (Collision.SolidTiles(worldVector, 48, 48))
+                {
+                    attemptCount--;
+                    continue;
+                }
+
+                if (!Collision.CanHitLine(worldVector, NPC.width, NPC.height, player.position, player.width, player.height))
+                {
+                    attemptCount--;
+                    continue;
+                }
+
+                randomPos = worldVector;
+                break;
+            }
+        }
+        NPC.netUpdate = true;
+        return randomPos;
+    }
+
+    Vector2 randomPos = Vector2.Zero;
+    const float SAV_BLAST_DIRECT_DURATION = 120;
+    void SavBlastDirect()
+    {
+        targetPosition = player.Center;
+        switch (AttackTimer)
+        {
+            case SAV_BLAST_DIRECT_DURATION:
+                GetRandomPos(40, 40);  
+                break;
+            case > 0:
+                if (randomPos != Vector2.Zero)
+                {
+                    NPC.MoveToPos(randomPos, 0.3f, 0.3f, 0.1f, 0.1f);
+                }
+                else
+                {
+                    randomPos = targetPosition;
+                }
+
+                if (AITimer % 60 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>());
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = SAV_BLAST_DIRECT_DURATION;
+                return;
+        }
+
+
+        AttackTimer--;
+    }
+
+    const float ROCKET_SPAM_DURATION = 300;
+    void RocketSpam()
+    {
+        targetPosition = player.Center;
+        switch (AttackTimer)
+        {
+            case ROCKET_SPAM_DURATION:
+                GetRandomPos(40, 40);
+                break;
+            case > ROCKET_SPAM_DURATION - 90:
+                if (randomPos != Vector2.Zero)
+                {
+                    NPC.MoveToPos(randomPos, 0.4f, 0.4f, 0.15f, 0.15f);
+                }
+                else
+                {
+                    randomPos = targetPosition;
+                }
+
+                if (AITimer % 90 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>());
+                    }
+                }
+
+                if (AITimer % 20 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, 
+                            NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 2, 
+                            ProjectileType<SavMissile>(), ai1: 120);
+                    }
+                }
+                break;
+            case > ROCKET_SPAM_DURATION - 180:
+                if (AITimer % 30 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 14, ProjectileType<SavBlast>());
+                    }
+                }
+                break;
+            case > 0:
+                if (randomPos != Vector2.Zero)
+                {
+                    NPC.MoveToPos(randomPos, 0.4f, 0.4f, 0.15f, 0.15f);
+                }
+                else
+                {
+                    randomPos = targetPosition;
+                }
+
+                if (AITimer % 90 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>());
+                    }
+                }
+
+                if (AITimer % 25 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center,
+                            NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 5,
+                            ProjectileType<SavMissile>(), ai1: 60);
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = ROCKET_SPAM_DURATION;
+                return;
+        }
+        AttackTimer--;
     }
 
     void NPCGunDirectionAndRotation()
@@ -194,7 +369,7 @@ public class ResearcherBoss : ModNPC
         }
         NPC.spriteDirection = NPC.direction;
     }
-    
+
     void SwitchAttacks()
     {
         Attack++;
@@ -220,11 +395,11 @@ public class ResearcherBoss : ModNPC
         NPC.dontTakeDamage = true;
         NPC.velocity = Vector2.Zero;
 
-        
+
         attackDuration = attackDurations[(int)Attack];
     }
 
-    
+
 
     public override void OnKill()
     {
@@ -238,7 +413,7 @@ public class ResearcherBoss : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        
+
     }
 
     public override bool? CanFallThroughPlatforms()
@@ -249,7 +424,7 @@ public class ResearcherBoss : ModNPC
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        
+
         return true;
     }
 

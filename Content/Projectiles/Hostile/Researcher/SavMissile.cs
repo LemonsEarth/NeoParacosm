@@ -5,6 +5,7 @@ namespace NeoParacosm.Content.Projectiles.Hostile.Researcher;
 public class SavMissile : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
+    ref float TrackingTime => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
     {
@@ -38,13 +39,15 @@ public class SavMissile : ModProjectile
         if (AITimer == 0)
         {
             savedVelocity = Projectile.velocity;
+            SoundEngine.PlaySound(SoundID.Item61 with { Volume = 0.75f}, Projectile.Center);
+
         }
 
-        if (AITimer < 120)
+        if (AITimer < TrackingTime)
         {
             if (AITimer % 45 == 0)
             {
-                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.75f, MaxInstances = 1 }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.25f, MaxInstances = 1 }, Projectile.Center);
             }
             Player player = LemonUtils.GetClosestPlayer(Projectile.Center);
             if (player != null && player.Alive())
@@ -56,20 +59,26 @@ public class SavMissile : ModProjectile
         {
             if (AITimer % soundTimer == 0)
             {
-                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.75f, MaxInstances = 1 }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.25f, MaxInstances = 1 }, Projectile.Center);
             }
             if (soundTimer > 5) soundTimer -= 5;
             Projectile.velocity *= 1.02f;
         }
 
-        Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 1f);
+        Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
 
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemSapphire);
+        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Electric);
         dust.noGravity = true;
         Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
         LemonUtils.StandardAnimation(Projectile, 6, 3);
         Projectile.velocity *= 1.03f;
         AITimer++;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        float percent = (180f - Projectile.timeLeft) / 180f;
+        LemonUtils.DrawGlow(Projectile.Center, Color.LightBlue, percent, 1 + percent);
     }
 
     public override void OnKill(int timeLeft)

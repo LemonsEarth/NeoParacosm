@@ -63,11 +63,11 @@ public class SavBlast : ModProjectile
             SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f}, Projectile.Center);
         }
 
-        Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 1f);
+        Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
 
         var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemSapphire);
         dust.noGravity = true;
-        Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+        Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
         AITimer++;
     }
 
@@ -91,6 +91,7 @@ public class SavBlast : ModProjectile
         {
             Projectile.velocity = Vector2.UnitY;
         }
+        LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.Electric, 2f);
         for (int i = 0; i < 4; i++)
         {
             LemonUtils.QuickProj(Projectile, Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(i * MathHelper.PiOver2) * (savedSpeed / 4f), ProjectileType<SavDroneProjectile>());

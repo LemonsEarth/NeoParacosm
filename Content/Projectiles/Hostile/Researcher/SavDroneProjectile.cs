@@ -20,7 +20,7 @@ public class SavDroneProjectile : ModProjectile
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
-        Projectile.tileCollide = true;
+        Projectile.tileCollide = false;
         Projectile.penetrate = 3;
         Projectile.timeLeft = 300;
         Projectile.scale = 1f;
@@ -33,9 +33,9 @@ public class SavDroneProjectile : ModProjectile
             SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (0.9f, 1f), Volume = 0.5f }, Projectile.Center);
         }
 
-        Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 1f);
+        Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
 
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemSapphire);
+        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Electric);
         dust.noGravity = true;
         Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
         LemonUtils.StandardAnimation(Projectile, 6, 4);
