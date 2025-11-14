@@ -19,6 +19,8 @@ using ReLogic.Content;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
@@ -42,7 +44,7 @@ public class ResearcherBoss : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 1 : 0;
+            int maxVal = phase == 1 ? 2 : 0;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -61,18 +63,17 @@ public class ResearcherBoss : ModNPC
     bool phaseTransition = false;
 
     float attackDuration = 0;
-    int[] attackDurations = { 600, 600, 600 };
+    int[] attackDurations = { 600, 600, 720 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
     float gunRotation = 0;
 
-
-
     public enum Attacks
     {
         SavBlastDirect,
         RocketSpam,
+        BulletSpam,
         SavBlastBurst,
         RocketSpam2
     }
@@ -86,8 +87,6 @@ public class ResearcherBoss : ModNPC
     {
         Main.npcFrameCount[NPC.type] = 1;
         NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
         NPCID.Sets.MPAllowedEnemies[Type] = true;
         NPCID.Sets.TrailCacheLength[NPC.type] = 5;
         NPCID.Sets.TrailingMode[NPC.type] = 3;
@@ -110,6 +109,11 @@ public class ResearcherBoss : ModNPC
             });
     }
 
+    public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+    {
+        
+    }
+
     public override void SetDefaults()
     {
         NPC.width = 80;
@@ -117,8 +121,8 @@ public class ResearcherBoss : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
-        NPC.lifeMax = 24000;
-        NPC.defense = 32;
+        NPC.lifeMax = 60000;
+        NPC.defense = 40;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
@@ -131,8 +135,19 @@ public class ResearcherBoss : ModNPC
 
         if (!Main.dedServ)
         {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/Gravefield");
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/ChaosCognition");
         }
+    }
+
+    public override void OnSpawn(IEntitySource source)
+    {
+        NPC.NP().SetDamageReductions(
+            (DamageClass.Melee, -10f),
+            (DamageClass.Magic, 10f),
+            (DamageClass.Ranged, 20f),
+            (DamageClass.Summon, 5f),
+            (DamageClass.SummonMeleeSpeed, 25f)
+            );
     }
 
     public override void FindFrame(int frameHeight)
@@ -146,7 +161,7 @@ public class ResearcherBoss : ModNPC
         NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
     }
 
-    int IntroDuration = 60;
+    int IntroDuration = 180;
     public override void AI()
     {
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -154,10 +169,11 @@ public class ResearcherBoss : ModNPC
             NPC.TargetClosest(false);
         }
         player = Main.player[NPC.target];
-
         DespawnCheck();
         NPCGunDirectionAndRotation();
-        Dust.NewDustPerfect(NPC.Center + Vector2.UnitX * (Main.rand.NextFloat(8, 16) * -NPC.direction), DustID.IceTorch, Vector2.UnitY * Main.rand.NextFloat(1, 3));
+
+        // jetpack dust
+        Dust.NewDustPerfect(NPC.Center + Vector2.UnitX * (Main.rand.NextFloat(8, 16) * -NPC.direction), DustID.IceTorch, Vector2.UnitY * Main.rand.NextFloat(0.5f, 1.5f));
         if (AITimer < IntroDuration)
         {
             Intro();
@@ -173,10 +189,6 @@ public class ResearcherBoss : ModNPC
             NPC.dontTakeDamage = false;
         }
 
-
-        targetPosition = player.Center;
-
-
         if (phase == 1)
         {
             switch (Attack)
@@ -186,6 +198,9 @@ public class ResearcherBoss : ModNPC
                     break;
                 case (int)Attacks.RocketSpam:
                     RocketSpam();
+                    break;
+                case (int)Attacks.BulletSpam:
+                    BulletSpam();
                     break;
             }
         }
@@ -199,6 +214,12 @@ public class ResearcherBoss : ModNPC
         AITimer++;
     }
 
+    /// <summary>
+    /// Gets random pos around the player, max width and height blocks around
+    /// </summary>
+    /// <param name="width"></param>
+    /// <param name="height"></param>
+    /// <returns></returns>
     Vector2 GetRandomPos(int width, int height)
     {
         int attemptCount = 1000;
@@ -259,7 +280,7 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>());
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
                     }
                 }
                 break;
@@ -284,18 +305,18 @@ public class ResearcherBoss : ModNPC
             case > ROCKET_SPAM_DURATION - 90:
                 if (randomPos != Vector2.Zero)
                 {
-                    NPC.MoveToPos(randomPos, 0.4f, 0.4f, 0.15f, 0.15f);
+                    NPC.MoveToPos(randomPos, 0.15f, 0.15f, 0.05f, 0.05f);
                 }
                 else
                 {
                     randomPos = targetPosition;
                 }
 
-                if (AITimer % 90 == 0)
+                if (LemonUtils.IsHard() &&  AITimer % 90 == 0)
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>());
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
                     }
                 }
 
@@ -305,16 +326,16 @@ public class ResearcherBoss : ModNPC
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center, 
                             NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 2, 
-                            ProjectileType<SavMissile>(), ai1: 120);
+                            ProjectileType<SavMissile>(), NPC.damage / 2, ai1: 120);
                     }
                 }
                 break;
             case > ROCKET_SPAM_DURATION - 180:
-                if (AITimer % 30 == 0)
+                if (LemonUtils.IsHard() && AITimer % 30 == 0)
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 14, ProjectileType<SavBlast>());
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 14, ProjectileType<SavBlast>(), NPC.damage / 2);
                     }
                 }
                 break;
@@ -328,11 +349,11 @@ public class ResearcherBoss : ModNPC
                     randomPos = targetPosition;
                 }
 
-                if (AITimer % 90 == 0)
+                if (LemonUtils.IsHard() && AITimer % 90 == 0)
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>());
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
                     }
                 }
 
@@ -342,7 +363,7 @@ public class ResearcherBoss : ModNPC
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center,
                             NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 5,
-                            ProjectileType<SavMissile>(), ai1: 60);
+                            ProjectileType<SavMissile>(), NPC.damage / 2, ai1: 60);
                     }
                 }
                 break;
@@ -353,11 +374,73 @@ public class ResearcherBoss : ModNPC
         AttackTimer--;
     }
 
+    const float BULLET_SPAM_DURATION = 240;
+    void BulletSpam()
+    {
+        switch (AttackTimer)
+        {
+            case BULLET_SPAM_DURATION:
+                GetRandomPos(40, 40);
+                break;
+
+            case > BULLET_SPAM_DURATION - 60:
+                LemonUtils.DustLine(NPC.Center, targetPosition, DustID.TintableDustLighted, 32, 1.2f, Color.LightBlue);
+                targetPosition = player.Center;
+                if (randomPos != Vector2.Zero)
+                {
+                    NPC.MoveToPos(randomPos, 0.4f, 0.4f, 0.15f, 0.15f);
+                }
+                else
+                {
+                    randomPos = targetPosition;
+                }
+                break;
+
+            case > BULLET_SPAM_DURATION - 180:
+                LemonUtils.DustLine(NPC.Center, targetPosition, DustID.TintableDustLighted, 32, 1.2f, Color.Red);
+                float minSpeed = 3;
+                float maxSpeed = 5;
+                if (AttackTimer < BULLET_SPAM_DURATION - 120)
+                {
+                    targetPosition += targetPosition.DirectionTo(player.Center) * 10;
+                    minSpeed = 2;
+                    maxSpeed = 3;
+
+                }
+                if (AttackTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            NPC.Center,
+                            NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4 / 2, MathHelper.PiOver4 / 2)) * Main.rand.NextFloat(minSpeed, maxSpeed),
+                            ProjectileType<SavDroneProjectile>(),
+                            NPC.damage / 2
+                            );
+                            
+                    }
+                }
+                NPC.velocity = Vector2.Zero;
+                break;
+
+            case > 0:
+
+                break;
+
+            case 0:
+                AttackTimer = BULLET_SPAM_DURATION;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void NPCGunDirectionAndRotation()
     {
         Vector2 directionToTarget = NPC.DirectionTo(targetPosition);
 
-        NPC.direction = MathF.Sign(directionToTarget.X) == 0 ? 1 : MathF.Sign(directionToTarget.X);
+        NPC.direction = directionToTarget.HasNaNs() || MathF.Sign(directionToTarget.X) == 0 ? 1 : MathF.Sign(directionToTarget.X);
 
         if (NPC.direction == 1)
         {
@@ -395,7 +478,7 @@ public class ResearcherBoss : ModNPC
         NPC.dontTakeDamage = true;
         NPC.velocity = Vector2.Zero;
 
-
+        targetPosition = NPC.Center + new Vector2(NPC.direction, 1);
         attackDuration = attackDurations[(int)Attack];
     }
 
@@ -409,6 +492,7 @@ public class ResearcherBoss : ModNPC
     public override void HitEffect(NPC.HitInfo hit)
     {
         if (Main.dedServ) return;
+        shieldColor = Color.White;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -428,8 +512,28 @@ public class ResearcherBoss : ModNPC
         return true;
     }
 
+    Color shieldColor = Color.DeepSkyBlue;
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         Main.EntitySpriteDraw(gunTexture.Value, NPC.Center - Main.screenPosition, null, Color.White, gunRotation, gunTexture.Size() * 0.5f, NPC.scale, LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection));
+
+
+        // shield
+        Texture2D texture = TextureAssets.Projectile[ProjectileType<PulseEffect>()].Value;
+        Vector2 drawPos = NPC.Center - Main.screenPosition;
+        var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
+        shader.Shader.Parameters["time"].SetValue(0.99f);
+        shader.Shader.Parameters["alwaysVisible"].SetValue(true);
+        shader.Shader.Parameters["speed"].SetValue(1f);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(1f);
+        float introClampedAITimer = Math.Clamp(AITimer, 0, IntroDuration);
+        shieldColor = Color.Lerp(shieldColor, Color.DeepSkyBlue, 1 / 10f);
+        shader.Shader.Parameters["color"].SetValue(shieldColor.ToVector4() * (introClampedAITimer / IntroDuration));
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        shader.Apply();
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, NPC.rotation, texture.Size() * 0.5f, NPC.scale, SpriteEffects.None, 0);
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

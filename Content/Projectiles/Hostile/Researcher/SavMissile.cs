@@ -47,7 +47,7 @@ public class SavMissile : ModProjectile
         {
             if (AITimer % 45 == 0)
             {
-                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.25f, MaxInstances = 1 }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.25f, MaxInstances = 10 }, Projectile.Center);
             }
             Player player = LemonUtils.GetClosestPlayer(Projectile.Center);
             if (player != null && player.Alive())
@@ -59,7 +59,7 @@ public class SavMissile : ModProjectile
         {
             if (AITimer % soundTimer == 0)
             {
-                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.25f, MaxInstances = 1 }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.1f }, Projectile.Center);
             }
             if (soundTimer > 5) soundTimer -= 5;
             Projectile.velocity *= 1.02f;

@@ -15,8 +15,7 @@ public class ResearcherDialogueUIState : UIState
     UIText DialogueText;
     UIImageButton CloseButton;
 
-    UIPanel NamePanel;
-    UIText NameText;
+    UITextPanel<string> NamePanel;
 
     UIPanel TalkOptionsPanel;
     UIText TalkOption;
@@ -58,21 +57,10 @@ public class ResearcherDialogueUIState : UIState
 
 
         // Name Panel and Name
-        NamePanel = new UIPanel();
-        NamePanel.Width.Set(0, 0.10f);
-        NamePanel.Height.Set(0, 0.05f);
+        NamePanel = new UITextPanel<string>(string.Empty, 1, false);
         NamePanel.HAlign = 0.06f;
         NamePanel.VAlign = 0.56f;
         Append(NamePanel);
-
-        NameText = new UIText(string.Empty, 1);
-        NameText.Width.Set(0, 0.9f);
-        NameText.Height.Set(0, 0.8f);
-        NameText.HAlign = 0.1f;
-        NameText.VAlign = 0f;
-        NameText.IsWrapped = true;
-        NameText.TextOriginX = 0;
-        NamePanel.Append(NameText);
 
 
         // Talk Options
@@ -133,7 +121,7 @@ public class ResearcherDialogueUIState : UIState
         timer = 0;
         charIndex = 0;
         DialogueText.SetText(string.Empty);
-        NameText.SetText("Sav", CalculateTextSize() * 1.2f, true);
+        NamePanel.SetText(Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.DisplayName"), CalculateTextSize() * 1.2f, true);
     }
 
     private void OnTalkButtonClick(UIMouseEvent evt, UIElement listeningElement)

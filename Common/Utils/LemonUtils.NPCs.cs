@@ -7,9 +7,16 @@ namespace NeoParacosm.Common.Utils;
 /// </summary>
 public static partial class LemonUtils
 {
+    public static bool IsHard() => Main.masterMode || Main.getGoodWorld;
+
     public static NPBuffNPC NPBuffNPC(this NPC npc)
     {
         return npc.GetGlobalNPC<NPBuffNPC>();
+    }
+
+    public static NPGlobalNPC NP(this NPC npc)
+    {
+        return npc.GetGlobalNPC<NPGlobalNPC>();
     }
 
     public static NPC GetClosestNPC(NPC npc, float minDistance = 0)

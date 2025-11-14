@@ -47,7 +47,7 @@ public class ResearcherNoteUIState : UIState
     public override void OnActivate()
     {
         brightness = 1f;
-        ChatHelper.DisplayMessageOnClient(NetworkText.FromLiteral("Mods.NeoParacosm.NPCs.Researcher.NoteCloseMessage"), Color.Orange, Main.myPlayer);
+        ChatHelper.DisplayMessageOnClient(NetworkText.FromKey("Mods.NeoParacosm.NPCs.Researcher.NoteCloseMessage"), Color.Orange, Main.myPlayer);
     }
 
     public override void OnDeactivate()

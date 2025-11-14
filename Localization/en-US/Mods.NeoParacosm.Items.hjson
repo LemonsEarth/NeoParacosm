@@ -494,3 +494,8 @@ ResearcherNoteItem: {
 	DisplayName: Researcher's Note
 	Tooltip: Use item to read the note
 }
+
+ResearcherBossUITest: {
+	DisplayName: Researcher Boss UI Test Do Not Use
+	Tooltip: ""
+}

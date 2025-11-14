@@ -8,7 +8,7 @@ CrimsonSentryForm.DisplayName: Crimson Sentry Form
 RotPerfumeValve.DisplayName: Rot Perfume Valve
 
 Researcher: {
-	DisplayName: Researcher
+	DisplayName: Sav the Researcher
 
 	TownNPCMood: {
 		Content: I am content.
@@ -197,7 +197,72 @@ CorruptWalker.DisplayName: Lost Person
 CorruptMage.DisplayName: Dark Mage
 DecayingRat.DisplayName: Decaying Rat
 ShadowOrbNPC.DisplayName: Shadow Orb
-Deathbird.DisplayName: Deathbird
+
+Deathbird: {
+	DisplayName: Deathbird
+	Bestiary: A big bird
+}
+
 GiantUndead.DisplayName: Giant Undead
 ResearcherNote.DisplayName: Researcher Note
-ResearcherBoss.DisplayName: Researcher Boss
+
+ResearcherBoss: {
+	DisplayName: Sav the Researcher
+
+	Dialogue: {
+		P0:
+			'''
+			...[30]
+			I figured you'd come back here.
+			It's been a while, old friend.
+			I can tell you've made great progress while I was gone.
+			Under different circumstances, I would be congratulating you...[30]
+			But unfortunately, your journey ends here.[30]
+			'''
+		P1:
+			'''
+			On my expedition, I've finally found and grasped the truth.[30]
+			We are nothing but a blight to existence.
+			You, I, our ancestors and our successors...
+			Throughout history we've done nothing but conquer, destroy and ruin.
+			The beauty of the world was stolen from us, by us, who sought power.
+			And what did we gain from it?[60]
+			'''
+		P2:
+			'''
+			The ramifications of their actions are visible all around us.[30]
+			I've seen at least a dozen mourning corpses today alone...
+			Doomed to roam these filthy ruins and caves, until they die again...
+			and again...[30]
+			and again.[60]
+			'''
+		P3:
+			'''
+			The only way to stop this cycle, is to start a new one, from the beginning...
+			And correct our mistakes. Atone for our sins before we ever commit them.
+			I saw it before, but I didn't want to believe it.
+			I thought it couldn't be true, that there must be a different way...[30]
+			A way to right these wrongs. One that would allow us to continue as we are.[60]
+			'''
+		P4:
+			'''
+			I've searched and searched...[30]
+			but there is no alternative.
+			Even this wouldn't be an option without the blessings of higher beings...
+			but they have decided to give us a chance.[60]
+			'''
+		P5:
+			'''
+			The Gods of Affliction grieve for this world as much as we should.[30]
+			It is our responsibility to yield this realm to them.[30]
+			'''
+		P6:
+			'''
+			Once that is done, this wretched, desolate world will finally pass...[30]
+			and a new one will be born from its remains.[30]
+			And when we rise again, when the Stars are born once more...[30]
+			...
+			Will our suffering finally end?[60]
+			'''
+	}
+}
