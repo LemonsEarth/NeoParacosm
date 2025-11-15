@@ -103,6 +103,8 @@ public class DeathLaser : ModProjectile
         var shader = GameShaders.Misc["NeoParacosm:LaserShader"];
         shader.Shader.Parameters["moveSpeed"].SetValue(-2f);
         shader.Shader.Parameters["time"].SetValue(AITimer / 60f);
+        shader.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
+        shader.Shader.Parameters["endColor"].SetValue(Color.Black.ToVector4());
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = Noise.Value;

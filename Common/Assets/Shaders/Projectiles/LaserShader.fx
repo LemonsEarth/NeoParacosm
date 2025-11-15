@@ -9,6 +9,8 @@ float2 uScreenPosition;
 float2 uScreenResolution;
 float time;
 float moveSpeed;
+float4 centerColor;
+float4 endColor;
 
 float4 LaserShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {
@@ -25,15 +27,15 @@ float4 LaserShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float
     
     float2 xMul = (1, 1);
     xMul = float2(1, 1) - float2(distanceToCenterX, distanceToCenterY); // curviness
-    float4 finalColor = noiseColor * (1 - distanceToCenterX) * length(xMul);
+    float4 finalColor = noiseColor * centerColor * (1 - distanceToCenterX) * length(xMul);
     
-    if (finalColor.r < 0.1)
+    if (all(finalColor < 0.1))
     { 
         finalColor = 0;
     }
-    else if (finalColor.r < 0.3)
+    else if (all(finalColor < 0.3))
     {
-        finalColor.rgb = 0;
+        finalColor = endColor;
     }
     return finalColor * 3;
 }

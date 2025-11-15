@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NeoParacosm.Content.NPCs.Bosses.ResearcherBoss;
+using System.Collections.Generic;
 using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Boss;
@@ -28,7 +29,14 @@ public class ResearcherBossUISystem : ModSystem
     public override void UpdateUI(GameTime gameTime)
     {
         lastUpdateGameTime = gameTime;
-        if (userInterface?.CurrentState != null) userInterface.Update(gameTime);
+        if (userInterface?.CurrentState != null)
+        {
+            userInterface.Update(gameTime);
+            if (!NPC.AnyNPCs(NPCType<ResearcherBoss>()))
+            {
+                HideUI();
+            }
+        }
     }
 
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -56,12 +64,23 @@ public class ResearcherBossUISystem : ModSystem
         HideUI();
     }
 
-    internal void ShowUI()
+    public bool IsActive()
     {
+        return userInterface.CurrentState != null;
+    }
+
+    public void ShowUI(int part, bool fastCharInterval = false)
+    {
+        if (part > ResearcherBossUIState.MAX_PART_COUNT)
+        {
+            part = ResearcherBossUIState.MAX_PART_COUNT;
+        }
+        UI.PartCount = part;
+        UI.charInterval = fastCharInterval ? ResearcherBossUIState.FAST_CHAR_INTERVAL : ResearcherBossUIState.DEFAULT_CHAR_INTERVAL;
         userInterface?.SetState(UI);
     }
 
-    internal void HideUI()
+    public void HideUI()
     {
         userInterface?.SetState(null);
     }

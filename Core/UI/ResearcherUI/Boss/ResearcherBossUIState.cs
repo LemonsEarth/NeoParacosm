@@ -16,34 +16,28 @@ public class ResearcherBossUIState : UIState
     string textToDisplay = string.Empty;
     string displayedText = string.Empty;
     string[] textLines;
-    public static int PartCount { get; private set; } = 0;
+    public const int MAX_PART_COUNT = 7;
+    public int PartCount { get; set; } = 0;
 
     public override void OnInitialize()
     {
         textPanel = new UITextPanel<string>(string.Empty, 1);
         textPanel.HAlign = 0.5f;
-        textPanel.VAlign = 0.5f;
+        textPanel.VAlign = 0.6f;
         textPanel.TextHAlign = 0f;
         Append(textPanel);
     }
 
     public override void OnActivate()
     {
-        //ChatHelper.DisplayMessageOnClient(NetworkText.FromKey("Mods.NeoParacosm.NPCs.Researcher.NoteCloseMessage"), Color.Orange, Main.myPlayer);
-        NextPart();
+        DisplayText();
     }
 
-    int maxPartCount = 7;
-    void NextPart()
+    void DisplayText()
     {
         textPanel.SetText("");
         textToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.ResearcherBoss.Dialogue.P{PartCount}");
         textLines = textToDisplay.Split("\n");
-        PartCount++;
-        if (PartCount >= maxPartCount)
-        {
-            PartCount = 0;
-        }
 
         timer = 0;
         charIndex = 0;
@@ -59,7 +53,9 @@ public class ResearcherBossUIState : UIState
     }
 
     int charIndex = 0;
-    int charInterval = 3;
+    public const int DEFAULT_CHAR_INTERVAL = 3;
+    public const int FAST_CHAR_INTERVAL = 1;
+    public int charInterval = 3;
     int timer = 0;
     int textLineIndex = 0;
     int newLinePauseDuration = 60;
@@ -68,6 +64,11 @@ public class ResearcherBossUIState : UIState
     bool paused = false;
     public override void Update(GameTime gameTime)
     {
+        if (Main.gameInactive || Main.gamePaused)
+        {
+            return;
+        }
+
         if (paused)
         {
             if (pauseTimer < pauseDuration)
@@ -104,7 +105,13 @@ public class ResearcherBossUIState : UIState
                 textLineIndex++;
                 charIndex = 0;
             }
+
+            if (!paused && (textLineIndex >= textLines.Length - 1) && charIndex >= textLine.Length)
+            {
+                GetInstance<ResearcherBossUISystem>().HideUI();
+            }
         }
+        
         textPanel.SetText(displayedText);
         timer++;
     }

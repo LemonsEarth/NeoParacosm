@@ -217,7 +217,7 @@ ResearcherBoss: {
 			It's been a while, old friend.
 			I can tell you've made great progress while I was gone.
 			Under different circumstances, I would be congratulating you...[30]
-			But unfortunately, your journey ends here.[30]
+			But unfortunately, your journey ends here.[90]
 			'''
 		P1:
 			'''
@@ -260,9 +260,19 @@ ResearcherBoss: {
 			'''
 			Once that is done, this wretched, desolate world will finally pass...[30]
 			and a new one will be born from its remains.[30]
-			And when we rise again, when the Stars are born once more...[30]
-			...
-			Will our suffering finally end?[60]
+			...[30]
+			..........
+			JOIN ME IN THIS QUEST![60]
+			TOGETHER WE WILL RISE!
+			TOGETHER WE WILL REPENT!
+			TOGETHER WE WILL DESTROY!
+			TOGETHER WE WILL SAVE
+			THIS
+			WORLD!!![30]
+			THE LAKES WILL RUN RED!
+			THE SKIES WILL BE SHROUDED IN DARK!
+			AND WHEN THE SUN RISES...
+			ALL WILL FLOURISH ONCE MORE!
 			'''
 	}
 }

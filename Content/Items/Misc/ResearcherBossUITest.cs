@@ -4,7 +4,7 @@ using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Misc;
 
-public class ResearcherBossUITest : ModItem
+/*public class ResearcherBossUITest : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -41,4 +41,4 @@ public class ResearcherBossUITest : ModItem
 
         return null;
     }
-}
+}*/

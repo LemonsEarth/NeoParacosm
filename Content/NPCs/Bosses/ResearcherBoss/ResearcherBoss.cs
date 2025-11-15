@@ -15,6 +15,7 @@ using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.Hostile.Researcher;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
+using NeoParacosm.Core.UI.ResearcherUI.Boss;
 using ReLogic.Content;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
+using Terraria.UI;
 
 namespace NeoParacosm.Content.NPCs.Bosses.ResearcherBoss;
 
@@ -44,7 +46,7 @@ public class ResearcherBoss : ModNPC
             {
                 diffMod = 0;
             }
-            int maxVal = phase == 1 ? 2 : 0;
+            int maxVal = NPC.GetLifePercent() <= 0.6f ? 4 : 2;
             if (value > maxVal + diffMod || value < 0)
             {
                 NPC.ai[1] = 0;
@@ -58,16 +60,19 @@ public class ResearcherBoss : ModNPC
     ref float AttackTimer => ref NPC.ai[2];
     ref float AttackCount => ref NPC.ai[3];
 
-    bool phase2Reached = false;
-    int phase = 1;
-    bool phaseTransition = false;
-
     float attackDuration = 0;
-    int[] attackDurations = { 600, 600, 720 };
+    int[] attackDurations = { 600, 600, 720, 480, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
     float gunRotation = 0;
+
+    ResearcherBossUISystem UISystem => GetInstance<ResearcherBossUISystem>();
+    static bool[] reachedPartInCurrentSession = new bool[ResearcherBossUIState.MAX_PART_COUNT];
+    bool[] reachedPartInCurrentLife = new bool[ResearcherBossUIState.MAX_PART_COUNT];
+    bool IsTalking => UISystem.IsActive();
+
+    int IntroDuration = 90; // base intro duration without dialogue
 
     public enum Attacks
     {
@@ -75,7 +80,7 @@ public class ResearcherBoss : ModNPC
         RocketSpam,
         BulletSpam,
         SavBlastBurst,
-        RocketSpam2
+        DroneSpam
     }
 
     public override void Load()
@@ -111,7 +116,7 @@ public class ResearcherBoss : ModNPC
 
     public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
     {
-        
+
     }
 
     public override void SetDefaults()
@@ -121,7 +126,7 @@ public class ResearcherBoss : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1;
-        NPC.lifeMax = 60000;
+        NPC.lifeMax = 80000;
         NPC.defense = 40;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
@@ -150,6 +155,11 @@ public class ResearcherBoss : ModNPC
             );
     }
 
+    public override bool CheckActive()
+    {
+        return false;
+    }
+
     public override void FindFrame(int frameHeight)
     {
 
@@ -161,7 +171,6 @@ public class ResearcherBoss : ModNPC
         NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
     }
 
-    int IntroDuration = 180;
     public override void AI()
     {
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -174,13 +183,25 @@ public class ResearcherBoss : ModNPC
 
         // jetpack dust
         Dust.NewDustPerfect(NPC.Center + Vector2.UnitX * (Main.rand.NextFloat(8, 16) * -NPC.direction), DustID.IceTorch, Vector2.UnitY * Main.rand.NextFloat(0.5f, 1.5f));
+        Lighting.AddLight(NPC.Center, 0.5f, 0.25f, 1f);
+
+        if (ShouldTalk())
+        {
+            TalkBehavior();
+        }
+
+        if (IsTalking)
+        {
+            return;
+        }
+
         if (AITimer < IntroDuration)
         {
             Intro();
             AITimer++;
             return;
         }
-        if (phaseTransition || AITimer < IntroDuration || Collision.SolidTiles(NPC.position, NPC.width, NPC.height))
+        if (AITimer < IntroDuration || Collision.SolidTiles(NPC.position, NPC.width, NPC.height))
         {
             NPC.dontTakeDamage = true;
         }
@@ -189,20 +210,24 @@ public class ResearcherBoss : ModNPC
             NPC.dontTakeDamage = false;
         }
 
-        if (phase == 1)
+        switch (Attack)
         {
-            switch (Attack)
-            {
-                case (int)Attacks.SavBlastDirect:
-                    SavBlastDirect();
-                    break;
-                case (int)Attacks.RocketSpam:
-                    RocketSpam();
-                    break;
-                case (int)Attacks.BulletSpam:
-                    BulletSpam();
-                    break;
-            }
+            case (int)Attacks.SavBlastDirect:
+                SavBlastDirect();
+                break;
+            case (int)Attacks.RocketSpam:
+                RocketSpam();
+                break;
+            case (int)Attacks.BulletSpam:
+                BulletSpam();
+                break;
+            case (int)Attacks.SavBlastBurst:
+                SavBlastBurst();
+                break;
+            case (int)Attacks.DroneSpam:
+                DroneSpam();
+                break;
+
         }
 
         attackDuration--;
@@ -212,6 +237,63 @@ public class ResearcherBoss : ModNPC
         }
 
         AITimer++;
+    }
+
+    int GetCurrentPart()
+    {
+        int lastPart = ResearcherBossUIState.MAX_PART_COUNT - 1;
+        int currentPart = NPC.GetLifePercent() switch
+        {
+            <= 0.01f => lastPart,
+            <= 0.1f => lastPart - 1,
+            <= 0.2f => lastPart - 2,
+            <= 0.4f => lastPart - 3,
+            <= 0.6f => lastPart - 4,
+            <= 0.8f => lastPart - 5,
+            <= 100f => lastPart - 6,
+            _ => -1
+        };
+
+        return currentPart;
+    }
+
+    bool ShouldTalk()
+    {
+        int currentPart = GetCurrentPart();
+        if (currentPart == -1)
+        {
+            return false;
+        }
+
+        return !reachedPartInCurrentLife[currentPart];
+    }
+
+    void TalkBehavior()
+    {
+        NPC.dontTakeDamage = true;
+        NPC.velocity = Vector2.Zero;
+        targetPosition = NPC.Center + new Vector2(NPC.direction, 1);
+
+        if (!IsTalking)
+        {
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.type == ProjectileType<SavBlast>() ||
+                    proj.type == ProjectileType<SavDroneProjectile>() ||
+                    proj.type == ProjectileType<ElectroGasHostile>() ||
+                    proj.type == ProjectileType<SavMissile>())
+                {
+                    proj.Kill();
+                }
+            }
+            int currentPart = GetCurrentPart();
+            if (currentPart < 0) return;
+            reachedPartInCurrentLife[currentPart] = true;
+            UISystem.ShowUI(currentPart, reachedPartInCurrentSession[currentPart]);
+            reachedPartInCurrentSession[currentPart] = true;
+            ResearcherBossCameraModifier cameraModifier = new ResearcherBossCameraModifier(NPC.Center, () => !IsTalking);
+            Main.instance.CameraModifiers.Add(cameraModifier);
+        }
     }
 
     /// <summary>
@@ -264,7 +346,7 @@ public class ResearcherBoss : ModNPC
         switch (AttackTimer)
         {
             case SAV_BLAST_DIRECT_DURATION:
-                GetRandomPos(40, 40);  
+                GetRandomPos(40, 40);
                 break;
             case > 0:
                 if (randomPos != Vector2.Zero)
@@ -276,7 +358,7 @@ public class ResearcherBoss : ModNPC
                     randomPos = targetPosition;
                 }
 
-                if (AITimer % 60 == 0)
+                if (AttackTimer % 60 == 0)
                 {
                     if (LemonUtils.NotClient())
                     {
@@ -312,7 +394,7 @@ public class ResearcherBoss : ModNPC
                     randomPos = targetPosition;
                 }
 
-                if (LemonUtils.IsHard() &&  AITimer % 90 == 0)
+                if (LemonUtils.IsHard() && AITimer % 90 == 0)
                 {
                     if (LemonUtils.NotClient())
                     {
@@ -324,8 +406,8 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, 
-                            NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 2, 
+                        LemonUtils.QuickProj(NPC, NPC.Center,
+                            NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 2,
                             ProjectileType<SavMissile>(), NPC.damage / 2, ai1: 120);
                     }
                 }
@@ -418,7 +500,7 @@ public class ResearcherBoss : ModNPC
                             ProjectileType<SavDroneProjectile>(),
                             NPC.damage / 2
                             );
-                            
+
                     }
                 }
                 NPC.velocity = Vector2.Zero;
@@ -430,6 +512,107 @@ public class ResearcherBoss : ModNPC
 
             case 0:
                 AttackTimer = BULLET_SPAM_DURATION;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+
+    const float SAV_BLAST_BURST_DURATION = 120;
+    void SavBlastBurst()
+    {
+        targetPosition = player.Center;
+        switch (AttackTimer)
+        {
+            case SAV_BLAST_DIRECT_DURATION:
+                GetRandomPos(40, 40);
+                break;
+            case > 0:
+                if (randomPos != Vector2.Zero)
+                {
+                    NPC.MoveToPos(randomPos, 0.3f, 0.3f, 0.1f, 0.1f);
+                }
+                else
+                {
+                    randomPos = targetPosition;
+                }
+                break;
+            case 0:
+                if (LemonUtils.NotClient())
+                {
+                    for (float i = -AttackCount; i <= AttackCount; i++)
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center,
+                            NPC.DirectionTo(targetPosition).RotatedBy(i * MathHelper.ToRadians(5)) * 10,
+                            ProjectileType<SavBlast>(), NPC.damage / 2, ai1: 1.02f);
+                    }
+                }
+                AttackTimer = SAV_BLAST_DIRECT_DURATION;
+                AttackCount++;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    const float DRONESPAM_DURATION = 240;
+    void DroneSpam()
+    {
+        targetPosition = player.Center;
+        switch (AttackTimer)
+        {
+            case SAV_BLAST_DIRECT_DURATION:
+                GetRandomPos(40, 40);
+                if (LemonUtils.NotClient())
+                {
+                    LemonUtils.QuickProj(NPC,
+                        NPC.Center,
+                        NPC.Center.DirectionTo(player.Center + player.velocity.SafeNormalize(Vector2.Zero) * 600) * Main.rand.NextFloat(6, 12),
+                        ProjectileType<SavDrone>(),
+                        NPC.damage / 2,
+                        ai0: 180,
+                        ai1: 2
+                        );
+                    LemonUtils.QuickProj(NPC,
+                        NPC.Center,
+                        NPC.Center.DirectionTo(player.Center) * Main.rand.NextFloat(6, 12),
+                        ProjectileType<SavDrone>(),
+                        NPC.damage / 2,
+                        ai0: 120,
+                        ai1: 2
+                        );
+                    LemonUtils.QuickProj(NPC,
+                        NPC.Center,
+                        NPC.Center.DirectionTo(player.Center - player.velocity.SafeNormalize(Vector2.Zero) * 600) * Main.rand.NextFloat(6, 12),
+                        ProjectileType<SavDrone>(),
+                        NPC.damage / 2,
+                        ai0: 180,
+                        ai1: 2
+                        );
+                }
+                break;
+            case > 0:
+                if (randomPos != Vector2.Zero)
+                {
+                    NPC.MoveToPos(randomPos, 0.3f, 0.3f, 0.1f, 0.1f);
+                }
+                else
+                {
+                    randomPos = targetPosition;
+                }
+
+                if (AttackTimer % 60 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = DRONESPAM_DURATION;
+                AttackCount++;
                 return;
         }
 
@@ -482,7 +665,16 @@ public class ResearcherBoss : ModNPC
         attackDuration = attackDurations[(int)Attack];
     }
 
-
+    public override bool CheckDead()
+    {
+        if (ShouldTalk())
+        {
+            NPC.life = 1;
+            NPC.dontTakeDamage = true;
+            return false;
+        }
+        return true;
+    }
 
     public override void OnKill()
     {

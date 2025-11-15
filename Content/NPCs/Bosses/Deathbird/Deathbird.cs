@@ -871,12 +871,17 @@ public class Deathbird : ModNPC
 
     void DespawnCheck()
     {
-        if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 5000)
+        if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 2500)
         {
             NPC.active = false;
             NPC.life = 0;
             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
         }
+    }
+
+    public override bool CheckActive()
+    {
+        return false;
     }
 
     void Intro()

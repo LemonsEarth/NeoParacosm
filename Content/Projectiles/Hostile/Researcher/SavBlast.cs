@@ -8,6 +8,7 @@ namespace NeoParacosm.Content.Projectiles.Hostile.Researcher;
 public class SavBlast : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
+    ref float SpeedUP => ref Projectile.ai[1];
 
     static BasicEffect BasicEffect;
 
@@ -64,7 +65,11 @@ public class SavBlast : ModProjectile
         }
 
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
-
+        if (SpeedUP == 0)
+        {
+            SpeedUP = 1f;
+        }
+        Projectile.velocity *= SpeedUP;
         var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemSapphire);
         dust.noGravity = true;
         Projectile.rotation = MathHelper.ToRadians(AITimer * 12);

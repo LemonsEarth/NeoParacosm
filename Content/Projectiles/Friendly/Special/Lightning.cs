@@ -87,8 +87,8 @@ public class Lightning : ModProjectile
             PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
             originalPos = Projectile.Center;
-            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f) });
-            SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f) });
+            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.75f });
+            SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.75f });
             Vector2 projToPos = targetPos - Projectile.Center;
             float spacing = projToPos.Length() / (20 / 2);
             bool flip = true;
