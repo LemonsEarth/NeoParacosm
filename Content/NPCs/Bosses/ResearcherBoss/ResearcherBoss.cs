@@ -1,21 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Gores;
-using NeoParacosm.Content.Items.BossBags;
-using NeoParacosm.Content.Items.Placeable.Relics;
-using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Content.Items.Weapons.Summon;
-using NeoParacosm.Content.NPCs.Hostile.Minions;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.Hostile.Researcher;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.UI.ResearcherUI.Boss;
+using NeoParacosm.Core.UI;
 using ReLogic.Content;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +63,7 @@ public class ResearcherBoss : ModNPC
     bool IsTalking => UISystem.IsActive();
 
     int IntroDuration = 90; // base intro duration without dialogue
-
+    int shieldTimer = 0;
     public enum Attacks
     {
         SavBlastDirect,
@@ -184,6 +174,7 @@ public class ResearcherBoss : ModNPC
         // jetpack dust
         Dust.NewDustPerfect(NPC.Center + Vector2.UnitX * (Main.rand.NextFloat(8, 16) * -NPC.direction), DustID.IceTorch, Vector2.UnitY * Main.rand.NextFloat(0.5f, 1.5f));
         Lighting.AddLight(NPC.Center, 0.5f, 0.25f, 1f);
+        shieldTimer++;
 
         if (ShouldTalk())
         {
@@ -291,7 +282,7 @@ public class ResearcherBoss : ModNPC
             reachedPartInCurrentLife[currentPart] = true;
             UISystem.ShowUI(currentPart, reachedPartInCurrentSession[currentPart]);
             reachedPartInCurrentSession[currentPart] = true;
-            ResearcherBossCameraModifier cameraModifier = new ResearcherBossCameraModifier(NPC.Center, () => !IsTalking);
+            MoveCameraModifier cameraModifier = new MoveCameraModifier(NPC.Center, () => !IsTalking);
             Main.instance.CameraModifiers.Add(cameraModifier);
         }
     }
@@ -714,10 +705,13 @@ public class ResearcherBoss : ModNPC
         Texture2D texture = TextureAssets.Projectile[ProjectileType<PulseEffect>()].Value;
         Vector2 drawPos = NPC.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Shader.Parameters["time"].SetValue(0.99f);
+        shader.Shader.Parameters["noiseTimeX"].SetValue(NPC.velocity.X * 10);
+        shader.Shader.Parameters["noiseTimeY"].SetValue(shieldTimer * 2.5f);
         shader.Shader.Parameters["alwaysVisible"].SetValue(true);
         shader.Shader.Parameters["speed"].SetValue(1f);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(1f);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(2f);
         float introClampedAITimer = Math.Clamp(AITimer, 0, IntroDuration);
         shieldColor = Color.Lerp(shieldColor, Color.DeepSkyBlue, 1 / 10f);
         shader.Shader.Parameters["color"].SetValue(shieldColor.ToVector4() * (introClampedAITimer / IntroDuration));

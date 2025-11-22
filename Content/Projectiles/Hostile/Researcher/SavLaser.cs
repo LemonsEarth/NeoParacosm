@@ -69,7 +69,7 @@ public class SavLaser : ModProjectile
         if (AITimer == 0)
         {
             SoundEngine.PlaySound(SoundID.Item67 with { MaxInstances = 0, PitchRange = (0.3f, 0.6f), Volume = 0.8f }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Zombie103 with { MaxInstances = 0, PitchRange = (0.3f, 0.6f), Volume = 0.8f }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Zombie103 with { MaxInstances = 1, PitchRange = (0.3f, 0.6f), Volume = 0.4f }, Projectile.Center);
             if (Size == 0) Size = 1;
         }
         Projectile.velocity = Vector2.Zero;

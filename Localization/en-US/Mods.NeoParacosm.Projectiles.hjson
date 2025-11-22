@@ -81,3 +81,8 @@ ElectroGasHostile.DisplayName: Electro Gas Hostile
 SavMissile.DisplayName: Sav Missile
 SavBlast.DisplayName: Sav Blast
 SavLaser.DisplayName: Sav Laser
+Fireball.DisplayName: Fireball
+FireballExplosion.DisplayName: Fireball Explosion
+GreatFireball.DisplayName: Great Fireball
+GreatFireballExplosion.DisplayName: Great Fireball Explosion
+SpellSwapProjectile.DisplayName: Spell Swap Projectile

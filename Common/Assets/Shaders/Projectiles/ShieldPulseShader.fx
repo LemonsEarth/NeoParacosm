@@ -3,6 +3,10 @@ float uProgress;
 float2 uTargetPosition;
 float2 uScreenResolution;
 
+sampler noiseTexture : register(s1);
+float noiseTimeX;
+float noiseTimeY;
+
 float time;
 float speed;
 float4 color;
@@ -11,6 +15,8 @@ bool alwaysVisible;
 
 float4 ShieldPulseShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
+    float4 noiseColor = tex2D(noiseTexture, coords + float2(noiseTimeX / 100.0, noiseTimeY / 100.0));
+    
     float2 centeredCoords = coords * 2.0 - 1.0;
     float coordsLength = length(centeredCoords);
     if (coordsLength > frac(time * speed))
@@ -22,7 +28,7 @@ float4 ShieldPulseShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0)
     {
         fadeOut = 1;
     }
-    return fadeOut * color * coordsLength * colorMultiplier;
+    return fadeOut * color * noiseColor.r * coordsLength * colorMultiplier;
 }
 
 technique Tech1

@@ -499,3 +499,31 @@ ResearcherBossUITest: {
 	DisplayName: Researcher Boss UI Test Do Not Use
 	Tooltip: ""
 }
+
+FireballSpell: {
+	DisplayName: Fireball
+	Tooltip: ""
+}
+
+Candlestick: {
+	DisplayName: Candlestick
+	Tooltip:
+	'''
+	Increases damage of fire spells by 15%
+	'''
+}
+
+GreatFireballSpell: {
+	DisplayName: Great Fireball
+	Tooltip: ""
+}
+
+CatalystTemplate: {
+	Description:
+		'''
+		[c/FFC400:This item is a Catalyst.]
+		[c/FFC400:Catalysts are used to cast Spells.]
+		'''
+	EquippedSpells: "[c/FFC400:Equipped Spells:]"
+	None: "[c/FFC400:None:]"
+}

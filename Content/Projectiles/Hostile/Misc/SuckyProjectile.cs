@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -60,10 +61,11 @@ public class SuckyProjectile : ModProjectile
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Shader.Parameters["time"].SetValue(AITimer / cycleDuration);
         shader.Shader.Parameters["alwaysVisible"].SetValue(false);
         shader.Shader.Parameters["speed"].SetValue(speed);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(2f);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(4f);
         shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

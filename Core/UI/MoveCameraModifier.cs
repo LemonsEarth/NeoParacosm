@@ -1,8 +1,8 @@
 ﻿using Terraria.Graphics.CameraModifiers;
 
-namespace NeoParacosm.Core.UI.ResearcherUI.Boss;
+namespace NeoParacosm.Core.UI;
 
-public class ResearcherBossCameraModifier : ICameraModifier
+public class MoveCameraModifier : ICameraModifier
 {
     public string UniqueIdentity { get; set; }
     public bool Finished { get; set; }
@@ -10,7 +10,7 @@ public class ResearcherBossCameraModifier : ICameraModifier
     Vector2 targetPosition;
     Func<bool> endCondition;
 
-    public ResearcherBossCameraModifier(Vector2 targetPosition, Func<bool> endCondition)
+    public MoveCameraModifier(Vector2 targetPosition, Func<bool> endCondition)
     {
         this.targetPosition = targetPosition - new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
         this.endCondition = endCondition;

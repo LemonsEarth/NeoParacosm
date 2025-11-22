@@ -9,6 +9,11 @@ public static partial class LemonUtils
         return (player != null || player.active || !player.dead || !player.ghost);
     }
 
+    public static NPCatalystPlayer NPCatalystPlayer(this Player player)
+    {
+        return player.GetModPlayer<NPCatalystPlayer>();
+    }
+
     public static NPAcessoryPlayer NPAccessoryPlayer(this Player player)
     {
         return player.GetModPlayer<NPAcessoryPlayer>();
