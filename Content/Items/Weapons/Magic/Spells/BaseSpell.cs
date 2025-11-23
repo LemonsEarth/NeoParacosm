@@ -3,6 +3,7 @@ using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells;
 
@@ -26,19 +27,17 @@ public abstract class BaseSpell : ModItem
 
     public enum SpellElement
     {
+        None,
         Fire,
         Magic,
         Ice,
         Earth,
         Lightning,
         Holy,
-        Death
+        Dark
     }
 
-    public HashSet<SpellElement> SpellElements = new HashSet<SpellElement>()
-    { 
-        SpellElement.Fire,
-    };
+    public HashSet<SpellElement> SpellElements = [];
 
     public virtual int GetDamage(Player player)
     {
@@ -80,5 +79,19 @@ public abstract class BaseSpell : ModItem
             SoundEngine.PlaySound(SoundID.Item74 with { Volume = 0.5f, PitchRange = (0.35f, 0.5f) }, player.Center);
         }
         return true;
+    }
+
+    public override void ModifyTooltips(List<TooltipLine> tooltips)
+    {
+        TooltipLine spellLine = new TooltipLine(Mod, "NeoParacosm:SpellDescription", Language.GetTextValue("Mods.NeoParacosm.Items.SpellTemplate.Description"));
+        tooltips.Add(spellLine);
+
+        string elements = Language.GetTextValue("Mods.NeoParacosm.Items.SpellTemplate.Elements");
+        foreach (var element in SpellElements)
+        {
+            elements += $"{Enum.GetName(element)} - ";
+        }
+        TooltipLine elementsLine = new TooltipLine(Mod, "NeoParacosm:SpellElements", elements);
+        tooltips.Add(elementsLine);
     }
 }

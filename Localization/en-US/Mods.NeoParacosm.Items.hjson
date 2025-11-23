@@ -500,30 +500,66 @@ ResearcherBossUITest: {
 	Tooltip: ""
 }
 
-FireballSpell: {
-	DisplayName: Fireball
-	Tooltip: ""
-}
-
-Candlestick: {
-	DisplayName: Candlestick
-	Tooltip:
-	'''
-	Increases damage of fire spells by 15%
-	'''
-}
-
-GreatFireballSpell: {
-	DisplayName: Great Fireball
-	Tooltip: ""
-}
-
 CatalystTemplate: {
 	Description:
 		'''
 		[c/FFC400:This item is a Catalyst.]
 		[c/FFC400:Catalysts are used to cast Spells.]
 		'''
-	EquippedSpells: "[c/FFC400:Equipped Spells:]"
-	None: "[c/FFC400:None:]"
+	EquippedSpells: "[c/FFC400:Equipped Spells: ]"
+	None: "[c/FFC400:None]"
+}
+
+SpellTemplate: {
+	Description:
+		'''
+		[c/FFC400:This item is a Spell.]
+		[c/FFC400:Catalysts are used to cast Spells.]
+		[c/FFC400:Use this item to equip the spell. Right click to remove it.]
+		'''
+	Elements: "[c/FFC400:Elements: ]"
+}
+
+FireballSpell: {
+	DisplayName: Fireball
+	Tooltip:
+	'''
+	Lobs a deadly fireball that lights enemies ablaze
+	Charging increases distance travelled
+	[c/FF5833:Before the Great Forge was constructed, the citizens of the Underworld were scorned and feared.]
+	[c/FF5833:Beings of Primal Flame were believed to reside down there.]
+	[c/FF5833:In response to the people's prayers, they granted them the power create fire from their own essence.]
+	'''
+}
+
+Candlestick: {
+	DisplayName: Candlestick
+	Tooltip: 
+	'''
+	Increases fire spell damage by {0}%
+	Increases fire spell efficiency by {1}%
+	'''
+}
+
+GreatFireballSpell: {
+	DisplayName: Great Fireball
+	Tooltip:
+	'''
+	Lobs a deadly fireball that scorches away sentience
+	Charging increases distance travelled
+	[c/FF5833:A symbol of mastery over fire.]
+	[c/FF5833:Spells such as this one made the climb from the bottom of the world possible.]
+	'''
+}
+
+
+DarkRendSpell: {
+	DisplayName: Dark Rend
+	Tooltip:
+	'''
+	Casts forth a burst of dark magic
+	Charging allows the blasts to pierce through enemies
+	[c/666666:It is said all dark magic draws power from a Greater Being.]
+	[c/666666:Parts of said being are ripped from it violently and used in these forbidden rituals.]
+	'''
 }

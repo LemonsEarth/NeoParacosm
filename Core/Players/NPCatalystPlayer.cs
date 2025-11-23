@@ -4,11 +4,13 @@ using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Misc;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria;
 namespace NeoParacosm.Core.Players;
 
 public class NPCatalystPlayer : ModPlayer
 {
     public Dictionary<BaseSpell.SpellElement, float> ElementalDamageBoosts = new Dictionary<BaseSpell.SpellElement, float>();
+    public Dictionary<BaseSpell.SpellElement, float> ElementalSpeedBoosts = new Dictionary<BaseSpell.SpellElement, float>();
 
     public List<BaseSpell> EquippedSpells { get; private set; } = new List<BaseSpell>();
     public BaseSpell SelectedSpell => (SelectedSpellIndex < 0) ? null : EquippedSpells[SelectedSpellIndex];
@@ -76,6 +78,11 @@ public class NPCatalystPlayer : ModPlayer
         foreach (BaseSpell.SpellElement spellDamageType in elementsArray)
         {
             ElementalDamageBoosts[spellDamageType] = 0;
+        }
+
+        foreach (BaseSpell.SpellElement spellDamageType in elementsArray)
+        {
+            ElementalSpeedBoosts[spellDamageType] = 1f;
         }
     }
 

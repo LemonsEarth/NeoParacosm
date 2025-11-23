@@ -20,6 +20,7 @@ public abstract class BaseCatalyst : ModItem
         Item.shoot = ProjectileID.PurificationPowder;
         Item.useTime = 10;
         Item.useAnimation = 10;
+        Item.channel = true;
     }
 
     public override bool CanUseItem(Player player)
@@ -78,7 +79,7 @@ public abstract class BaseCatalyst : ModItem
         {
             equippedSpells += $"[i:NeoParacosm/{spell.GetType().Name}] ";
         }
-        TooltipLine spellsLine2 = new TooltipLine(Mod, "NeoParacosm:Spells2", equippedSpells);
+        TooltipLine spellsLine2 = new TooltipLine(Mod, "NeoParacosm:EquippedSpells", equippedSpells);
         tooltips.Add(spellsLine2);
     }
 }

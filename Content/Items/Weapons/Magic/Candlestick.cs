@@ -4,11 +4,16 @@ using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 
 public class Candlestick : BaseCatalyst
 {
+    static readonly float fireDamageBoost = 15;
+    static readonly float fireSpeedBoost = 10;
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(fireDamageBoost, fireSpeedBoost);
+
     public override void SetStaticDefaults()
     {
         Item.staff[Type] = true;
@@ -31,6 +36,7 @@ public class Candlestick : BaseCatalyst
 
     public override void HoldItem(Player player)
     {
-        player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Fire] += 15f / 100f;
+        player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Fire] += fireDamageBoost / 100f;
+        player.NPCatalystPlayer().ElementalSpeedBoosts[BaseSpell.SpellElement.Fire] += fireSpeedBoost / 100f;
     }
 }

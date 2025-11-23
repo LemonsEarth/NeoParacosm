@@ -1,16 +1,17 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Core.Systems.Assets;
+using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
-namespace NeoParacosm.Content.Items.Weapons.Magic.Spells;
+namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 
 public class FireballSpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 12;
     public override Vector2 TargetVector => Main.MouseWorld;
-
+    
     public override void ShootBehaviour(Player player)
     {
         if (LemonUtils.NotClient())
@@ -32,5 +33,6 @@ public class FireballSpell : BaseSpell
         Item.height = 38;
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Green;
+        SpellElements = [SpellElement.Fire];
     }
 }

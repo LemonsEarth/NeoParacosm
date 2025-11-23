@@ -7,6 +7,8 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 public class GreatFireball : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
+    bool released = false;
+    Vector2 savedVelocity = Vector2.Zero;
 
     public override void SetStaticDefaults()
     {
@@ -19,7 +21,7 @@ public class GreatFireball : ModProjectile
         Projectile.width = 48;
         Projectile.height = 48;
         Projectile.friendly = true;
-        Projectile.timeLeft = 480;
+        Projectile.timeLeft = 720;
         Projectile.penetrate = 1;
         Projectile.Opacity = 0f;
         Projectile.usesLocalNPCImmunity = true;
@@ -37,8 +39,10 @@ public class GreatFireball : ModProjectile
         if (AITimer == 0)
         {
             SoundEngine.PlaySound(SoundID.Item20, Projectile.Center);
+            savedVelocity = Projectile.velocity;
+            Projectile.velocity = Vector2.Zero;
         }
-        if (AITimer < 20)
+        if (AITimer < 20 || !released)
         {
             Projectile.tileCollide = false;
         }
@@ -46,11 +50,42 @@ public class GreatFireball : ModProjectile
         {
             Projectile.tileCollide = true;
         }
-        Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.OrangeStainedGlass, Scale: 3f, newColor: Color.OrangeRed).noGravity = true;
-        Dust.NewDustDirect(Projectile.RandomPos( - 24, - 24), 2, 2, DustID.GemTopaz, Scale: 2f, newColor:Color.Yellow).noGravity = true;
+
+        float dustScaleOR = 0.75f;
+        float dustScaleYel = 0.5f;
+        if (released)
+        {
+            dustScaleOR = 3f;
+            dustScaleYel = 2f;
+        }
+        Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.OrangeStainedGlass, Scale: dustScaleOR, newColor: Color.OrangeRed).noGravity = true;
+        Dust.NewDustDirect(Projectile.RandomPos( - 24, - 24), 2, 2, DustID.GemTopaz, Scale: dustScaleYel, newColor:Color.Yellow).noGravity = true;
 
 
-        Projectile.velocity.Y += 0.1f;
+        Player player = Main.player[Projectile.owner];
+
+        if (!player.Alive() && !released)
+        {
+            Projectile.Kill();
+            return;
+        }
+
+        if ((!player.channel || AITimer >= 300) && !released)
+        {
+            released = true;
+            Projectile.velocity = savedVelocity * (Math.Clamp(AITimer, 0, 60) / 60f);
+        }
+
+        if (!released)
+        {
+            Projectile.velocity = Vector2.Zero;
+            Projectile.Center = player.Center;
+            player.SetDummyItemTime(player.NPCatalystPlayer().SelectedSpell.AttackCooldown);
+        }
+        else
+        {
+            Projectile.velocity.Y += 0.1f;
+        }
 
         AITimer++;
     }
