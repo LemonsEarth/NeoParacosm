@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Core.Players;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+using NeoParacosm.Core.Players;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -27,6 +28,16 @@ public static partial class LemonUtils
     public static NPArmorPlayer NPArmorPlayer(this Player player)
     {
         return player.GetModPlayer<NPArmorPlayer>();
+    }
+
+    public static float GetElementalDamageBoost(this Player player, BaseSpell.SpellElement element)
+    {
+        return player.NPCatalystPlayer().ElementalDamageBoosts[element];
+    }
+
+    public static float GetElementalExpertiseBoost(this Player player, BaseSpell.SpellElement element)
+    {
+        return player.NPCatalystPlayer().ElementalExpertiseBoosts[element];
     }
 
     public static bool HasAnyFireDebuff(this Player player)

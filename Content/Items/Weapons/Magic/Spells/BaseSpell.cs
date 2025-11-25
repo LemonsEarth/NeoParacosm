@@ -33,6 +33,7 @@ public abstract class BaseSpell : ModItem
         Ice,
         Earth,
         Lightning,
+        Nature,
         Holy,
         Dark
     }

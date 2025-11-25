@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using Terraria;
 using Terraria.Audio;
 
@@ -34,6 +35,7 @@ public class GreatFireball : ModProjectile
         target.AddBuff(BuffID.OnFire3, 180);
     }
 
+    int releasedTimer = 0;
     public override void AI()
     {
         if (AITimer == 0)
@@ -42,7 +44,7 @@ public class GreatFireball : ModProjectile
             savedVelocity = Projectile.velocity;
             Projectile.velocity = Vector2.Zero;
         }
-        if (AITimer < 20 || !released)
+        if ((releasedTimer < 30 && released) || !released)
         {
             Projectile.tileCollide = false;
         }
@@ -57,10 +59,10 @@ public class GreatFireball : ModProjectile
         {
             dustScaleOR = 3f;
             dustScaleYel = 2f;
+            releasedTimer++;
         }
         Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.OrangeStainedGlass, Scale: dustScaleOR, newColor: Color.OrangeRed).noGravity = true;
-        Dust.NewDustDirect(Projectile.RandomPos( - 24, - 24), 2, 2, DustID.GemTopaz, Scale: dustScaleYel, newColor:Color.Yellow).noGravity = true;
-
+        Dust.NewDustDirect(Projectile.RandomPos(-24, -24), 2, 2, DustID.GemTopaz, Scale: dustScaleYel, newColor: Color.Yellow).noGravity = true;
 
         Player player = Main.player[Projectile.owner];
 
@@ -70,10 +72,18 @@ public class GreatFireball : ModProjectile
             return;
         }
 
-        if ((!player.channel || AITimer >= 300) && !released)
+        int baseTimeToFire = 300;
+        float fireSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Fire];
+        int minTimeToFire = 60;
+        int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (fireSpeedBoost - 1))), minTimeToFire);
+        if ((!player.channel || AITimer >= timeAdjusted) && !released)
         {
             released = true;
-            Projectile.velocity = savedVelocity * (Math.Clamp(AITimer, 0, 60) / 60f);
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Projectile.velocity = player.DirectionTo(Main.MouseWorld) * savedVelocity.Length() * (Math.Clamp(AITimer, 0, timeAdjusted) / (float)timeAdjusted);
+            }
+            Projectile.netUpdate = true;
         }
 
         if (!released)
@@ -88,6 +98,12 @@ public class GreatFireball : ModProjectile
         }
 
         AITimer++;
+    }
+
+    public override bool? CanHitNPC(NPC target)
+    {
+        if (!released) return false;
+        else return null;
     }
 
     public override void OnKill(int timeLeft)

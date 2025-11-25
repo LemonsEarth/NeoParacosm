@@ -9,8 +9,20 @@ namespace NeoParacosm.Core.Players;
 
 public class NPCatalystPlayer : ModPlayer
 {
+    /// <summary>
+    /// Damage boosts for each spell element type.
+    /// Each is set to 0 at the start of every Update.
+    /// Value is a percentage, so 1f would be a 100% damage increase.
+    /// </summary>
     public Dictionary<BaseSpell.SpellElement, float> ElementalDamageBoosts = new Dictionary<BaseSpell.SpellElement, float>();
-    public Dictionary<BaseSpell.SpellElement, float> ElementalSpeedBoosts = new Dictionary<BaseSpell.SpellElement, float>();
+
+    /// <summary>
+    /// Speed, Projectile amount, knockback and other misc boosts for each spell element type.
+    /// Expertise affects each spell differently, if at all.
+    /// Each is set to 1 at the start of every Update.
+    /// Value is a percentage, so 2f could be a 100% speed increase.
+    /// </summary>
+    public Dictionary<BaseSpell.SpellElement, float> ElementalExpertiseBoosts = new Dictionary<BaseSpell.SpellElement, float>();
 
     public List<BaseSpell> EquippedSpells { get; private set; } = new List<BaseSpell>();
     public BaseSpell SelectedSpell => (SelectedSpellIndex < 0) ? null : EquippedSpells[SelectedSpellIndex];
@@ -82,7 +94,7 @@ public class NPCatalystPlayer : ModPlayer
 
         foreach (BaseSpell.SpellElement spellDamageType in elementsArray)
         {
-            ElementalSpeedBoosts[spellDamageType] = 1f;
+            ElementalExpertiseBoosts[spellDamageType] = 1f;
         }
     }
 

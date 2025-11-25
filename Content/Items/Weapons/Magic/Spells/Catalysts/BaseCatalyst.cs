@@ -6,7 +6,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Weapons.Magic;
+namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 
 public abstract class BaseCatalyst : ModItem
 {
@@ -49,7 +49,7 @@ public abstract class BaseCatalyst : ModItem
 
     public override float UseSpeedMultiplier(Player player)
     {
-        return ((float)Item.useTime / (player.NPCatalystPlayer().SelectedSpell.AttackCooldown + Item.useTime));
+        return (float)Item.useTime / (player.NPCatalystPlayer().SelectedSpell.AttackCooldown + Item.useTime);
     }
 
     public override void ModifyManaCost(Player player, ref float reduce, ref float mult)

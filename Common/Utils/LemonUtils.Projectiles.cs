@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.GameContent;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -7,6 +9,11 @@ namespace NeoParacosm.Common.Utils;
 /// </summary>
 public static partial class LemonUtils
 {
+    public static Player GetOwner(this Projectile projectile)
+    {
+        return Main.player[projectile.owner];
+    }
+
     public static Projectile QuickProj(Projectile proj, Vector2 position, Vector2 velocity, int type, float damage = -1, float knockback = 1, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
     {
         if (damage == -1) damage = proj.damage;
@@ -18,6 +25,19 @@ public static partial class LemonUtils
     {
         if (damage == -1) damage = npc.damage;
         return Projectile.NewProjectileDirect(npc.GetSource_FromThis(), position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
+    }
+
+    public static void DrawAfterimages(this Projectile Projectile, Color lightColor, float opacityMultiplier = 1f)
+    {
+        Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+
+        Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
+        for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+        {
+            Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+            Color color = (Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length)) * opacityMultiplier;
+            Main.EntitySpriteDraw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+        }
     }
 
     /// <summary>

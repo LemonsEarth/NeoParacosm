@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using Terraria;
 using Terraria.Audio;
 
@@ -55,17 +56,18 @@ public class DarkBlast : ModProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Granite, Scale:dustScaleBlack, newColor: Color.Black).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond, Scale: dustScaleWhite).noGravity = true;
 
+        Player player = Main.player[Projectile.owner];
+
         if (releasedTimer == 600)
         {
             Projectile.velocity = savedVelocity;
         }
         if (releasedTimer == 1200)
         {
-            Projectile.velocity *= 10;
-            SoundEngine.PlaySound(SoundID.Zombie53 with { Volume = 0.4f, PitchRange = (-0.6f, -0.4f)}, Projectile.Center);
+            Projectile.velocity *= 10 * player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Dark];
+            SoundEngine.PlaySound(SoundID.Zombie53 with { Volume = 0.2f, PitchRange = (-1f, -0.8f)}, Projectile.Center);
         }
 
-        Player player = Main.player[Projectile.owner];
 
         if (!player.Alive() && !released)
         {
@@ -94,6 +96,12 @@ public class DarkBlast : ModProjectile
         }
 
         AITimer++;
+    }
+
+    public override bool? CanHitNPC(NPC target)
+    {
+        if (!released) return false;
+        else return null;
     }
 
     public override void OnKill(int timeLeft)

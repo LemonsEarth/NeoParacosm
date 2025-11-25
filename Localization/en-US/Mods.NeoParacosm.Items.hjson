@@ -303,24 +303,24 @@ AscendedShadowScalemail: {
 
 Gravesword: {
 	DisplayName: Gravesword
-	Tooltip:
+	Tooltip: Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
+	NPLore:
 		'''
-		Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
-		[c/666666:A dull blade, made out of shattered tombstone, imbued with deathflame.]
-		[c/666666:It is said that tombstones hold the spirits of those who passed.]
-		[c/666666:Within that pale stone, deathflame may burn eternally.]
+				[c/666666:A dull blade, made out of shattered tombstone, imbued with deathflame.]
+			[c/666666:It is said that tombstones hold the spirits of those who passed.]
+			[c/666666:Within that pale stone, deathflame may burn eternally.]
 		'''
 }
 
 DeathTolls: {
 	DisplayName: Death Tolls
-	Tooltip:
+	Tooltip: Fires homing Deathflame Balls
+	NPLore:
 		'''
-		Fires homing Deathflame Balls
-		[c/666666:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
-		[c/666666:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
-		[c/666666:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
-		[c/666666:Death does not follow rules an individual imposes, mortal or Divine.]
+				[c/666666:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
+			[c/666666:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
+			[c/666666:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
+			[c/666666:Death does not follow rules an individual imposes, mortal or Divine.]
 		'''
 }
 
@@ -330,10 +330,13 @@ LamentOfTheLate: {
 		'''
 		Fires an arrow into the sky
 		A barrage of arrows soon falls around your mouse cursor
-		[c/666666:A bow comprised of two arms and an unknown, string-like material.]
-		[c/666666:Its origins are unknown, though it appears to have been created prior to the collapse.]
-		[c/666666:The two arms have been identified to belong to different people, possibly of divine heritage.]
-		[c/666666:Symbolizes an inseparable bond, beyond space, time and death.]
+		'''
+	NPLore:
+		'''
+				[c/666666:A bow comprised of two arms and an unknown, string-like material.]
+			[c/666666:Its origins are unknown, though it appears to have been created prior to the collapse.]
+			[c/666666:The two arms have been identified to belong to different people, possibly of divine heritage.]
+			[c/666666:Symbolizes an inseparable bond, beyond space, time and death.]
 		'''
 }
 
@@ -396,13 +399,13 @@ WaterfallerStaff: {
 
 StarecrowStaff: {
 	DisplayName: Aberrant Deathbird Staff
-	Tooltip:
+	Tooltip: Summons Starecrows to fight for you
+	NPLore:
 		'''
-		Summons Starecrows to fight for you
-		[c/666666:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
-		[c/666666:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
-		[c/666666:Aberrant Deathbirds are the last of these flighted terrors.]
-		[c/666666:Also known as Starecrows, due to their curious behaviour.]
+				[c/666666:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
+			[c/666666:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
+			[c/666666:Aberrant Deathbirds are the last of these flighted terrors.]
+			[c/666666:Also known as Starecrows, due to their curious behaviour.]
 		'''
 }
 
@@ -413,10 +416,13 @@ RuneOfExtinction: {
 		Killing an enemy heals you for 20 hp
 		This effect has a 0.25s cooldown
 		Each enemy kill contributes 2x banner progress
-		[c/666666:One of the sacred runes granted to powerful beings.]
-		[c/666666:This rune was entrusted to those who were tasked with extermination of large populations.]
-		[c/666666:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
-		[c/666666:And so they were aptly named "Vessels of Extinction".]
+		'''
+	NPLore:
+		'''
+				[c/666666:One of the sacred runes granted to powerful beings.]
+			[c/666666:This rune was entrusted to those who were tasked with extermination of large populations.]
+			[c/666666:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
+			[c/666666:And so they were aptly named "Vessels of Extinction".]
 		'''
 }
 
@@ -428,10 +434,13 @@ RuneOfPeridition: {
 		Increases damage by 10%
 		Reduces defense by 10%
 		Increases aggro
-		[c/666666:A fragment of a sacred rune granted to powerful beings.]
-		[c/666666:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
-		[c/666666:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
-		[c/666666:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
+		'''
+	NPLore:
+		'''
+				[c/666666:A fragment of a sacred rune granted to powerful beings.]
+			[c/666666:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
+			[c/666666:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
+			[c/666666:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
 		'''
 }
 
@@ -523,43 +532,63 @@ SpellTemplate: {
 FireballSpell: {
 	DisplayName: Fireball
 	Tooltip:
-	'''
-	Lobs a deadly fireball that lights enemies ablaze
-	Charging increases distance travelled
-	[c/FF5833:Before the Great Forge was constructed, the citizens of the Underworld were scorned and feared.]
-	[c/FF5833:Beings of Primal Flame were believed to reside down there.]
-	[c/FF5833:In response to the people's prayers, they granted them the power create fire from their own essence.]
-	'''
+		'''
+		Lobs a deadly fireball that lights enemies ablaze
+		Charging increases distance travelled
+		'''
+	NPLore:
+		'''
+		[c/FF5833:Before the Great Forge was constructed, the citizens of the Underworld were scorned and feared.]
+		[c/FF5833:Beings of Primal Flame were believed to reside down there.]
+		[c/FF5833:In response to the people's prayers, they granted them the power to create fire from their very own essence.]
+		'''
 }
 
 Candlestick: {
 	DisplayName: Candlestick
-	Tooltip: 
-	'''
-	Increases fire spell damage by {0}%
-	Increases fire spell efficiency by {1}%
-	'''
+	Tooltip:
+		'''
+		Increases fire spell damage by {0}%
+		Increases fire spell expertise by {1}%
+		'''
 }
 
 GreatFireballSpell: {
 	DisplayName: Great Fireball
 	Tooltip:
-	'''
-	Lobs a deadly fireball that scorches away sentience
-	Charging increases distance travelled
-	[c/FF5833:A symbol of mastery over fire.]
-	[c/FF5833:Spells such as this one made the climb from the bottom of the world possible.]
-	'''
+		'''
+		Lobs a deadly fireball that scorches away sentience
+		Charging increases distance travelled
+		'''
+	NPLore:
+		'''
+		[c/FF5833:A symbol of mastery over fire.]
+		[c/FF5833:Spells such as this one made the climb from the bottom of the world possible.]
+		'''
 }
-
 
 DarkRendSpell: {
 	DisplayName: Dark Rend
 	Tooltip:
-	'''
-	Casts forth a burst of dark magic
-	Charging allows the blasts to pierce through enemies
-	[c/666666:It is said all dark magic draws power from a Greater Being.]
-	[c/666666:Parts of said being are ripped from it violently and used in these forbidden rituals.]
-	'''
+		'''
+		Casts forth a burst of dark magic
+		Charging allows the blasts to pierce through enemies
+		'''
+	NPLore:
+		'''
+		[c/666666:It is said all dark magic draws power from a Greater Being.]
+		[c/666666:Parts of said being are ripped from it violently and used in these forbidden rituals.]
+		'''
+}
+
+LoreTemplate.Inspect: "[c/666666:Hold the Inspect key to inspect]"
+
+LeafSpell: {
+	DisplayName: Leaf Spell
+	Tooltip: ""
+}
+
+DarkSpearSpell: {
+	DisplayName: Dark Spear Spell
+	Tooltip: ""
 }
