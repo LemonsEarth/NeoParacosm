@@ -10,11 +10,11 @@ public class GreatFireballSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 36;
-    public override Vector2 TargetVector => Main.MouseWorld;
+    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
 
-
-    public override void ShootBehaviour(Player player)
+    public override void SpellAction(Player player)
     {
+        TargetVector = Main.MouseWorld;
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center, 

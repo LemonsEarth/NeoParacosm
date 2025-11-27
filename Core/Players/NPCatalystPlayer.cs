@@ -5,6 +5,7 @@ using NeoParacosm.Core.Systems.Misc;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ModLoader.IO;
 namespace NeoParacosm.Core.Players;
 
 public class NPCatalystPlayer : ModPlayer
@@ -24,6 +25,24 @@ public class NPCatalystPlayer : ModPlayer
     /// </summary>
     public Dictionary<BaseSpell.SpellElement, float> ElementalExpertiseBoosts = new Dictionary<BaseSpell.SpellElement, float>();
 
+    public const int BASE_SPELL_SLOTS = 3;
+    public int maxSpellSlots = 3;
+
+    public override void Initialize()
+    {
+        maxSpellSlots = BASE_SPELL_SLOTS;
+    }
+
+    public override void SaveData(TagCompound tag)
+    {
+        tag[nameof(maxSpellSlots)] = maxSpellSlots;
+    }
+
+    public override void LoadData(TagCompound tag)
+    {
+        maxSpellSlots = tag.GetInt(nameof(maxSpellSlots));
+    }
+
     public List<BaseSpell> EquippedSpells { get; private set; } = new List<BaseSpell>();
     public BaseSpell SelectedSpell => (SelectedSpellIndex < 0) ? null : EquippedSpells[SelectedSpellIndex];
     public int SelectedSpellIndex { get; private set; } = -1;
@@ -33,7 +52,15 @@ public class NPCatalystPlayer : ModPlayer
         int foundSpell = EquippedSpells.IndexOf(EquippedSpells.Find(sp => sp.Type == spell.Type));
         if (foundSpell == -1)
         {
-            EquippedSpells.Add(spell);
+            if (EquippedSpells.Count < maxSpellSlots)
+            {
+                EquippedSpells.Add(spell);
+            }
+            else
+            {
+                RemoveSpell(EquippedSpells[EquippedSpells.Count - 1]);
+                EquippedSpells.Add(spell);
+            }
             SelectedSpellIndex = EquippedSpells.Count - 1;
         }
         else

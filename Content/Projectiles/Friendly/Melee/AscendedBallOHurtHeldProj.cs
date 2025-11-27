@@ -44,7 +44,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
             for (int i = 0; i < chargeCount; i++)
             {
                 Vector2 pos = target.Center + new Vector2(Main.rand.NextFloat(-100, 100), -500);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<Lightning>(), Projectile.damage / 3, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<PurpleLightning>(), Projectile.damage / 3, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
             }
         }
     }

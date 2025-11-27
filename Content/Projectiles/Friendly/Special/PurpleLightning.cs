@@ -8,7 +8,7 @@ using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public class RedLightning : ModProjectile
+public class PurpleLightning : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
 
@@ -84,6 +84,8 @@ public class RedLightning : ModProjectile
     {
         if (AITimer == 0)
         {
+            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
+            Main.instance.CameraModifiers.Add(mod1);
             originalPos = Projectile.Center;
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f });
             SoundEngine.PlaySound(SoundID.Thunder with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f });
@@ -108,7 +110,7 @@ public class RedLightning : ModProjectile
                 Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 8));
                 Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 8));
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.Granite, randVector.X, randVector.Y, newColor: Color.Black, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
-                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemRuby, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
+                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemAmethyst, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
             }
         }
         Projectile.velocity = Vector2.Zero;
@@ -129,7 +131,7 @@ public class RedLightning : ModProjectile
     public override void OnKill(int timeLeft)
     {
 
-        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.Red);
+        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.DarkSlateBlue);
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -139,8 +141,8 @@ public class RedLightning : ModProjectile
         VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
         VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
         {
-            //Color color = Main.rand.NextBool(10) ? Color.White : Color.Red;
-            return new VertexPositionColorTexture(new Vector3(pos, 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+            //Color color = Main.rand.NextBool(10) ? Color.White : Color.DarkSlateBlue;
+            return new VertexPositionColorTexture(new Vector3(pos, 0), Color.Magenta * Projectile.Opacity, Vector2.Zero);
         }
         for (int i = 0; i < quadCount; i += 1)
         {
@@ -160,18 +162,18 @@ public class RedLightning : ModProjectile
         }
         //for (int i = 0; i < positions.Length; i += 1)
         //{
-        //    Color color = i % 2 == 0 ? Color.Red : new Color(130, 120, 200, 255);
+        //    Color color = i % 2 == 0 ? Color.DarkSlateBlue : new Color(130, 120, 200, 255);
         //    if (i < 3)
         //    {
-        //        vertices[i] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 1] = new VertexPositionColorTexture(new Vector3(positions[i + 1], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 2] = new VertexPositionColorTexture(new Vector3(positions[i + 2], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i + 1] = new VertexPositionColorTexture(new Vector3(positions[i + 1], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i + 2] = new VertexPositionColorTexture(new Vector3(positions[i + 2], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
         //    }
         //    else
         //    {
-        //        vertices[i * 3] = new VertexPositionColorTexture(new Vector3(positions[i - 2], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 1] = new VertexPositionColorTexture(new Vector3(positions[i - 1], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 2] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Red * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i * 3] = new VertexPositionColorTexture(new Vector3(positions[i - 2], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i * 3 + 1] = new VertexPositionColorTexture(new Vector3(positions[i - 1], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
+        //        vertices[i * 3 + 2] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.DarkSlateBlue * Projectile.Opacity, Vector2.Zero);
         //    }
         //}
         BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
@@ -186,9 +188,9 @@ public class RedLightning : ModProjectile
         for (int i = 0; i < 2; i++)
         {
             float circleOpacity = Projectile.Opacity + 0.2f;
-            LemonUtils.DrawGlow(originalPos, Color.Red, circleOpacity, 2f);
+            LemonUtils.DrawGlow(originalPos, Color.DarkBlue, circleOpacity, 2f);
             LemonUtils.DrawGlow(originalPos, Color.Black, circleOpacity, 1f);
-            LemonUtils.DrawGlow(positions.Last(), Color.Red, circleOpacity, 0.5f);
+            LemonUtils.DrawGlow(positions.Last(), Color.DarkBlue, circleOpacity, 0.5f);
             LemonUtils.DrawGlow(positions.Last(), Color.Black, circleOpacity, 1f);
         }
 

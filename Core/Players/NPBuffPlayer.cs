@@ -95,6 +95,11 @@ public class NPBuffPlayer : ModPlayer
         {
             bofBuffTimer--;
         }
+
+        if (Player.HasBuff(BuffType<BeFuelDebuff>()))
+        {
+            Dust.NewDustDirect(Player.RandomPos(8, 8), 2, 2, DustID.OrangeStainedGlass, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-4, -0.5f)).noGravity = true;
+        }
     }
 
     public override void PostUpdateEquips()
@@ -125,6 +130,11 @@ public class NPBuffPlayer : ModPlayer
         if (Player.HasBuff(BuffType<DeathflameDebuff>()))
         {
             DOTDebuff((int)(Player.statLifeMax2 * 0.07f));
+        }
+
+        if (Player.HasBuff(BuffType<BeFuelDebuff>()))
+        {
+            DOTDebuff(15);
         }
 
         if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))

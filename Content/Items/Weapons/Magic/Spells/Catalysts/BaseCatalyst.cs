@@ -43,7 +43,7 @@ public abstract class BaseCatalyst : ModItem
         {
             return false;
         }
-        cp.SelectedSpell.ShootBehaviour(player);
+        cp.SelectedSpell.SpellAction(player);
         return false;
     }
 
@@ -65,7 +65,7 @@ public abstract class BaseCatalyst : ModItem
         TooltipLine catalystLine = new TooltipLine(Mod, "NeoParacosm:CatalystDescription", Language.GetTextValue("Mods.NeoParacosm.Items.CatalystTemplate.Description"));
         tooltips.Add(catalystLine);
 
-        TooltipLine spellsLine = new TooltipLine(Mod, "NeoParacosm:Spells", Language.GetTextValue("Mods.NeoParacosm.Items.CatalystTemplate.EquippedSpells"));
+        TooltipLine spellsLine = new TooltipLine(Mod, "NeoParacosm:Spells", Language.GetTextValue("Mods.NeoParacosm.Items.CatalystTemplate.EquippedSpells", Main.LocalPlayer.NPCatalystPlayer().maxSpellSlots));
         tooltips.Add(spellsLine);
 
         if (Main.LocalPlayer.NPCatalystPlayer().EquippedSpells.Count == 0)

@@ -23,7 +23,7 @@ public class NPPlayer : ModPlayer
     }
 
     public override void PostUpdate()
-    {       
+    {
         //LemonUtils.DebugPlayerCenter(Player);
         //Main.NewText("World Surface: " + (int)Main.worldSurface);
         //Main.NewText(WorldDataSystem.ResearcherQuestProgress);
@@ -54,8 +54,8 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
-        ScreenShaderData datan = Filters.Scene.Activate("NeoParacosm:NauseaShader").GetShader();
-        datan.Shader.Parameters["time"].SetValue(timer);
+        //ScreenShaderData datan = Filters.Scene.Activate("NeoParacosm:NauseaShader").GetShader();
+        //datan.Shader.Parameters["time"].SetValue(timer);
         if (Player.InModBiome<DeadForestBiome>())
         {
             desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);

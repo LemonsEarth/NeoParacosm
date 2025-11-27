@@ -22,8 +22,8 @@ public abstract class BaseSpell : ModItem
     /// <summary>
     /// Vector that controls in what direction the catalyst will be pointing
     /// </summary>
-    public abstract Vector2 TargetVector { get; }
-    public abstract void ShootBehaviour(Player player);
+    public abstract Vector2 TargetVector { get; set; }
+    public abstract void SpellAction(Player player);
 
     public enum SpellElement
     {

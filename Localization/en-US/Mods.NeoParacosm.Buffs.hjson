@@ -86,3 +86,13 @@ LightsBaneDebuff2: {
 	DisplayName: Lights Bane Debuff2
 	Description: Mods.NeoParacosm.Buffs.LightsBaneDebuff2.Description
 }
+
+BeFuelDebuff: {
+	DisplayName: Be Fuel Debuff
+	Description: Mods.NeoParacosm.Buffs.BeFuelDebuff.Description
+}
+
+GoldenHeartBuff: {
+	DisplayName: Golden Heart Buff
+	Description: Mods.NeoParacosm.Buffs.GoldenHeartBuff.Description
+}

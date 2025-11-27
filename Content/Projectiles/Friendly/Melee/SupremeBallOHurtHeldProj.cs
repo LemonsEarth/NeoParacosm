@@ -44,7 +44,7 @@ public class SupremeBallOHurtHeldProj : ModProjectile
             for (int i = 0; i < chargeCount * 2; i++)
             {
                 Vector2 pos = target.Center + new Vector2(Main.rand.NextFloat(-200, 200), -450);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<Lightning>(), Projectile.damage / 4, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<PurpleLightning>(), Projectile.damage / 4, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
             }
         }
 

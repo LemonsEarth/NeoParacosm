@@ -306,9 +306,9 @@ Gravesword: {
 	Tooltip: Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
 	NPLore:
 		'''
-				[c/666666:A dull blade, made out of shattered tombstone, imbued with deathflame.]
-			[c/666666:It is said that tombstones hold the spirits of those who passed.]
-			[c/666666:Within that pale stone, deathflame may burn eternally.]
+				[c/888888:A dull blade, made out of shattered tombstone, imbued with deathflame.]
+			[c/888888:It is said that tombstones hold the spirits of those who passed.]
+			[c/888888:Within that pale stone, deathflame may burn eternally.]
 		'''
 }
 
@@ -317,10 +317,10 @@ DeathTolls: {
 	Tooltip: Fires homing Deathflame Balls
 	NPLore:
 		'''
-				[c/666666:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
-			[c/666666:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
-			[c/666666:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
-			[c/666666:Death does not follow rules an individual imposes, mortal or Divine.]
+				[c/888888:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
+			[c/888888:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
+			[c/888888:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
+			[c/888888:Death does not follow rules an individual imposes, mortal or Divine.]
 		'''
 }
 
@@ -333,10 +333,10 @@ LamentOfTheLate: {
 		'''
 	NPLore:
 		'''
-				[c/666666:A bow comprised of two arms and an unknown, string-like material.]
-			[c/666666:Its origins are unknown, though it appears to have been created prior to the collapse.]
-			[c/666666:The two arms have been identified to belong to different people, possibly of divine heritage.]
-			[c/666666:Symbolizes an inseparable bond, beyond space, time and death.]
+				[c/888888:A bow comprised of two arms and an unknown, string-like material.]
+			[c/888888:Its origins are unknown, though it appears to have been created prior to the collapse.]
+			[c/888888:The two arms have been identified to belong to different people, possibly of divine heritage.]
+			[c/888888:Symbolizes an inseparable bond, beyond space, time and death.]
 		'''
 }
 
@@ -402,10 +402,10 @@ StarecrowStaff: {
 	Tooltip: Summons Starecrows to fight for you
 	NPLore:
 		'''
-				[c/666666:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
-			[c/666666:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
-			[c/666666:Aberrant Deathbirds are the last of these flighted terrors.]
-			[c/666666:Also known as Starecrows, due to their curious behaviour.]
+				[c/888888:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
+			[c/888888:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
+			[c/888888:Aberrant Deathbirds are the last of these flighted terrors.]
+			[c/888888:Also known as Starecrows, due to their curious behaviour.]
 		'''
 }
 
@@ -419,10 +419,10 @@ RuneOfExtinction: {
 		'''
 	NPLore:
 		'''
-				[c/666666:One of the sacred runes granted to powerful beings.]
-			[c/666666:This rune was entrusted to those who were tasked with extermination of large populations.]
-			[c/666666:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
-			[c/666666:And so they were aptly named "Vessels of Extinction".]
+				[c/888888:One of the sacred runes granted to powerful beings.]
+			[c/888888:This rune was entrusted to those who were tasked with extermination of large populations.]
+			[c/888888:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
+			[c/888888:And so they were aptly named "Vessels of Extinction".]
 		'''
 }
 
@@ -437,10 +437,10 @@ RuneOfPeridition: {
 		'''
 	NPLore:
 		'''
-				[c/666666:A fragment of a sacred rune granted to powerful beings.]
-			[c/666666:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
-			[c/666666:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
-			[c/666666:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
+				[c/888888:A fragment of a sacred rune granted to powerful beings.]
+			[c/888888:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
+			[c/888888:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
+			[c/888888:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
 		'''
 }
 
@@ -515,7 +515,7 @@ CatalystTemplate: {
 		[c/FFC400:This item is a Catalyst.]
 		[c/FFC400:Catalysts are used to cast Spells.]
 		'''
-	EquippedSpells: "[c/FFC400:Equipped Spells: ]"
+	EquippedSpells: "[c/FFC400:Equipped Spells (Max: {0}): ]"
 	None: "[c/FFC400:None]"
 }
 
@@ -576,19 +576,85 @@ DarkRendSpell: {
 		'''
 	NPLore:
 		'''
-		[c/666666:It is said all dark magic draws power from a Greater Being.]
-		[c/666666:Parts of said being are ripped from it violently and used in these forbidden rituals.]
+		[c/888888:It is said all dark magic draws power from a Greater Being.]
+		[c/888888:Parts of said being are ripped from it violently and used in these forbidden rituals.]
 		'''
 }
 
-LoreTemplate.Inspect: "[c/666666:Hold the Inspect key to inspect]"
+LoreTemplate.Inspect: "[c/888888:Hold the Inspect key to inspect]"
 
 LeafSpell: {
-	DisplayName: Leaf Spell
-	Tooltip: ""
+	DisplayName: Leaf Array
+	Tooltip: Conjure leaves from the ground and hurl them at enemies
+	NPLore:
+		'''
+		[c/00FF00: One of the most basic, yet useful spells.]
+		[c/00FF00: Many opponents fall the moment they realize why a forest is a caster's domain.]
+		'''
 }
 
 DarkSpearSpell: {
-	DisplayName: Dark Spear Spell
+	DisplayName: Dark Spear
+	Tooltip:
+		'''
+		Fire off a dark spear
+		Charging increases potency
+		'''
+	NPLore:
+		'''
+		[c/888888:During the Dark Rising Incident, spears such as this one would be shot from the very shadows beneath warriors.]
+		[c/888888:This is when people realised fighting total darkness with traditional means was impossible.]
+		'''
+}
+
+StarStone: {
+	DisplayName: Star Stone
 	Tooltip: ""
+	NPLore:
+		'''
+		[c/888888:A common stone imbued with starpower.]
+		[c/888888:A catalyst for the most amateur casters.]
+		[c/888888:A segment of the star is still poking out, which may be used to damage incoming foes as a last resort.]
+		'''
+}
+
+RestoreManaSpell: {
+	DisplayName: Restore Mana
+	Tooltip: Restores mana at the cost of HP
+	NPLore:
+		'''
+		[c/888888:Wielders of dark magic are known to go mad for power.]
+		[c/888888:This spell was created as a result of their greed and gluttony.]
+		'''
+}
+
+BeFuelSpell: {
+	DisplayName: Be Fuel
+	Tooltip: Light yourself ablaze, increasing all damage, as well as fire damage and expertise
+	NPLore: "[c/FF5833:When absolute power is needed, anything can become fuel.]"
+}
+
+GoldenHeartSpell: {
+	DisplayName: My Golden Heart
+	Tooltip:
+		'''
+		Increases damage, critical strike chance, defense and damage reduction
+		Increases buff depletion rate
+		'''
+	NPLore:
+		'''
+		[c/FFFF00:It is said that once every 1000 years, a creature would be born with a Golden Heart.]
+		[c/FFFF00:The Golden Heart protects its bearer from all external phenomena.]
+		[c/FFFF00:This spell was created in an attempt to replicate this divine blessing.]
+		'''
+}
+
+LightningStrikeSpell: {
+	DisplayName: Lightning Strike Spell
+	Tooltip: Casts a lightning bolt from the sky
+	NPLore:
+		'''
+		[c/FFAA00:Lands without faith relied on fire and lightning to ward off forces of the dark depths.]
+		[c/FFAA00:Though the light emitted is fairly ordinary, their destructive potential proved sufficient.]
+		'''
 }

@@ -69,6 +69,7 @@ public class LeafProjectile : ModProjectile
     public override void OnKill(int timeLeft)
     {
         //SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+        SoundEngine.PlaySound(SoundID.Grass with { PitchRange = (-0.1f, 0.1f) }, Projectile.Center);
         Dust.NewDust(Projectile.Center, 2, 2, DustID.GrassBlades, Projectile.velocity.X / 2, Projectile.velocity.Y / 2);
     }
 
