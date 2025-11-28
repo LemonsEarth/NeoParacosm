@@ -697,13 +697,10 @@ ManaGuardSpell: {
 
 MagicLanternSpell: {
 	DisplayName: Magic Lantern Spell
-	Tooltip:
-	'''
-	Cast forth a sphere of light that decays over time
-	'''
+	Tooltip: Cast forth a sphere of light that decays over time
 	NPLore:
-	'''
-	[c/78ACFF:Created to make harvesting minerals a lot easier.]
-	[c/78ACFF:Unfortunately most miners lacked the intelligence to use it.]
-	'''
+		'''
+		[c/78ACFF:Created to make harvesting minerals a lot easier.]
+		[c/78ACFF:Unfortunately most miners lacked the intelligence to use it.]
+		'''
 }
