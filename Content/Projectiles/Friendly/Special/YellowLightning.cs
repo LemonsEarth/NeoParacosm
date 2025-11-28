@@ -72,6 +72,7 @@ public class YellowLightning : ModProjectile
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
+        Projectile.tileCollide = false;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -94,6 +95,7 @@ public class YellowLightning : ModProjectile
 
             bool flip = true;
             int i = 0;
+
             while (Projectile.Center.Distance(targetPos) > 32)
             {
                 Vector2 normalVector = projToPos.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);

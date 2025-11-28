@@ -96,3 +96,13 @@ GoldenHeartBuff: {
 	DisplayName: Golden Heart Buff
 	Description: Mods.NeoParacosm.Buffs.GoldenHeartBuff.Description
 }
+
+MagicGuardBuff: {
+	DisplayName: Magic Guard Buff
+	Description: Mods.NeoParacosm.Buffs.MagicGuardBuff.Description
+}
+
+ManaGuardBuff: {
+	DisplayName: Mana Guard Buff
+	Description: Mods.NeoParacosm.Buffs.ManaGuardBuff.Description
+}

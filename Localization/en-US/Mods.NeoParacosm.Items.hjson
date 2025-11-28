@@ -658,3 +658,52 @@ LightningStrikeSpell: {
 		[c/FFAA00:Though the light emitted is fairly ordinary, their destructive potential proved sufficient.]
 		'''
 }
+
+MagicStarsSpell: {
+	DisplayName: Magic Stars
+	Tooltip: Summons 3 magic stars that follow you and attack nearby enemies
+	NPLore:
+		'''
+		[c/78ACFF:A basic spell taught to novice sorcerers.]
+		[c/78ACFF:Useful in pretty much any scenario, it is one of the few spells with enough utility to be used by common infantry.]
+		[c/78ACFF:It is unknown how the magic stars find and chase targets on their own.]
+		'''
+}
+
+MagicGuardSpell: {
+	DisplayName: Magic Guard
+	Tooltip: Temporarily increases defense and damage reduction
+	NPLore:
+		'''
+		[c/78ACFF:The most basic defensive spell there is.]
+		[c/78ACFF:The first step for many novice sorcerers, this spell can still prove useful even for experienced mages.]
+		'''
+}
+
+ManaGuardSpell: {
+	DisplayName: Mana Guard
+	Tooltip:
+		'''
+		Greatly increases defense and damage reduction
+		Taking damage consumes mana
+		Increases damage taken based on missing mana
+		'''
+	NPLore:
+		'''
+		[c/78ACFF:During the First Mage Uprising, sorcerers found common spells being utilized by their thickheaded enemies.]
+		[c/78ACFF:As such, they developed powerful defensive spells that would not only be useful for them, but also useless for their opponents.]
+		'''
+}
+
+MagicLanternSpell: {
+	DisplayName: Magic Lantern Spell
+	Tooltip:
+	'''
+	Cast forth a sphere of light that decays over time
+	'''
+	NPLore:
+	'''
+	[c/78ACFF:Created to make harvesting minerals a lot easier.]
+	[c/78ACFF:Unfortunately most miners lacked the intelligence to use it.]
+	'''
+}

@@ -135,5 +135,15 @@ public class NPCatalystPlayer : ModPlayer
         {
             CycleSpells(-1);
         }
+
+        foreach (var spellElement in ElementalExpertiseBoosts.Keys)
+        {
+            ElementalExpertiseBoosts[spellElement] *= (1 - Player.manaSickReduction);
+        }
+
+        foreach (var spellElement in ElementalDamageBoosts.Keys)
+        {
+            ElementalDamageBoosts[spellElement] *= (1 - Player.manaSickReduction);
+        }
     }
 }

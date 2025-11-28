@@ -17,6 +17,14 @@ public class RestoreManaSpell : BaseSpell
         float boostAdjusted = 1 + (player.GetElementalExpertiseBoost(SpellElement.Dark) - 1) * 3;
         player.RestoreMana((int)(30 * MathF.Max(boostAdjusted, 0)));
         player.statLife -= 7;
+        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.3f, 0.5f) }, player.Center);
+        for (int j = 0; j < 3; j++)
+        {
+            Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
+            Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
+            Dust.NewDustDirect(player.RandomPos(), 2, 2, DustID.GemSapphire, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.0f, 1.4f)).noGravity = true;
+            Dust.NewDustDirect(player.RandomPos(), 2, 2, DustID.IceTorch, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.0f, 1.4f)).noGravity = true;
+        }
     }
 
     public override void SetDefaults()

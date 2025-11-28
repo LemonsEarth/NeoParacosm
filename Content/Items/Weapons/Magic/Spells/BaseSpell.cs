@@ -29,7 +29,7 @@ public abstract class BaseSpell : ModItem
     {
         None,
         Fire,
-        Magic,
+        Pure,
         Ice,
         Earth,
         Lightning,
@@ -50,7 +50,7 @@ public abstract class BaseSpell : ModItem
             finalItemDamage += (int)(itemDamage * player.NPCatalystPlayer().ElementalDamageBoosts.GetValueOrDefault(element, 0));
         }
 
-        return player.HeldItem.damage + finalItemDamage;
+        return (int)player.GetDamage(DamageClass.Magic).ApplyTo(player.HeldItem.damage + finalItemDamage);
     }
 
     public override bool AltFunctionUse(Player player)

@@ -72,6 +72,7 @@ public class RedLightning : ModProjectile
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
+        Projectile.tileCollide = false;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

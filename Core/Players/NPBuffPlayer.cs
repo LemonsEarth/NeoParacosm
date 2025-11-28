@@ -102,6 +102,24 @@ public class NPBuffPlayer : ModPlayer
         }
     }
 
+    public override void OnHurt(Player.HurtInfo info)
+    {
+        if (Player.HasBuff(BuffType<ManaGuardBuff>()))
+        {
+            Player.CheckMana((info.Damage * 2) / LemonUtils.GetDifficulty(), true, true);
+        }
+    }
+
+    public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+    {
+        if (Player.HasBuff(BuffType<ManaGuardBuff>()))
+        {
+            float manaPercent = (float)Player.statMana / Player.statManaMax2;
+            float bonusDamage = 1 - manaPercent;
+            modifiers.FinalDamage *= (1 + bonusDamage);
+        }
+    }
+
     public override void PostUpdateEquips()
     {
 
