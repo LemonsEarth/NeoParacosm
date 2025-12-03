@@ -75,6 +75,8 @@ public class Dreadlord : ModNPC
     DreadlordBodyPart BackLegFar = new DreadlordBodyPart();
     DreadlordBodyPart BackFootFar = new DreadlordBodyPart();
 
+    static Asset<Texture2D> neckTexture;
+
     #endregion
 
     int facingDirection = 1;
@@ -85,7 +87,7 @@ public class Dreadlord : ModNPC
 
     public override void Load()
     {
-        
+        neckTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeck");
     }
 
     public override void SetStaticDefaults()
@@ -166,58 +168,6 @@ public class Dreadlord : ModNPC
         BackFootClose.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordFootBackClose");
         BackLegFar.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordLegBackClose");
         BackFootFar.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordFootBackClose");
-        InitializeBodyParts();
-    }
-
-    public void InitializeBodyParts()
-    {
-        Body.Position = NPC.Center;
-        Body.Rotation = 0f;
-        Body.Origin = Body.Texture.Size() * 0.5f;
-        Body.MiscPosition = NPC.position + new Vector2(Body.Texture.Width(), 0); // Neck Position
-        Dust.QuickDust(NPC.position + new Vector2(648, 236), Color.White);
-
-        HeadCorrupt.Position = Body.MiscPosition + new Vector2(50, -250);
-        HeadCorrupt.Rotation = 0f;
-        HeadCorrupt.Origin = HeadCorrupt.Texture.Size() * 0.33f;
-
-        HeadCrimson.Position = Body.MiscPosition + new Vector2(70, -200);
-        HeadCrimson.Rotation = 0f;
-        HeadCrimson.Origin = HeadCrimson.Texture.Size() * 0.33f;
-
-        FrontLegClose.Position = NPC.position + new Vector2(660, 220);
-        FrontLegClose.Rotation = 0f;
-        FrontLegClose.Origin = new Vector2(FrontLegClose.Texture.Width() * 0.75f, 0);
-
-        FrontFootClose.Position = FrontLegClose.Position + new Vector2(-FrontLegClose.Texture.Width() * 0.75f, FrontLegClose.Texture.Height() * 0.66f);
-        FrontFootClose.Rotation = 0f;
-        FrontFootClose.Origin = Vector2.Zero;
-
-        BackLegClose.Position = NPC.position + new Vector2(400, 240);
-        BackLegClose.Rotation = 0f;
-        BackLegClose.Origin = new Vector2(BackLegClose.Texture.Width() * 0.5f, 0);
-
-        BackFootClose.Position = BackLegClose.Position + new Vector2(BackLegClose.Texture.Width() * 0.1f, BackLegClose.Texture.Height());
-        BackFootClose.Rotation = 0f;
-        BackFootClose.Origin = BackFootClose.Texture.Size() * 0.5f;
-
-
-
-        FrontLegFar.Position = NPC.Center;
-        FrontLegFar.Rotation = 0f;
-        FrontLegFar.Origin = FrontLegFar.Texture.Size() * 0.5f;
-
-        FrontFootFar.Position = NPC.Center;
-        FrontFootFar.Rotation = 0f;
-        FrontFootFar.Origin = FrontFootFar.Texture.Size() * 0.5f;
-
-        BackLegFar.Position = NPC.Center;
-        BackLegFar.Rotation = 0f;
-        BackLegFar.Origin = Vector2.Zero;
-
-        BackFootFar.Position = NPC.Center;
-        BackFootFar.Rotation = 0f;
-        BackFootFar.Origin = BackFootFar.Texture.Size() * 0.5f;
     }
 
     public override bool CheckActive()
@@ -244,7 +194,6 @@ public class Dreadlord : ModNPC
         }
         player = Main.player[NPC.target];
         DespawnCheck();
-        InitializeBodyParts();
 
         if (AITimer < INTRO_DURATION)
         {
@@ -348,9 +297,24 @@ public class Dreadlord : ModNPC
         BackLegFar.Draw();
         FrontFootFar.Draw();
         FrontLegFar.Draw();*/
+
+        
+
         Body.Draw();
+        Vector2 neckBaseToHeadCorrupt = Body.MiscPosition.DirectionTo(HeadCorrupt.Position);
+        float neckBaseDistanceToHeadCorrupt = Body.MiscPosition.Distance(HeadCorrupt.Position);
+        float distanceLeft = neckBaseDistanceToHeadCorrupt;
+        Vector2 drawOrigin = neckTexture.Size() * 0.5f;
+        Vector2 drawPos = Body.MiscPosition;
+        while (distanceLeft > 0)
+        {
+            float rotation = drawPos.DirectionTo(drawPos + (neckTexture.Height() * neckBaseToHeadCorrupt)).ToRotation() + MathHelper.PiOver2;   
+            drawPos += (neckTexture.Height() / 2f * neckBaseToHeadCorrupt);
+            Main.EntitySpriteDraw(neckTexture.Value, drawPos - Main.screenPosition, null, drawColor, rotation, drawOrigin, 1f, SpriteEffects.None);
+            distanceLeft -= neckTexture.Height() / 2f;
+        }
         HeadCorrupt.Draw();
-        HeadCrimson.Draw();
+        //HeadCrimson.Draw();
         FrontLegClose.Draw();
         FrontFootClose.Draw();
         BackLegClose.Draw();

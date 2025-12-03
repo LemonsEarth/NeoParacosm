@@ -2,7 +2,7 @@
 using NeoParacosm.Common.Utils;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Armor.Summoner;
+namespace NeoParacosm.Content.Items.Armor.Summoner.AscendedCrimson;
 
 [AutoloadEquip(EquipType.Legs)]
 public class AscendedCrimsonGreaves : ModItem

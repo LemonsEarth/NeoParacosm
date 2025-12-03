@@ -2,7 +2,7 @@
 using NeoParacosm.Common.Utils;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Armor.Ranged;
+namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 
 [AutoloadEquip(EquipType.Head)]
 public class AscendedShadowHelmet : ModItem
@@ -43,7 +43,7 @@ public class AscendedShadowHelmet : ModItem
     public override void UpdateArmorSet(Player player)
     {
         player.setBonus = setBonusText.Value;
-        player.NPArmorPlayer().ascendedShadowArmor = true;
+        player.NPArmorPlayer().AscendedShadowArmor = true;
     }
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

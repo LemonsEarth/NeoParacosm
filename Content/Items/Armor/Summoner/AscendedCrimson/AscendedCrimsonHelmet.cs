@@ -6,7 +6,7 @@ using NeoParacosm.Core.Systems.Misc;
 using Terraria.Audio;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Armor.Summoner;
+namespace NeoParacosm.Content.Items.Armor.Summoner.AscendedCrimson;
 
 [AutoloadEquip(EquipType.Head)]
 public class AscendedCrimsonHelmet : ModItem

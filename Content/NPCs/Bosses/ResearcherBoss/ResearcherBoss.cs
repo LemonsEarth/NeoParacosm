@@ -669,7 +669,7 @@ public class ResearcherBoss : ModNPC
 
     public override void OnKill()
     {
-
+        ResearcherQuest.Progress = ResearcherQuest.ProgressState.DownedResearcher;
     }
 
     public override void HitEffect(NPC.HitInfo hit)

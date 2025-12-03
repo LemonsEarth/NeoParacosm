@@ -704,3 +704,82 @@ MagicLanternSpell: {
 		[c/78ACFF:Unfortunately most miners lacked the intelligence to use it.]
 		'''
 }
+
+RObsidianHelmet: {
+	SetBonus: Mods.NeoParacosm.Items.RObsidianHelmet.SetBonus
+	DisplayName: Obsidian-Reinforced Stone
+	Tooltip: Reduces movement speed by {0}%
+}
+
+StoneHelmet: {
+	SetBonus: Allows you to eat gems to gain different buffs
+	DisplayName: Stone Helmet
+	Tooltip: Reduces movement speed by {0}%
+}
+
+RObsidianBoots: {
+	DisplayName: Obsidian-Reinforced Stone Boots
+	Tooltip: Reduces movement speed by {0}%
+}
+
+RObsidianBreastplate: {
+	DisplayName: Obsidian-Reinforced Stone Breastplate
+	Tooltip: Reduces movement speed by {0}%
+}
+
+StoneBoots: {
+	DisplayName: Stone Boots
+	Tooltip: Reduces movement speed by {0}%
+}
+
+StoneBreastplate: {
+	DisplayName: Stone Breastplate
+	Tooltip: Reduces movement speed by {0}%
+}
+
+EnchantedTwig: {
+	DisplayName: Enchanted Twig
+	Tooltip:
+		'''
+		Increases pure magic spell damage by {0}%
+		Increases pure magic spell expertise by {1}%
+		Increases nature spell damage by {2}%
+		Increases nature spell expertise by {3}%
+		'''
+	NPLore:
+		'''
+		[c/00FF00:Living wood has a weird property, in that its biological abilities seem to be active even after being cut off from a greater whole.]
+		[c/00FF00:More research needs to be done on this strange material.]
+		'''
+}
+
+ManasapGlove: {
+	DisplayName: Manasap Glove
+	Tooltip:
+		'''
+		Increases pure magic spell damage by {0}%
+		Increases pure magic spell expertise by {1}%
+		'''
+	NPLore:
+		'''
+		[c/78ACFF:A glove created by combining fleshy materials with mana.]
+		[c/78ACFF:Its complex structure allows the wearer to retain more mana during spellcasting.]
+		'''
+}
+
+StarCrystal: {
+	DisplayName: Star Crystal
+	Tooltip:
+		'''
+		Increases pure magic spell damage by {0}%
+		Increases pure magic spell expertise by {1}%
+		Increases earth spell damage by {2}%
+		Increases earth spell expertise by {3}%
+		'''
+	NPLore:
+		'''
+		[c/78ACFF:A star fragment, sealed in crystals.]
+		[c/78ACFF:Crystals are one of the few natural sources of pure mana.]
+		[c/78ACFF:Other sources, such as fallen stars, have no known origin.]
+		'''
+}

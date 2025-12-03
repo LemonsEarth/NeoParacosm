@@ -38,4 +38,13 @@ public class StarStone : BaseCatalyst
     {
         
     }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.StoneBlock, 20);
+        recipe.AddIngredient(ItemID.FallenStar, 1);
+        recipe.AddTile(TileID.Anvils);
+        recipe.Register();
+    }
 }

@@ -40,6 +40,12 @@ public class NPGlobalNPC : GlobalNPC
             spawnRate = (int)(spawnRate * 5f);
             maxSpawns = (int)(maxSpawns * 0.5f);
         }
+
+        if (ResearcherQuest.DarkCataclysmActive)
+        {
+            spawnRate = (int)(spawnRate * 0.75f);
+            maxSpawns = (int)(maxSpawns * 2f);
+        }
     }
 
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)

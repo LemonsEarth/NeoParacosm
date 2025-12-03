@@ -25,6 +25,9 @@ public class DreadlordBodyPart
     public Vector2 Origin { get; set; }
     public SpriteEffects SpriteEffects { get; set; } = SpriteEffects.None;
 
+    public float Width => Texture.Width();
+    public float Height => Texture.Height();
+
     public void Draw()
     {
         if (Texture == null)

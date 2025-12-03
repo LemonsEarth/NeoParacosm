@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using NeoParacosm.Core.CustomSkies.Biome;
 
 namespace NeoParacosm;
 
@@ -27,12 +28,15 @@ public class NeoParacosm : Mod
         LoadFilterShader("DesaturateShader", "Common/Assets/Shaders/DesaturateShader", EffectPriority.Medium);
         LoadFilterShader("DeathbirdArenaShader", "Common/Assets/Shaders/NPCs/DeathbirdArenaShader", EffectPriority.High);
         LoadFilterShader("NauseaShader", "Common/Assets/Shaders/NauseaShader", (EffectPriority)9999);
+        LoadFilterShader("DCEffect", "Common/Assets/Shaders/Biome/DCEffect", (EffectPriority)9999);
 
         LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader");
         LoadMiscShader("GasShader", "Common/Assets/Shaders/Projectiles/GasShader");
         LoadMiscShader("LaserShader", "Common/Assets/Shaders/Projectiles/LaserShader");
         LoadMiscShader("AscendedWeaponGlow", "Common/Assets/Shaders/Items/AscendedWeaponGlow");
         LoadMiscShader("DeathbirdWingShader", "Common/Assets/Shaders/NPCs/DeathbirdWingShader");
+
+        SkyManager.Instance["NeoParacosm:DCSky"] = new DCSky();
     }
 
     void LoadFilterShader(string name, string path, EffectPriority priority)

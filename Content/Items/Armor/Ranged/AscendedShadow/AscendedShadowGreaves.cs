@@ -2,7 +2,7 @@
 using NeoParacosm.Common.Utils;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Armor.Ranged;
+namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 
 [AutoloadEquip(EquipType.Legs)]
 public class AscendedShadowGreaves : ModItem

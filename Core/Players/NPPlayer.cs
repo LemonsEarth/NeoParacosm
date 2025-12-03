@@ -3,7 +3,9 @@ using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -17,6 +19,9 @@ public class NPPlayer : ModPlayer
     float desaturateEffectOpacity = 0f;
     float desaturateEffectOpacityTimer = 0f;
     float maxDesaturateValue = 0.6f;
+
+    float DCEffectOpacity = 0f;
+    float DCEffectOpacityTimer = 0f;
     public override void ResetEffects()
     {
 
@@ -54,8 +59,23 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
-        //ScreenShaderData datan = Filters.Scene.Activate("NeoParacosm:NauseaShader").GetShader();
-        //datan.Shader.Parameters["time"].SetValue(timer);
+        DeadForestEffects();
+
+        DepthsEffects();
+
+        DCEffects();
+
+        if (timer % 10 == 0)
+        {
+            if (!NPC.AnyNPCs(NPCType<Deathbird>()))
+            {
+                Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
+            }
+        }
+    }
+
+    void DeadForestEffects()
+    {
         if (Player.InModBiome<DeadForestBiome>())
         {
             desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);
@@ -78,7 +98,10 @@ public class NPPlayer : ModPlayer
                 Filters.Scene["NeoParacosm:DesaturateShader"].GetShader().UseProgress(desaturateEffectOpacity);
             }
         }
+    }
 
+    void DepthsEffects()
+    {
         if (Player.InModBiome<DepthsHigh>())
         {
             Filters.Scene.Activate("NeoParacosm:ScreenTintShader").GetShader().UseColor(new Color(102, 148, 255));
@@ -88,13 +111,53 @@ public class NPPlayer : ModPlayer
         {
             Filters.Scene.Deactivate("NeoParacosm:ScreenTintShader");
         }
+    }
 
-        if (timer % 10 == 0)
+    void DCEffects()
+    {
+        if (ResearcherQuest.DarkCataclysmActive)
         {
-            if (!NPC.AnyNPCs(NPCType<Deathbird>()))
+            DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 60f);
+            if (DCEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;
+            ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DCEffect").GetShader();
+            data.UseProgress(DCEffectOpacity);
+            int worldWidth = Main.maxTilesX * 16;
+            int worldHeight = Main.maxTilesY * 16;
+            int sectionWidth = worldWidth / 16;
+            int sectionHeight = worldHeight / 16;
+            int sectionX = (int)MathF.Floor(Player.Center.X / sectionWidth);
+            int sectionY = (int)MathF.Floor(Player.Center.Y / sectionHeight);
+            int biomeDecider = (sectionX + sectionY) % 2;
+            if (biomeDecider == 0)
             {
-                Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
+                Player.ZoneCorrupt = true;
             }
+            else
+            {
+                Player.ZoneCrimson = true;
+            }
+
+            Lighting.GlobalBrightness = 0.9f;
+            if (!SkyManager.Instance["NeoParacosm:DCSky"].IsActive())
+            {
+                SkyManager.Instance.Activate("NeoParacosm:DCSky");
+            }
+        }
+        else
+        {
+            DCEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, DCEffectOpacityTimer / 60f);
+            if (DCEffectOpacityTimer > 0) DCEffectOpacityTimer--;
+            if (DCEffectOpacityTimer <= 0)
+            {
+                Filters.Scene.Deactivate("NeoParacosm:DCEffect");
+                SkyManager.Instance.Deactivate("NeoParacosm:DCSky");
+            }
+            else
+            {
+                Filters.Scene["NeoParacosm:DCEffect"].GetShader().UseProgress(DCEffectOpacity);
+                SkyManager.Instance["NeoParacosm:DCSky"].Opacity = DCEffectOpacity;
+            }
+
         }
     }
 }

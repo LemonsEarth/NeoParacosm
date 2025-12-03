@@ -25,9 +25,11 @@ public class ResearcherQuest : ModSystem
         Hardmode,
         CollectedData2, // Data Collector EX
         DownedMechBoss,
-        DownedPlantera
+        DownedPlantera,
+        DownedResearcher,
     }
 
+    public static bool DarkCataclysmActive => Progress == ProgressState.DownedResearcher;
 
     public override void PostUpdateWorld()
     {

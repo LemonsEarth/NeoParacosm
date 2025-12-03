@@ -11,39 +11,39 @@ using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 
-public class Candlestick : BaseCatalyst
+public class ManasapGlove : BaseCatalyst
 {
-    static readonly float fireDamageBoost = 15;
-    static readonly float fireSpeedBoost = 10;
-    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(fireDamageBoost, fireSpeedBoost);
+    static readonly float magicDamageBoost = 10;
+    static readonly float magicSpeedBoost = 25;
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(magicDamageBoost, magicSpeedBoost);
 
     static Asset<Texture2D> inventoryTexture;
 
     public override void SetStaticDefaults()
     {
-        inventoryTexture = Request<Texture2D>("NeoParacosm/Content/Items/Weapons/Magic/Spells/Catalysts/Candlestick_Inventory");
+        inventoryTexture = Request<Texture2D>("NeoParacosm/Content/Items/Weapons/Magic/Spells/Catalysts/ManasapGlove_Inventory");
         Item.staff[Type] = true;
     }
 
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.damage = 15;
-        Item.width = 16;
+        Item.damage = 12;
+        Item.width = 14;
         Item.height = 16;
-        Item.useTime = 20;
-        Item.useAnimation = 20;
+        Item.useTime = 12;
+        Item.useAnimation = 12;
         Item.knockBack = 3;
-        Item.value = Item.buyPrice(gold: 3);
-        Item.rare = ItemRarityID.Green;
+        Item.value = Item.sellPrice(gold: 1);
+        Item.rare = ItemRarityID.Blue;
         Item.autoReuse = true;
-        Item.mana = 12;
+        Item.mana = 8;
     }
 
     public override void HoldItem(Player player)
     {
-        player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Fire] += fireDamageBoost / 100f;
-        player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Fire] += fireSpeedBoost / 100f;
+        player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Pure] += magicDamageBoost / 100f;
+        player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Pure] += magicSpeedBoost / 100f;
     }
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -63,9 +63,9 @@ public class Candlestick : BaseCatalyst
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.Torch, 1);
-        recipe.AddIngredient(ItemID.Hellstone, 10);
-        recipe.AddIngredient(ItemID.ManaCrystal, 1);
+        recipe.AddIngredient(ItemID.ManaCrystal, 2);
+        recipe.AddIngredient(ItemID.Leather, 3);
+        recipe.AddRecipeGroup("NeoParacosm:AnyEvilMaterial", 10);
         recipe.AddTile(TileID.Anvils);
         recipe.Register();
     }
