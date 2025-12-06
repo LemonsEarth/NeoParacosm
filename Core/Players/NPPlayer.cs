@@ -5,8 +5,10 @@ using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Core.Systems;
+using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
+using System.Runtime.InteropServices;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
@@ -113,13 +115,22 @@ public class NPPlayer : ModPlayer
         }
     }
 
+    Vector2 moveT = Vector2.Zero;
     void DCEffects()
     {
         if (ResearcherQuest.DarkCataclysmActive)
         {
-            DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 60f);
-            if (DCEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;
+            DCEffectOpacity = MathHelper.Lerp(0, 1f, DCEffectOpacityTimer / 60f);
+
+            if (DCEffectOpacityTimer < 60) DCEffectOpacityTimer++;
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DCEffect").GetShader();
+            data.UseImage(ParacosmTextures.NoiseTexture.Value);
+            data.Shader.Parameters["time"].SetValue(timer / 100f);
+
+            Vector2 pVClamped = Vector2.Clamp(Player.velocity, -Vector2.One * 10, Vector2.One * 10);
+            moveT = Vector2.Lerp(moveT, pVClamped, 1f / 60f);
+            data.Shader.Parameters["playerVelocity"].SetValue(Player.velocity);
+            data.Shader.Parameters["moveT"].SetValue(moveT);
             data.UseProgress(DCEffectOpacity);
             int worldWidth = Main.maxTilesX * 16;
             int worldHeight = Main.maxTilesY * 16;

@@ -48,7 +48,7 @@ public class DragonRemainsPulseShield : ModProjectile
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Shader.Parameters["time"].SetValue(0.99f); // constant size of shield
-        shader.Shader.Parameters["noiseTimeX"].SetValue((AITimer * 5) / 100f); // constant size of shield
+        shader.Shader.Parameters["noiseTimeX"].SetValue((AITimer * 5) / 100f);
         shader.Shader.Parameters["alwaysVisible"].SetValue(true);
         shader.Shader.Parameters["speed"].SetValue(1f);
         shader.Shader.Parameters["colorMultiplier"].SetValue(2f);
