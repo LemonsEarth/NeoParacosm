@@ -78,7 +78,7 @@ public class BaneflyHiveEnemy : ModNPC
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
         int chanceBoost = NPC.downedBoss2 ? 4 : 1;
-        return (spawnInfo.Player.ZoneCorrupt) ? 0.05f * chanceBoost : 0f;
+        return (spawnInfo.Player.ZoneCorrupt && (spawnInfo.Player.ZoneSkyHeight || spawnInfo.Player.ZoneOverworldHeight)) ? 0.05f * chanceBoost : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

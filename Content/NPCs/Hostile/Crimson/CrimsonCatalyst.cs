@@ -12,6 +12,7 @@ public class CrimsonCatalyst : ModNPC
 {
     float AITimer = 0;
     int choosePositionTimer = 0;
+    int spawnCount = 0;
 
     HashSet<Vector2> storedPositions = new();
 
@@ -134,6 +135,7 @@ public class CrimsonCatalyst : ModNPC
                         NPC.NewNPCDirect(NPC.GetSource_FromThis(), pos, Main.rand.NextFromCollection(enemiesToSpawn));
                     }
                 }
+                spawnCount++;
                 storedPositions.Clear();
             }
             choosePositionTimer = 0;
@@ -143,13 +145,18 @@ public class CrimsonCatalyst : ModNPC
         {
             if (choosePositionTimer % 30 == 0)
             {
-                SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.5f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.5f), Volume = 0.5f }, NPC.Center);
                 LemonUtils.DustCircle(NPC.Center, 8, 8, DustID.GemRuby, choosePositionTimer / 100f);
             }
             foreach (var pos in storedPositions)
             {
                 Dust.NewDustDirect(pos, 32, 2, DustID.Crimson, 0, -10, Scale: 1.5f).noGravity = true;
             }
+        }
+
+        if (spawnCount >= 3)
+        {
+            NPC.SimpleStrikeNPC(80085, 1, true);
         }
         Lighting.AddLight(NPC.Center, 3, 0, 0);
         choosePositionTimer++;
@@ -174,7 +181,7 @@ public class CrimsonCatalyst : ModNPC
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
         int chanceBoost = NPC.downedBoss2 ? 4 : 1;
-        return (spawnInfo.Player.ZoneCrimson) ? 0.05f * chanceBoost : 0f;
+        return (spawnInfo.Player.ZoneCrimson && !spawnInfo.Player.ZoneUnderworldHeight) ? 0.05f * chanceBoost : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

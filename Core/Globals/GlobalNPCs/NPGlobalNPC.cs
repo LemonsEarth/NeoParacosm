@@ -1,9 +1,12 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
+using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;
 
@@ -31,6 +34,30 @@ public class NPGlobalNPC : GlobalNPC
                 pool.Add(NPCType<Deathbird>(), 1f);
             }
         }
+    }
+
+    public override bool PreAI(NPC npc)
+    {
+        if (ResearcherQuest.DarkCataclysmActive)
+        {
+            if (npc.friendly || npc.CountsAsACritter || npc.realLife != -1 || npc.boss)
+            {
+                return true;
+            }
+            var combined = new HashSet<int>(EvilGlobalNPC.EvilEnemies);
+            combined.UnionWith(EvilGlobalNPC.EvilEnemiesBonus);
+            if (!combined.Contains(npc.type))
+            {
+                npc.active = false;
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public override void SetStaticDefaults()
+    {
+
     }
 
     public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)

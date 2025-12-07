@@ -3,6 +3,7 @@ using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
+using Terraria.GameContent.Bestiary;
 using static Terraria.ID.NPCID;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs.Evil;
@@ -14,7 +15,7 @@ public class EvilGlobalNPC : GlobalNPC
     public static HashSet<int> EvilEnemies { get; private set; } = new HashSet<int>()
         {
             FaceMonster, FloatyGross, BloodCrawler, BloodCrawlerWall, Crimera, Crimslime, CrimsonAxe, CrimsonBunny, CrimsonPenguin, CrimsonGoldfish,
-            EaterofSouls, DevourerHead, Clinger, Slimer, IchorSticker,
+            EaterofSouls, DevourerHead, Clinger, Slimer, IchorSticker, Corruptor, CorruptBunny, CorruptPenguin, CorruptGoldfish, CursedHammer, Slimer2,
             DarkMummy, BloodMummy, DesertGhoulCrimson, DesertGhoulCorruption, DesertLamiaDark, SandsharkCorrupt, SandsharkCrimson,
             NPCType<CrimsonInfectionForm>(), NPCType<BaneflyEnemy>(), NPCType<DecayingRat>()
         };

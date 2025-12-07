@@ -107,6 +107,7 @@ public class NPBuffPlayer : ModPlayer
         if (Player.HasBuff(BuffType<ManaGuardBuff>()))
         {
             Player.CheckMana((info.Damage * 2) / LemonUtils.GetDifficulty(), true, true);
+            Player.manaRegenDelay = 120;
         }
     }
 

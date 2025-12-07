@@ -22,7 +22,7 @@ float4 DCEffect(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
     desaturatedColor.rgb = lerp(color.rgb, gray, uProgress * 0.4);
     desaturatedColor *= 1 - length(centeredCoords) * uProgress;
     noiseColor.a = noiseColor.r;
-    float4 finalNoiseColor = noiseColor * 0.33 * uProgress;
+    float4 finalNoiseColor = noiseColor * 0.1 * uProgress;
     return desaturatedColor + finalNoiseColor;
 }
 

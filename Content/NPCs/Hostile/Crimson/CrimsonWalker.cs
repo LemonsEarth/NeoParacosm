@@ -76,8 +76,8 @@ public class CrimsonWalker : ModNPC
         if (hitTimer > 0) hitTimer--;
         if (Main.rand.NextBool(300))
         {
-            SoundEngine.PlaySound(SoundID.Mummy with { PitchRange = (-1f, 1f) }, NPC.Center);
-            SoundEngine.PlaySound(SoundID.ZombieMoan with { PitchRange = (-1f, 1f) }, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Mummy with { PitchRange = (-1f, 1f), Volume = 0.5f }, NPC.Center);
+            SoundEngine.PlaySound(SoundID.ZombieMoan with { PitchRange = (-1f, 1f), Volume = 0.5f }, NPC.Center);
         }
 
         if (NPC.Center.Distance(player.Center) < 500)

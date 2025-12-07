@@ -72,22 +72,24 @@ public class DecayingRat : ModNPC
         if (NPC.HasValidTarget)
         {
             Player player = Main.player[NPC.target];
-            Vector2 TileCheckPos = NPC.Center + Vector2.UnitX * NPC.direction * (NPC.width / 2 + 16);
+            Vector2 npcToPlayer = NPC.DirectionTo(player.Center);
+            Vector2 TileCheckPos = NPC.Center + npcToPlayer * (NPC.width / 2 + 8);
             bool TileCheck = Collision.SolidTiles(TileCheckPos, 2, 2);
-            if (Collision.CanHitLine(NPC.Center, 16, 16, player.Center, 16, 16) && !TileCheck)
-            {
-                NPC.noTileCollide = false;
-                NPC.noGravity = false;
-                NPC.velocity.Y += 2;
-                return true;
-            }
-            else
+            if (!Collision.CanHitLine(NPC.Center, 1, 1, player.Center, 1, 1) && TileCheck)
             {
                 NPC.velocity = NPC.Center.DirectionTo(player.Center) * 4;
                 NPC.noTileCollide = true;
                 NPC.noGravity = true;
                 SoundEngine.PlaySound(SoundID.WormDig with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
                 return false;
+            }
+            else
+            {
+
+                NPC.noTileCollide = false;
+                NPC.noGravity = false;
+                NPC.velocity.Y += 2;
+                return true;
             }
         }
 
@@ -138,7 +140,7 @@ public class DecayingRat : ModNPC
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
         int chanceBoost = NPC.downedBoss2 ? 4 : 1;
-        return (spawnInfo.Player.ZoneCorrupt) ? 0.06f * chanceBoost : 0f;
+        return (spawnInfo.Player.ZoneCorrupt && !spawnInfo.Player.ZoneNormalSpace) ? 0.06f * chanceBoost : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

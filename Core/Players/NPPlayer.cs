@@ -153,10 +153,12 @@ public class NPPlayer : ModPlayer
             {
                 SkyManager.Instance.Activate("NeoParacosm:DCSky");
             }
+            SkyManager.Instance["NeoParacosm:DCSky"].Opacity = DCEffectOpacity;
         }
         else
         {
             DCEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, DCEffectOpacityTimer / 60f);
+            SkyManager.Instance["NeoParacosm:DCSky"].Opacity = DCEffectOpacity;
             if (DCEffectOpacityTimer > 0) DCEffectOpacityTimer--;
             if (DCEffectOpacityTimer <= 0)
             {

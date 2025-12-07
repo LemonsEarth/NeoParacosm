@@ -49,7 +49,10 @@ public class CrimsonSentryForm : ModNPC
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
         int chanceBoost = NPC.downedBoss2 ? 4 : 1;
-        return (spawnInfo.Player.ZoneCrimson && Main.tile[spawnInfo.SpawnTileX + 1, spawnInfo.SpawnTileY].HasTile && Main.tile[spawnInfo.SpawnTileX - 1, spawnInfo.SpawnTileY].HasTile) ? 0.07f * chanceBoost : 0f;
+        return (spawnInfo.Player.ZoneCrimson && !spawnInfo.Player.ZoneNormalSpace &&
+            Main.tile[spawnInfo.SpawnTileX + 1, spawnInfo.SpawnTileY].HasTile && Main.tile[spawnInfo.SpawnTileX - 1, spawnInfo.SpawnTileY].HasTile) ? 
+            0.07f * chanceBoost 
+            : 0f;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
