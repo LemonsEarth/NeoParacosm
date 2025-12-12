@@ -9,24 +9,30 @@ public class DreadlordBodyPart
     {
 
     }
-    public DreadlordBodyPart(Asset<Texture2D> texture, Vector2 position, Vector2 miscPosition, float rotation, Vector2 origin)
+    public DreadlordBodyPart(Asset<Texture2D> texture, Vector2 position, Vector2 miscPosition1, Vector2 miscPosition2, float rotation, Vector2 origin)
     {
         Texture = texture;
         Position = position;
-        MiscPosition = miscPosition;
+        MiscPosition1 = miscPosition1;
+        MiscPosition2 = miscPosition2;
         Rotation = rotation;
         Origin = origin;
     }
 
     public Asset<Texture2D> Texture { get; set; }
     public Vector2 Position { get; set; }
-    public Vector2 MiscPosition { get; set; }
-    public float Rotation { get; set; }
+    public Vector2 MiscPosition1 { get; set; }
+    public Vector2 MiscPosition2 { get; set; }
+    public int Frames { get; set; } = 1;
+    public int CurrentFrame { get; set; } = 0;
+    public Rectangle Frame => Texture.Frame(1, Frames, 0, CurrentFrame);
+    public float Rotation { get; set; } = 0f;
     public Vector2 Origin { get; set; }
+    public float Scale { get; set; } = 1f;
     public SpriteEffects SpriteEffects { get; set; } = SpriteEffects.None;
 
-    public float Width => Texture.Width();
-    public float Height => Texture.Height();
+    public float Width => Frame.Width;
+    public float Height => Frame.Height;
 
     public void Draw()
     {
@@ -34,6 +40,6 @@ public class DreadlordBodyPart
         {
             return;
         }
-        Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, null, Color.White, Rotation, Origin, 1f, SpriteEffects);
+        Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, Color.White, Rotation, Origin, Scale, SpriteEffects);
     }
 }
