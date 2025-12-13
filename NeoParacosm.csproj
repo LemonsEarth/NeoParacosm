@@ -35,7 +35,6 @@
 	  <Folder Include="Content\Projectiles\Interactable\" />
 	  <Folder Include="Content\World\Biomes\" />
 	  <Folder Include="Content\World\Tiles\" />
-	  <Folder Include="Core\Misc\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="StructureHelper">

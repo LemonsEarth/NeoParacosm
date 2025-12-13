@@ -783,3 +783,8 @@ StarCrystal: {
 		[c/78ACFF:Other sources, such as fallen stars, have no known origin.]
 		'''
 }
+
+AncientCallingHorn: {
+	DisplayName: Ancient Calling Horn
+	Tooltip: ""
+}

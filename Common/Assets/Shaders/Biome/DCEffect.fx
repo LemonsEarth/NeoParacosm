@@ -1,7 +1,11 @@
 sampler uImage0 : register(s0);
 float2 uScreenResolution;
-float3 uColor;
+float noFogDistance;
+float2 uTargetPosition;
+float2 uScreenPosition;
+float4 fogColor;
 float time;
+float maxFogOpacity;
 float uProgress;
 float uImageSize0;
 float2 noiseSize;
@@ -13,6 +17,7 @@ float2 moveT;
 
 float4 DCEffect(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
+    float2 normalizedPixelCoords = (uScreenResolution / uScreenResolution.y);
     float4 color = tex2D(uImage0, coords);
     float4 noiseColor = tex2D(useImage1, coords + float2(time / 100, 0) + (moveT / 50));
     float2 centeredCoords = coords * 2.0 - 1.0;
@@ -22,7 +27,15 @@ float4 DCEffect(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
     desaturatedColor.rgb = lerp(color.rgb, gray, uProgress * 0.4);
     desaturatedColor *= 1 - length(centeredCoords) * uProgress;
     noiseColor.a = noiseColor.r;
-    float4 finalNoiseColor = noiseColor * 0.1 * uProgress;
+    
+    float2 targetPositionDistanceOffset = uTargetPosition + float2(noFogDistance, 0);
+    float2 uTargetPositionScreen = (uTargetPosition - uScreenPosition) / uScreenResolution;
+    float2 targetPositionDistanceOffsetScreen = (targetPositionDistanceOffset - uScreenPosition) / uScreenResolution;
+    float noFogDistanceScreen = distance(uTargetPositionScreen, targetPositionDistanceOffsetScreen);
+    float coordsToPosDistance = length((coords - uTargetPositionScreen) * normalizedPixelCoords);
+    float fogOpacity = clamp(coordsToPosDistance - noFogDistanceScreen, 0, maxFogOpacity);
+    float4 finalNoiseColor = noiseColor * fogColor * fogOpacity * uProgress;
+    finalNoiseColor.a = fogOpacity;
     return desaturatedColor + finalNoiseColor;
 }
 

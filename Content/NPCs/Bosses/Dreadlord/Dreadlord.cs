@@ -152,7 +152,7 @@ public class Dreadlord : ModNPC
 
         if (!Main.dedServ)
         {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/ChaosCognition");
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/EmbodimentOfEvilReborn");
         }
     }
 
