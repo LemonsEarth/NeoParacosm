@@ -1,7 +1,9 @@
-﻿using NeoParacosm.Content.Projectiles.Effect;
+﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
+using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Players.NPEffectPlayers;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Data;
 using Terraria.Audio;
 using Terraria.DataStructures;
 
@@ -19,7 +21,7 @@ public class AncientCallingHorn : ModItem
         Item.width = 46;
         Item.height = 42;
         Item.useTime = 15;
-        Item.useAnimation = 300;
+        Item.useAnimation = 301;
         Item.reuseDelay = 60;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.value = Item.sellPrice(0, 2);
@@ -30,24 +32,44 @@ public class AncientCallingHorn : ModItem
         Item.noMelee = true;
     }
 
+    public override bool CanUseItem(Player player)
+    {
+        return ((!Main.dayTime || ResearcherQuest.DarkCataclysmActive) && !NPC.AnyNPCs(NPCType<Dreadlord>()) && (player.ZoneCorrupt || player.ZoneCrimson));
+    }
+
     public override bool? UseItem(Player player)
     {
         if (player.ItemAnimationJustStarted)
         {
             SoundEngine.PlaySound(ParacosmSFX.AncientCallingHorn with { Volume = 0.75f }, player.Center);
             NPPlayer.savedMusicVolume = Main.musicVolume;
+            player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition = player.Center;
+            player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogDistance = 2000;
+            player.GetModPlayer<NPEffectPlayer>().DCEffectMaxFogOpacity = 0.2f;
+            player.GetModPlayer<NPEffectPlayer>().DCEffectFogSpeed = 5;
         }
+        player.GetModPlayer<NPEffectPlayer>().DCEffectFogColor = Color.Lerp(player.GetModPlayer<NPEffectPlayer>().DCEffectFogColor, Color.Red, 1 / 60f);
         Main.musicVolume = 0f;
-        player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition = player.Center;
-        player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogDistance = 1000;
-        player.GetModPlayer<NPEffectPlayer>().DCEffectMaxFogOpacity = 1;
+
+        if (player.ItemAnimationEndingOrEnded)
+        {
+
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                NPC.SpawnBoss((int)player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition.X, (int)player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition.Y - 2000, NPCType<Dreadlord>(), player.whoAmI);
+            }
+            else
+            {
+                NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: Type);
+            }
+        }
 
         return null;
     }
 
     public override void UpdateInventory(Player player)
     {
-        
+
     }
 
 

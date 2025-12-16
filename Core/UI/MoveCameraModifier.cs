@@ -41,7 +41,6 @@ public class MoveCameraModifier : ICameraModifier
             }
             return;
         }
-
         if (Main.gamePaused || Main.gameInactive)
         {
             return;

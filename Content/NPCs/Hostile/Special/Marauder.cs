@@ -177,7 +177,7 @@ public class Marauder : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return (spawnInfo.Player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && Main.hardMode) ? 0.025f : 0f;
+        return spawnInfo.Player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && Main.hardMode ? 0.025f : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

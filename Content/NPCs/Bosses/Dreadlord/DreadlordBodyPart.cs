@@ -9,9 +9,10 @@ public class DreadlordBodyPart
     {
 
     }
-    public DreadlordBodyPart(Asset<Texture2D> texture, Vector2 position, Vector2 miscPosition1, Vector2 miscPosition2, float rotation, Vector2 origin)
+    public DreadlordBodyPart(Asset<Texture2D> texture, Vector2 defaultPosition, Vector2 position, Vector2 miscPosition1, Vector2 miscPosition2, float rotation, Vector2 origin)
     {
         Texture = texture;
+        DefaultPosition = defaultPosition;
         Position = position;
         MiscPosition1 = miscPosition1;
         MiscPosition2 = miscPosition2;
@@ -20,6 +21,22 @@ public class DreadlordBodyPart
     }
 
     public Asset<Texture2D> Texture { get; set; }
+    private Vector2 _defaultPosition;
+    public Vector2 DefaultPosition
+    {
+        get
+        {
+            return _defaultPosition;
+        }
+        set
+        {
+            _defaultPosition = value;
+            if (Position == Vector2.Zero)
+            {
+                Position = _defaultPosition;
+            }
+        }
+    }
     public Vector2 Position { get; set; }
     public Vector2 MiscPosition1 { get; set; }
     public Vector2 MiscPosition2 { get; set; }

@@ -282,7 +282,7 @@ public class ResearcherBoss : ModNPC
             reachedPartInCurrentLife[currentPart] = true;
             UISystem.ShowUI(currentPart, reachedPartInCurrentSession[currentPart]);
             reachedPartInCurrentSession[currentPart] = true;
-            MoveCameraModifier cameraModifier = new MoveCameraModifier(NPC.Center, () => !IsTalking);
+            MoveCameraModifier cameraModifier = new MoveCameraModifier(NPC.Center, () => !IsTalking || !NPC.active);
             Main.instance.CameraModifiers.Add(cameraModifier);
         }
     }

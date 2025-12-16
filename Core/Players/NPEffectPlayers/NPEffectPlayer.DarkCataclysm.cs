@@ -3,6 +3,7 @@ using NeoParacosm.Content.Biomes.TheDepths;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.BossSummons;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
+using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Core.Systems;
@@ -19,16 +20,18 @@ public partial class NPEffectPlayer : ModPlayer
 {
     float DCEffectOpacity = 0f;
     float DCEffectOpacityTimer = 0f;
-    public Color DCEffectFogColor = Color.White;
-    public Vector2 DCEffectNoFogPosition = Vector2.Zero;
-    public float DCEffectNoFogDistance = 0;
-    public float DCEffectNoFogDistanceCurrent = 0;
-    public float DCEffectMaxFogOpacity = 0.1f;
-    public float DCEffectFogOpacity = 0f;
-    public bool ShouldReset => !(Player.HeldItem.type == ItemType<AncientCallingHorn>() && Player.ItemAnimationActive);
+    public Color DCEffectFogColor { get; set; } = Color.White;
+    public Vector2 DCEffectNoFogPosition { get; set; } = Vector2.Zero;
+    public float DCEffectNoFogDistance { get; set; } = 0;
+    public float DCEffectNoFogDistanceCurrent { get; set; } = 0;
+    public float DCEffectMaxFogOpacity { get; set; } = 0.1f;
+    public float DCEffectFogOpacity { get; set; } = 0f;
+    public float DCEffectFogSpeed { get; set; } = 1f;
+    public bool ShouldReset => !(Player.HeldItem.type == ItemType<AncientCallingHorn>() && Player.ItemAnimationActive) && !NPC.AnyNPCs(NPCType<Dreadlord>());
+    
     public override void ResetEffects()
     {
-       
+        
     }
 
     Vector2 moveT = Vector2.Zero;
@@ -39,18 +42,19 @@ public partial class NPEffectPlayer : ModPlayer
             DCEffectFogColor = Color.White;
             DCEffectMaxFogOpacity = 0.1f;
             DCEffectNoFogDistance = 0;
+            DCEffectFogSpeed = 1f;
         }
 
         if (ResearcherQuest.DarkCataclysmActive)
         {
             DCEffectFogOpacity = MathHelper.Lerp(DCEffectFogOpacity, DCEffectMaxFogOpacity, 1 / 60f);
-            DCEffectOpacity = MathHelper.Lerp(0, 1f, DCEffectOpacityTimer / 60f);
+            DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 60f);
             DCEffectNoFogDistanceCurrent = MathHelper.Lerp(DCEffectNoFogDistanceCurrent, DCEffectNoFogDistance, 1 / 120f);
 
             if (DCEffectOpacityTimer < 60) DCEffectOpacityTimer++;
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DCEffect").GetShader();
             data.UseImage(ParacosmTextures.NoiseTexture.Value);
-            data.Shader.Parameters["time"].SetValue(Timer / 100f);
+            data.Shader.Parameters["time"].SetValue(DCEffectFogSpeed * Timer / 100f);
             data.Shader.Parameters["fogColor"].SetValue(DCEffectFogColor.ToVector4());
             data.UseTargetPosition(DCEffectNoFogPosition);
             data.Shader.Parameters["noFogDistance"].SetValue(DCEffectNoFogDistanceCurrent);
@@ -59,7 +63,7 @@ public partial class NPEffectPlayer : ModPlayer
             Vector2 pVClamped = Vector2.Clamp(Player.velocity, -Vector2.One * 10, Vector2.One * 10);
             moveT = Vector2.Lerp(moveT, pVClamped, 1f / 60f);
             data.Shader.Parameters["playerVelocity"].SetValue(Player.velocity);
-            data.Shader.Parameters["moveT"].SetValue(moveT);
+            data.Shader.Parameters["moveT"].SetValue(DCEffectFogSpeed * moveT);
             data.UseProgress(DCEffectOpacity);
 
             int worldWidth = Main.maxTilesX * 16;
@@ -83,6 +87,7 @@ public partial class NPEffectPlayer : ModPlayer
             {
                 SkyManager.Instance.Activate("NeoParacosm:DCSky");
             }
+
             SkyManager.Instance["NeoParacosm:DCSky"].Opacity = DCEffectOpacity;
         }
         else
