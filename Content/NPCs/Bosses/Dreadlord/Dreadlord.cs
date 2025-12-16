@@ -50,6 +50,22 @@ public class Dreadlord : ModNPC
     }
     ref float AttackTimer => ref NPC.ai[2];
     ref float AttackCount => ref NPC.ai[3];
+    int playerSide = 1; // whether NPC is to the left (-1) or right (1) of the player
+    float PlayerSide
+    {
+        get => playerSide;
+        set
+        {
+            if (value >= 0)
+            {
+                playerSide = 1;
+            }
+            else
+            {
+                playerSide = -1;
+            }
+        }
+    }
 
     float attackDuration = 0;
     int[] attackDurations = { 600, 600, 600, 600, 600 };
@@ -66,6 +82,7 @@ public class Dreadlord : ModNPC
     #region Constants
     const int INTRO_DURATION = 60;
 
+    // Animation frame constants
     const int HEAD_MOUTH_CLOSED = 0;
     const int HEAD_MOUTH_OPEN = 1;
 
@@ -93,6 +110,10 @@ public class Dreadlord : ModNPC
     Vector2 lookPosition = Vector2.Zero;
     public Player player { get; private set; }
 
+    /// <summary>
+    /// The leg being controlled in attacks that utilize a single leg at a time
+    /// </summary>
+    DreadlordBodyPart targetLeg;
 
     public override void Load()
     {
@@ -197,6 +218,8 @@ public class Dreadlord : ModNPC
 
     public override void AI()
     {
+        WorldDataSystem.DreadlordAlive = true;
+
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
             NPC.TargetClosest(false);
@@ -226,7 +249,7 @@ public class Dreadlord : ModNPC
         {
             case < 120:
                 SetBodyPartPositions(1 / 5f, 1 / 5f, 1 / 10f);
-                if (NPC.Center.Y < player.Center.Y)
+                if (NPC.Center.Y < WorldDataSystem.DCEffectNoFogPosition.Y)
                 {
                     NPC.velocity.Y += 0.5f;
                     SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { MaxInstances = 1, PitchVariance = 1.0f, Volume = 0.5f, SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest }, NPC.Center);
@@ -259,11 +282,10 @@ public class Dreadlord : ModNPC
                                      );
                 break;
             case 210:
-                NPC.velocity = Vector2.Zero;
                 NPC.noTileCollide = true;
                 SoundEngine.PlaySound(SoundID.Roar with { MaxInstances = 2, Pitch = -1f }, NPC.Center);
                 SoundEngine.PlaySound(SoundID.NPCDeath62 with { MaxInstances = 2, Pitch = -0.5f }, NPC.Center);
-                PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 60f, 6f, 360, 1000f, FullName);
+                PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 60f, 8f, 360, 2000f, FullName);
                 Main.instance.CameraModifiers.Add(mod1);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
@@ -304,8 +326,19 @@ public class Dreadlord : ModNPC
                                     );
                 HeadCorrupt.CurrentFrame = HEAD_MOUTH_OPEN;
                 HeadCrimson.CurrentFrame = HEAD_MOUTH_OPEN;
+                if (AttackTimer % 20 == 0)
+                {
+                    SetBodyPartPositions(HeadCorrupt.DefaultPosition + Main.rand.NextVector2Circular(64, 64),
+                                         HeadCrimson.DefaultPosition + Main.rand.NextVector2Circular(64, 64),
+                                         LegCorrupt.DefaultPosition + Main.rand.NextVector2Circular(64, 64),
+                                         LegCrimson.DefaultPosition + Main.rand.NextVector2Circular(64, 64),
+                                         Body.DefaultPosition + Main.rand.NextVector2Circular(64, 64)
+                        );
+                }
+                //NPC.velocity = Main.rand.NextVector2Circular(2, 2);
                 break;
             case < 540 and > 210:
+                NPC.velocity = Vector2.Zero;
                 SetBodyPartPositions();
                 HeadCorrupt.CurrentFrame = HEAD_MOUTH_CLOSED;
                 HeadCrimson.CurrentFrame = HEAD_MOUTH_CLOSED;
@@ -334,35 +367,85 @@ public class Dreadlord : ModNPC
 
     void DiagonalSwings()
     {
-        SetBodyPartPositions(1f, 1f, 1f);
+        if (AttackTimer > 45)
+        {
+
+            SetBodyPartPositions(0.5f, 1f, 1f);
+        }
         switch (AttackTimer)
         {
-            case 300:
-                AttackCount++;
+            case 600:
+                PlayerSide = player.DirectionTo(NPC.Center).X;
+                ResetLegFrame();
                 break;
-            case > 180:
-                Vector2 diagPos = player.Center + new Vector2(-500, -700);
+            case > 480:
+                Vector2 diagPos = player.Center + new Vector2(400 * -playerSide, -400);
                 NPC.MoveToPos(diagPos, 0.2f, 0.2f, 0.2f, 0.2f);
                 break;
-            case > 150:
+            case > 450:
                 NPC.velocity = player.DirectionTo(NPC.Center) * 5;
-                LegCorrupt.CurrentFrame = LEG_ATTACK;
-                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, MathHelper.PiOver2, 1 / 40f);
+                targetLeg = GetLeg(true);
+                targetLeg.CurrentFrame = LEG_ATTACK;
+                targetLeg.Rotation = Utils.AngleLerp(targetLeg.Rotation, MathHelper.PiOver2 * PlayerSide, 1 / 10f);
                 break;
-            case 150:
+            case 450:
                 NPC.velocity = NPC.DirectionTo(player.Center) * 25;
                 break;
-            case >= 120:
-                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, -MathHelper.Pi / 6, 1 / 15f);
+            case >= 420:
+                targetLeg.Rotation = Utils.AngleLerp(targetLeg.Rotation, -PlayerSide * MathHelper.Pi / 6, 1 / 5f);
                 break;
-            case > 30 and < 120:
-                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, 0, 1 / 40f);
+            case > 360:
+                targetLeg.Rotation = Utils.AngleLerp(targetLeg.Rotation, 0, 1 / 40f);
                 NPC.velocity *= 0.97f;
+                break;
+            case > 330:
+                break;
+            case 330:
+                PlayerSide *= -1;
+                targetLeg = GetLeg(true);
+                ResetLegFrame();
+                break;
+            case > 290:
+                Vector2 diagPos2 = player.Center + new Vector2(300 * -playerSide, -300);
+                NPC.MoveToPos(diagPos2, 0.2f, 0.2f, 0.4f, 0.4f);
+                break;
+            case > 270:
+                NPC.velocity = player.DirectionTo(NPC.Center) * 5;
+                targetLeg.CurrentFrame = LEG_ATTACK;
+                targetLeg.Rotation = Utils.AngleLerp(targetLeg.Rotation, MathHelper.PiOver2 * PlayerSide, 1 / 10f);
+                break;
+            case 270:
+                NPC.velocity = NPC.DirectionTo(player.Center) * 25;
+                break;
+            case >= 240:
+                targetLeg.Rotation = Utils.AngleLerp(targetLeg.Rotation, -PlayerSide * MathHelper.Pi / 6, 1 / 10f);
+                break;
+            case > 210:
+                targetLeg.Rotation = Utils.AngleLerp(targetLeg.Rotation, 0, 1 / 10f);
+                NPC.velocity *= 0.97f;
+                break;
+            case > 120:
+                Vector2 abovePos = player.Center - Vector2.UnitY * 300;
+                NPC.MoveToPos(abovePos, 0.4f, 0.4f, 0.6f, 0.6f);
+                ResetLegFrame();
+                break;
+            case > 90:
+                NPC.velocity.X = 0;
+                NPC.velocity.Y -= 0.5f;
+                break;
+            case 90:
+                NPC.velocity = Vector2.UnitY * 40;
+                break;
+            case > 45:
+                SetBodyPartPositions(0.5f, 0.01f, 1f);
+                break;
+            case > 0:
+                NPC.velocity *= 0.95f;
                 break;
             case 0:
                 NPC.velocity = Vector2.Zero;
-                LegCorrupt.CurrentFrame = LEG_STANDARD;
-                AttackTimer = 300;
+                AttackTimer = 600;
+                ResetLegFrame();
                 return;
         }
 
@@ -373,10 +456,11 @@ public class Dreadlord : ModNPC
     {
         Attack++;
         attackDuration = attackDurations[(int)Attack];
-
+        targetLeg = null;
         AttackCount = 0;
         AttackTimer = 0;
         NPC.Opacity = 1f;
+        ResetLegFrame();
     }
 
     void DespawnCheck()
@@ -391,6 +475,11 @@ public class Dreadlord : ModNPC
 
 
     public override bool CheckDead()
+    {
+        return true;
+    }
+
+    public override bool CanHitPlayer(Player target, ref int cooldownSlot)
     {
         return true;
     }
@@ -423,12 +512,12 @@ public class Dreadlord : ModNPC
         Body.MiscPosition1 = Body.Position + new Vector2(-Body.Width * 0.25f, -Body.Height * 0.2f);
         Body.MiscPosition2 = Body.Position + new Vector2(+Body.Width * 0.25f, -Body.Height * 0.2f);
 
-        LegCorrupt.DefaultPosition = Body.Position + new Vector2(-Body.Width * 0.57f, -Body.Height * 0.35f);
-        LegCorrupt.Origin = new Vector2(LegCorrupt.Width * 0.5f, 0);
+        LegCorrupt.DefaultPosition = Body.Position + new Vector2(-Body.Width * 0.57f, -Body.Height * 0.1f);
+        LegCorrupt.Origin = new Vector2(LegCorrupt.Width * 0.5f, LegCorrupt.Height * 0.17f);
         LegCorrupt.Frames = 2;
 
-        LegCrimson.DefaultPosition = Body.Position + new Vector2(Body.Width * 0.57f, -Body.Height * 0.35f);
-        LegCrimson.Origin = new Vector2(LegCrimson.Width * 0.5f, 0);
+        LegCrimson.DefaultPosition = Body.Position + new Vector2(Body.Width * 0.57f, -Body.Height * 0.1f);
+        LegCrimson.Origin = new Vector2(LegCrimson.Width * 0.5f, LegCrimson.Height * 0.17f);
         LegCrimson.Frames = 2;
 
         BackLegs.DefaultPosition = Body.Position + new Vector2(0, BackLegs.Height * 0.2f);
@@ -507,6 +596,25 @@ public class Dreadlord : ModNPC
         WingCorrupt.CurrentFrame = wingFrame;
         WingCrimson.CurrentFrame = wingFrame;
         wingAnimTimer++;
+    }
+
+    /// <summary>
+    /// If opposite is true, returns the opposite leg of the side the player is on.
+    /// </summary>
+    /// <returns>LegCorrupt if playerSide == 1, LegCrimson if playerSide == -1</returns>
+    DreadlordBodyPart GetLeg(bool opposite = true)
+    {
+        if (!opposite)
+        {
+            return playerSide == 1 ? LegCrimson : LegCorrupt;
+        }
+        return playerSide == 1 ? LegCorrupt : LegCrimson;
+    }
+
+    void ResetLegFrame()
+    {
+        LegCorrupt.CurrentFrame = LEG_STANDARD;
+        LegCrimson.CurrentFrame = LEG_STANDARD;
     }
 
     void DrawNeck(Vector2 neckBase, Vector2 destination, Asset<Texture2D> texture)

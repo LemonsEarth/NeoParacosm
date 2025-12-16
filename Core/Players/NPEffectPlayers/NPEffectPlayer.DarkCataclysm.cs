@@ -18,16 +18,15 @@ namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
 public partial class NPEffectPlayer : ModPlayer
 {
-    float DCEffectOpacity = 0f;
-    float DCEffectOpacityTimer = 0f;
-    public Color DCEffectFogColor { get; set; } = Color.White;
-    public Vector2 DCEffectNoFogPosition { get; set; } = Vector2.Zero;
-    public float DCEffectNoFogDistance { get; set; } = 0;
-    public float DCEffectNoFogDistanceCurrent { get; set; } = 0;
-    public float DCEffectMaxFogOpacity { get; set; } = 0.1f;
-    public float DCEffectFogOpacity { get; set; } = 0f;
-    public float DCEffectFogSpeed { get; set; } = 1f;
-    public bool ShouldReset => !(Player.HeldItem.type == ItemType<AncientCallingHorn>() && Player.ItemAnimationActive) && !NPC.AnyNPCs(NPCType<Dreadlord>());
+    ref float DCEffectOpacity => ref WorldDataSystem.DCEffectOpacity;
+    ref float DCEffectOpacityTimer => ref WorldDataSystem.DCEffectOpacityTimer;
+    ref Color DCEffectFogColor => ref WorldDataSystem.DCEffectFogColor;
+    ref Vector2 DCEffectNoFogPosition => ref WorldDataSystem.DCEffectNoFogPosition;
+    ref float DCEffectNoFogDistance => ref WorldDataSystem.DCEffectNoFogDistance;
+    ref float DCEffectNoFogDistanceCurrent => ref WorldDataSystem.DCEffectNoFogDistanceCurrent;
+    ref float DCEffectMaxFogOpacity => ref WorldDataSystem.DCEffectMaxFogOpacity;
+    ref float DCEffectFogOpacity => ref WorldDataSystem.DCEffectFogOpacity;
+    ref float DCEffectFogSpeed => ref WorldDataSystem.DCEffectFogSpeed;
     
     public override void ResetEffects()
     {
@@ -37,14 +36,10 @@ public partial class NPEffectPlayer : ModPlayer
     Vector2 moveT = Vector2.Zero;
     void DCEffects()
     {
-        if (ShouldReset)
+        if (Player.HeldItem.type == ItemType<AncientCallingHorn>() && Player.ItemAnimationActive)
         {
-            DCEffectFogColor = Color.White;
-            DCEffectMaxFogOpacity = 0.1f;
-            DCEffectNoFogDistance = 0;
-            DCEffectFogSpeed = 1f;
+            WorldDataSystem.AncientCallingHornInUse = true;
         }
-
         if (ResearcherQuest.DarkCataclysmActive)
         {
             DCEffectFogOpacity = MathHelper.Lerp(DCEffectFogOpacity, DCEffectMaxFogOpacity, 1 / 60f);

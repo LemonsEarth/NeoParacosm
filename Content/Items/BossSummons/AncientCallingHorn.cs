@@ -37,26 +37,26 @@ public class AncientCallingHorn : ModItem
         return ((!Main.dayTime || ResearcherQuest.DarkCataclysmActive) && !NPC.AnyNPCs(NPCType<Dreadlord>()) && (player.ZoneCorrupt || player.ZoneCrimson));
     }
 
+    public override void UseAnimation(Player player)
+    {
+        
+    }
+
     public override bool? UseItem(Player player)
     {
         if (player.ItemAnimationJustStarted)
         {
             SoundEngine.PlaySound(ParacosmSFX.AncientCallingHorn with { Volume = 0.75f }, player.Center);
             NPPlayer.savedMusicVolume = Main.musicVolume;
-            player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition = player.Center;
-            player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogDistance = 2000;
-            player.GetModPlayer<NPEffectPlayer>().DCEffectMaxFogOpacity = 0.2f;
-            player.GetModPlayer<NPEffectPlayer>().DCEffectFogSpeed = 5;
+            WorldDataSystem.DCEffectNoFogPosition = player.Center;
         }
-        player.GetModPlayer<NPEffectPlayer>().DCEffectFogColor = Color.Lerp(player.GetModPlayer<NPEffectPlayer>().DCEffectFogColor, Color.Red, 1 / 60f);
         Main.musicVolume = 0f;
 
         if (player.ItemAnimationEndingOrEnded)
         {
-
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.SpawnBoss((int)player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition.X, (int)player.GetModPlayer<NPEffectPlayer>().DCEffectNoFogPosition.Y - 2000, NPCType<Dreadlord>(), player.whoAmI);
+                NPC.SpawnBoss((int)WorldDataSystem.DCEffectNoFogPosition.X, (int)WorldDataSystem.DCEffectNoFogPosition.Y - 2000, NPCType<Dreadlord>(), player.whoAmI);
             }
             else
             {
