@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Content.Projectiles.Hostile;
+using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Content.Projectiles.Hostile.Researcher;
 using NeoParacosm.Core.Players.NPEffectPlayers;
 using NeoParacosm.Core.Systems.Assets;
@@ -15,10 +15,8 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.Graphics.Shaders;
-using Terraria.UI;
+using static Microsoft.Xna.Framework.MathHelper;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 
@@ -72,7 +70,7 @@ public class Dreadlord : ModNPC
 
     public enum Attacks
     {
-        DiagonalSwings,
+        BallsNLightning,
     }
 
     int wingFrame = 0;
@@ -107,8 +105,11 @@ public class Dreadlord : ModNPC
 
     int facingDirection = 1;
 
-    Vector2 lookPosition = Vector2.Zero;
+    Vector2 targetPosition = Vector2.Zero;
     public Player player { get; private set; }
+    float projDamage => NPC.damage / 4;
+
+    Vector2 arenaCenter => WorldDataSystem.DCEffectNoFogPosition;
 
     /// <summary>
     /// The leg being controlled in attacks that utilize a single leg at a time
@@ -283,8 +284,7 @@ public class Dreadlord : ModNPC
                 break;
             case 210:
                 NPC.noTileCollide = true;
-                SoundEngine.PlaySound(SoundID.Roar with { MaxInstances = 2, Pitch = -1f }, NPC.Center);
-                SoundEngine.PlaySound(SoundID.NPCDeath62 with { MaxInstances = 2, Pitch = -0.5f }, NPC.Center);
+                PlayRoar();
                 PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 60f, 8f, 360, 2000f, FullName);
                 Main.instance.CameraModifiers.Add(mod1);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -297,11 +297,16 @@ public class Dreadlord : ModNPC
                     0,
                     0,
                     -1,
-                    4, 15, 5
+                    2, 15, 5
                     );
                 }
                 break;
+            case 360:
+                PlayRoar(0.3f);
+                break;
             case < 480 and > 210:
+                float speed = AITimer < 360 ? 2 : 4;
+                float size = AITimer < 360 ? 15 : 16;
                 if (AITimer % 15 == 0)
                 {
                     if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -314,7 +319,7 @@ public class Dreadlord : ModNPC
                         0,
                         0,
                         -1,
-                        2, 15, 5
+                        speed, size, 5
                         );
                     }
                 }
@@ -353,8 +358,8 @@ public class Dreadlord : ModNPC
     {
         switch (Attack)
         {
-            case (int)Attacks.DiagonalSwings:
-                DiagonalSwings();
+            case (int)Attacks.BallsNLightning:
+                BallsNLightning();
                 break;
         }
 
@@ -363,6 +368,102 @@ public class Dreadlord : ModNPC
         {
             SwitchAttacks();
         }
+    }
+
+    void BallsNLightning()
+    {
+        if (AttackTimer < 450)
+        {
+
+            SetBodyPartPositions(HeadCorrupt.DefaultPosition + Vector2.UnitY * 40,
+                HeadCrimson.DefaultPosition - Vector2.UnitY * 32 * AttackCount + Main.rand.NextVector2Circular(24, 24),
+                LegCorrupt.DefaultPosition, LegCrimson.DefaultPosition, Body.DefaultPosition);
+        }
+        else
+        {
+
+            SetBodyPartPositions(0.5f, 0.5f, 0.5f);
+        }
+        switch (AttackTimer)
+        {
+            case 600:
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    targetPosition = arenaCenter + Main.rand.NextVector2Circular(600, 600);
+                }
+                NPC.netUpdate = true;
+                break;
+            case > 450:
+                NPC.MoveToPos(targetPosition, 0.04f, 0.04f, 0.1f, 0.1f);
+                break;
+            case > 420:
+                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, ToRadians(60), 1 / 10f); // Move leg outward
+                LegCorrupt.CurrentFrame = LEG_ATTACK;
+                NPC.velocity *= 0.95f;
+                break;
+            case 420:
+                NPC.velocity = Vector2.Zero;
+                if (LemonUtils.NotClient())
+                {
+                    GiantCursedSphere(1.05f, 120);
+                }
+                PlayRoar(0);
+                AttackCount++;
+                break;
+            case > 270:
+                HeadCrimson.CurrentFrame = HEAD_MOUTH_OPEN;
+                if (AttackTimer % 15 == 0 && LemonUtils.NotClient())
+                {
+                    LightningAroundPlayer(1200, -1500, 60, 3000);
+                }
+                break;
+            case 270:
+                HeadCrimson.CurrentFrame = HEAD_MOUTH_CLOSED;
+                AttackCount++;
+                LegCorrupt.CurrentFrame = LEG_STANDARD;
+                break;
+            case > 240:
+                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, 0, 1 / 10f); // Move leg back
+                break;
+            case 240:
+                LegCorrupt.CurrentFrame = LEG_ATTACK;
+                GiantCursedSphere(1.05f, 120);
+                break;
+            case 210:
+                PlayRoar();
+                HeadCrimson.CurrentFrame = HEAD_MOUTH_OPEN;
+                AttackCount++;
+                break;
+            case > 120 and < 210:
+                LegCorrupt.Rotation = 0;
+                if (AttackTimer % 10 == 0 && LemonUtils.NotClient())
+                {
+                    LightningAroundPlayer(1200, -1500, 90, 3000);
+                }
+                break;
+            case 120:
+                LegCorrupt.CurrentFrame = LEG_STANDARD;
+                break;
+            case > 60 and < 210:
+                if (AttackTimer % 5 == 0 && LemonUtils.NotClient())
+                {
+                    int lightningCount2 = LemonUtils.IsHard() ? 1 : 3;
+                    if (LemonUtils.IsHard())
+                    {
+                        for (int i = 0; i < lightningCount2; i++)
+                        {
+                            LightningAroundPlayer(600, -1500, 90, 3000);
+                        }
+                    }
+                }
+                break;
+            case 0:
+                HeadCrimson.CurrentFrame = HEAD_MOUTH_CLOSED;
+                AttackTimer = 600;
+                return;
+        }
+
+        AttackTimer--;
     }
 
     void DiagonalSwings()
@@ -463,6 +564,33 @@ public class Dreadlord : ModNPC
         ResetLegFrame();
     }
 
+    void LightningAroundPlayer(float range, int height, int warningDuration, int length)
+    {
+        Vector2 randPos = player.Center + new Vector2(Main.rand.NextFloat(-range, range), height);
+        LemonUtils.QuickProj(
+            NPC,
+            randPos,
+            Vector2.Zero,
+            ProjectileType<LightningWarningProj>(),
+            projDamage,
+            ai1: warningDuration,
+            ai2: length
+            );
+    }
+
+    void GiantCursedSphere(float acceleration, int duration)
+    {
+        LemonUtils.QuickProj(NPC, LegCorrupt.MiscPosition1, Vector2.Zero, ProjectileType<GiantCursedFlameSphere>(), projDamage,
+                    ai1: acceleration,
+                    ai2: duration);
+    }
+
+    void PlayRoar(float bonusPitch = 0f)
+    {
+        SoundEngine.PlaySound(SoundID.Roar with { MaxInstances = 2, Pitch = -1f + bonusPitch }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.NPCDeath62 with { MaxInstances = 2, Pitch = -0.5f + bonusPitch }, NPC.Center);
+    }
+
     void DespawnCheck()
     {
         if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 5000)
@@ -513,14 +641,17 @@ public class Dreadlord : ModNPC
         Body.MiscPosition2 = Body.Position + new Vector2(+Body.Width * 0.25f, -Body.Height * 0.2f);
 
         LegCorrupt.DefaultPosition = Body.Position + new Vector2(-Body.Width * 0.57f, -Body.Height * 0.1f);
+        LegCorrupt.MiscPosition1 = LegCorrupt.Position + new Vector2(LegCorrupt.Width * 0.1f, LegCorrupt.Height * 0.7f).RotatedBy(LegCorrupt.Rotation);
         LegCorrupt.Origin = new Vector2(LegCorrupt.Width * 0.5f, LegCorrupt.Height * 0.17f);
         LegCorrupt.Frames = 2;
 
         LegCrimson.DefaultPosition = Body.Position + new Vector2(Body.Width * 0.57f, -Body.Height * 0.1f);
+        LegCrimson.MiscPosition1 = LegCrimson.Position + new Vector2(LegCrimson.Width * 0.1f, LegCrimson.Height * 0.7f).RotatedBy(LegCrimson.Rotation);
+
         LegCrimson.Origin = new Vector2(LegCrimson.Width * 0.5f, LegCrimson.Height * 0.17f);
         LegCrimson.Frames = 2;
 
-        BackLegs.DefaultPosition = Body.Position + new Vector2(0, BackLegs.Height * 0.2f);
+        BackLegs.DefaultPosition = Body.Position + new Vector2(0, BackLegs.Height * 0.25f);
         BackLegs.Origin = BackLegs.Texture.Size() * 0.5f;
 
         HeadCorrupt.DefaultPosition = Body.MiscPosition1 + new Vector2(0, -50);

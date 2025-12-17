@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria.GameContent;
+using Terraria.ModLoader.IO;
 
 namespace NeoParacosm.Common.Utils.Prim;
 
@@ -24,7 +25,7 @@ public class PrimHelper
     /// <param name="bottomVertexRotation"></param>
     /// <param name="topDistance"></param>
     /// <param name="bottomDistance"></param>
-    public static void DrawBasicProjectilePrimTrailTriangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float? topVertexRotation = null, float? bottomVertexRotation = null, int? topDistance = null, int? bottomDistance = null)
+    public static void DrawBasicProjectilePrimTrailTriangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float? topVertexRotation = null, float? bottomVertexRotation = null, int? topDistance = null, int? bottomDistance = null, Vector2? positionOffset = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
@@ -48,8 +49,10 @@ public class PrimHelper
             int botVertexDistance = bottomDistance ?? (texture.Height / 2);
             Vector2 topVertexOffset = Vector2.UnitX.RotatedBy(topRot) * topVertexDistance * (1 - lerpT);
             Vector2 botVertexOffset = Vector2.UnitX.RotatedBy(botRot) * botVertexDistance * (1 - lerpT);
-            currentPos += new Vector2(texture.Width / 2, texture.Height / 2);
-            oldPos += new Vector2(texture.Width / 2, texture.Height / 2);
+
+            Vector2 posOffset = positionOffset ?? new Vector2(texture.Width / 2, texture.Height / 2);
+            currentPos += posOffset;
+            oldPos += posOffset;
 
 
             Color colorFront = Color.Lerp(startColor, endColor, lerpT);

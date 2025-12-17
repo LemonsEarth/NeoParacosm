@@ -788,3 +788,18 @@ AncientCallingHorn: {
 	DisplayName: Ancient Calling Horn
 	Tooltip: ""
 }
+
+HolyBladeSpell: {
+	DisplayName: Holy Blade Spell
+	Tooltip: ""
+}
+
+FishmanBlessingSpell: {
+	DisplayName: Fishman Blessing Spell
+	Tooltip: ""
+}
+
+HailfireSpell: {
+	DisplayName: Hailfire Spell
+	Tooltip: ""
+}

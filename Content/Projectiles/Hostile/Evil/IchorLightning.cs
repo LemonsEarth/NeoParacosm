@@ -6,23 +6,12 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Special;
+namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
-public class YellowLightning : ModProjectile
+public class IchorLightning : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    Vector2 targetPos
-    {
-        get
-        {
-            return new Vector2(Projectile.ai[1], Projectile.ai[2]);
-        }
-        set
-        {
-            Projectile.ai[1] = value.X;
-            Projectile.ai[2] = value.Y;
-        }
-    }
+    ref float Length => ref Projectile.ai[1];
 
     Vector2 originalPos = Vector2.Zero;
 
@@ -66,8 +55,8 @@ public class YellowLightning : ModProjectile
     {
         Projectile.width = 64;
         Projectile.height = 64;
-        Projectile.friendly = true;
-        Projectile.hostile = false;
+        Projectile.friendly = false;
+        Projectile.hostile = true;
         Projectile.timeLeft = 30;
         Projectile.penetrate = -1;
         Projectile.Opacity = 1f;
@@ -78,18 +67,21 @@ public class YellowLightning : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        
     }
     Color color = Color.White;
     public override void AI()
     {
         if (AITimer == 0)
         {
-            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 6000;
+            Vector2 targetPos = Projectile.Center + Vector2.UnitY * Length;
+            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center + Vector2.UnitY * (Length / 2), (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
             originalPos = Projectile.Center;
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f }, Projectile.Center);
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
             Vector2 projToPos = targetPos - Projectile.Center;
             float spacing = projToPos.Length() / (10 / 2);
 
@@ -131,8 +123,8 @@ public class YellowLightning : ModProjectile
         Projectile.velocity = Vector2.Zero;
         if (Projectile.timeLeft < 30)
         {
-            color = Color.Lerp(Color.Yellow, Color.White, Projectile.timeLeft / 15f);
-            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 5f);
+            color = Color.Lerp(Color.Orange, Color.White, Projectile.timeLeft / 15f);
+            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 10f);
         }
         AITimer++;
     }
@@ -147,7 +139,7 @@ public class YellowLightning : ModProjectile
     public override void OnKill(int timeLeft)
     {
 
-        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.Yellow);
+        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.Orange);
     }
 
     public override bool PreDraw(ref Color lightColor)

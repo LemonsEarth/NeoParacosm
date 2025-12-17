@@ -106,3 +106,8 @@ ManaGuardBuff: {
 	DisplayName: Mana Guard Buff
 	Description: Mods.NeoParacosm.Buffs.ManaGuardBuff.Description
 }
+
+HolyBladeBuff: {
+	DisplayName: Holy Blade Buff
+	Description: Mods.NeoParacosm.Buffs.HolyBladeBuff.Description
+}
