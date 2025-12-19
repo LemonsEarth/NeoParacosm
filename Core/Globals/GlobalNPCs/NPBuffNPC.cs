@@ -54,7 +54,17 @@ public class NPBuffNPC : GlobalNPC
         else
         {
             timer = 0;
+        }    
+
+        if (npc.HasBuff(BuffType<SnowgraveDebuff>()) && !npc.boss)
+        {
+            npc.velocity = Vector2.Zero;
         }
+    }
+
+    public override void AI(NPC npc)
+    {
+        
     }
 
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)

@@ -803,3 +803,8 @@ HailfireSpell: {
 	DisplayName: Hailfire Spell
 	Tooltip: ""
 }
+
+SnowgraveSpell: {
+	DisplayName: Snowgrave Spell
+	Tooltip: ""
+}

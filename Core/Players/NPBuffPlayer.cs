@@ -2,6 +2,8 @@
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Players;
@@ -109,6 +111,43 @@ public class NPBuffPlayer : ModPlayer
         {
             Player.CheckMana((info.Damage * 2) / LemonUtils.GetDifficulty(), true, true);
             Player.manaRegenDelay = 120;
+        }
+
+        if (Player.HasBuff(BuffType<SnowgraveBuff>()))
+        {
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                Projectile.NewProjectile(
+                    Player.GetSource_OnHurt(info.DamageSource),
+                    Player.Center,
+                    Vector2.Zero,
+                    ProjectileType<SnowgraveProjectile>(),
+                    (int)Player.GetDamage(DamageClass.Magic).ApplyTo(30),
+                    5f,
+                    Player.whoAmI,
+                    ai1: 60
+                    );
+            }
+        }
+    }
+
+    public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+    {
+        if (Player.HasBuff(BuffType<SnowgraveBuff>()))
+        {
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                Projectile.NewProjectile(
+                    Player.GetSource_OnHurt(damageSource),
+                    Player.Center,
+                    Vector2.Zero,
+                    ProjectileType<SnowgraveProjectile>(),
+                    (int)Player.GetDamage(DamageClass.Magic).ApplyTo(100),
+                    5f,
+                    Player.whoAmI,
+                    ai1: 180
+                    );
+            }
         }
     }
 

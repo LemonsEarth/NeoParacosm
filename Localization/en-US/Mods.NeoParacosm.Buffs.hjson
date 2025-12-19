@@ -111,3 +111,13 @@ HolyBladeBuff: {
 	DisplayName: Holy Blade Buff
 	Description: Mods.NeoParacosm.Buffs.HolyBladeBuff.Description
 }
+
+SnowgraveDebuff: {
+	DisplayName: Snowgrave Debuff
+	Description: Mods.NeoParacosm.Buffs.SnowgraveDebuff.Description
+}
+
+SnowgraveBuff: {
+	DisplayName: Snowgrave Buff
+	Description: Mods.NeoParacosm.Buffs.SnowgraveBuff.Description
+}

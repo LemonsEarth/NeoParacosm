@@ -48,7 +48,7 @@ public class DeathseederNPC : GlobalNPC
 
     public override void OnSpawn(NPC npc, IEntitySource source)
     {
-        if (source.Context == "DeathseederSpawn")
+        if (source != null && source.Context == "DeathseederSpawn")
         {
             isDeathseederSpawn = true;
         }

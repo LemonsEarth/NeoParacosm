@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.UI;
 using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Common.Utils;
@@ -92,5 +93,11 @@ public static partial class LemonUtils
             -1,
             speed, scale, colorMult
             );
+    }
+
+    public static void QuickCameraFocus(Vector2 position, Func<bool> endConditionFunc)
+    {
+        MoveCameraModifier cameraModifier = new MoveCameraModifier(position, endConditionFunc);
+        Main.instance.CameraModifiers.Add(cameraModifier);
     }
 }
