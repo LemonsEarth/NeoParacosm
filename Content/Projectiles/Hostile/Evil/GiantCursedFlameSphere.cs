@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Projectiles.Effect;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -7,7 +8,8 @@ namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
 public class GiantCursedFlameSphere : ModProjectile
 {
-    ref float AITimer => ref Projectile.ai[0];
+    int AITimer = 0;
+    ref float Angle => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
     ref float TimeLeft => ref Projectile.ai[2];
 
@@ -52,7 +54,7 @@ public class GiantCursedFlameSphere : ModProjectile
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
         Projectile.penetrate = 3;
-        Projectile.timeLeft = 999;
+        Projectile.timeLeft = 9999;
         Projectile.scale = 1f;
         Projectile.Opacity = 0f;
     }
@@ -62,6 +64,10 @@ public class GiantCursedFlameSphere : ModProjectile
     {
         if (AITimer == 0)
         {
+            if (Angle == 0)
+            {
+                Angle = MathHelper.Pi / 8;
+            }
             savedSpeed = Projectile.velocity.Length();
             SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
@@ -86,7 +92,7 @@ public class GiantCursedFlameSphere : ModProjectile
         {
             SpeedUP = 1f;
         }
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f));
+        var dust = Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f));
         dust.noGravity = true;
         Projectile.rotation = MathHelper.ToRadians(AITimer * 24);
         Projectile.StandardAnimation(6, 6);
@@ -124,10 +130,12 @@ public class GiantCursedFlameSphere : ModProjectile
     {
         SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1f, ai1: 10, ai2: 5);
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.CursedTorch, 2f);
         for (int i = 0; i < 16; i++)
         {
-            LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * MathHelper.Pi / 8) * 2, ProjectileType<CursedFlameSphere>(), ai1: SpeedUP);
+            LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * Angle) * 2, ProjectileType<CursedFlameSphere>(), ai1: SpeedUP);
         }
     }
 }

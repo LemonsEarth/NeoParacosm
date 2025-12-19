@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles.Effect;
 using Terraria;
 using Terraria.GameContent;
 
@@ -109,5 +110,4 @@ public static partial class LemonUtils
         Vector2 pos = proj.position + new Vector2(Main.rand.NextFloat(-fluffX, proj.width + fluffX), Main.rand.NextFloat(-fluffY, proj.height + fluffY));
         return pos;
     }
-
 }

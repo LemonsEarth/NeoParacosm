@@ -87,7 +87,7 @@ public class LightningWarningProj : ModProjectile
         Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, 
             Projectile.Center - Main.screenPosition, 
             null, 
-            Color.White * Projectile.Opacity, 
+            Color.White * Projectile.Opacity * 0.5f, 
             0f, 
             new Vector2(ParacosmTextures.GlowBallTexture.Width() * 0.5f, 0), 
             new Vector2(1f, Length / 128 * Projectile.scale), 

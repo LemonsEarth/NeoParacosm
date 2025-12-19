@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Assets;
 using ReLogic.Content;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 
@@ -51,12 +53,26 @@ public class DreadlordBodyPart
     public float Width => Frame.Width;
     public float Height => Frame.Height;
 
-    public void Draw()
+    public void Draw(bool useShader = false, int shaderTimer = 0)
     {
         if (Texture == null)
         {
             return;
         }
         Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, Color.White, Rotation, Origin, Scale, SpriteEffects);
+        if (useShader)
+        {
+            var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
+            shader.Shader.Parameters["uTime"].SetValue(shaderTimer);
+            shader.Shader.Parameters["color"].SetValue(Color.Gold.ToVector4());
+            shader.Shader.Parameters["moveSpeed"].SetValue(1f);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+            Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+            shader.Apply();
+            Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, Color.White, Rotation, Origin, Scale, SpriteEffects);
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        }
     }
 }
