@@ -42,7 +42,7 @@ public class EnchantedTwig : BaseCatalyst
         Item.mana = 11;
     }
 
-    public override void HoldItem(Player player)
+    public override void UpdateInventory(Player player)
     {
         player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Pure] += magicDamageBoost / 100f;
         player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Pure] += magicSpeedBoost / 100f;

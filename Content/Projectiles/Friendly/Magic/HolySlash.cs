@@ -22,10 +22,10 @@ public class HolySlash : ModProjectile
         Projectile.height = 64;
         Projectile.friendly = true;
         Projectile.timeLeft = 240;
-        Projectile.penetrate = 1;
+        Projectile.penetrate = -1;
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
-        Projectile.localNPCHitCooldown = 20;
+        Projectile.localNPCHitCooldown = -1;
     }
 
     public override void AI()

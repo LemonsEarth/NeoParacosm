@@ -121,3 +121,8 @@ SnowgraveBuff: {
 	DisplayName: Snowgrave Buff
 	Description: Mods.NeoParacosm.Buffs.SnowgraveBuff.Description
 }
+
+FireAuraBuff: {
+	DisplayName: Fire Aura Buff
+	Description: Mods.NeoParacosm.Buffs.FireAuraBuff.Description
+}

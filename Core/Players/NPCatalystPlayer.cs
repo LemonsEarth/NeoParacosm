@@ -12,7 +12,7 @@ public class NPCatalystPlayer : ModPlayer
 {
     /// <summary>
     /// Damage boosts for each spell element type.
-    /// Each is set to 0 at the start of every Update.
+    /// Each is set to 1f at the start of every Update.
     /// Value is a percentage, so 1f would be a 100% damage increase.
     /// </summary>
     public Dictionary<BaseSpell.SpellElement, float> ElementalDamageBoosts = new Dictionary<BaseSpell.SpellElement, float>();
@@ -24,6 +24,8 @@ public class NPCatalystPlayer : ModPlayer
     /// Value is a percentage, so 2f could be a 100% speed increase.
     /// </summary>
     public Dictionary<BaseSpell.SpellElement, float> ElementalExpertiseBoosts = new Dictionary<BaseSpell.SpellElement, float>();
+
+    public Dictionary<int, bool> CatalystBoostActive = new Dictionary<int, bool>();
 
     public const int BASE_SPELL_SLOTS = 3;
     public int maxSpellSlots = 3;
@@ -116,12 +118,13 @@ public class NPCatalystPlayer : ModPlayer
         elementsArray ??= (BaseSpell.SpellElement[])Enum.GetValues(typeof(BaseSpell.SpellElement));
         foreach (BaseSpell.SpellElement spellDamageType in elementsArray)
         {
-            ElementalDamageBoosts[spellDamageType] = 0;
+            ElementalDamageBoosts[spellDamageType] = 1f;
+            ElementalExpertiseBoosts[spellDamageType] = 1f;
         }
 
-        foreach (BaseSpell.SpellElement spellDamageType in elementsArray)
+        foreach (int catalystType in CatalystBoostActive.Keys)
         {
-            ElementalExpertiseBoosts[spellDamageType] = 1f;
+            CatalystBoostActive[catalystType] = false;
         }
     }
 

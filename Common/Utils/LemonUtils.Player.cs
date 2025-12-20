@@ -50,6 +50,13 @@ public static partial class LemonUtils
         return player.NPCatalystPlayer().ElementalExpertiseBoosts[element];
     }
 
+    public static float GetElementalExpertiseBoostMultiplied(this Player player, BaseSpell.SpellElement element, float mul)
+    {
+        float dec = MathF.Max(player.NPCatalystPlayer().ElementalExpertiseBoosts[element] - 1, 0);
+        dec *= 2;
+        return 1 + dec;
+    }
+
     public static bool HasAnyFireDebuff(this Player player)
     {
         return player.HasBuff(BuffID.OnFire) || player.HasBuff(BuffID.Burning) || player.HasBuff(BuffID.OnFire3)

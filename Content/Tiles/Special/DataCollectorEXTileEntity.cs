@@ -28,7 +28,6 @@ public class DataCollectorEXTileEntity : ModTileEntity
         t.Text = dataCollected.ToString();
         Vector2 pos = (CenterPos - new Point16(0, 3)).ToWorldCoordinates();
         lastMessageSentID = PopupText.NewText(t, pos);
-        Main.NewText(ResearcherQuest.Progress);
         if (dataCollected >= killAmount && ResearcherQuest.Progress == ResearcherQuest.ProgressState.Hardmode)
         {
             ResearcherQuest.Progress = ResearcherQuest.ProgressState.CollectedData2;

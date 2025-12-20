@@ -40,10 +40,12 @@ public class Candlestick : BaseCatalyst
         Item.mana = 12;
     }
 
-    public override void HoldItem(Player player)
+    public override void UpdateInventory(Player player)
     {
+
         player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Fire] += fireDamageBoost / 100f;
         player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Fire] += fireSpeedBoost / 100f;
+
     }
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

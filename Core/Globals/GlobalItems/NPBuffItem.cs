@@ -24,9 +24,18 @@ public class NPBuffItem : GlobalItem
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                Main.NewText(player.GetElementalDamageBoost(BaseSpell.SpellElement.Fire));
+                float maxDamage = 0;
+                if (player.GetElementalExpertiseBoost(BaseSpell.SpellElement.Holy) > 1.5f)
+                {
+                    maxDamage = item.damage;
+                }
+                else
+                {
+                    maxDamage = item.damage * 0.25f;
+                }
                 Vector2 velocity = player.DirectionTo(Main.MouseWorld) * 8 * player.GetElementalExpertiseBoost(BaseSpell.SpellElement.Holy);
                 float damage = player.GetDamage(DamageClass.Generic).ApplyTo(item.damage * (player.GetElementalDamageBoost(BaseSpell.SpellElement.Holy) + 1));
+                damage = MathHelper.Clamp(damage, 5, maxDamage);
                 Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, velocity, ProjectileType<HolySlash>(), (int)damage, 2f, player.whoAmI, ai1: 0.95f, ai2: 30);
             }
         }

@@ -34,7 +34,7 @@ public class StarStone : BaseCatalyst
         Item.noMelee = false;
     }
 
-    public override void HoldItem(Player player)
+    public override void UpdateInventory(Player player)
     {
         
     }

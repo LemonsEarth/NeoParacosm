@@ -105,6 +105,16 @@ public class NPBuffPlayer : ModPlayer
         }
     }
 
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    {
+        if (Player.HasBuff(BuffType<FireAuraBuff>()))
+        {
+            float distance = Player.Center.Distance(target.Center);
+            int defReduction = (int)((1 - MathHelper.Clamp((distance / 500f), 0, 1)) * 10 * Player.GetElementalExpertiseBoostMultiplied(BaseSpell.SpellElement.Fire, 2f));
+            modifiers.Defense.Flat -= defReduction;
+        }
+    }
+
     public override void OnHurt(Player.HurtInfo info)
     {
         if (Player.HasBuff(BuffType<ManaGuardBuff>()))

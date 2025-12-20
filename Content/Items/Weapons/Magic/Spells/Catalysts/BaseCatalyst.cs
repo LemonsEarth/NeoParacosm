@@ -31,8 +31,8 @@ public abstract class BaseCatalyst : ModItem
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
     {
         position = player.Center;
-        velocity = player.NPCatalystPlayer().SelectedSpell.TargetVector == Vector2.Zero ? 
-                                                                           Main.MouseWorld : 
+        velocity = player.NPCatalystPlayer().SelectedSpell.TargetVector == Vector2.Zero ?
+                                                                           Main.MouseWorld :
                                                                            player.DirectionTo(player.NPCatalystPlayer().SelectedSpell.TargetVector);
     }
 
@@ -81,5 +81,14 @@ public abstract class BaseCatalyst : ModItem
         }
         TooltipLine spellsLine2 = new TooltipLine(Mod, "NeoParacosm:EquippedSpells", equippedSpells);
         tooltips.Add(spellsLine2);
+    }
+
+    public void ApplyElementalDamageBoosts(Player player, BaseSpell.SpellElement element, float boost)
+    {
+        if (!player.NPCatalystPlayer().CatalystBoostActive.ContainsKey(Type) || player.NPCatalystPlayer().CatalystBoostActive[Type] == false)
+        {
+            player.AddElementalDamageBoost(element, boost);
+            player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
+        }
     }
 }

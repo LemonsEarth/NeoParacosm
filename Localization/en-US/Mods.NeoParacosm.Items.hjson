@@ -786,25 +786,59 @@ StarCrystal: {
 
 AncientCallingHorn: {
 	DisplayName: Ancient Calling Horn
-	Tooltip: ""
+	Tooltip: An ancient instrument used for communing with dragons, amped with the energy of afflicted souls
+	NPLore:
+		'''
+		[c/FF9E03:Many centuries ago, dragons were subjects of worship, overseeing civilizations and granting their followers power.]
+		[c/FF9E03:All have either journeyed to lands far away or were hunted down by those who despise them or those devoted to them.]
+		[c/FF9E03:With the exception of the Dragonlord, Edyiem, who abandoned his mortal flesh and ascended to a higher realm a century ago.]
+		[c/FF9E03:The Dragonlord was a bearer of the Golden Heart. It is said that the Heart remains inside of his discarded flesh to this very day.]
+		'''
 }
 
 HolyBladeSpell: {
-	DisplayName: Holy Blade Spell
-	Tooltip: ""
+	DisplayName: Holy Blade
+	Tooltip:
+		'''
+		Temporarily grants your items holy power, unleashing holy slashes when used.
+		Does not work on items that fire projectiles.
+		'''
+	NPLore:
+		'''
+		[c/FFFF00:There was a time when a group of bandits visited a cathedral, seemingly seeking absolution.]
+		[c/FFFF00:This spell, a secret to all but the most devoted, was then stolen by those same bandits.]
+		[c/FFFF00:Though the bandits were eventually caught, this spell and its whereabouts remained a mystery.]
+		'''
 }
 
 FishmanBlessingSpell: {
-	DisplayName: Fishman Blessing Spell
-	Tooltip: ""
+	DisplayName: Fishman's Blessing
+	Tooltip: Briefly grants you the ability to breathe and maneuver underwater.
+	NPLore:
+		'''
+		[c/5CCEFF:The legendary fishman was neither fish nor man, but rather a combination of the two dissimilar creatures.]
+		[c/5CCEFF:To some, he was a savior, brought from the watery heavens, bringing tears of joy to those who adored him.]
+		[c/5CCEFF:To others, a filthy monster, who froze hell over and has come to our realm to do the same.]
+		[c/5CCEFF:The fishman laughed, then said: "这副躯壳束缚不了我！！棕色海岸67人丧生！！".]
+		'''
 }
 
 HailfireSpell: {
-	DisplayName: Hailfire Spell
-	Tooltip: ""
+	DisplayName: Hailfire
+	Tooltip: Lob an array of ice-cold fire
 }
 
 SnowgraveSpell: {
 	DisplayName: Snowgrave Spell
+	Tooltip:
+		'''
+		Grants you the blessing of the buried snowdwellers
+		Upon getting hit, damage and freeze nearby enemies
+		Greater effect upon death
+		'''
+}
+
+FireAuraSpell: {
+	DisplayName: Fire Aura Spell
 	Tooltip: ""
 }

@@ -40,7 +40,7 @@ public class NPGlobalNPC : GlobalNPC
     {
         if (ResearcherQuest.DarkCataclysmActive)
         {
-            if (npc.friendly || npc.CountsAsACritter || npc.realLife != -1 || npc.boss)
+            if (npc.friendly || npc.CountsAsACritter || npc.realLife != -1 || npc.boss || npc.immortal || npc.lifeMax > 1000)
             {
                 return true;
             }
