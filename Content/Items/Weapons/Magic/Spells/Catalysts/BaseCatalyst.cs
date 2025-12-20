@@ -2,6 +2,7 @@
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -10,6 +11,11 @@ namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 
 public abstract class BaseCatalyst : ModItem
 {
+    public bool BoostIsNotActive(Player player)
+    {
+        return !player.NPCatalystPlayer().CatalystBoostActive.ContainsKey(Type) || player.NPCatalystPlayer().CatalystBoostActive[Type] == false;
+    }
+
     public override void SetDefaults()
     {
         Item.DamageType = DamageClass.Magic;
@@ -81,14 +87,5 @@ public abstract class BaseCatalyst : ModItem
         }
         TooltipLine spellsLine2 = new TooltipLine(Mod, "NeoParacosm:EquippedSpells", equippedSpells);
         tooltips.Add(spellsLine2);
-    }
-
-    public void ApplyElementalDamageBoosts(Player player, BaseSpell.SpellElement element, float boost)
-    {
-        if (!player.NPCatalystPlayer().CatalystBoostActive.ContainsKey(Type) || player.NPCatalystPlayer().CatalystBoostActive[Type] == false)
-        {
-            player.AddElementalDamageBoost(element, boost);
-            player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-        }
     }
 }

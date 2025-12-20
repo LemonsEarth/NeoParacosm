@@ -30,7 +30,6 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        Main.NewText(Player.GetElementalExpertiseBoost(BaseSpell.SpellElement.Fire));
         if (NPC.FindFirstNPC(NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Researcher>())].Distance(Player.Center) > 500)
         {
             AscensionUISystem UISystem = GetInstance<AscensionUISystem>();

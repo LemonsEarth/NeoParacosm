@@ -41,10 +41,14 @@ public class StarCrystal : BaseCatalyst
 
     public override void UpdateInventory(Player player)
     {
-        player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Pure] += magicDamageBoost / 100f;
-        player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Pure] += magicSpeedBoost / 100f;
-        player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Earth] += earthDamageBoost / 100f;
-        player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Earth] += earthSpeedBoost / 100f;
+        if (BoostIsNotActive(player))
+        {
+            player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
+            player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Pure] += magicDamageBoost / 100f;
+            player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Pure] += magicSpeedBoost / 100f;
+            player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Earth] += earthDamageBoost / 100f;
+            player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Earth] += earthSpeedBoost / 100f;
+        }
     }
 
     public override void AddRecipes()

@@ -36,7 +36,10 @@ public class StarStone : BaseCatalyst
 
     public override void UpdateInventory(Player player)
     {
-        
+        if (BoostIsNotActive(player))
+        {
+            player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
+        }
     }
 
     public override void AddRecipes()

@@ -25,7 +25,7 @@ public class NPBuffItem : GlobalItem
             if (Main.myPlayer == player.whoAmI)
             {
                 float maxDamage = 0;
-                if (player.GetElementalExpertiseBoost(BaseSpell.SpellElement.Holy) > 1.5f)
+                if (player.GetElementalExpertiseBoost(BaseSpell.SpellElement.Holy) >= 1.5f)
                 {
                     maxDamage = item.damage;
                 }
