@@ -6,6 +6,7 @@ using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Placeable.Relics;
 using NeoParacosm.Content.Items.Weapons.Magic;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Items.Weapons.Summon;
@@ -1018,7 +1019,7 @@ public class Deathbird : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
-        classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DeathTolls>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
+        classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DeathTolls>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
         npcLoot.Add(classicRule);
         npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathbirdTreasureBag>()));
         npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DeathbirdRelicItem>()));

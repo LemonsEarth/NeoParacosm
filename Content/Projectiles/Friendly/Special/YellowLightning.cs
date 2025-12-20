@@ -10,7 +10,8 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
 public class YellowLightning : ModProjectile
 {
-    ref float AITimer => ref Projectile.ai[0];
+    int AITimer = 0;
+    ref float Delay => ref Projectile.ai[0];
     Vector2 targetPos
     {
         get
@@ -83,7 +84,13 @@ public class YellowLightning : ModProjectile
     Color color = Color.White;
     public override void AI()
     {
-        if (AITimer == 0)
+        if (AITimer < Delay)
+        {
+            AITimer++;
+            Projectile.timeLeft = 30;
+            return;
+        }
+        if (AITimer == Delay)
         {
             PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
