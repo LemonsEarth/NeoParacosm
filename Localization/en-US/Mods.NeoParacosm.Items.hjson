@@ -840,34 +840,28 @@ SnowgraveSpell: {
 
 FireAuraSpell: {
 	DisplayName: Fire Aura Spell
-	Tooltip:
-	'''
-	Grants you a fiery aura that reduces enemy defense the closer they are to you
-	'''
+	Tooltip: Grants you a fiery aura that reduces enemy defense the closer they are to you
 }
 
 HeadstoneRing: {
 	DisplayName: Headstone Ring
 	Tooltip:
-	'''
-	Increases dark spell damage by {0}%
-	Increases dark spell expertise by {1}%
-	'''
+		'''
+		Increases dark spell damage by {0}%
+		Increases dark spell expertise by {1}%
+		'''
 }
 
 LightningRod: {
 	DisplayName: Lightning Rod
 	Tooltip:
-	'''
-	Increases lightning spell damage by {0}%
-	Increases lightning spell expertise by {1}%
-	'''
+		'''
+		Increases lightning spell damage by {0}%
+		Increases lightning spell expertise by {1}%
+		'''
 }
 
 ThunderstormSpell: {
 	DisplayName: Thunderstorm Spell
-	Tooltip:
-	'''
-	Cast forth several bolts of lightning
-	'''
+	Tooltip: Cast forth several bolts of lightning
 }
