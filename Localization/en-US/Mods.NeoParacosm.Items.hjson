@@ -865,3 +865,8 @@ ThunderstormSpell: {
 	DisplayName: Thunderstorm Spell
 	Tooltip: Cast forth several bolts of lightning
 }
+
+PebbleStrikeSpell: {
+	DisplayName: Pebble Strike Spell
+	Tooltip: ""
+}
