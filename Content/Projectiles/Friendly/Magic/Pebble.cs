@@ -62,6 +62,8 @@ public class Pebble : ModProjectile
         }
 
         Projectile.rotation = Projectile.velocity.ToRotation();
+
+        Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Stone).noGravity = true;
         AITimer++;
     }
 
@@ -72,6 +74,7 @@ public class Pebble : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        LemonUtils.DrawAfterimages(Projectile, lightColor, 0.1f);
         //PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.White, Color.Black * 0, BasicEffect, topDistance: 7, bottomDistance: 7);
         return true;
     }

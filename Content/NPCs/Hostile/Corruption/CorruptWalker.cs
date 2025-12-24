@@ -28,7 +28,7 @@ public class CorruptWalker : ModNPC
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 1000;
         NPC.aiStyle = -1;
-        NPC.knockBackResist = 0f;
+        NPC.knockBackResist = 0.5f;
         NPC.noGravity = false;
         NPC.noTileCollide = false;
     }
