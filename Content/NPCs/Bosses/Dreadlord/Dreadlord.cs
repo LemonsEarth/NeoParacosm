@@ -68,7 +68,7 @@ public class Dreadlord : ModNPC
     }
 
     float attackDuration = 0;
-    int[] attackDurations = { 600, 1320, 600, 600, 600 };
+    int[] attackDurations = { 600, 900, 1320, 600, 600 };
 
     public enum Attacks
     {
@@ -329,6 +329,13 @@ public class Dreadlord : ModNPC
                             }
                         }
                     }
+                    if (AITimer % 10 == 0)
+                    {
+                        if (LemonUtils.NotClient())
+                        {
+                            LightningAroundPlayer(900, -1500, 120, 3000);
+                        }
+                    }
                 }
                 else
                 {
@@ -448,6 +455,17 @@ public class Dreadlord : ModNPC
                 if (AttackTimer % 15 == 0 && LemonUtils.NotClient())
                 {
                     LightningAroundPlayer(1200, -1500, 60, 3000);
+
+                    LemonUtils.QuickProj(
+                        NPC,
+                        player.Center + new Vector2(Main.rand.NextFloat(-800, 800), 800),
+                        -Vector2.UnitY * 5,
+                        ProjectileType<CrimsonLostSoul>(),
+                        ProjDamage,
+                        ai0: 60,
+                        ai1: 240
+                        );
+
                 }
                 break;
             case 270:
@@ -628,6 +646,8 @@ public class Dreadlord : ModNPC
                 break;
             case > 420:
                 AttackCount++;
+
+                // Teleport indicator
                 float angle = ToRadians(45 - AttackCount);
                 float distance = 1200 - AttackCount * 10;
                 if (distance < 0) distance = 0;
@@ -640,6 +660,7 @@ public class Dreadlord : ModNPC
                         Dust.NewDustPerfect(dustPos, DustID.GemTopaz, Vector2.Zero, Scale: 3f).noGravity = true;
                     }
                 }
+
                 if (AttackTimer % 20 == 0 && LemonUtils.NotClient())
                 {
                     LightningAroundPlayer(600, -1500, 90, 3000);
@@ -652,7 +673,7 @@ public class Dreadlord : ModNPC
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 NPC.Center = arenaCenter;
                 SetBodyPartPositions(headLerpSpeed: 1f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
-                SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f)}, NPC.Center);
+                SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f) }, NPC.Center);
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 break;
             case > 360:
@@ -752,8 +773,7 @@ public class Dreadlord : ModNPC
                             ProjectileType<CrimsonLostSoul>(),
                             ProjDamage,
                             ai0: waitTime,
-                            ai1: player.whoAmI,
-                            ai2: duration
+                            ai1: duration
                             );
     }
 

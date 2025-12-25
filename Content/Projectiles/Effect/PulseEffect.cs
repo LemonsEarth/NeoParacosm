@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -13,6 +14,21 @@ public class PulseEffect : ModProjectile
     ref float Speed => ref Projectile.ai[0];
     ref float Scale => ref Projectile.ai[1];
     ref float ColorMult => ref Projectile.ai[2];
+
+    public Color PulseColor { get; set; } = Color.White;
+
+    public override void SendExtraAI(BinaryWriter writer)
+    {
+        writer.Write(PulseColor.R);
+        writer.Write(PulseColor.G);
+        writer.Write(PulseColor.B);
+        writer.Write(PulseColor.A);
+    }
+
+    public override void ReceiveExtraAI(BinaryReader reader)
+    {
+        PulseColor = new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
+    }
 
     public override void SetStaticDefaults()
     {
@@ -51,7 +67,7 @@ public class PulseEffect : ModProjectile
         shader.Shader.Parameters["alwaysVisible"].SetValue(false);
         shader.Shader.Parameters["speed"].SetValue(Speed);
         shader.Shader.Parameters["colorMultiplier"].SetValue(ColorMult);
-        shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
+        shader.Shader.Parameters["color"].SetValue(PulseColor.ToVector4());
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();

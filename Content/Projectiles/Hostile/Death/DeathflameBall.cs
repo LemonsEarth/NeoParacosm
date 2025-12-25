@@ -13,13 +13,13 @@ public class DeathflameBall : ModProjectile
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 1;
+        Main.projFrames[Type] = 2;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 32;
-        Projectile.height = 32;
+        Projectile.width = 28;
+        Projectile.height = 28;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -28,7 +28,7 @@ public class DeathflameBall : ModProjectile
         Projectile.timeLeft = 240;
         Projectile.scale = 1f;
         Projectile.aiStyle = 0;
-        Projectile.Opacity = 0.5f;
+        Projectile.Opacity = 1f;
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
@@ -53,7 +53,6 @@ public class DeathflameBall : ModProjectile
             if (currentSpeed < maxSpeed) currentSpeed += speedAddValue;
             float angleDifference = MathHelper.WrapAngle(Projectile.Center.DirectionTo(player.Center).ToRotation() - Projectile.velocity.ToRotation());
             Projectile.velocity = Projectile.velocity.RotatedBy(angleDifference / 20f).SafeNormalize(Vector2.Zero) * currentSpeed;
-            //Projectile.velocity += Projectile.Center.DirectionTo(player.Center);
         }
 
         Lighting.AddLight(Projectile.Center, 1, 1, 1);
@@ -63,12 +62,26 @@ public class DeathflameBall : ModProjectile
             Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
             Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
         }
+
+        Projectile.rotation = Projectile.velocity.ToRotation();
+        if (Projectile.rotation > MathHelper.PiOver2 || Projectile.rotation < -MathHelper.PiOver2)
+        {
+            Projectile.spriteDirection = -1;
+            Projectile.rotation += MathHelper.Pi;
+        }
+        else
+        {
+            Projectile.spriteDirection = 1;
+        }
+
+        Projectile.StandardAnimation(18, 2);
+
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
-        return false;
+        return true;
     }
 }

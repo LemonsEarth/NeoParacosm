@@ -81,9 +81,13 @@ public static partial class LemonUtils
         Main.instance.CameraModifiers.Add(mod);
     }
 
-    public static void QuickPulse(Entity sourceEntity, Vector2 pos, float speed, float scale, float colorMult)
+    public static void QuickPulse(Entity sourceEntity, Vector2 pos, float speed, float scale, float colorMult, Color? color = null)
     {
-        Projectile.NewProjectileDirect(
+        if (color == null)
+        {
+            color = Color.White;
+        }
+        Projectile proj = Projectile.NewProjectileDirect(
             sourceEntity.GetSource_FromThis(),
             pos,
             Vector2.Zero,
@@ -93,6 +97,8 @@ public static partial class LemonUtils
             -1,
             speed, scale, colorMult
             );
+        PulseEffect pulse = proj.ModProjectile as PulseEffect;
+        pulse.PulseColor = color.Value;
     }
 
     public static void QuickCameraFocus(Vector2 position, Func<bool> endConditionFunc)

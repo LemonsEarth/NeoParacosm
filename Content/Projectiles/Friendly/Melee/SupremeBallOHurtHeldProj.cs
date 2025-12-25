@@ -154,17 +154,11 @@ public class SupremeBallOHurtHeldProj : ModProjectile
 
             Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
             Projectile.damage = (Projectile.originalDamage / 2) * (chargeCount + 1);
-            if (Collision.SolidTiles(Projectile.Center, 2, 2) || Projectile.penetrate <= 0)
-            {
-                Projectile.velocity = Projectile.Center.DirectionTo(playerCenter) * 30;
-                collided = true;
-            }
-            else if (!collided)
-            {
-                Vector2 controlPos = playerCenter + (savedMousePos - playerCenter) / 2 - playerCenter.DirectionTo(savedMousePos).RotatedBy(MathHelper.PiOver2 * player.direction) * controlPointOffset;
-                Projectile.Center = LemonUtils.BezierCurve(playerCenter, savedMousePos, controlPos, lerpValue * player.GetAttackSpeed(DamageClass.Melee) / (releasedDuration / 2));
-            }
-            if (releasedTimer > releasedDuration || (collided && Projectile.Center.Distance(playerCenter) < 16))
+
+            Vector2 controlPos = playerCenter + (savedMousePos - playerCenter) / 2 - playerCenter.DirectionTo(savedMousePos).RotatedBy(MathHelper.PiOver2 * player.direction) * controlPointOffset;
+            Projectile.Center = LemonUtils.BezierCurve(playerCenter, savedMousePos, controlPos, lerpValue * player.GetAttackSpeed(DamageClass.Melee) / (releasedDuration / 2));
+
+            if (releasedTimer > releasedDuration || (Projectile.Center.Distance(playerCenter) < 16))
             {
                 Projectile.Kill();
             }

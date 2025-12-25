@@ -868,45 +868,36 @@ ThunderstormSpell: {
 
 PebbleStrikeSpell: {
 	DisplayName: Pebble Strike
-	Tooltip:
-	'''
-	Throws a load of sharp pebbles
-	'''
+	Tooltip: Throws a load of sharp pebbles
 }
 
 SandBurstSpell: {
 	DisplayName: Sand Burst
-	Tooltip:
-	'''
-	Fire of a burst of sand that remains on the ground
-	'''
+	Tooltip: Fire of a burst of sand that remains on the ground
 	NPLore:
-	'''
-	[c/8F5100:Unlike most materials, sand is affected the same force that pulls living creatures downward.]
-	[c/8F5100:A truly unfortunate fate for this substance. It must be lonely being the only one affected by the curse of gravity.]
-	[c/8F5100:Maybe, somewhere far away, there is a place where everything is affected by gravity.]
-	'''
+		'''
+		[c/8F5100:Unlike most materials, sand is affected the same force that pulls living creatures downward.]
+		[c/8F5100:A truly unfortunate fate for this substance. It must be lonely being the only one affected by the curse of gravity.]
+		[c/8F5100:Maybe, somewhere far away, there is a place where everything is affected by gravity.]
+		'''
 }
 
 SandWallSpell: {
 	DisplayName: Sand Wall
-	Tooltip:
-	'''
-	Constructs a wall made of sand
-	'''
+	Tooltip: Constructs a wall made of sand
 	NPLore:
-	'''
-	[c/8F5100:Unlike most materials, sand is affected the same force that pulls living creatures downward.]
-	[c/8F5100:This has lead researchers to speculate sand is a sentient lifeform, too.]
-	[c/8F5100:Further research is required.]
-	'''
+		'''
+		[c/8F5100:Unlike most materials, sand is affected the same force that pulls living creatures downward.]
+		[c/8F5100:This has lead researchers to speculate sand is a sentient lifeform, too.]
+		[c/8F5100:Further research is required.]
+		'''
 }
 
 UnearthSpell: {
 	DisplayName: Unearth Spell
 	Tooltip:
-	'''
-	Knocks nearby enemies high up into the air
-	Scales off enemy knockback resistance
-	'''
+		'''
+		Knocks nearby enemies high up into the air
+		Scales off enemy knockback resistance
+		'''
 }

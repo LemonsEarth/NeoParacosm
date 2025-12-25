@@ -6,20 +6,36 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
+namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public class IchorLightning : ModProjectile
+public abstract class TargetedLightning : ModProjectile
 {
-    ref float AITimer => ref Projectile.ai[0];
-    ref float Length => ref Projectile.ai[1];
+    protected int AITimer = 0;
+    protected ref float Delay => ref Projectile.ai[0];
+    protected Vector2 targetPos
+    {
+        get
+        {
+            return new Vector2(Projectile.ai[1], Projectile.ai[2]);
+        }
+        set
+        {
+            Projectile.ai[1] = value.X;
+            Projectile.ai[2] = value.Y;
+        }
+    }
 
-    Vector2 originalPos = Vector2.Zero;
+    protected Vector2 originalPos = Vector2.Zero;
+    protected List<Vector2> positions = new List<Vector2>();
+    protected virtual Color ShineColor => Color.White;
+    protected virtual Color DarkColor => Color.Yellow;
+    protected virtual float BaseSpacingDenominator => 5;
+    protected virtual float HorizontalOffsetMin => 10;
+    protected virtual float HorizontalOffsetMax => 36;
+    Color currentColor = Color.White;
 
-    static BasicEffect BasicEffect;
-    GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
-
-    List<Vector2> positions = new List<Vector2>();
-
+    protected static BasicEffect BasicEffect;
+    protected GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
     public override void Load()
     {
         if (Main.dedServ) return;
@@ -46,8 +62,6 @@ public class IchorLightning : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-        ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
         ProjectileID.Sets.DrawScreenCheckFluff[Type] = 6000;
     }
 
@@ -55,8 +69,8 @@ public class IchorLightning : ModProjectile
     {
         Projectile.width = 64;
         Projectile.height = 64;
-        Projectile.friendly = false;
-        Projectile.hostile = true;
+        Projectile.friendly = true;
+        Projectile.hostile = false;
         Projectile.timeLeft = 30;
         Projectile.penetrate = -1;
         Projectile.Opacity = 1f;
@@ -65,25 +79,24 @@ public class IchorLightning : ModProjectile
         Projectile.tileCollide = false;
     }
 
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
-    {
-        
-    }
-    Color color = Color.White;
     public override void AI()
     {
-        if (AITimer == 0)
+        if (AITimer < Delay)
         {
-            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 6000;
-            Vector2 targetPos = Projectile.Center + Vector2.UnitY * Length;
-            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center + Vector2.UnitY * (Length / 2), (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
+            AITimer++;
+            Projectile.timeLeft = 30;
+            return;
+        }
+        if (AITimer == Delay)
+        {
+            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
             originalPos = Projectile.Center;
+            float origToTargetDistance = originalPos.Distance(targetPos);
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f }, Projectile.Center);
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0, Volume = 0.75f }, Projectile.Center);
             Vector2 projToPos = targetPos - Projectile.Center;
-            float spacing = projToPos.Length() / (20);
+            float spacing = projToPos.Length() / BaseSpacingDenominator;
 
             bool flip = true;
             int i = 0;
@@ -91,8 +104,8 @@ public class IchorLightning : ModProjectile
             while (Projectile.Center.Distance(targetPos) > 32)
             {
                 Vector2 normalVector = projToPos.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
-                Vector2 offset = normalVector * flip.ToDirectionInt() * Main.rand.Next(10, 24);
-                if ((Projectile.Center + offset).Y > targetPos.Y)
+                Vector2 offset = normalVector * flip.ToDirectionInt() * Main.rand.NextFloat(HorizontalOffsetMin, HorizontalOffsetMax);
+                if ((Projectile.Center + offset).Distance(originalPos) > origToTargetDistance)
                 {
                     break;
                 }
@@ -123,8 +136,8 @@ public class IchorLightning : ModProjectile
         Projectile.velocity = Vector2.Zero;
         if (Projectile.timeLeft < 30)
         {
-            color = Color.Lerp(Color.Orange, Color.White, Projectile.timeLeft / 15f);
-            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 10f);
+            currentColor = Color.Lerp(DarkColor, ShineColor, Projectile.timeLeft / 15f);
+            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 5f);
         }
         AITimer++;
     }
@@ -138,8 +151,7 @@ public class IchorLightning : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-
-        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.Orange);
+        LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: ShineColor);
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -149,8 +161,7 @@ public class IchorLightning : ModProjectile
         VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
         VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
         {
-            //Color color = Main.rand.NextBool(10) ? Color.White : Color.Yellow;
-            return new VertexPositionColorTexture(new Vector3(pos, 0), color * Projectile.Opacity, Vector2.Zero);
+            return new VertexPositionColorTexture(new Vector3(pos, 0), currentColor * Projectile.Opacity, Vector2.Zero);
         }
         for (int i = 0; i < quadCount; i += 1)
         {
@@ -168,22 +179,7 @@ public class IchorLightning : ModProjectile
             vertices[6 * i + 4] = QuickVertexPCT(right0);
             vertices[6 * i + 5] = QuickVertexPCT(right1);
         }
-        //for (int i = 0; i < positions.Length; i += 1)
-        //{
-        //    Color color = i % 2 == 0 ? Color.Yellow : new Color(130, 120, 200, 255);
-        //    if (i < 3)
-        //    {
-        //        vertices[i] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 1] = new VertexPositionColorTexture(new Vector3(positions[i + 1], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 2] = new VertexPositionColorTexture(new Vector3(positions[i + 2], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //    }
-        //    else
-        //    {
-        //        vertices[i * 3] = new VertexPositionColorTexture(new Vector3(positions[i - 2], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 1] = new VertexPositionColorTexture(new Vector3(positions[i - 1], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 2] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //    }
-        //}
+
         BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
         BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
         GraphicsDevice.RasterizerState = RasterizerState.CullNone;
@@ -196,10 +192,10 @@ public class IchorLightning : ModProjectile
         for (int i = 0; i < 2; i++)
         {
             float circleOpacity = Projectile.Opacity + 0.2f;
-            LemonUtils.DrawGlow(originalPos, color, circleOpacity, 2f);
-            LemonUtils.DrawGlow(originalPos, Color.White, circleOpacity, 1f);
-            LemonUtils.DrawGlow(positions.Last(), color, circleOpacity, 2f);
-            LemonUtils.DrawGlow(positions.Last(), Color.White, circleOpacity, 1f);
+            LemonUtils.DrawGlow(originalPos, DarkColor, circleOpacity, 2f);
+            LemonUtils.DrawGlow(originalPos, ShineColor, circleOpacity, 1f);
+            LemonUtils.DrawGlow(positions.Last(), DarkColor, circleOpacity, 2f);
+            LemonUtils.DrawGlow(positions.Last(), ShineColor, circleOpacity, 1f);
         }
 
         return false;

@@ -38,7 +38,7 @@ public class LightningFriendly : GlobalProjectile
     {
         if (AITimer == 0 && friendly)
         {
-            SoundEngine.PlaySound(SoundID.Thunder with { MaxInstances = 1, Volume = 0.75f }, projectile.Center);
+            SoundEngine.PlaySound(SoundID.Thunder with { MaxInstances = 2, Volume = 0.5f }, projectile.Center);
         }
         AITimer++;
     }

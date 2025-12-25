@@ -72,7 +72,7 @@ public class SupremeCrimsonCloud : ModProjectile
                 if (LemonUtils.NotClient())
                 {
                     Vector2 rPos = Projectile.RandomPos(-64, -64);
-                    Vector2 pos = rPos + Main.rand.NextVector2Circular(120 * Projectile.scale, 120 * Projectile.scale);
+                    Vector2 pos = rPos + LemonUtils.RandomVector2Circular(120 * Projectile.scale, 120 * Projectile.scale, 30 * Projectile.scale, 30 * Projectile.scale);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), rPos, Vector2.Zero,
                         ProjectileType<RedLightning>(), Projectile.damage, 1f, Projectile.owner,
                         ai1: pos.X,

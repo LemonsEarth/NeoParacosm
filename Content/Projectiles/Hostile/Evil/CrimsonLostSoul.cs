@@ -7,20 +7,19 @@ public class CrimsonLostSoul : ModProjectile
 {
     int AITimer = 0;
     ref float WaitTime => ref Projectile.ai[0];
-    ref float PlayerID => ref Projectile.ai[1];
-    ref float Duration => ref Projectile.ai[2];
+    ref float Duration => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 1;
+        Main.projFrames[Type] = 2;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 16;
-        Projectile.height = 16;
+        Projectile.width = 28;
+        Projectile.height = 28;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -34,12 +33,13 @@ public class CrimsonLostSoul : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        
+
     }
 
     float maxSpeed = 0;
     float currentSpeed = 0;
     float speedAddValue = 0.05f;
+    Player player = null;
     public override void AI()
     {
         if (AITimer == 0)
@@ -48,8 +48,11 @@ public class CrimsonLostSoul : ModProjectile
             currentSpeed = Projectile.velocity.Length();
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 3f);
         }
-        Player player = Main.player[(int)PlayerID];
-        if (player.Alive() && AITimer > WaitTime)
+        if (player == null || !player.Alive())
+        {
+            player = LemonUtils.GetClosestPlayer(Projectile.Center, 1000);
+        }
+        if (player != null && player.Alive() && AITimer > WaitTime)
         {
             if (currentSpeed < maxSpeed) currentSpeed += speedAddValue;
             float angleDifference = MathHelper.WrapAngle(Projectile.Center.DirectionTo(player.Center).ToRotation() - Projectile.velocity.ToRotation());
@@ -70,12 +73,25 @@ public class CrimsonLostSoul : ModProjectile
             Projectile.Kill();
         }
 
+        Projectile.rotation = Projectile.velocity.ToRotation();
+        if (Projectile.rotation > MathHelper.PiOver2 || Projectile.rotation < -MathHelper.PiOver2)
+        {
+            Projectile.spriteDirection = -1;
+            Projectile.rotation += MathHelper.Pi;
+        }
+        else
+        {
+            Projectile.spriteDirection = 1;
+        }
+
+        Projectile.StandardAnimation(18, 2);
+
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
         LemonUtils.DrawGlow(Projectile.Center, Color.DarkRed, Projectile.Opacity, Projectile.scale);
-        return false;
+        return true;
     }
 }
