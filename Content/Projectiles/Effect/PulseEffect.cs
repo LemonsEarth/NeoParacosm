@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Assets;
 using System.IO;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -17,7 +18,7 @@ public class PulseEffect : ModProjectile
 
     public Color PulseColor { get; set; } = Color.White;
 
-    public override void SendExtraAI(BinaryWriter writer)
+    /*public override void SendExtraAI(BinaryWriter writer)
     {
         writer.Write(PulseColor.R);
         writer.Write(PulseColor.G);
@@ -28,7 +29,7 @@ public class PulseEffect : ModProjectile
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         PulseColor = new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
-    }
+    }*/
 
     public override void SetStaticDefaults()
     {
@@ -63,6 +64,7 @@ public class PulseEffect : ModProjectile
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Shader.Parameters["time"].SetValue(AITimer / 60f); // constant size of shield
         shader.Shader.Parameters["alwaysVisible"].SetValue(false);
         shader.Shader.Parameters["speed"].SetValue(Speed);

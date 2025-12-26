@@ -68,11 +68,12 @@ public class Dreadlord : ModNPC
     }
 
     float attackDuration = 0;
-    int[] attackDurations = { 600, 900, 1320, 600, 600 };
+    int[] attackDurations = { 600, 1080, 1320, 600, 600 };
 
     public enum Attacks
     {
         BallsNLightning,
+        MeatballsWithFire,
         DashingWithBalls,
     }
 
@@ -401,6 +402,9 @@ public class Dreadlord : ModNPC
             case (int)Attacks.BallsNLightning:
                 BallsNLightning();
                 break;
+            case (int)Attacks.MeatballsWithFire:
+                MeatballsWithFire();
+                break;
             case (int)Attacks.DashingWithBalls:
                 DashingWithBalls();
                 break;
@@ -426,31 +430,31 @@ public class Dreadlord : ModNPC
         }
         switch (AttackTimer)
         {
-            case 600:
+            case 600: // Choosing random position around arena center
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     targetPosition = arenaCenter + Main.rand.NextVector2Circular(600, 600);
                 }
                 NPC.netUpdate = true;
                 break;
-            case > 450:
+            case > 450: // Moving to target position
                 NPC.MoveToPos(targetPosition, 0.04f, 0.04f, 0.1f, 0.1f);
                 break;
-            case > 420:
+            case > 420: // Slowing down, moving leg outward
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, ToRadians(60), 1 / 10f); // Move leg outward
                 SetLegCorruptFrame(LEG_ATTACK);
                 NPC.velocity *= 0.95f;
                 break;
-            case 420:
+            case 420: // Spawn giant cursed sphere (explodes at 300), stop moving, roar
                 NPC.velocity = Vector2.Zero;
                 if (LemonUtils.NotClient())
                 {
-                    GiantCursedSphere(LegCorrupt.MiscPosition1, 1.05f, 120);
+                    GiantCursedSphere(LegCorrupt.MiscPosition1, 1.05f, 420 - 300);
                 }
                 PlayRoar(0.3f);
                 AttackCount++;
                 break;
-            case > 270:
+            case > 270: // Begin ichor lightning with lost souls from below
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
                 if (AttackTimer % 15 == 0 && LemonUtils.NotClient())
                 {
@@ -468,37 +472,37 @@ public class Dreadlord : ModNPC
 
                 }
                 break;
-            case 270:
+            case 270: // Reset frames
                 SetHeadCrimsonFrame(HEAD_MOUTH_CLOSED);
                 SetLegCorruptFrame(LEG_STANDARD);
                 AttackCount++;
                 break;
-            case > 240:
-                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, 0, 1 / 10f); // Move leg back
+            case > 240: // Move leg back
+                LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, 0, 1 / 10f);
                 break;
-            case 240:
+            case 240: // Spawning second giant cursed sphere (explodes at 120)
                 SetLegCorruptFrame(LEG_ATTACK);
                 if (LemonUtils.NotClient())
                 {
-                    GiantCursedSphere(LegCorrupt.MiscPosition1, 1.05f, 120);
+                    GiantCursedSphere(LegCorrupt.MiscPosition1, 1.05f, 240 - 120);
                 }
                 break;
-            case 210:
+            case 210: // Roar and open crimson mouth
                 PlayRoar(0.6f);
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
                 AttackCount++;
                 break;
-            case > 120 and < 210:
+            case > 120 and < 210: // Second wave of lightning
                 LegCorrupt.Rotation = 0;
                 if (AttackTimer % 10 == 0 && LemonUtils.NotClient())
                 {
                     LightningAroundPlayer(1200, -1500, 90, 3000);
                 }
                 break;
-            case 120:
+            case 120: // Reset leg
                 SetLegCorruptFrame(LEG_STANDARD);
                 break;
-            case > 60 and < 210:
+            case > 60 and < 210: // Faster lightning
                 if (AttackTimer % 5 == 0 && LemonUtils.NotClient())
                 {
                     int lightningCount2 = LemonUtils.IsHard() ? 1 : 3;
@@ -523,18 +527,138 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
+    void MeatballsWithFire()
+    {
+        SetBodyPartPositions(headLerpSpeed: 0.8f, bodyLerpSpeed: 0.8f, legLerpSpeed: 0.8f);
+        switch (AttackTimer)
+        {
+            case 1080: // Choose random position
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    targetPosition = arenaCenter + LemonUtils.RandomVector2Circular(600, 600, 100, 100);
+                }
+                NPC.netUpdate = true;
+                PlayRoar(-0.2f);
+                break;
+            case > 780: // Move to random positions, firing cursed spheres at player
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+                Vector2 headOffset = HeadCorrupt.MiscPosition1 + HeadCorrupt.MiscPosition1.DirectionTo(player.Center) * 100;
+                HeadCorrupt.Position = Vector2.Lerp(HeadCorrupt.Position, headOffset, 1 / 10f);
+                NPC.MoveToPos(targetPosition, 0.1f, 0.1f, 0.1f, 0.1f);
+                if (AttackTimer > 840)
+                {
+                    if (LemonUtils.NotClient() && AttackTimer % 5 == 0)
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.MiscPosition1,
+                            HeadCorrupt.MiscPosition1.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(3, 6),
+                            ProjectileType<CursedFlameSphere>(),
+                            ProjDamage,
+                            ai1: Main.rand.NextFloat(1.005f, 1.025f)
+                            );
+                    }
+                }
+                else
+                {
+                    SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                }
+                break;
+            case 780: // Predictive cursed sphere burst
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.Position,
+                            NPC.Center.DirectionTo(player.Center + player.velocity * 100).RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(3, 6),
+                            ProjectileType<CursedFlameSphere>(),
+                            ProjDamage,
+                            ai1: Main.rand.NextFloat(1.005f, 1.025f)
+                            );
+                    }
+                }
+                break;
+            case > 750: // Slowing down
+                NPC.velocity *= 0.96f;
+                break;
+            case > 720: // Slowing down, move crimson leg outward
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                NPC.velocity *= 0.96f;
+                SetLegCrimsonFrame(LEG_ATTACK);
+                LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, -Pi / 6, 1 / 10f);
+                break;
+            case 720: // Giant meatball (explodes at 480)
+                if (LemonUtils.NotClient())
+                {
+                    GiantMeatball(LegCrimson.MiscPosition1, 720 - 480, 60, 360);
+                }
+                break;
+            case > 690: // Rotate leg back
+                LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, 0, 1 / 10f);
+                break;
+            case 690: // Reset leg, calculate where NPC is relative to arena center, calculate new target pos (start firing angle)
+                SetLegCrimsonFrame(LEG_STANDARD);
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+                Vector2 dirToPlayer = HeadCorrupt.Position.DirectionTo(player.Center);
+                targetPosition = HeadCorrupt.Position + new Vector2(MathF.Sign(dirToPlayer.X) * 100, -MathF.Sign(dirToPlayer.Y) * 200);
+                if (dirToPlayer.Y >= 0) // Which direction target pos should rotate
+                {
+                    AttackCount = dirToPlayer.X >= 0 ? -1 : 1;
+                }
+                else
+                {
+                    AttackCount = dirToPlayer.X >= 0 ? 1 : -1;
+                }
+                break;
+            case > 480: // Firing cursed flames spheres
+                Vector2 headOffset2 = HeadCorrupt.MiscPosition1 + HeadCorrupt.MiscPosition1.DirectionTo(targetPosition) * 100;
+                HeadCorrupt.Position = Vector2.Lerp(HeadCorrupt.Position, headOffset2, 1 / 10f);
+                if (AttackTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.MiscPosition1,
+                            HeadCorrupt.MiscPosition1.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(3, 6),
+                            ProjectileType<CursedFlameSphere>(),
+                            ProjDamage,
+                            ai1: Main.rand.NextFloat(1.005f, 1.025f)
+                            );
+                    }
+                }
+                if (AttackTimer < 630)
+                {
+                    targetPosition = targetPosition.RotatedBy(ToRadians(3 * AttackCount), HeadCorrupt.MiscPosition1);
+                }
+                break;
+            case 480:
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                break;
+            case 0:
+                AttackTimer = 1080;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void DashingWithBalls()
     {
         SetBodyPartPositions(headLerpSpeed: 0.9f, legLerpSpeed: 0.9f, bodyLerpSpeed: 0.9f);
         switch (AttackTimer)
         {
-            case 1320:
+            case 1320: // Begin mini cutscene
                 PlayRoar(-0.3f);
                 LemonUtils.QuickScreenShake(NPC.Center, 60f, 8f, 120, 2000);
                 SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
                 break;
-            case > 1200:
+            case > 1200: // Head shaking, pulses and dust
                 SetBodyPartPositions(
                 HeadCorrupt.DefaultPosition - Vector2.UnitY * 40 + Main.rand.NextVector2Circular(24, 24),
                 HeadCrimson.DefaultPosition - Vector2.UnitY * 40 + Main.rand.NextVector2Circular(24, 24));
@@ -548,14 +672,14 @@ public class Dreadlord : ModNPC
                 }
                 AuraBurst((int)AttackCount, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 break;
-            case 1200:
+            case 1200: // Activate shader, reset mouths
                 shaderIsActive = true;
                 ResetMouthFrames();
                 break;
-            case > 1170:
+            case > 1170: // Prep leg
                 SetLegCorruptFrame(LEG_ATTACK);
                 break;
-            case 1170:
+            case 1170: // Spawn giant cursed sphere (explodes at 140), save current NPC pos
                 if (LemonUtils.NotClient())
                 {
                     GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, 1170 - 140);
@@ -563,68 +687,69 @@ public class Dreadlord : ModNPC
                 SetLegCorruptFrame(LEG_STANDARD);
                 targetPosition = NPC.Center;
                 break;
-            case > 1110:
+            case > 1110: // Start moving away from saved pos (charging up)
                 Vector2 awayPos = targetPosition + -NPCToPlayer * 320;
                 NPC.MoveToPos(awayPos, 0.1f, 0.1f, 0.35f, 0.35f);
                 break;
-            case 1110:
+            case 1110: // Dash to player
                 NPC.velocity = NPCToPlayer * 40;
                 AuraBurst(100, -NPCToPlayer.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10, 20));
                 PlayRoar(-0.3f);
                 break;
             case > 1080:
                 break;
-            case > 1020:
+            case > 1020: // Start slowing down
                 NPC.velocity *= 0.95f;
                 break;
-            case > 990:
+            case > 990: // Full stop, prep leg for gcs
                 NPC.velocity = Vector2.Zero;
                 SetLegCorruptFrame(LEG_ATTACK);
                 break;
-            case 990:
+            case 990: // Spawn giant cursed sphere (explodes at 145), save current NPC pos
                 if (LemonUtils.NotClient())
                 {
                     GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, 990 - 145);
                 }
                 SetLegCorruptFrame(LEG_STANDARD);
+                targetPosition = NPC.Center;
                 break;
-            case > 930:
+            case > 930: // Start moving away again
                 Vector2 awayPos2 = targetPosition + -NPCToPlayer * 320;
                 NPC.MoveToPos(awayPos2, 0.1f, 0.1f, 0.5f, 0.5f);
                 break;
-            case 930:
+            case 930: // Dash
                 NPC.velocity = NPCToPlayer * 30;
                 AuraBurst(100, -NPCToPlayer.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(10, 20));
                 PlayRoar(-0.3f);
                 break;
             case > 900:
                 break;
-            case 900:
+            case 900: // Prep for lightning
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
                 PlayRoar(0.3f);
                 break;
-            case > 750:
+            case > 750: // Lightning, move towards player
                 if (AttackTimer % 25 == 0 && LemonUtils.NotClient())
                 {
-                    LightningAroundPlayer(900, -1500, 90, 3000);
+                    LightningAroundPlayer(600, -1500, 90, 3000);
                 }
                 NPC.MoveToPos(player.Center, 0.1f, 0.1f, 0.3f, 0.3f);
                 HeadCrimson.Position = HeadCrimson.DefaultPosition - Vector2.UnitY * 32 + Main.rand.NextVector2Circular(12, 12);
                 SetLegCorruptFrame(LEG_ATTACK);
                 break;
-            case 750:
+            case 750: // Stop lightning, slow down
                 NPC.velocity *= 0.93f;
                 SetHeadCrimsonFrame(HEAD_MOUTH_CLOSED);
                 break;
-            case > 720:
+            case > 720: // Slowing down...
                 NPC.velocity *= 0.93f;
                 break;
-            case 720:
+            case 720: // Spawn giant cursed sphere (explodes at 120) and lost souls at head
                 NPC.velocity *= 0.93f;
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
                 if (LemonUtils.NotClient())
                 {
-                    GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, 120);
+                    GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, 720 - 120);
                     for (int i = 0; i < 7; i++)
                     {
                         CrimsonLostSouls(HeadCrimson.Position, Vector2.UnitY.RotatedByRandom(Pi * 2) * 5, 60, 240);
@@ -632,19 +757,19 @@ public class Dreadlord : ModNPC
                 }
                 SetLegCorruptFrame(LEG_STANDARD);
                 break;
-            case > 690:
+            case > 690: // Slowing down idk why anymore
                 NPC.velocity *= 0.93f;
                 break;
-            case 690:
+            case 690: // Roar
                 PlayRoar(-0.3f);
                 break;
             case > 600:
                 break;
-            case 600:
+            case 600: // Prep for lightning
                 PlayRoar(0.4f);
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
                 break;
-            case > 420:
+            case > 420: // Spiraling dust, lightning around player
                 AttackCount++;
 
                 // Teleport indicator
@@ -668,7 +793,7 @@ public class Dreadlord : ModNPC
                 HeadCrimson.Position = HeadCrimson.DefaultPosition - Vector2.UnitY * 32 + Main.rand.NextVector2Circular(12, 12);
                 NPC.velocity *= 0.97f;
                 break;
-            case 420:
+            case 420: // Teleport to arena center
                 NPC.velocity = Vector2.Zero;
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 NPC.Center = arenaCenter;
@@ -676,7 +801,7 @@ public class Dreadlord : ModNPC
                 SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f) }, NPC.Center);
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 break;
-            case > 360:
+            case > 360: // More lightning, rotate legs inward
                 if (AttackTimer % 10 == 0 && LemonUtils.NotClient())
                 {
                     LightningAroundPlayer(600, -1500, 90, 3000);
@@ -687,7 +812,7 @@ public class Dreadlord : ModNPC
                 SetLegCorruptFrame(LEG_ATTACK);
                 SetLegCrimsonFrame(LEG_ATTACK);
                 break;
-            case 360:
+            case 360: // Spawn several giant cursed spheres, exploding at 160 +- 10
                 SetHeadCrimsonFrame(HEAD_MOUTH_CLOSED);
                 if (LemonUtils.NotClient())
                 {
@@ -697,15 +822,15 @@ public class Dreadlord : ModNPC
                     GiantCursedSphere(ballPos, 1.02f, 360 - 170, ToRadians(22.5f + 6.12f));
                 }
                 break;
-            case > 160:
+            case > 160: // Move legs outward
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, ToRadians(30), 1 / 30f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, -ToRadians(30), 1 / 30f);
                 break;
-            case > 150:
+            case > 150: // Move legs in quickly
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, -ToRadians(45), 1 / 5f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, ToRadians(45), 1 / 5f);
                 break;
-            case 150:
+            case 150: // Spheres explode, deactivate shader, roar, screen shake
                 PlayRoar(0.3f);
                 PlayRoar(-0.3f);
                 shaderIsActive = false;
@@ -716,7 +841,7 @@ public class Dreadlord : ModNPC
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, -ToRadians(45), 1 / 5f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, ToRadians(45), 1 / 5f);
                 break;
-            case > 0:
+            case > 0: // Return legs to normal position
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, 0, 1 / 30f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, 0, 1 / 30f);
                 break;
@@ -762,6 +887,14 @@ public class Dreadlord : ModNPC
                     ai0: angle,
                     ai1: acceleration,
                     ai2: duration);
+    }
+
+    void GiantMeatball(Vector2 pos, float timeLeft, int lostSoulWaitTime, float lostSoulTimeLeft)
+    {
+        LemonUtils.QuickProj(NPC, pos, Vector2.UnitY * 6, ProjectileType<GiantMeatball>(), ProjDamage,
+                    ai0: timeLeft,
+                    ai1: lostSoulWaitTime,
+                    ai2: lostSoulTimeLeft);
     }
 
     void CrimsonLostSouls(Vector2 pos, Vector2 velocity, int waitTime = 60, int duration = 360)
@@ -855,10 +988,12 @@ public class Dreadlord : ModNPC
         BackLegs.Origin = BackLegs.Texture.Size() * 0.5f;
 
         HeadCorrupt.DefaultPosition = Body.MiscPosition1 + new Vector2(0, -50);
+        HeadCorrupt.MiscPosition1 = HeadCorrupt.DefaultPosition + new Vector2(0, -64);
         HeadCorrupt.Origin = HeadCorrupt.Texture.Size() * 0.5f;
         HeadCorrupt.Frames = 2;
 
         HeadCrimson.DefaultPosition = Body.MiscPosition2 + new Vector2(0, -50);
+        HeadCrimson.MiscPosition1 = HeadCrimson.DefaultPosition + new Vector2(0, -64);
         HeadCrimson.Origin = HeadCrimson.Texture.Size() * 0.5f;
         HeadCrimson.Frames = 2;
 

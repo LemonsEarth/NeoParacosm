@@ -13,30 +13,6 @@ public class GiantMeatball : ModProjectile
     ref float LostSoulWaitTime => ref Projectile.ai[1];
     ref float LostSoulTimeLeft => ref Projectile.ai[2];
 
-    static BasicEffect BasicEffect;
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
-
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
@@ -58,9 +34,14 @@ public class GiantMeatball : ModProjectile
         Projectile.Opacity = 1f;
     }
 
+    int spinDir = -1;
     float savedSpeed = 1f;
     public override void AI()
     {
+        if (TimeLeft == 0)
+        {
+            TimeLeft = 30;
+        }
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
@@ -72,7 +53,7 @@ public class GiantMeatball : ModProjectile
         {
             Projectile.Kill();
         }
-        Projectile.velocity = Vector2.Zero;
+        Projectile.velocity = Main.rand.NextVector2Unit();
         int pulseInterval = (int)TimeLeft / 4;
         if (AITimer >= TimeLeft / 2)
         {
@@ -81,7 +62,7 @@ public class GiantMeatball : ModProjectile
                 SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f), Volume = 0.5f }, Projectile.Center);
                 Projectile.scale = 0.7f;
             }
-            Projectile.scale = MathHelper.Lerp(Projectile.scale, 1f, 1 / 20f);
+            Projectile.scale = MathHelper.Lerp(Projectile.scale, 1f, 1 / 40f);
         }
         else
         {
@@ -92,17 +73,16 @@ public class GiantMeatball : ModProjectile
         Projectile.Opacity = AITimer / 15f;
 
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.RedMoss, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f));
-        dust.noGravity = true;
-        Projectile.rotation = MathHelper.ToRadians(AITimer * 24);
+        Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.RedMoss, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+        Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.Crimson, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
+        LemonUtils.DrawGlow(Projectile.Center, Color.Red, Projectile.Opacity, Projectile.scale * 10);
         for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
         {
             Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
@@ -115,7 +95,6 @@ public class GiantMeatball : ModProjectile
                 Projectile.scale * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length),
                 SpriteEffects.None);
         }
-        LemonUtils.DrawGlow(Projectile.Center, Color.Red, Projectile.Opacity, Projectile.scale);
         return false;
     }
 
@@ -129,8 +108,8 @@ public class GiantMeatball : ModProjectile
         SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-        LemonUtils.QuickPulse(Projectile, Projectile.Center, 1, 10, 5, Color.Red);
-        LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.CursedTorch, 2f);
+        LemonUtils.QuickPulse(Projectile, Projectile.Center, 1.5f, 15, 5, Color.Red);
+        LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.Crimson, 2f);
         for (int i = 0; i < 8; i++)
         {
             LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * savedSpeed, ProjectileType<CrimsonLostSoul>(), ai0: LostSoulWaitTime, ai1: LostSoulTimeLeft);
