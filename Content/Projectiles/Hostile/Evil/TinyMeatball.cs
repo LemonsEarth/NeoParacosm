@@ -24,7 +24,7 @@ public class TinyMeatball : ModProjectile
     {
         Projectile.width = 32;
         Projectile.height = 32;
-        Projectile.hostile = true;
+        Projectile.hostile = false;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
@@ -52,7 +52,7 @@ public class TinyMeatball : ModProjectile
         }
         Projectile.velocity = Vector2.Zero;
         Projectile.Center = Vector2.Lerp(savedPos, new Vector2(PosX, PosY), AITimer / TimeToReach);
-        Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
+        Projectile.rotation = MathHelper.ToRadians(AITimer * 3 * Projectile.velocity.Length());
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
         Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.RedMoss, 0, 0, Scale: Main.rand.NextFloat(1f, 2f)).noGravity = true;
         Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.Crimson, 0, 0, Scale: Main.rand.NextFloat(1f, 2f)).noGravity = true;
@@ -87,6 +87,6 @@ public class TinyMeatball : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY * 10, ProjectileType<CrimsonLostSoul>(), ai0: 90, ai1: 240);
+        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY * 4, ProjectileType<GiantMeatball>(), ai0: 180, ai1: 90, ai2: 360);
     }
 }

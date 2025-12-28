@@ -68,12 +68,13 @@ public class Dreadlord : ModNPC
     }
 
     float attackDuration = 0;
-    int[] attackDurations = { 600, 1080, 1320, 600, 600 };
+    int[] attackDurations = { 600, 1080, 1080, 1320, 600 };
 
     public enum Attacks
     {
         BallsNLightning,
         MeatballsWithFire,
+        CursedFlamethrower,
         DashingWithBalls,
     }
 
@@ -468,6 +469,9 @@ public class Dreadlord : ModNPC
             case (int)Attacks.MeatballsWithFire:
                 MeatballsWithFire();
                 break;
+            case (int)Attacks.CursedFlamethrower:
+                CursedFlamethrower();
+                break;
             case (int)Attacks.DashingWithBalls:
                 DashingWithBalls();
                 break;
@@ -657,7 +661,7 @@ public class Dreadlord : ModNPC
             case 720: // Giant meatball (explodes at 480)
                 if (LemonUtils.NotClient())
                 {
-                    GiantMeatball(LegCrimson.MiscPosition1, 720 - 480, 60, 360, 3);
+                    GiantMeatball(LegCrimson.MiscPosition1, 720 - 480, 60, 360, 5);
                 }
                 break;
             case > 690: // Rotate leg back
@@ -751,6 +755,122 @@ public class Dreadlord : ModNPC
                 break;
             case > 0: // Slow down
                 NPC.velocity *= 0.95f;
+                break;
+            case 0:
+                AttackTimer = 1080;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void CursedFlamethrower()
+    {
+        SetBodyPartPositions(headLerpSpeed: 0.8f, bodyLerpSpeed: 0.8f, legLerpSpeed: 0.8f);
+        switch (AttackTimer)
+        {
+            case 1080: // Choose random position
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    targetPosition = arenaCenter + LemonUtils.RandomVector2Circular(600, 600, 200, 200);
+                }
+                NPC.netUpdate = true;
+                PlayRoar(-0.2f);
+                break;
+            case > 1020: // Move to pos
+                NPC.MoveToPos(targetPosition, 0.2f, 0.2f, 0.4f, 0.4f);
+                break;
+            case > 900: // Slow down, move corrupt head downward
+                NPC.velocity *= 0.93f;
+                HeadCorrupt.Position = HeadCorrupt.DefaultPosition + Vector2.UnitY * 32;
+                Dust.NewDustDirect(
+                    HeadCorrupt.Position + Main.rand.NextVector2Circular(HeadCorrupt.Width * 0.5f, HeadCorrupt.Height * 0.5f),
+                    2, 2,
+                    DustID.CursedTorch,
+                    0, Main.rand.NextFloat(-12f, -8f),
+                    Scale: Main.rand.NextFloat(1.5f, 3f)
+                    ).noGravity = true;
+                SetLegCrimsonFrame(LEG_ATTACK);
+                LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, -Pi / 6, 1 / 30f);
+                break;
+            case > 720: // Flamethrower
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+                NPC.velocity = Vector2.Zero;
+                if (AttackTimer % 10 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        for (int i = 0; i < 6; i++)
+                        {
+                            LemonUtils.QuickProj(
+                                NPC,
+                                HeadCorrupt.Position,
+                                HeadCorrupt.Position.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 16, Pi / 16)) * Main.rand.NextFloat(45, 55),
+                                ProjectileType<CursedFlamethrower>(),
+                                ProjDamage,
+                                ai0: 30,
+                                ai1: 0.97f,
+                                ai2: Main.rand.NextFloat(-Pi / 32, Pi / 32)
+                                );
+                        }
+                    }
+                }
+
+                LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, Pi / 6, 1 / 30f);
+
+                if (LegCrimson.Rotation > 0 && AttackCount == 0)
+                {
+                    AttackCount = 1;
+                    if (LemonUtils.NotClient())
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            Vector2 pos = player.Center + LemonUtils.RandomVector2Circular(400, 400, 100, 100);
+                            LemonUtils.QuickProj(
+                                NPC,
+                                LegCrimson.MiscPosition1,
+                                Vector2.Zero,
+                                ProjectileType<TinyMeatball>(),
+                                ProjDamage,
+                                ai0: pos.X,
+                                ai1: pos.Y,
+                                ai2: 60
+                                );
+                        }
+                    }
+
+                    NPC.netUpdate = true;
+                }
+                break;
+            case > 600:
+                SetLegCrimsonFrame(LEG_STANDARD);
+                LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, 0, 1 / 30f);
+
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                break;
+            case > 240:
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+
+                NPC.velocity = Vector2.Zero;
+                if (LemonUtils.NotClient() && AITimer % 10 == 0)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.Position,
+                            HeadCorrupt.Position.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 16, Pi / 16)) * Main.rand.NextFloat(45, 55),
+                            ProjectileType<CursedFlamethrower>(),
+                            ProjDamage,
+                            ai0: 30,
+                            ai1: 0.97f,
+                            ai2: Main.rand.NextFloat(-Pi / 32, Pi / 32)
+                            );
+                    }
+                }
+                break;
+            case > 0:
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
                 break;
             case 0:
                 AttackTimer = 1080;
