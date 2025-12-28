@@ -35,7 +35,7 @@ public class FireAuraSpell : BaseSpell
         Item.height = 38;
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Green;
-        SpellElements = [SpellElement.Dark];
+        SpellElements = [SpellElement.Fire];
     }
 
     public override void ModifyWeaponDamage(Player player, ref StatModifier damage)

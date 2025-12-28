@@ -227,7 +227,6 @@ public class Dreadlord : ModNPC
     public override void AI()
     {
         WorldDataSystem.DreadlordAlive = true;
-
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
             NPC.TargetClosest(false);
@@ -245,13 +244,77 @@ public class Dreadlord : ModNPC
         DespawnCheck();
         SetBodyPartPositions();
         AttackControl();
+        ArenaControl();
         AnimateWings(8);
         AITimer++;
+    }
+
+    /// <summary>
+    /// Spawns special Crimson Lost Souls around players that go too far from the boss or from the arena center
+    /// </summary>
+    void ArenaControl()
+    {
+        /*for (int i = 0; i < 64; i++)
+        {
+            Dust.NewDustDirect(NPC.Center + Vector2.UnitY.RotatedBy(i * (Pi * 2 / 64f)) * 1500, 2, 2, DustID.GemDiamond, Scale: 5f).noGravity = true;
+        }*/
+
+        if (LemonUtils.NotClient())
+        {
+            foreach (var plr in Main.ActivePlayers)
+            {
+                float distanceToNPC = plr.Distance(NPC.Center);
+                float distanceToArena = plr.Distance(arenaCenter);
+
+                float baseArenaDistance = WorldDataSystem.DCEffectNoFogDistance * 0.5f;
+                float baseNPCDistance = 1500f * 0.5f;
+                if (distanceToNPC > baseNPCDistance) // too far from boss
+                {
+                    float speedDen = Math.Clamp(distanceToNPC / baseNPCDistance, 1, 3);
+                    if (AITimer % (60 / speedDen) == 0)
+                    {
+                        Vector2 pos = player.Center + NPC.Center.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * 400;
+                        LemonUtils.QuickProj(
+                            NPC,
+                            pos,
+                            pos.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * Main.rand.NextFloat(2, 4),
+                            ProjectileType<ArenaBoundLostSoul>(),
+                            ProjDamage * 2,
+                            ai1: Main.rand.NextFloat(5, 8),
+                            ai2: 160
+                            );
+                    }
+                }
+
+                if (distanceToArena > baseArenaDistance) // too far from arena
+                {
+                    float speedDen = Math.Clamp(distanceToArena / baseArenaDistance, 1, 3);
+                    if (AITimer % (60 / speedDen) == 0)
+                    {
+                        Vector2 pos = player.Center + arenaCenter.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * 400;
+                        LemonUtils.QuickProj(
+                            NPC,
+                            pos,
+                            pos.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * Main.rand.NextFloat(4, 6),
+                            ProjectileType<ArenaBoundLostSoul>(),
+                            ProjDamage * 2,
+                            ai1: Main.rand.NextFloat(8, 10),
+                            ai2: 160
+                            );
+                    }
+                }
+            }
+        }
     }
 
     void Intro()
     {
         //NPC.dontTakeDamage = true;
+
+        if (WorldDataSystem.DCEffectNoFogPosition == Vector2.Zero)
+        {
+            WorldDataSystem.DCEffectNoFogPosition = NPC.Center;
+        }
 
         switch (AITimer)
         {
@@ -574,7 +637,7 @@ public class Dreadlord : ModNPC
                         LemonUtils.QuickProj(
                             NPC,
                             HeadCorrupt.Position,
-                            NPC.Center.DirectionTo(player.Center + player.velocity * 100).RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(3, 6),
+                            NPC.Center.DirectionTo(player.Center + player.velocity * 75).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * Main.rand.NextFloat(3, 6),
                             ProjectileType<CursedFlameSphere>(),
                             ProjDamage,
                             ai1: Main.rand.NextFloat(1.005f, 1.025f)
@@ -594,7 +657,7 @@ public class Dreadlord : ModNPC
             case 720: // Giant meatball (explodes at 480)
                 if (LemonUtils.NotClient())
                 {
-                    GiantMeatball(LegCrimson.MiscPosition1, 720 - 480, 60, 360);
+                    GiantMeatball(LegCrimson.MiscPosition1, 720 - 480, 60, 360, 3);
                 }
                 break;
             case > 690: // Rotate leg back
@@ -603,16 +666,6 @@ public class Dreadlord : ModNPC
             case 690: // Reset leg, calculate where NPC is relative to arena center, calculate new target pos (start firing angle)
                 SetLegCrimsonFrame(LEG_STANDARD);
                 SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
-                Vector2 dirToPlayer = HeadCorrupt.Position.DirectionTo(player.Center);
-                targetPosition = HeadCorrupt.Position + new Vector2(MathF.Sign(dirToPlayer.X) * 100, -MathF.Sign(dirToPlayer.Y) * 200);
-                if (dirToPlayer.Y >= 0) // Which direction target pos should rotate
-                {
-                    AttackCount = dirToPlayer.X >= 0 ? -1 : 1;
-                }
-                else
-                {
-                    AttackCount = dirToPlayer.X >= 0 ? 1 : -1;
-                }
                 break;
             case > 480: // Firing cursed flames spheres
                 Vector2 headOffset2 = HeadCorrupt.MiscPosition1 + HeadCorrupt.MiscPosition1.DirectionTo(targetPosition) * 100;
@@ -624,10 +677,10 @@ public class Dreadlord : ModNPC
                         LemonUtils.QuickProj(
                             NPC,
                             HeadCorrupt.MiscPosition1,
-                            HeadCorrupt.MiscPosition1.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(3, 6),
+                            Vector2.UnitY.RotatedByRandom(Pi * 2) * Main.rand.NextFloat(3, 6),
                             ProjectileType<CursedFlameSphere>(),
                             ProjDamage,
-                            ai1: Main.rand.NextFloat(1.005f, 1.025f)
+                            ai1: Main.rand.NextFloat(1.02f, 1.04f)
                             );
                     }
                 }
@@ -636,8 +689,68 @@ public class Dreadlord : ModNPC
                     targetPosition = targetPosition.RotatedBy(ToRadians(3 * AttackCount), HeadCorrupt.MiscPosition1);
                 }
                 break;
-            case 480:
+            case 480: // Close mouth, scream on hard
                 SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+                PlayRoar(-0.2f);
+
+                if (LemonUtils.IsHard())
+                {
+                    SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
+                    PlayRoar(0.3f);
+                }
+                break;
+            case > 180: // Move above player, predictive burst shots, lightning on hard
+                if (AttackTimer % 60 == 0)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        if (LemonUtils.NotClient())
+                        {
+                            LemonUtils.QuickProj(
+                                NPC,
+                                HeadCorrupt.Position,
+                                NPC.Center.DirectionTo(player.Center + player.velocity * 60).RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(3, 6),
+                                ProjectileType<CursedFlameSphere>(),
+                                ProjDamage,
+                                ai1: Main.rand.NextFloat(1.005f, 1.025f)
+                                );
+                        }
+                    }
+                }
+                if (LemonUtils.IsHard())
+                {
+                    HeadCrimson.Position = HeadCrimson.DefaultPosition - Vector2.UnitY * 40 + Main.rand.NextVector2Circular(24, 24);
+                    if (AITimer % 120 == 0)
+                    {
+                        PlayRoar(0.3f);
+                    }
+                    if (LemonUtils.NotClient() && AttackTimer % 20 == 0)
+                    {
+                        LightningAroundPlayer(600, -1500, 120, 3000);
+                    }
+                }
+
+                NPC.MoveToPos(player.Center - Vector2.UnitY * 800, 0.1f, 0.3f, 0.4f, 0.4f);
+                break;
+            case 180: // Close mouth
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                break;
+            case > 120: // Slow down
+                NPC.velocity *= 0.97f;
+                break;
+            case 120: // Dash
+                NPC.velocity = NPC.DirectionTo(player.Center) * 30;
+                PlayRoar(-0.2f);
+                PlayRoar(0.2f);
+                break;
+            case > 90:
+                break;
+            case > 30: // Move to player
+                NPC.MoveToPos(player.Center, 0.1f, 0.1f, 0.3f, 0.3f);
+                break;
+            case > 0: // Slow down
+                NPC.velocity *= 0.95f;
                 break;
             case 0:
                 AttackTimer = 1080;
@@ -889,9 +1002,9 @@ public class Dreadlord : ModNPC
                     ai2: duration);
     }
 
-    void GiantMeatball(Vector2 pos, float timeLeft, int lostSoulWaitTime, float lostSoulTimeLeft)
+    void GiantMeatball(Vector2 pos, float timeLeft, int lostSoulWaitTime, float lostSoulTimeLeft, float speed = 6)
     {
-        LemonUtils.QuickProj(NPC, pos, Vector2.UnitY * 6, ProjectileType<GiantMeatball>(), ProjDamage,
+        LemonUtils.QuickProj(NPC, pos, Vector2.UnitY * speed, ProjectileType<GiantMeatball>(), ProjDamage,
                     ai0: timeLeft,
                     ai1: lostSoulWaitTime,
                     ai2: lostSoulTimeLeft);

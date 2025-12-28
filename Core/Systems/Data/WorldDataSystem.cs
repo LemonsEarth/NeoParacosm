@@ -46,19 +46,19 @@ public class WorldDataSystem : ModSystem
 
     public override void PostUpdateNPCs()
     {
-        if (AncientCallingHornInUse)
-        {
-            DCEffectNoFogDistance = 2000;
-            DCEffectMaxFogOpacity = 1f;
-            DCEffectFogSpeed = 5;
-            DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.Red, 1 / 60f);
-        }
         if (ShouldReset)
         {
             DCEffectFogColor = Color.White;
             DCEffectMaxFogOpacity = 0.4f;
             DCEffectNoFogDistance = 0;
             DCEffectFogSpeed = 1f;
+        }
+        else
+        {
+            DCEffectNoFogDistance = 2000;
+            DCEffectMaxFogOpacity = 1f;
+            DCEffectFogSpeed = 5;
+            DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.Red, 1 / 60f);
         }
     }
 }

@@ -17,13 +17,13 @@ public class GiantMeatball : ModProjectile
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 1;
+        Main.projFrames[Type] = 2;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 256;
-        Projectile.height = 256;
+        Projectile.width = 128;
+        Projectile.height = 128;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -62,33 +62,42 @@ public class GiantMeatball : ModProjectile
                 SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f), Volume = 0.5f }, Projectile.Center);
                 Projectile.scale = 0.7f;
             }
+            Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.RedMoss, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+            Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.Crimson, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
             Projectile.scale = MathHelper.Lerp(Projectile.scale, 1f, 1 / 40f);
         }
         else
         {
             Projectile.scale = Math.Clamp(AITimer / (30f), 0, 1f);
+            Vector2 randDustPos = Projectile.Center + new Vector2(Main.rand.NextFloat(-200, 200), Main.rand.NextFloat(300, 400));
+            Vector2 randDustPos2 = Projectile.Center + new Vector2(Main.rand.NextFloat(-200, 200), Main.rand.NextFloat(300, 400));
+            Vector2 randPosToProj1 = randDustPos.DirectionTo(Projectile.Center) * Main.rand.NextFloat(20, 30);
+            Vector2 randPosToProj2 = randDustPos2.DirectionTo(Projectile.Center) * Main.rand.NextFloat(20, 30);
 
+            Dust.NewDustDirect(randDustPos, 2, 2, DustID.GemRuby, randPosToProj1.X, randPosToProj1.Y, Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+            Dust.NewDustDirect(randDustPos2, 2, 2, DustID.Crimson, randPosToProj2.X, randPosToProj2.Y, Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+            
         }
 
         Projectile.Opacity = AITimer / 15f;
 
+        Projectile.StandardAnimation(24, 2);
+
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
-        Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.RedMoss, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
-        Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.Crimson, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Vector2 drawOrigin = texture.Size() * 0.5f;
-        LemonUtils.DrawGlow(Projectile.Center, Color.Red, Projectile.Opacity, Projectile.scale * 10);
+        Vector2 drawOrigin = texture.Frame(1, 2, 0, Projectile.frame).Size() * 0.5f;
+        LemonUtils.DrawGlow(Projectile.Center, Color.Red, Projectile.Opacity, Projectile.scale * 5);
         for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
         {
             Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
             Main.EntitySpriteDraw(texture,
                 drawPos - Main.screenPosition,
-                null,
+                texture.Frame(1, 2, 0, Projectile.frame),
                 Color.Red * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length) * Projectile.Opacity,
                 Projectile.rotation,
                 drawOrigin,

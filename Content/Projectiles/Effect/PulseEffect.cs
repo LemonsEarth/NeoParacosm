@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Systems.Assets;
 using System.IO;
+using System.Linq;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
@@ -17,19 +18,39 @@ public class PulseEffect : ModProjectile
     ref float ColorMult => ref Projectile.ai[2];
 
     public Color PulseColor { get; set; } = Color.White;
+    public Entity EntityToFollow { get; set; } = null;
+    int entityType = -1;
+    int entityID = -1;
 
-    /*public override void SendExtraAI(BinaryWriter writer)
+    public override void SendExtraAI(BinaryWriter writer)
     {
         writer.Write(PulseColor.R);
         writer.Write(PulseColor.G);
         writer.Write(PulseColor.B);
         writer.Write(PulseColor.A);
+        writer.Write(entityType);
+        writer.Write(entityID);
     }
 
     public override void ReceiveExtraAI(BinaryReader reader)
     {
         PulseColor = new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
-    }*/
+        entityType = reader.ReadInt32();
+        entityID = reader.ReadInt32();
+        if (entityID < 0) return;
+        switch (entityType)
+        {
+            case 1:
+                EntityToFollow = Main.player[entityID];
+                break;
+            case 2:
+                EntityToFollow = Main.projectile.FirstOrDefault(p => p.identity == entityID, null);
+                break;
+            case 3:
+                EntityToFollow = Main.npc[entityID];
+                break;
+        }
+    }
 
     public override void SetStaticDefaults()
     {
@@ -52,6 +73,32 @@ public class PulseEffect : ModProjectile
 
     public override void AI()
     {
+        if (AITimer == 0)
+        {
+            if (EntityToFollow != null)
+            {
+                if (EntityToFollow is Player)
+                {
+                    entityType = 1;
+                    entityID = EntityToFollow.whoAmI;
+                }
+                else if (EntityToFollow is Projectile proj)
+                {
+                    entityType = 2;
+                    entityID = proj.identity;
+                }
+                else if (EntityToFollow is NPC)
+                {
+                    entityType = 3;
+                    entityID = EntityToFollow.whoAmI;
+                }
+            }
+            Projectile.netUpdate = true;
+        }
+        if (EntityToFollow != null)
+        {
+            Projectile.Center = EntityToFollow.Center;
+        }
         if (Scale == 0) Scale = 1;
         if (Speed == 0) Speed = 1;
         Projectile.velocity = Vector2.Zero;

@@ -4,6 +4,7 @@ using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using System.Threading;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Players;
@@ -14,6 +15,7 @@ public class NPBuffPlayer : ModPlayer
     public bool fastFall { get; set; } = false;
 
     int bofBuffTimer = 0;
+    int timer = 0;
 
     public override bool CanUseItem(Item item)
     {
@@ -36,7 +38,7 @@ public class NPBuffPlayer : ModPlayer
 
     public override void PostUpdateBuffs()
     {
-
+        timer++;
     }
 
     public override void UpdateEquips()
@@ -102,6 +104,14 @@ public class NPBuffPlayer : ModPlayer
         if (Player.HasBuff(BuffType<BeFuelDebuff>()))
         {
             Dust.NewDustDirect(Player.RandomPos(8, 8), 2, 2, DustID.OrangeStainedGlass, Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-4, -0.5f)).noGravity = true;
+        }
+
+        if (Player.HasBuff(BuffType<FireAuraBuff>()) && timer % 120 == 0)
+        {
+            if (Main.myPlayer == Player.whoAmI)
+            {
+                LemonUtils.QuickPulse(Player, Player.Center, 1, 5, 5, Color.Red, Player);
+            }
         }
     }
 

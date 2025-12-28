@@ -17,9 +17,16 @@ public class GoldenHeartBuff : ModBuff
         player.GetCritChance(DamageClass.Generic) += 5f;
         for (int i = 0; i < player.buffTime.Length; i++)
         {
-            if (player.buffTime[i] > 10 && player.buffType[i] != Type && !Main.debuff[player.buffType[i]])
+            if (player.buffType[i] != Type)
             {
-                player.buffTime[i] -= 3;
+                if (player.buffTime[i] > 12 && !Main.debuff[player.buffType[i]])
+                {
+                    player.buffTime[i] -= 10;
+                }
+            }
+            else
+            {
+
             }
         }
     }

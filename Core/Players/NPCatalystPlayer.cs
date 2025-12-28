@@ -148,5 +148,23 @@ public class NPCatalystPlayer : ModPlayer
         {
             ElementalDamageBoosts[spellElement] *= (1 - Player.manaSickReduction);
         }
+
+        RemoveBuggedSpells();
+    }
+
+    void RemoveBuggedSpells()
+    {
+        BaseSpell spellToRemove = null;
+        foreach (var spell in EquippedSpells)
+        {
+            if (!spell.Item.active)
+            {
+                spellToRemove = spell;
+            }
+        }
+        if (spellToRemove != null)
+        {
+            RemoveSpell(spellToRemove);
+        }
     }
 }
