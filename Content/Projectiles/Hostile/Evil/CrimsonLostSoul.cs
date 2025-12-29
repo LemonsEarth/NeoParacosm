@@ -62,11 +62,10 @@ public class CrimsonLostSoul : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 1, 1, 1);
 
-        for (float i = 0; i < 1 + Projectile.velocity.Length() / 3f; i++)
-        {
-            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
-            Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.Crimson, Vector2.Zero, Scale: 1.2f).noGravity = true;
-        }
+
+        Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
+        Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.Crimson, Vector2.Zero, Scale: 1.2f).noGravity = true;
+
 
         if (AITimer > Duration)
         {

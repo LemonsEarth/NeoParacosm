@@ -36,7 +36,7 @@ public class CursedFlamethrower : ModProjectile
         if (AITimer == 0)
         {
             Projectile.rotation = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
-            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { MaxInstances = 3, PitchRange = (-0.2f, 0.2f)}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { MaxInstances = 3, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         }
 
         if (AITimer <= 2)
@@ -56,7 +56,10 @@ public class CursedFlamethrower : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 
-        Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.CursedTorch, Scale: Main.rand.NextFloat(2.5f, 4f)).noGravity = true;
+        if (AITimer % 10 == 0)
+        {
+            Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.CursedTorch, Scale: Main.rand.NextFloat(2.5f, 4f)).noGravity = true;
+        }
 
         Projectile.velocity *= SlowDownRate;
 
@@ -76,7 +79,7 @@ public class CursedFlamethrower : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Projectile.DrawAfterimages(Color.White, 1f);
-        //LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, 2f);
+        LemonUtils.DrawGlow(Projectile.Center, Color.GreenYellow, Projectile.Opacity, 2f);
         return false;
     }
 

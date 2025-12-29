@@ -121,7 +121,7 @@ public class GiantMeatball : ModProjectile
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.Crimson, 2f);
         for (int i = 0; i < 8; i++)
         {
-            LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * savedSpeed, ProjectileType<CrimsonLostSoul>(), ai0: LostSoulWaitTime, ai1: LostSoulTimeLeft);
+            LemonUtils.QuickProj(Projectile, Projectile.RandomPos(-8,-8), Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * savedSpeed, ProjectileType<CrimsonLostSoul>(), ai0: LostSoulWaitTime, ai1: LostSoulTimeLeft);
         }
     }
 }

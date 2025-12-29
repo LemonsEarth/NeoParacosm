@@ -49,6 +49,7 @@ public class DreadlordBodyPart
     public Vector2 Origin { get; set; }
     public float Scale { get; set; } = 1f;
     public SpriteEffects SpriteEffects { get; set; } = SpriteEffects.None;
+    public float Opacity = 1f;
 
     public float Width => Frame.Width;
     public float Height => Frame.Height;
@@ -59,12 +60,12 @@ public class DreadlordBodyPart
         {
             return;
         }
-        Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, Color.White, Rotation, Origin, Scale, SpriteEffects);
+        Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, Color.White * Opacity, Rotation, Origin, Scale, SpriteEffects);
         if (useShader)
         {
             var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
             shader.Shader.Parameters["uTime"].SetValue(shaderTimer);
-            shader.Shader.Parameters["color"].SetValue(Color.Gold.ToVector4());
+            shader.Shader.Parameters["color"].SetValue(Color.Gold.ToVector4() * Opacity);
             shader.Shader.Parameters["moveSpeed"].SetValue(1f);
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
