@@ -68,13 +68,14 @@ public class Dreadlord : ModNPC
     }
 
     float attackDuration = 0;
-    int[] attackDurations = { 600, 1080, 1080, 1320, 600 };
+    int[] attackDurations = { 600, 1080, 1080, 1080, 1320 };
 
     public enum Attacks
     {
         BallsNLightning,
         MeatballsWithFire,
         CursedFlamethrower,
+        FlameWallsAndSpinning,
         DashingWithBalls,
     }
 
@@ -471,6 +472,9 @@ public class Dreadlord : ModNPC
                 break;
             case (int)Attacks.CursedFlamethrower:
                 CursedFlamethrower();
+                break;
+            case (int)Attacks.FlameWallsAndSpinning:
+                FlameWallsAndSpinning();
                 break;
             case (int)Attacks.DashingWithBalls:
                 DashingWithBalls();
@@ -896,6 +900,96 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
+    void FlameWallsAndSpinning()
+    {
+        SetBodyPartPositions(headLerpSpeed: 0.9f, legLerpSpeed: 0.9f, bodyLerpSpeed: 0.9f);
+        switch (AttackTimer)
+        {
+            case 1080:
+                break;
+            case > 990:
+                NPC.MoveToPos(arenaCenter, 0.1f, 0.1f, 0.25f, 0.25f);
+                break;
+            case 990:
+                NPC.velocity = Vector2.Zero;
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+                PlayRoar(-0.2f);
+                if (LemonUtils.NotClient())
+                {
+                    for (int i = 0; i < 18; i++)
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.Position,
+                            Vector2.UnitY * 30,
+                            ProjectileType<CirclingCursedFlameSphere>(),
+                            ProjDamage,
+                            ai0: NPC.whoAmI,
+                            ai1: 2 * i * Pi / 18,
+                            ai2: 180 + i * 10
+                            );
+                    }
+                }
+                break;
+            case > 960:
+                NPC.MoveToPos(player.Center, 0.05f, 0.05f, 0.1f, 0.1f);
+                break;
+            case 960:
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+                break;
+            case > 720:
+                NPC.MoveToPos(player.Center, 0.05f, 0.05f, 0.2f, 0.2f);
+                break;
+            case > 660:
+                NPC.velocity *= 0.92f;
+                break;
+            case 660:
+                SetHeadCorruptFrame(HEAD_MOUTH_OPEN);
+                PlayRoar(-0.2f);
+                if (LemonUtils.NotClient())
+                {
+                    for (int i = 0; i < 24; i++)
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.Position,
+                            Vector2.UnitY * 30,
+                            ProjectileType<CirclingCursedFlameSphere>(),
+                            ProjDamage,
+                            ai0: NPC.whoAmI,
+                            ai1: 2 * i * Pi / 24,
+                            ai2: 240 + i * 15
+                            );
+                    }
+                }
+                break;
+            case > 600:
+                for (int i = 0; i < 16; i++)
+                {
+                    Dust.NewDustDirect(player.Center + new Vector2(300, -800 + 100 * i), 2, 2, DustID.CursedTorch, 0, -10, Scale: Main.rand.NextFloat(2, 4f)).noGravity = true;
+                    Dust.NewDustDirect(player.Center + new Vector2(-300, -800 + 100 * i), 2, 2, DustID.CursedTorch, 0, -10, Scale: Main.rand.NextFloat(2, 4f)).noGravity = true;
+                }
+                break;
+            case 600:
+                SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
+
+                targetPosition = player.Center;
+                break;
+            case > 120:
+                if (LemonUtils.NotClient() && AttackTimer % 6 == 0)
+                {
+                    CursedFlames(targetPosition + new Vector2(300, 800), -Vector2.UnitY, Pi/64, 60, 75, turningAngle: Pi/64);
+                    CursedFlames(targetPosition + new Vector2(-300, 800), -Vector2.UnitY, Pi/64, 60, 75, turningAngle: Pi/64);
+                }
+                break;
+            case 0:
+                AttackTimer = 1080;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void DashingWithBalls()
     {
         SetBodyPartPositions(headLerpSpeed: 0.9f, legLerpSpeed: 0.9f, bodyLerpSpeed: 0.9f);
@@ -1165,6 +1259,7 @@ public class Dreadlord : ModNPC
     void SwitchAttacks()
     {
         Attack++;
+        Attack = 3;
         attackDuration = attackDurations[(int)Attack];
         targetLeg = null;
         AttackCount = 0;

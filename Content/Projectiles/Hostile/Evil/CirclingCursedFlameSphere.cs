@@ -5,10 +5,12 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
-public class CursedFlameSphere : ModProjectile
+public class CirclingCursedFlameSphere : ModProjectile
 {
-    ref float AITimer => ref Projectile.ai[0];
-    ref float SpeedUP => ref Projectile.ai[1];
+    int AITimer = 0;
+    ref float NPCToFollow => ref Projectile.ai[0];
+    ref float CirclingOffsetAngle => ref Projectile.ai[1];
+    ref float WaitTime => ref Projectile.ai[2];
 
     static BasicEffect BasicEffect;
 
@@ -51,7 +53,7 @@ public class CursedFlameSphere : ModProjectile
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
         Projectile.penetrate = 3;
-        Projectile.timeLeft = 300;
+        Projectile.timeLeft = 1500;
         Projectile.scale = 1f;
     }
 
@@ -61,15 +63,34 @@ public class CursedFlameSphere : ModProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f }, Projectile.Center);
         }
 
-        Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
-        if (SpeedUP == 0)
+        NPC npc = Main.npc[(int)NPCToFollow];
+
+        if (npc == null || !npc.active)
         {
-            SpeedUP = 1f;
+            Projectile.Kill();
+            return;
         }
-        Projectile.velocity *= SpeedUP;
+        Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
+
+        if (AITimer < WaitTime)
+        {
+            Projectile.Center = npc.Center + Vector2.UnitX.RotatedBy(CirclingOffsetAngle + MathHelper.ToRadians(AITimer * savedSpeed * 0.01f)) * 300;
+            Projectile.velocity = Vector2.Zero;
+        }
+        else if (AITimer == WaitTime)
+        {
+            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f }, Projectile.Center);
+
+            Player closestPlayer = LemonUtils.GetClosestPlayer(Projectile.Center, 4000);
+            if (closestPlayer != null && closestPlayer.Alive())
+            {
+                Projectile.velocity = Projectile.Center.DirectionTo(closestPlayer.Center) * savedSpeed;
+            }
+        }
+
         var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, Scale: 2f);
         dust.noGravity = true;
         Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
