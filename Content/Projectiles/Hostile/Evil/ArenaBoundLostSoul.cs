@@ -6,7 +6,7 @@ namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 public class ArenaBoundLostSoul : ModProjectile
 {
     int AITimer = 0;
-    ref float Un => ref Projectile.ai[0];
+    ref float Duration => ref Projectile.ai[0];
     ref float ChaseSpeed => ref Projectile.ai[1];
     ref float Range => ref Projectile.ai[2];
 
@@ -26,7 +26,7 @@ public class ArenaBoundLostSoul : ModProjectile
         Projectile.ignoreWater = false;
         Projectile.tileCollide = false;
         Projectile.penetrate = 3;
-        Projectile.timeLeft = 600;
+        Projectile.timeLeft = 900;
         Projectile.scale = 1f;
         Projectile.aiStyle = 0;
         Projectile.Opacity = 0.5f;
@@ -70,6 +70,11 @@ public class ArenaBoundLostSoul : ModProjectile
         else
         {
             Projectile.spriteDirection = 1;
+        }
+
+        if (AITimer > Duration)
+        {
+            Projectile.Kill();
         }
 
         Projectile.StandardAnimation(18, 2);

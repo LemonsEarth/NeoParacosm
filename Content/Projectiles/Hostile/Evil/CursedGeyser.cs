@@ -37,7 +37,7 @@ public class CursedGeyser : ModProjectile
         if (AITimer == 0)
         {
             savedVelocity = Projectile.velocity;
-            Projectile.rotation = savedVelocity.ToRotation() - MathHelper.PiOver2;
+            Projectile.rotation = savedVelocity.ToRotation() + MathHelper.PiOver2;
             for (int i = 0; i < 5; i++)
             {
                 Dust.NewDustDirect(Projectile.RandomPos(-16, -16), 2, 2, DustID.CursedTorch, Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10), Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
@@ -77,7 +77,6 @@ public class CursedGeyser : ModProjectile
         }
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
-
 
         Projectile.StandardAnimation(30, 2);
 
