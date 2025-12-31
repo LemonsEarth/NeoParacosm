@@ -45,12 +45,12 @@ public class PrimHelper
             float topRot = topVertexRotation ?? projectile.velocity.ToRotation() - MathHelper.PiOver2;
             float botRot = bottomVertexRotation ?? projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-            int topVertexDistance = topDistance ?? (texture.Height / 2);
-            int botVertexDistance = bottomDistance ?? (texture.Height / 2);
+            int topVertexDistance = topDistance ?? (int)((texture.Height / 2) * projectile.scale);
+            int botVertexDistance = bottomDistance ?? (int)((texture.Height / 2) * projectile.scale);
             Vector2 topVertexOffset = Vector2.UnitX.RotatedBy(topRot) * topVertexDistance * (1 - lerpT);
             Vector2 botVertexOffset = Vector2.UnitX.RotatedBy(botRot) * botVertexDistance * (1 - lerpT);
 
-            Vector2 posOffset = positionOffset ?? new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 posOffset = positionOffset ?? new Vector2(texture.Width / 2, texture.Height / 2) * projectile.scale;
             currentPos += posOffset;
             oldPos += posOffset;
 

@@ -53,7 +53,7 @@ public class LightningWarningProj : ModProjectile
             startPos = Projectile.Center;
         }
 
-        Projectile.scale = AITimer / Duration;
+        Projectile.scale = AITimer / Duration * MathHelper.Clamp(Length / 1000f, 1, 5);
 
         Projectile.velocity = Vector2.Zero;
         if (AITimer > Duration)

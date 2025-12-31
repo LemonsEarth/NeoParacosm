@@ -103,4 +103,37 @@ public static partial class LemonUtils
         int closeness = 1 - (distanceToMid / mid);
         return closeness;
     }
+
+    public static int Sign(float num, int zeroDefault = 0)
+    {
+        if (num > 0)
+        {
+            return 1;
+        }
+        else if (num < 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return zeroDefault;
+        }
+    }
+
+    public static int Sign(float num, float zeroDefault = 0)
+    {
+        int _zeroDefault = (int)zeroDefault;
+        if (num > 0)
+        {
+            return 1;
+        }
+        else if (num < 0)
+        {
+            return -1;
+        }
+        else
+        {
+            return _zeroDefault;
+        }
+    }
 }

@@ -3,7 +3,7 @@ using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
-public class CursedFlamethrower : ModProjectile
+public class IchorFlamethrower : ModProjectile
 {
     int AITimer = 0;
     ref float Duration => ref Projectile.ai[0];
@@ -58,7 +58,7 @@ public class CursedFlamethrower : ModProjectile
 
         if (AITimer % 10 == 0)
         {
-            Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.CursedTorch, Scale: Main.rand.NextFloat(2.5f, 4f)).noGravity = true;
+            Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.IchorTorch, Scale: Main.rand.NextFloat(2.5f, 4f)).noGravity = true;
         }
 
         Projectile.velocity *= SlowDownRate;
@@ -79,12 +79,12 @@ public class CursedFlamethrower : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Projectile.DrawAfterimages(Color.White, 1f);
-        LemonUtils.DrawGlow(Projectile.Center, Color.GreenYellow, Projectile.Opacity, 2f);
+        LemonUtils.DrawGlow(Projectile.Center, Color.Yellow, Projectile.Opacity, 2f);
         return false;
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(BuffID.CursedInferno, 180);
+        target.AddBuff(BuffID.Ichor, 360);
     }
 }

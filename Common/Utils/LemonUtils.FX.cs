@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.UI;
+using Terraria;
 using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Common.Utils;
@@ -100,6 +101,36 @@ public static partial class LemonUtils
         PulseEffect pulse = proj.ModProjectile as PulseEffect;
         pulse.PulseColor = color.Value;
         pulse.EntityToFollow = entityToFollow;
+        return proj;
+    }
+
+    public static void DrawLaser(Vector2 position1, Vector2 position2, float laserWidth, Color color)
+    {
+        Main.EntitySpriteDraw(ParacosmTextures.TrueMagicPixel.Value,
+            position1 - Main.screenPosition,
+            null,
+            color,
+            position1.DirectionTo(position2).ToRotation(),
+            new Vector2(0, ParacosmTextures.TrueMagicPixel.Height() * 0.5f),
+            new Vector2((position1 - Main.screenPosition).Distance(position2 - Main.screenPosition) / 4, 1),
+            SpriteEffects.None);
+    }
+
+    public static Projectile QuickLaser(Entity sourceEntity, Vector2 position, Vector2 endPositionOffset, int duration, float laserWidth, Color color, Entity entityToFollow = null)
+    {
+        Projectile proj = QuickProj(
+            sourceEntity,
+            position,
+            endPositionOffset,
+            ProjectileType<LaserEffect>(),
+            0,
+            ai0: duration,
+            ai1: laserWidth
+            );
+
+        LaserEffect laser = proj.ModProjectile as LaserEffect;
+        laser.LaserColor = color;
+        laser.EntityToFollow = entityToFollow;
         return proj;
     }
 

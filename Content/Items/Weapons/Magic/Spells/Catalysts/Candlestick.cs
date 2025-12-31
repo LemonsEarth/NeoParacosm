@@ -41,7 +41,7 @@ public class Candlestick : BaseCatalyst
     }
 
     public override void UpdateInventory(Player player)
-    {
+    {     
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;

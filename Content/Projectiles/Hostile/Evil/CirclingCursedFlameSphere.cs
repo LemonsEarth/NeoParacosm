@@ -51,10 +51,10 @@ public class CirclingCursedFlameSphere : ModProjectile
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
-        Projectile.tileCollide = true;
+        Projectile.tileCollide = false;
         Projectile.penetrate = 3;
         Projectile.timeLeft = 1500;
-        Projectile.scale = 1f;
+        Projectile.scale = 2f;
     }
 
     float savedSpeed = 1f;
@@ -77,7 +77,7 @@ public class CirclingCursedFlameSphere : ModProjectile
 
         if (AITimer < WaitTime)
         {
-            Projectile.Center = npc.Center + Vector2.UnitX.RotatedBy(CirclingOffsetAngle + MathHelper.ToRadians(AITimer * savedSpeed * 0.01f)) * 300;
+            Projectile.Center = npc.Center + Vector2.UnitX.RotatedBy(CirclingOffsetAngle + MathHelper.ToRadians(AITimer * savedSpeed * 0.1f)) * 300;
             Projectile.velocity = Vector2.Zero;
         }
         else if (AITimer == WaitTime)
@@ -105,10 +105,11 @@ public class CirclingCursedFlameSphere : ModProjectile
         Color color = Color.White;
         for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
         {
-            Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
+            Vector2 drawPos = Projectile.oldPos[i] + drawOrigin * Projectile.scale;
             Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, color * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), Projectile.rotation, drawOrigin, Projectile.scale * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), SpriteEffects.None);
         }
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale * 0.5f);
         return false;
     }
 

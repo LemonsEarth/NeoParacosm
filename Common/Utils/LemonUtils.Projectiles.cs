@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Projectiles.Effect;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Common.Utils;
@@ -15,17 +16,22 @@ public static partial class LemonUtils
         return Main.player[projectile.owner];
     }
 
-    public static Projectile QuickProj(Projectile proj, Vector2 position, Vector2 velocity, int type, float damage = -1, float knockback = 1, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+    public static Projectile QuickProj(Entity entity, Vector2 position, Vector2 velocity, int type, float damage = -1, float knockback = 1, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
     {
-        if (damage == -1) damage = proj.damage;
-        if (owner == -1) owner = proj.owner;
-        return Projectile.NewProjectileDirect(proj.GetSource_FromThis(), position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
-    }
+        IEntitySource source = null;
+        if (entity is Projectile proj)
+        {
+            if (damage == -1) damage = proj.damage;
+            if (owner == -1) owner = proj.owner;
+            source = proj.GetSource_FromThis();
+        }
+        else if (entity is NPC npc)
+        {
+            if (damage == -1) damage = npc.damage;
+            source = npc.GetSource_FromThis();
+        }
 
-    public static Projectile QuickProj(NPC npc, Vector2 position, Vector2 velocity, int type, float damage = -1, float knockback = 1, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
-    {
-        if (damage == -1) damage = npc.damage;
-        return Projectile.NewProjectileDirect(npc.GetSource_FromThis(), position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
+        return Projectile.NewProjectileDirect(source, position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
     }
 
     public static void DrawAfterimages(this Projectile Projectile, Color lightColor, float opacityMultiplier = 1f)
