@@ -39,13 +39,16 @@ public static partial class LemonUtils
 
     public static void DustLine(Vector2 pos1, Vector2 pos2, int type, int distanceBetween = 16, float scale = 1, Color color = default)
     {
+        if (color == default) color = Color.White;
         Vector2 dir = pos1.DirectionTo(pos2);
+        float distance = pos1.Distance(pos2);
+        int dustCount = (int)(distance / 16);
         Vector2 currentPos = pos1;
-
-        while (currentPos.Distance(pos2) > distanceBetween * 2)
+        while (dustCount > 0)
         {
             Dust.NewDustPerfect(currentPos, type, Scale: scale, newColor: color).noGravity = true;
-            currentPos += dir * distanceBetween * scale;
+            currentPos += dir * distanceBetween;
+            dustCount--;
         }
     }
 

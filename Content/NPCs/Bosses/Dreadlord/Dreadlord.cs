@@ -194,8 +194,8 @@ public class Dreadlord : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1f;
-        NPC.lifeMax = 80000;
-        NPC.defense = 40;
+        NPC.lifeMax = 200000;
+        NPC.defense = 60;
         NPC.damage = 100;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
@@ -981,7 +981,7 @@ public class Dreadlord : ModNPC
                 NPC.MoveToPos(arenaCenter, 0.1f, 0.05f, 0.2f, 0.2f);
                 break;
             case 180:
-                LemonUtils.DustLine(HeadCrimson.MiscPosition1, targetPosition, DustID.GemTopaz, 32, 5f);
+                LemonUtils.DustLine(HeadCrimson.MiscPosition1, targetPosition, DustID.GemTopaz, 16, 2f);
                 LemonUtils.DustCircle(targetPosition, 8, 10, DustID.GemTopaz, 5f);
                 break;
             case > 120:
@@ -989,7 +989,10 @@ public class Dreadlord : ModNPC
                 NPC.MoveToPos(arenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
                 break;
             case > 30:
-                IchorFlames(HeadCrimson.MiscPosition1, HeadCrimson.MiscPosition1.DirectionTo(targetPosition), Pi / 4, 85, 100, 45, 0.97f, Pi / 32);
+                if (LemonUtils.NotClient())
+                {
+                    IchorFlames(HeadCrimson.MiscPosition1, HeadCrimson.MiscPosition1.DirectionTo(targetPosition), Pi / 4, 85, 100, 45, 0.97f, Pi / 32, 6);
+                }
                 NPC.velocity *= 0.93f;
                 SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
                 SetHeadCrimsonFrame(HEAD_MOUTH_OPEN);
@@ -1002,7 +1005,7 @@ public class Dreadlord : ModNPC
                 AttackTimer = 1080;
                 return;
         }
-
+        Main.NewText(AttackTimer);
         AttackTimer--;
     }
 
@@ -1395,6 +1398,7 @@ public class Dreadlord : ModNPC
     void SwitchAttacks()
     {
         Attack++;
+        Attack = 2;
         attackDuration = attackDurations[(int)Attack];
         targetLeg = null;
         AttackCount = 0;
@@ -1501,8 +1505,8 @@ public class Dreadlord : ModNPC
                 direction.RotatedBy(Main.rand.NextFloat(-angle, angle)) * Main.rand.NextFloat(minSpeed, maxSpeed),
                 ProjectileType<IchorFlamethrower>(),
                 ProjDamage,
-                ai0: 30,
-                ai1: 0.97f,
+                ai0: duration,
+                ai1: slowDownRate,
                 ai2: Main.rand.NextFloat(-turningAngle, turningAngle)
                 );
         }

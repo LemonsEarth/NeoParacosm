@@ -67,7 +67,7 @@ public class IchorFlamethrower : ModProjectile
             Projectile.Kill();
         }
 
-        int frameDuration = (int)(Duration / 6);
+        int frameDuration = (int)(Duration / 6f);
         if (Projectile.frame < 5) // safeguard so it never loops
         {
             Projectile.StandardAnimation(frameDuration, 6);

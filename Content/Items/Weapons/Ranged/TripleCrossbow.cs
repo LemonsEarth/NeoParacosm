@@ -1,4 +1,5 @@
-﻿namespace NeoParacosm.Content.Items.Weapons.Ranged;
+﻿
+namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class TripleCrossbow : ModItem
 {
