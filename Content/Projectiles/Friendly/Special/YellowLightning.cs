@@ -1,12 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Assets;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.Graphics.CameraModifiers;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
 public class YellowLightning : TargetedLightning
 {

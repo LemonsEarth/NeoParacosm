@@ -1,9 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Core.Systems.Assets;
-using Terraria.Audio;
-using Terraria.DataStructures;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Lightning;
 

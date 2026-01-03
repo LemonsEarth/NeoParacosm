@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using ReLogic.Content;
 using System.Collections.Generic;

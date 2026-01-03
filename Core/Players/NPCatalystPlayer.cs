@@ -1,10 +1,7 @@
-﻿using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Misc;
 using System.Collections.Generic;
-using System.Linq;
-using Terraria;
 using Terraria.ModLoader.IO;
 namespace NeoParacosm.Core.Players;
 

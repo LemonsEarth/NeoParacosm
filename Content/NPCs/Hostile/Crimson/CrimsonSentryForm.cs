@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
+﻿using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;

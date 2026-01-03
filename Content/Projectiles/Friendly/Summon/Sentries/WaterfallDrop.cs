@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
 public class WaterfallDrop : ModProjectile
 {

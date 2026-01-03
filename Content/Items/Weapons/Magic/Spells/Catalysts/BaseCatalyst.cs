@@ -1,9 +1,5 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Core.Players;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Core.Players;
 using System.Collections.Generic;
-using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Localization;
 

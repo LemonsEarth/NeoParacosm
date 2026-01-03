@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird;
+﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;

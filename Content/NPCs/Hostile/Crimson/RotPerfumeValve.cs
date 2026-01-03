@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
+﻿using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using System.Collections.Generic;

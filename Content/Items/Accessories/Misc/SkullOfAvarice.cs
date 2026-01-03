@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Items.Accessories.Misc;
+﻿namespace NeoParacosm.Content.Items.Accessories.Misc;
 
 public class SkullOfAvarice : ModItem
 {

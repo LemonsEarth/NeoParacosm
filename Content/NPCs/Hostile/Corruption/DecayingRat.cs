@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
+﻿using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;

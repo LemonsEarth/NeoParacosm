@@ -1,8 +1,7 @@
-﻿using NeoParacosm.Content.Tiles.DeadForest;
-using NeoParacosm.Content.Tiles.Depths;
+﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using NeoParacosm.Content.Items.Placeable.Tiles.Depths;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using NeoParacosm.Core.Systems.Data;
-using System.Linq;
 using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Core.Systems.World;

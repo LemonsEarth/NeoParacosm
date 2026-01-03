@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Players;
-using NeoParacosm.Core.Players.NPEffectPlayers;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using Terraria.Audio;

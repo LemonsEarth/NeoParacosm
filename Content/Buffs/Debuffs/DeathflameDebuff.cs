@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class DeathflameDebuff : ModBuff
 {

@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Items.Accessories.Misc;
 using NeoParacosm.Content.Projectiles.Hostile.Evil;

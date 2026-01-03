@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Armor.Summoner.AscendedCrimson;

@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using Terraria.Localization;
-
-namespace NeoParacosm.Content.Buffs.GoodBuffs;
+﻿namespace NeoParacosm.Content.Buffs.GoodBuffs;
 
 public class HolyBladeBuff : ModBuff
 {

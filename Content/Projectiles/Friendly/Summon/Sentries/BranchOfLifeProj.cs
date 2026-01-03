@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 

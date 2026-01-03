@@ -1,8 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 

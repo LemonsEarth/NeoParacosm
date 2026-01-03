@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Misc;
-using ReLogic.Content;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Boss;

@@ -901,3 +901,18 @@ UnearthSpell: {
 		Scales off enemy knockback resistance
 		'''
 }
+
+DeadDirtItem: {
+	DisplayName: Dead Dirt Item
+	Tooltip: ""
+}
+
+DeadDirtWallItem: {
+	DisplayName: Dead Dirt Wall Item
+	Tooltip: ""
+}
+
+DeathBrickItem: {
+	DisplayName: Death Brick Item
+	Tooltip: ""
+}

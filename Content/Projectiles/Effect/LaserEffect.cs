@@ -1,10 +1,5 @@
-﻿
-using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Assets;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Effect;
 

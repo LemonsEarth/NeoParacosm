@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Effect;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 

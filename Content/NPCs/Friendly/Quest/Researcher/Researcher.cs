@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
+﻿using NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 using NeoParacosm.Content.Items.Armor.Summoner.AscendedCrimson;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Melee;

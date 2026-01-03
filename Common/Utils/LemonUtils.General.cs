@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Assets;
-using Terraria.Graphics.CameraModifiers;
-
-namespace NeoParacosm.Common.Utils;
+﻿namespace NeoParacosm.Common.Utils;
 
 /// <summary>
 /// Contains a lot of utillities and global usings

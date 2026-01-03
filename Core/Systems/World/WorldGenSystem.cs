@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Input;
-using NeoParacosm.Common.Utils;
+using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using NeoParacosm.Content.Items.Placeable.Tiles.Depths;
 using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Tiles.DeadForest;
-using NeoParacosm.Content.Tiles.Depths;
 using StructureHelper.API;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.IO;
@@ -199,7 +197,7 @@ public class WorldGenSystem : ModSystem
                 if (WorldGen.InWorld(i, j))
                 {
 
-                    WorldGen.PlaceWall(i, j, WallType<DepthStoneWallBlock>());
+                    WorldGen.PlaceWall(i, j, WallType<DepthStoneWall>());
 
                     if (Main.tile[i, j].HasTile)
                     {

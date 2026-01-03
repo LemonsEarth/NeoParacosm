@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Content.Buffs.Debuffs;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 

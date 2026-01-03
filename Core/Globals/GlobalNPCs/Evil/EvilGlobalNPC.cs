@@ -3,7 +3,6 @@ using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
-using Terraria.GameContent.Bestiary;
 using static Terraria.ID.NPCID;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs.Evil;

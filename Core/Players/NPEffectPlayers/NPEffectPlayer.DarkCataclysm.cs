@@ -1,16 +1,6 @@
-﻿using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Biomes.TheDepths;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Items.BossSummons;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
-using NeoParacosm.Core.Systems;
+﻿using NeoParacosm.Content.Items.BossSummons;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
-using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using System.Runtime.InteropServices;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 

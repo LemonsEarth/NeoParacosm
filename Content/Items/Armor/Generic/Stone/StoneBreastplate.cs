@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Armor.Generic.Stone;
 

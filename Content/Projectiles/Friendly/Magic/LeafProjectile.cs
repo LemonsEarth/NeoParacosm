@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
-using Terraria.GameContent;
+﻿using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 

@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
-using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;

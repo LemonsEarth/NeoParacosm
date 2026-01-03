@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Gores;
+﻿using NeoParacosm.Content.Gores;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;

@@ -1,16 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Placeable.Tiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Localization;
 using Terraria.Map;
 using Terraria.UI;
 

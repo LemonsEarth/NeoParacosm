@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
 using Terraria.Audio;

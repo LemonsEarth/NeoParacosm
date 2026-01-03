@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
-using Terraria.GameContent;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
 public class HolySlash : ModProjectile
 {

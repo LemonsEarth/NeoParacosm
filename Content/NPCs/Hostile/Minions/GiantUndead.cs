@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using ReLogic.Content;

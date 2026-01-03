@@ -1,11 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
-using NeoParacosm.Core.Systems.Misc;
-using Terraria;
-using Terraria.Audio;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Armor.Generic.Stone;
 

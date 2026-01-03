@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Projectiles.Effect;
-using NeoParacosm.Content.Projectiles.Hostile;
 using NeoParacosm.Content.Projectiles.Hostile.Researcher;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
@@ -8,15 +7,10 @@ using NeoParacosm.Core.UI.ResearcherUI.Boss;
 using NeoParacosm.Core.UI;
 using ReLogic.Content;
 using System.Collections.Generic;
-using System.Linq;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
-using Terraria.UI;
 
 namespace NeoParacosm.Content.NPCs.Bosses.ResearcherBoss;
 

@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat;

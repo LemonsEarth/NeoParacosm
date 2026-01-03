@@ -2,7 +2,6 @@
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.UI;
-using Terraria;
 using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Common.Utils;

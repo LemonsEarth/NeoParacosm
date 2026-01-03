@@ -1,13 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Core.Players;
-using NeoParacosm.Core.Systems.Assets;
-using ReLogic.Content;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 

@@ -1,6 +1,4 @@
-﻿using Terraria.Localization;
-
-namespace NeoParacosm.Content.Buffs.GoodBuffs;
+﻿namespace NeoParacosm.Content.Buffs.GoodBuffs;
 
 public class GoldenHeartBuff : ModBuff
 {

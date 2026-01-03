@@ -4,9 +4,6 @@ using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
-using System.Linq;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;
 

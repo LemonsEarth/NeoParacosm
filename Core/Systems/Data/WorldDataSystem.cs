@@ -1,13 +1,4 @@
-﻿using NeoParacosm.Content.Items.BossSummons;
-using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using System.IO;
-using Terraria.Chat;
-using Terraria.DataStructures;
-using Terraria.Localization;
-using Terraria.ModLoader.IO;
-
-namespace NeoParacosm.Core.Systems.Data;
+﻿namespace NeoParacosm.Core.Systems.Data;
 
 public class WorldDataSystem : ModSystem
 {

@@ -1,9 +1,4 @@
-﻿using NeoParacosm.Content.Items.Armor.Generic.Stone;
-using NeoParacosm.Core.Systems.Misc;
-using System.Collections.Generic;
-using Terraria.Localization;
-
-namespace NeoParacosm.Core.Globals.GlobalItems;
+﻿namespace NeoParacosm.Core.Globals.GlobalItems;
 
 public class GemItem : GlobalItem
 {

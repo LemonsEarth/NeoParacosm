@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Core.UI.ResearcherUI.Boss;
-using NeoParacosm.Core.UI.ResearcherUI.Note;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Content.Items.Misc;
+﻿namespace NeoParacosm.Content.Items.Misc;
 
 /*public class ResearcherBossUITest : ModItem
 {

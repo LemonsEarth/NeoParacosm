@@ -1,8 +1,4 @@
-﻿
-
-using NeoParacosm.Common.Utils;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
 public class AshenBolt : ModProjectile
 {

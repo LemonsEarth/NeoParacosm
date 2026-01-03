@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;

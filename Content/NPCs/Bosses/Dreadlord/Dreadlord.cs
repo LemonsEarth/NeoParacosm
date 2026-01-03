@@ -1,23 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Effect;
-using NeoParacosm.Content.Projectiles.Hostile;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
-using NeoParacosm.Content.Projectiles.Hostile.Researcher;
-using NeoParacosm.Core.Players.NPEffectPlayers;
+using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
-using NeoParacosm.Core.UI;
-using NeoParacosm.Core.UI.ResearcherUI.Boss;
 using ReLogic.Content;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.RGB;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 using static Microsoft.Xna.Framework.MathHelper;
 
@@ -581,6 +570,20 @@ public class Dreadlord : ModNPC
                             );
                     }
 
+                }
+
+                if (AttackTimer % 30 == 0 && LemonUtils.NotClient())
+                {
+                    LemonUtils.QuickProj(
+                        NPC,
+                        HeadCrimson.Position,
+                        Vector2.UnitY.RotatedByRandom(Pi * 2) * 6,
+                        ProjectileType<IchorSphere>(),
+                        ProjDamage,
+                        ai0: 180,
+                        ai1: 60,
+                        ai2: 2
+                        );
                 }
                 break;
             case 270: // Reset frames

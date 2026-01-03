@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;

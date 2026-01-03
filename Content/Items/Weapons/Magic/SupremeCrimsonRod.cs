@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Magic;

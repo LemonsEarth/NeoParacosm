@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.Items.Armor.Generic.Stone;
 using NeoParacosm.Content.NPCs.Misc;
 using System.Linq;
-using Terraria;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Players;

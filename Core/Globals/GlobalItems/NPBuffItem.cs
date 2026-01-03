@@ -1,10 +1,6 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Items.Armor.Generic.Stone;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Core.Systems.Misc;
-using System.Collections.Generic;
-using Terraria.Localization;
 
 namespace NeoParacosm.Core.Globals.GlobalItems;
 

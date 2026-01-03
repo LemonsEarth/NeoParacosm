@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Players;
-using Terraria.Audio;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Effect;

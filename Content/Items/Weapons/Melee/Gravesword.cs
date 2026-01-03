@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Projectiles.Friendly.Melee;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Melee;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 

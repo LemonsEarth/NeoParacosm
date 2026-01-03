@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.Utils;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using Terraria;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;

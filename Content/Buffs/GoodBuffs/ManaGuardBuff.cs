@@ -1,5 +1,4 @@
-﻿using Terraria.Localization;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 
 namespace NeoParacosm.Content.Buffs.GoodBuffs;
 
