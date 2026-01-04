@@ -9,7 +9,7 @@ public class RuneOfExtinction : ModItem
 
     public override void SetStaticDefaults()
     {
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 15, false));
+        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 9, true));
         ItemID.Sets.AnimatesAsSoul[Type] = true;
     }
 

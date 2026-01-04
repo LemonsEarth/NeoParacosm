@@ -903,16 +903,21 @@ UnearthSpell: {
 }
 
 DeadDirtItem: {
-	DisplayName: Dead Dirt Item
+	DisplayName: Dead Dirt
 	Tooltip: ""
 }
 
 DeadDirtWallItem: {
-	DisplayName: Dead Dirt Wall Item
+	DisplayName: Dead Dirt Wall
 	Tooltip: ""
 }
 
 DeathBrickItem: {
-	DisplayName: Death Brick Item
+	DisplayName: Death Brick
 	Tooltip: ""
+}
+
+HiveTwisterItem: {
+	DisplayName: Hive Twister
+	Tooltip: A machine that periodically spawns bees when enemies are nearby
 }

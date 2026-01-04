@@ -1,4 +1,6 @@
-﻿using NeoParacosm.Core.Globals.GlobalNPCs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Globals.GlobalNPCs;
+using Terraria.GameContent;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -56,5 +58,18 @@ public static partial class LemonUtils
         && npc.Hitbox.Contains(Main.MouseWorld.ToPoint())
         && Main.LocalPlayer.Distance(npc.Center) < maxTalkDistance
         && Main.mouseRight && Main.mouseRightRelease;
+    }
+
+    public static void DrawAfterimages(this NPC npc, Color lightColor, float opacityMultiplier = 1f)
+    {
+        Texture2D texture = TextureAssets.Npc[npc.type].Value;
+        Rectangle sourceRect = npc.frame;
+        Vector2 drawOrigin = sourceRect.Size() * 0.5f;
+        for (int k = npc.oldPos.Length - 1; k > 0; k--)
+        {
+            Vector2 drawPos = (npc.oldPos[k] - Main.screenPosition) + drawOrigin;
+            Color color = (npc.GetAlpha(lightColor) * ((npc.oldPos.Length - k) / (float)npc.oldPos.Length)) * opacityMultiplier;
+            Main.EntitySpriteDraw(texture, drawPos, sourceRect, color, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0);
+        }
     }
 }
