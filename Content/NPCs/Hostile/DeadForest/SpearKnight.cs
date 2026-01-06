@@ -9,26 +9,27 @@ using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 
-public class ShieldKnight : ModNPC
+public class SpearKnight : ModNPC
 {
     int AITimer = 0;
-    int blockTimer = 0;
-    int notBlockTimer = 0;
-    int MAX_BLOCK_DURATION = 120;
+    int throwWindUpDuration = 60;
+    int throwingTimer = 0;
+    int notThrowingTimer = 0;
+    int throwCount = 0;
 
-    bool blocking = false;
+    bool throwing = false;
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[NPC.type] = 5;
+        Main.npcFrameCount[NPC.type] = 6;
         NPCID.Sets.TrailCacheLength[NPC.type] = 10;
         NPCID.Sets.TrailingMode[NPC.type] = 3;
     }
 
     public override void SetDefaults()
     {
-        NPC.width = 38;
-        NPC.height = 58;
+        NPC.width = 72;
+        NPC.height = 64;
         NPC.lifeMax = 500;
         NPC.defense = 25;
         NPC.damage = 40;
@@ -53,108 +54,6 @@ public class ShieldKnight : ModNPC
         });
     }
 
-    public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
-    {
-
-    }
-
-    public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
-    {
-        if (blocking) // if blocking, nullify damage and reduce penetrate, more in OnHitByProjectile
-        {
-            if (projectile.active)
-            {
-                projectile.penetrate--;
-                modifiers.FinalDamage *= 0;
-            }
-        }
-    }
-
-    public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
-    {
-        if (blocking)
-        {
-            // Fire projectile at closest player if blocking, keep blocking every time when hit by projectile
-            Player closestPlayer = LemonUtils.GetClosestPlayer(NPC.Center);
-            blockTimer = MAX_BLOCK_DURATION;
-            LemonUtils.QuickProj(
-                NPC,
-                NPC.Center,
-                NPC.DirectionTo(closestPlayer.Center) * 10,
-                ProjectileType<HolyBlast>(),
-                (hit.SourceDamage + NPC.damage) / 4,
-                1f,
-                ai1: 1.01f,
-                ai2: 300
-                );
-            if (LemonUtils.IsHard())
-            {
-                for (int i = -1; i <= 1; i += 2)
-                {
-                    LemonUtils.QuickProj(
-                        NPC,
-                        NPC.Center,
-                        NPC.DirectionTo(closestPlayer.Center).RotatedBy(i * MathHelper.PiOver4) * 10,
-                        ProjectileType<HolyBlast>(),
-                        (hit.SourceDamage + NPC.damage) / 4,
-                        1f,
-                        ai1: 1.01f,
-                        ai2: 300
-                        );
-                }
-            }
-        }
-        else
-        {
-            // only block if hasn't blocked in 5 seconds with a 25% chance
-            if (notBlockTimer > 300 && Main.rand.NextBool(4))
-            {
-                StartBlocking();
-            }
-        }
-    }
-
-    public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
-    {
-
-    }
-
-    public override bool PreAI()
-    {
-        NPC.TargetClosest(true);
-        if (NPC.HasPlayerTarget)
-        {
-            NPC.DiscourageDespawn(600);
-        }
-        NPC.spriteDirection = -NPC.direction;
-
-        if (blockTimer > 0)
-        {
-            blocking = true;
-            notBlockTimer = 0;
-            blockTimer--;
-        }
-        else
-        {
-            blocking = false;
-            notBlockTimer++;
-        }
-
-        if ((notBlockTimer == 10 || notBlockTimer % 300 == 0) && NPC.HasPlayerTarget) // dash right when coming out of block
-        {
-            NPC.velocity = NPC.DirectionTo(Main.player[NPC.target].Center) * 10;
-        }
-
-        if (blocking)
-        {
-            NPC.noGravity = true;
-            NPC.velocity = Vector2.Zero;
-            return false;
-        }
-        NPC.noGravity = false;
-        return true;
-    }
-
     public override void HitEffect(NPC.HitInfo hit)
     {
         if (NPC.life <= 0)
@@ -166,8 +65,92 @@ public class ShieldKnight : ModNPC
         }
         else
         {
-            Dust.NewDustDirect(NPC.RandomPos(-8, -8), 2, 2, DustID.Stone);
+            Dust.NewDustDirect(NPC.RandomPos(-16, -16), 2, 2, DustID.Stone);
         }
+    }
+
+    public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+    {
+
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
+    {
+
+    }
+
+    public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+    {
+
+    }
+
+    public override bool PreAI()
+    {
+        NPC.TargetClosest(true);
+        if (NPC.HasPlayerTarget)
+        {
+            NPC.DiscourageDespawn(600);
+        }
+        else
+        {
+            return true;
+        }
+        NPC.spriteDirection = -NPC.direction;
+        Player player = Main.player[NPC.target];
+        int minDistanceToTarget = 600;
+        if (NPC.Distance(player.Center) < minDistanceToTarget)
+        {
+            if (notThrowingTimer > 210 && !throwing)
+            {
+                throwing = true;
+                throwingTimer = throwWindUpDuration;
+                throwCount = 0;
+            }
+        }
+
+        if (!throwing)
+        {
+            notThrowingTimer++;
+        }
+        else
+        {
+            notThrowingTimer = 0;
+            if (throwingTimer == 0)
+            {
+                if (LemonUtils.NotClient())
+                {
+                    LemonUtils.QuickProj(
+                        NPC,
+                        NPC.Top,
+                        NPC.DirectionTo(player.Center) * 15,
+                        ProjectileType<HolySpear>(),
+                        NPC.damage / 4,
+                        1f,
+                        ai0: 15,
+                        ai1: 0.2f,
+                        ai2: 15f
+                        );
+                }
+                throwCount++;
+                if (throwCount < 3 + (LemonUtils.GetDifficulty() - 1))
+                {
+                    throwingTimer = throwWindUpDuration / LemonUtils.GetDifficulty();
+                }
+                else
+                {
+                    throwing = false;
+                }
+            }
+
+            if (throwingTimer > 0)
+            {
+                throwingTimer--;
+            }
+            NPC.velocity.X = 0;
+            return false;
+        }
+
+        return true;
     }
 
     public override void AI()
@@ -180,21 +163,19 @@ public class ShieldKnight : ModNPC
         AITimer++;
     }
 
-    void StartBlocking()
-    {
-        blockTimer = MAX_BLOCK_DURATION;
-        if (LemonUtils.NotClient())
-        {
-            LemonUtils.QuickPulse(NPC, NPC.Center, 2f, 3f, 5f, Color.Gold);
-        }
-    }
-
     public override void FindFrame(int frameHeight)
     {
-        int frameDur = 9;
-        if (blocking)
+        int frameDur = 20;
+        if (throwing)
         {
-            NPC.frame.Y = 4 * frameHeight;
+            if (throwingTimer > 6)
+            {
+                NPC.frame.Y = 4 * frameHeight;
+            }
+            else
+            {
+                NPC.frame.Y = 5 * frameHeight;
+            }
             NPC.frameCounter = 0;
         }
         else

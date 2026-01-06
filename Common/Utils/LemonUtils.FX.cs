@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.UI;
+using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Common.Utils;
@@ -52,6 +53,14 @@ public static partial class LemonUtils
         }
     }
 
+    public static void SmokeGore(IEntitySource source, Vector2 pos, float minSpeed, float maxSpeed)
+    {
+        if (!Main.dedServ)
+        {
+            Gore.NewGoreDirect(source, pos, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(minSpeed, maxSpeed), Main.rand.NextFromList(GoreID.Smoke1, GoreID.Smoke2, GoreID.Smoke3));
+        }
+    }
+
     public static Vector2 BezierCurve(Vector2 pointA, Vector2 pointB, Vector2 controlPoint, float fracComplete)
     {
         Vector2 AToControl = Vector2.Lerp(pointA, controlPoint, fracComplete);
@@ -75,11 +84,11 @@ public static partial class LemonUtils
     public static void QuickScreenShake(Vector2 pos, float strength, float vibrationCyclesPerSecond, int frames, float distanceFalloff)
     {
         PunchCameraModifier mod = new PunchCameraModifier(
-            pos, 
-            Vector2.UnitY.RotatedByRandom(MathHelper.Pi * 2), 
-            strength, 
-            vibrationCyclesPerSecond, 
-            frames, 
+            pos,
+            Vector2.UnitY.RotatedByRandom(MathHelper.Pi * 2),
+            strength,
+            vibrationCyclesPerSecond,
+            frames,
             distanceFalloff);
         Main.instance.CameraModifiers.Add(mod);
     }

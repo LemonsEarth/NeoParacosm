@@ -113,3 +113,6 @@ LaserEffect.DisplayName: Laser Effect
 IchorFlamethrower.DisplayName: Ichor Flamethrower
 IchorSphere.DisplayName: Ichor Sphere
 HolyBlast.DisplayName: Holy Blast
+HolySpear.DisplayName: Holy Spear
+HolyFire.DisplayName: Holy Fire
+SmallHolyBlast.DisplayName: Small Holy Blast
