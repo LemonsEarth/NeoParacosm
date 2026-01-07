@@ -9,7 +9,7 @@ public class RuneOfPeridition : ModItem
 
     public override void SetStaticDefaults()
     {
-        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 12, false));
+        Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 12, true));
         ItemID.Sets.AnimatesAsSoul[Type] = true;
     }
 

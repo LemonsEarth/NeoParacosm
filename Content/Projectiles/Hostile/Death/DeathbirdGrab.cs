@@ -24,7 +24,7 @@ public class DeathbirdGrab : ModProjectile
     {
         Projectile.width = 64;
         Projectile.height = 64;
-        Projectile.hostile = false;
+        Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = true;
         Projectile.tileCollide = false;
@@ -49,8 +49,6 @@ public class DeathbirdGrab : ModProjectile
         {
             Projectile.Kill();
         }
-
-        Projectile.damage = 1;
 
         if (Main.npc[(int)DeathbirdID].type != NPCType<Deathbird>() || !Main.npc[(int)DeathbirdID].active || Main.npc[(int)DeathbirdID].life <= 0 || Main.npc[(int)DeathbirdID].dontTakeDamage)
         {
@@ -78,7 +76,7 @@ public class DeathbirdGrab : ModProjectile
         {
             LemonUtils.DustCircle(Projectile.Center, 8, 4, DustID.GemRuby, 2);
         }
-        foreach (var player in Main.ActivePlayers)
+        /*foreach (var player in Main.ActivePlayers)
         {
             if (hitPlayers.Contains(player)) return;
             if (Projectile.Colliding(Projectile.Hitbox, player.Hitbox))
@@ -86,13 +84,18 @@ public class DeathbirdGrab : ModProjectile
                 hitPlayers.Add(player);
                 Projectile.timeLeft = 180;
             }
-        }
+        }*/
 
         AITimer++;
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
+        if (!hitPlayers.Contains(target))
+        {
+            hitPlayers.Add(target);
+            Projectile.timeLeft = 180;
+        }
 
     }
 

@@ -562,7 +562,7 @@ public class Deathbird : ModNPC
                 PlayRoar();
                 if (LemonUtils.NotClient())
                 {
-                    grabProjIdentity = LemonUtils.QuickProj(NPC, NPC.Center + grabOffset, Vector2.Zero, ProjectileType<DeathbirdGrab>(), 1, ai0: NPC.whoAmI).identity;
+                    grabProjIdentity = LemonUtils.QuickProj(NPC, NPC.Center + grabOffset, Vector2.Zero, ProjectileType<DeathbirdGrab>(), projDamage, ai0: NPC.whoAmI, ai1: 180).identity;
                 }
                 NPC.netUpdate = true;
                 break;
@@ -800,6 +800,11 @@ public class Deathbird : ModNPC
         AttackTimer--;
     }
 
+    public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+    {
+        return !(phase == 1 && Attack == (int)Attacks.Grab);
+    }
+
     const int DeathflameKamikazeDuration = 180;
     void DeathflameKamikaze()
     {
@@ -953,7 +958,9 @@ public class Deathbird : ModNPC
                 PlayRoar();
                 if (LemonUtils.NotClient())
                 {
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 20, ai2: 2);
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 20, ai2: 5);
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 2, ai1: 20, ai2: 5);
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 3, ai1: 20, ai2: 5);
                 }
                 break;
             case < PhaseTransitionDuration:
@@ -995,7 +1002,7 @@ public class Deathbird : ModNPC
 
     public override void OnKill()
     {
-
+        DownedBossSystem.downedDeathbird = true;
     }
 
     public override void HitEffect(NPC.HitInfo hit)

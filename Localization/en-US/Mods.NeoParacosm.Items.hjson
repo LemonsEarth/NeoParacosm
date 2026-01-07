@@ -419,10 +419,10 @@ RuneOfExtinction: {
 		'''
 	NPLore:
 		'''
-				[c/888888:One of the sacred runes granted to powerful beings.]
-			[c/888888:This rune was entrusted to those who were tasked with extermination of large populations.]
-			[c/888888:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
-			[c/888888:And so they were aptly named "Vessels of Extinction".]
+		[c/888888:One of the sacred runes granted to powerful beings.]
+		[c/888888:This rune was entrusted to those who were tasked with extermination of large populations.]
+		[c/888888:Those who committed these atrocities, willingly or not, had their ambitions extinguished, all of their thoughts erased over time.]
+		[c/888888:And so they were aptly named "Vessels of Extinction".]
 		'''
 }
 

@@ -16,8 +16,12 @@ public class WorldGenSystem : ModSystem
     int WorldSize => LemonUtils.GetWorldSize();
     readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
     readonly string DragonRemainsPath = "Common/Assets/Structures/DragonRemainsSanctuary";
+    readonly string DeadForestPlatformsPath = "Common/Assets/Structures/DeadForestPlatforms";
 
     static int UnderworldDepth => Main.maxTilesY - 200;
+
+    int baseDeadForestTileRadius = 200;
+    int DeadForestRadius => baseDeadForestTileRadius * WorldSize;
 
     void GenerateCrimsonVillage(GenerationProgress progress, GameConfiguration config)
     {
@@ -41,7 +45,6 @@ public class WorldGenSystem : ModSystem
             {
                 int attemptCounter = 0;
                 Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, Mod, i);
-
 
                 while (attemptCounter < 100000)
                 {
@@ -107,31 +110,75 @@ public class WorldGenSystem : ModSystem
 
     void GenerateDeadForest(GenerationProgress progress, GameConfiguration config)
     {
-        int Radius = 200 * WorldSize;
         Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30);
-        //LemonUtils.DustCircle(startPos.ToWorldCoordinates(), 8, 8, DustID.Granite, 10);
-        for (int i = -Radius; i < Radius; i++)
+        for (int i = -DeadForestRadius; i < DeadForestRadius; i++)
         {
-            for (int j = -Radius; j < Radius; j++)
+            for (int j = -DeadForestRadius; j < DeadForestRadius; j++)
             {
                 Point pos = startPos + new Point(i, j);
                 pos = new Point(Math.Clamp(pos.X, 0, Main.maxTilesX), Math.Clamp(pos.Y, 0, Main.maxTilesY));
-                if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > Radius * 16)
+                if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > DeadForestRadius * 16)
                 {
                     continue;
                 }
                 Tile tile = Main.tile[pos];
-                //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ProjectileType<DragonRemainsPulseShield>(), 1, 1);
                 if (tile.HasTile)
                 {
                     switch (tile.TileType)
                     {
                         case TileID.Dirt or TileID.ClayBlock or TileID.Grass or TileID.Sand or TileID.CorruptGrass or TileID.CrimsonGrass or TileID.Ebonsand or TileID.Crimsand:
-                            //WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
                             WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
                             break;
                     }
                 }
+            }
+        }
+
+        GenerateDeadForestPlatforms();
+    }
+
+    void GenerateDeadForestPlatforms()
+    {
+        int startXTile = (int)MathHelper.Clamp(Main.dungeonX - DeadForestRadius, 0, Main.maxTilesX);
+        int maxXTile = (int)MathHelper.Clamp(Main.dungeonX + DeadForestRadius, 0, Main.maxTilesX);
+        int startYTile = (int)MathHelper.Clamp(Main.dungeonY - 80, 0, Main.maxTilesY);
+        int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
+        Point16 startPos = new Point16(startXTile, startYTile);
+        Point16 unitY = new Point16(0, 1);
+        Point16 pos = startPos;
+        while (pos.X < maxXTile)
+        {
+            int structureIndex = WorldGen.genRand.Next(0, 2);
+            Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(DeadForestPlatformsPath, Mod, structureIndex);
+            while (pos.Y < maxYTile)
+            {
+                Tile tile = Main.tile[new Point16(pos.X + structureDims.X / 2, pos.Y)];
+                if (tile.HasTile && (tile.TileType == TileType<DeadDirtBlock>() || tile.TileType == TileID.Stone))
+                {
+                    // Offset the platform vertically for more variety
+                    int verticalOffset = WorldGen.genRand.Next(structureDims.Y, structureDims.Y * 2);
+                    Point16 structurePos = new Point16(pos.X, pos.Y - verticalOffset);
+                    MultiStructureGenerator.GenerateMultistructureSpecific(DeadForestPlatformsPath, structureIndex, structurePos, Mod);
+
+                    Point16 wallCheckPos = structurePos + new Point16(structureDims.X / 2 - 1, structureDims.Y);
+
+                    // Extending pillar
+                    while (wallCheckPos.Y < pos.Y + 2)
+                    {
+                        WorldGen.PlaceWall(wallCheckPos.X, wallCheckPos.Y, WallID.AncientBlueBrickWall);
+                        WorldGen.PlaceWall(wallCheckPos.X + 1, wallCheckPos.Y, WallID.AncientBlueBrickWall);
+                        wallCheckPos += unitY;
+                    }
+                    break;
+                }
+                pos += unitY;
+            }
+
+            pos = new Point16(pos.X + WorldGen.genRand.Next(structureDims.X, structureDims.X * 2), startYTile);
+            // Skip generating close to the dungeon
+            if (MathF.Abs(pos.X - Main.dungeonX) < 80)
+            {
+                pos = new Point16(Main.dungeonX + WorldGen.genRand.Next(81, 120), startYTile);
             }
         }
     }
@@ -230,9 +277,9 @@ public class WorldGenSystem : ModSystem
     public override void PostUpdateWorld()
     {
 
-        if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
+        /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
-            /*int Radius = 100 * worldSize;
+            int Radius = 100 * worldSize;
             Point startPos = new Point(Main.maxTilesX / 2, (int)GenVars.worldSurfaceLow + 100);
             //LemonUtils.DustCircle(startPos.ToWorldCoordinates(), 8, 8, DustID.Granite, 10);
             for (int i = -Radius; i < Radius; i++)
@@ -258,8 +305,8 @@ public class WorldGenSystem : ModSystem
 
                     }
                 }
-            }*/
-        }
+            }
+        }*/
     }
 
     void InsertAfterTask(List<GenPass> tasks, string genpassName, string newGenPassName, WorldGenLegacyMethod method)

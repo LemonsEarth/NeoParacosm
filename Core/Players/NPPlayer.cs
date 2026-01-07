@@ -18,6 +18,7 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        //Dust.QuickDust(new Point(Main.dungeonX, Main.dungeonY), Color.White);
         if (NPC.FindFirstNPC(NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Researcher>())].Distance(Player.Center) > 500)
         {
             AscensionUISystem UISystem = GetInstance<AscensionUISystem>();
