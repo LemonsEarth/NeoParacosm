@@ -44,13 +44,9 @@ public partial class NPEffectPlayer : ModPlayer
             data.UseTargetPosition(DCEffectNoFogPosition);
             data.Shader.Parameters["noFogDistance"].SetValue(DCEffectNoFogDistanceCurrent);
             data.Shader.Parameters["maxFogOpacity"].SetValue(DCEffectFogOpacity);
-
-            Vector2 pVClamped = Vector2.Clamp(Player.velocity, -Vector2.One * 10, Vector2.One * 10);
-            moveT = Vector2.Lerp(moveT, pVClamped, 1f / 60f);
-            data.Shader.Parameters["playerVelocity"].SetValue(Player.velocity);
-            data.Shader.Parameters["moveT"].SetValue(DCEffectFogSpeed * moveT);
+            data.Shader.Parameters["worldSize"].SetValue(new Vector2(Main.maxTilesX * 16f, Main.maxTilesY * 16f));
+            data.Shader.Parameters["screenPos"].SetValue(Main.screenPosition);
             data.UseProgress(DCEffectOpacity);
-
             int worldWidth = Main.maxTilesX * 16;
             int worldHeight = Main.maxTilesY * 16;
             int sectionWidth = worldWidth / 16;

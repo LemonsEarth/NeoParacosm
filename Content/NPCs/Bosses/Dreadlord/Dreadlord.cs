@@ -1005,7 +1005,6 @@ public class Dreadlord : ModNPC
                 AttackTimer = 1080;
                 return;
         }
-        Main.NewText(AttackTimer);
         AttackTimer--;
     }
 
@@ -1398,7 +1397,6 @@ public class Dreadlord : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-        Attack = 2;
         attackDuration = attackDurations[(int)Attack];
         targetLeg = null;
         AttackCount = 0;
