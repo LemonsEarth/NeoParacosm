@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Core.Systems.Data;
+﻿using NeoParacosm.Core.Players;
+
+namespace NeoParacosm.Core.Systems.Data;
 
 public class WorldDataSystem : ModSystem
 {

@@ -26,6 +26,20 @@ public static partial class LemonUtils
         else if (entity is NPC npc)
         {
             if (damage == -1) damage = npc.damage;
+
+            if (!Main.expertMode)
+            {
+                damage *= 0.5f;
+            }
+            else if (Main.expertMode)
+            {
+                damage *= 0.25f;
+            }
+            else if (Main.masterMode)
+            {
+                damage *= 1/6f;
+            }
+
             source = npc.GetSource_FromThis();
         }
 

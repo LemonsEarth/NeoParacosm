@@ -20,6 +20,11 @@ public static partial class LemonUtils
         return player.GetModPlayer<NPAcessoryPlayer>();
     }
 
+    public static NPPlayer NPPlayer(this Player player)
+    {
+        return player.GetModPlayer<NPPlayer>();
+    }
+
     public static NPBuffPlayer NPBuffPlayer(this Player player)
     {
         return player.GetModPlayer<NPBuffPlayer>();

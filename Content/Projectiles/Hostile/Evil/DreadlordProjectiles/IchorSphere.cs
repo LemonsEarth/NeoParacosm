@@ -5,7 +5,7 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class IchorSphere : ModProjectile
+public class IchorSphere : PrimProjectile
 {
     string GlowMask_Path => Texture + "_Glow";
 
@@ -13,31 +13,6 @@ public class IchorSphere : ModProjectile
     ref float TimeLeft => ref Projectile.ai[0];
     ref float RedirectInterval => ref Projectile.ai[1];
     ref float RedirectCount => ref Projectile.ai[2];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

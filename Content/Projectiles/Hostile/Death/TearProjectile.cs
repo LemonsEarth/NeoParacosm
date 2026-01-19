@@ -5,7 +5,7 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
-public class HolyBlast : PrimProjectile
+public class TearProjectile : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
@@ -15,13 +15,13 @@ public class HolyBlast : PrimProjectile
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 1;
+        Main.projFrames[Type] = 3;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 40;
-        Projectile.height = 40;
+        Projectile.width = 64;
+        Projectile.height = 64;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = true;
@@ -37,7 +37,8 @@ public class HolyBlast : PrimProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Drip with { PitchRange = (0f, 1f), Volume = 0.5f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item45 with { PitchRange = (0.2f, 0.5f), Volume = 0.5f}, Projectile.Center);
         }
 
         Lighting.AddLight(Projectile.Center, 0.8f, 0.8f, 0f);
@@ -52,24 +53,25 @@ public class HolyBlast : PrimProjectile
         }
 
         Projectile.velocity *= SpeedUP;
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemTopaz, Scale: 2f);
+        var dust = Dust.NewDustDirect(Projectile.RandomPos(0, -32), 2, 2, DustID.GemDiamond, Scale: 1.2f);
         dust.noGravity = true;
         Projectile.rotation = Projectile.velocity.ToRotation();
+        Projectile.StandardAnimation(6, 3);
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.Gold, Color.Transparent, BasicEffect, topDistance: (int)(Projectile.height * 0.25f), bottomDistance: (int)(Projectile.height * 0.25f));
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.White, Color.Transparent, BasicEffect, topDistance: 8, bottomDistance: 8);
         Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Vector2 drawOrigin = texture.Size() * 0.5f;
+        Vector2 drawOrigin = texture.Frame(1, 3, 0, 0).Size() * 0.5f;
         Color color = Color.White;
         for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
         {
             Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
-            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, color * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), Projectile.rotation, drawOrigin, Projectile.scale * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), SpriteEffects.None);
+            Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), color * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), Projectile.rotation, drawOrigin, Projectile.scale * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), SpriteEffects.None);
         }
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
+        //LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
     }
 
@@ -80,7 +82,7 @@ public class HolyBlast : PrimProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemTopaz, 2f);
+        LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
         /*for (int i = 0; i < 4; i++)
         {
             LemonUtils.QuickProj(Projectile, Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(i * MathHelper.PiOver2) * (savedSpeed / 4f), ProjectileType<SavDroneProjectile>());

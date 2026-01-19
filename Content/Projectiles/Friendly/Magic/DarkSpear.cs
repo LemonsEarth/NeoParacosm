@@ -6,37 +6,11 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class DarkSpear : ModProjectile
+public class DarkSpear : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     bool released = false;
     Vector2 savedVelocity = Vector2.Zero;
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

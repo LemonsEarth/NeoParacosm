@@ -82,7 +82,7 @@ public class Dreadlord : ModNPC
     /// <summary>
     /// Attack durations indexed by Attack field
     /// </summary>
-    int[] attackDurations = { 600, 1080, 1080, 1080, 1320 };
+    readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -126,21 +126,22 @@ public class Dreadlord : ModNPC
     public DreadlordBodyPart Body { get; private set; } = new DreadlordBodyPart();
     public DreadlordBodyPart BackLegs { get; private set; } = new DreadlordBodyPart();
 
-    public static Asset<Texture2D> neckTextureCorrupt { get; private set; }
-    public static Asset<Texture2D> neckTextureCrimson { get; private set; }
+    public static Asset<Texture2D> NeckTextureCorrupt { get; private set; }
+    public static Asset<Texture2D> NeckTextureCrimson { get; private set; }
 
     bool shaderIsActive = false;
 
     #endregion
 
-    int facingDirection = 1;
-
     Vector2 targetPosition = Vector2.Zero;
+
+    #pragma warning disable IDE1006 // Naming Styles
     public Player player { get; private set; }
+    #pragma warning restore IDE1006 // Naming Styles
     Vector2 NPCToPlayer => NPC.DirectionTo(player.Center);
     float ProjDamage => NPC.damage / 4;
 
-    Vector2 arenaCenter => WorldDataSystem.DCEffectNoFogPosition == Vector2.Zero ? player.Center : WorldDataSystem.DCEffectNoFogPosition;
+    Vector2 ArenaCenter => WorldDataSystem.DCEffectNoFogPosition == Vector2.Zero ? player.Center : WorldDataSystem.DCEffectNoFogPosition;
 
     /// <summary>
     /// The leg being controlled in attacks that utilize a single leg at a time
@@ -149,8 +150,8 @@ public class Dreadlord : ModNPC
 
     public override void Load()
     {
-        neckTextureCorrupt = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCorrupt");
-        neckTextureCrimson = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCrimson");
+        NeckTextureCorrupt = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCorrupt");
+        NeckTextureCrimson = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCrimson");
     }
 
     public override void SetStaticDefaults()
@@ -441,7 +442,7 @@ public class Dreadlord : ModNPC
             foreach (var plr in Main.ActivePlayers)
             {
                 float distanceToNPC = plr.Distance(NPC.Center);
-                float distanceToArena = plr.Distance(arenaCenter);
+                float distanceToArena = plr.Distance(ArenaCenter);
 
                 float baseArenaDistance = WorldDataSystem.DCEffectNoFogDistance * 0.5f;
                 float baseNPCDistance = 1500f * 0.5f;
@@ -469,7 +470,7 @@ public class Dreadlord : ModNPC
                     float speedDen = Math.Clamp(distanceToArena / baseArenaDistance, 1, 3);
                     if (AITimer % (60 / speedDen) == 0)
                     {
-                        Vector2 pos = player.Center + arenaCenter.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * 400;
+                        Vector2 pos = player.Center + ArenaCenter.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * 400;
                         LemonUtils.QuickProj(
                             NPC,
                             pos,
@@ -530,7 +531,7 @@ public class Dreadlord : ModNPC
             case 600: // Choosing random position around arena center
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    targetPosition = arenaCenter + Main.rand.NextVector2Circular(600, 600);
+                    targetPosition = ArenaCenter + Main.rand.NextVector2Circular(600, 600);
                 }
                 NPC.netUpdate = true;
                 break;
@@ -649,7 +650,7 @@ public class Dreadlord : ModNPC
             case 1080: // Choose random position
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    targetPosition = arenaCenter + LemonUtils.RandomVector2Circular(600, 600, 100, 100);
+                    targetPosition = ArenaCenter + LemonUtils.RandomVector2Circular(600, 600, 100, 100);
                 }
                 NPC.netUpdate = true;
                 PlayRoar(-0.2f);
@@ -824,7 +825,7 @@ public class Dreadlord : ModNPC
             case 1080: // Choose random position
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    targetPosition = arenaCenter + LemonUtils.RandomVector2Circular(600, 600, 200, 200);
+                    targetPosition = ArenaCenter + LemonUtils.RandomVector2Circular(600, 600, 200, 200);
                 }
                 NPC.netUpdate = true;
                 PlayRoar(-0.2f);
@@ -918,7 +919,7 @@ public class Dreadlord : ModNPC
                 }
                 CursedFlamethrowerPrepDust();
                 SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
-                NPC.MoveToPos(arenaCenter, 0.2f, 0.05f, 0.2f, 0.2f);
+                NPC.MoveToPos(ArenaCenter, 0.2f, 0.05f, 0.2f, 0.2f);
                 if (AttackTimer == 600)
                 {
                     if (LemonUtils.NotClient())
@@ -978,7 +979,7 @@ public class Dreadlord : ModNPC
                 IchorFlamethrowerPrepDust();
                 SetHeadCorruptFrame(HEAD_MOUTH_CLOSED);
                 SetHeadCrimsonFrame(HEAD_MOUTH_CLOSED);
-                NPC.MoveToPos(arenaCenter, 0.1f, 0.05f, 0.2f, 0.2f);
+                NPC.MoveToPos(ArenaCenter, 0.1f, 0.05f, 0.2f, 0.2f);
                 break;
             case 180:
                 LemonUtils.DustLine(HeadCrimson.MiscPosition1, targetPosition, DustID.GemTopaz, 16, 2f);
@@ -986,7 +987,7 @@ public class Dreadlord : ModNPC
                 break;
             case > 120:
                 YellowLaserEnabled = false;
-                NPC.MoveToPos(arenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
+                NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
                 break;
             case > 30:
                 if (LemonUtils.NotClient())
@@ -1016,7 +1017,7 @@ public class Dreadlord : ModNPC
             case 1080:
                 break;
             case > 990: // Move to center
-                NPC.MoveToPos(arenaCenter, 0.1f, 0.1f, 0.25f, 0.25f);
+                NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.25f, 0.25f);
                 break;
             case 990: // Spawn circling flame spheres
                 NPC.velocity = Vector2.Zero;
@@ -1112,7 +1113,7 @@ public class Dreadlord : ModNPC
                 NPC.MoveToPos(NPCmoveToPos, 0.3f, 0.1f, 0.05f, 0.1f);
                 break;
             case > 0:
-                NPC.MoveToPos(arenaCenter, 0.3f, 0.3f, 0.3f, 0.3f);
+                NPC.MoveToPos(ArenaCenter, 0.3f, 0.3f, 0.3f, 0.3f);
                 break;
             case 0:
                 AttackTimer = 1080;
@@ -1308,7 +1309,7 @@ public class Dreadlord : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickPulse(NPC, arenaCenter, 0.5f, 10, 5, Color.Gold);
+                        LemonUtils.QuickPulse(NPC, ArenaCenter, 0.5f, 10, 5, Color.Gold);
                     }
                 }
                 // Teleport indicator
@@ -1320,7 +1321,7 @@ public class Dreadlord : ModNPC
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        Vector2 dustPos = arenaCenter + dustOffset.RotatedBy(PiOver2 * i);
+                        Vector2 dustPos = ArenaCenter + dustOffset.RotatedBy(PiOver2 * i);
                         Dust.NewDustPerfect(dustPos, DustID.GemTopaz, Vector2.Zero, Scale: 3f).noGravity = true;
                     }
                 }
@@ -1336,7 +1337,7 @@ public class Dreadlord : ModNPC
             case 420: // Teleport to arena center
                 NPC.velocity = Vector2.Zero;
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
-                NPC.Center = arenaCenter;
+                NPC.Center = ArenaCenter;
                 SetBodyPartPositions(headLerpSpeed: 1f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
                 SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f) }, NPC.Center);
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
@@ -1486,8 +1487,8 @@ public class Dreadlord : ModNPC
                 direction.RotatedBy(Main.rand.NextFloat(-angle, angle)) * Main.rand.NextFloat(minSpeed, maxSpeed),
                 ProjectileType<CursedFlamethrower>(),
                 ProjDamage,
-                ai0: 30,
-                ai1: 0.97f,
+                ai0: duration,
+                ai1: slowDownRate,
                 ai2: Main.rand.NextFloat(-turningAngle, turningAngle)
                 );
         }
@@ -1844,8 +1845,8 @@ public class Dreadlord : ModNPC
         Body.Draw(shaderIsActive, (int)AITimer);
         LegCorrupt.Draw(shaderIsActive, (int)AITimer);
         LegCrimson.Draw(shaderIsActive, (int)AITimer);
-        DrawNeck(Body.MiscPosition1, HeadCorrupt.Position, neckTextureCorrupt);
-        DrawNeck(Body.MiscPosition2, HeadCrimson.Position, neckTextureCrimson);
+        DrawNeck(Body.MiscPosition1, HeadCorrupt.Position, NeckTextureCorrupt);
+        DrawNeck(Body.MiscPosition2, HeadCrimson.Position, NeckTextureCrimson);
         HeadCorrupt.Draw(shaderIsActive, (int)AITimer);
         HeadCrimson.Draw(shaderIsActive, (int)AITimer);
         return false;

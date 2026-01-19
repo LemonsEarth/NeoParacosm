@@ -6,20 +6,18 @@ namespace NeoParacosm.Core.Players;
 public class NPPlayer : ModPlayer
 {
     int timer = 0;
-    public static float savedMusicVolume { get; set; } = -1f;
+    public bool NoMusic { get; set; } = false;
 
     public override void ResetEffects()
     {
-        if (savedMusicVolume != -1f)
-        {
-            Main.musicVolume = savedMusicVolume;
-        }
+        NoMusic = false;
     }
 
     public override void PostUpdate()
     {
         //Dust.QuickDust(new Point(Main.dungeonX, Main.dungeonY), Color.White);
-        if (NPC.FindFirstNPC(NPCType<Researcher>()) > 0 && Main.npc[NPC.FindFirstNPC(NPCType<Researcher>())].Distance(Player.Center) > 500)
+        int researcherIndex = NPC.FindFirstNPC(NPCType<Researcher>());
+        if (researcherIndex >= 0 && Main.npc[researcherIndex].Distance(Player.Center) > 500)
         {
             AscensionUISystem UISystem = GetInstance<AscensionUISystem>();
             UISystem.HideUI();

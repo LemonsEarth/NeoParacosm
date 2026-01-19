@@ -5,37 +5,12 @@ using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil;
 
-public class CrimsonCarrierProj : ModProjectile
+public class CrimsonCarrierProj : PrimProjectile
 {
     string GlowMask_Path => Texture + "_Glow";
     static Asset<Texture2D> GlowMask;
 
     ref float AITimer => ref Projectile.ai[0];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

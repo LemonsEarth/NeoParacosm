@@ -8,7 +8,7 @@ using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public abstract class TargetedLightning : ModProjectile
+public abstract class TargetedLightning : PrimProjectile
 {
     protected int AITimer = 0;
     protected ref float Delay => ref Projectile.ai[0];
@@ -33,32 +33,6 @@ public abstract class TargetedLightning : ModProjectile
     protected virtual float HorizontalOffsetMin => 10;
     protected virtual float HorizontalOffsetMax => 36;
     Color currentColor = Color.White;
-
-    protected static BasicEffect BasicEffect;
-    protected GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

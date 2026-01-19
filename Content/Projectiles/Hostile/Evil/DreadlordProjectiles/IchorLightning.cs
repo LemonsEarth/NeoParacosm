@@ -8,41 +8,14 @@ using Terraria.Graphics.CameraModifiers;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class IchorLightning : ModProjectile
+public class IchorLightning : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float Length => ref Projectile.ai[1];
 
     Vector2 originalPos = Vector2.Zero;
 
-    static BasicEffect BasicEffect;
-    GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
-
     List<Vector2> positions = new List<Vector2>();
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

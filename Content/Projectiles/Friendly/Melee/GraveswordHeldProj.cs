@@ -6,36 +6,12 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 
-public class GraveswordHeldProj : ModProjectile
+public class GraveswordHeldProj : PrimProjectile
 {
     int AITimer = 0;
 
     ref float special => ref Projectile.ai[0];
     ref float direction => ref Projectile.ai[1];
-
-    static BasicEffect BasicEffect;
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {

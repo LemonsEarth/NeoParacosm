@@ -3,35 +3,10 @@ using NeoParacosm.Common.Utils.Prim;
 using Terraria.Audio;
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class CorruptBolt : ModProjectile
+public class CorruptBolt : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float angle => ref Projectile.ai[1];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

@@ -26,12 +26,12 @@ public class TaintedSteed : ModNPC
     {
         NPC.width = 84;
         NPC.height = 64;
-        NPC.lifeMax = 500;
-        NPC.defense = 25;
+        NPC.lifeMax = 250;
+        NPC.defense = 8;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCDeath18;
         NPC.DeathSound = SoundID.NPCDeath18;
-        NPC.value = 10000;
+        NPC.value = 5000;
         NPC.aiStyle = NPCAIStyleID.Unicorn;
         //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0f;

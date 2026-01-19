@@ -5,35 +5,10 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class CursedFlameSphere : ModProjectile
+public class CursedFlameSphere : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

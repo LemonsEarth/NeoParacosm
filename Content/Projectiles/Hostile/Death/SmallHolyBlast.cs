@@ -5,36 +5,11 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
-public class SmallHolyBlast : ModProjectile
+public class SmallHolyBlast : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
     ref float Duration => ref Projectile.ai[2];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

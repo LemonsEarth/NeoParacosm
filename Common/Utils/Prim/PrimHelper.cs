@@ -24,9 +24,15 @@ public class PrimHelper
     /// <param name="bottomVertexRotation"></param>
     /// <param name="topDistance"></param>
     /// <param name="bottomDistance"></param>
-    public static void DrawBasicProjectilePrimTrailTriangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float? topVertexRotation = null, float? bottomVertexRotation = null, int? topDistance = null, int? bottomDistance = null, Vector2? positionOffset = null)
+    public static void DrawBasicProjectilePrimTrailTriangular(Projectile projectile,
+        Color startColor, Color endColor,
+        BasicEffect BasicEffect,
+        float? topVertexRotation = null, float? bottomVertexRotation = null,
+        int? topDistance = null, int? bottomDistance = null,
+        Vector2? positionOffset = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
+        Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, 0);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < projectile.oldPos.Length; i++)
         {
@@ -44,12 +50,12 @@ public class PrimHelper
             float topRot = topVertexRotation ?? projectile.velocity.ToRotation() - MathHelper.PiOver2;
             float botRot = bottomVertexRotation ?? projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-            int topVertexDistance = topDistance ?? (int)((texture.Height / 2) * projectile.scale);
-            int botVertexDistance = bottomDistance ?? (int)((texture.Height / 2) * projectile.scale);
+            int topVertexDistance = topDistance ?? (int)((frame.Height / 2) * projectile.scale);
+            int botVertexDistance = bottomDistance ?? (int)((frame.Height / 2) * projectile.scale);
             Vector2 topVertexOffset = Vector2.UnitX.RotatedBy(topRot) * topVertexDistance * (1 - lerpT);
             Vector2 botVertexOffset = Vector2.UnitX.RotatedBy(botRot) * botVertexDistance * (1 - lerpT);
 
-            Vector2 posOffset = positionOffset ?? new Vector2(texture.Width / 2, texture.Height / 2) * projectile.scale;
+            Vector2 posOffset = positionOffset ?? new Vector2(frame.Width / 2, frame.Height / 2) * projectile.scale;
             currentPos += posOffset;
             oldPos += posOffset;
 
@@ -89,12 +95,13 @@ public class PrimHelper
     public static void DrawBasicProjectilePrimTrailRectangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float? topVertexRotation = null, float? bottomVertexRotation = null, int? topDistance = null, int? bottomDistance = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
+        Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, 0);
         Vector2 moveDirection = projectile.velocity.SafeNormalize(Vector2.Zero);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         float topRot = topVertexRotation ?? projectile.velocity.ToRotation() - MathHelper.PiOver2;
         float botRot = bottomVertexRotation ?? projectile.velocity.ToRotation() + MathHelper.PiOver2;
-        int topVertexDistance = topDistance ?? (texture.Height / 2);
-        int botVertexDistance = bottomDistance ?? (texture.Height / 2);
+        int topVertexDistance = topDistance ?? (frame.Height / 2);
+        int botVertexDistance = bottomDistance ?? (frame.Height / 2);
         Vector2 topVertexOffset = Vector2.UnitX.RotatedBy(topRot) * topVertexDistance;
         Vector2 botVertexOffset = Vector2.UnitX.RotatedBy(botRot) * botVertexDistance;
         for (int i = 0; i < projectile.oldPos.Length; i++)
@@ -108,8 +115,8 @@ public class PrimHelper
             }
 
 
-            currentPos += new Vector2(texture.Width / 2, texture.Height / 2);
-            oldPos += new Vector2(texture.Width / 2, texture.Height / 2);
+            currentPos += new Vector2(frame.Width / 2, frame.Height / 2);
+            oldPos += new Vector2(frame.Width / 2, frame.Height / 2);
 
             Color colorFront = Color.Lerp(startColor, endColor, (float)i / projectile.oldPos.Length);
             Color colorBack = Color.Lerp(startColor, endColor, (float)oldPosIndex / projectile.oldPos.Length);
@@ -132,6 +139,7 @@ public class PrimHelper
     public static void DrawHeldProjectilePrimTrailRectangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float topVertexRotationOffset, float bottomVertexRotationOffset, int? topDistance = null, int? bottomDistance = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
+        Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, 0);
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < projectile.oldPos.Length; i++)
         {
@@ -148,15 +156,15 @@ public class PrimHelper
 
             float oldTopRot = topVertexRotationOffset + projectile.oldRot[oldPosIndex];
             float oldBotRot = bottomVertexRotationOffset + projectile.oldRot[oldPosIndex];
-            int topVertexDistance = topDistance ?? (texture.Height / 2);
-            int botVertexDistance = bottomDistance ?? (texture.Height / 2);
+            int topVertexDistance = topDistance ?? (frame.Height / 2);
+            int botVertexDistance = bottomDistance ?? (frame.Height / 2);
             Vector2 topVertexOffset = Vector2.UnitX.RotatedBy(topRot) * topVertexDistance;
             Vector2 botVertexOffset = Vector2.UnitX.RotatedBy(botRot) * botVertexDistance;
             Vector2 oldTopVertexOffset = Vector2.UnitX.RotatedBy(oldTopRot) * topVertexDistance;
             Vector2 oldBotVertexOffset = Vector2.UnitX.RotatedBy(oldBotRot) * botVertexDistance;
 
-            currentPos += new Vector2(texture.Width / 2, texture.Height / 2);
-            oldPos += new Vector2(texture.Width / 2, texture.Height / 2);
+            currentPos += new Vector2(frame.Width / 2, frame.Height / 2);
+            oldPos += new Vector2(frame.Width / 2, frame.Height / 2);
 
             Color colorFront = Color.Lerp(startColor, endColor, (float)i / projectile.oldPos.Length);
             Color colorBack = Color.Lerp(startColor, endColor, (float)oldPosIndex / projectile.oldPos.Length);
@@ -179,6 +187,8 @@ public class PrimHelper
     public static void DrawHeldProjectilePrimTrailTriangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float topVertexRotationOffset, float bottomVertexRotationOffset, int? topDistance = null, int? bottomDistance = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
+        Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, 0);
+
         List<VertexPositionColorTexture> vertices = new List<VertexPositionColorTexture>();
         for (int i = 0; i < projectile.oldPos.Length; i++)
         {
@@ -198,15 +208,15 @@ public class PrimHelper
 
             float oldTopRot = topVertexRotationOffset + projectile.oldRot[oldPosIndex];
             float oldBotRot = bottomVertexRotationOffset + projectile.oldRot[oldPosIndex];
-            int topVertexDistance = topDistance ?? (texture.Height / 2);
-            int botVertexDistance = bottomDistance ?? (texture.Height / 2);
+            int topVertexDistance = topDistance ?? (frame.Height / 2);
+            int botVertexDistance = bottomDistance ?? (frame.Height / 2);
             Vector2 topVertexOffset = Vector2.UnitX.RotatedBy(topRot) * topVertexDistance * (1 - lerpT);
             Vector2 botVertexOffset = Vector2.UnitX.RotatedBy(botRot) * botVertexDistance * (1 - lerpT);
             Vector2 oldTopVertexOffset = Vector2.UnitX.RotatedBy(oldTopRot) * topVertexDistance * (1 - oldLerpT);
             Vector2 oldBotVertexOffset = Vector2.UnitX.RotatedBy(oldBotRot) * botVertexDistance * (1 - oldLerpT);
 
-            currentPos += new Vector2(texture.Width / 2, texture.Height / 2);
-            oldPos += new Vector2(texture.Width / 2, texture.Height / 2);
+            currentPos += new Vector2(frame.Width / 2, frame.Height / 2);
+            oldPos += new Vector2(frame.Width / 2, frame.Height / 2);
 
             Color colorFront = Color.Lerp(startColor, endColor, lerpT);
             Color colorBack = Color.Lerp(startColor, endColor, oldLerpT);

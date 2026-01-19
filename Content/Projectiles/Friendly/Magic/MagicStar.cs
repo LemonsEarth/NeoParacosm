@@ -6,37 +6,12 @@ using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class MagicStar : ModProjectile
+public class MagicStar : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float posX => ref Projectile.ai[1];
     ref float posY => ref Projectile.ai[2];
     NPC closestNPC;
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

@@ -4,34 +4,9 @@ using NeoParacosm.Common.Utils.Prim;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class Pebble : ModProjectile
+public class Pebble : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

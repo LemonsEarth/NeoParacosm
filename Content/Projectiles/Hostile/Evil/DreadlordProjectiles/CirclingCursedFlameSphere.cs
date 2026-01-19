@@ -5,37 +5,12 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class CirclingCursedFlameSphere : ModProjectile
+public class CirclingCursedFlameSphere : PrimProjectile
 {
     int AITimer = 0;
     ref float NPCToFollow => ref Projectile.ai[0];
     ref float CirclingOffsetAngle => ref Projectile.ai[1];
     ref float WaitTime => ref Projectile.ai[2];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {

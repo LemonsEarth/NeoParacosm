@@ -12,3 +12,4 @@ public class DarkCataclysmSceneEffect : ModSceneEffect
         return ResearcherQuest.DarkCataclysmActive;
     }
 }
+

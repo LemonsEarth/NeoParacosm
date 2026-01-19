@@ -46,7 +46,6 @@ public class AncientCallingHorn : ModItem
         if (player.ItemAnimationJustStarted)
         {
             SoundEngine.PlaySound(ParacosmSFX.AncientCallingHorn with { Volume = 0.75f }, player.Center);
-            NPPlayer.savedMusicVolume = Main.musicVolume;
             WorldDataSystem.DCEffectNoFogPosition = player.Center;
         }
         Main.musicVolume = 0f;
@@ -90,9 +89,7 @@ public class AncientCallingHorn : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.Wood, 12);
-        recipe.AddRecipeGroup("NeoParacosm:AnyGoldBar", 15);
-        recipe.AddIngredient(ItemID.Bone, 12);
+
         recipe.AddTile(TileID.Anvils);
         recipe.Register();
     }

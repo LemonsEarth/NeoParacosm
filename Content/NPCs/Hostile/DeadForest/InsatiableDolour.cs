@@ -33,7 +33,7 @@ public class InsatiableDolour : ModNPC
         NPC.width = 84;
         NPC.height = 64;
         NPC.lifeMax = 500;
-        NPC.defense = 25;
+        NPC.defense = 14;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCDeath18;
         NPC.DeathSound = SoundID.NPCDeath18;

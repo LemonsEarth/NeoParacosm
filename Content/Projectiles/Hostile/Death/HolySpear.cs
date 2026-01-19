@@ -5,37 +5,12 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
-public class HolySpear : ModProjectile
+public class HolySpear : PrimProjectile
 {
     int AITimer = 0;
     ref float FireSpeed => ref Projectile.ai[0];
     ref float FallSpeed => ref Projectile.ai[1];
     ref float TimeBeforeFall => ref Projectile.ai[2];
-
-    static BasicEffect BasicEffect;
-
-    public override void Load()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect = new BasicEffect(PrimHelper.GraphicsDevice)
-            {
-                TextureEnabled = true,
-                VertexColorEnabled = true,
-            };
-        });
-    }
-
-    public override void Unload()
-    {
-        if (Main.dedServ) return;
-        Main.RunOnMainThread(() =>
-        {
-            BasicEffect?.Dispose();
-            BasicEffect = null;
-        });
-    }
 
     public override void SetStaticDefaults()
     {
