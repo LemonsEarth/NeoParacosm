@@ -48,7 +48,6 @@ public class AncientCallingHorn : ModItem
             SoundEngine.PlaySound(ParacosmSFX.AncientCallingHorn with { Volume = 0.75f }, player.Center);
             WorldDataSystem.DCEffectNoFogPosition = player.Center;
         }
-        Main.musicVolume = 0f;
 
         if (player.ItemAnimationEndingOrEnded)
         {

@@ -64,10 +64,13 @@ public class IchorSphere : PrimProjectile
        
     }
 
+    float glowOpacity = 0f;
     public override bool PreDraw(ref Color lightColor)
     {
         if (Main.dedServ) return true;
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.Yellow, Color.Yellow, BasicEffect);
+        float sinValue = (MathF.Sin(AITimer / 24f) + 1) * 0.5f; ;
+        Color trailColor = new Color(1, 1, sinValue);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, trailColor, trailColor, BasicEffect);
         Main.EntitySpriteDraw(
             TextureAssets.Projectile[Type].Value,
             Projectile.Center - Main.screenPosition,
@@ -78,6 +81,8 @@ public class IchorSphere : PrimProjectile
             Projectile.scale,
             SpriteEffects.None
             );
+        glowOpacity = sinValue;
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, glowOpacity, 1.5f);
         return false;
     }
 

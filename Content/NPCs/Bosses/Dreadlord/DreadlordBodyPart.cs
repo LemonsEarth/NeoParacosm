@@ -54,13 +54,13 @@ public class DreadlordBodyPart
     public float Width => Frame.Width;
     public float Height => Frame.Height;
 
-    public void Draw(bool useShader = false, int shaderTimer = 0)
+    public void Draw(bool useShader = false, float brightness = 1, int shaderTimer = 0)
     {
         if (Texture == null)
         {
             return;
         }
-        Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, Color.White * Opacity, Rotation, Origin, Scale, SpriteEffects);
+        Main.EntitySpriteDraw(Texture.Value, Position - Main.screenPosition, Frame, new Color(brightness, brightness, brightness) * Opacity, Rotation, Origin, Scale, SpriteEffects);
         if (useShader)
         {
             var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];

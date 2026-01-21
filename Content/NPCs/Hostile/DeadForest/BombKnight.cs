@@ -4,6 +4,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 
@@ -117,6 +118,7 @@ public class BombKnight : ModNPC
             notThrowingTimer = 0;
             if (throwingTimer == 0)
             {
+                SoundEngine.PlaySound(SoundID.Item1, NPC.Center);
                 if (LemonUtils.NotClient())
                 {
                     LemonUtils.QuickProj(

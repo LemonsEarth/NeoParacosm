@@ -1,0 +1,86 @@
+﻿using NeoParacosm.Content.Buffs.Debuffs;
+
+namespace NeoParacosm.Content.Projectiles.Hostile.Death;
+
+public class DeathflameBallSmall : ModProjectile
+{
+    int AITimer = 0;
+    ref float WaitTime => ref Projectile.ai[0];
+    ref float playerID => ref Projectile.ai[1];
+
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
+        ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+        Main.projFrames[Type] = 2;
+    }
+
+    public override void SetDefaults()
+    {
+        Projectile.width = 16;
+        Projectile.height = 16;
+        Projectile.hostile = true;
+        Projectile.friendly = false;
+        Projectile.ignoreWater = false;
+        Projectile.tileCollide = false;
+        Projectile.penetrate = 3;
+        Projectile.timeLeft = 180;
+        Projectile.scale = 1f;
+        Projectile.aiStyle = 0;
+        Projectile.Opacity = 1f;
+    }
+
+    public override void OnHitPlayer(Player target, Player.HurtInfo info)
+    {
+        target.AddBuff(BuffType<DeathflameDebuff>(), 30);
+    }
+
+    float maxSpeed = 0;
+    float currentSpeed = 0;
+    float speedAddValue = 0.05f;
+    public override void AI()
+    {
+        if (AITimer == 0)
+        {
+            maxSpeed = Projectile.velocity.Length() * 2;
+            currentSpeed = Projectile.velocity.Length();
+            LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
+        }
+        Player player = Main.player[(int)playerID];
+        if (player.Alive() && AITimer > WaitTime)
+        {
+            if (currentSpeed < maxSpeed) currentSpeed += speedAddValue;
+            float angleDifference = MathHelper.WrapAngle(Projectile.Center.DirectionTo(player.Center).ToRotation() - Projectile.velocity.ToRotation());
+            Projectile.velocity = Projectile.velocity.RotatedBy(angleDifference / 20f).SafeNormalize(Vector2.Zero) * currentSpeed;
+        }
+
+        Lighting.AddLight(Projectile.Center, 1, 1, 1);
+
+        for (float i = 0; i < 2; i++)
+        {
+            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(1, 2), newColor: Color.Black).noGravity = true;
+            Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.1f).noGravity = true;
+        }
+
+        Projectile.rotation = Projectile.velocity.ToRotation();
+        if (Projectile.rotation > MathHelper.PiOver2 || Projectile.rotation < -MathHelper.PiOver2)
+        {
+            Projectile.spriteDirection = -1;
+            Projectile.rotation += MathHelper.Pi;
+        }
+        else
+        {
+            Projectile.spriteDirection = 1;
+        }
+
+        Projectile.StandardAnimation(18, 2);
+
+        AITimer++;
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale * 0.5f);
+        return true;
+    }
+}

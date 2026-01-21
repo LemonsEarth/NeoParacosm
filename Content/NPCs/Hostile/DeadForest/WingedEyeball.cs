@@ -4,6 +4,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 
@@ -179,6 +180,7 @@ public class WingedEyeball : ModNPC
     {
         if (dashTimer == 0)
         {
+            SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaivePierce with { PitchRange = (0.2f, 0.5f)}, NPC.Center);
             NPC.frame.Y = 4 * 64;
             for (int i = 0; i < 6; i++)
             {

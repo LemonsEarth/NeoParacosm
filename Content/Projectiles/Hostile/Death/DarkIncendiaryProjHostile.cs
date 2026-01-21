@@ -33,6 +33,7 @@ public class DarkIncendiaryProjHostile : ModProjectile
 
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
+        Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.PiOver4 * -MathF.Sign(oldVelocity.X));
         return false;
     }
 
@@ -56,7 +57,7 @@ public class DarkIncendiaryProjHostile : ModProjectile
             //Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
         }
 
-        Projectile.rotation = MathHelper.ToRadians(Projectile.velocity.X * AITimer);
+        Projectile.rotation = MathHelper.ToRadians(Projectile.velocity.Length() * AITimer);
 
         Projectile.StandardAnimation(6, 4);
 
