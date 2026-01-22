@@ -46,14 +46,14 @@ public class AncientCallingHorn : ModItem
         if (player.ItemAnimationJustStarted)
         {
             SoundEngine.PlaySound(ParacosmSFX.AncientCallingHorn with { Volume = 0.75f }, player.Center);
-            WorldDataSystem.DCEffectNoFogPosition = player.Center;
+            DarkCataclysmSystem.DCEffectNoFogPosition = player.Center;
         }
 
         if (player.ItemAnimationEndingOrEnded)
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                NPC.SpawnBoss((int)WorldDataSystem.DCEffectNoFogPosition.X, (int)WorldDataSystem.DCEffectNoFogPosition.Y - 2000, NPCType<Dreadlord>(), player.whoAmI);
+                NPC.SpawnBoss((int)DarkCataclysmSystem.DCEffectNoFogPosition.X, (int)DarkCataclysmSystem.DCEffectNoFogPosition.Y - 2000, NPCType<Dreadlord>(), player.whoAmI);
             }
             else
             {

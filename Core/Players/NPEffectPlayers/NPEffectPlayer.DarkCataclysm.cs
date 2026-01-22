@@ -8,15 +8,15 @@ namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
 public partial class NPEffectPlayer : ModPlayer
 {
-    static ref float DCEffectOpacity => ref WorldDataSystem.DCEffectOpacity;
-    static ref float DCEffectOpacityTimer => ref WorldDataSystem.DCEffectOpacityTimer;
-    static ref Color DCEffectFogColor => ref WorldDataSystem.DCEffectFogColor;
-    static ref Vector2 DCEffectNoFogPosition => ref WorldDataSystem.DCEffectNoFogPosition;
-    static ref float DCEffectNoFogDistance => ref WorldDataSystem.DCEffectNoFogDistance;
-    static ref float DCEffectNoFogDistanceCurrent => ref WorldDataSystem.DCEffectNoFogDistanceCurrent;
-    static ref float DCEffectMaxFogOpacity => ref WorldDataSystem.DCEffectMaxFogOpacity;
-    static ref float DCEffectFogOpacity => ref WorldDataSystem.DCEffectFogOpacity;
-    static ref float DCEffectFogSpeed => ref WorldDataSystem.DCEffectFogSpeed;
+    static ref float DCEffectOpacity => ref DarkCataclysmSystem.DCEffectOpacity;
+    static ref float DCEffectOpacityTimer => ref DarkCataclysmSystem.DCEffectOpacityTimer;
+    static ref Color DCEffectFogColor => ref DarkCataclysmSystem.DCEffectFogColor;
+    static ref Vector2 DCEffectNoFogPosition => ref DarkCataclysmSystem.DCEffectNoFogPosition;
+    static ref float DCEffectNoFogDistance => ref DarkCataclysmSystem.DCEffectNoFogDistance;
+    static ref float DCEffectNoFogDistanceCurrent => ref DarkCataclysmSystem.DCEffectNoFogDistanceCurrent;
+    static ref float DCEffectMaxFogOpacity => ref DarkCataclysmSystem.DCEffectMaxFogOpacity;
+    static ref float DCEffectFogOpacity => ref DarkCataclysmSystem.DCEffectFogOpacity;
+    static ref float DCEffectFogSpeed => ref DarkCataclysmSystem.DCEffectFogSpeed;
     
     public override void ResetEffects()
     {
@@ -28,7 +28,7 @@ public partial class NPEffectPlayer : ModPlayer
     {
         if (Player.HeldItem.type == ItemType<AncientCallingHorn>() && Player.ItemAnimationActive)
         {
-            WorldDataSystem.AncientCallingHornInUse = true;
+            DarkCataclysmSystem.AncientCallingHornInUse = true;
             Player.NPPlayer().NoMusic = true;
         }
         if (ResearcherQuest.DarkCataclysmActive)

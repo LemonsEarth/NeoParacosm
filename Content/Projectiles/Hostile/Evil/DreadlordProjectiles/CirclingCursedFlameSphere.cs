@@ -74,7 +74,7 @@ public class CirclingCursedFlameSphere : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.DarkGreen, Color.DarkGreen, BasicEffect);
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;

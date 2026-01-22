@@ -66,7 +66,7 @@ public class GiantMeatball : ModProjectile
         }
         else
         {
-            Projectile.scale = Math.Clamp(AITimer / 30f, 0, 1f);
+            Projectile.scale = Math.Clamp(AITimer / 30f, 0.3f, 1f);
             Vector2 randDustPos = Projectile.Center + new Vector2(Main.rand.NextFloat(-200, 200), Main.rand.NextFloat(300, 400));
             Vector2 randDustPos2 = Projectile.Center + new Vector2(Main.rand.NextFloat(-200, 200), Main.rand.NextFloat(300, 400));
             Vector2 randPosToProj1 = randDustPos.DirectionTo(Projectile.Center) * Main.rand.NextFloat(20, 30);
@@ -76,8 +76,6 @@ public class GiantMeatball : ModProjectile
             Dust.NewDustDirect(randDustPos2, 2, 2, DustID.Crimson, randPosToProj2.X, randPosToProj2.Y, Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
             
         }
-
-        Projectile.Opacity = AITimer / 15f;
 
         Projectile.StandardAnimation(24, 2);
 

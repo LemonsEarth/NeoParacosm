@@ -2,16 +2,15 @@
 using NeoParacosm.Common.Utils.Prim;
 using Terraria.Audio;
 using Terraria.GameContent;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class IchorSphere : PrimProjectile
+public class IchorBlob : PrimProjectile
 {
-    string GlowMask_Path => Texture + "_Glow";
-
     int AITimer = 0;
-    ref float TimeLeft => ref Projectile.ai[0];
-    ref float RedirectInterval => ref Projectile.ai[1];
+    ref float FallSpeed => ref Projectile.ai[0];
+    ref float TimeLeft => ref Projectile.ai[1];
     ref float RedirectCount => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
@@ -31,28 +30,18 @@ public class IchorSphere : PrimProjectile
         Projectile.timeLeft = 999;
     }
 
-    float savedSpeed = 1f;
     public override void AI()
     {
         if (AITimer == 0)
         {
-            savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.NPCDeath13, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.NPCDeath13 with { PitchRange = (0.3f, 0.5f), Volume = 0.5f}, Projectile.Center);
         }
 
-        Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ichor);
+        Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ichor).noGravity = true;
         Projectile.rotation = MathHelper.ToRadians(AITimer * 6);
 
-        if (AITimer > 0 && AITimer % RedirectInterval == 0 && RedirectCount > 0)
-        {
-            Player closestPlayer = LemonUtils.GetClosestPlayer(Projectile.Center, 99999);
-            if (closestPlayer != null)
-            {
-                Projectile.velocity = Projectile.DirectionTo(closestPlayer.Center) * savedSpeed;
-                RedirectCount--;
-            }
-        }
 
+        Projectile.velocity.Y += FallSpeed;
         if (AITimer > TimeLeft) Projectile.Kill();
         AITimer++;
     }
@@ -71,9 +60,10 @@ public class IchorSphere : PrimProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         if (Main.dedServ) return true;
-        float sinValue = (MathF.Sin(AITimer / 24f) + 1) * 0.5f; ;
-        Color trailColor = new Color(1, 1, sinValue);
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, trailColor, trailColor, BasicEffect);
+        float scaleX = (MathF.Sin(AITimer / 4f) * 0.3f + 1) * Projectile.scale;
+
+        // 1.25 when 0
+        float scaleY = (MathF.Sin(AITimer / 4f + MathHelper.PiOver2) * 0.3f + 1) * Projectile.scale;
         Main.EntitySpriteDraw(
             TextureAssets.Projectile[Type].Value,
             Projectile.Center - Main.screenPosition,
@@ -81,11 +71,9 @@ public class IchorSphere : PrimProjectile
             Color.White,
             Projectile.rotation,
             TextureAssets.Projectile[Type].Size() * 0.5f,
-            Projectile.scale,
+            new Vector2(scaleX, scaleY),
             SpriteEffects.None
             );
-        glowOpacity = sinValue;
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, glowOpacity, 1.5f);
         return false;
     }
 

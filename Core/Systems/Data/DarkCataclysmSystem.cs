@@ -2,7 +2,7 @@
 
 namespace NeoParacosm.Core.Systems.Data;
 
-public class WorldDataSystem : ModSystem
+public class DarkCataclysmSystem : ModSystem
 {
     public static float DCEffectOpacity = 0f;
     public static float DCEffectOpacityTimer = 0f;
@@ -48,7 +48,7 @@ public class WorldDataSystem : ModSystem
         }
         else
         {
-            DCEffectNoFogDistance = 2000;
+            DCEffectNoFogDistance = 1500;
             DCEffectMaxFogOpacity = 1f;
             DCEffectFogSpeed = 5;
             DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.Red, 1 / 60f);

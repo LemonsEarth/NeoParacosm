@@ -34,13 +34,9 @@ public class CursedFlamethrower : ModProjectile
     {
         if (AITimer == 0)
         {
+            Projectile.Opacity = Main.rand.NextFloat(0.5f, 1f);
             Projectile.rotation = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
             SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { MaxInstances = 3, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-        }
-
-        if (AITimer <= 2)
-        {
-            Projectile.Opacity = AITimer / 2f;
         }
 
         if (Duration - AITimer < 5)
