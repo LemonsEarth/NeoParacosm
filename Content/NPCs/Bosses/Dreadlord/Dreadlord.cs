@@ -184,7 +184,7 @@ public class Dreadlord : ModNPC
 
     public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
     {
-
+        
     }
 
     public override void SetDefaults()

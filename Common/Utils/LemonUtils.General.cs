@@ -59,6 +59,14 @@ public static partial class LemonUtils
         return difficulty;
     }
 
+    public static bool IntersectsExact(this Rectangle rect, Rectangle other)
+    {
+        return (other.Left <= rect.Right &&
+                    rect.Left <= other.Right &&
+                    other.Top <= rect.Bottom &&
+                    rect.Top <= other.Bottom);
+    }
+
     public static Vector2 RandomVector2Circular(float circleHalfWidth, float circleHalfHeight, float minWidth = 0, float minHeight = 0)
     {
         float width = 0;
