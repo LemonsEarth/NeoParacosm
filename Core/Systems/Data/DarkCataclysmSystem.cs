@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Core.Players;
-
-namespace NeoParacosm.Core.Systems.Data;
+﻿namespace NeoParacosm.Core.Systems.Data;
 
 public class DarkCataclysmSystem : ModSystem
 {

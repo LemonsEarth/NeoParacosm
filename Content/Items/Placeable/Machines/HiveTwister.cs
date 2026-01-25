@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Placeable.Special.ResearcherQuestTiles;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ObjectData;
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Input;
-using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 using NeoParacosm.Content.Items.Placeable.Tiles.Depths;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using StructureHelper.API;

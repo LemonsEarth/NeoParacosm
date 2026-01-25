@@ -3,9 +3,7 @@ using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;

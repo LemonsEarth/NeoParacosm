@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Core.Systems.Data;
-
-namespace NeoParacosm.Core.Misc.SceneEffects;
+﻿namespace NeoParacosm.Core.Misc.SceneEffects;
 
 public class NoMusicSceneEffect : ModSceneEffect
 {

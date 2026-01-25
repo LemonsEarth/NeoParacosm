@@ -11,23 +11,12 @@ public class EvilGlobalNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
-    public static HashSet<int> EvilEnemies { get; private set; } = new HashSet<int>()
-        {
-            FaceMonster, FloatyGross, BloodCrawler, BloodCrawlerWall, Crimera, Crimslime, CrimsonAxe, CrimsonBunny, CrimsonPenguin, CrimsonGoldfish,
-            EaterofSouls, DevourerHead, Clinger, Slimer, IchorSticker, Corruptor, CorruptBunny, CorruptPenguin, CorruptGoldfish, CursedHammer, Slimer2,
-            DarkMummy, BloodMummy, DesertGhoulCrimson, DesertGhoulCorruption, DesertLamiaDark, SandsharkCorrupt, SandsharkCrimson,
-            NPCType<CrimsonInfectionForm>(), NPCType<BaneflyEnemy>(), NPCType<DecayingRat>()
-        };
-
-    public static HashSet<int> EvilEnemiesBonus { get; private set; } = new HashSet<int>()
-        {
-            BigMimicCorruption, BigMimicCrimson, NPCType<CrimsonCarrier>(), NPCType<CrimsonSentryForm>(),
-            NPCType<CrimsonWalker>(), NPCType<RotPerfumeValve>(), NPCType<Marauder>(), NPCType<CorruptMage>(), NPCType<CorruptWalker>(), NPCType<BaneflyHiveEnemy>()
-        };
+    public static HashSet<int> EvilEnemies { get; private set; } = new HashSet<int>();
+    public static HashSet<int> EvilEnemiesBonus { get; private set; } = new HashSet<int>();
 
     int AITimer = 0;
 
-    bool EvoActive => ResearcherQuest.Progress >= ResearcherQuest.ProgressState.DownedEvilBoss
+    static bool EvoActive => ResearcherQuest.Progress >= ResearcherQuest.ProgressState.DownedEvilBoss
                    && ResearcherQuest.Progress < ResearcherQuest.ProgressState.AscendedItem;
 
     Dictionary<DamageClass, int> ClassAdaptation = new Dictionary<DamageClass, int>
@@ -41,7 +30,19 @@ public class EvilGlobalNPC : GlobalNPC
 
     public override void SetStaticDefaults()
     {
+        EvilEnemies = new HashSet<int>()
+        {
+            FaceMonster, FloatyGross, BloodCrawler, BloodCrawlerWall, Crimera, Crimslime, CrimsonAxe, CrimsonBunny, CrimsonPenguin, CrimsonGoldfish,
+            EaterofSouls, DevourerHead, Clinger, Slimer, IchorSticker, Corruptor, CorruptBunny, CorruptPenguin, CorruptGoldfish, CursedHammer, Slimer2,
+            DarkMummy, BloodMummy, DesertGhoulCrimson, DesertGhoulCorruption, DesertLamiaDark, SandsharkCorrupt, SandsharkCrimson,
+            NPCType<CrimsonInfectionForm>(), NPCType<BaneflyEnemy>(), NPCType<DecayingRat>()
+        };
 
+        EvilEnemiesBonus = new HashSet<int>()
+        {
+            BigMimicCorruption, BigMimicCrimson, NPCType<CrimsonCarrier>(), NPCType<CrimsonSentryForm>(),
+            NPCType<CrimsonWalker>(), NPCType<RotPerfumeValve>(), NPCType<Marauder>(), NPCType<CorruptMage>(), NPCType<CorruptWalker>(), NPCType<BaneflyHiveEnemy>()
+        };
     }
 
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)

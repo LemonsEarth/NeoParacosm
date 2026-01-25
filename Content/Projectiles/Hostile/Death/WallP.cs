@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using Terraria;
-
-namespace NeoParacosm.Content.Projectiles.Hostile.Death;
+﻿namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
 public class WallP : ModProjectile
 {

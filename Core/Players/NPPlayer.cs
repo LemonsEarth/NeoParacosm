@@ -1,7 +1,8 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
+using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using Terraria;
+using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Players;
 
@@ -10,9 +11,19 @@ public class NPPlayer : ModPlayer
     int timer = 0;
     public bool NoMusic { get; set; } = false;
 
+    public static HashSet<int> BlockProjectiles { get; set; } = new HashSet<int>();
+
     public override void ResetEffects()
     {
         NoMusic = false;
+    }
+
+    public override void SetStaticDefaults()
+    {
+        BlockProjectiles = new HashSet<int>() {
+            ProjectileType<WallP>(),
+            ProjectileType<CorruptPillar>(),
+        };
     }
 
     public override void PreUpdateMovement()
@@ -20,7 +31,7 @@ public class NPPlayer : ModPlayer
         foreach (var projectile in Main.ActiveProjectiles)
         {
             // If walkable projectiles are expanded upon, some HashSet should probably be made for them
-            if (projectile.type != ProjectileType<WallP>())
+            if (!BlockProjectiles.Contains(projectile.type))
             {
                 continue;
             }
