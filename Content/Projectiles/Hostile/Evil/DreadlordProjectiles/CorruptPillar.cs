@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Gores;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
@@ -10,6 +11,7 @@ public class CorruptPillar : ModProjectile
     ref float Length => ref Projectile.ai[1];
     ref float MoveTime => ref Projectile.ai[2];
 
+    int hFrame = 0;
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
@@ -54,11 +56,43 @@ public class CorruptPillar : ModProjectile
         Projectile.damage = 0;
         if (AITimer == 0)
         {
+            hFrame = Main.rand.Next(0, 2);
             startPos = Projectile.position;
         }
         float t = MathHelper.Clamp(AITimer / MoveTime, 0, 1);
         Projectile.position = Vector2.SmoothStep(startPos, EndPos, t);
         Projectile.height = (int)MathF.Abs((Projectile.position.Y - startPos.Y)) + 96;
+        if (MathF.Abs(Projectile.position.Y - EndPos.Y) > 96)
+        {
+            Vector2 randomPos = Main.rand.NextVector2FromRectangle(new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, 96, 96));
+            Gore.NewGoreDirect(
+                Projectile.GetSource_FromAI(),
+                randomPos,
+                Vector2.UnitY.RotatedByRandom(6.28f),
+                GoreType<CorruptPillarGore>(),
+                Main.rand.NextFloat(0.4f, 0.8f));
+            for (int i = 0; i < 4; i++)
+            {
+                Dust.NewDustDirect(randomPos, 2, 2, DustID.Corruption, Scale: Main.rand.NextFloat(1f, 2.5f));
+            }
+        }
+        int chance = MathF.Abs(Projectile.position.Y - EndPos.Y) > 96 ? 10 : 60;
+
+        if (Main.rand.NextBool(chance) && !Main.dedServ)
+        {
+            Vector2 randomPos = Main.rand.NextVector2FromRectangle(Projectile.getRect());
+            Gore.NewGoreDirect(
+                Projectile.GetSource_FromAI(), 
+                randomPos, 
+                Vector2.UnitY.RotatedByRandom(6.28f), 
+                GoreType<CorruptPillarGore>(), 
+                Main.rand.NextFloat(0.4f, 0.8f));
+            for (int i = 0; i < 4; i++)
+            {
+                Dust.NewDustDirect(randomPos, 2, 2, DustID.Corruption, Scale: Main.rand.NextFloat(1f, 2.5f));
+            }
+        }
+
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
@@ -74,9 +108,10 @@ public class CorruptPillar : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Rectangle frameTop = texture.Frame(1, 3, 0, 0);
-        Rectangle frameMiddle = texture.Frame(1, 3, 0, 1);
-        Rectangle frameBottom = texture.Frame(1, 3, 0, 2);
+        Rectangle frameTop = texture.Frame(2, 4, hFrame, 0);
+        Rectangle frameMiddle1 = texture.Frame(2, 4, hFrame, 1);
+        Rectangle frameMiddle2 = texture.Frame(2, 4, hFrame, 2);
+        Rectangle frameBottom = texture.Frame(2, 4, hFrame, 3);
         Vector2 origin = Vector2.Zero;
         Vector2 drawPosTop = Projectile.position - Main.screenPosition;
         Vector2 drawPosExtraMiddle = (startPos + (Vector2.UnitY * frameBottom.Height)) - Main.screenPosition;
@@ -88,15 +123,22 @@ public class CorruptPillar : ModProjectile
         // Draw between top and bottom
         Vector2 drawPosMiddle = Projectile.position;
         float distanceToBottom = Projectile.position.Distance(startPos);
+        int count = 0;
         while (distanceToBottom > 0)
         {
-            drawPosMiddle += Vector2.UnitY * frameMiddle.Height;
-            Main.EntitySpriteDraw(texture, drawPosMiddle - Main.screenPosition, frameMiddle, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
-            distanceToBottom -= frameMiddle.Height;
+            Rectangle frame = frameMiddle1;
+            if (count % 2 == 0)
+            {
+                frame = frameMiddle2;
+            }
+            drawPosMiddle += Vector2.UnitY * frame.Height;
+            Main.EntitySpriteDraw(texture, drawPosMiddle - Main.screenPosition, frame, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
+            distanceToBottom -= frame.Height;
+            count++;
         }
 
         // Draw bottom parts (one extra middle part so it looks lest bad)
-        Main.EntitySpriteDraw(texture, drawPosExtraMiddle, frameMiddle, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
+        Main.EntitySpriteDraw(texture, drawPosExtraMiddle, frameMiddle2, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
         Main.EntitySpriteDraw(texture, drawPosBottom, frameBottom, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
         return false;
     }
