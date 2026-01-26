@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Core.Players;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -37,6 +38,15 @@ public class CursedFlameSphere : PrimProjectile
         {
             savedSpeed = Projectile.velocity.Length();
             SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f}, Projectile.Center);
+        }
+        
+        foreach (Projectile proj in NPPlayer.BlockProjectileInstances)
+        {
+            if (Projectile.Hitbox.IntersectsExact(proj.Hitbox))
+            {
+                Projectile.Kill();
+                return;
+            }
         }
 
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);

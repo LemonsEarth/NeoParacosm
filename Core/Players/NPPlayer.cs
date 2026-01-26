@@ -12,10 +12,13 @@ public class NPPlayer : ModPlayer
     public bool NoMusic { get; set; } = false;
 
     public static HashSet<int> BlockProjectiles { get; set; } = new HashSet<int>();
+    public static List<Projectile> BlockProjectileInstances { get; set; } = new List<Projectile>();
 
     public override void ResetEffects()
     {
         NoMusic = false;
+
+        BlockProjectileInstances.RemoveAll(p => !p.active);
     }
 
     public override void SetStaticDefaults()
