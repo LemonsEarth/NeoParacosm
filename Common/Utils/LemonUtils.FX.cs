@@ -115,6 +115,12 @@ public static partial class LemonUtils
         return proj;
     }
 
+    public static void BeginSpriteBatchProjectile(SpriteSortMode spriteSortMode = SpriteSortMode.Deferred, BlendState blendstate = default, Effect effect = null)
+    {
+        if (blendstate == default) blendstate = BlendState.AlphaBlend;
+        Main.spriteBatch.Begin(spriteSortMode, blendstate, Main.DefaultSamplerState, default, Main.Rasterizer, effect, Main.GameViewMatrix.TransformationMatrix);
+    }
+
     public static void DrawLaser(Vector2 position1, Vector2 position2, float laserWidth, Color color)
     {
         Main.EntitySpriteDraw(ParacosmTextures.TrueMagicPixel.Value,

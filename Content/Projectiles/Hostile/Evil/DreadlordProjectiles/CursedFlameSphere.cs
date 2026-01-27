@@ -63,15 +63,17 @@ public class CursedFlameSphere : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightGreen, Color.Transparent, BasicEffect);
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;
-        for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
+        /*for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
         {
             Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
             Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, color * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), Projectile.rotation, drawOrigin, Projectile.scale * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), SpriteEffects.None);
-        }
+        }*/
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
+
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
     }

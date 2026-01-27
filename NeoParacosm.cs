@@ -33,6 +33,7 @@ public class NeoParacosm : Mod
         LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader");
         LoadMiscShader("GasShader", "Common/Assets/Shaders/Projectiles/GasShader");
         LoadMiscShader("LaserShader", "Common/Assets/Shaders/Projectiles/LaserShader");
+        LoadMiscShader("SphereShader", "Common/Assets/Shaders/Projectiles/SphereShader");
         LoadMiscShader("AscendedWeaponGlow", "Common/Assets/Shaders/Items/AscendedWeaponGlow");
         LoadMiscShader("DeathbirdWingShader", "Common/Assets/Shaders/NPCs/DeathbirdWingShader");
 

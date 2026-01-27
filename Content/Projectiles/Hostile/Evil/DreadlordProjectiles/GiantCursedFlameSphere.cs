@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Projectiles.Effect;
+using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
@@ -22,8 +24,8 @@ public class GiantCursedFlameSphere : PrimProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 64;
-        Projectile.height = 64;
+        Projectile.width = 128;
+        Projectile.height = 128;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -48,6 +50,11 @@ public class GiantCursedFlameSphere : PrimProjectile
             SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         }
 
+        if (TimeLeft == 0)
+        {
+            TimeLeft = 60;
+        }
+
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
@@ -61,15 +68,13 @@ public class GiantCursedFlameSphere : PrimProjectile
         Projectile.scale = MathHelper.Lerp(Projectile.scale, 2f, 1 / 10f);
 
         Projectile.Opacity = AITimer / 15f;
-
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
         if (SpeedUP == 0)
         {
             SpeedUP = 1f;
         }
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f));
-        dust.noGravity = true;
-        Projectile.rotation = MathHelper.ToRadians(AITimer * 24);
+        Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+        Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
         Projectile.StandardAnimation(6, 6);
         AITimer++;
     }
@@ -77,28 +82,34 @@ public class GiantCursedFlameSphere : PrimProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
-        Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Vector2 drawOrigin = texture.Frame(1, 6, 0, 0).Size() * 0.5f;
+        Texture2D texture = ParacosmTextures.NoiseTexture.Value;
+        Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;
-        for (int i = Projectile.oldPos.Length - 1; i >= 0; i--)
-        {
-            Vector2 drawPos = Projectile.oldPos[i] + drawOrigin;
-            Main.EntitySpriteDraw(texture, 
-                drawPos - Main.screenPosition, 
-                texture.Frame(1, 6, 0, Projectile.frame), 
-                color * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length) * Projectile.Opacity, 
-                Projectile.rotation, 
-                drawOrigin, 
-                Projectile.scale * (((float)Projectile.oldPos.Length - i) / Projectile.oldPos.Length), 
-                SpriteEffects.None);
-        }
+
+        var shader = GameShaders.Misc["NeoParacosm:SphereShader"];
+        shader.UseImage1(ParacosmTextures.NoiseTexture);
+        shader.Shader.Parameters["distance"].SetValue(0.7f);
+        shader.Shader.Parameters["borderWidth"].SetValue(0.3f);
+        shader.Shader.Parameters["uTime"].SetValue(AITimer);
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
+        Main.spriteBatch.Draw(texture,
+            new Rectangle((int)(Projectile.Center.X - Main.screenPosition.X), (int)(Projectile.Center.Y - Main.screenPosition.Y), (int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale)),
+            null,
+            color * Projectile.Opacity,
+            Projectile.rotation,
+            drawOrigin,
+            SpriteEffects.None, 
+            0);
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile();
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        
+
     }
 
     public override void OnKill(int timeLeft)
