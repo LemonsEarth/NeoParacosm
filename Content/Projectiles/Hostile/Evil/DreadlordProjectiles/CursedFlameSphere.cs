@@ -44,6 +44,7 @@ public class CursedFlameSphere : PrimProjectile
         {
             if (Projectile.Hitbox.IntersectsExact(proj.Hitbox))
             {
+                proj.ai[0] -= 10;
                 Projectile.Kill();
                 return;
             }

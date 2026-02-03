@@ -50,6 +50,8 @@ public class GiantCursedFlameSphere : PrimProjectile
             SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         }
 
+        Projectile.velocity *= 0.97f;
+
         if (TimeLeft == 0)
         {
             TimeLeft = 60;
@@ -99,7 +101,7 @@ public class GiantCursedFlameSphere : PrimProjectile
             color * Projectile.Opacity,
             Projectile.rotation,
             drawOrigin,
-            SpriteEffects.None, 
+            SpriteEffects.None,
             0);
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile();

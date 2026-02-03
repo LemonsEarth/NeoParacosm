@@ -89,7 +89,7 @@ public class Dreadlord : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
-    readonly int[] attackDurations2 = [900, 1080, 1080, 1080, 1320];
+    readonly int[] attackDurations2 = [1080, 1080, 1080, 1080, 1320];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -1491,19 +1491,19 @@ public class Dreadlord : ModNPC
         SetBodyPartPositions(headLerpSpeed: 0.8f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
         switch (AttackTimer)
         {
-            case 900:
+            case 1080:
                 break;
-            case > 780: // Move to center, scale down
+            case > 960: // Move to center, scale down
                 NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
                 LerpScale(0.7f, 1 / 20f);
                 break;
-            case > 720: // Slow down, scale back to normal, move heads down
+            case > 900: // Slow down, scale back to normal, move heads down
                 NPC.velocity *= 0.94f;
                 LerpScale(1f, 1 / 30f);
                 HeadCorrupt.Position = HeadCorrupt.DefaultPosition + Vector2.UnitY * 32;
                 HeadCrimson.Position = HeadCrimson.DefaultPosition + Vector2.UnitY * 32;
                 break;
-            case 720: // Shake screen and heads, summon pillars
+            case 900: // Shake screen and heads, summon pillars
                 NPC.velocity = Vector2.Zero;
                 LemonUtils.QuickScreenShake(NPC.Center, 60f, 8f, 300, 4000f);
                 SetHeadCorruptFrame(MOUTH_OPEN);
@@ -1514,7 +1514,7 @@ public class Dreadlord : ModNPC
                 AttackCount = -8;
 
                 break;
-            case > 420: // Shake heads
+            case > 600: // Shake heads
                 if (AttackTimer % 2 == 0 && AttackTimer > 600)
                 {
                     ShakeCorruptHead(intensity: 8);
@@ -1526,7 +1526,7 @@ public class Dreadlord : ModNPC
                     ResetMouthFrames();
                 }
 
-                if (AttackTimer % 16 == 0)
+                if (AttackTimer % 18 == 0)
                 {
                     float distance = DarkCataclysmSystem.DCEffectNoFogDistance;
                     Vector2 position = new Vector2(ArenaCenter.X + AttackCount * 300, ArenaCenter.Y + distance * 1.5f);
@@ -1538,7 +1538,7 @@ public class Dreadlord : ModNPC
                             Vector2.Zero,
                             ProjectileType<CorruptPillar>(),
                             0,
-                            ai0: 600,
+                            ai0: 780,
                             ai1: 2400 + Main.rand.Next(-3, 3) * 96,
                             ai2: Main.rand.Next(60, 240)
                             );
@@ -1549,8 +1549,42 @@ public class Dreadlord : ModNPC
                     }
                 }
                 break;
+            case 600:
+                AttackCount = 0;
+                break;
+            case >= 300:
+                ResetMouthFrames();
+                LerpScale(0.8f, 1 / 15f);
+                if (AttackTimer % 30 == 0)
+                {
+                    SetLegCorruptFrame(LEG_ATTACK);
+                    if (LemonUtils.NotClient())
+                    {
+                        targetPosition = ArenaCenter + new Vector2(Main.rand.Next(-1500, 1500), Main.rand.Next(-1200, -400));
+                        if (AttackCount > 0)
+                        {
+                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.06f, (int)AttackTimer - 180, ToRadians(22.5f));
+                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.04f, (int)AttackTimer - 180, ToRadians(22.5f + 11.25f));
+                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, (int)AttackTimer - 180, ToRadians(22.5f + 6.12f));
+                        }
+                    }
+                    AttackCount++;
+                }
+
+                if (targetPosition != Vector2.Zero)
+                {
+                    NPC.velocity = (targetPosition - NPC.Center) / 24f;
+                }
+                break;
+            case > 180:
+                Vector2 aboveCenter = ArenaCenter - Vector2.UnitY * 500;
+                NPC.velocity = (aboveCenter - NPC.Center) / 12f;
+                break;
+            case 180:
+                NPC.velocity = Vector2.Zero;
+                break;
             case 0:
-                AttackTimer = 900;
+                AttackTimer = 1080;
                 ResetMouthFrames();
                 return;
         }

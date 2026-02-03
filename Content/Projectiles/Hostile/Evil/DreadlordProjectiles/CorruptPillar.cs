@@ -127,7 +127,7 @@ public class CorruptPillar : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 8; i++)
         {
             Vector2 randomPos = Main.rand.NextVector2FromRectangle(Projectile.getRect());
             Gore.NewGoreDirect(
@@ -140,6 +140,16 @@ public class CorruptPillar : ModProjectile
             {
                 Dust.NewDustDirect(randomPos, 2, 2, DustID.Corruption, Scale: Main.rand.NextFloat(1.5f, 2.5f));
             }
+        }
+        for (int i = 0; i < Projectile.height / 96; i++)
+        {
+            int frame = i == 0 ? 0 : 1;
+            Gore.NewGoreDirect(
+                    Projectile.GetSource_FromAI(),
+                    Projectile.position + Vector2.UnitY * i * 96,
+                    Vector2.UnitY.RotatedByRandom(6.28f) * 0.5f,
+                    GoreType<CorruptPillarGoreLarge>(),
+                    Projectile.scale).frame = 0;
         }
         SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack with { PitchRange = (-0.4f, -0.2f) }, Projectile.Center);
         SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack with { PitchRange = (-0.4f, -0.2f) }, Projectile.Center - Vector2.UnitY * Length);
@@ -177,7 +187,7 @@ public class CorruptPillar : ModProjectile
             count++;
         }
 
-        // Draw bottom parts (one extra middle part so it looks lest bad)
+        // Draw bottom parts (one extra middle part so it looks less bad)
         Main.EntitySpriteDraw(texture, drawPosExtraMiddle, frameMiddle2, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
         Main.EntitySpriteDraw(texture, drawPosBottom, frameBottom, Color.White, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
         return false;
