@@ -44,7 +44,7 @@ public class CursedFlameSphere : PrimProjectile
         {
             if (Projectile.Hitbox.IntersectsExact(proj.Hitbox))
             {
-                proj.ai[0] -= 10;
+                proj.ai[0] -= 30;
                 Projectile.Kill();
                 return;
             }
@@ -86,7 +86,14 @@ public class CursedFlameSphere : PrimProjectile
 
     public override void OnKill(int timeLeft)
     {
+        if (LemonUtils.NotClient())
+        {
+            LemonUtils.QuickPulse(Projectile, Projectile.Center, 2, 2f, 5f, Color.LightGreen);
+        }
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.CursedTorch, 2f);
+        SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, Projectile.Center);
         /*for (int i = 0; i < 4; i++)
         {
             LemonUtils.QuickProj(Projectile, Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(i * MathHelper.PiOver2) * (savedSpeed / 4f), ProjectileType<SavDroneProjectile>());

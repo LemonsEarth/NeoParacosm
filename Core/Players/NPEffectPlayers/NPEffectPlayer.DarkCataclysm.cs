@@ -17,7 +17,8 @@ public partial class NPEffectPlayer : ModPlayer
     static ref float DCEffectMaxFogOpacity => ref DarkCataclysmSystem.DCEffectMaxFogOpacity;
     static ref float DCEffectFogOpacity => ref DarkCataclysmSystem.DCEffectFogOpacity;
     static ref float DCEffectFogSpeed => ref DarkCataclysmSystem.DCEffectFogSpeed;
-    
+    static ref float DCEffectFogColorMultiplier => ref DarkCataclysmSystem.DCEffectFogColorMultiplier;
+
     public override void ResetEffects()
     {
         
@@ -44,7 +45,8 @@ public partial class NPEffectPlayer : ModPlayer
             data.Shader.Parameters["fogColor"].SetValue(DCEffectFogColor.ToVector4());
             data.UseTargetPosition(DCEffectNoFogPosition);
             data.Shader.Parameters["noFogDistance"].SetValue(DCEffectNoFogDistanceCurrent);
-            data.Shader.Parameters["maxFogOpacity"].SetValue(DCEffectFogOpacity);
+            data.Shader.Parameters["maxFogOpacity"].SetValue(DCEffectMaxFogOpacity);
+            data.Shader.Parameters["fogColorMultiplier"].SetValue(DCEffectFogColorMultiplier);
             data.Shader.Parameters["worldSize"].SetValue(new Vector2(Main.maxTilesX * 16f, Main.maxTilesY * 16f));
             data.Shader.Parameters["screenPos"].SetValue(Main.screenPosition);
             data.UseProgress(DCEffectOpacity);

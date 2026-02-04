@@ -89,7 +89,7 @@ public class Dreadlord : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
-    readonly int[] attackDurations2 = [1080, 1080, 1080, 1080, 1320];
+    readonly int[] attackDurations2 = [1600, 1080, 1080, 1080, 1320];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -449,7 +449,22 @@ public class Dreadlord : ModNPC
     {
         /*for (int i = 0; i < 64; i++)
         {
-            Dust.NewDustDirect(NPC.Center + Vector2.UnitY.RotatedBy(i * (Pi * 2 / 64f)) * 1500, 2, 2, DustID.GemDiamond, Scale: 5f).noGravity = true;
+            Dust.NewDustDirect(NPC.Center + Vector2.UnitY.RotatedBy(i * (Pi * 2 / 64f)) * DarkCataclysmSystem.DCEffectNoFogDistance, 2, 2, DustID.GemDiamond, Scale: 5f).noGravity = true;
+        }*/
+
+        if (AITimer % 4 == 0 && Main.myPlayer == player.whoAmI)
+        {
+            if (Main.LocalPlayer.Distance(ArenaCenter) > DarkCataclysmSystem.DCEffectNoFogDistance - 200)
+            {
+                for (int i = -4; i <= 4; i++)
+                {
+                    Vector2 dustPos = ArenaCenter + ArenaCenter.DirectionTo(player.Center).RotatedBy(i * ToRadians(12f / 16f)) * DarkCataclysmSystem.DCEffectNoFogDistance;
+                    Dust.NewDustDirect(dustPos, 2, 2, DustID.GemRuby, Scale: 2f).noGravity = true;
+                }
+            }
+        }
+        /*for (int i = 0; i < 64; i++)
+        {
         }*/
 
         if (LemonUtils.NotClient())
@@ -458,13 +473,12 @@ public class Dreadlord : ModNPC
             {
                 float distanceToNPC = plr.Distance(NPC.Center);
                 float distanceToArena = plr.Distance(ArenaCenter);
-
-                float baseArenaDistance = DarkCataclysmSystem.DCEffectNoFogDistance * 0.5f;
-                float baseNPCDistance = 1500f * 0.5f;
+                float baseArenaDistance = DarkCataclysmSystem.DCEffectNoFogDistance;
+                float baseNPCDistance = DarkCataclysmSystem.DCEffectNoFogDistance;
                 if (distanceToNPC > baseNPCDistance) // too far from boss
                 {
                     float speedDen = Math.Clamp(distanceToNPC / baseNPCDistance, 1, 3);
-                    if (AITimer % (60 / speedDen) == 0)
+                    if (AITimer % (int)(60 / speedDen) == 0)
                     {
                         Vector2 pos = player.Center + NPC.Center.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * 400;
                         LemonUtils.QuickProj(
@@ -482,7 +496,7 @@ public class Dreadlord : ModNPC
                 if (distanceToArena > baseArenaDistance) // too far from arena
                 {
                     float speedDen = Math.Clamp(distanceToArena / baseArenaDistance, 1, 3);
-                    if (AITimer % (60 / speedDen) == 0)
+                    if (AITimer % (int)(60 / speedDen) == 0 && LemonUtils.NotClient())
                     {
                         Vector2 pos = player.Center + ArenaCenter.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * 400;
                         LemonUtils.QuickProj(
@@ -599,7 +613,7 @@ public class Dreadlord : ModNPC
 
                 if (AttackTimer % 30 == 0 && LemonUtils.NotClient())
                 {
-                    IchorSpheres(HeadCrimson.Position - Vector2.UnitY * 32, Vector2.UnitY.RotatedByRandom(Pi * 2) * 8, 240, 60, 2 + LemonUtils.GetDifficulty());
+                    TrackingIchorSpheres(HeadCrimson.Position - Vector2.UnitY * 32, Vector2.UnitY.RotatedByRandom(Pi * 2) * 8, 240, 60, 2 + LemonUtils.GetDifficulty());
                 }
                 break;
             case 270: // Reset frames
@@ -1491,19 +1505,19 @@ public class Dreadlord : ModNPC
         SetBodyPartPositions(headLerpSpeed: 0.8f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
         switch (AttackTimer)
         {
-            case 1080:
+            case 1600:
                 break;
-            case > 960: // Move to center, scale down
+            case > 1480: // Move to center, scale down
                 NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
                 LerpScale(0.7f, 1 / 20f);
                 break;
-            case > 900: // Slow down, scale back to normal, move heads down
+            case > 1420: // Slow down, scale back to normal, move heads down
                 NPC.velocity *= 0.94f;
                 LerpScale(1f, 1 / 30f);
                 HeadCorrupt.Position = HeadCorrupt.DefaultPosition + Vector2.UnitY * 32;
                 HeadCrimson.Position = HeadCrimson.DefaultPosition + Vector2.UnitY * 32;
                 break;
-            case 900: // Shake screen and heads, summon pillars
+            case 1420: // Shake screen and heads, summon pillars
                 NPC.velocity = Vector2.Zero;
                 LemonUtils.QuickScreenShake(NPC.Center, 60f, 8f, 300, 4000f);
                 SetHeadCorruptFrame(MOUTH_OPEN);
@@ -1514,14 +1528,14 @@ public class Dreadlord : ModNPC
                 AttackCount = -8;
 
                 break;
-            case > 600: // Shake heads
-                if (AttackTimer % 2 == 0 && AttackTimer > 600)
+            case > 1120: // Shake heads, Spawn pillars
+                if (AttackTimer % 2 == 0 && AttackTimer >= 1240)
                 {
                     ShakeCorruptHead(intensity: 8);
                     ShakeCrimsonHead(intensity: 8);
                 }
 
-                if (AttackTimer % 600 == 0)
+                if (AttackTimer == 1240)
                 {
                     ResetMouthFrames();
                 }
@@ -1538,7 +1552,7 @@ public class Dreadlord : ModNPC
                             Vector2.Zero,
                             ProjectileType<CorruptPillar>(),
                             0,
-                            ai0: 780,
+                            ai0: 1600,
                             ai1: 2400 + Main.rand.Next(-3, 3) * 96,
                             ai2: Main.rand.Next(60, 240)
                             );
@@ -1549,13 +1563,47 @@ public class Dreadlord : ModNPC
                     }
                 }
                 break;
-            case 600:
+            case 1120:
                 AttackCount = 0;
+                PlayRoar(0.2f);
+                break;
+            case > 900: // First volley of ichor spheres
+                if (AttackTimer % 2 == 0)
+                {
+                    SetHeadCrimsonFrame(MOUTH_OPEN);
+                    ShakeCrimsonHead(intensity: 2);
+                }
+                if (AttackTimer % 30 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 randomPos = player.Center + LemonUtils.RandomVector2Circular(300, 250, 200, 150);
+                        IchorSpheres(randomPos, randomPos.DirectionTo(player.Center) * 10, 90, 120);
+                    }
+                }
+                break;
+            case > 720: // Second volley
+                ResetMouthFrames();
+                if (AttackTimer % 15 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 randomPos = player.Center + LemonUtils.RandomVector2Circular(300, 250, 200, 150);
+                        IchorSpheres(randomPos, randomPos.DirectionTo(player.Center) * 10, 90, 120);
+                    }
+                }
                 break;
             case >= 300:
-                ResetMouthFrames();
                 LerpScale(0.8f, 1 / 15f);
-                if (AttackTimer % 30 == 0)
+                if (AttackTimer % 30 == 0 && AttackTimer > 420)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 randomPos = player.Center + LemonUtils.RandomVector2Circular(200, 250, 100, 150);
+                        IchorSpheres(randomPos, randomPos.DirectionTo(player.Center) * 10, 120, 180);
+                    }
+                }
+                if (AttackTimer % 60 == 0)
                 {
                     SetLegCorruptFrame(LEG_ATTACK);
                     if (LemonUtils.NotClient())
@@ -1563,9 +1611,8 @@ public class Dreadlord : ModNPC
                         targetPosition = ArenaCenter + new Vector2(Main.rand.Next(-1500, 1500), Main.rand.Next(-1200, -400));
                         if (AttackCount > 0)
                         {
-                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.06f, (int)AttackTimer - 180, ToRadians(22.5f));
-                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.04f, (int)AttackTimer - 180, ToRadians(22.5f + 11.25f));
-                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, (int)AttackTimer - 180, ToRadians(22.5f + 6.12f));
+                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.04f, (int)AttackTimer - 180 + Main.rand.Next(30, 120), ToRadians(22.5f));
+                            GiantCursedSphere(LegCorrupt.MiscPosition1, 1.02f, (int)AttackTimer - 180, ToRadians(22.5f + 11.25f));
                         }
                     }
                     AttackCount++;
@@ -1584,7 +1631,7 @@ public class Dreadlord : ModNPC
                 NPC.velocity = Vector2.Zero;
                 break;
             case 0:
-                AttackTimer = 1080;
+                AttackTimer = 1600;
                 ResetMouthFrames();
                 return;
         }
@@ -1670,16 +1717,29 @@ public class Dreadlord : ModNPC
                     ai2: lostSoulTimeLeft);
     }
 
-    private void IchorSpheres(Vector2 pos, Vector2 velocity, int duration, int redirectInterval, int redirectCount)
+    private void TrackingIchorSpheres(Vector2 pos, Vector2 velocity, int duration, int redirectInterval, int redirectCount)
+    {
+        LemonUtils.QuickProj(
+                                NPC,
+                                pos,
+                                velocity,
+                                ProjectileType<TrackingIchorSphere>(),
+                                ai0: duration,
+                                ai1: redirectInterval,
+                                ai2: redirectCount
+                                );
+    }
+
+    private void IchorSpheres(Vector2 pos, Vector2 velocity, int waitTime, float timeLeft, float speedUp = 1f)
     {
         LemonUtils.QuickProj(
                                 NPC,
                                 pos,
                                 velocity,
                                 ProjectileType<IchorSphere>(),
-                                ai0: duration,
-                                ai1: redirectInterval,
-                                ai2: redirectCount
+                                ai0: waitTime,
+                                ai1: speedUp,
+                                ai2: timeLeft
                                 );
     }
 

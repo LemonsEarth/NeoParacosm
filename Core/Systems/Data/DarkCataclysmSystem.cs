@@ -11,6 +11,7 @@ public class DarkCataclysmSystem : ModSystem
     public static float DCEffectMaxFogOpacity = 0.1f;
     public static float DCEffectFogOpacity = 0f;
     public static float DCEffectFogSpeed = 1f;
+    public static float DCEffectFogColorMultiplier = 1f;
     public static bool AncientCallingHornInUse = false;
     public static bool DreadlordAlive = false;
     bool ShouldReset => !AncientCallingHornInUse && !DreadlordAlive;
@@ -43,13 +44,15 @@ public class DarkCataclysmSystem : ModSystem
             DCEffectMaxFogOpacity = 0.4f;
             DCEffectNoFogDistance = 0;
             DCEffectFogSpeed = 1f;
+            DCEffectFogColorMultiplier = 1;
         }
         else
         {
-            DCEffectNoFogDistance = 1500;
+            DCEffectNoFogDistance = 2000;
             DCEffectMaxFogOpacity = 1f;
-            DCEffectFogSpeed = 5;
-            DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.Red, 1 / 60f);
+            DCEffectFogSpeed = 25;
+            DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.DarkRed, 1 / 60f);
+            DCEffectFogColorMultiplier = 10;
         }
     }
 }
