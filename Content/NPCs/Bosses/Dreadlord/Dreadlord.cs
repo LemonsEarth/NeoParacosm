@@ -60,26 +60,6 @@ public class Dreadlord : ModNPC
     float AttackCount2 = 0;
 
     /// <summary>
-    /// whether NPC is to the left (-1) or right (1) of the player
-    /// </summary>
-    int playerSide = 1;
-    float PlayerSide
-    {
-        get => playerSide;
-        set
-        {
-            if (value >= 0)
-            {
-                playerSide = 1;
-            }
-            else
-            {
-                playerSide = -1;
-            }
-        }
-    }
-
-    /// <summary>
     /// Attack duration of the current attack being executed.
     /// Counts down and switches attacks when equal to 0
     /// </summary>
@@ -1907,6 +1887,11 @@ public class Dreadlord : ModNPC
 
     }
 
+    public override void BossLoot(ref int potionType)
+    {
+        potionType = ItemID.GreaterHealingPotion;
+    }
+
     public override bool? CanFallThroughPlatforms()
     {
         return true;
@@ -2024,19 +2009,6 @@ public class Dreadlord : ModNPC
             NPC.scale = 1f;
         }
         NPC.scale = MathHelper.Lerp(NPC.scale, targetScale, time);
-    }
-
-    /// <summary>
-    /// If opposite is true, returns the opposite leg of the side the player is on.
-    /// </summary>
-    /// <returns>LegCorrupt if playerSide == 1, LegCrimson if playerSide == -1</returns>
-    DreadlordBodyPart GetLeg(bool opposite = true)
-    {
-        if (!opposite)
-        {
-            return playerSide == 1 ? LegCrimson : LegCorrupt;
-        }
-        return playerSide == 1 ? LegCorrupt : LegCrimson;
     }
 
     #region Animation Methods
