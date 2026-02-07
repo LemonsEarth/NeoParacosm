@@ -13,22 +13,17 @@ public class EmperorColdsteelBody : ModNPC
 
     int FollowingNPC
     {
-        get { return (int)NPC.ai[1]; }
+        get { return (int)NPC.ai[0]; }
     }
 
-    int FollowerNPC
+    int SegmentNum
     {
-        get { return (int)NPC.ai[0]; }
+        get { return (int)NPC.ai[1]; }
     }
 
     int HeadNPC
     {
         get { return (int)NPC.ai[2]; }
-    }
-
-    int SegmentNum
-    {
-        get { return (int)NPC.ai[3]; }
     }
 
     int AttackTimer = 0;

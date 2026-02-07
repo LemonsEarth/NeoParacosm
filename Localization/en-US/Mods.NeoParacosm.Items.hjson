@@ -921,3 +921,8 @@ HiveTwisterItem: {
 	DisplayName: Hive Twister
 	Tooltip: A machine that periodically spawns bees when enemies are nearby
 }
+
+CrossedWire: {
+	DisplayName: Crossed Wire
+	Tooltip: ""
+}

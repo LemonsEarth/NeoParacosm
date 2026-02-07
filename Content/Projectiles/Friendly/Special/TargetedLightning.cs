@@ -73,7 +73,6 @@ public abstract class TargetedLightning : PrimProjectile
             float spacing = projToPos.Length() / BaseSpacingDenominator;
 
             bool flip = true;
-            int i = 0;
 
             while (Projectile.Center.Distance(targetPos) > 32)
             {
@@ -88,11 +87,10 @@ public abstract class TargetedLightning : PrimProjectile
 
                 flip = !flip;
                 Projectile.Center += Projectile.Center.DirectionTo(targetPos) * spacing * Main.rand.NextFloat(0.5f, 1.5f);
-                for (int dc = 0; dc < 6; dc++)
+                for (int dc = 0; dc < 6; dc++) // dust count
                 {
                     Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemDiamond, Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-8, 8), Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
                 }
-                i += 2;
             }
             positions.Add(Projectile.Center);
             positions.Add(Projectile.Center);

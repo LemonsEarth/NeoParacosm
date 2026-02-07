@@ -15,7 +15,7 @@ public class EmperorColdsteelHead : ModNPC
 {
     int BodyType => ModContent.NPCType<EmperorColdsteelBody>();
     const int MAX_SEGMENT_COUNT = 8;
-    int SegmentCount = 0;
+    public int SegmentCount { get; private set; } = 0;
     #region Attack Fields and Data
     ref float AITimer => ref NPC.ai[0];
 
@@ -219,7 +219,7 @@ public class EmperorColdsteelHead : ModNPC
     void SpawnSegments()
     {
         int latestNPC = NPC.whoAmI;
-        while (SegmentCount < MAX_SEGMENT_COUNT - 2) // Body segments, excluding head and tail
+        while (SegmentCount < MAX_SEGMENT_COUNT - 1) // Body segments, excluding head
         {
             latestNPC = SpawnSegment(BodyType, latestNPC);
             EmperorColdsteelBody bodySegment = (EmperorColdsteelBody)Main.npc[latestNPC].ModNPC;
@@ -233,7 +233,7 @@ public class EmperorColdsteelHead : ModNPC
         int oldestNPC = latestNPC;
         latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI, 0, latestNPC, NPC.whoAmI, SegmentCount);
 
-        Main.npc[oldestNPC].ai[0] = latestNPC;
+        Main.npc[oldestNPC].ai[0] = latestNPC; // NPC to follow
         Main.npc[latestNPC].realLife = NPC.whoAmI;
         return latestNPC;
     }
