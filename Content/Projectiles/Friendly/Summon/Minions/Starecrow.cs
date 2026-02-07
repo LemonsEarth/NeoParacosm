@@ -5,7 +5,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;
 public class Starecrow : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    float attackTimer = 0;
+
     public override void SetStaticDefaults()
     {
         Main.projFrames[Projectile.type] = 2;
@@ -40,7 +40,6 @@ public class Starecrow : ModProjectile
         return false;
     }
 
-    NPC closestNPC;
     Vector2 randomPos = Vector2.Zero;
     public override void AI()
     {

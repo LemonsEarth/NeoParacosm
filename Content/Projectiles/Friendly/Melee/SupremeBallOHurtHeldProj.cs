@@ -27,8 +27,6 @@ public class SupremeBallOHurtHeldProj : ModProjectile
     }
 
     int chargeCount = 0;
-    bool collided = false;
-
     static Asset<Texture2D> chainTexture;
 
     public override void Load()

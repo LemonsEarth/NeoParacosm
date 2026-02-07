@@ -13,8 +13,6 @@ public class ResearcherDialogueUIState : UIState
 {
     UIPanel MainPanel;
     UIText DialogueText;
-    UIImageButton CloseButton;
-
     UITextPanel<string> NamePanel;
 
     UIPanel TalkOptionsPanel;

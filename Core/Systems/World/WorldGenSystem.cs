@@ -219,50 +219,6 @@ public class WorldGenSystem : ModSystem
         }
     }
 
-    void GenerateDepths(GenerationProgress progress, GameConfiguration config)
-    {
-        int startTileX = Main.maxTilesX - 350;
-        int startTileY = (int)Main.worldSurface - 100;
-
-        int endTileX = Main.maxTilesX;
-        int endTileY = startTileY + 4 * WorldSize * 75;
-        for (int yLevel = 0; yLevel < 4 * WorldSize; yLevel++)
-        {
-            for (int xPos = 0; xPos < 5; xPos++)
-            {
-                WorldGen.OreRunner(startTileX + xPos * 100, startTileY + yLevel * 100, 200, 10, (ushort)TileType<DepthStoneBlock>());
-            }
-        }
-        GenerateVerticalOceanTunnels();
-        GenerateHorizontalOceanTunnels();
-
-        for (int i = startTileX; i < endTileX; i++)
-        {
-            for (int j = startTileY; j < endTileY; j++)
-            {
-                if (WorldGen.InWorld(i, j))
-                {
-
-                    WorldGen.PlaceWall(i, j, WallType<DepthStoneWall>());
-
-                    if (Main.tile[i, j].HasTile)
-                    {
-                        if (Main.tile[i, j].TileType != (ushort)TileType<DepthStoneBlock>())
-                        {
-                            WorldGen.PlaceTile(i, j, (ushort)TileType<DepthStoneBlock>(), forced: true);
-                        }
-
-                    }
-                    else
-                    {
-                        WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);
-                    }
-
-                }
-            }
-        }
-    }
-
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
         InsertAfterTask(tasks, "Tile Cleanup", "Crimson Village", GenerateCrimsonVillage);

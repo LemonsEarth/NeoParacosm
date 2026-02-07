@@ -10,7 +10,6 @@ public class AscendedMusketHeldProj : ModProjectile
 {
     int AITimer = 0;
     ref float shotCount => ref Projectile.ai[0];
-    bool thrown = false;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -40,7 +39,6 @@ public class AscendedMusketHeldProj : ModProjectile
         Projectile.localNPCHitCooldown = 300;
     }
 
-    float attackRate = 10;
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];

@@ -12,8 +12,6 @@ namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 public class InsatiableDolour : ModNPC
 {
     int AITimer = 0;
-    ref float RandomEvent => ref NPC.ai[0];
-
     bool isDashing = false;
     int dashTimer = 0;
     Vector2 dashStartPos;

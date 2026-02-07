@@ -6,8 +6,6 @@ namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class LamentOfTheLate : ModItem
 {
-    int useCounter = 0;
-
     public override void SetDefaults()
     {
         Item.damage = 28;

@@ -8,8 +8,6 @@ public class ShadowOrbNPC : ModNPC
     int savedDamage = 10;
     bool crit = false;
 
-    ref float playerIndex => ref NPC.ai[0];
-
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 1;

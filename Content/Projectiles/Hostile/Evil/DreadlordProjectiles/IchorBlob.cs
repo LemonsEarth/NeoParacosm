@@ -9,7 +9,6 @@ public class IchorBlob : PrimProjectile
     int AITimer = 0;
     ref float FallSpeed => ref Projectile.ai[0];
     ref float TimeLeft => ref Projectile.ai[1];
-    ref float RedirectCount => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -54,7 +53,6 @@ public class IchorBlob : PrimProjectile
 
     }
 
-    float glowOpacity = 0f;
     public override bool PreDraw(ref Color lightColor)
     {
         if (Main.dedServ) return true;

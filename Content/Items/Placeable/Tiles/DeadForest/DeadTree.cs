@@ -33,11 +33,6 @@ public class DeadTree : ModTree
         return TileType<DeadTreeSapling>();
     }
 
-    public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
-    {
-
-    }
-
     public override Asset<Texture2D> GetBranchTextures()
     {
         return branchTexture;

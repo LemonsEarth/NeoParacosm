@@ -503,8 +503,6 @@ public class ResearcherBoss : ModNPC
         AttackTimer--;
     }
 
-
-    const float SAV_BLAST_BURST_DURATION = 120;
     void SavBlastBurst()
     {
         targetPosition = player.Center;

@@ -6,7 +6,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 public class Deathseeder : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    ref float AttackTimer => ref Projectile.ai[1];
+
     NPC closestEnemy;
     public override void SetStaticDefaults()
     {

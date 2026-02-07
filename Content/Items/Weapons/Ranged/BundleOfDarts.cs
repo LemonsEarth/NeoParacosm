@@ -4,8 +4,6 @@ namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class BundleOfDarts : ModItem
 {
-    int useCounter = 0;
-
     public override void SetDefaults()
     {
         Item.damage = 9;

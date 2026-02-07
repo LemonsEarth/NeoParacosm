@@ -3,7 +3,7 @@
 public class CursedDecayFire : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    bool grounded = false;
+
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;

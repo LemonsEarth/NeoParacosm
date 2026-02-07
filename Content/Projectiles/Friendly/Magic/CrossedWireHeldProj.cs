@@ -28,7 +28,18 @@ public class CrossedWireHeldProj : PrimProjectile
         Projectile.penetrate = -1;
         Projectile.timeLeft = 60;
         Projectile.DamageType = DamageClass.Magic;
+        Projectile.usesLocalNPCImmunity = true;
+        Projectile.localNPCHitCooldown = 10;
         Projectile.Opacity = 1f;
+        Projectile.ArmorPenetration = 20;
+    }
+
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    {
+        float distance = MathHelper.Clamp(target.Distance(Main.MouseWorld), 0, 300);
+        float damageMod = (300 - distance) / 300;
+        float clampedDamageMod = MathHelper.Clamp(damageMod, 0.5f, 1f);
+        modifiers.FinalDamage *= clampedDamageMod;
     }
 
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
@@ -122,7 +133,7 @@ public class CrossedWireHeldProj : PrimProjectile
             positions.Add(Main.MouseWorld);
             positions.Add(Main.MouseWorld);
         }
-        
+
         SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
 
         AITimer++;
@@ -174,7 +185,7 @@ public class CrossedWireHeldProj : PrimProjectile
         GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
         foreach (Vector2 pos in positions)
         {
-            LemonUtils.DrawGlow(pos, new Color(230, 230, 255), 0.5f, 1f);
+            LemonUtils.DrawGlow(pos, new Color(230, 230, 255), 0.2f, 0.7f);
         }
 
         Texture2D tex = TextureAssets.Projectile[Type].Value;

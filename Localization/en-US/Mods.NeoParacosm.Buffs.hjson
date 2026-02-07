@@ -126,3 +126,8 @@ FireAuraBuff: {
 	DisplayName: Fire Aura Buff
 	Description: Mods.NeoParacosm.Buffs.FireAuraBuff.Description
 }
+
+ShroomedDebuff: {
+	DisplayName: Shroomed Debuff
+	Description: Mods.NeoParacosm.Buffs.ShroomedDebuff.Description
+}

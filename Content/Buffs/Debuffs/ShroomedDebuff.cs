@@ -1,0 +1,21 @@
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
+
+public class ShroomedDebuff : ModBuff
+{
+    public override void SetStaticDefaults()
+    {
+        Main.debuff[Type] = true;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
+        BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+    }
+
+    public override void Update(Player player, ref int buffIndex)
+    {
+
+    }
+
+    public override void Update(NPC npc, ref int buffIndex)
+    {
+        Dust.NewDustDirect(npc.RandomPos(), 2, 2, DustID.GlowingMushroom);
+    }
+}

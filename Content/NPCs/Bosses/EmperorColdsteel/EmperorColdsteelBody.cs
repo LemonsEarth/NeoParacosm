@@ -16,11 +16,6 @@ public class EmperorColdsteelBody : ModNPC
         get { return (int)NPC.ai[0]; }
     }
 
-    int SegmentNum
-    {
-        get { return (int)NPC.ai[1]; }
-    }
-
     int HeadNPC
     {
         get { return (int)NPC.ai[2]; }
@@ -31,8 +26,6 @@ public class EmperorColdsteelBody : ModNPC
     float RandNum = 0;
 
     EmperorColdsteelHead head;
-
-    Vector2 bodyPlayerDir => head.player.Center - NPC.Center;
 
     public override void SetStaticDefaults()
     {

@@ -11,7 +11,7 @@ namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 public class TaintedSteed : ModNPC
 {
     int AITimer = 0;
-    ref float RandomEvent => ref NPC.ai[0];
+
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 4;

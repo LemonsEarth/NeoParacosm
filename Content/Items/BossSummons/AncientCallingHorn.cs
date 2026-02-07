@@ -9,8 +9,6 @@ namespace NeoParacosm.Content.Items.BossSummons;
 
 public class AncientCallingHorn : ModItem
 {
-    int useCounter = 0;
-
     public override void SetDefaults()
     {
         Item.damage = 0;

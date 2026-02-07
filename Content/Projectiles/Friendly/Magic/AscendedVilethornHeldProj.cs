@@ -9,7 +9,6 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 public class AscendedVilethornHeldProj : ModProjectile
 {
     int AITimer = 0;
-    bool released = false;
     Vector2 trackingPos;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

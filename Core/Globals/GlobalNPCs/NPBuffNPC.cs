@@ -3,6 +3,7 @@ using NeoParacosm.Content.Items.Placeable.Special.ResearcherQuestTiles;
 using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using Terraria.DataStructures;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;
 
@@ -53,17 +54,33 @@ public class NPBuffNPC : GlobalNPC
         else
         {
             timer = 0;
-        }    
+        }
 
         if (npc.HasBuff(BuffType<SnowgraveDebuff>()) && !npc.boss)
         {
             npc.velocity = Vector2.Zero;
         }
+
+        if (npc.HasBuff(BuffType<ShroomedDebuff>()))
+        {
+            foreach (var otherNPC in Main.ActiveNPCs)
+            {
+                if (npc.whoAmI != otherNPC.whoAmI && npc.DistanceSQ(otherNPC.Center) < 10000)
+                {
+                    otherNPC.AddBuff(BuffType<ShroomedDebuff>(), 180);
+                }
+            }
+
+            if (LemonUtils.NotClient() && Main.rand.NextBool(200))
+            {
+                Projectile.NewProjectileDirect(npc.GetSource_FromAI(), npc.RandomPos(), Vector2.Zero, ProjectileID.Mushroom, 5, 0f);
+            }
+        }
     }
 
     public override void AI(NPC npc)
     {
-        
+
     }
 
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
@@ -86,6 +103,11 @@ public class NPBuffNPC : GlobalNPC
             float damagePerSecond = npc.lifeMax * 0.005f + 10;
             if (damagePerSecond > 50) damagePerSecond = 50;
             DOTDebuff(npc, damagePerSecond, ref damage);
+        }
+
+        if (npc.HasBuff(BuffType<ShroomedDebuff>()))
+        {
+            DOTDebuff(npc, 8, ref damage);
         }
     }
 

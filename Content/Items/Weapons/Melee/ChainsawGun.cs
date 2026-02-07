@@ -3,8 +3,6 @@ namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class ChainsawGun : ModItem
 {
-    int useCounter = 0;
-
     public override void SetDefaults()
     {
         Item.damage = 18;

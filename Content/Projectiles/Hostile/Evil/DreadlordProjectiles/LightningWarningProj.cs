@@ -39,9 +39,7 @@ public class LightningWarningProj : ModProjectile
     }
 
     Vector2 startPos = Vector2.Zero;
-    int amount = 0; // amount of lights
-    int interval = 0; // time between lights appearing
-    int count = 0;
+
     public override void AI()
     {
         if (AITimer == 0)

@@ -2,7 +2,6 @@
 
 public class LightsBaneDebuff : ModBuff
 {
-    int timer = 0;
     public override void SetStaticDefaults()
     {
         Main.debuff[Type] = true;
@@ -23,7 +22,6 @@ public class LightsBaneDebuff : ModBuff
 
 public class LightsBaneDebuff2 : ModBuff
 {
-    int timer = 0;
     public override void SetStaticDefaults()
     {
         Main.debuff[Type] = true;

@@ -76,7 +76,7 @@ public class Marauder : ModNPC
     }
 
     int CarrierProj => WorldGen.crimson ? ProjectileType<CrimsonCarrierProj>() : ProjectileType<CorruptCarrierProj>();
-    int GasProj => WorldGen.crimson ? ProjectileType<RotGasHostile>() : ProjectileType<DecayGasHostile>();
+
     int stage => NPC.GetLifePercent() != 0 ? 4 - (int)Math.Ceiling(NPC.GetLifePercent() / 0.25f) : 3;
     public override void AI()
     {
@@ -135,7 +135,7 @@ public class Marauder : ModNPC
                     break;
                 case < 900:
                     NPC.rotation = MathHelper.ToRadians(AITimer * 12);
-                    if (AttackTimer % (60 / (stage + 1)) == 0)
+                    /*if (AttackTimer % (60 / (stage + 1)) == 0)
                     {
                         if (LemonUtils.NotClient())
                         {
@@ -144,7 +144,7 @@ public class Marauder : ModNPC
                                 LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, GasProj, NPC.damage / 4);
                             }
                         }
-                    }
+                    }*/
                     NPC.MoveToPos(player.Center, 0.05f * (stage + 1), 0.05f * (stage + 1), 0.15f, 0.15f);
                     break;
                 default:

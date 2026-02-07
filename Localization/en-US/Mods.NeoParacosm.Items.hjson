@@ -924,5 +924,29 @@ HiveTwisterItem: {
 
 CrossedWire: {
 	DisplayName: Crossed Wire
+	Tooltip: Produces constant electricity between the weapon and your mouse cursor
+}
+
+GlowingMushroomSpore: {
+	DisplayName: Glowing Mushroom Spore
 	Tooltip: ""
+}
+
+MushroomCannon: {
+	DisplayName: Mushroom Cannon
+	Tooltip:
+		'''
+		Fires glowing mushrooms that inflict Shroomed
+		Shroomed deals damage over time and spreads to nearby enemies
+		Uses Glowing Mushroom Spores as ammo
+		'''
+}
+
+TheGuardDuty: {
+	DisplayName: The Guard Duty
+	Tooltip:
+		'''
+		Fires stingers instead of musket balls
+		Occasionally fires an array of bees
+		'''
 }

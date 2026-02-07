@@ -5,7 +5,6 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 public class ChainsawGunHeldProjectile : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    bool sharp = false;
 
     public override void SetStaticDefaults()
     {

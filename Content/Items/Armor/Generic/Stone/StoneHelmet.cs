@@ -10,8 +10,6 @@ public class StoneHelmet : ModItem
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(speedDecrease);
     public static LocalizedText setBonusText;
 
-    int timer = 0;
-
     public override void SetStaticDefaults()
     {
         setBonusText = this.GetLocalization("SetBonus");

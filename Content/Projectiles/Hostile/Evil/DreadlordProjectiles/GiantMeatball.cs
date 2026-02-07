@@ -32,7 +32,6 @@ public class GiantMeatball : ModProjectile
         Projectile.Opacity = 1f;
     }
 
-    int spinDir = -1;
     float savedSpeed = 1f;
     public override void AI()
     {

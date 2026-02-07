@@ -6,9 +6,6 @@ namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 public class CrimsonCarrierHead : ModNPC
 {
     float AITimer = 0;
-    float AttackTimer = 0;
-    float AttackCount = 0;
-
     bool spawnedEnemies = false;
 
     public override void SetStaticDefaults()

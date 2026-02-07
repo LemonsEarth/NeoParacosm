@@ -8,8 +8,6 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 public class AscendedCrimsonRodHeldProj : ModProjectile
 {
     int AITimer = 0;
-    ref float chargeAmount => ref Projectile.ai[0];
-    bool released = false;
     int shotprojID = -1;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

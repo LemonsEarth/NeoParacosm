@@ -8,7 +8,6 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 public class LingeringDeathflameFriendly : ModProjectile
 {
     int AITimer = 0;
-    bool landed = false;
 
     ref float doFall => ref Projectile.ai[0];
     ref float duration => ref Projectile.ai[1];

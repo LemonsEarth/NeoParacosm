@@ -12,10 +12,10 @@ public class CrossedWire : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 44;
+        Item.damage = 36;
         Item.DamageType = DamageClass.Magic;
-        Item.width = 48;
-        Item.height = 48;
+        Item.width = 44;
+        Item.height = 44;
         Item.useTime = 60;
         Item.useAnimation = 60;
         Item.useStyle = ItemUseStyleID.Shoot;
@@ -24,7 +24,7 @@ public class CrossedWire : ModItem
         Item.rare = ItemRarityID.Pink;
         Item.UseSound = SoundID.Item8;
         Item.autoReuse = true;
-        Item.mana = 2;
+        Item.mana = 4;
         Item.shoot = ProjectileType<CrossedWireHeldProj>();
         Item.shootSpeed = 10;
         Item.noMelee = true;
@@ -36,5 +36,16 @@ public class CrossedWire : ModItem
     {
         Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI);
         return false;
+    }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.HallowedBar, 8)
+            .AddIngredient(ItemID.SoulofMight, 12)
+            .AddRecipeGroup(RecipeGroupID.IronBar, 12)
+            .AddIngredient(ItemID.Wire, 20)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
     }
 }

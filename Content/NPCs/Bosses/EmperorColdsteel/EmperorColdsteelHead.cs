@@ -89,7 +89,6 @@ public class EmperorColdsteelHead : ModNPC
     }
 
     public int Phase { get; private set; } = 0;
-    bool reachedSecondPhase = false;
     #endregion
 
     public Player player { get; private set; }
@@ -304,12 +303,6 @@ public class EmperorColdsteelHead : ModNPC
         AttackCount2 = 0;
         AttackTimer = 0;
         NPC.Opacity = 1f;
-    }
-
-    void PlayRoar()
-    {
-        SoundEngine.PlaySound(SoundID.DD2_BetsyDeath with { PitchRange = (0.2f, 0.6f) }, NPC.Center);
-        SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-1f, -0.5f) }, NPC.Center);
     }
 
     public override bool? CanFallThroughPlatforms()

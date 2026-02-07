@@ -98,10 +98,9 @@ public class Dreadlord : ModNPC
     // Whether eye lasers should be active
     bool GreenLaserEnabled = false;
     bool YellowLaserEnabled = false;
-    #endregion
 
+    #endregion
     #region Constants
-    const int INTRO_DURATION = 60;
 
     // Animation frame constants
     const int MOUTH_CLOSED = 0;
@@ -136,11 +135,6 @@ public class Dreadlord : ModNPC
     Vector2 NPCToPlayer => NPC.DirectionTo(player.Center);
 
     Vector2 ArenaCenter => DarkCataclysmSystem.DCEffectNoFogPosition == Vector2.Zero ? player.Center : DarkCataclysmSystem.DCEffectNoFogPosition;
-
-    /// <summary>
-    /// The leg being controlled in attacks that utilize a single leg at a time
-    /// </summary>
-    DreadlordBodyPart targetLeg;
 
     public override void Load()
     {
@@ -1638,8 +1632,6 @@ public class Dreadlord : ModNPC
         {
             attackDuration = attackDurations2[(int)Attack];
         }
-
-        targetLeg = null;
         AttackCount = 0;
         AttackCount2 = 0;
         AttackTimer = 0;
