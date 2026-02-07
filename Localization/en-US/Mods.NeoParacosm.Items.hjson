@@ -929,10 +929,7 @@ CrossedWire: {
 
 GlowingMushroomSpore: {
 	DisplayName: Glowing Mushroom Spore
-	Tooltip:
-	'''
-	With the help of technology and the right environment, these can quickly grow into normal glowing mushrooms
-	'''
+	Tooltip: With the help of technology and the right environment, these can quickly grow into normal glowing mushrooms
 }
 
 MushroomCannon: {

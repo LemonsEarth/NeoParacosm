@@ -18,6 +18,11 @@ public class EmperorColdsteelBody : ModNPC
 
     int HeadNPC
     {
+        get { return (int)NPC.ai[1]; }
+    }
+
+    int SegmentNum
+    {
         get { return (int)NPC.ai[2]; }
     }
 
@@ -58,7 +63,6 @@ public class EmperorColdsteelBody : ModNPC
         NPC.noGravity = true;
         NPC.npcSlots = 10;
         NPC.SpawnWithHigherTime(30);
-
         if (!Main.dedServ)
         {
             Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/ChaosCognition");
@@ -107,7 +111,6 @@ public class EmperorColdsteelBody : ModNPC
 
         NPC.Opacity = head.NPC.Opacity;
         FollowNextSegment(followingNPC);
-
         NPC.spriteDirection = followingNPC.spriteDirection;
 
         AITimer++;

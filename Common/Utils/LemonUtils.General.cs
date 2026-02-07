@@ -67,6 +67,11 @@ public static partial class LemonUtils
                     rect.Top <= other.Bottom);
     }
 
+    public static float AngleBetween(Vector2 v1, Vector2 v2)
+    {
+        return MathF.Atan2(v1.X * v2.Y - v2.X * v1.Y, v1.X * v2.X + v1.Y * v2.Y);
+    }
+
     public static Vector2 RandomVector2Circular(float circleHalfWidth, float circleHalfHeight, float minWidth = 0, float minHeight = 0)
     {
         float width = 0;

@@ -206,13 +206,28 @@ public class EmperorColdsteelHead : ModNPC
         if (AITimer == 0)
         {
             SpawnSegments();
+            targetPosition = NPC.Center;
+            NPC.velocity = Vector2.UnitY * 5;
         }
         NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
         player = Main.player[NPC.target];
-        NPC.MoveToPos(player.Center, 0.05f, 0.05f, 0.4f, 0.4f);
+        //NPC.MoveToPos(player.Center, 0.05f, 0.05f, 0.4f, 0.4f);
+        MoveToPos(player.Center, 2, 10);
         DespawnCheck();
         AttackControl();
         AITimer++;
+    }
+
+    void MoveToPos(Vector2 pos, float turningSpeedDegrees, float moveSpeed)
+    {
+        Vector2 dirToPos = NPC.DirectionTo(pos);
+        float angleBetween = MathHelper.ToDegrees(LemonUtils.AngleBetween(NPC.velocity, dirToPos));
+        //Main.NewText(MathHelper.ToDegrees(angleBetween));
+        if (MathF.Abs(angleBetween) > MathHelper.ToRadians(5))
+        {
+            NPC.velocity = NPC.velocity.RotatedBy(MathHelper.ToRadians(turningSpeedDegrees) * LemonUtils.Sign(angleBetween, 1));
+        }
+
     }
 
     void SpawnSegments()
@@ -229,10 +244,7 @@ public class EmperorColdsteelHead : ModNPC
 
     int SpawnSegment(int type, int latestNPC)
     {
-        int oldestNPC = latestNPC;
-        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI, 0, latestNPC, NPC.whoAmI, SegmentCount);
-
-        Main.npc[oldestNPC].ai[0] = latestNPC; // NPC to follow
+        latestNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, latestNPC, NPC.whoAmI, SegmentCount);
         Main.npc[latestNPC].realLife = NPC.whoAmI;
         return latestNPC;
     }

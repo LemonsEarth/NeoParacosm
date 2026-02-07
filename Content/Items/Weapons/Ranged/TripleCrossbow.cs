@@ -1,4 +1,7 @@
 ﻿
+using Terraria.Audio;
+using Terraria.DataStructures;
+
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class TripleCrossbow : ModItem
@@ -23,6 +26,12 @@ public class TripleCrossbow : ModItem
         Item.useAmmo = AmmoID.Arrow;
         Item.shootSpeed = 100;
         Item.noMelee = true;
+    }
+
+    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+    {
+        SoundEngine.PlaySound(SoundID.Item5 with { PitchRange = (0.1f, 0.2f) }, player.Center);
+        return true;
     }
 
     public override void AddRecipes()
