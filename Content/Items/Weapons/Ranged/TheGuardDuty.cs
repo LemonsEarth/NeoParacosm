@@ -1,7 +1,10 @@
 ﻿
 
+using NeoParacosm.Core.Conditions;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
@@ -46,5 +49,26 @@ public class TheGuardDuty : ModItem
             }
         }
         return true;
+    }
+}
+
+public class HornetNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+
+    public override void SetStaticDefaults()
+    {
+
+    }
+
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return lateInstantiation && (entity.type == NPCID.Hornet || entity.type == NPCID.MossHornet);
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        ItemDropWithConditionRule rule1 = new ItemDropWithConditionRule(ItemType<TheGuardDuty>(), 50, 1, 1, new EyeOfCthulhuDowned());
+        npcLoot.Add(rule1);
     }
 }

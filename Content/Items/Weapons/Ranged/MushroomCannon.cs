@@ -1,9 +1,9 @@
-﻿
-
-using NeoParacosm.Content.Items.Consumables;
+﻿using NeoParacosm.Content.Items.Consumables;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
+using NeoParacosm.Core.Conditions;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
@@ -12,7 +12,7 @@ public class MushroomCannon : ModItem
     public override void SetDefaults()
     {
         Item.damage = 36;
-        Item.knockBack = 8f;
+        Item.knockBack = 5f;
         Item.crit = 4;
         Item.DamageType = DamageClass.Ranged;
         Item.width = 48;
@@ -39,5 +39,39 @@ public class MushroomCannon : ModItem
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
     {
         //velocity = velocity.RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 16, MathHelper.Pi / 16));
+    }
+}
+
+public class MushroomNPCs : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+
+    public override void SetStaticDefaults()
+    {
+
+    }
+
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return lateInstantiation && (entity.type == NPCID.FungiBulb
+            || entity.type == NPCID.AnomuraFungus
+            || entity.type == NPCID.MushiLadybug
+            || entity.type == NPCID.ZombieMushroom
+            || entity.type == NPCID.ZombieMushroomHat);
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        IItemDropRule dropRule;
+        switch (npc.type)
+        {
+            case NPCID.AnomuraFungus or NPCID.MushiLadybug or NPCID.FungiBulb:
+                dropRule = ItemDropRule.Common(ItemType<MushroomCannon>(), 20);
+                break;
+            default:
+                dropRule = ItemDropRule.Common(ItemType<MushroomCannon>(), 40);
+                break;
+        }
+        npcLoot.Add(dropRule);
     }
 }

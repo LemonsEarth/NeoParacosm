@@ -107,7 +107,12 @@ public class NPBuffNPC : GlobalNPC
 
         if (npc.HasBuff(BuffType<ShroomedDebuff>()))
         {
-            DOTDebuff(npc, 8, ref damage);
+            float dps = 8;
+            if (npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.Creeper || npc.realLife != -1)
+            {
+                dps = 1;
+            }
+            DOTDebuff(npc, dps, ref damage);
         }
     }
 

@@ -929,7 +929,10 @@ CrossedWire: {
 
 GlowingMushroomSpore: {
 	DisplayName: Glowing Mushroom Spore
-	Tooltip: ""
+	Tooltip:
+	'''
+	With the help of technology and the right environment, these can quickly grow into normal glowing mushrooms
+	'''
 }
 
 MushroomCannon: {
@@ -939,6 +942,7 @@ MushroomCannon: {
 		Fires glowing mushrooms that inflict Shroomed
 		Shroomed deals damage over time and spreads to nearby enemies
 		Uses Glowing Mushroom Spores as ammo
+		"May be carried around by those who roam the sparse mushroom lands under the sky"
 		'''
 }
 
@@ -949,4 +953,9 @@ TheGuardDuty: {
 		Fires stingers instead of musket balls
 		Occasionally fires an array of bees
 		'''
+}
+
+GrenadeBundle: {
+	DisplayName: Grenade Bundle
+	Tooltip: ""
 }
