@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Consumables;
+using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 using NeoParacosm.Core.Conditions;
 using Terraria.Audio;
@@ -62,16 +63,20 @@ public class MushroomNPCs : GlobalNPC
 
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
-        IItemDropRule dropRule;
+        IItemDropRule dropRule1;
+        IItemDropRule dropRule2;
         switch (npc.type)
         {
             case NPCID.AnomuraFungus or NPCID.MushiLadybug or NPCID.FungiBulb:
-                dropRule = ItemDropRule.Common(ItemType<MushroomCannon>(), 20);
+                dropRule1 = ItemDropRule.Common(ItemType<MushroomCannon>(), 20);
+                dropRule2 = ItemDropRule.Common(ItemType<GlowingSporeSack>(), 20);
                 break;
             default:
-                dropRule = ItemDropRule.Common(ItemType<MushroomCannon>(), 40);
+                dropRule1 = ItemDropRule.Common(ItemType<MushroomCannon>(), 40);
+                dropRule2 = ItemDropRule.Common(ItemType<GlowingSporeSack>(), 40);
                 break;
         }
-        npcLoot.Add(dropRule);
+        npcLoot.Add(dropRule1);
+        npcLoot.Add(dropRule2);
     }
 }

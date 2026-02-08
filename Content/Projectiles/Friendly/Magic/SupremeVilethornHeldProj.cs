@@ -51,18 +51,17 @@ public class SupremeVilethornHeldProj : ModProjectile
         {
             trackingPos = Projectile.Center;
         }
+
+        if (!player.CheckMana((int)MathHelper.Clamp(player.HeldItem.mana / 8, 2, 20), true, true))
+        {
+            Projectile.Kill();
+            return;
+        }
+
         if (player.channel)
         {
             Projectile.timeLeft = 2;
             SetPositionRotationDirection(player, player.Center.DirectionTo(Main.MouseWorld).ToRotation());
-            if (AITimer % 120 == 0)
-            {
-                if (!player.CheckMana(player.HeldItem.mana, true))
-                {
-                    Projectile.Kill();
-                }
-
-            }
             trackingPos += trackingPos.DirectionTo(Main.MouseWorld) * 5;
             Dust.NewDustPerfect(trackingPos, DustID.GemEmerald, Scale: 2f).noGravity = true;
             if (trackingPos.Distance(Main.MouseWorld) < 12)

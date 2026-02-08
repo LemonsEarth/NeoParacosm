@@ -954,5 +954,35 @@ TheGuardDuty: {
 
 GrenadeBundle: {
 	DisplayName: Grenade Bundle
+	Tooltip: Lobs a handful of grenades
+}
+
+DarkIncendiary: {
+	DisplayName: Dark Incendiary
+	Tooltip: Explosions leave behind lingering deathflame
+}
+
+AssassinsBackup: {
+	DisplayName: Assassins Backup
+	Tooltip:
+		'''
+		Throws a volley of knives
+		Knives have a chance to steal life
+		'''
+}
+
+GlowingSporeSack: {
+	DisplayName: Glowing Spore Sack
+	Tooltip:
+		'''
+		Casts forth a cloud of mushroom spores that inflicts Shroomed
+		Shroomed deals damage over time and spreads to nearby enemies
+		Uses Glowing Mushroom Spores as ammo
+		"May be carried around by those who roam the sparse mushroom lands under the sky"
+		'''
+}
+
+Starsaber: {
+	DisplayName: Starsaber
 	Tooltip: ""
 }

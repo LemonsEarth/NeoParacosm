@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using Terraria.Audio;
+
+namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
 public class AshenBolt : ModProjectile
 {
@@ -72,6 +74,8 @@ public class AshenBolt : ModProjectile
     {
         if (doBurst == 1)
         {
+            SoundEngine.PlaySound(SoundID.Item20 with { PitchRange = (0.2f, 0.5f)}, Projectile.position);
+            
             if (Main.myPlayer == Projectile.owner)
             {
                 for (int i = 0; i < 3; i++)
@@ -80,7 +84,6 @@ public class AshenBolt : ModProjectile
                 }
             }
         }
-        //SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
         LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 7f, color: Color.Orange);
     }
 }

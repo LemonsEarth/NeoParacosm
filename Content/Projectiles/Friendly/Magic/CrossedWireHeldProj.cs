@@ -181,8 +181,16 @@ public class CrossedWireHeldProj : PrimProjectile
         Viewport viewport = GraphicsDevice.Viewport;
         BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, -1, 10);
         GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
+
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+
         BasicEffect.CurrentTechnique.Passes[0].Apply();
         GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
+
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+    
         foreach (Vector2 pos in positions)
         {
             LemonUtils.DrawGlow(pos, new Color(230, 230, 255), 0.2f, 0.7f);
@@ -192,5 +200,11 @@ public class CrossedWireHeldProj : PrimProjectile
         Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
 
         return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

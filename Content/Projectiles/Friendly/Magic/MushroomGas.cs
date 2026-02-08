@@ -7,7 +7,7 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class RotGas : ModProjectile
+public class MushroomGas : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float RandomRot => ref Projectile.ai[1];
@@ -24,10 +24,10 @@ public class RotGas : ModProjectile
         Projectile.width = 24;
         Projectile.height = 24;
         Projectile.friendly = true;
-        Projectile.timeLeft = 300;
+        Projectile.timeLeft = 420;
         Projectile.penetrate = 6;
-        Projectile.Opacity = 0f;
         Projectile.stopsDealingDamageAfterPenetrateHits = true;
+        Projectile.Opacity = 0f;
         Projectile.usesIDStaticNPCImmunity = true;
         Projectile.idStaticNPCHitCooldown = 30;
         Projectile.hide = true;
@@ -36,7 +36,7 @@ public class RotGas : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffType<CrimsonRotDebuff>(), 300);
+        target.AddBuff(BuffType<ShroomedDebuff>(), 60);
     }
 
     public override void AI()
@@ -48,6 +48,17 @@ public class RotGas : ModProjectile
                 Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2), GoreType<RedSmokeGore>(), Main.rand.NextFloat(0.8f, 1.2f));
             }
         }*/
+
+        if (AITimer % 30 == 0)
+        {
+            if (LemonUtils.NotClient())
+            {
+                LemonUtils.QuickProj(Projectile, Projectile.RandomPos(-16, -16), Vector2.Zero, ProjectileID.Mushroom, Projectile.damage * 2);
+            }
+        }
+
+        Dust.NewDustDirect(Projectile.RandomPos(-16, -16), 2, 2, DustID.GemDiamond).noGravity = true;
+
         if (AITimer == 0)
         {
             RandomRot = Main.rand.NextFloat(0.5f, 3);
@@ -62,8 +73,8 @@ public class RotGas : ModProjectile
         if (AITimer < 30)
         {
             Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
-
         }
+
         //Projectile.rotation += MathHelper.ToRadians(RandomRot);
         AITimer++;
     }
@@ -84,7 +95,7 @@ public class RotGas : ModProjectile
         var shader = GameShaders.Misc["NeoParacosm:GasShader"];
         shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["distance"].SetValue(1);
-        shader.Shader.Parameters["color"].SetValue(new Vector4(1, 0, 0, Projectile.Opacity));
+        shader.Shader.Parameters["color"].SetValue(new Vector4(0, 0, 1, Projectile.Opacity) * 2);
         shader.Shader.Parameters["velocity"].SetValue(new Vector2(-Projectile.velocity.X * 0.001f, 0.5f));
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

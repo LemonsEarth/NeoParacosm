@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Common.Utils.Prim;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Common.Utils.Prim;
 using Terraria.Audio;
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -59,5 +60,11 @@ public class CorruptBolt : PrimProjectile
     {
         //SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
         LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.Corruption, 4f);
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

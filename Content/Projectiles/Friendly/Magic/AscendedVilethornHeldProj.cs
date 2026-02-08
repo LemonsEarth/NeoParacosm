@@ -52,16 +52,17 @@ public class AscendedVilethornHeldProj : ModProjectile
         {
             trackingPos = Projectile.Center;
         }
+        if (!player.CheckMana((int)MathHelper.Clamp(player.HeldItem.mana / 8, 2, 20), true, true))
+        {
+            Projectile.Kill();
+            return;
+        }
         if (player.channel)
         {
             Projectile.timeLeft = 2;
             SetPositionRotationDirection(player, player.Center.DirectionTo(Main.MouseWorld).ToRotation());
             if (AITimer % 30 == 0)
             {
-                if (!player.CheckMana(player.HeldItem.mana, true))
-                {
-                    Projectile.Kill();
-                }
                 if (Main.myPlayer == Projectile.owner)
                 {
                     if (Main.rand.NextBool(5))
