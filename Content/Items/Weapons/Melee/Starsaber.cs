@@ -15,7 +15,7 @@ public class Starsaber : ModItem
 
     public override void SetDefaults()
     {
-        Item.damage = 24;
+        Item.damage = 16;
         Item.DamageType = DamageClass.Melee;
         Item.width = 72;
         Item.height = 72;

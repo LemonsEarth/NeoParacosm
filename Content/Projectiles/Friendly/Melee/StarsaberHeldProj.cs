@@ -21,14 +21,17 @@ public class StarsaberHeldProj : PrimProjectile
     {
         if (special == 0 || alreadyHit) return;
         alreadyHit = true;
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 4; i++)
         {
             LemonUtils.QuickProj(
                 Projectile,
                 Projectile.Center,
-                Projectile.GetOwner().DirectionTo(target.Center).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 8, MathHelper.Pi/8)) * Main.rand.NextFloat(16, 24),
-                ProjectileID.SuperStar,
-                Projectile.damage / 2
+                Projectile.GetOwner().DirectionTo(target.Center).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 8, MathHelper.Pi / 8)) * Main.rand.NextFloat(12, 16),
+                ProjectileType<HomingStar>(),
+                Projectile.damage / 3,
+                3f,
+                ai0: 45f,
+                ai1: 90f
                 );
         }
     }
@@ -54,7 +57,6 @@ public class StarsaberHeldProj : PrimProjectile
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 180;
-        Projectile.stopsDealingDamageAfterPenetrateHits = true;
     }
 
     float goalRotation = 270;
@@ -87,10 +89,6 @@ public class StarsaberHeldProj : PrimProjectile
             {
                 rotValue = 360;
                 goalRotation = 0;
-            }
-            if (special == 1)
-            {
-                Projectile.penetrate = 1;
             }
         }
         Projectile.extraUpdates = 3;

@@ -26,7 +26,7 @@ public class GiantShiverthorn : ModProjectile
 
     public override void AI()
     {
-        closestEnemy = GetClosestNPC(1000);
+        closestEnemy = LemonUtils.GetClosestNPC(Projectile.Center, 1000);
 
         Projectile.velocity.Y = 10f;
         if (closestEnemy != null)
@@ -35,7 +35,7 @@ public class GiantShiverthorn : ModProjectile
             {
                 if (LemonUtils.NotClient())
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.Center.DirectionTo(closestEnemy.Center) * 10, ProjectileType<IceProjectile>(), Projectile.damage, 1f, Projectile.owner);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.Center.DirectionTo(closestEnemy.Center) * 5, ProjectileType<IceProjectile>(), Projectile.damage, 1f, Projectile.owner);
                 }
                 SoundEngine.PlaySound(SoundID.Item28 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
                 AttackTimer = 0;
@@ -59,27 +59,6 @@ public class GiantShiverthorn : ModProjectile
         }
         Lighting.AddLight(Projectile.Center, 0, 0, 5);
         AITimer++;
-    }
-
-    public NPC GetClosestNPC(int distance)
-    {
-        NPC closestEnemy = null;
-        foreach (var npc in Main.ActiveNPCs)
-        {
-            if (npc.CanBeChasedBy() && Projectile.Center.Distance(npc.Center) < distance)
-            {
-                if (closestEnemy == null)
-                {
-                    closestEnemy = npc;
-                }
-                float distanceToNPC = Projectile.Center.DistanceSQ(npc.Center);
-                if (distanceToNPC < Projectile.Center.DistanceSQ(closestEnemy.Center))
-                {
-                    closestEnemy = npc;
-                }
-            }
-        }
-        return closestEnemy;
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)

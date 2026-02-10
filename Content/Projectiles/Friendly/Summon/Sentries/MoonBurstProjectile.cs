@@ -47,8 +47,8 @@ public class MoonBurstProjectile : ModProjectile
             {
                 if (Main.myPlayer == Projectile.owner)
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(1, 1).RotatedBy(i * MathHelper.PiOver4) * 10, Projectile.type, Projectile.damage / 2, Projectile.knockBack, ai1: reps - 1, ai2: 1.2f);
                     reps--;
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, new Vector2(1, 1).RotatedBy(i * MathHelper.PiOver4) * 10, Projectile.type, Projectile.damage / 2, Projectile.knockBack, ai1: reps, ai2: 1.2f);
                 }
             }
         }

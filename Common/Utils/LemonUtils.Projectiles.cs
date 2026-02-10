@@ -37,13 +37,18 @@ public static partial class LemonUtils
             }
             else if (Main.masterMode)
             {
-                damage *= 1/6f;
+                damage *= 1 / 6f;
             }
 
             source = npc.GetSource_FromThis();
         }
 
         return Projectile.NewProjectileDirect(source, position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
+    }
+
+    public static Texture2D GetTexture(this Projectile projectile)
+    {
+        return TextureAssets.Projectile[projectile.type].Value;
     }
 
     public static void DrawAfterimages(this Projectile Projectile, Color lightColor, float opacityMultiplier = 1f)

@@ -21,7 +21,7 @@ public class InvisibleProjectileFriendly : ModProjectile
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
-        Projectile.tileCollide = true;
+        Projectile.tileCollide = false;
         Projectile.penetrate = -1;
         Projectile.localNPCHitCooldown = 30;
         Projectile.usesLocalNPCImmunity = true;

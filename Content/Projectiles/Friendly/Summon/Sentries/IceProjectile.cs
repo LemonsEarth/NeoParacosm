@@ -21,14 +21,19 @@ public class IceProjectile : ModProjectile
         Projectile.localNPCHitCooldown = 30;
     }
 
+    float savedSpeed;
     public override void AI()
     {
+        if (AITimer == 0)
+        {
+            savedSpeed = Projectile.velocity.Length();
+        }
         if (AITimer % 30 == 0)
         {
             closestEnemy = GetClosestNPC(500);
             if (closestEnemy != null)
             {
-                Projectile.velocity = Projectile.Center.DirectionTo(closestEnemy.Center) * 5;
+                Projectile.velocity = Projectile.Center.DirectionTo(closestEnemy.Center) * savedSpeed;
             }
         }
 
