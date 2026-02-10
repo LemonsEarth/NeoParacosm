@@ -352,10 +352,10 @@ BlinkrootBusterStaff: {
 BranchOfLife: {
 	DisplayName: Branch Of Life
 	Tooltip:
-	'''
-	Grants nearby players the Blessing of the Jungle Heart
-	Cycles through many different attacks when enemies are nearby
-	'''
+		'''
+		Grants nearby players the Blessing of the Jungle Heart
+		Cycles through many different attacks when enemies are nearby
+		'''
 }
 
 DeathseederStaff: {

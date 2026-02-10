@@ -9,11 +9,13 @@ public class ParacosmTextures : ModSystem
     public static Asset<Texture2D> TransparentNoiseTexture { get; private set; }
     public static Asset<Texture2D> GlowBallTexture { get; private set; }
     public static Asset<Texture2D> TrueMagicPixel { get; private set; }
+    public static Asset<Texture2D> Empty100Tex { get; private set; }
     public override void Load()
     {
         NoiseTexture = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture");
         TransparentNoiseTexture = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Noise/TransparentNoise");
         GlowBallTexture = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Misc/GlowBall");
         TrueMagicPixel = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Misc/TrueMagicPixel");
+        Empty100Tex = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex");
     }
 }
