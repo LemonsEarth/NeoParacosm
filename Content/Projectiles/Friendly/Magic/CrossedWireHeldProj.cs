@@ -100,7 +100,6 @@ public class CrossedWireHeldProj : PrimProjectile
         }
 
         SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
-
         AITimer++;
     }
 
@@ -108,25 +107,36 @@ public class CrossedWireHeldProj : PrimProjectile
     {
         float _ = float.NaN;
         Vector2 endPos = Main.MouseWorld;
-        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPos, 32, ref _);
+        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPos, Projectile.height, ref _);
     }
 
+    float randValue = 0;
+    int randSegmentCount = 0;
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D tex = TextureAssets.Projectile[Type].Value;
         Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
-
+        if (AITimer % 3 == 0)
+        {
+            randValue = Main.rand.NextFloat(1, 100);
+            randSegmentCount = Main.rand.Next(8, 16);
+        }
+        Vector2 lightningPos = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation - MathHelper.PiOver4) * (Projectile.height / 2); // start at tip of the weapon
+        lightningLength -= 0.5f; // cutting off excess
+        LemonUtils.DrawGlow(lightningPos, Color.White, 1f, Projectile.scale * (MathF.Sin(AITimer) + 8) * 0.16f);
         var shader = GameShaders.Misc["NeoParacosm:LightningShader"];
         shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
-        shader.Shader.Parameters["segmentCount"].SetValue(10);
+        shader.Shader.Parameters["segmentCount"].SetValue(randSegmentCount);
+        shader.Shader.Parameters["random"].SetValue(randValue);
+        shader.Shader.Parameters["amplitudeMult"].SetValue(0.2f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
         shader.Apply();
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
 
         Vector2 lightningScale = new(lightningLength, 1);
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
         Main.EntitySpriteDraw(
             ParacosmTextures.Empty100Tex.Value, 
-            Projectile.Center - Main.screenPosition, 
+            lightningPos - Main.screenPosition, 
             null, 
             Color.White, 
             Projectile.rotation - MathHelper.PiOver4, 
