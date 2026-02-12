@@ -100,7 +100,7 @@ public class EmperorColdsteelBody : ModNPC
     {
         NPC followingNPC = Main.npc[FollowingNPC];
         NPC headNPC = Main.npc[HeadNPC];
-
+        Lighting.AddLight(NPC.Center, 0.8f, 0.8f, 1f);
         if (followingNPC is null || !followingNPC.active || followingNPC.friendly || followingNPC.townNPC || followingNPC.lifeMax <= 5)
         {
             NPC.active = false;

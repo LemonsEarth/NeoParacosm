@@ -1,23 +1,28 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using static Microsoft.Xna.Framework.MathHelper;
 
 namespace NeoParacosm.Content.NPCs.Bosses.EmperorColdsteel;
 
 [AutoloadBossHead]
 public class EmperorColdsteelHead : ModNPC
 {
-    int BodyType => ModContent.NPCType<EmperorColdsteelBody>();
+    int BodyType => NPCType<EmperorColdsteelBody>();
     const int MAX_SEGMENT_COUNT = 8;
     public int SegmentCount { get; private set; } = 0;
+    bool debugText = false;
     #region Attack Fields and Data
     ref float AITimer => ref NPC.ai[0];
+
 
     /// <summary>
     /// The current attack being executed.
@@ -68,7 +73,7 @@ public class EmperorColdsteelHead : ModNPC
     /// <summary>
     /// Attack durations indexed by Attack field
     /// </summary>
-    readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
+    readonly int[] attackDurations = [1500, 1080, 1080, 1080, 1320];
     readonly int[] attackDurations2 = [1600, 1080, 1080, 1080, 1320];
 
     /// <summary>
@@ -76,11 +81,7 @@ public class EmperorColdsteelHead : ModNPC
     /// </summary>
     public enum Attacks
     {
-        BallsNLightning,
-        MeatballsWithFire,
-        CursedFlamethrower,
-        FlameWallsAndSpinning,
-        DashingWithBalls,
+        DivingOnPlayer,
     }
 
     public enum Attacks2
@@ -95,6 +96,9 @@ public class EmperorColdsteelHead : ModNPC
     Vector2 targetPosition = Vector2.Zero;
 
     List<EmperorColdsteelBody> Segments = new List<EmperorColdsteelBody>();
+
+    bool drawFlashlight = false;
+    float flashLightOpacity = 0f;
 
     public override void SetStaticDefaults()
     {
@@ -121,7 +125,6 @@ public class EmperorColdsteelHead : ModNPC
             new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
         });
     }
-
 
     public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
     {
@@ -165,40 +168,24 @@ public class EmperorColdsteelHead : ModNPC
             );
     }
 
-    public override bool CheckActive()
+    void Visuals()
     {
-        return false;
-    }
+        Lighting.AddLight(NPC.Center, 0.8f, 0.8f, 1f);
+        NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
 
-    public override void FindFrame(int frameHeight)
-    {
-
-    }
-
-    public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
-    {
-        NPC.damage = (int)(NPC.damage * balance * 0.5f);
-        NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
-    }
-
-    public override void SendExtraAI(BinaryWriter writer)
-    {
-        writer.Write(targetPosition.X);
-        writer.Write(targetPosition.Y);
-        writer.Write(attackDuration);
-        writer.Write(AttackCount2);
-    }
-
-    public override void ReceiveExtraAI(BinaryReader reader)
-    {
-        targetPosition.X = reader.ReadSingle();
-        targetPosition.Y = reader.ReadSingle();
-        attackDuration = reader.ReadSingle();
-        AttackCount2 = reader.ReadInt32();
+        if (drawFlashlight)
+        {
+            flashLightOpacity = Lerp(flashLightOpacity, 1f, 1 / 30f);
+        }
+        else
+        {
+            flashLightOpacity = Lerp(flashLightOpacity, 0f, 1 / 10f);
+        }
     }
 
     public override void AI()
     {
+        debugText = true;
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
             NPC.TargetClosest(false);
@@ -209,23 +196,25 @@ public class EmperorColdsteelHead : ModNPC
             targetPosition = NPC.Center;
             NPC.velocity = Vector2.UnitY * 5;
         }
-        NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
         player = Main.player[NPC.target];
-        //NPC.MoveToPos(player.Center, 0.05f, 0.05f, 0.4f, 0.4f);
-        MoveToPos(player.Center, 2, 10);
+
+        Visuals();
+        MoveToPos(player.Center, 30, 10);
         DespawnCheck();
+
         AttackControl();
+
         AITimer++;
     }
 
-    void MoveToPos(Vector2 pos, float turningSpeedDegrees, float moveSpeed)
+    void MoveToPos(Vector2 pos, float turningSpeedDegreesDenominator = 60f, float moveSpeed = 8f)
     {
         Vector2 dirToPos = NPC.DirectionTo(pos);
         float angleBetween = MathHelper.ToDegrees(LemonUtils.AngleBetween(NPC.velocity, dirToPos));
-        //Main.NewText(MathHelper.ToDegrees(angleBetween));
+        //Main.NewText(angleBetween);
         if (MathF.Abs(angleBetween) > MathHelper.ToRadians(5))
         {
-            NPC.velocity = NPC.velocity.RotatedBy(MathHelper.ToRadians(turningSpeedDegrees) * LemonUtils.Sign(angleBetween, 1));
+            NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(angleBetween / turningSpeedDegreesDenominator)) * moveSpeed;
         }
 
     }
@@ -265,16 +254,17 @@ public class EmperorColdsteelHead : ModNPC
         {
             switch (Attack)
             {
-                case (int)Attacks.BallsNLightning:
+                case (int)Attacks.DivingOnPlayer:
+                    DivingOnPlayer();
                     break;
-                case (int)Attacks.MeatballsWithFire:
-                    break;
-                case (int)Attacks.CursedFlamethrower:
-                    break;
-                case (int)Attacks.FlameWallsAndSpinning:
-                    break;
-                case (int)Attacks.DashingWithBalls:
-                    break;
+                    /*case (int)Attacks.MeatballsWithFire:
+                        break;
+                    case (int)Attacks.CursedFlamethrower:
+                        break;
+                    case (int)Attacks.FlameWallsAndSpinning:
+                        break;
+                    case (int)Attacks.DashingWithBalls:
+                        break;*/
             }
         }
         else if (Phase == 1)
@@ -317,6 +307,63 @@ public class EmperorColdsteelHead : ModNPC
         NPC.Opacity = 1f;
     }
 
+    void DivingOnPlayer()
+    {
+        switch (AttackTimer)
+        {
+            case 360: // Repeat this several times
+                targetPosition = player.Center - Vector2.UnitY * 1000;
+                break;
+            case > 240: // Moving above player
+                Print("Move above player");
+                MoveToPos(player.Center - Vector2.UnitY * 1000, 16, 20);
+                if (AttackTimer < 300)
+                {
+                    drawFlashlight = true;
+                }
+                break;
+            case 240:
+                drawFlashlight = false;
+                break;
+            case > 120: // Moving to player, "circling"
+                Print("Move to player");
+                MoveToPos(player.Center, 30, 50);
+                break;
+            case 120: 
+                targetPosition = player.Center + Vector2.UnitY * 1000;
+                drawFlashlight = true;
+                break;
+            case > 60: // Moving below player
+                Print("Move below player");
+                MoveToPos(player.Center + Vector2.UnitY * 1000, 20, 60);
+                break;
+            case > 0: // Rising up quickly
+                Print("Move above player fast");
+                drawFlashlight = false;
+                MoveToPos(player.Center - Vector2.UnitY * 1000, 20, 45);
+                break;
+            case 0:
+                AttackTimer = 360;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void PlayRoar()
+    {
+        SoundEngine.PlaySound(SoundID.NPCDeath10 with { PitchRange = (-0.6f, -0.4f) }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.6f, -0.4f) }, NPC.Center);
+    }
+
+    void Print(string text)
+    {
+        if (debugText)
+        {
+            Main.NewText(text);
+        }
+    }
+
     public override bool? CanFallThroughPlatforms()
     {
         return true;
@@ -345,6 +392,38 @@ public class EmperorColdsteelHead : ModNPC
         return true;
     }
 
+    public override bool CheckActive()
+    {
+        return false;
+    }
+
+    public override void FindFrame(int frameHeight)
+    {
+
+    }
+
+    public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+    {
+        NPC.damage = (int)(NPC.damage * balance * 0.5f);
+        NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
+    }
+
+    public override void SendExtraAI(BinaryWriter writer)
+    {
+        writer.Write(targetPosition.X);
+        writer.Write(targetPosition.Y);
+        writer.Write(attackDuration);
+        writer.Write(AttackCount2);
+    }
+
+    public override void ReceiveExtraAI(BinaryReader reader)
+    {
+        targetPosition.X = reader.ReadSingle();
+        targetPosition.Y = reader.ReadSingle();
+        attackDuration = reader.ReadSingle();
+        AttackCount2 = reader.ReadInt32();
+    }
+
     public override void OnKill()
     {
         /*for (int i = 0; i < 16; i++)
@@ -357,5 +436,32 @@ public class EmperorColdsteelHead : ModNPC
     {
 
         return true;
+    }
+
+    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        if (player == null || !player.Alive())
+        {
+            return;
+        }
+
+        DrawFlashlight();
+    }
+
+    void DrawFlashlight()
+    {
+        Vector2 toPlayer = player.Center - NPC.Center;
+        float toPlayerDistance = toPlayer.Length();
+        Vector2 toPlayerDir = toPlayer.SafeNormalize(Vector2.Zero);
+        Texture2D texture = ParacosmTextures.GlowBallTexture.Value;
+        float count = toPlayerDistance / 25;
+        for (int i = 0; i < count; i++)
+        {
+            float segmentSize = 4f * (i + 1) / count;
+            float spacing = toPlayerDistance / count;
+            Vector2 pos = NPC.Center + toPlayerDir * spacing * i;
+            float opacity = (count - i) / count * flashLightOpacity;
+            LemonUtils.DrawGlow(pos, Color.White, opacity, segmentSize);
+        }
     }
 }

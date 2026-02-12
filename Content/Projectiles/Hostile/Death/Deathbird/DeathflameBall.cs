@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Death;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
 public class DeathflameBall : ModProjectile
 {

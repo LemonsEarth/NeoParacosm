@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Death;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
 public class DeathLaser : ModProjectile
 {

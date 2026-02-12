@@ -1,4 +1,5 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 

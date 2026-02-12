@@ -5,7 +5,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Death;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
 public class DeathbirdFeather : ModProjectile
 {

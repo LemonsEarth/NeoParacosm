@@ -1,7 +1,6 @@
-﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Death;
+namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
 public class DeathbirdGrab : ModProjectile
 {
@@ -50,7 +49,7 @@ public class DeathbirdGrab : ModProjectile
             Projectile.Kill();
         }
 
-        if (Main.npc[(int)DeathbirdID].type != NPCType<Deathbird>() || !Main.npc[(int)DeathbirdID].active || Main.npc[(int)DeathbirdID].life <= 0 || Main.npc[(int)DeathbirdID].dontTakeDamage)
+        if (!Main.npc[(int)DeathbirdID].active || Main.npc[(int)DeathbirdID].life <= 0 || Main.npc[(int)DeathbirdID].dontTakeDamage)
         {
             Projectile.Kill();
             return;
