@@ -6,6 +6,11 @@ namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class TripleCrossbow : ModItem
 {
+    public override void SetStaticDefaults()
+    {
+
+    }
+
     public override void SetDefaults()
     {
         Item.damage = 28;

@@ -3,6 +3,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
+using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Players;
 
@@ -87,7 +88,7 @@ public class NPPlayer : ModPlayer
                 float extraYVelocity = MathHelper.Clamp(projectile.velocity.Y, 0, Player.maxFallSpeed);
                 Player.Bottom = new Vector2(Player.Bottom.X, projectile.Top.Y + extraYVelocity);
             }
-            else if(Player.Center.Y > projectile.Center.Y && Player.velocity.Y <= 0) // Rising into block from below
+            else if (Player.Center.Y > projectile.Center.Y && Player.velocity.Y <= 0) // Rising into block from below
             {
                 Player.velocity.Y = 0;
                 Player.Top = new Vector2(Player.Top.X, projectile.Bottom.Y);

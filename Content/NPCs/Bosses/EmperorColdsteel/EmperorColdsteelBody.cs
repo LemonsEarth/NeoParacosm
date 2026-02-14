@@ -49,8 +49,8 @@ public class EmperorColdsteelBody : ModNPC
     public override void SetDefaults()
     {
         NPC.aiStyle = -1;
-        NPC.width = 128;
-        NPC.height = 128;
+        NPC.width = 96;
+        NPC.height = 96;
         NPC.Opacity = 1;
         NPC.lifeMax = 400000;
         NPC.defense = 40;
@@ -62,6 +62,7 @@ public class EmperorColdsteelBody : ModNPC
         NPC.knockBackResist = 0;
         NPC.noGravity = true;
         NPC.npcSlots = 10;
+        NPC.hide = true;
         NPC.SpawnWithHigherTime(30);
         if (!Main.dedServ)
         {
@@ -171,5 +172,10 @@ public class EmperorColdsteelBody : ModNPC
     {
 
         return true;
+    }
+
+    public override void DrawBehind(int index)
+    {
+        Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
     }
 }

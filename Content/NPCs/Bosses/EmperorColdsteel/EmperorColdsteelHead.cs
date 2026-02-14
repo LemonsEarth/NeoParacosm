@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles.Hostile.Ice.EmperorColdsteel;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ public class EmperorColdsteelHead : ModNPC
     /// <summary>
     /// Attack durations indexed by Attack field
     /// </summary>
-    readonly int[] attackDurations = [1500, 1080, 1080, 1080, 1320];
+    readonly int[] attackDurations = [1080, 900, 1080, 1080, 1320];
     readonly int[] attackDurations2 = [1600, 1080, 1080, 1080, 1320];
 
     /// <summary>
@@ -82,6 +83,7 @@ public class EmperorColdsteelHead : ModNPC
     public enum Attacks
     {
         DivingOnPlayer,
+        SineIceBurst
     }
 
     public enum Attacks2
@@ -98,7 +100,8 @@ public class EmperorColdsteelHead : ModNPC
     List<EmperorColdsteelBody> Segments = new List<EmperorColdsteelBody>();
 
     bool drawFlashlight = false;
-    float flashLightOpacity = 0f;
+    Color flashlightColor = Color.White;
+    float flashlightOpacity = 0f;
 
     public override void SetStaticDefaults()
     {
@@ -148,6 +151,7 @@ public class EmperorColdsteelHead : ModNPC
         NPC.knockBackResist = 0;
         NPC.noGravity = true;
         NPC.npcSlots = 10;
+        NPC.hide = true;
         NPC.SpawnWithHigherTime(30);
 
         if (!Main.dedServ)
@@ -175,17 +179,17 @@ public class EmperorColdsteelHead : ModNPC
 
         if (drawFlashlight)
         {
-            flashLightOpacity = Lerp(flashLightOpacity, 1f, 1 / 30f);
+            flashlightOpacity = Lerp(flashlightOpacity, 1f, 1 / 30f);
         }
         else
         {
-            flashLightOpacity = Lerp(flashLightOpacity, 0f, 1 / 10f);
+            flashlightOpacity = Lerp(flashlightOpacity, 0f, 1 / 10f);
         }
     }
 
     public override void AI()
     {
-        debugText = true;
+        debugText = false;
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
             NPC.TargetClosest(false);
@@ -195,6 +199,7 @@ public class EmperorColdsteelHead : ModNPC
             SpawnSegments();
             targetPosition = NPC.Center;
             NPC.velocity = Vector2.UnitY * 5;
+            attackDuration = attackDurations[0];
         }
         player = Main.player[NPC.target];
 
@@ -205,6 +210,17 @@ public class EmperorColdsteelHead : ModNPC
         AttackControl();
 
         AITimer++;
+    }
+
+    void DoDrawFlashlight(Color color)
+    {
+        drawFlashlight = true;
+        flashlightColor = color;
+    }
+
+    void StopDrawingFlashlight()
+    {
+        drawFlashlight = false;
     }
 
     void MoveToPos(Vector2 pos, float turningSpeedDegreesDenominator = 60f, float moveSpeed = 8f)
@@ -257,14 +273,15 @@ public class EmperorColdsteelHead : ModNPC
                 case (int)Attacks.DivingOnPlayer:
                     DivingOnPlayer();
                     break;
-                    /*case (int)Attacks.MeatballsWithFire:
-                        break;
-                    case (int)Attacks.CursedFlamethrower:
+                case (int)Attacks.SineIceBurst:
+                    SineIceBurst();
+                    break;
+                    /*case (int)Attacks.CursedFlamethrower:
                         break;
                     case (int)Attacks.FlameWallsAndSpinning:
                         break;
                     case (int)Attacks.DashingWithBalls:
-                        break;*/
+                        break; */
             }
         }
         else if (Phase == 1)
@@ -286,7 +303,7 @@ public class EmperorColdsteelHead : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-
+        Attack = 1;
         foreach (EmperorColdsteelBody bodySegment in Segments)
         {
             bodySegment.SwitchAttacks((int)Attack);
@@ -319,19 +336,19 @@ public class EmperorColdsteelHead : ModNPC
                 MoveToPos(player.Center - Vector2.UnitY * 1000, 16, 20);
                 if (AttackTimer < 300)
                 {
-                    drawFlashlight = true;
+                    DoDrawFlashlight(Color.Red);
                 }
                 break;
             case 240:
-                drawFlashlight = false;
+                StopDrawingFlashlight();
                 break;
             case > 120: // Moving to player, "circling"
                 Print("Move to player");
                 MoveToPos(player.Center, 30, 50);
                 break;
-            case 120: 
+            case 120:
                 targetPosition = player.Center + Vector2.UnitY * 1000;
-                drawFlashlight = true;
+                DoDrawFlashlight(Color.Red);
                 break;
             case > 60: // Moving below player
                 Print("Move below player");
@@ -339,11 +356,61 @@ public class EmperorColdsteelHead : ModNPC
                 break;
             case > 0: // Rising up quickly
                 Print("Move above player fast");
-                drawFlashlight = false;
+                StopDrawingFlashlight();
                 MoveToPos(player.Center - Vector2.UnitY * 1000, 20, 45);
                 break;
             case 0:
                 AttackTimer = 360;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void SineIceBurst()
+    {
+        switch (AttackTimer)
+        {
+            case 300:
+                MoveToPos(player.Center, 60, 10f);
+                break;
+            case > 240:
+                MoveToPos(player.Center, 150, 20f);
+                break;
+            case > 60:
+                MoveToPos(player.Center, 180, 45f);
+                if (AttackTimer % 20 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        for (int i = -1; i <= 1; i++)
+                        {
+                            int direction = AttackCount2 % 2 == 0 ? -1 : 1;
+                            float xPosOffset = AttackCount * direction * 360 + Main.rand.NextFloat(-64, 64);
+                            float yPosOffset = i * 300 + Main.rand.NextFloat(-40, 40);
+                            Vector2 pos = player.Center + new Vector2(xPosOffset, yPosOffset);
+                            LemonUtils.QuickProj(
+                                NPC,
+                                pos,
+                                Vector2.Zero,
+                                ProjectileType<IceBurst>(),
+                                ai0: 60,
+                                ai1: 120,
+                                ai2: 5
+                                );
+
+                        }
+                    }
+                    AttackCount++;
+                }
+                break;
+            case > 0:
+                MoveToPos(player.Center, 150, 40f);
+                break;
+            case 0:
+                AttackTimer = 300;
+                AttackCount = -4; // x position offset of ice shards
+                AttackCount2++; // how many times attack has been executed
                 return;
         }
 
@@ -448,6 +515,11 @@ public class EmperorColdsteelHead : ModNPC
         DrawFlashlight();
     }
 
+    public override void DrawBehind(int index)
+    {
+        Main.instance.DrawCacheNPCsBehindNonSolidTiles.Add(index);
+    }
+
     void DrawFlashlight()
     {
         Vector2 toPlayer = player.Center - NPC.Center;
@@ -460,8 +532,8 @@ public class EmperorColdsteelHead : ModNPC
             float segmentSize = 4f * (i + 1) / count;
             float spacing = toPlayerDistance / count;
             Vector2 pos = NPC.Center + toPlayerDir * spacing * i;
-            float opacity = (count - i) / count * flashLightOpacity;
-            LemonUtils.DrawGlow(pos, Color.White, opacity, segmentSize);
+            float opacity = (count - i) / count * flashlightOpacity;
+            LemonUtils.DrawGlow(pos, flashlightColor, opacity, segmentSize);
         }
     }
 }
