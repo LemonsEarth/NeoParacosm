@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.NPCs.Bosses.EmperorColdsteel;
 

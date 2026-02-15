@@ -1,15 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Projectiles.Hostile.Ice.EmperorColdsteel;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using static Microsoft.Xna.Framework.MathHelper;
 
 namespace NeoParacosm.Content.NPCs.Bosses.EmperorColdsteel;
@@ -92,6 +88,7 @@ public class EmperorColdsteelHead : ModNPC
     }
 
     public int Phase { get; private set; } = 0;
+    public int MiniPhase { get; private set; } = 0;
     #endregion
 
     public Player player { get; private set; }
@@ -187,6 +184,14 @@ public class EmperorColdsteelHead : ModNPC
         }
     }
 
+    void PhaseControl()
+    {
+        if (NPC.GetLifePercent() < 0.8f && MiniPhase < 1)
+        {
+            MiniPhase = 1;
+        }
+    }
+
     public override void AI()
     {
         debugText = false;
@@ -203,6 +208,7 @@ public class EmperorColdsteelHead : ModNPC
         }
         player = Main.player[NPC.target];
 
+        PhaseControl();
         Visuals();
         MoveToPos(player.Center, 30, 10);
         DespawnCheck();
@@ -303,7 +309,6 @@ public class EmperorColdsteelHead : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-        Attack = 1;
         foreach (EmperorColdsteelBody bodySegment in Segments)
         {
             bodySegment.SwitchAttacks((int)Attack);
@@ -345,6 +350,37 @@ public class EmperorColdsteelHead : ModNPC
             case > 120: // Moving to player, "circling"
                 Print("Move to player");
                 MoveToPos(player.Center, 30, 50);
+                if (MiniPhase >= 1)
+                {
+                    if (AttackTimer == 150)
+                    {
+                        foreach (var bodySegment in Segments)
+                        {
+                            if (LemonUtils.NotClient())
+                            {
+                                LemonUtils.QuickProj(
+                                    NPC,
+                                    bodySegment.NPC.Center,
+                                    Vector2.Zero,
+                                    ProjectileType<IceBurst>(),
+                                    ai0: 45,
+                                    ai1: 60,
+                                    ai2: 8
+                                    );
+                            }
+                        }
+                    }
+                    if (AttackTimer % 5 == 0 && LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            NPC.Center,
+                            NPC.velocity.SafeNormalize(Vector2.Zero) * 5,
+                            ProjectileType<IceSpike>(),
+                            ai0: 300
+                            );
+                    }
+                }
                 break;
             case 120:
                 targetPosition = player.Center + Vector2.UnitY * 1000;
@@ -374,10 +410,10 @@ public class EmperorColdsteelHead : ModNPC
             case 300:
                 MoveToPos(player.Center, 60, 10f);
                 break;
-            case > 240:
+            case > 240: // Moving to player slowly
                 MoveToPos(player.Center, 150, 20f);
                 break;
-            case > 60:
+            case > 60: // Move to player fast (circling), spawn ice burst projectiles in a pattern (l->r, l<-r, l->r)
                 MoveToPos(player.Center, 180, 45f);
                 if (AttackTimer % 20 == 0)
                 {
@@ -395,17 +431,16 @@ public class EmperorColdsteelHead : ModNPC
                                 Vector2.Zero,
                                 ProjectileType<IceBurst>(),
                                 ai0: 60,
-                                ai1: 120,
-                                ai2: 5
+                                ai1: 150,
+                                ai2: 8
                                 );
-
                         }
                     }
                     AttackCount++;
                 }
                 break;
             case > 0:
-                MoveToPos(player.Center, 150, 40f);
+                MoveToPos(player.Center, 180, 40f);
                 break;
             case 0:
                 AttackTimer = 300;

@@ -4,7 +4,6 @@ using NeoParacosm.Core.Conditions;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 

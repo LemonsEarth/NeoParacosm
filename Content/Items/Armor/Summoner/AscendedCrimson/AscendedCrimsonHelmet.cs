@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Buffs.Debuffs.Cooldowns;
 using NeoParacosm.Core.Systems.Misc;
 using Terraria.Audio;
 using Terraria.Localization;
@@ -76,5 +74,79 @@ public class AscendedCrimsonHelmet : ModItem
         timer++;
         LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.CrimsonHelmet, rotation, scale, timer, spriteBatch, Color.Yellow);
         return false;
+    }
+}
+
+public class CrimsonSacrificeCooldown : ModBuff
+{
+    public override void SetStaticDefaults()
+    {
+        Main.debuff[Type] = true;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
+        BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+    }
+
+    public override void Update(Player player, ref int buffIndex)
+    {
+        if (!player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
+        {
+            player.statDefense -= 10;
+            player.moveSpeed -= 0.5f;
+        }
+    }
+}
+
+public class CrimsonSacrificeDebuff : ModBuff
+{
+    public override void SetStaticDefaults()
+    {
+        Main.debuff[Type] = true;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
+        BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
+    }
+
+    public override void Update(Player player, ref int buffIndex)
+    {
+        player.GetDamage(DamageClass.Generic) += 35f / 100f;
+        player.GetAttackSpeed(DamageClass.Generic) += 20f / 100f;
+    }
+}
+
+public class CrimsonSacrificePlayer : ModPlayer
+{
+    public override void UpdateEquips()
+    {
+        if (Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
+        {
+            if (Player.numMinions > 0)
+            {
+                foreach (var proj in Main.ActiveProjectiles)
+                {
+                    if (proj.minion && proj.owner == Player.whoAmI)
+                    {
+                        LemonUtils.DustCircle(proj.Center, 8, 8, DustID.Crimson, 2f);
+                    }
+                }
+                LemonUtils.DustCircle(Player.Center, 8, 8, DustID.Crimson, 2f);
+            }
+            Player.maxMinions = 0;
+            Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.getRect()), DustID.Crimson).noGravity = true;
+        }
+    }
+
+    public override void UpdateBadLifeRegen()
+    {
+        if (Player.HasBuff<CrimsonSacrificeCooldown>() && !Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
+        {
+            Player.lifeRegen -= 2;
+        }
+    }
+
+    public override void UpdateLifeRegen()
+    {
+        if (Player.HasBuff(BuffType<CrimsonSacrificeDebuff>()))
+        {
+            Player.lifeRegen += 60;
+        }
     }
 }

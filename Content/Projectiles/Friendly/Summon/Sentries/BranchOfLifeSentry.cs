@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.NPCs.Friendly.Special;
 using NeoParacosm.Content.Projectiles.Effect;
-using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;

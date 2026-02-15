@@ -4,7 +4,6 @@ using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
-using System.Net.Mail;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

@@ -24,7 +24,39 @@ public class RuneOfPeridition : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.NPAccessoryPlayer().runeOfPeridition = true;
+        player.GetModPlayer<RuneOfPeriditionPlayer>().runeOfPeridition = true;
         player.GetDamage(DamageClass.Generic) += 10f / 100f;
+    }
+}
+
+public class RuneOfPeriditionPlayer : ModPlayer
+{
+    public bool runeOfPeridition { get; set; } = false;
+    public override void ResetEffects()
+    {
+        runeOfPeridition = false;
+    }
+
+    public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+    {
+        if (runeOfPeridition)
+        {
+            foreach (Player player in Main.ActivePlayers)
+            {
+                if (player.team == Player.team)
+                {
+                    player.Heal(player.statLifeMax2 / 3);
+                }
+            }
+        }
+    }
+
+    public override void PostUpdateEquips()
+    {
+        if (runeOfPeridition)
+        {
+            Player.aggro += 600;
+            Player.statDefense *= 0.9f;
+        }
     }
 }

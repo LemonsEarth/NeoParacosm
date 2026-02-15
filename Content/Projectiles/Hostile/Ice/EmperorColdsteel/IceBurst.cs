@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Audio;
 

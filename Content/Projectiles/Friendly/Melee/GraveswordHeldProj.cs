@@ -80,7 +80,7 @@ public class GraveswordHeldProj : PrimProjectile
                 }
                 Projectile.Kill();
             }
-            player.NPBuffPlayer().fastFall = true;
+            player.NPPlayer().FastFall = true;
             Projectile.Center = player.Center + Vector2.UnitY * (Projectile.height / 2);
             Projectile.spriteDirection = player.direction;
             Projectile.rotation = player.direction * ThreePiOverFour;

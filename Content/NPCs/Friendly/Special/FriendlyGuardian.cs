@@ -1,10 +1,6 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Misc;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.NPCs.Friendly.Special;
 
@@ -43,6 +39,7 @@ public class FriendlyGuardian : ModNPC
         NPC.lifeMax = 20;
         NPC.value = 0;
         NPC.friendly = true;
+        NPC.knockBackResist = 0f;
         NPC.noTileCollide = true;
         NPC.ShowNameOnHover = true;
         NPC.noGravity = true;

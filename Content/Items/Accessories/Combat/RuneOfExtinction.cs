@@ -25,6 +25,42 @@ public class RuneOfExtinction : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.NPAccessoryPlayer().runeOfExtinction = true;
+        player.GetModPlayer<RuneOfExtinctionPlayer>().runeOfExtinction = true;
+    }
+}
+
+public class RuneOfExtinctionPlayer : ModPlayer
+{
+    public bool runeOfExtinction { get; set; } = false;
+    int runeOfExtinctionTimer = 0;
+
+    public override void ResetEffects()
+    {
+        runeOfExtinction = false;
+    }
+
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+        if (runeOfExtinction)
+        {
+            if (target.life <= 0 && !target.friendly && !target.SpawnedFromStatue)
+            {
+                if (runeOfExtinctionTimer <= 0)
+                {
+                    Player.Heal(20);
+                    runeOfExtinctionTimer = 15;
+                }
+
+                NPC.killCount[Item.NPCtoBanner(target.type)] += 1;
+            }
+        }
+    }
+
+    public override void PostUpdateEquips()
+    {
+        if (runeOfExtinction && runeOfExtinctionTimer > 0)
+        {
+            runeOfExtinctionTimer--;
+        }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 
@@ -233,7 +235,7 @@ public class ShieldKnight : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<EclipseGreatshield>(), 20, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

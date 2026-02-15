@@ -16,3 +16,25 @@ public class ManaGuardBuff : ModBuff
         player.GetDamage(DamageClass.Generic) -= 10f / 100f;
     }
 }
+
+public class ManaGuardPlayer : ModPlayer
+{
+    public override void OnHurt(Player.HurtInfo info)
+    {
+        if (Player.HasBuff(BuffType<ManaGuardBuff>()))
+        {
+            Player.CheckMana((info.Damage * 2) / LemonUtils.GetDifficulty(), true, true);
+            Player.manaRegenDelay = 120;
+        }
+    }
+
+    public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+    {
+        if (Player.HasBuff(BuffType<ManaGuardBuff>()))
+        {
+            float manaPercent = (float)Player.statMana / Player.statManaMax2;
+            float bonusDamage = 1 - manaPercent;
+            modifiers.FinalDamage *= (1 + bonusDamage);
+        }
+    }
+}

@@ -8,14 +8,23 @@ public class CorruptDecayDebuff : ModBuff
         BuffID.Sets.LongerExpertDebuff[Type] = false;
         BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
     }
+}
 
-    public override void Update(NPC npc, ref int buffIndex)
+public class CorruptDecayPlayer : ModPlayer
+{
+    public override void UpdateBadLifeRegen()
     {
-
+        if (Player.HasBuff(BuffType<CorruptDecayDebuff>()))
+        {
+            Player.DOTDebuff(14);
+        }
     }
 
-    public override void Update(Player player, ref int buffIndex)
+    public override void PostUpdateRunSpeeds()
     {
-
+        if (Player.HasBuff(BuffType<CorruptDecayDebuff>()))
+        {
+            Player.runAcceleration *= 0.5f;
+        }
     }
 }

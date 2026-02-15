@@ -6,6 +6,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 public class Fireball : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
+    ref float Mode => ref Projectile.ai[1];
     bool released = false;
     Vector2 savedVelocity = Vector2.Zero;
 
@@ -55,12 +56,20 @@ public class Fireball : ModProjectile
         float fireSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Fire];
         int minTimeToFire = 20;
         int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (fireSpeedBoost - 1))), minTimeToFire);
-        if ((!player.channel || AITimer >= timeAdjusted) && !released)
+        if ((!player.channel || AITimer >= timeAdjusted || Mode == 1) && !released)
         {
             released = true;
             if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.velocity = player.DirectionTo(Main.MouseWorld) * savedVelocity.Length() * (Math.Clamp(AITimer, 0, timeAdjusted) / (float)timeAdjusted);
+                if (Mode == 1) // used by flameforged battle axe
+                {
+                    Projectile.velocity = player.DirectionTo(Main.MouseWorld) * savedVelocity.Length();
+                }
+                else
+                {
+                    Projectile.velocity = player.DirectionTo(Main.MouseWorld) * savedVelocity.Length() * (Math.Clamp(AITimer, 0, timeAdjusted) / (float)timeAdjusted);
+                }
+                    
             }
             Projectile.netUpdate = true;
         }

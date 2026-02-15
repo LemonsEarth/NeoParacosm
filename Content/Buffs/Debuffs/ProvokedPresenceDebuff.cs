@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿using NeoParacosm.Content.NPCs.Hostile.Special;
+
+namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class ProvokedPresenceDebuff : ModBuff
 {
@@ -8,14 +10,17 @@ public class ProvokedPresenceDebuff : ModBuff
         BuffID.Sets.LongerExpertDebuff[Type] = false;
         BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
     }
+}
 
-    public override void Update(NPC npc, ref int buffIndex)
+public class ProvokedPresenceNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+    public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
     {
-
-    }
-
-    public override void Update(Player player, ref int buffIndex)
-    {
-
+        if (player.HasBuff(BuffType<ProvokedPresenceDebuff>()) && !NPC.AnyNPCs(NPCType<Marauder>()))
+        {
+            spawnRate /= 3;
+            maxSpawns *= 4;
+        }
     }
 }

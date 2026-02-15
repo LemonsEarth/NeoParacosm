@@ -1,65 +1,49 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
-using ReLogic.Content;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 
-public class StarsaberHeldProj : PrimProjectile
+public class FlameforgedBattleAxeHeldProj : PrimProjectile
 {
     int AITimer = 0;
 
     ref float special => ref Projectile.ai[0];
     ref float direction => ref Projectile.ai[1];
-    ref float useCounter => ref Projectile.ai[2];
-
-    bool alreadyHit = false;
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (special == 0 || alreadyHit) return;
-        alreadyHit = true;
-        for (int i = 0; i < 4; i++)
-        {
-            LemonUtils.QuickProj(
-                Projectile,
-                Projectile.Center,
-                Projectile.GetOwner().DirectionTo(target.Center).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 8, MathHelper.Pi / 8)) * Main.rand.NextFloat(12, 16),
-                ProjectileType<HomingStar>(),
-                Projectile.damage / 3,
-                3f,
-                ai0: 45f,
-                ai1: 90f
-                );
-        }
+        LemonUtils.QuickProj(Projectile, target.Center, Vector2.Zero, ProjectileType<FireballExplosion>());
+
     }
 
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 2;
+        Main.projFrames[Type] = 1;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 72;
-        Projectile.height = 72;
+        Projectile.width = 92;
+        Projectile.height = 92;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
         Projectile.tileCollide = false;
-        Projectile.penetrate = -1;
+        Projectile.penetrate = 1;
         Projectile.timeLeft = 120;
         Projectile.DamageType = DamageClass.Melee;
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 180;
+        Projectile.ArmorPenetration = 10;
     }
 
-    float goalRotation = 270;
-    float rotValue = -60;
+    float goalRotation = 300;
+    float lerpSpeed = 1 / 60f;
+    float rotValue = -90;
     public override void AI()
     {
         Player player = Main.player[Projectile.owner];
@@ -70,43 +54,73 @@ public class StarsaberHeldProj : PrimProjectile
 
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
-        player.SetDummyItemTime(2);
+        player.SetDummyItemTime(5);
         if (AITimer < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
         if (Projectile.timeLeft < 30) Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 30f);
 
         Projectile.velocity = Vector2.Zero;
+
+        if (special != 0 && AITimer == 0)
+        {
+            if (Main.myPlayer == Projectile.owner)
+            {
+                LemonUtils.QuickProj(
+                    Projectile,
+                    Projectile.Center,
+                    Vector2.UnitY * 5,
+                    ProjectileType<Fireball>(),
+                    Projectile.damage * 4,
+                    ai1: 1
+                    );
+            }
+        }
 
         Projectile.timeLeft = 3;
         if (AITimer == 0)
         {
             if (direction == 1)
             {
-                rotValue = -60;
-                goalRotation = 270;
+                rotValue = -90;
+                goalRotation = 300;
             }
             else
             {
                 rotValue = 360;
-                goalRotation = 0;
+                goalRotation = -60;
             }
         }
         Projectile.extraUpdates = 3;
 
-        float lerpSpeed = 1 / 15f;
-        if (special == 1)
+        if (direction == 1)
         {
-            lerpSpeed = 1 / 30f;
+            if (rotValue < 30)
+            {
+                Projectile.damage = 0;
+            }
+            else
+            {
+                Projectile.damage = Projectile.originalDamage;
+            }
         }
+        else
+        {
+            if (rotValue > 240)
+            {
+                Projectile.damage = 0;
+            }
+            else
+            {
+                Projectile.damage = Projectile.originalDamage;
+            }
+        }
+
+        Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.SolarFlare, Scale: Main.rand.NextFloat(1, 2)).noGravity = true;
+
         rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpSpeed * player.GetAttackSpeed(DamageClass.Melee));
         if (direction == 1 && rotValue > goalRotation - 10) Projectile.Kill();
         else if (direction == -1 && rotValue < goalRotation + 10) Projectile.Kill();
         SetPositionRotationDirection(player, MathHelper.ToRadians(rotValue));
         AITimer++;
-    }
-
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
-    {
-
     }
 
     public override void OnKill(int timeLeft)
@@ -132,30 +146,13 @@ public class StarsaberHeldProj : PrimProjectile
     {
         Player player = Main.player[Projectile.owner];
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        Asset<Texture2D> textureAsset = TextureAssets.Projectile[Type];
         Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Rectangle frame = textureAsset.Frame(1, 2, 0, (int)special);
-        float topRotOffset = player.direction == 1 ? -MathHelper.PiOver4 : -3 * MathHelper.PiOver4;
-        float botRotOffset = player.direction == 1 ? 3 * MathHelper.PiOver4 : MathHelper.PiOver4;
-        if (direction == -1)
-        {
-            topRotOffset += MathHelper.PiOver2 * player.direction;
-            botRotOffset += MathHelper.PiOver2 * player.direction;
-        }
 
-        Main.spriteBatch.End(); // Restarting spritebatch around Primitive Drawing to fix some layering issues
-        Color color = special == 0 ? new Color(255, 255, 128) * 0.25f : new Color(255, 255, 128);
-        PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, color, Color.Transparent, BasicEffect, topRotOffset, botRotOffset);
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-
-        Main.EntitySpriteDraw(texture, drawPos, frame, Color.White, Projectile.rotation, frame.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
-
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

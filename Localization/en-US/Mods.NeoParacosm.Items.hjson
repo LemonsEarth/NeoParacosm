@@ -988,5 +988,24 @@ GlowingSporeSack: {
 
 Starsaber: {
 	DisplayName: Starsaber
-	Tooltip: ""
+	Tooltip: Every third hit fires a burst of homing stars
+}
+
+FlameforgedBattleAxe: {
+	DisplayName: Flameforged Battle Axe
+	Tooltip:
+		'''
+		Explodes on contact with enemies
+		Every few attacks, sends out a fireball
+		Attacks faster when consistently hitting enemies
+		'''
+}
+
+EclipseGreatshield: {
+	DisplayName: Eclipse Greatshield
+	Tooltip:
+	'''
+	Grants immunity to knockback from projectiles
+	Has a 25% chance to reduce incoming projectile damage by 50% and retaliate with holy blasts
+	'''
 }

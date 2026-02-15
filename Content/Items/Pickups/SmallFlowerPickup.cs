@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Accessories.Combat;
 using Terraria.Audio;
 using Terraria.DataStructures;
 

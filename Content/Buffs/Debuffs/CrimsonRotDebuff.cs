@@ -8,14 +8,43 @@ public class CrimsonRotDebuff : ModBuff
         BuffID.Sets.LongerExpertDebuff[Type] = false;
         BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
     }
+}
 
-    public override void Update(NPC npc, ref int buffIndex)
+public class CrimsonRotPlayer : ModPlayer
+{
+    public override void UpdateEquips()
     {
-
+        if (Player.HasBuff(BuffType<CrimsonRotDebuff>()))
+        {
+            Player.statDefense -= 10 - (int)(((float)Player.statLife / Player.statLifeMax2) * 10) + 1;
+        }
     }
 
-    public override void Update(Player player, ref int buffIndex)
+    public override void UpdateBadLifeRegen()
     {
+        if (Player.HasBuff(BuffType<CrimsonRotDebuff>()))
+        {
+            Player.DOTDebuff(20);
+        }
+    }
+}
 
+public class CrimsonRotNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+    public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+    {
+        if (npc.HasBuff(BuffType<CrimsonRotDebuff>()))
+        {
+            modifiers.Defense.Flat -= (10 - (npc.life / npc.lifeMax * 10));
+        }
+    }
+
+    public override void UpdateLifeRegen(NPC npc, ref int damage)
+    {
+        if (npc.HasBuff(BuffType<CrimsonRotDebuff>()))
+        {
+            npc.DOTDebuff(24, ref damage);
+        }
     }
 }

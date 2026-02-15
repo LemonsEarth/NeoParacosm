@@ -62,7 +62,7 @@ public class DeathbirdGrab : ModProjectile
         {
             foreach (var player in hitPlayers)
             {
-                player.NPBuffPlayer().grabbed = true;
+                player.NPPlayer().Grabbed = true;
                 player.Center = Projectile.Center;
             }
 

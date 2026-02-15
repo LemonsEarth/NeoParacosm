@@ -31,7 +31,7 @@ public class StoneHelmet : ModItem
 
     public override void UpdateInventory(Player player)
     {
-        
+
     }
 
     public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -42,7 +42,7 @@ public class StoneHelmet : ModItem
     public override void UpdateArmorSet(Player player)
     {
         player.setBonus = setBonusText.Value;
-        player.NPArmorPlayer().StoneArmor = true;
+        player.GetModPlayer<StoneArmorPlayer>().StoneArmor = true;
     }
 
     public override void AddRecipes()
@@ -51,5 +51,20 @@ public class StoneHelmet : ModItem
         recipe.AddIngredient(ItemID.StoneBlock, 25);
         recipe.AddTile(TileID.Anvils);
         recipe.Register();
+    }
+}
+
+public class StoneArmorPlayer : ModPlayer
+{
+    public bool StoneArmor { get; set; } = false;
+
+    public override void ResetEffects()
+    {
+        if (Player.armor[0].type != ItemType<StoneHelmet>()
+            || Player.armor[1].type != ItemType<StoneBreastplate>()
+            || Player.armor[2].type != ItemType<StoneBoots>())
+        {
+            StoneArmor = false;
+        }
     }
 }

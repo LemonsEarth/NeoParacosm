@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Players;
 using Terraria.Audio;
 using Terraria.GameContent;

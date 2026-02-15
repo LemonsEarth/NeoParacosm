@@ -15,24 +15,9 @@ public static partial class LemonUtils
         return player.GetModPlayer<NPCatalystPlayer>();
     }
 
-    public static NPAcessoryPlayer NPAccessoryPlayer(this Player player)
-    {
-        return player.GetModPlayer<NPAcessoryPlayer>();
-    }
-
     public static NPPlayer NPPlayer(this Player player)
     {
         return player.GetModPlayer<NPPlayer>();
-    }
-
-    public static NPBuffPlayer NPBuffPlayer(this Player player)
-    {
-        return player.GetModPlayer<NPBuffPlayer>();
-    }
-
-    public static NPArmorPlayer NPArmorPlayer(this Player player)
-    {
-        return player.GetModPlayer<NPArmorPlayer>();
     }
 
     public static void AddElementalDamageBoost(this Player player, BaseSpell.SpellElement element, float value)
@@ -89,9 +74,16 @@ public static partial class LemonUtils
     {
         if (player.statMana + value > player.statManaMax2)
         {
-            value = player.statManaMax2 - player.statMana;     
+            value = player.statManaMax2 - player.statMana;
         }
         player.statMana += value;
         player.ManaEffect(value);
+    }
+
+    public static void DOTDebuff(this Player player, int damagePerSecond)
+    {
+        if (player.lifeRegen > 0) player.lifeRegen = 0;
+        player.lifeRegenTime = 0;
+        player.lifeRegen -= damagePerSecond * 2;
     }
 }

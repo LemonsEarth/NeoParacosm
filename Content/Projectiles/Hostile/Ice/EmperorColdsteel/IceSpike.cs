@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
 using ReLogic.Content;
 using Terraria.Audio;
 
@@ -44,6 +43,11 @@ public class IceSpike : ModProjectile
             Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.IceRod, Scale: Main.rand.NextFloat(1.2f, 1.75f)).noGravity = true;
         }
 
+        if (TimeLeft - AITimer < 30f)
+        {
+            Projectile.Opacity = MathHelper.Lerp(0, 1, (TimeLeft - AITimer) / 30f);
+        }
+
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
@@ -73,7 +77,7 @@ public class IceSpike : ModProjectile
             Color color = Color.Lerp(Color.Cyan, Color.Blue, (float)(Projectile.oldPos.Length - i) / Projectile.oldPos.Length);
             Vector2 origin = TrailTexture.Frame(1, 2, 0, Projectile.frame).Size() * 0.5f;
             Vector2 pos = Projectile.oldPos[i] + origin - Main.screenPosition;
-            Main.EntitySpriteDraw(TrailTexture.Value, pos, TrailTexture.Frame(1, 2, 0, Projectile.frame), color * 0.2f, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
+            Main.EntitySpriteDraw(TrailTexture.Value, pos, TrailTexture.Frame(1, 2, 0, Projectile.frame), color * 0.2f * Projectile.Opacity, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None);
         }
         return true;
     }

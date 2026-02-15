@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.Accessories.Combat;
+using NeoParacosm.Core.Globals.GlobalNPCs;
 using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;
 
@@ -56,7 +57,7 @@ public class DataCollectorTileEntity : ModTileEntity
             {
                 if (npc.Distance(Position.ToWorldCoordinates()) < distance)
                 {
-                    npc.NPBuffNPC().dataCollectorTEPos = Position;
+                    npc.GetGlobalNPC<DataCollectorNPC>().dataCollectorTEPos = Position;
                 }
             }
 

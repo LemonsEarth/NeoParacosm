@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.Armor.Generic.Stone;
+using NeoParacosm.Content.NPCs.Misc;
+using System.Linq;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
@@ -42,7 +45,7 @@ public class AscendedShadowHelmet : ModItem
     public override void UpdateArmorSet(Player player)
     {
         player.setBonus = setBonusText.Value;
-        player.NPArmorPlayer().AscendedShadowArmor = true;
+        player.GetModPlayer<AscendedShadowArmorPlayer>().AscendedShadowArmor = true;
     }
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
@@ -57,5 +60,37 @@ public class AscendedShadowHelmet : ModItem
         timer++;
         LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowHelmet, rotation, scale, timer, spriteBatch, Color.Purple);
         return false;
+    }
+}
+
+public class AscendedShadowArmorPlayer : ModPlayer
+{
+    public bool AscendedShadowArmor { get; set; } = false;
+    int shadowTimer = 0;
+
+    public override void ResetEffects()
+    {
+        AscendedShadowArmor = false;
+    }
+
+    public override void PostUpdateEquips()
+    {
+
+        if (shadowTimer > 0)
+        {
+            shadowTimer--;
+        }
+    }
+
+    public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+    {
+        if (AscendedShadowArmor && target.CanBeChasedBy() && shadowTimer == 0 && !Main.npc.Any(n => n.active && n.type == NPCType<ShadowOrbNPC>() && n.ai[0] == Player.whoAmI))
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                NPC.NewNPCDirect(Player.GetSource_FromThis(), target.Center + Main.rand.NextVector2Circular(300, 300), NPCType<ShadowOrbNPC>(), ai0: Player.whoAmI);
+            }
+            shadowTimer = 600;
+        }
     }
 }

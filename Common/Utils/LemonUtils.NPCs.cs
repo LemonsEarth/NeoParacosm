@@ -11,11 +11,6 @@ public static partial class LemonUtils
 {
     public static bool IsHard() => Main.masterMode || Main.getGoodWorld;
 
-    public static NPBuffNPC NPBuffNPC(this NPC npc)
-    {
-        return npc.GetGlobalNPC<NPBuffNPC>();
-    }
-
     public static NPGlobalNPC NP(this NPC npc)
     {
         return npc.GetGlobalNPC<NPGlobalNPC>();
@@ -40,6 +35,16 @@ public static partial class LemonUtils
             }
         }
         return closestEnemy;
+    }
+
+    public static void DOTDebuff(this NPC npc, float damagePerSecond, ref int damage)
+    {
+        if (npc.lifeRegen > 0) npc.lifeRegen = 0;
+        npc.lifeRegen -= (int)(damagePerSecond * 2);
+        if (damage < damagePerSecond)
+        {
+            damage = (int)damagePerSecond;
+        }
     }
 
     public static Vector2 RandomPos(this NPC npc, float fluffX = 0, float fluffY = 0)

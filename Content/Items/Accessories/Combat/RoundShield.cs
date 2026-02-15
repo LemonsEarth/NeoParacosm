@@ -17,7 +17,7 @@ public class RoundShield : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.NPAccessoryPlayer().roundShield = true;
+        player.GetModPlayer<RoundShieldPlayer>().roundShield = true;
     }
 
     public override void AddRecipes()
@@ -27,5 +27,41 @@ public class RoundShield : ModItem
         recipe.AddRecipeGroup(RecipeGroupID.IronBar, 6);
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
+    }
+}
+
+public class RoundShieldPlayer : ModPlayer
+{
+    public bool roundShield { get; set; } = false;
+
+    public override void ResetEffects()
+    {
+        roundShield = false;
+    }
+
+    public override void OnHurt(Player.HurtInfo info)
+    {
+        if (roundShield && !Player.HasBuff(BuffType<KnockbackCooldown>()))
+        {
+            Player.AddBuff(BuffType<KnockbackCooldown>(), 1800);
+        }
+    }
+
+    public override void PostUpdateEquips()
+    {
+        if (roundShield && !Player.HasBuff(BuffType<KnockbackCooldown>())) // On Hurt code is in Main
+        {
+            Player.noKnockback = true;
+        }
+    }
+}
+
+public class KnockbackCooldown : ModBuff
+{
+    public override void SetStaticDefaults()
+    {
+        Main.debuff[Type] = true;
+        BuffID.Sets.LongerExpertDebuff[Type] = false;
+        BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
     }
 }

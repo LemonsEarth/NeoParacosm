@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Projectiles.Friendly.Ranged;
-using Terraria.Audio;
-using Terraria.DataStructures;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
 namespace NeoParacosm.Content.Items.Consumables;
 

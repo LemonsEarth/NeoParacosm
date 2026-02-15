@@ -3,14 +3,15 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
-using Terraria.DataStructures;
 
 namespace NeoParacosm.Core.Players;
 
 public class NPPlayer : ModPlayer
 {
-    int timer = 0;
+    public static int timer = 0;
     public bool NoMusic { get; set; } = false;
+    public bool Grabbed { get; set; } = false;
+    public bool FastFall { get; set; } = false;
 
     public static HashSet<int> BlockProjectiles { get; set; } = new HashSet<int>();
     public static List<Projectile> BlockProjectileInstances { get; set; } = new List<Projectile>();
@@ -18,8 +19,22 @@ public class NPPlayer : ModPlayer
     public override void ResetEffects()
     {
         NoMusic = false;
-
         BlockProjectileInstances.RemoveAll(p => !p.active);
+        if (FastFall)
+        {
+            Player.noKnockback = true;
+            Player.blockExtraJumps = true;
+            Player.maxFallSpeed *= 3;
+            Player.velocity.Y = 20;
+            Player.velocity.X = 0;
+        }
+        Grabbed = false;
+        FastFall = false;
+    }
+
+    public override bool CanUseItem(Item item)
+    {
+        return !Grabbed;
     }
 
     public override void SetStaticDefaults()

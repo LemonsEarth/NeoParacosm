@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Core.Globals.GlobalItems;
+﻿using NeoParacosm.Content.Items.Armor.Generic.Stone;
+
+namespace NeoParacosm.Core.Globals.GlobalItems;
 
 public class GemItem : GlobalItem
 {
@@ -18,7 +20,7 @@ public class GemItem : GlobalItem
     int tileID = -1;
     public override bool? UseItem(Item item, Player player)
     {
-        if (player.NPArmorPlayer().StoneArmor)
+        if (player.GetModPlayer<StoneArmorPlayer>().StoneArmor)
         {
             return true;
         }
@@ -32,7 +34,7 @@ public class GemItem : GlobalItem
 
     public override void OnConsumeItem(Item item, Player player)
     {
-        if (!player.NPArmorPlayer().StoneArmor)
+        if (!player.GetModPlayer<StoneArmorPlayer>().StoneArmor)
         {
             return;
         }
@@ -70,7 +72,7 @@ public class GemItem : GlobalItem
 
     public override void UpdateInventory(Item item, Player player)
     {
-        if (player.NPArmorPlayer().StoneArmor)
+        if (player.GetModPlayer<StoneArmorPlayer>().StoneArmor)
         {
             if (tileID == -1)
             {
