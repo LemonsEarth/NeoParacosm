@@ -131,3 +131,8 @@ ShroomedDebuff: {
 	DisplayName: Shroomed Debuff
 	Description: Mods.NeoParacosm.Buffs.ShroomedDebuff.Description
 }
+
+GloveOfRetaliationBuff: {
+	DisplayName: Glove Of Retaliation Buff
+	Description: Mods.NeoParacosm.Buffs.GloveOfRetaliationBuff.Description
+}

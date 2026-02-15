@@ -1004,8 +1004,41 @@ FlameforgedBattleAxe: {
 EclipseGreatshield: {
 	DisplayName: Eclipse Greatshield
 	Tooltip:
+		'''
+		Grants immunity to knockback from projectiles
+		Has a 25% chance to reduce incoming projectile damage by 50% and retaliate with holy blasts
+		'''
+}
+
+AllForOneLocket: {
+	DisplayName: All For One Locket
+	Tooltip:
 	'''
-	Grants immunity to knockback from projectiles
-	Has a 25% chance to reduce incoming projectile damage by 50% and retaliate with holy blasts
+	Increases your maximum life by 20 for each player on your team (caps at 100)
+	'''
+}
+
+GloveOfRetaliation: {
+	DisplayName: Glove Of Retaliation
+	Tooltip:
+	'''
+	Taking more than 10% of your maximum health in contact damage briefly increases your melee damage by 300%
+	'''
+}
+
+MoltenClockwork: {
+	DisplayName: Molten Clockwork
+	Tooltip:
+	'''
+	Increases ranged attack speed by {0}%
+	Ranged attacks inflict Hellfire
+	'''
+}
+
+RageGauntlet: {
+	DisplayName: Rage Gauntlet
+	Tooltip:
+	'''
+	Going below 10% of your maximum HP increases damage by {0}% and critical strike chance by {1}%
 	'''
 }

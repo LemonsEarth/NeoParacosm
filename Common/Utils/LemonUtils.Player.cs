@@ -47,6 +47,11 @@ public static partial class LemonUtils
         return 1 + dec;
     }
 
+    public static float GetLifePercent(this Player player)
+    {
+        return (float)player.statLife / player.statLifeMax2;
+    }
+
     public static bool HasAnyFireDebuff(this Player player)
     {
         return player.HasBuff(BuffID.OnFire) || player.HasBuff(BuffID.Burning) || player.HasBuff(BuffID.OnFire3)
