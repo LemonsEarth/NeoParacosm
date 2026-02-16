@@ -45,7 +45,7 @@ public class Fireball : ModProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeStainedGlass, Scale: 2f, newColor: Color.OrangeRed).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, Scale: 1f, newColor: Color.Yellow).noGravity = true;
 
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (!player.Alive() && !released)
         {

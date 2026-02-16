@@ -29,7 +29,7 @@ public class SpellSwapProjectile : ModProjectile
 
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         Projectile.Center = player.Center;
         Projectile.velocity = Vector2.Zero;
         if (AITimer == 0)
@@ -57,7 +57,7 @@ public class SpellSwapProjectile : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         NPCatalystPlayer cp = player.NPCatalystPlayer();
         if (cp.EquippedSpells.Count == 0)
         {

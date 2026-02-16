@@ -43,7 +43,7 @@ public class Starecrow : ModProjectile
     Vector2 randomPos = Vector2.Zero;
     public override void AI()
     {
-        Player owner = Main.player[Projectile.owner];
+        Player owner = Projectile.GetOwner();
         if (IsPlayerAlive(owner) == false)
         {
             return;

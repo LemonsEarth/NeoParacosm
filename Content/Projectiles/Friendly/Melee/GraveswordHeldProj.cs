@@ -46,7 +46,7 @@ public class GraveswordHeldProj : PrimProjectile
     float rotValue = -60;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();
@@ -132,7 +132,7 @@ public class GraveswordHeldProj : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         float topRotOffset = player.direction == 1 ? -MathHelper.PiOver4 : -3 * MathHelper.PiOver4;

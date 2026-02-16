@@ -62,7 +62,7 @@ public class GreatFireball : ModProjectile
         Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.OrangeStainedGlass, Scale: dustScaleOR, newColor: Color.OrangeRed).noGravity = true;
         Dust.NewDustDirect(Projectile.RandomPos(-24, -24), 2, 2, DustID.GemTopaz, Scale: dustScaleYel, newColor: Color.Yellow).noGravity = true;
 
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (!player.Alive() && !released)
         {

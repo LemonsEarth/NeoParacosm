@@ -54,7 +54,7 @@ public class DarkBlast : ModProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Granite, Scale:dustScaleBlack, newColor: Color.Black).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemDiamond, Scale: dustScaleWhite).noGravity = true;
 
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (releasedTimer == 600)
         {

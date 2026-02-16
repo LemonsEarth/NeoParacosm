@@ -51,12 +51,12 @@ public class SawProjectile : ModProjectile
 
         if (Released && AITimer < 30) Projectile.Kill();
 
-        if (!Main.player[Projectile.owner].channel && !Released)
+        if (!Projectile.GetOwner().channel && !Released)
         {
             Released = true;
             if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.velocity = Main.player[Projectile.owner].Center.DirectionTo(Main.MouseWorld) * 20f;
+                Projectile.velocity = Projectile.GetOwner().Center.DirectionTo(Main.MouseWorld) * 20f;
             }
             Projectile.penetrate = 7;
             Projectile.netUpdate = true;
@@ -66,7 +66,7 @@ public class SawProjectile : ModProjectile
             Projectile.velocity = Vector2.UnitX.RotatedByRandom(6.28f) * 1.5f;
             if (Main.myPlayer == Projectile.owner)
             {
-                Projectile.Center = parent.Center + Main.player[Projectile.owner].Center.DirectionTo(Main.MouseWorld) * 32;
+                Projectile.Center = parent.Center + Projectile.GetOwner().Center.DirectionTo(Main.MouseWorld) * 32;
             }
             if (AITimer < 60)
             {

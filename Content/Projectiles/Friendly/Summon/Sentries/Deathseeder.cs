@@ -37,8 +37,8 @@ public class Deathseeder : ModProjectile
             {
                 NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
                 npc.damage = Projectile.damage;
-                npc.lifeMax = Main.player[Projectile.owner].statLifeMax2 / 2;
-                npc.defense = Main.player[Projectile.owner].statDefense / 2;
+                npc.lifeMax = Projectile.GetOwner().statLifeMax2 / 2;
+                npc.defense = Projectile.GetOwner().statDefense / 2;
                 NetMessage.SendData(MessageID.SyncNPC);
             }
         }

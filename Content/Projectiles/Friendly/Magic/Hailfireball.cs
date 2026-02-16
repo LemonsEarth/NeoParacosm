@@ -45,7 +45,7 @@ public class Hailfireball : ModProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch, Scale: 2f).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemSapphire, Scale: 1f).noGravity = true;
 
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (!player.Alive() && !released)
         {

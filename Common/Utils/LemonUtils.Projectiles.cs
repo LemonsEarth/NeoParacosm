@@ -9,6 +9,8 @@ namespace NeoParacosm.Common.Utils;
 /// </summary>
 public static partial class LemonUtils
 {
+    /// <param name="projectile"></param>
+    /// <returns>Projectile.GetOwner()</returns>
     public static Player GetOwner(this Projectile projectile)
     {
         return Main.player[projectile.owner];
@@ -62,6 +64,19 @@ public static partial class LemonUtils
             Color color = (Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length)) * opacityMultiplier;
             Main.EntitySpriteDraw(texture, drawPos, sourceRect, color, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
         }
+    }
+
+    public static bool CountsAsTrueMelee(this Projectile proj)
+    {
+        if (proj.TryGetOwner(out Player owner))
+        {
+            if (proj.friendly && proj.CountsAsClass(DamageClass.Melee) && owner.heldProj == proj.whoAmI)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /// <summary>

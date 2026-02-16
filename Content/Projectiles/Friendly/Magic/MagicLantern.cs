@@ -32,7 +32,6 @@ public class MagicLantern : PrimProjectile
         {
             Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Terra, newColor: Color.Lime, Scale: 1.5f).noGravity = true;
         }*/
-        Player player = Projectile.GetOwner();
         if (AITimer == 0)
         {
             Projectile.scale = 0.1f;
@@ -51,8 +50,11 @@ public class MagicLantern : PrimProjectile
         {
             Projectile.Kill();
         }
-        float lightLevel = 3 * Projectile.scale * player.GetElementalExpertiseBoost(Items.Weapons.Magic.Spells.BaseSpell.SpellElement.Pure);
-        Lighting.AddLight(Projectile.Center, lightLevel, lightLevel, lightLevel);
+        if (Projectile.TryGetOwner(out Player player))
+        {
+            float lightLevel = 3 * Projectile.scale * player.GetElementalExpertiseBoost(Items.Weapons.Magic.Spells.BaseSpell.SpellElement.Pure);
+            Lighting.AddLight(Projectile.Center, lightLevel, lightLevel, lightLevel);
+        }
         AITimer++;
     }
 

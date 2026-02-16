@@ -59,7 +59,10 @@ public class AssassinsBackupProj : ModProjectile
             {
                 healAmount = 10;
             }
-            Projectile.GetOwner().Heal(healAmount);
+            if (Projectile.TryGetOwner(out Player owner))
+            {
+                owner.Heal(healAmount);
+            }
         }
     }
 

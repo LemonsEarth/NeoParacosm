@@ -63,7 +63,7 @@ public class SupremeRottedForkHeldProj : ModProjectile
     int releasedDuration = 90;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();

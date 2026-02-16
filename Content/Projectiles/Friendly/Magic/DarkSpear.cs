@@ -39,7 +39,7 @@ public class DarkSpear : PrimProjectile
 
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (AITimer == 0)
         {
             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalSpawnEnemy, Projectile.Center);

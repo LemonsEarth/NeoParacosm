@@ -41,7 +41,7 @@ public class Banefly : ModProjectile
 
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (Main.myPlayer == Projectile.owner)
         {

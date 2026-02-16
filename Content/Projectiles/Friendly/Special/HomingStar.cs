@@ -46,7 +46,7 @@ public class HomingStar : PrimProjectile
     NPC closestNPC;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (AITimer == 0)
         {

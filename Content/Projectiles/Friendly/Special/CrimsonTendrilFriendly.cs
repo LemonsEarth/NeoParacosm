@@ -57,21 +57,21 @@ public class CrimsonTendrilFriendly : ModProjectile
     public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
     {
         float _ = float.NaN;
-        Vector2 endPos = Main.player[Projectile.owner].Center + Main.player[Projectile.owner].DirectionTo(Projectile.Center) * Main.player[Projectile.owner].Distance(Projectile.Center);
-        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Main.player[Projectile.owner].Center, endPos, Projectile.width, ref _); ;
+        Vector2 endPos = Projectile.GetOwner().Center + Projectile.GetOwner().DirectionTo(Projectile.Center) * Projectile.GetOwner().Distance(Projectile.Center);
+        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.GetOwner().Center, endPos, Projectile.width, ref _); ;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         if (damageDone > target.life)
         {
-            Main.player[Projectile.owner].Heal(10);
+            Projectile.GetOwner().Heal(10);
         }
     }
 
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         Projectile.timeLeft = 2;
 
         if (AITimer == 0)
@@ -153,7 +153,7 @@ public class CrimsonTendrilFriendly : ModProjectile
     {
         Texture2D tendrilTexture = TextureAssets.Projectile[Type].Value;
         Texture2D bodyTex = bodyTexture.Value;
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         Vector2 playerToProj = player.Center.DirectionTo(Projectile.Center);
         Vector2 drawPos = player.Center;

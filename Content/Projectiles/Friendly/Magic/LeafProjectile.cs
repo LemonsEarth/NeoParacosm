@@ -30,8 +30,6 @@ public class LeafProjectile : ModProjectile
     {
         Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GrassBlades).noGravity = true;
 
-        Player player = Projectile.GetOwner();
-
         if (AITimer == 0)
         {
             if (Main.myPlayer == Projectile.owner)
@@ -39,7 +37,7 @@ public class LeafProjectile : ModProjectile
                 Projectile.velocity = Projectile.DirectionTo(Main.MouseWorld).SafeNormalize(Vector2.Zero) * speed;
             }
             Projectile.netUpdate = true;
-            SoundEngine.PlaySound(SoundID.Item39 with { PitchRange = (-0.1f, 0.1f)}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item39 with { PitchRange = (-0.1f, 0.1f) }, Projectile.Center);
         }
         else if (AITimer > 0)
         {
@@ -54,7 +52,7 @@ public class LeafProjectile : ModProjectile
 
         if (Projectile.velocity.Length() > 2f)
         {
-            Projectile.rotation = Utils.AngleLerp(Projectile.rotation, Projectile.velocity.ToRotation() + MathHelper.PiOver2, 1/2f);
+            Projectile.rotation = Utils.AngleLerp(Projectile.rotation, Projectile.velocity.ToRotation() + MathHelper.PiOver2, 1 / 2f);
         }
         else
         {

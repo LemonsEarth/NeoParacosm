@@ -43,7 +43,7 @@ public class SupremeCrimsonCloud : ModProjectile
     float savedScale = 1f;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
 
         if (!player.channel) released = true;
 

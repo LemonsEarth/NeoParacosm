@@ -46,7 +46,7 @@ public class FlameforgedBattleAxeHeldProj : PrimProjectile
     float rotValue = -90;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();
@@ -144,7 +144,7 @@ public class FlameforgedBattleAxeHeldProj : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
 

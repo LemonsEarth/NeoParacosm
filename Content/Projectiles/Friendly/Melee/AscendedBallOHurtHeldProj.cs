@@ -76,7 +76,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
     float lerpValue = 0;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();
@@ -182,7 +182,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
 
-        Vector2 startPos = Main.player[Projectile.owner].Center;
+        Vector2 startPos = Projectile.GetOwner().Center;
         Vector2 chainDrawPos = startPos;
         int segmentCount = (int)(Projectile.Center.Distance(startPos) / (chainTexture.Value.Height * Projectile.scale));
         int segmentsDrawn = 0;

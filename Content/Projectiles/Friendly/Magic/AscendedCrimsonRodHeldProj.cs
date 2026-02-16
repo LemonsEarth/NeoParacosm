@@ -40,7 +40,7 @@ public class AscendedCrimsonRodHeldProj : ModProjectile
 
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();

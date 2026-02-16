@@ -1012,33 +1012,48 @@ EclipseGreatshield: {
 
 AllForOneLocket: {
 	DisplayName: All For One Locket
-	Tooltip:
-	'''
-	Increases your maximum life by 20 for each player on your team (caps at 100)
-	'''
+	Tooltip: Increases your maximum life by 20 for each player on your team (caps at 100)
 }
 
 GloveOfRetaliation: {
 	DisplayName: Glove Of Retaliation
-	Tooltip:
-	'''
-	Taking more than 10% of your maximum health in contact damage briefly increases your melee damage by 300%
-	'''
+	Tooltip: Taking more than 10% of your maximum health in contact damage briefly increases your melee damage by 300%
 }
 
 MoltenClockwork: {
 	DisplayName: Molten Clockwork
 	Tooltip:
-	'''
-	Increases ranged attack speed by {0}%
-	Ranged attacks inflict Hellfire
-	'''
+		'''
+		Increases ranged attack speed by {0}%
+		Ranged attacks inflict Hellfire
+		'''
 }
 
 RageGauntlet: {
 	DisplayName: Rage Gauntlet
+	Tooltip: Going below 10% of your maximum HP increases damage by {0}% and critical strike chance by {1}%
+}
+
+CraterCoating: {
+	DisplayName: Crater Coating
+	Tooltip: True melee hits summon meteors
+}
+
+SpiritCoating: {
+	DisplayName: Spirit Coating
 	Tooltip:
-	'''
-	Going below 10% of your maximum HP increases damage by {0}% and critical strike chance by {1}%
-	'''
+		'''
+		True melee hits summon angry spirits that home in on enemies
+		Small chance to summon a calm spirit that heals you instead
+		'''
+}
+
+StarfallCoating: {
+	DisplayName: Starfall Coating
+	Tooltip: True melee hits summon stars to fall on your enemies
+}
+
+SuperStarfallCoating: {
+	DisplayName: Super Starfall Coating
+	Tooltip: True melee hits summon superstars to fall on your enemies
 }

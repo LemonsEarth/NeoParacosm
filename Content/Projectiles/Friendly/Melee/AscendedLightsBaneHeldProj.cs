@@ -47,7 +47,7 @@ public class AscendedLightsBaneHeldProj : ModProjectile
     float rotValue;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();

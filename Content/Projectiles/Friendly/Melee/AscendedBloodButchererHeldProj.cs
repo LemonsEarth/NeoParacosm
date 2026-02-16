@@ -54,7 +54,7 @@ public class AscendedBloodButchererHeldProj : ModProjectile
     float lerpT = 4f / 60f;
     public override void AI()
     {
-        Player player = Main.player[Projectile.owner];
+        Player player = Projectile.GetOwner();
         if (!player.Alive())
         {
             Projectile.Kill();

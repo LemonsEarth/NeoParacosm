@@ -28,7 +28,6 @@ public class HolySlash : ModProjectile
     {
         Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemTopaz).noGravity = true;
 
-        Player player = Projectile.GetOwner();
         Projectile.velocity *= DecelerationRate;
         Projectile.rotation = Projectile.velocity.ToRotation();
         if (AITimer > TimeLeft)
@@ -42,7 +41,7 @@ public class HolySlash : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        
+
     }
 
     public override bool PreDraw(ref Color lightColor)
