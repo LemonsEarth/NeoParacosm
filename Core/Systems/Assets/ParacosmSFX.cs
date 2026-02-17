@@ -9,6 +9,8 @@ public class ParacosmSFX : ModSystem
     public static SoundStyle ElectricBurst { get; private set; }
     public static SoundStyle ChurchBell { get; private set; }
     public static SoundStyle AncientCallingHorn { get; private set; }
+    public static SoundStyle SniperShot { get; private set; }
+    public static SoundStyle SniperScope { get; private set; }
     public override void Load()
     {
         UndertakerGunshot = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/UndertakerGunshot");
@@ -16,5 +18,7 @@ public class ParacosmSFX : ModSystem
         ChurchBell = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/ChurchBell");
         Thunder = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/Thunder");
         AncientCallingHorn = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/AncientCallingHorn");
+        SniperShot = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SniperShot");
+        SniperScope = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SniperScope");
     }
 }

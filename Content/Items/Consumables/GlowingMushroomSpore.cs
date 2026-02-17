@@ -24,3 +24,14 @@ public class GlowingMushroomSpore : ModItem
             .Register();
     }
 }
+
+public class GlowingMushroomGrassSeedsItem : GlobalItem
+{
+    public override void AddRecipes()
+    {
+        Recipe.Create(ItemID.MushroomGrassSeeds, 1)
+            .AddIngredient(ItemType<GlowingMushroomSpore>(), 50)
+            .AddTile(TileID.ChlorophyteExtractinator)
+            .Register();
+    }
+}

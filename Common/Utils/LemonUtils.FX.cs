@@ -123,13 +123,14 @@ public static partial class LemonUtils
 
     public static void DrawLaser(Vector2 position1, Vector2 position2, float laserWidth, Color color)
     {
-        Main.EntitySpriteDraw(ParacosmTextures.TrueMagicPixel.Value,
+        Main.EntitySpriteDraw(
+            ParacosmTextures.TrueMagicPixel.Value,
             position1 - Main.screenPosition,
             null,
             color,
             position1.DirectionTo(position2).ToRotation(),
             new Vector2(0, ParacosmTextures.TrueMagicPixel.Height() * 0.5f),
-            new Vector2((position1 - Main.screenPosition).Distance(position2 - Main.screenPosition) / 4, 1),
+            new Vector2((position1 - Main.screenPosition).Distance(position2 - Main.screenPosition) / 4, 1 * laserWidth),
             SpriteEffects.None);
     }
 

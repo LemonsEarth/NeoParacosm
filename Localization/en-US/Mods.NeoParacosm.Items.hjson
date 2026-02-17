@@ -1057,3 +1057,8 @@ SuperStarfallCoating: {
 	DisplayName: Super Starfall Coating
 	Tooltip: True melee hits summon superstars to fall on your enemies
 }
+
+CreminiCremator: {
+	DisplayName: Cremini Cremator
+	Tooltip: ""
+}
