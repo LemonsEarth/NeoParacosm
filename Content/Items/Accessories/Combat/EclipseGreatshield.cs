@@ -8,8 +8,8 @@ public class EclipseGreatshield : ModItem
 {
     public override void SetDefaults()
     {
-        Item.width = 30;
-        Item.height = 30;
+        Item.width = 48;
+        Item.height = 48;
         Item.accessory = true;
         Item.value = Item.buyPrice(0, 1);
         Item.rare = ItemRarityID.Green;

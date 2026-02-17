@@ -42,6 +42,7 @@ public class DarkIncendiaryProjHostile : ModProjectile
         //target.AddBuff(BuffType<DeathflameDebuff>(), 60);
     }
 
+    float rotValue = 0;
     public override void AI()
     {
         if (AITimer == 0)
@@ -57,7 +58,8 @@ public class DarkIncendiaryProjHostile : ModProjectile
             //Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
         }
 
-        Projectile.rotation = MathHelper.ToRadians(Projectile.velocity.Length() * AITimer);
+        rotValue = MathHelper.Lerp(rotValue, Projectile.velocity.X * AITimer, 1 / 20f);
+        Projectile.rotation = MathHelper.ToRadians(rotValue);
 
         Projectile.StandardAnimation(6, 4);
 

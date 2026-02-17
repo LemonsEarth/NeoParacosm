@@ -14,32 +14,30 @@ namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 public class BombKnight : ModNPC
 {
     int AITimer = 0;
-    int throwWindUpDuration = 60;
+    int throwWindUpDuration = 120;
     int throwingTimer = 0;
     int notThrowingTimer = 0;
-    int throwCount = 0;
 
     bool throwing = false;
 
     public override void SetStaticDefaults()
     {
-        Main.npcFrameCount[NPC.type] = 6;
+        Main.npcFrameCount[NPC.type] = 8;
         NPCID.Sets.TrailCacheLength[NPC.type] = 10;
         NPCID.Sets.TrailingMode[NPC.type] = 3;
     }
 
     public override void SetDefaults()
     {
-        NPC.width = 30;
-        NPC.height = 58;
-        NPC.lifeMax = 500;
+        NPC.width = 128;
+        NPC.height = 156;
+        NPC.lifeMax = 1200;
         NPC.defense = 25;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
         NPC.DeathSound = SoundID.NPCDeath55;
         NPC.value = 10000;
         NPC.aiStyle = NPCAIStyleID.Fighter;
-        //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0.2f;
     }
 
@@ -97,7 +95,7 @@ public class BombKnight : ModNPC
         {
             return true;
         }
-        NPC.spriteDirection = -NPC.direction;
+        NPC.spriteDirection = NPC.direction;
         Player player = Main.player[NPC.target];
         int minDistanceToTarget = 600;
         if (NPC.Distance(player.Center) < minDistanceToTarget)
@@ -106,7 +104,6 @@ public class BombKnight : ModNPC
             {
                 throwing = true;
                 throwingTimer = throwWindUpDuration;
-                throwCount = 0;
             }
         }
 
@@ -125,7 +122,7 @@ public class BombKnight : ModNPC
                     LemonUtils.QuickProj(
                         NPC,
                         NPC.Top,
-                        NPC.DirectionTo(player.Center) * Main.rand.NextFloat(5, 9),
+                        NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 20),
                         ProjectileType<DarkIncendiaryProjHostile>(),
                         NPC.damage / 4,
                         1f,
@@ -134,18 +131,14 @@ public class BombKnight : ModNPC
                         ai2: 15f
                         );
                 }
-                throwCount++;
-                if (throwCount < 1 + (LemonUtils.GetDifficulty() - 1))
-                {
-                    throwingTimer = throwWindUpDuration / LemonUtils.GetDifficulty();
-                }
-                else
-                {
-                    throwing = false;
-                }
             }
 
-            if (throwingTimer > 0)
+            if (throwingTimer <= -16)
+            {
+                throwing = false;
+            }
+
+            if (throwingTimer > -16)
             {
                 throwingTimer--;
             }
@@ -171,19 +164,34 @@ public class BombKnight : ModNPC
         int frameDur = 20;
         if (throwing)
         {
-            if (throwingTimer > 6)
+            NPC.frameCounter++;
+            if (throwingTimer > 60)
             {
-                NPC.frame.Y = 4 * frameHeight;
+                frameDur = 4;
+                if (NPC.frameCounter > frameDur && NPC.frame.Y < 7 * frameHeight)
+                {
+                    NPC.frame.Y += frameHeight;
+                    NPC.frameCounter = 0;
+                }
             }
-            else
+            else if (throwingTimer > 0)
             {
-                NPC.frame.Y = 5 * frameHeight;
+                NPC.frame.Y = 7 * frameHeight;
+                NPC.frameCounter = 0;
             }
-            NPC.frameCounter = 0;
+            else if (throwingTimer > -16)
+            {
+                frameDur = 4;
+                if (NPC.frameCounter > frameDur && NPC.frame.Y > 4 * frameHeight)
+                {
+                    NPC.frame.Y -= frameHeight;
+                    NPC.frameCounter = 0;
+                }
+            }
         }
         else
         {
-            NPC.frameCounter += 1;
+            NPC.frameCounter++;
             if (NPC.frameCounter > frameDur)
             {
                 NPC.frame.Y += frameHeight;
