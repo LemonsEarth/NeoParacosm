@@ -139,3 +139,5 @@ SpiritProjDamage.DisplayName: Spirit Proj Damage
 SpiritProjHealing.DisplayName: Spirit Proj Healing
 CreminiCrematorHeldProj.DisplayName: Cremini Cremator Held Proj
 CrematorRound.DisplayName: Cremator Round
+IceComet.DisplayName: Ice Comet
+IceBlockProjHostile.DisplayName: Ice Block Proj Hostile

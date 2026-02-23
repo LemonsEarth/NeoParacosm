@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Globals.GlobalNPCs;
+using System.Collections.Generic;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Common.Utils;
@@ -35,6 +37,57 @@ public static partial class LemonUtils
             }
         }
         return closestEnemy;
+    }
+
+    public static void DontDropAnything(this NPC npc)
+    {
+        NPCID.Sets.CantTakeLunchMoney[npc.type] = true;
+        NPCID.Sets.CannotDropSouls[npc.type] = true;
+        NPCID.Sets.NeverDropsResourcePickups[npc.type] = true;
+    }
+
+    /// <summary>
+    /// Attempts to find a safe position to teleport.
+    /// </summary>
+    /// <returns>Chosen position. Returns Vector2.Zero if no safe position is found</returns>
+    public static Vector2 FindSafeTeleportPosition(this NPC npc, Vector2 target, float maxDistanceToTarget, float minDistanceToTarget, int maxAttemptCount = 100)
+    {
+        int attemptCount = 0;
+        while (attemptCount < maxAttemptCount)
+        {
+            Vector2 chosenPos = Vector2.Zero;
+            chosenPos = target + RandomVector2Circular(maxDistanceToTarget, maxDistanceToTarget, minDistanceToTarget, minDistanceToTarget);
+
+            Point16 topLeftTile = chosenPos.ToTileCoordinates16();
+            Point16 bottomRightTile = (chosenPos + new Vector2(npc.width, npc.height)).ToTileCoordinates16();
+            bool badPos = false;
+            for (int x = topLeftTile.X; x < bottomRightTile.X; x++)
+            {
+                for (int y = topLeftTile.Y; y < bottomRightTile.Y; y++)
+                {
+                    Tile tile = Main.tile[x, y];
+                    if (tile.HasTile || tile.LiquidAmount >= 200)
+                    {
+                        badPos = true;
+                        break;
+                    }
+
+                }
+                if (badPos)
+                {
+                    break;
+                }
+            }
+
+            if (!badPos)
+            {
+                return chosenPos;
+            }
+
+            attemptCount++;
+        }
+
+        return Vector2.Zero;
     }
 
     public static void DOTDebuff(this NPC npc, float damagePerSecond, ref int damage)

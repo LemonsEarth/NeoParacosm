@@ -53,6 +53,14 @@ public static partial class LemonUtils
         }
     }
 
+    public static void DustBurst(int count, Vector2 pos, int dustID, float randXSpeed, float randYSpeed, float minScale, float maxScale, Color color = default)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Dust.NewDustPerfect(pos, dustID, new Vector2(Main.rand.NextFloat(-randXSpeed, randXSpeed), Main.rand.NextFloat(-randYSpeed, randYSpeed)), Scale: Main.rand.NextFloat(minScale, maxScale), newColor: color).noGravity = true;
+        }
+    }
+
     public static void SmokeGore(IEntitySource source, Vector2 pos, float minSpeed, float maxSpeed)
     {
         if (!Main.dedServ)

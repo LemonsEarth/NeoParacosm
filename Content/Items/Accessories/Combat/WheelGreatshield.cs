@@ -20,6 +20,15 @@ public class WheelGreatshield : ModItem
         player.GetModPlayer<WheelGreatshieldPlayer>().wheelGreatshield = true;
         player.moveSpeed += 0.1f;
     }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.Bone, 20)
+            .AddRecipeGroup(RecipeGroupID.Wood, 30)
+            .AddTile(TileID.Anvils)
+            .Register();
+    }
 }
 
 public class WheelGreatshieldPlayer : ModPlayer

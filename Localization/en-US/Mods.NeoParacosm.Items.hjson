@@ -1065,5 +1065,10 @@ CreminiCremator: {
 
 WheelGreatshield: {
 	DisplayName: Wheel Greatshield
+	Tooltip: Increases movement speed and grants immunity to knockback upon contact damage
+}
+
+IceCometStaff: {
+	DisplayName: Ice Comet Staff
 	Tooltip: ""
 }
