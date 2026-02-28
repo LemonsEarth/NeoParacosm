@@ -70,7 +70,7 @@ public class EmperorColdsteelHead : ModNPC
     /// <summary>
     /// Attack durations indexed by Attack field
     /// </summary>
-    readonly int[] attackDurations = [1080, 900, 1080, 1080, 1320];
+    readonly int[] attackDurations = [1080, 900, 1440, 1080, 1320];
     readonly int[] attackDurations2 = [1600, 1080, 1080, 1080, 1320];
 
     /// <summary>
@@ -79,7 +79,8 @@ public class EmperorColdsteelHead : ModNPC
     public enum Attacks
     {
         DivingOnPlayer,
-        SineIceBurst
+        SineIceBurst,
+        CometShower
     }
 
     public enum Attacks2
@@ -210,7 +211,7 @@ public class EmperorColdsteelHead : ModNPC
 
         PhaseControl();
         Visuals();
-        MoveToPos(player.Center, 30, 10);
+        //MoveToPos(player.Center, 30, 10);
         DespawnCheck();
 
         AttackControl();
@@ -282,12 +283,9 @@ public class EmperorColdsteelHead : ModNPC
                 case (int)Attacks.SineIceBurst:
                     SineIceBurst();
                     break;
-                    /*case (int)Attacks.CursedFlamethrower:
-                        break;
-                    case (int)Attacks.FlameWallsAndSpinning:
-                        break;
-                    case (int)Attacks.DashingWithBalls:
-                        break; */
+                case (int)Attacks.CometShower:
+                    CometShower();
+                    break;
             }
         }
         else if (Phase == 1)
@@ -333,70 +331,37 @@ public class EmperorColdsteelHead : ModNPC
     {
         switch (AttackTimer)
         {
-            case 360: // Repeat this several times
+            case 300: // Repeat this several times
                 targetPosition = player.Center - Vector2.UnitY * 1000;
                 break;
             case > 240: // Moving above player
                 Print("Move above player");
-                MoveToPos(player.Center - Vector2.UnitY * 1000, 16, 20);
-                if (AttackTimer < 300)
-                {
-                    DoDrawFlashlight(Color.Red);
-                }
+                MoveToPos(player.Center - Vector2.UnitY * 600, 20, 20);
                 break;
             case 240:
-                StopDrawingFlashlight();
+                PlayRoar();
+                NPC.velocity = NPC.DirectionTo(player.Center) * 40;
                 break;
-            case > 120: // Moving to player, "circling"
-                Print("Move to player");
-                MoveToPos(player.Center, 30, 50);
-                if (MiniPhase >= 1)
-                {
-                    if (AttackTimer == 150)
-                    {
-                        foreach (var bodySegment in Segments)
-                        {
-                            if (LemonUtils.NotClient())
-                            {
-                                LemonUtils.QuickProj(
-                                    NPC,
-                                    bodySegment.NPC.Center,
-                                    Vector2.Zero,
-                                    ProjectileType<IceBurst>(),
-                                    ai0: 45,
-                                    ai1: 60,
-                                    ai2: 8
-                                    );
-                            }
-                        }
-                    }
-                    if (AttackTimer % 5 == 0 && LemonUtils.NotClient())
-                    {
-                        LemonUtils.QuickProj(
-                            NPC,
-                            NPC.Center,
-                            NPC.velocity.SafeNormalize(Vector2.Zero) * 5,
-                            ProjectileType<IceSpike>(),
-                            ai0: 300
-                            );
-                    }
-                }
+            case > 210:
+                break;
+            case > 120:
+                Print("Move above player");
+                MoveToPos(player.Center + Vector2.UnitY * 600, 20, 20);
                 break;
             case 120:
-                targetPosition = player.Center + Vector2.UnitY * 1000;
-                DoDrawFlashlight(Color.Red);
+                PlayRoar();
+                NPC.velocity = NPC.DirectionTo(player.Center) * 40;
                 break;
-            case > 60: // Moving below player
-                Print("Move below player");
-                MoveToPos(player.Center + Vector2.UnitY * 1000, 20, 60);
+            case > 60:
                 break;
-            case > 0: // Rising up quickly
-                Print("Move above player fast");
-                StopDrawingFlashlight();
-                MoveToPos(player.Center - Vector2.UnitY * 1000, 20, 45);
+            case 60:
+                PlayRoar();
+                NPC.velocity = NPC.DirectionTo(player.Center) * 50;
+                break;
+            case > 0:
                 break;
             case 0:
-                AttackTimer = 360;
+                AttackTimer = 300;
                 return;
         }
 
@@ -452,10 +417,45 @@ public class EmperorColdsteelHead : ModNPC
         AttackTimer--;
     }
 
+    void CometShower()
+    {
+        switch (AttackTimer)
+        {
+            case 480:
+                break;
+            case > 300: // Move above player, TODO: No contact damage
+                Print("Moving above");
+                MoveToPos(player.Center - Vector2.UnitY * 500, 300, 100);
+                break;
+            case > 0:
+                NPC.velocity *= 0.99f;
+                if (AttackTimer % 15 == 0 && AttackTimer > 60)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 randomPos = NPC.Center + new Vector2(Main.rand.NextFloat(-800, 800), -500);
+                        LemonUtils.QuickProj(
+                            NPC,
+                            randomPos,
+                            new Vector2(Main.rand.NextFloat(25, 35), Main.rand.NextFloat(35, 45)),
+                            ProjectileType<IceCometSmallHostile>(),
+                            ai0: 300,
+                            ai1: AttackTimer + Main.rand.Next(10, 60)
+                            );
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = 480;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void PlayRoar()
     {
-        SoundEngine.PlaySound(SoundID.NPCDeath10 with { PitchRange = (-0.6f, -0.4f) }, NPC.Center);
-        SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (-0.6f, -0.4f) }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (0.2f, 0.4f), SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest }, NPC.Center);
     }
 
     void Print(string text)

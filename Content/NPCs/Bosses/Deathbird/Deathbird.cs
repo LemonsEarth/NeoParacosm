@@ -1134,4 +1134,5 @@ public class Deathbird : ModNPC
         }
         return false;
     }
+
 }

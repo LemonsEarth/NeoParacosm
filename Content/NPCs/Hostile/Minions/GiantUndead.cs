@@ -180,7 +180,7 @@ public class GiantUndead : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.Center.DirectionTo(player.Center) * 10, ProjectileType<DeathflameBall>(), NPC.damage / 4, ai0: 9999, ai1: NPC.target);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.Center.DirectionTo(player.Center) * 10, ProjectileType<DeathflameBall>(), ai0: 9999, ai1: NPC.target);
                     }
                     SoundEngine.PlaySound(SoundID.NPCDeath6 with { PitchRange = (0, 0.5f) }, NPC.Center);
                 }

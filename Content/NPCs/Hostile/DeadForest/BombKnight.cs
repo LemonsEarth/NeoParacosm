@@ -124,8 +124,6 @@ public class BombKnight : ModNPC
                         NPC.Top,
                         NPC.DirectionTo(player.Center) * Main.rand.NextFloat(12, 20),
                         ProjectileType<DarkIncendiaryProjHostile>(),
-                        NPC.damage / 4,
-                        1f,
                         ai0: 180,
                         ai1: NPC.target,
                         ai2: 15f
@@ -179,7 +177,7 @@ public class BombKnight : ModNPC
                 NPC.frame.Y = 7 * frameHeight;
                 NPC.frameCounter = 0;
             }
-            else if (throwingTimer > -16)
+            else if (throwingTimer > -12)
             {
                 frameDur = 4;
                 if (NPC.frameCounter > frameDur && NPC.frame.Y > 4 * frameHeight)
@@ -187,6 +185,11 @@ public class BombKnight : ModNPC
                     NPC.frame.Y -= frameHeight;
                     NPC.frameCounter = 0;
                 }
+            }
+            else
+            {
+                NPC.frame.Y = 0;
+                NPC.frameCounter = 0;
             }
         }
         else

@@ -123,8 +123,6 @@ public class SpearKnight : ModNPC
                         NPC.Top,
                         NPC.DirectionTo(player.Center) * 15,
                         ProjectileType<HolySpear>(),
-                        NPC.damage / 4,
-                        1f,
                         ai0: 15,
                         ai1: 0.2f,
                         ai2: 15f

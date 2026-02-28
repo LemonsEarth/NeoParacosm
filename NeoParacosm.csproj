@@ -8,33 +8,6 @@
 		
 	</PropertyGroup>
 	<ItemGroup>
-	  <AdditionalFiles Remove="Content\NPCs\Boss\**" />
-	  <Compile Remove="Content\NPCs\Boss\**" />
-	  <EmbeddedResource Remove="Content\NPCs\Boss\**" />
-	  <None Remove="Content\NPCs\Boss\**" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Remove="Content\Projectiles\Friendly\Magic\AshenBolt.png" />
-	  <None Remove="Content\Projectiles\Friendly\Melee\ChainsawGunHeldProjectile.png" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Biomes.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Buffs.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Items.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Keybinds.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.NPCs.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Projectiles.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Subworlds.hjson" />
-	  <None Remove="Localization\en-US\Mods.NeoParacosm.Tiles.hjson" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Common\Assets\Audio\Music\" />
-	  <Folder Include="Common\Conditions\" />
-	  <Folder Include="Content\Items\Tools\" />
-	  <Folder Include="Content\Items\Weapons\Generic\" />
-	  <Folder Include="Content\Projectiles\Interactable\" />
-	  <Folder Include="Content\World\Biomes\" />
-	  <Folder Include="Content\World\Tiles\" />
-	</ItemGroup>
-	<ItemGroup>
 	  <Reference Include="StructureHelper">
 	    <HintPath>lib\StructureHelper.dll</HintPath>
 	  </Reference>

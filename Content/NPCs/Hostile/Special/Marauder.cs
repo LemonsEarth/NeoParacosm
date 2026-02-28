@@ -128,7 +128,7 @@ public class Marauder : ModNPC
                             for (int i = -1; i <= 1; i++)
                             {
                                 Vector2 dir = NPC.DirectionTo(player.Center).RotatedBy(i * MathHelper.ToRadians(30));
-                                LemonUtils.QuickProj(NPC, NPC.Center, dir * 2 * (stage + 1), CarrierProj, NPC.damage / 4);
+                                LemonUtils.QuickProj(NPC, NPC.Center, dir * 2 * (stage + 1), CarrierProj);
                             }
                         }
                     }

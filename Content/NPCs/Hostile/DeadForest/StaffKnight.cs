@@ -138,7 +138,6 @@ public class StaffKnight : ModNPC
                                 NPC.Center,
                                 NPC.DirectionTo(player.Center).RotatedBy(i * MathHelper.Pi / 8) * 5,
                                 ProjectileType<SmallHolyBlast>(),
-                                NPC.damage / 4,
                                 ai1: 1f,
                                 ai2: 360f
                                 );

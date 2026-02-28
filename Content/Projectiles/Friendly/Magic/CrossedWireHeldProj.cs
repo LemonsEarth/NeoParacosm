@@ -134,13 +134,13 @@ public class CrossedWireHeldProj : PrimProjectile
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
         Main.EntitySpriteDraw(
-            ParacosmTextures.Empty100Tex.Value, 
-            lightningPos - Main.screenPosition, 
-            null, 
-            Color.White, 
-            Projectile.rotation - MathHelper.PiOver4, 
-            Vector2.UnitY * ParacosmTextures.Empty100Tex.Height() * 0.5f, 
-            lightningScale, 
+            ParacosmTextures.Empty100Tex.Value,
+            lightningPos - Main.screenPosition,
+            null,
+            Color.White,
+            Projectile.rotation - MathHelper.PiOver4,
+            Vector2.UnitY * ParacosmTextures.Empty100Tex.Height() * 0.5f,
+            lightningScale,
             LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
 
         Main.spriteBatch.End();
@@ -151,7 +151,7 @@ public class CrossedWireHeldProj : PrimProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        //Main.spriteBatch.End();
-        //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

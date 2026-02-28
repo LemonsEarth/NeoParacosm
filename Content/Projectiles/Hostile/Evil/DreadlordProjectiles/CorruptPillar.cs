@@ -113,6 +113,9 @@ public class CorruptPillar : ModProjectile
             }
         }
 
+        float shakePercent = (AITimer / TimeLeft) * (AITimer / TimeLeft);
+        Projectile.position.X = startPos.X + Main.rand.NextFloat(-16 * shakePercent, 16 * shakePercent);
+
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
