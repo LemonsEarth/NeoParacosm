@@ -30,12 +30,12 @@ public class AncientCallingHorn : ModItem
 
     public override bool CanUseItem(Player player)
     {
-        return ((!Main.dayTime || ResearcherQuest.DarkCataclysmActive) && !NPC.AnyNPCs(NPCType<Dreadlord>()) && (player.ZoneCorrupt || player.ZoneCrimson));
+        return ((!Main.dayTime || DarkCataclysmSystem.DarkCataclysmActive) && !NPC.AnyNPCs(NPCType<Dreadlord>()) && (player.ZoneCorrupt || player.ZoneCrimson));
     }
 
     public override void UseAnimation(Player player)
     {
-        
+
     }
 
     public override bool? UseItem(Player player)

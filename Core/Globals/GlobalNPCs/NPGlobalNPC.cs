@@ -40,7 +40,7 @@ public class NPGlobalNPC : GlobalNPC
 
     public override bool PreAI(NPC npc)
     {
-        if (ResearcherQuest.DarkCataclysmActive)
+        if (DarkCataclysmSystem.DarkCataclysmActive)
         {
             if (npc.friendly || npc.CountsAsACritter || npc.realLife != -1 || npc.boss || npc.immortal || npc.lifeMax > 1000)
             {
@@ -70,7 +70,7 @@ public class NPGlobalNPC : GlobalNPC
             maxSpawns = (int)(maxSpawns * 0.5f);
         }
 
-        if (ResearcherQuest.DarkCataclysmActive)
+        if (DarkCataclysmSystem.DarkCataclysmActive)
         {
             spawnRate = (int)(spawnRate * 0.75f);
             maxSpawns = (int)(maxSpawns * 2f);

@@ -9,7 +9,7 @@ public class DarkCataclysmSceneEffect : ModSceneEffect
 
     public override bool IsSceneEffectActive(Player player)
     {
-        return ResearcherQuest.DarkCataclysmActive;
+        return DarkCataclysmSystem.DarkCataclysmActive;
     }
 }
 

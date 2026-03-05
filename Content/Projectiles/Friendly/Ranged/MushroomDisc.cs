@@ -45,6 +45,7 @@ public class MushroomDisc : ModProjectile
 
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
+        //Projectile.damage = (int)(Projectile.damage * 1.2f);
         if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
         {
             Projectile.velocity.X = -oldVelocity.X;

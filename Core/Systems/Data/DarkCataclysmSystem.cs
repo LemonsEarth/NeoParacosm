@@ -2,6 +2,7 @@
 
 public class DarkCataclysmSystem : ModSystem
 {
+    public static bool DarkCataclysmActive => ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedResearcher;
     public static float DCEffectOpacity = 0f;
     public static float DCEffectOpacityTimer = 0f;
     public static Color DCEffectFogColor = Color.White;
@@ -23,12 +24,12 @@ public class DarkCataclysmSystem : ModSystem
 
     public override void PostUpdateItems()
     {
-        
+
     }
 
     public override void PreUpdatePlayers()
     {
-       
+
     }
 
     public override void PreUpdateNPCs()

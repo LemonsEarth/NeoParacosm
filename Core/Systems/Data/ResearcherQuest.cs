@@ -29,8 +29,6 @@ public class ResearcherQuest : ModSystem
         DownedResearcher,
     }
 
-    public static bool DarkCataclysmActive => Progress == ProgressState.DownedResearcher;
-
     public override void PostUpdateWorld()
     {
         if (Progress == ProgressState.NotDownedEvilBoss && NPC.downedBoss2)

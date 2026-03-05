@@ -32,7 +32,7 @@ public partial class NPEffectPlayer : ModPlayer
             DarkCataclysmSystem.AncientCallingHornInUse = true;
             Player.NPPlayer().NoMusic = true;
         }
-        if (ResearcherQuest.DarkCataclysmActive)
+        if (DarkCataclysmSystem.DarkCataclysmActive)
         {
             DCEffectFogOpacity = MathHelper.Lerp(DCEffectFogOpacity, DCEffectMaxFogOpacity, 1 / 60f);
             DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 60f);

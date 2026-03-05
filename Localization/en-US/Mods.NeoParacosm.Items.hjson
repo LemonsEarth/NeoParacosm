@@ -1076,8 +1076,8 @@ IceCometStaff: {
 MushroomDiscLauncher: {
 	DisplayName: Mushroom Disc Launcher
 	Tooltip:
-	'''
-	Fires discs that bounce off tiles and enemies
-	Inflicts Shroomed on hit
-	'''
+		'''
+		Fires discs that bounce off tiles and enemies
+		Inflicts Shroomed on hit
+		'''
 }

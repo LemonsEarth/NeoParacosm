@@ -8,8 +8,6 @@ public class DataCollectorNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
-    int timer = 0;
-
     public Point16 dataCollectorTEPos { get; set; } = Point16.Zero;
     public Point16 dataCollectorEXTEPos { get; set; } = Point16.Zero;
 
