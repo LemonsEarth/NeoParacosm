@@ -32,7 +32,7 @@ public partial class Dreadlord : ModNPC
     {
         for (int i = 0; i < count; i++)
         {
-            Dust.NewDustDirect(NPC.RandomPos(200, 100), 2, 2, DustID.GemTopaz, speed.X, speed.Y, Scale: Main.rand.NextFloat(2f, 3f));
+            Dust.NewDustDirect(NPC.RandomPos(200, 100), 2, 2, DustID.GemTopaz, speed.X, speed.Y, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
         }
     }
 

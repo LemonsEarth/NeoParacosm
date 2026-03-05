@@ -68,13 +68,13 @@ public class CirclingIchorSphere : PrimProjectile
         }
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
 
-        if (AITimer < WaitTime)
+        if (AITimer <= WaitTime)
         {
             Projectile.Center = npc.Center + Vector2.UnitX.RotatedBy(CirclingOffsetAngle + MathHelper.ToRadians(AITimer * savedSpeed * 0.1f)) * 300;
             Projectile.velocity = Vector2.Zero;
             lastCirclingPos = npc.Center;
         }
-        else if (AITimer >= WaitTime)
+        else if (AITimer > WaitTime)
         {
             Projectile.Center = lastCirclingPos + Vector2.UnitX.RotatedBy(CirclingOffsetAngle + MathHelper.ToRadians(AITimer * savedSpeed * 0.1f)) * (300 + (AITimer - WaitTime) * MovingOutSpeed);
             Projectile.velocity = Vector2.Zero;

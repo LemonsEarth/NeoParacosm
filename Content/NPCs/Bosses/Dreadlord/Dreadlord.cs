@@ -64,7 +64,7 @@ public partial class Dreadlord : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
-    readonly int[] attackDurations2 = [1600, 1200, 1080, 1080, 1320];
+    readonly int[] attackDurations2 = [1600, 1200, 1200, 1080, 1320];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -81,7 +81,8 @@ public partial class Dreadlord : ModNPC
     public enum Attacks2
     {
         Pillars,
-        CirclingIchor
+        CirclingIchor,
+        Slamming
     }
 
     public int Phase { get; private set; } = 0;
@@ -166,6 +167,9 @@ public partial class Dreadlord : ModNPC
                     break;
                 case (int)Attacks2.CirclingIchor:
                     Attack_CirclingIchor();
+                    break;
+                case (int)Attacks2.Slamming:
+                    Attack_Slamming();
                     break;
 
             }
@@ -360,7 +364,7 @@ public partial class Dreadlord : ModNPC
                 float distanceToArena = plr.Distance(ArenaCenter);
                 float baseArenaDistance = DarkCataclysmSystem.DCEffectNoFogDistance;
                 float baseNPCDistance = DarkCataclysmSystem.DCEffectNoFogDistance;
-                if (distanceToNPC > baseNPCDistance) // too far from boss
+                /*if (distanceToNPC > baseNPCDistance) // too far from boss
                 {
                     float speedDen = Math.Clamp(distanceToNPC / baseNPCDistance, 1, 3);
                     if (AITimer % (int)(60 / speedDen) == 0)
@@ -376,7 +380,7 @@ public partial class Dreadlord : ModNPC
                             ai2: 160
                             );
                     }
-                }
+                }*/
 
                 if (distanceToArena > baseArenaDistance) // too far from arena
                 {
@@ -1545,7 +1549,7 @@ public partial class Dreadlord : ModNPC
                 {
                     for (int i = 0; i < 6; i++)
                     {
-                        float rotSpeed = i % 2 == 0 ? Main.rand.NextFloat(6, 12) : -Main.rand.NextFloat(6, 12);
+                        float rotSpeed = i % 2 == 0 ? Main.rand.NextFloat(3, 5) : -Main.rand.NextFloat(3, 5);
                         CirclingIchorSpheres(8, 120 + i * 60, 600, rotSpeed, 6);
                     }
                 }
@@ -1592,10 +1596,71 @@ public partial class Dreadlord : ModNPC
         AttackTimer--;
     }
 
+    void Attack_Slamming()
+    {
+        SetBodyPartPositions(headLerpSpeed: 0.8f, legLerpSpeed: 0.8f, bodyLerpSpeed: 0.8f);
+        switch (AttackTimer)
+        {
+            case 300:
+                if (LemonUtils.NotClient())
+                {
+                    CirclingIchorSpheres(8, 0, 900, 10 * Main.rand.NextBool().ToDirectionInt(), 8);
+                }
+                AttackCount = Main.rand.NextFloat(-3, 3); // Random x speed
+                break;
+            case > 240:
+                float lerpT = 1 - (AttackTimer - 240f) / 60f;
+                float scaleSpeedFactor = 1 / (NPC.scale * 0.25f); // moves faster the smaller it is
+                NPC.velocity = new Vector2(AttackCount, -2) * scaleSpeedFactor;
+                LerpScale(0.5f, lerpT);
+                NPC.Opacity = Lerp(1f, 0f, lerpT);
+                break;
+            case 240:
+                AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
+                NPC.Center = player.Center - Vector2.UnitY * 1200;
+                break;
+            case > 120:
+                if (LemonUtils.NotClient() && AttackTimer % 5 == 0)
+                {
+                    LemonUtils.QuickProj(
+                        NPC,
+                        HeadCorrupt.MiscPosition1,
+                        Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * Main.rand.NextFloat(12, 15),
+                        ProjectileType<CursedFlameSphere>(),
+                        ai1: 1
+                        );
+                }
+                NPC.Opacity = Lerp(NPC.Opacity, 1f, 0.25f);
+                LerpScale(1f, 0.25f);
+                NPC.MoveToPos(player.Center - Vector2.UnitY * 1200, 0.3f, 0.6f, 0.3f, 0.5f);
+                break;
+            case 120:
+                NPC.Center = player.Center + new Vector2(0, -1200);
+                break;
+            case > 90:
+                NPC.Center = player.Center + new Vector2(0,  -1200);
+                break;
+            case 90:
+                PlayRoar();
+                NPC.velocity = Vector2.UnitY * 35;
+                break;
+            case > 60:
+                break;
+            case > 0:
+                NPC.velocity *= 0.93f;
+                break;
+            case 0:
+                AttackTimer = 300;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void SwitchAttacks()
     {
         Attack++;
-        Attack = 1;
+        //Attack = 2;
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
             reachedSecondPhase = true;
