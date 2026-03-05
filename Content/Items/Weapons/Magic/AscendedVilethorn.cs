@@ -38,14 +38,14 @@ public class AscendedVilethorn : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Vilethorn, position, scale, timer, frame, spriteBatch, Color.YellowGreen);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Vilethorn, position, scale, frame, spriteBatch, Color.YellowGreen);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Vilethorn, rotation, scale, timer, spriteBatch, Color.YellowGreen);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Vilethorn, rotation, scale, spriteBatch, Color.YellowGreen);
         return false;
     }
 

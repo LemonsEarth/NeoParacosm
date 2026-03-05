@@ -8,7 +8,6 @@ public class AscendedShadowScalemail : ModItem
 {
     static readonly float damageBoost = 8;
     static readonly int drBoost = 8;
-    int timer = 0;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost, drBoost);
 
     public override void SetDefaults()
@@ -28,15 +27,13 @@ public class AscendedShadowScalemail : ModItem
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowScalemail, position, scale, timer, frame, spriteBatch, Color.Purple);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowScalemail, position, scale, frame, spriteBatch, Color.Purple);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowScalemail, rotation, scale, timer, spriteBatch, Color.Purple);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowScalemail, rotation, scale, spriteBatch, Color.Purple);
         return false;
     }
 }

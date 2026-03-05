@@ -37,14 +37,14 @@ public class AscendedMusket : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Musket, position, scale, timer, frame, spriteBatch, Color.YellowGreen);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Musket, position, scale, frame, spriteBatch, Color.YellowGreen);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Musket, rotation, scale, timer, spriteBatch, Color.YellowGreen);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Musket, rotation, scale, spriteBatch, Color.YellowGreen);
         return false;
     }
 

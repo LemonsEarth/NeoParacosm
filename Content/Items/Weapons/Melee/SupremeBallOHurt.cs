@@ -35,14 +35,14 @@ public class SupremeBallOHurt : ModItem
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.BallOHurt, position, scale, timer, frame, spriteBatch, Color.Magenta);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.BallOHurt, position, scale, frame, spriteBatch, Color.Magenta);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
         timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.BallOHurt, rotation, scale, timer, spriteBatch, Color.Magenta);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.BallOHurt, rotation, scale, spriteBatch, Color.Magenta);
         return false;
     }
 

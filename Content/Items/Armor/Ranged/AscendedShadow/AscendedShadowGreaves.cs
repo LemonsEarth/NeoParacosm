@@ -8,7 +8,6 @@ public class AscendedShadowGreaves : ModItem
 {
     static readonly float moveSpeedBoost = 16;
     static readonly float critBoost = 8;
-    int timer = 0;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(moveSpeedBoost, critBoost);
 
     public override void SetDefaults()
@@ -29,16 +28,14 @@ public class AscendedShadowGreaves : ModItem
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowGreaves, position, scale, timer, frame, spriteBatch, Color.Purple);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowGreaves, position, scale, frame, spriteBatch, Color.Purple);
         return false;
     }
 
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowGreaves, rotation, scale, timer, spriteBatch, Color.Purple);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowGreaves, rotation, scale, spriteBatch, Color.Purple);
         return false;
     }
 }

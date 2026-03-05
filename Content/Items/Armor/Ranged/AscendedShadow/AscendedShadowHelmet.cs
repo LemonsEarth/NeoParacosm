@@ -14,8 +14,6 @@ public class AscendedShadowHelmet : ModItem
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost, critBoost);
     public static LocalizedText setBonusText;
 
-    int timer = 0;
-
     public override void SetStaticDefaults()
     {
         setBonusText = this.GetLocalization("SetBonus").WithFormatArgs();
@@ -49,15 +47,13 @@ public class AscendedShadowHelmet : ModItem
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowHelmet, position, scale, timer, frame, spriteBatch, Color.Purple);
+        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowHelmet, position, scale, frame, spriteBatch, Color.Purple);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowHelmet, rotation, scale, timer, spriteBatch, Color.Purple);
+        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowHelmet, rotation, scale, spriteBatch, Color.Purple);
         return false;
     }
 }

@@ -81,7 +81,7 @@ public class SupremeVilethornHeldProj : ModProjectile
         for (int i = -4; i <= 4; i++)
         {
             float damageMul = Math.Clamp(AITimer, 60, 300) / 300f;
-            LemonUtils.QuickProj(Projectile, trackingPos + new Vector2(64 * i, 200 + Math.Abs(i) * 32), -Vector2.UnitY * 40, ProjectileType<VilethornFriendly>(), damageMul * Projectile.damage);
+            //LemonUtils.QuickProj(Projectile, trackingPos + new Vector2(64 * i, 200 + Math.Abs(i) * 32), -Vector2.UnitY * 40, ProjectileType<VilethornFriendly>(), damageMul * Projectile.damage);
         }
     }
 
@@ -102,29 +102,46 @@ public class SupremeVilethornHeldProj : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D glowTexture = TextureAssets.Projectile[Type].Value;
-
         Texture2D originalTexture = TextureAssets.Item[ItemID.Vilethorn].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
         Main.EntitySpriteDraw(originalTexture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, originalTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["color"].SetValue(Color.Magenta.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        Main.EntitySpriteDraw(glowTexture, drawPos, null, Color.White, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        return false;
+        shader.UseImage1(ParacosmTextures.NoiseTexture);
 
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(
+            SpriteSortMode.Deferred,
+            BlendState.Additive,
+            Main.DefaultSamplerState,
+            DepthStencilState.None,
+            Main.Rasterizer,
+            shader.Shader,
+            Main.GameViewMatrix.TransformationMatrix
+        );
+        shader.Apply();
+
+        Main.EntitySpriteDraw(glowTexture, drawPos, null, Color.White, Projectile.rotation, glowTexture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
+
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(
+            SpriteSortMode.Deferred,
+            BlendState.AlphaBlend,
+            Main.DefaultSamplerState,
+            DepthStencilState.None,
+            Main.Rasterizer,
+            null,
+            Main.GameViewMatrix.TransformationMatrix
+        );
+        return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        //Main.spriteBatch.End();
+        //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }
