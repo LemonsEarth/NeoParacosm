@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Core.Players;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
+﻿using NeoParacosm.Core.Players;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat;
 

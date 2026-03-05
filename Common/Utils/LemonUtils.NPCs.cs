@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Globals.GlobalNPCs;
-using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 

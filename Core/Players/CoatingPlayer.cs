@@ -1,10 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Content.Projectiles.Hostile.Death;
-using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
-using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using System.Collections.Generic;
-
-namespace NeoParacosm.Core.Players;
+﻿namespace NeoParacosm.Core.Players;
 
 public abstract class CoatingPlayer : ModPlayer
 {

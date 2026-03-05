@@ -1,8 +1,5 @@
-﻿using NeoParacosm.Content.Projectiles.Hostile.Evil;
-using System.Collections.Generic;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Ice;
 

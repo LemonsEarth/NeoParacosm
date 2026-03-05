@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Items.Accessories.Misc;
-using NeoParacosm.Content.Items.Placeable.Special.ResearcherQuestTiles;
-using NeoParacosm.Content.NPCs.Hostile.Special;
+﻿using NeoParacosm.Content.Items.Placeable.Special.ResearcherQuestTiles;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using Terraria.DataStructures;
 

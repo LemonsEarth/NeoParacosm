@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Hostile.Researcher;
 using NeoParacosm.Core.Systems.Assets;
-using Steamworks;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 

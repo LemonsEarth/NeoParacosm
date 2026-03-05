@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Armor.Generic.Stone;
 using NeoParacosm.Content.NPCs.Misc;
 using System.Linq;
 using Terraria.Localization;

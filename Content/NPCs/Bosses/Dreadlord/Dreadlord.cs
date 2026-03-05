@@ -1,19 +1,15 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
-using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
-using Terraria.Graphics.Shaders;
 using static Microsoft.Xna.Framework.MathHelper;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 
+// This boss is spread across multiple files
+// This file contains primarily AI and Attack logic
+
 [AutoloadBossHead]
-public class Dreadlord : ModNPC
+public partial class Dreadlord : ModNPC
 {
     #region Attack Fields and Data
     ref float AITimer => ref NPC.ai[0];
@@ -90,15 +86,6 @@ public class Dreadlord : ModNPC
 
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
-
-    // Wing animation stuff
-    int wingFrame = 0;
-    int wingAnimTimer = 0;
-
-    // Whether eye lasers should be active
-    bool GreenLaserEnabled = false;
-    bool YellowLaserEnabled = false;
-
     #endregion
     #region Constants
 
@@ -110,23 +97,6 @@ public class Dreadlord : ModNPC
     const int LEG_ATTACK = 1;
     #endregion
 
-    #region Body Parts
-    public DreadlordBodyPart HeadCorrupt { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart HeadCrimson { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart WingCorrupt { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart WingCrimson { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart LegCorrupt { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart LegCrimson { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart Body { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart BackLegs { get; private set; } = new DreadlordBodyPart();
-
-    public static Asset<Texture2D> NeckTextureCorrupt { get; private set; }
-    public static Asset<Texture2D> NeckTextureCrimson { get; private set; }
-
-    bool shaderIsActive = false;
-
-    #endregion
-
     Vector2 targetPosition = Vector2.Zero;
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -135,108 +105,6 @@ public class Dreadlord : ModNPC
     Vector2 NPCToPlayer => NPC.DirectionTo(player.Center);
 
     Vector2 ArenaCenter => DarkCataclysmSystem.DCEffectNoFogPosition == Vector2.Zero ? player.Center : DarkCataclysmSystem.DCEffectNoFogPosition;
-
-    public override void Load()
-    {
-        NeckTextureCorrupt = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCorrupt");
-        NeckTextureCrimson = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCrimson");
-    }
-
-    public override void SetStaticDefaults()
-    {
-        Main.npcFrameCount[NPC.type] = 1;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
-        NPCID.Sets.MustAlwaysDraw[Type] = true;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.CursedInferno] = true;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Ichor] = true;
-        NPCID.Sets.MPAllowedEnemies[Type] = true;
-        NPCID.Sets.TrailCacheLength[NPC.type] = 5;
-        NPCID.Sets.TrailingMode[NPC.type] = 3;
-        NPCID.Sets.CantTakeLunchMoney[Type] = true;
-        NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-        NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers() { };
-        /*{
-            PortraitScale = 0.2f,
-            PortraitPositionYOverride = -150
-        };*/
-        NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-    }
-
-    public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-    {
-        bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>
-            {
-                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
-                new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
-            });
-    }
-
-    public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
-    {
-
-    }
-
-    public override void SetDefaults()
-    {
-        NPC.width = 284;
-        NPC.height = 416;
-        NPC.boss = true;
-        NPC.aiStyle = -1;
-        NPC.Opacity = 1f;
-        NPC.lifeMax = 200000;
-        NPC.defense = 60;
-        NPC.damage = 100;
-        NPC.HitSound = SoundID.NPCHit1;
-        NPC.DeathSound = SoundID.NPCDeath1;
-        NPC.value = 300000;
-        NPC.noTileCollide = false;
-        NPC.knockBackResist = 0;
-        NPC.noGravity = true;
-        NPC.npcSlots = 10;
-        NPC.SpawnWithHigherTime(30);
-
-        HeadCorrupt.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordHeadCorrupt");
-        HeadCrimson.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordHeadCrimson");
-        LegCorrupt.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordLegCorrupt");
-        LegCrimson.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordLegCrimson");
-        WingCorrupt.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordWingCorrupt");
-        WingCrimson.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordWingCrimson");
-        Body.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordBody");
-        BackLegs.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordBackLegs");
-
-        if (!Main.dedServ)
-        {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/EmbodimentOfEvilReborn");
-        }
-
-    }
-
-    public override void OnSpawn(IEntitySource source)
-    {
-        NPC.NP().SetDamageReductions(
-            (DamageClass.Melee, 10f),
-            (DamageClass.Ranged, 15f),
-            (DamageClass.Magic, 15f),
-            (DamageClass.Summon, 10f),
-            (DamageClass.SummonMeleeSpeed, 60f)
-            );
-    }
-
-    public override bool CheckActive()
-    {
-        return false;
-    }
-
-    public override void FindFrame(int frameHeight)
-    {
-
-    }
-
-    public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
-    {
-        NPC.damage = (int)(NPC.damage * balance * 0.5f);
-        NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
-    }
 
     public override void AI()
     {
@@ -266,6 +134,49 @@ public class Dreadlord : ModNPC
         AITimer++;
     }
 
+    void AttackControl()
+    {
+        if (Phase == 0)
+        {
+            switch (Attack)
+            {
+                case (int)Attacks.BallsNLightning:
+                    Attack_BallsNLightning();
+                    break;
+                case (int)Attacks.MeatballsWithFire:
+                    Attack_MeatballsWithFire();
+                    break;
+                case (int)Attacks.CursedFlamethrower:
+                    Attack_CursedFlamethrower();
+                    break;
+                case (int)Attacks.FlameWallsAndSpinning:
+                    Attack_FlameWallsAndSpinning();
+                    break;
+                case (int)Attacks.DashingWithBalls:
+                    Attack_DashingWithBalls();
+                    break;
+            }
+        }
+        else if (Phase == 1)
+        {
+            switch (Attack)
+            {
+                case (int)Attacks2.Pillars:
+                    Attack_Pillars();
+                    break;
+                case (int)Attacks2.CirclingIchor:
+                    Attack_CirclingIchor();
+                    break;
+
+            }
+        }
+
+        attackDuration--;
+        if (attackDuration <= 0)
+        {
+            SwitchAttacks();
+        }
+    }
 
     void Intro()
     {
@@ -488,50 +399,7 @@ public class Dreadlord : ModNPC
         }
     }
 
-    void AttackControl()
-    {
-        if (Phase == 0)
-        {
-            switch (Attack)
-            {
-                case (int)Attacks.BallsNLightning:
-                    BallsNLightning();
-                    break;
-                case (int)Attacks.MeatballsWithFire:
-                    MeatballsWithFire();
-                    break;
-                case (int)Attacks.CursedFlamethrower:
-                    CursedFlamethrower();
-                    break;
-                case (int)Attacks.FlameWallsAndSpinning:
-                    FlameWallsAndSpinning();
-                    break;
-                case (int)Attacks.DashingWithBalls:
-                    DashingWithBalls();
-                    break;
-            }
-        }
-        else if (Phase == 1)
-        {
-            switch (Attack)
-            {
-                case (int)Attacks2.Pillars:
-                    Pillars();
-                    break;
-                case (int)Attacks2.CirclingIchor:
-                    CirclingIchor();
-                    break;
-            }
-        }
-
-        attackDuration--;
-        if (attackDuration <= 0)
-        {
-            SwitchAttacks();
-        }
-    }
-
-    void BallsNLightning()
+    void Attack_BallsNLightning()
     {
         if (AttackTimer < 450)
         {
@@ -648,7 +516,7 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
-    void MeatballsWithFire()
+    void Attack_MeatballsWithFire()
     {
         SetBodyPartPositions(headLerpSpeed: 0.8f, bodyLerpSpeed: 0.8f, legLerpSpeed: 0.8f);
         switch (AttackTimer)
@@ -863,7 +731,7 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
-    void CursedFlamethrower()
+    void Attack_CursedFlamethrower()
     {
         SetBodyPartPositions(headLerpSpeed: 0.8f, bodyLerpSpeed: 0.8f, legLerpSpeed: 0.8f);
         switch (AttackTimer)
@@ -1055,7 +923,7 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
-    void FlameWallsAndSpinning()
+    void Attack_FlameWallsAndSpinning()
     {
         SetBodyPartPositions(headLerpSpeed: 0.9f, legLerpSpeed: 0.9f, bodyLerpSpeed: 0.9f);
         switch (AttackTimer)
@@ -1173,7 +1041,7 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
-    void DashingWithBalls()
+    void Attack_DashingWithBalls()
     {
         SetBodyPartPositions(headLerpSpeed: 0.9f, legLerpSpeed: 0.9f, bodyLerpSpeed: 0.9f);
         switch (AttackTimer)
@@ -1477,7 +1345,7 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
-    void Pillars()
+    void Attack_Pillars()
     {
         SetBodyPartPositions(headLerpSpeed: 0.8f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
         switch (AttackTimer)
@@ -1644,7 +1512,7 @@ public class Dreadlord : ModNPC
         AttackTimer--;
     }
 
-    void CirclingIchor()
+    void Attack_CirclingIchor()
     {
         SetBodyPartPositions(headLerpSpeed: 0.8f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
         LerpScale(1f, 0.1f);
@@ -1800,7 +1668,7 @@ public class Dreadlord : ModNPC
                     ai2: lostSoulTimeLeft);
     }
 
-    private void TrackingIchorSpheres(Vector2 pos, Vector2 velocity, int duration, int redirectInterval, int redirectCount)
+    void TrackingIchorSpheres(Vector2 pos, Vector2 velocity, int duration, int redirectInterval, int redirectCount)
     {
         LemonUtils.QuickProj(
                                 NPC,
@@ -1813,7 +1681,7 @@ public class Dreadlord : ModNPC
                                 );
     }
 
-    private void IchorSpheres(Vector2 pos, Vector2 velocity, int waitTime, float timeLeft, float speedUp = 1f)
+    void IchorSpheres(Vector2 pos, Vector2 velocity, int waitTime, float timeLeft, float speedUp = 1f)
     {
         LemonUtils.QuickProj(
                                 NPC,
@@ -1949,30 +1817,6 @@ public class Dreadlord : ModNPC
         }
     }
 
-    void PlayRoar(float bonusPitch = 0f)
-    {
-        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -1f + bonusPitch }, NPC.Center);
-        SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch }, NPC.Center);
-    }
-
-    private void AuraBurst(int count, Vector2 speed)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            Dust.NewDustDirect(NPC.RandomPos(200, 100), 2, 2, DustID.GemTopaz, speed.X, speed.Y, Scale: Main.rand.NextFloat(2f, 3f));
-        }
-    }
-
-    void ShakeCrimsonHead(float height = 32, float intensity = 24)
-    {
-        HeadCrimson.Position = HeadCrimson.DefaultPosition - Vector2.UnitY * height + Main.rand.NextVector2Circular(intensity, intensity);
-    }
-
-    void ShakeCorruptHead(float height = 32, float intensity = 24)
-    {
-        HeadCorrupt.Position = HeadCorrupt.DefaultPosition - Vector2.UnitY * height + Main.rand.NextVector2Circular(intensity, intensity);
-    }
-
     void DespawnCheck()
     {
         if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 5000)
@@ -1982,318 +1826,4 @@ public class Dreadlord : ModNPC
             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
         }
     }
-
-
-    public override bool CheckDead()
-    {
-        return true;
-    }
-
-    // Disable contact damage when "in background"
-    public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-    {
-        cooldownSlot = ImmunityCooldownID.Bosses;
-        return NPC.scale == 1;
-    }
-
-    public override void OnKill()
-    {
-
-    }
-
-    public override void HitEffect(NPC.HitInfo hit)
-    {
-        if (Main.dedServ) return;
-
-    }
-
-    public override void ModifyNPCLoot(NPCLoot npcLoot)
-    {
-
-    }
-
-    public override void BossLoot(ref int potionType)
-    {
-        potionType = ItemID.GreaterHealingPotion;
-    }
-
-    public override bool? CanFallThroughPlatforms()
-    {
-        return true;
-    }
-
-    public void SetDefaultBodyPartPositions()
-    {
-        Body.DefaultPosition = NPC.Center;
-        Body.Origin = Body.Texture.Size() * 0.5f;
-        Body.MiscPosition1 = Body.Position + new Vector2(-Body.Width * 0.25f, -Body.Height * 0.2f) * NPC.scale;
-        Body.MiscPosition2 = Body.Position + new Vector2(+Body.Width * 0.25f, -Body.Height * 0.2f) * NPC.scale;
-        Body.Opacity = NPC.Opacity;
-        Body.Scale = NPC.scale;
-
-        LegCorrupt.DefaultPosition = Body.Position + new Vector2(-Body.Width * 0.57f, -Body.Height * 0.1f) * NPC.scale;
-        LegCorrupt.MiscPosition1 = LegCorrupt.Position + new Vector2(LegCorrupt.Width * 0.1f, LegCorrupt.Height * 0.7f).RotatedBy(LegCorrupt.Rotation) * NPC.scale;
-        LegCorrupt.Origin = new Vector2(LegCorrupt.Width * 0.5f, LegCorrupt.Height * 0.17f);
-        LegCorrupt.Frames = 2;
-        LegCorrupt.Opacity = NPC.Opacity;
-        LegCorrupt.Scale = NPC.scale;
-
-        LegCrimson.DefaultPosition = Body.Position + new Vector2(Body.Width * 0.57f, -Body.Height * 0.1f) * NPC.scale;
-        LegCrimson.MiscPosition1 = LegCrimson.Position + new Vector2(LegCrimson.Width * 0.1f, LegCrimson.Height * 0.7f).RotatedBy(LegCrimson.Rotation) * NPC.scale;
-        LegCrimson.Origin = new Vector2(LegCrimson.Width * 0.5f, LegCrimson.Height * 0.17f);
-        LegCrimson.Opacity = NPC.Opacity;
-        LegCrimson.Scale = NPC.scale;
-        LegCrimson.Frames = 2;
-        LegCrimson.Scale = NPC.scale;
-
-        BackLegs.DefaultPosition = Body.Position + new Vector2(0, BackLegs.Height * 0.25f) * NPC.scale;
-        BackLegs.Origin = BackLegs.Texture.Size() * 0.5f;
-        BackLegs.Opacity = NPC.Opacity;
-        BackLegs.Scale = NPC.scale;
-
-        HeadCorrupt.DefaultPosition = Body.MiscPosition1 + new Vector2(0, -50) * NPC.scale;
-        HeadCorrupt.MiscPosition1 = HeadCorrupt.DefaultPosition + new Vector2(0, -64) * NPC.scale;
-        HeadCorrupt.Origin = HeadCorrupt.Texture.Size() * 0.5f;
-        HeadCorrupt.Frames = 2;
-        HeadCorrupt.Opacity = NPC.Opacity;
-        HeadCorrupt.Scale = NPC.scale;
-
-        HeadCrimson.DefaultPosition = Body.MiscPosition2 + new Vector2(0, -50) * NPC.scale;
-        HeadCrimson.MiscPosition1 = HeadCrimson.DefaultPosition + new Vector2(0, -64) * NPC.scale;
-        HeadCrimson.Origin = HeadCrimson.Texture.Size() * 0.5f;
-        HeadCrimson.Frames = 2;
-        HeadCrimson.Opacity = NPC.Opacity;
-        HeadCrimson.Scale = NPC.scale;
-
-        WingCorrupt.DefaultPosition = Body.Position - new Vector2(0, Body.Height * 0.2f) * NPC.scale;
-        WingCorrupt.Origin = new Vector2(WingCorrupt.Width, WingCorrupt.Height * 0.5f);
-        WingCorrupt.Frames = 6;
-        WingCorrupt.Opacity = NPC.Opacity;
-        WingCorrupt.Scale = NPC.scale;
-
-        WingCrimson.DefaultPosition = Body.Position - new Vector2(0, Body.Height * 0.2f) * NPC.scale;
-        WingCrimson.Origin = new Vector2(0, WingCrimson.Height * 0.5f);
-        WingCrimson.Frames = 6;
-        WingCrimson.Opacity = NPC.Opacity;
-        WingCrimson.Scale = NPC.scale;
-    }
-
-    public void SetBodyPartPositions(Vector2 headCorruptTargetPosition = default,
-                                    Vector2 headCrimsonTargetPosition = default,
-                                    Vector2 legCorruptTargetPosition = default,
-                                    Vector2 legCrimsonTargetPosition = default,
-                                    Vector2 bodyTargetPosition = default,
-                                    float headLerpSpeed = 1 / 10f,
-                                    float legLerpSpeed = 1 / 10f,
-                                    float bodyLerpSpeed = 1 / 10f)
-    {
-        if (headCorruptTargetPosition == default)
-        {
-            headCorruptTargetPosition = HeadCorrupt.DefaultPosition;
-        }
-
-        if (headCrimsonTargetPosition == default)
-        {
-            headCrimsonTargetPosition = HeadCrimson.DefaultPosition;
-        }
-
-        if (legCorruptTargetPosition == default)
-        {
-            legCorruptTargetPosition = LegCorrupt.DefaultPosition;
-        }
-
-        if (legCrimsonTargetPosition == default)
-        {
-            legCrimsonTargetPosition = LegCrimson.DefaultPosition;
-        }
-
-        if (bodyTargetPosition == default)
-        {
-            bodyTargetPosition = Body.DefaultPosition;
-        }
-
-        Body.Position = Vector2.Lerp(Body.Position, bodyTargetPosition, bodyLerpSpeed);
-
-        LegCorrupt.Position = Vector2.Lerp(LegCorrupt.Position, legCorruptTargetPosition, legLerpSpeed);
-        LegCrimson.Position = Vector2.Lerp(LegCrimson.Position, legCrimsonTargetPosition, legLerpSpeed);
-
-        BackLegs.Position = BackLegs.DefaultPosition;
-        HeadCorrupt.Position = Vector2.Lerp(HeadCorrupt.Position, headCorruptTargetPosition, headLerpSpeed);
-        HeadCrimson.Position = Vector2.Lerp(HeadCrimson.Position, headCrimsonTargetPosition, headLerpSpeed);
-
-        WingCorrupt.Position = WingCorrupt.DefaultPosition;
-        WingCrimson.Position = WingCrimson.DefaultPosition;
-
-    }
-
-    void LerpScale(float targetScale, float time)
-    {
-        // rounding stuff
-        if (targetScale == 1f && MathF.Abs(targetScale - NPC.scale) < 0.05f)
-        {
-            NPC.scale = 1f;
-        }
-        NPC.scale = MathHelper.Lerp(NPC.scale, targetScale, time);
-    }
-
-    #region Animation Methods
-    void ResetLegFrames()
-    {
-        SetLegCorruptFrame(LEG_STANDARD);
-        SetLegCrimsonFrame(LEG_STANDARD);
-    }
-
-    void ResetMouthFrames()
-    {
-        SetHeadCorruptFrame(MOUTH_CLOSED);
-        SetHeadCrimsonFrame(MOUTH_CLOSED);
-    }
-
-    void SetLegCorruptFrame(int frame)
-    {
-        LegCorrupt.CurrentFrame = frame;
-    }
-
-    void SetLegCrimsonFrame(int frame)
-    {
-        LegCrimson.CurrentFrame = frame;
-    }
-
-    void SetHeadCorruptFrame(int frame)
-    {
-        HeadCorrupt.CurrentFrame = frame;
-    }
-
-    void SetHeadCrimsonFrame(int frame)
-    {
-        HeadCrimson.CurrentFrame = frame;
-    }
-
-    void AnimateWings(int frameDuration)
-    {
-        if (wingAnimTimer > frameDuration)
-        {
-            wingAnimTimer = 0;
-            wingFrame++;
-        }
-        if (wingFrame >= 6)
-        {
-            wingFrame = 0;
-        }
-
-        WingCorrupt.CurrentFrame = wingFrame;
-        WingCrimson.CurrentFrame = wingFrame;
-        wingAnimTimer++;
-    }
-    #endregion
-
-    #region Drawing
-
-    void EnableLasers(bool enabled)
-    {
-        GreenLaserEnabled = enabled;
-        YellowLaserEnabled = enabled;
-    }
-
-    void DrawLaserCorrupt()
-    {
-        LemonUtils.DrawLaser(HeadCorrupt.Position + new Vector2(-0.2f * HeadCorrupt.Width, -HeadCorrupt.Height * 0.43f), player.Center, 2, Color.GreenYellow);
-        LemonUtils.DrawLaser(HeadCorrupt.Position + new Vector2(0.2f * HeadCorrupt.Width, -HeadCorrupt.Height * 0.43f), player.Center, 2, Color.GreenYellow);
-    }
-
-    void DrawLaserCrimson()
-    {
-        LemonUtils.DrawLaser(HeadCrimson.Position + new Vector2(-0.2f * HeadCrimson.Width, -HeadCrimson.Height * 0.43f), player.Center, 2, Color.Yellow);
-        LemonUtils.DrawLaser(HeadCrimson.Position + new Vector2(0.2f * HeadCrimson.Width, -HeadCrimson.Height * 0.43f), player.Center, 2, Color.Yellow);
-    }
-
-    void DrawNeck(Vector2 neckBase, Vector2 destination, Asset<Texture2D> texture, float brightness = 1)
-    {
-        Vector2 baseToDestination = neckBase.DirectionTo(destination);
-        float distanceLeft = neckBase.Distance(destination);
-        float rotation = baseToDestination.ToRotation() - MathHelper.PiOver2;
-
-        Vector2 drawPos = neckBase;
-
-        while (distanceLeft > -texture.Height() * 0.9f * NPC.scale)
-        {
-            Main.EntitySpriteDraw(texture.Value,
-                drawPos - Main.screenPosition,
-                null,
-                new Color(brightness, brightness, brightness) * NPC.Opacity,
-                rotation,
-                texture.Size() * 0.5f,
-                NPC.scale,
-                SpriteEffects.None);
-            if (shaderIsActive)
-            {
-                var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-                shader.Shader.Parameters["uTime"].SetValue(AITimer);
-                shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4() * NPC.Opacity);
-                shader.Shader.Parameters["moveSpeed"].SetValue(2f);
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-                Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-                shader.Apply();
-                Main.EntitySpriteDraw(texture.Value,
-                                    drawPos - Main.screenPosition,
-                                    null,
-                                    Color.White * NPC.Opacity,
-                                    rotation,
-                                    texture.Size() * 0.5f,
-                                    NPC.scale,
-                                    SpriteEffects.None);
-                Main.spriteBatch.End();
-                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-            }
-            drawPos += baseToDestination * texture.Height() * 0.9f * NPC.scale;
-            distanceLeft -= texture.Height() * 0.9f * NPC.scale;
-        }
-    }
-
-    void DrawBodyParts(float brightness = 1)
-    {
-        BackLegs.Draw(shaderIsActive, brightness, (int)AITimer);
-        WingCorrupt.Draw(shaderIsActive, brightness, (int)AITimer);
-        WingCrimson.Draw(shaderIsActive, brightness, (int)AITimer);
-        Body.Draw(shaderIsActive, brightness, (int)AITimer);
-        LegCorrupt.Draw(shaderIsActive, brightness, (int)AITimer);
-        LegCrimson.Draw(shaderIsActive, brightness, (int)AITimer);
-        DrawNeck(Body.MiscPosition1, HeadCorrupt.Position, NeckTextureCorrupt, brightness);
-        DrawNeck(Body.MiscPosition2, HeadCrimson.Position, NeckTextureCrimson, brightness);
-        HeadCorrupt.Draw(shaderIsActive, brightness, (int)AITimer);
-        HeadCrimson.Draw(shaderIsActive, brightness, (int)AITimer);
-    }
-
-    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-    {
-        DrawBodyParts(NPC.scale * NPC.scale);
-        return false;
-    }
-
-    public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-    {
-        //Eye glow
-        if (HeadCorrupt.CurrentFrame == MOUTH_CLOSED)
-        {
-            LemonUtils.DrawGlow(HeadCorrupt.Position + new Vector2(-0.2f * HeadCorrupt.Width, -HeadCorrupt.Height * 0.43f) * NPC.scale, Color.LightGreen * NPC.Opacity, 0.8f * NPC.scale, 1f);
-            LemonUtils.DrawGlow(HeadCorrupt.Position + new Vector2(0.2f * HeadCorrupt.Width, -HeadCorrupt.Height * 0.43f) * NPC.scale, Color.LightGreen * NPC.Opacity, 0.8f * NPC.scale, 1f);
-        }
-
-        if (HeadCrimson.CurrentFrame == MOUTH_CLOSED)
-        {
-            LemonUtils.DrawGlow(HeadCrimson.Position + new Vector2(0.2f * HeadCrimson.Width, -HeadCrimson.Height * 0.43f) * NPC.scale, Color.Yellow * NPC.Opacity, 0.8f * NPC.scale, 1f);
-        }
-
-        if (GreenLaserEnabled)
-        {
-            DrawLaserCorrupt();
-        }
-
-        if (YellowLaserEnabled)
-        {
-            DrawLaserCrimson();
-        }
-    }
-    #endregion
 }

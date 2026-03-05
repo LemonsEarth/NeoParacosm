@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Content.Projectiles.Hostile.Death;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat;
 

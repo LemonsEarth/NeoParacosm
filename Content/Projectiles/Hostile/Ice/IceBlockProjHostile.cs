@@ -1,6 +1,4 @@
-﻿using Terraria.Audio;
-
-namespace NeoParacosm.Content.Projectiles.Hostile.Ice;
+﻿namespace NeoParacosm.Content.Projectiles.Hostile.Ice;
 
 public class IceBlockProjHostile : ModProjectile
 {

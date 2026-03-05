@@ -1,6 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.NPCs.Hostile.Ice;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Content.Projectiles.Hostile.Ice;
 using System.Collections.Generic;
 using Terraria.Audio;

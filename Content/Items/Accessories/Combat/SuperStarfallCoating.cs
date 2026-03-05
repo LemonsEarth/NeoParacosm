@@ -1,6 +1,4 @@
-﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
-using NeoParacosm.Core.Players;
+﻿using NeoParacosm.Core.Players;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat;

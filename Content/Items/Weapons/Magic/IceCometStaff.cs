@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Consumables;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.Audio;
 using Terraria.DataStructures;
 

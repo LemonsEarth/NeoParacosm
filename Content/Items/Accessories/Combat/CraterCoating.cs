@@ -1,5 +1,4 @@
 ﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
 using NeoParacosm.Core.Players;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat;
