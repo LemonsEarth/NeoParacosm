@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 
@@ -85,12 +86,16 @@ public static partial class LemonUtils
     /// <param name="pos"></param>
     /// <param name="minDistance"></param>
     /// <returns></returns>
-    public static NPC GetClosestNPC(Vector2 pos, float minDistance = 0)
+    public static NPC GetClosestNPC(Vector2 pos, float minDistance = 0, params int[] excludeWhoAmIs)
     {
         NPC closestEnemy = null;
         if (minDistance == 0) minDistance = 99999;
         foreach (var npc in Main.ActiveNPCs)
         {
+            if (excludeWhoAmIs.Contains(npc.whoAmI))
+            {
+                continue;
+            }
             if (npc.CanBeChasedBy() && (npc.Distance(pos) < minDistance))
             {
                 if (closestEnemy == null)

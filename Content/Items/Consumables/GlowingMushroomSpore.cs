@@ -4,6 +4,11 @@ namespace NeoParacosm.Content.Items.Consumables;
 
 public class GlowingMushroomSpore : ModItem
 {
+    public override void SetStaticDefaults()
+    {
+        AmmoID.Sets.IsSpecialist[Type] = true;
+    }
+
     public override void SetDefaults()
     {
         Item.width = 14;

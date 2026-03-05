@@ -1072,3 +1072,12 @@ IceCometStaff: {
 	DisplayName: Ice Comet Staff
 	Tooltip: ""
 }
+
+MushroomDiscLauncher: {
+	DisplayName: Mushroom Disc Launcher
+	Tooltip:
+	'''
+	Fires discs that bounce off tiles and enemies
+	Inflicts Shroomed on hit
+	'''
+}
