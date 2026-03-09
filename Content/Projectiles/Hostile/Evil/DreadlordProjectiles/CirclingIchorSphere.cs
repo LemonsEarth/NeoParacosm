@@ -66,7 +66,7 @@ public class CirclingIchorSphere : PrimProjectile
             Projectile.Kill();
             return;
         }
-        Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
+        Lighting.AddLight(Projectile.Center, 1f, 1f, 0f);
 
         if (AITimer <= WaitTime)
         {
@@ -86,7 +86,7 @@ public class CirclingIchorSphere : PrimProjectile
             return;
         }
 
-        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, Scale: 2f);
+        var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.IchorTorch, Scale: 2f);
         dust.noGravity = true;
         Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
         AITimer++;
@@ -94,7 +94,7 @@ public class CirclingIchorSphere : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.DarkGreen, Color.DarkGreen, BasicEffect);
+        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.Gold, Color.OrangeRed, BasicEffect);
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;

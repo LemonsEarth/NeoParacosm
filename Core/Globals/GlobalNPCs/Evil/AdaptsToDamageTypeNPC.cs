@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
+﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
+using NeoParacosm.Content.NPCs.Hostile.Corruption;
 using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Core.Systems.Data;
@@ -7,7 +8,7 @@ using static Terraria.ID.NPCID;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 
-public class EvilGlobalNPC : GlobalNPC
+public class AdaptsToDamageTypeNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
@@ -16,8 +17,8 @@ public class EvilGlobalNPC : GlobalNPC
 
     int AITimer = 0;
 
-    static bool EvoActive => ResearcherQuest.Progress >= ResearcherQuest.ProgressState.DownedEvilBoss
-                   && ResearcherQuest.Progress < ResearcherQuest.ProgressState.AscendedItem;
+    static bool EvoActive => (ResearcherQuest.Progress >= ResearcherQuest.ProgressState.DownedEvilBoss
+                   && ResearcherQuest.Progress < ResearcherQuest.ProgressState.AscendedItem) || DarkCataclysmSystem.DarkCataclysmActive;
 
     Dictionary<DamageClass, int> ClassAdaptation = new Dictionary<DamageClass, int>
         {

@@ -81,7 +81,7 @@ public class SupremeVilethornHeldProj : ModProjectile
         for (int i = -4; i <= 4; i++)
         {
             float damageMul = Math.Clamp(AITimer, 60, 300) / 300f;
-            //LemonUtils.QuickProj(Projectile, trackingPos + new Vector2(64 * i, 200 + Math.Abs(i) * 32), -Vector2.UnitY * 40, ProjectileType<VilethornFriendly>(), damageMul * Projectile.damage);
+            LemonUtils.QuickProj(Projectile, trackingPos + new Vector2(64 * i, 200 + Math.Abs(i) * 32), -Vector2.UnitY * 40, ProjectileType<VilethornFriendly>(), damageMul * Projectile.damage);
         }
     }
 
@@ -141,7 +141,7 @@ public class SupremeVilethornHeldProj : ModProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        //Main.spriteBatch.End();
-        //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

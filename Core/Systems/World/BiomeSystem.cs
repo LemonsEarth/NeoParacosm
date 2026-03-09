@@ -46,9 +46,9 @@ public class BiomeSystem : ModSystem
                     item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CrimsonUndergroundDesert ||
                     item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CrimsonIce)
                 {
-                    if (!EvilGlobalNPC.EvilEnemiesBonus.Contains(i))
+                    if (!AdaptsToDamageTypeNPC.EvilEnemiesBonus.Contains(i))
                     {
-                        EvilGlobalNPC.EvilEnemies.Add(i);
+                        AdaptsToDamageTypeNPC.EvilEnemies.Add(i);
                     }
                 }
             }

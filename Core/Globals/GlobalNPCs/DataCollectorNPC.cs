@@ -17,11 +17,11 @@ public class DataCollectorNPC : GlobalNPC
 
         if (dataCollectorTEPos != Point16.Zero && TileEntity.TryGet<DataCollectorTileEntity>(dataCollectorTEPos, out DataCollectorTileEntity dataCollector))
         {
-            if (EvilGlobalNPC.EvilEnemiesBonus.Contains(npc.type))
+            if (AdaptsToDamageTypeNPC.EvilEnemiesBonus.Contains(npc.type))
             {
                 dataCollector.CollectData(3);
             }
-            else if (EvilGlobalNPC.EvilEnemies.Contains(npc.type))
+            else if (AdaptsToDamageTypeNPC.EvilEnemies.Contains(npc.type))
             {
                 dataCollector.CollectData();
             }
@@ -29,11 +29,11 @@ public class DataCollectorNPC : GlobalNPC
 
         if (dataCollectorEXTEPos != Point16.Zero && TileEntity.TryGet<DataCollectorEXTileEntity>(dataCollectorEXTEPos, out DataCollectorEXTileEntity dataCollectorEX))
         {
-            if (EvilGlobalNPC.EvilEnemiesBonus.Contains(npc.type))
+            if (AdaptsToDamageTypeNPC.EvilEnemiesBonus.Contains(npc.type))
             {
                 dataCollectorEX.CollectData(3);
             }
-            else if (EvilGlobalNPC.EvilEnemies.Contains(npc.type))
+            else if (AdaptsToDamageTypeNPC.EvilEnemies.Contains(npc.type))
             {
                 dataCollectorEX.CollectData();
             }

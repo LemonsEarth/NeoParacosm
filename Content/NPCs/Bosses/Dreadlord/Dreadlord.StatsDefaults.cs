@@ -25,6 +25,15 @@ public partial class Dreadlord : ModNPC
     public static Asset<Texture2D> NeckTextureCrimson { get; private set; }
     #endregion
 
+    Dictionary<DamageClass, int> ClassAdaptation = new Dictionary<DamageClass, int>
+        {
+            {DamageClass.Melee, 0},
+            {DamageClass.Ranged, 0},
+            {DamageClass.Magic, 0},
+            {DamageClass.Summon, 0},
+            {DamageClass.Generic, 0},
+        };
+
     public override void Load()
     {
         NeckTextureCorrupt = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCorrupt");
@@ -60,10 +69,59 @@ public partial class Dreadlord : ModNPC
             });
     }
 
+    #region Adaptation
+    // DamageType adaptation system similar to but AdaptsToDamageTypeNPC
+    // TODO: Expand on AdaptsToDamageTypeNPC to allow variables to be configured on a case by case basis
+
+    int maxDamageResistance = 50;
+    int damageResistancePerHit = 1;
     public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
     {
+        if (modifiers.DamageType == null) return;
+        if (ClassAdaptation.TryGetValue(modifiers.DamageType, out int damageResistance))
+        {
+            if (damageResistance < maxDamageResistance)
+            {
+                ClassAdaptation[modifiers.DamageType] += damageResistancePerHit;
+            }
+            modifiers.FinalDamage *= (100 - damageResistance) / 100f;
 
+            foreach (var key in ClassAdaptation.Keys)
+            {
+                if (key != modifiers.DamageType)
+                {
+                    if (ClassAdaptation[key] >= damageResistancePerHit) ClassAdaptation[key] -= damageResistancePerHit;
+                }
+            }
+        }
+        else
+        {
+            if (ClassAdaptation[DamageClass.Generic] < maxDamageResistance)
+            {
+                ClassAdaptation[DamageClass.Generic] += damageResistancePerHit;
+            }
+            modifiers.FinalDamage *= (100 - ClassAdaptation[DamageClass.Generic]) / 100f;
+        }
     }
+
+    public override void PostAI()
+    {
+        //foreach(KeyValuePair<DamageClass, int> kvp in ClassAdaptation)
+        //{
+        //    Main.NewText(kvp.Key + ": " + kvp.Value);
+        //}
+        if (AITimer % 60 == 0)
+        {
+            foreach (DamageClass key in ClassAdaptation.Keys)
+            {
+                if (ClassAdaptation[key] >= damageResistancePerHit * 5)
+                {
+                    ClassAdaptation[key] -= damageResistancePerHit * 5;
+                }
+            }
+        }
+    }
+        #endregion
 
     public override void SetDefaults()
     {
@@ -72,7 +130,7 @@ public partial class Dreadlord : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1f;
-        NPC.lifeMax = 200000;
+        NPC.lifeMax = 250000;
         NPC.defense = 60;
         NPC.damage = 100;
         NPC.HitSound = SoundID.NPCHit1;

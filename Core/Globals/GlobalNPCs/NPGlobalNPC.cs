@@ -46,8 +46,8 @@ public class NPGlobalNPC : GlobalNPC
             {
                 return true;
             }
-            var combined = new HashSet<int>(EvilGlobalNPC.EvilEnemies);
-            combined.UnionWith(EvilGlobalNPC.EvilEnemiesBonus);
+            var combined = new HashSet<int>(AdaptsToDamageTypeNPC.EvilEnemies);
+            combined.UnionWith(AdaptsToDamageTypeNPC.EvilEnemiesBonus);
             if (!combined.Contains(npc.type))
             {
                 npc.active = false;

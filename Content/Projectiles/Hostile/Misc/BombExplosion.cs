@@ -15,7 +15,7 @@ public class BombExplosion : ModProjectile
         Projectile.hostile = true;
         Projectile.friendly = true;
         Projectile.ignoreWater = true;
-        Projectile.tileCollide = true;
+        Projectile.tileCollide = false;
         Projectile.timeLeft = 2;
         Projectile.penetrate = -1;
         Projectile.Opacity = 0f;
@@ -29,6 +29,16 @@ public class BombExplosion : ModProjectile
     public override void AI()
     {
         AITimer++;
+    }
+
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    {
+        modifiers.FinalDamage *= 4;
+    }
+
+    public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+    {
+        
     }
 
     public override void OnKill(int timeLeft)

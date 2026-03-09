@@ -31,7 +31,7 @@ public class IchorBlob : PrimProjectile
     {
         if (AITimer == 0)
         {
-            SoundEngine.PlaySound(SoundID.NPCDeath13 with { PitchRange = (0.3f, 0.5f), Volume = 0.5f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.NPCDeath13 with { PitchRange = (0.3f, 0.5f), Volume = 0.5f }, Projectile.Center);
         }
 
         Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ichor).noGravity = true;
@@ -60,17 +60,25 @@ public class IchorBlob : PrimProjectile
 
         // 1.25 when 0
         float scaleY = (MathF.Sin(AITimer / 4f + MathHelper.PiOver2) * 0.3f + 1) * Projectile.scale;
+
+        float opacity = Projectile.velocity.Y > 0 ? 1f : 0.75f;
+
         Main.EntitySpriteDraw(
             TextureAssets.Projectile[Type].Value,
             Projectile.Center - Main.screenPosition,
             null,
-            Color.White,
+            Color.White * opacity * Projectile.Opacity,
             Projectile.rotation,
             TextureAssets.Projectile[Type].Size() * 0.5f,
             new Vector2(scaleX, scaleY),
             SpriteEffects.None
             );
         return false;
+    }
+
+    public override bool CanHitPlayer(Player target)
+    {
+        return Projectile.velocity.Y > 0;
     }
 
     public override void PostDraw(Color lightColor)
