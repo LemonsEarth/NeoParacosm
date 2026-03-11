@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
+using System.Reflection.Metadata;
 using Terraria.Audio;
 using static Microsoft.Xna.Framework.MathHelper;
 
@@ -922,7 +923,7 @@ public partial class Dreadlord : ModNPC
             case > 30:
                 if (LemonUtils.NotClient() && AttackTimer % 2 == 0)
                 {
-                    IchorFlames(HeadCrimson.MiscPosition1, HeadCrimson.MiscPosition1.DirectionTo(targetPosition), Pi / 4, 75, 85, 45, 0.97f, Pi / 32, 6);
+                    IchorFlames(HeadCrimson.MiscPosition1, HeadCrimson.MiscPosition1.DirectionTo(targetPosition), Pi / 8, 75, 85, 45, 0.97f, Pi / 32, 6);
                 }
                 NPC.velocity *= 0.93f;
                 SetHeadCorruptFrame(MOUTH_CLOSED);
@@ -1553,6 +1554,11 @@ public partial class Dreadlord : ModNPC
                 }
                 break;
             case 1080: // Set frame and start direction
+                if (LemonUtils.NotClient())
+                {
+                    AttackCount = Main.rand.NextBool().ToDirectionInt();
+                }
+                NPC.netUpdate = true;
                 SetHeadCorruptFrame(MOUTH_OPEN);
                 targetPosition = -Vector2.UnitY; // Direction for flamethrower, rotates
                 break;
@@ -1569,7 +1575,7 @@ public partial class Dreadlord : ModNPC
             case > 120: // flamethrower
                 float durationInFrames = 1080 - 120;
                 float rotationPerFrame = Pi * 2 / durationInFrames;
-                targetPosition = targetPosition.RotatedBy(rotationPerFrame);
+                targetPosition = targetPosition.RotatedBy(rotationPerFrame * AttackCount);
                 HeadCorrupt.Position = HeadCorrupt.DefaultPosition + targetPosition * 10;
                 if (LemonUtils.NotClient() && AttackTimer % 10 == 0)
                 {

@@ -48,10 +48,10 @@ public class IchorFlamethrower : ModProjectile
             Projectile.Opacity -= 1 / 5f;
         }
 
-        if (AITimer > Duration * 0.5f)
-        {
+        //if (AITimer > Duration * 0.5f)
+        //{
             Projectile.velocity = Projectile.velocity.RotatedBy(TurningAngle);
-        }
+        //}
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 

@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Common.Utils;
+﻿using Terraria.Utilities;
+
+namespace NeoParacosm.Common.Utils;
 
 /// <summary>
 /// Contains a lot of utillities and global usings
@@ -26,6 +28,17 @@ public static partial class LemonUtils
         float XaccelMod = Math.Sign(direction.X) - Math.Sign(entity.velocity.X);
         float YaccelMod = Math.Sign(direction.Y) - Math.Sign(entity.velocity.Y);
         entity.velocity += new Vector2(XaccelMod * xDecel + xAccel * Math.Sign(direction.X), YaccelMod * yDecel + yAccel * Math.Sign(direction.Y));
+    }
+
+    /// <summary>
+    /// Returns 1 one out of "consequent" times, otherwise -1
+    /// </summary>
+    /// <param name="rand"></param>
+    /// <param name="consequent"></param>
+    /// <returns></returns>
+    public static int NextDirectionInt(this UnifiedRandom rand, int consequent = 1)
+    {
+        return rand.NextBool(consequent).ToDirectionInt();
     }
 
     /// <summary>
