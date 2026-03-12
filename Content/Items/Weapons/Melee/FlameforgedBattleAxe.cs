@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Melee;
+using NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
@@ -23,11 +24,6 @@ public class FlameforgedBattleAxe : ModItem
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
-    }
-
-    public override bool AltFunctionUse(Player player)
-    {
-        return true;
     }
 
     public override bool CanUseItem(Player player)

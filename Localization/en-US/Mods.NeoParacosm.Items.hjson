@@ -1060,7 +1060,7 @@ SuperStarfallCoating: {
 
 CreminiCremator: {
 	DisplayName: Cremini Cremator
-	Tooltip: ""
+	Tooltip: '''"Long-Range Plague Deployment Mechanism"'''
 }
 
 WheelGreatshield: {
@@ -1079,5 +1079,23 @@ MushroomDiscLauncher: {
 		'''
 		Fires discs that bounce off tiles and enemies
 		Inflicts Shroomed on hit
+		'''
+}
+
+SunflowerScepter: {
+	DisplayName: Sunflower Scepter
+	Tooltip:
+		'''
+		Left click to use as a melee weapon
+		Right click to fire seeds that deal magic damage
+		'''
+}
+
+BloodBloomScepter: {
+	DisplayName: Blood Bloom Scepter
+	Tooltip:
+		'''
+		Left click to use as a melee weapon
+		Right click to fire a burst of seeds that explode after a delay
 		'''
 }

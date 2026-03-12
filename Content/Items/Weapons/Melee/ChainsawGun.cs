@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Melee;
+using NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class ChainsawGun : ModItem

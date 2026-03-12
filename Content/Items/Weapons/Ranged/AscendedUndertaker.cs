@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Friendly.Ranged;
+using NeoParacosm.Content.Projectiles.Friendly.Ranged.HeldProjectiles;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 

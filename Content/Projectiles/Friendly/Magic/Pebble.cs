@@ -1,6 +1,6 @@
 ﻿namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class Pebble : PrimProjectile
+public class Pebble : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
 
@@ -29,18 +29,18 @@ public class Pebble : PrimProjectile
     {
         if (AITimer == 0)
         {
-            Projectile.frame = Main.rand.Next(0, 3);
+
         }
 
         Projectile.rotation = Projectile.velocity.ToRotation();
 
-        Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Stone).noGravity = true;
+        //Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Stone).noGravity = true;
         AITimer++;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-       
+
     }
 
     public override bool PreDraw(ref Color lightColor)

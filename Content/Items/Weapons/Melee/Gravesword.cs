@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Melee;
+using NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
@@ -17,7 +18,7 @@ public class Gravesword : ModItem
         Item.useAnimation = 10;
         Item.UseSound = SoundID.Item71;
         Item.useStyle = ItemUseStyleID.Shoot;
-        Item.knockBack = 2;
+        Item.knockBack = 6;
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Green;
         Item.autoReuse = true;
