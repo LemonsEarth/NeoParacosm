@@ -65,9 +65,9 @@ public class FireTestProj : ModProjectile
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:FireShader"];
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        shader.UseImage1(ParacosmTextures.NoiseTexture);
         Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
         Main.spriteBatch.End();
@@ -77,6 +77,7 @@ public class FireTestProj : ModProjectile
 
     public override void PostDraw(Color lightColor)
     {
+        //LemonUtils.DrawGlow(Projectile.Center, Color.Black, Projectile.Opacity, Projectile.scale);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }

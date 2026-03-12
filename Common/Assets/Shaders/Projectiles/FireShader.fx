@@ -25,19 +25,19 @@ float getHashedY(float xCoords)
     return lerp(leftEdgeY, rightEdgeY, fracPosX);
 }
 
+
 float4 FireShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {
     float4 color = tex2D(uImage0, coords);
-    float2 scaleAdjustedCoords = float2(coords.x * 1, coords.y);
-    float baseY = 0.5;
-    float yOffset = getHashedY(scaleAdjustedCoords.x + uTime * 0.2) * 0.1;
-    float factor = sin((uTime + yOffset + scaleAdjustedCoords.x) * 0.1);
-    float yPos = baseY + yOffset + factor * 0.2;
-    if (scaleAdjustedCoords.y > yPos)
-    {
-        return 1;
-    }
-    return 0;
+    float4 noiseColor = tex2D(uImage1, float2(coords.x + uTime, coords.y + uTime));
+    float2 centeredCoords = coords * 2.0 - 1.0;
+    
+    float distFromCenter = length(centeredCoords);
+    noiseColor.rgb -= coords.y * coords.y;
+    noiseColor.rgb = 1-step(noiseColor.rgb, 0.2);
+    noiseColor.a = 1-noiseColor.r;
+    noiseColor *= noiseColor.a;
+    return noiseColor;
 }
 
 technique Tech1

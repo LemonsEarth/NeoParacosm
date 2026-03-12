@@ -13,7 +13,7 @@ public class IchorSpirit : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 25;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         Main.projFrames[Type] = 5;
     }
@@ -80,7 +80,7 @@ public class IchorSpirit : ModProjectile
                 {
                     LemonUtils.QuickProj(
                         Projectile,
-                        Projectile.Center,
+                        Projectile.oldPos[20] + new Vector2(Projectile.width, Projectile.height) * 0.5f,
                         Vector2.Zero,
                         ProjectileType<IchorFlamethrower>(),
                         ai0: 30
