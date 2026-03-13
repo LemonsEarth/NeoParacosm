@@ -41,8 +41,8 @@ public class FireTestProj : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 100;
-        Projectile.height = 100;
+        Projectile.width = 200;
+        Projectile.height = 200;
         Projectile.hostile = false;
         Projectile.friendly = false;
         Projectile.ignoreWater = true;
@@ -66,8 +66,14 @@ public class FireTestProj : ModProjectile
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:FireShader"];
         shader.UseImage1(ParacosmTextures.NoiseTexture);
+        shader.UseColor(Color.White);
+        shader.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        shader.Apply();
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
+        shader.UseColor(Color.Black);
+        shader.Shader.Parameters["flameHeightDownward"].SetValue(1.5f);
         shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
         Main.spriteBatch.End();

@@ -35,7 +35,7 @@ public class IchorFlamethrower : ModProjectile
         if (AITimer == 0)
         {
             Projectile.rotation = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
-            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { MaxInstances = 3, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { MaxInstances = 10, PitchRange = (-0.2f, 0.2f), Volume = 0.75f }, Projectile.Center);
         }
 
         if (AITimer <= 2)

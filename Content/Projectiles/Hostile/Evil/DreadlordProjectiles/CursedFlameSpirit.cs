@@ -4,11 +4,11 @@ using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class IchorSpirit : ModProjectile
+public class CursedFlameSpirit : ModProjectile
 {
     int AITimer = 0;
     ref float Duration => ref Projectile.ai[0];
-    ref float ChaseSpeed => ref Projectile.ai[1];
+    ref float RotSpeed => ref Projectile.ai[1];
     ref float AttackInterval => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
@@ -37,28 +37,19 @@ public class IchorSpirit : ModProjectile
 
     }
 
-    Player player = null;
     int despawnTimer = 0;
     public override void AI()
     {
         if (AITimer == 0)
         {
-            
+
         }
 
         if (AITimer > Duration)
         {
             Projectile.Kill();
         }
-
-        player = LemonUtils.GetClosestPlayer(Projectile.Center, 2000);
-
-        if (player == null || !player.Alive())
-        {
-            Projectile.Kill();
-            return;
-        }
-
+        float firingRot = MathHelper.ToRadians((AITimer - 60) * RotSpeed);
         Lighting.AddLight(Projectile.Center, 1, 1, 1);
         Projectile.StandardAnimation(6, 5);
 
@@ -72,16 +63,15 @@ public class IchorSpirit : ModProjectile
                         Projectile,
                         Projectile.Center,
                         Vector2.Zero,
-                        ProjectileType<IchorFlamethrower>(),
+                        ProjectileType<CursedFlamethrower>(),
                         ai0: 30
                         );
                 }
             }
-            Projectile.velocity = Vector2.Zero;
             Projectile.scale = MathHelper.Lerp(0, 1, AITimer / 60f);
             for (int i = 0; i < 3; i++)
             {
-                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.IchorTorch, 0, -10, Scale: 2f).noGravity = true;
+                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, 0, -10, Scale: 2f).noGravity = true;
             }
             AITimer++;
             return;
@@ -89,17 +79,16 @@ public class IchorSpirit : ModProjectile
         else if (AITimer < Duration - 60)
         {
             Projectile.Opacity = 1f;
-            Projectile.velocity = Projectile.DirectionTo(player.Center) * ChaseSpeed;
             if (AITimer % AttackInterval == 0)
             {
                 if (LemonUtils.NotClient())
                 {
                     LemonUtils.QuickProj(
                         Projectile,
-                        Projectile.oldPos[10] + new Vector2(Projectile.width, Projectile.height) * 0.5f,
-                        Vector2.Zero,
-                        ProjectileType<IchorFlamethrower>(),
-                        ai0: 30
+                        Projectile.Center,
+                        Vector2.UnitY.RotatedBy(firingRot) * 5,
+                        ProjectileType<CursedFlameSphere>(),
+                        ai1: 1.02f
                         );
                 }
             }
@@ -114,20 +103,20 @@ public class IchorSpirit : ModProjectile
                         Projectile,
                         Projectile.Center,
                         Vector2.Zero,
-                        ProjectileType<IchorFlamethrower>(),
+                        ProjectileType<CursedFlamethrower>(),
                         ai0: 30
                         );
                 }
             }
             for (int i = 0; i < 3; i++)
             {
-                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.IchorTorch, 0, -10, Scale: 2f).noGravity = true;
+                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, 0, -10, Scale: 2f).noGravity = true;
             }
-            Projectile.velocity = Vector2.Zero;
             Projectile.scale = MathHelper.Lerp(1, 0, despawnTimer / 60f);
             Projectile.Opacity = MathHelper.Lerp(1, 0, despawnTimer / 60f);
             despawnTimer++;
         }
+        Projectile.velocity = Vector2.Zero;
 
         AITimer++;
     }

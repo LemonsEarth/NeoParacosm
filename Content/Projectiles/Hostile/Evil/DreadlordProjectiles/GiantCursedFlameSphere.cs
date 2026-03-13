@@ -74,7 +74,7 @@ public class GiantCursedFlameSphere : PrimProjectile
             SpeedUP = 1f;
         }
         Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
-        Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
+        //Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
         Projectile.StandardAnimation(6, 6);
         AITimer++;
     }
@@ -103,7 +103,24 @@ public class GiantCursedFlameSphere : PrimProjectile
             0);
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile();
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
+
+        /*Texture2D texture = ParacosmTextures.Empty100Tex.Value;
+        Vector2 drawPos = Projectile.Center - Main.screenPosition;
+        var shader = GameShaders.Misc["NeoParacosm:FireShader"];
+        shader.UseImage1(ParacosmTextures.NoiseTexture);
+        shader.UseColor(Color.White);
+        shader.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        shader.Apply();
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+        shader.UseColor(Color.DarkGreen);
+        shader.Shader.Parameters["flameHeightDownward"].SetValue(1.5f);
+        shader.Apply();
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);*/
+        //LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
     }
 
