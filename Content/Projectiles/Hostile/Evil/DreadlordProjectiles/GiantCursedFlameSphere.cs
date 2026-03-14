@@ -90,7 +90,7 @@ public class GiantCursedFlameSphere : PrimProjectile
         shader.UseImage1(ParacosmTextures.NoiseTexture);
         shader.Shader.Parameters["distance"].SetValue(0.7f);
         shader.Shader.Parameters["borderWidth"].SetValue(0.3f);
-        shader.Shader.Parameters["uTime"].SetValue(AITimer);
+        shader.Shader.Parameters["uTime"].SetValue(AITimer * 2);
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
         Main.spriteBatch.Draw(texture,
@@ -120,7 +120,7 @@ public class GiantCursedFlameSphere : PrimProjectile
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, 2, SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);*/
-        //LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
     }
 

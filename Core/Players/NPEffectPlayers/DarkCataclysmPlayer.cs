@@ -1,38 +1,35 @@
 ﻿using NeoParacosm.Content.Items.BossSummons;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using static NeoParacosm.Core.Systems.Data.DarkCataclysmSystem;
 
 namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
-public partial class NPEffectPlayer : ModPlayer
+public partial class DarkCataclysmPlayer : ModPlayer
 {
-    static ref float DCEffectOpacity => ref DarkCataclysmSystem.DCEffectOpacity;
-    static ref float DCEffectOpacityTimer => ref DarkCataclysmSystem.DCEffectOpacityTimer;
-    static ref Color DCEffectFogColor => ref DarkCataclysmSystem.DCEffectFogColor;
-    static ref Vector2 DCEffectNoFogPosition => ref DarkCataclysmSystem.DCEffectNoFogPosition;
-    static ref float DCEffectNoFogDistance => ref DarkCataclysmSystem.DCEffectNoFogDistance;
-    static ref float DCEffectNoFogDistanceCurrent => ref DarkCataclysmSystem.DCEffectNoFogDistanceCurrent;
-    static ref float DCEffectMaxFogOpacity => ref DarkCataclysmSystem.DCEffectMaxFogOpacity;
-    static ref float DCEffectFogOpacity => ref DarkCataclysmSystem.DCEffectFogOpacity;
-    static ref float DCEffectFogSpeed => ref DarkCataclysmSystem.DCEffectFogSpeed;
-    static ref float DCEffectFogColorMultiplier => ref DarkCataclysmSystem.DCEffectFogColorMultiplier;
-
+    int Timer = 0;
     public override void ResetEffects()
     {
-        
+
     }
 
-    Vector2 moveT = Vector2.Zero;
+    public override void PostUpdateMiscEffects()
+    {
+        DCEffects();
+        Timer++;
+    }
+
     void DCEffects()
     {
         if (Player.HeldItem.type == ItemType<AncientCallingHorn>() && Player.ItemAnimationActive)
         {
-            DarkCataclysmSystem.AncientCallingHornInUse = true;
+            AncientCallingHornInUse = true;
             Player.NPPlayer().NoMusic = true;
         }
-        if (DarkCataclysmSystem.DarkCataclysmActive)
+        if (DarkCataclysmActive)
         {
             DCEffectFogOpacity = MathHelper.Lerp(DCEffectFogOpacity, DCEffectMaxFogOpacity, 1 / 60f);
             DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 60f);
@@ -76,7 +73,7 @@ public partial class NPEffectPlayer : ModPlayer
         }
         else
         {
-            DCEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, DCEffectOpacityTimer / 60f);
+            DCEffectOpacity = MathHelper.Lerp(0, 0.6f, DCEffectOpacityTimer / 60f);
             SkyManager.Instance["NeoParacosm:DCSky"].Opacity = DCEffectOpacity;
             if (DCEffectOpacityTimer > 0) DCEffectOpacityTimer--;
             if (DCEffectOpacityTimer <= 0)

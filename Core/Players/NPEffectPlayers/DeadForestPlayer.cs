@@ -1,15 +1,21 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
-public partial class NPEffectPlayer : ModPlayer
+public partial class DeadForestPlayer : ModPlayer
 {
     float desaturateEffectOpacity = 0f;
     float desaturateEffectOpacityTimer = 0f;
     float maxDesaturateValue = 0.6f;
+
+    public override void PostUpdateMiscEffects()
+    {
+        DeadForestEffects();
+    }
 
     void DeadForestEffects()
     {

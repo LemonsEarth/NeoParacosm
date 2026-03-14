@@ -15,9 +15,6 @@ public partial class NPEffectPlayer : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
-        DeadForestEffects();
-        DCEffects();
-
         if (Timer % 10 == 0)
         {
             if (!NPC.AnyNPCs(NPCType<Deathbird>()))

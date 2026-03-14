@@ -15,12 +15,6 @@ public class FireTestProj : ModProjectile
     int AITimer = 0;
     ref float Timeleft => ref Projectile.ai[0];
     ref float Scale => ref Projectile.ai[1];
-    ref float ColorMult => ref Projectile.ai[2];
-
-    public Color PulseColor { get; set; } = Color.White;
-    public Entity EntityToFollow { get; set; } = null;
-    int entityType = -1;
-    int entityID = -1;
 
     public override void SendExtraAI(BinaryWriter writer)
     {

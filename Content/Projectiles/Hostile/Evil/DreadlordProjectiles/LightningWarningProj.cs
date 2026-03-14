@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
 
@@ -46,8 +47,12 @@ public class LightningWarningProj : ModProjectile
         {
             startPos = Projectile.Center;
         }
-
+        if (AITimer % 4 == 0)
+        {
+            Dust.NewDustDirect(Projectile.RandomPos(-16), 2, 2, DustType<StreakDust>()).velocity = Vector2.UnitY * 60;
+        }
         Projectile.scale = AITimer / Duration * MathHelper.Clamp(Length / 2000f, 1, 5);
+        Projectile.height = (int)(64 * Length / 128);
 
         Projectile.velocity = Vector2.Zero;
         if (AITimer > Duration)
@@ -78,14 +83,14 @@ public class LightningWarningProj : ModProjectile
         for (int i = 0; i < 1; i++)
         {
 
-        Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, 
-            Projectile.Center - Main.screenPosition, 
-            null, 
-            Color.White * Projectile.Opacity * 0.5f, 
-            0f, 
-            new Vector2(ParacosmTextures.GlowBallTexture.Width() * 0.5f, 0), 
-            new Vector2(1f, Length / 128 * Projectile.scale), 
-            SpriteEffects.None);
+            Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value,
+                Projectile.Center - Main.screenPosition,
+                null,
+                Color.White * Projectile.Opacity * 0.5f,
+                0f,
+                new Vector2(ParacosmTextures.GlowBallTexture.Width() * 0.5f, 0),
+                new Vector2(1f, Length / 128 * Projectile.scale),
+                SpriteEffects.None);
         }
 
         return false;

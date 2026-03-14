@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Dusts;
 using Terraria.GameContent;
 using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
@@ -8,7 +9,7 @@ public class CursedFlameSpirit : ModProjectile
 {
     int AITimer = 0;
     ref float Duration => ref Projectile.ai[0];
-    ref float RotSpeed => ref Projectile.ai[1];
+    ref float Rot => ref Projectile.ai[1];
     ref float AttackInterval => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
@@ -38,18 +39,23 @@ public class CursedFlameSpirit : ModProjectile
     }
 
     int despawnTimer = 0;
+    int rotTimer = 0;
     public override void AI()
     {
         if (AITimer == 0)
         {
-
+            if (LemonUtils.NotClient())
+            {
+                //rotTimer = Main.rand.Next(0, 360);
+            }
+            Projectile.netUpdate = true;
         }
+        //Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustType<StreakDust>());
 
         if (AITimer > Duration)
         {
             Projectile.Kill();
         }
-        float firingRot = MathHelper.ToRadians((AITimer - 60) * RotSpeed);
         Lighting.AddLight(Projectile.Center, 1, 1, 1);
         Projectile.StandardAnimation(6, 5);
 
@@ -81,15 +87,18 @@ public class CursedFlameSpirit : ModProjectile
             Projectile.Opacity = 1f;
             if (AITimer % AttackInterval == 0)
             {
-                if (LemonUtils.NotClient())
+                for (int i = 0; i < 4; i++)
                 {
-                    LemonUtils.QuickProj(
-                        Projectile,
-                        Projectile.Center,
-                        Vector2.UnitY.RotatedBy(firingRot) * 5,
-                        ProjectileType<CursedFlameSphere>(),
-                        ai1: 1.02f
-                        );
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            Projectile,
+                            Projectile.Center,
+                            Vector2.UnitY.RotatedBy(Rot).RotatedBy(MathHelper.PiOver2 * i) * 8,
+                            ProjectileType<CursedFlameSphere>(),
+                            ai1: 1.0f
+                            );
+                    }
                 }
             }
         }
@@ -117,7 +126,7 @@ public class CursedFlameSpirit : ModProjectile
             despawnTimer++;
         }
         Projectile.velocity = Vector2.Zero;
-
+        rotTimer++;
         AITimer++;
     }
 

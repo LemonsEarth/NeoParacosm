@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Core.Systems.World.GenPasses;
 using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
@@ -11,218 +12,11 @@ namespace NeoParacosm.Core.Systems.World;
 
 public class WorldGenSystem : ModSystem
 {
-    int WorldSize => LemonUtils.GetWorldSize();
-    readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
-    readonly string DragonRemainsPath = "Common/Assets/Structures/DragonRemainsSanctuary";
-    readonly string DeadForestPlatformsPath = "Common/Assets/Structures/DeadForestPlatforms";
-
-    static int UnderworldDepth => Main.maxTilesY - 200;
-
-    int baseDeadForestTileRadius = 200;
-    int DeadForestRadius => baseDeadForestTileRadius * WorldSize;
-
-    void GenerateCrimsonVillage(GenerationProgress progress, GameConfiguration config)
-    {
-        if (!WorldGen.crimson)
-        {
-            return;
-        }
-
-        bool IsCrimsonTile(int tileType)
-        {
-            return tileType == TileID.Crimstone || tileType == TileID.CrimsonGrass || tileType == TileID.Crimsand;
-        }
-
-        for (int rep = 0; rep < WorldSize; rep++)
-        {
-            int startX = 0;
-            int endX = Main.maxTilesX;
-            int startY = 0;
-            int endY = (int)GenVars.worldSurfaceHigh;
-            for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, Mod); i++)
-            {
-                int attemptCounter = 0;
-                Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, Mod, i);
-
-                while (attemptCounter < 100000)
-                {
-                    int x = WorldGen.genRand.Next(startX, endX);
-                    int y = WorldGen.genRand.Next(startY, endY);
-                    Tile tile = Main.tile[x, y];
-                    Tile tileAbove = Main.tile[x, Math.Clamp(y - 1, 0, Main.maxTilesY)];
-
-                    if (tile.HasTile && IsCrimsonTile(tile.TileType) && !tileAbove.HasTile)
-                    {
-                        startX = Math.Clamp(x - 150, 0, Main.maxTilesX);
-                        endX = Math.Clamp(x + 150, 0, Main.maxTilesX);
-
-                        startY = Math.Clamp(y - 150, 0, Main.maxTilesY);
-                        endY = Math.Clamp(y + 150, 0, Main.maxTilesY);
-                        Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
-
-                        if (!GenVars.structures.CanPlace(structureRect, 5))
-                        {
-                            attemptCounter++;
-                            continue;
-                        }
-                        Point16 point = new Point16(x, y);
-                        MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, Mod);
-                        Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
-                        GenVars.structures.AddProtectedStructure(structureRect, 5);
-                        break;
-                    }
-
-
-                    attemptCounter++;
-                    continue;
-                }
-            }
-        }
-
-        for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
-        {
-            Chest chest = Main.chest[chestIndex];
-            if (chest == null) continue;
-            int x = chest.x;
-            int y = chest.y;
-
-            Tile chestTile = Main.tile[x, y];
-            if (chestTile.TileType != TileID.Containers || chestTile.TileFrameX != 14 * 36)
-            {
-                continue;
-            }
-
-            for (int inventoryIndex = 0; inventoryIndex < Chest.maxItems; inventoryIndex++)
-            {
-                if (chest.item[inventoryIndex].type == ItemID.None)
-                {
-                    if (WorldGen.genRand.NextBool(10))
-                    {
-                        chest.item[inventoryIndex].SetDefaults(ItemType<ChainsawGun>());
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
-    void GenerateDeadForest(GenerationProgress progress, GameConfiguration config)
-    {
-        Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30);
-        for (int i = -DeadForestRadius; i < DeadForestRadius; i++)
-        {
-            for (int j = -DeadForestRadius; j < DeadForestRadius; j++)
-            {
-                Point pos = startPos + new Point(i, j);
-                pos = new Point(Math.Clamp(pos.X, 0, Main.maxTilesX), Math.Clamp(pos.Y, 0, Main.maxTilesY));
-                if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > DeadForestRadius * 16)
-                {
-                    continue;
-                }
-                Tile tile = Main.tile[pos];
-                if (tile.HasTile)
-                {
-                    switch (tile.TileType)
-                    {
-                        case TileID.Dirt or TileID.ClayBlock or TileID.Grass or TileID.Sand or TileID.CorruptGrass or TileID.CrimsonGrass or TileID.Ebonsand or TileID.Crimsand:
-                            WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
-                            break;
-                    }
-                }
-            }
-        }
-
-        GenerateDeadForestPlatforms();
-    }
-
-    void GenerateDeadForestPlatforms()
-    {
-        int startXTile = (int)MathHelper.Clamp(Main.dungeonX - DeadForestRadius, 0, Main.maxTilesX);
-        int maxXTile = (int)MathHelper.Clamp(Main.dungeonX + DeadForestRadius, 0, Main.maxTilesX);
-        int startYTile = (int)MathHelper.Clamp(Main.dungeonY - 80, 0, Main.maxTilesY);
-        int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
-        Point16 startPos = new Point16(startXTile, startYTile);
-        Point16 unitY = new Point16(0, 1);
-        Point16 pos = startPos;
-        while (pos.X < maxXTile)
-        {
-            int structureIndex = WorldGen.genRand.Next(0, 2);
-            Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(DeadForestPlatformsPath, Mod, structureIndex);
-            while (pos.Y < maxYTile)
-            {
-                Tile tile = Main.tile[new Point16(pos.X + structureDims.X / 2, pos.Y)];
-                if (tile.HasTile && (tile.TileType == TileType<DeadDirtBlock>() || tile.TileType == TileID.Stone))
-                {
-                    // Offset the platform vertically for more variety
-                    int verticalOffset = WorldGen.genRand.Next(structureDims.Y, structureDims.Y * 2);
-                    Point16 structurePos = new Point16(pos.X, pos.Y - verticalOffset);
-                    MultiStructureGenerator.GenerateMultistructureSpecific(DeadForestPlatformsPath, structureIndex, structurePos, Mod);
-
-                    Point16 wallCheckPos = structurePos + new Point16(structureDims.X / 2 - 1, structureDims.Y);
-
-                    // Extending pillar
-                    while (wallCheckPos.Y < pos.Y + 2)
-                    {
-                        WorldGen.PlaceWall(wallCheckPos.X, wallCheckPos.Y, WallID.AncientBlueBrickWall);
-                        WorldGen.PlaceWall(wallCheckPos.X + 1, wallCheckPos.Y, WallID.AncientBlueBrickWall);
-                        wallCheckPos += unitY;
-                    }
-                    break;
-                }
-                pos += unitY;
-            }
-
-            pos = new Point16(pos.X + WorldGen.genRand.Next(structureDims.X, structureDims.X * 2), startYTile);
-            // Skip generating close to the dungeon
-            if (MathF.Abs(pos.X - Main.dungeonX) < 80)
-            {
-                pos = new Point16(Main.dungeonX + WorldGen.genRand.Next(81, 120), startYTile);
-            }
-        }
-    }
-
-    void GenerateDragonRemains(GenerationProgress progress, GameConfiguration config)
-    {
-        int attemptCount = 0;
-        int maxAttempts = 1000000;
-        Point16 structureDims = Generator.GetStructureDimensions(DragonRemainsPath, Mod);
-        while (attemptCount < maxAttempts)
-        {
-            bool conflict = false;
-            int x = WorldGen.genRand.Next((int)(Main.maxTilesX * 0.33f), (int)(Main.maxTilesX * 0.66f));
-            int y = WorldGen.genRand.Next((int)GenVars.rockLayerHigh, UnderworldDepth - 100 - structureDims.Y);
-            Rectangle structureRect = new Rectangle(x, y, structureDims.X, structureDims.Y);
-            for (int i = 0; i < structureDims.X; i++)
-            {
-                if (conflict) break;
-                for (int j = 0; j < structureDims.Y; j++)
-                {
-                    Tile tile = Main.tile[x + i, y + j];
-                    bool cantPlace = !GenVars.structures.CanPlace(structureRect, 0);
-                    bool isSpecialBrick = IsDungeonBrick(tile.TileType) || tile.TileType == TileID.LihzahrdBrick;
-                    if (cantPlace || (tile.HasTile && isSpecialBrick))
-                    {
-                        attemptCount++;
-                        conflict = true;
-                        break;
-                    }
-                }
-            }
-            if (!conflict)
-            {
-                GenVars.structures.AddProtectedStructure(structureRect, 0);
-                Generator.GenerateStructure(DragonRemainsPath, new Point16(x, y), Mod);
-                Mod.Logger.Info($"Generated Dragon Remains At ({x}, {y})");
-                break;
-            }
-        }
-    }
-
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        InsertAfterTask(tasks, "Tile Cleanup", "Crimson Village", GenerateCrimsonVillage);
-        InsertAfterTask(tasks, "Planting Trees", "Dead Forest", GenerateDeadForest);
-        InsertAfterTask(tasks, "Micro Biomes", "Dragon Remains", GenerateDragonRemains);
+        InsertAfterTask(tasks, "Tile Cleanup", "Crimson Village", new CrimsonVillageGenPass("Building Bloody Settlement", 100f));
+        InsertAfterTask(tasks, "Planting Trees", "Dead Forest", new DeadForestGenPass("Spreading Death", 100f));
+        InsertAfterTask(tasks, "Micro Biomes", "Dragon Remains", new DragonRemainsGenPass("Shifting Earth due to Powerful Presence", 100f));
 
         //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
         //tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
@@ -263,16 +57,16 @@ public class WorldGenSystem : ModSystem
         }*/
     }
 
-    void InsertAfterTask(List<GenPass> tasks, string genpassName, string newGenPassName, WorldGenLegacyMethod method)
+    void InsertAfterTask(List<GenPass> tasks, string genpassName, string newGenPassName, GenPass genpass)
     {
         int step = tasks.FindIndex(genpass => genpass.Name.Equals(genpassName));
-        tasks.Insert(step + 1, new PassLegacy($"[c/AA00FF:NeoParacosm: {newGenPassName}]", method));
+        tasks.Insert(step + 1, genpass);
     }
 
-    void GenerateVerticalOceanTunnels()
+    /*void GenerateVerticalOceanTunnels()
     {
         int distanceBetweenTunnels = 50;
-        int tunnelRepDistance = 20 * WorldSize;
+        int tunnelRepDistance = 20 * LemonUtils.GetWorldSize();
         //int repFailChanceDenominator = 8;
         for (int amountOfTunnels = 0; amountOfTunnels < 10; amountOfTunnels++)
         {
@@ -283,7 +77,7 @@ public class WorldGenSystem : ModSystem
                     repFailChanceDenominator = 16;
                     continue;
                 }
-                repFailChanceDenominator /= 2;*/
+                repFailChanceDenominator /= 2;
                 int xStartPos = Main.maxTilesX - 300;
                 int tunnelXPos = xStartPos + amountOfTunnels * distanceBetweenTunnels + Main.rand.Next(-4, 5);
 
@@ -302,7 +96,7 @@ public class WorldGenSystem : ModSystem
         int distanceBetweenTunnels = 75;
         int tunnelRepDistance = 20;
         //int repFailChanceDenominator = 4;
-        for (int amountOfTunnels = 0; amountOfTunnels < 4 * WorldSize; amountOfTunnels++)
+        for (int amountOfTunnels = 0; amountOfTunnels < 4 * LemonUtils.GetWorldSize(); amountOfTunnels++)
         {
             for (int tunnelRepCount = 0; tunnelRepCount < 16; tunnelRepCount++)
             {
@@ -311,7 +105,7 @@ public class WorldGenSystem : ModSystem
                     repFailChanceDenominator = 8;
                     continue;
                 }
-                repFailChanceDenominator /= 2;*/
+                repFailChanceDenominator /= 2;
                 int xStartPos = Main.maxTilesX - 350;
                 int tunnelXPos = xStartPos + tunnelRepCount * tunnelRepDistance;
 
@@ -323,10 +117,5 @@ public class WorldGenSystem : ModSystem
                 WorldGen.digTunnel(tunnelXPos, tunnelYPos, 3, 0, 10, 8, true);
             }
         }
-    }
-
-    public static bool IsDungeonBrick(int tileID)
-    {
-        return tileID == TileID.BlueDungeonBrick || tileID == TileID.GreenDungeonBrick || tileID == TileID.PinkDungeonBrick;
-    }
+    }*/
 }

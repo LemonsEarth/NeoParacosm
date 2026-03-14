@@ -9,6 +9,8 @@ public static partial class LemonUtils
 {
     public static bool NotClient() => Main.netMode != NetmodeID.MultiplayerClient;
 
+    public static int UnderworldDepth => Main.maxTilesY - 200;
+
     /// <summary>
     /// Accelerates an entity towards a position
     /// </summary>
@@ -56,6 +58,11 @@ public static partial class LemonUtils
             default:
                 return 1;
         }
+    }
+
+    public static bool IsDungeonBrick(int tileID)
+    {
+        return tileID == TileID.BlueDungeonBrick || tileID == TileID.GreenDungeonBrick || tileID == TileID.PinkDungeonBrick;
     }
 
     /// <summary>

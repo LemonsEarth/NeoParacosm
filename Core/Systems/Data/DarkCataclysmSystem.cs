@@ -1,5 +1,9 @@
 ﻿namespace NeoParacosm.Core.Systems.Data;
 
+/// <summary>
+/// Controls Dark Cataclysm effect params and whether it is active globally.
+/// Effects and actual shader code are handled in DarkCataclysmPlayer.
+/// </summary>
 public class DarkCataclysmSystem : ModSystem
 {
     public static bool DarkCataclysmActive => ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedResearcher;
@@ -13,9 +17,10 @@ public class DarkCataclysmSystem : ModSystem
     public static float DCEffectFogOpacity = 0f;
     public static float DCEffectFogSpeed = 1f;
     public static float DCEffectFogColorMultiplier = 1f;
-    public static bool AncientCallingHornInUse = false;
-    public static bool DreadlordAlive = false;
-    bool ShouldReset => !AncientCallingHornInUse && !DreadlordAlive;
+    public static bool AncientCallingHornInUse = false; // Set in DarkCataclysmPlayer
+    public static bool DreadlordAlive = false; // Set in Dreadlord AI
+    // Only reset when Ancient Calling Horn isn't being used and Dreadlord isn't alive, as they manipulate the fog distance, position etc.
+    static bool ShouldReset => !AncientCallingHornInUse && !DreadlordAlive;
 
     public override void PreUpdateItems()
     {
@@ -39,6 +44,7 @@ public class DarkCataclysmSystem : ModSystem
 
     public override void PostUpdateNPCs()
     {
+        // Only reset when Ancient Calling Horn isn't being used and Dreadlord isn't alive, as they manipulate the fog
         if (ShouldReset)
         {
             DCEffectFogColor = Color.White;
