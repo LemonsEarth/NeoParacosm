@@ -1099,3 +1099,8 @@ BloodBloomScepter: {
 		Right click to fire a burst of seeds that explode after a delay
 		'''
 }
+
+DeathBrickWallItem: {
+	DisplayName: Death Brick Wall Item
+	Tooltip: ""
+}

@@ -5,6 +5,11 @@ namespace NeoParacosm.Content.Items.Weapons.Summon;
 
 public class ShadowflowerStaff : ModItem
 {
+    public override void SetStaticDefaults()
+    {
+
+    }
+
     public override void SetDefaults()
     {
         Item.width = 40;
