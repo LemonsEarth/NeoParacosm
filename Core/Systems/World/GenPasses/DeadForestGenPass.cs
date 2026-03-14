@@ -63,7 +63,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
             while (pos.X < maxXTile)
             {
                 int structureIndex = WorldGen.genRand.Next(0, 2);
-                Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(DeadForestPlatformsPath, GetInstance<Mod>(), structureIndex);
+                Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(DeadForestPlatformsPath, NeoParacosm.Instance, structureIndex);
                 while (pos.Y < maxYTile)
                 {
                     Tile tile = Main.tile[new Point16(pos.X + structureDims.X / 2, pos.Y)];
@@ -72,7 +72,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                         // Offset the platform vertically for more variety
                         int verticalOffset = WorldGen.genRand.Next(structureDims.Y, structureDims.Y * 2);
                         Point16 structurePos = new Point16(pos.X, pos.Y - verticalOffset);
-                        MultiStructureGenerator.GenerateMultistructureSpecific(DeadForestPlatformsPath, structureIndex, structurePos, GetInstance<Mod>());
+                        MultiStructureGenerator.GenerateMultistructureSpecific(DeadForestPlatformsPath, structureIndex, structurePos, NeoParacosm.Instance);
 
                         Point16 wallCheckPos = structurePos + new Point16(structureDims.X / 2 - 1, structureDims.Y);
 

@@ -21,7 +21,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
         {
             int attemptCount = 0;
             int maxAttempts = 1000000;
-            Point16 structureDims = Generator.GetStructureDimensions(DragonRemainsPath, GetInstance<Mod>());
+            Point16 structureDims = Generator.GetStructureDimensions(DragonRemainsPath, NeoParacosm.Instance);
             while (attemptCount < maxAttempts)
             {
                 bool conflict = false;
@@ -47,7 +47,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                 if (!conflict)
                 {
                     GenVars.structures.AddProtectedStructure(structureRect, 0);
-                    Generator.GenerateStructure(DragonRemainsPath, new Point16(x, y), GetInstance<Mod>());
+                    Generator.GenerateStructure(DragonRemainsPath, new Point16(x, y), NeoParacosm.Instance);
                     //Mod.Logger.Info($"Generated Dragon Remains At ({x}, {y})");
                     break;
                 }

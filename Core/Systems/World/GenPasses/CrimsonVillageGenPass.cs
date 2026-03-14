@@ -36,10 +36,10 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                 int endX = Main.maxTilesX;
                 int startY = 0;
                 int endY = (int)GenVars.worldSurfaceHigh;
-                for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, GetInstance<Mod>()); i++)
+                for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, NeoParacosm.Instance); i++)
                 {
                     int attemptCounter = 0;
-                    Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, GetInstance<Mod>(), i);
+                    Point16 structureDims = MultiStructureGenerator.GetStructureDimensions(CrimsonVillagePath, NeoParacosm.Instance, i);
 
                     while (attemptCounter < 100000)
                     {
@@ -63,7 +63,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                                 continue;
                             }
                             Point16 point = new Point16(x, y);
-                            MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, GetInstance<Mod>());
+                            MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, NeoParacosm.Instance);
                             //Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
                             GenVars.structures.AddProtectedStructure(structureRect, 5);
                             break;
