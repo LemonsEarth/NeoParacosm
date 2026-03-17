@@ -1,6 +1,6 @@
 ﻿namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
-public class DeathBrickWall : ModWall
+public class DeathBrickWallLight : ModWall
 {
     public override void SetStaticDefaults()
     {
@@ -16,7 +16,7 @@ public class DeathBrickWall : ModWall
     }
 }
 
-public class DeathBrickWallItem : ModItem
+public class DeathBrickWallLightItem : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -26,7 +26,7 @@ public class DeathBrickWallItem : ModItem
 
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableWall(WallType<DeathBrickWall>());
+        Item.DefaultToPlaceableWall(WallType<DeathBrickWallLight>());
         Item.width = 32;
         Item.height = 32;
     }

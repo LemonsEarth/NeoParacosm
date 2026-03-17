@@ -1104,3 +1104,18 @@ DeathBrickWallItem: {
 	DisplayName: Death Brick Wall Item
 	Tooltip: ""
 }
+
+DeathBrickWallDarkItem: {
+	DisplayName: Death Brick Wall Dark Item
+	Tooltip: ""
+}
+
+DeathBrickWallLightItem: {
+	DisplayName: Death Brick Wall Light Item
+	Tooltip: ""
+}
+
+DeathBrickWallGrayItem: {
+	DisplayName: Death Brick Wall Gray Item
+	Tooltip: ""
+}

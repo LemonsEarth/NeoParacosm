@@ -12,7 +12,7 @@ public class BloodBloomHeldProjMelee : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-
+        LemonUtils.DustBurst(8, target.RandomPos(), DustID.GemRuby, 5, 5, 1.5f, 2.5f);
     }
 
     public override void SetStaticDefaults()

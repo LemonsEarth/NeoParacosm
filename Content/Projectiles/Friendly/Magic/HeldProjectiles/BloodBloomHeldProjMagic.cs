@@ -80,7 +80,8 @@ public class BloodBloomHeldProjMagic : ModProjectile
                 Vector2 dirToMouse = Main.player[Projectile.owner].Center.DirectionTo(Main.MouseWorld);
                 Vector2 pos = Main.player[Projectile.owner].Center + dirToMouse * Projectile.width * 0.8f;
                 pos += dirToMouse.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(-6, 6);
-                Dust.NewDustDirect(pos, 2, 2, DustID.GemRuby, dirToMouse.X, dirToMouse.Y).noGravity = true;
+                LemonUtils.DustBurst(8, pos, DustID.GemRuby, 5, 5, 1.5f, 2.5f);
+                //Dust.NewDustDirect(pos, 2, 2, DustID.GemRuby, dirToMouse.X, dirToMouse.Y).noGravity = true;
                 for (int i = 0; i < 5; i++)
                 {
                     LemonUtils.QuickProj(

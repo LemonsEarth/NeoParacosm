@@ -24,7 +24,6 @@ public class WorldGenSystem : ModSystem
 
     public override void PostUpdateWorld()
     {
-
         /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
             int Radius = 100 * worldSize;
