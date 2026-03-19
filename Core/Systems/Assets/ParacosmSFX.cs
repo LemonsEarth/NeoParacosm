@@ -11,6 +11,7 @@ public class ParacosmSFX : ModSystem
     public static SoundStyle AncientCallingHorn { get; private set; }
     public static SoundStyle SniperShot { get; private set; }
     public static SoundStyle SniperScope { get; private set; }
+    public static SoundStyle SwordDeflect { get; private set; }
     public override void Load()
     {
         UndertakerGunshot = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/UndertakerGunshot");
@@ -20,5 +21,6 @@ public class ParacosmSFX : ModSystem
         AncientCallingHorn = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/AncientCallingHorn");
         SniperShot = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SniperShot");
         SniperScope = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SniperScope");
+        SwordDeflect = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SwordDeflect");
     }
 }

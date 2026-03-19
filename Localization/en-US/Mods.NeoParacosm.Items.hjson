@@ -1100,22 +1100,47 @@ BloodBloomScepter: {
 		'''
 }
 
-DeathBrickWallItem: {
-	DisplayName: Death Brick Wall Item
-	Tooltip: ""
-}
-
 DeathBrickWallDarkItem: {
-	DisplayName: Death Brick Wall Dark Item
+	DisplayName: Death Brick Wall (Dark)
 	Tooltip: ""
 }
 
 DeathBrickWallLightItem: {
-	DisplayName: Death Brick Wall Light Item
+	DisplayName: Death Brick Wall (Light)
 	Tooltip: ""
 }
 
 DeathBrickWallGrayItem: {
-	DisplayName: Death Brick Wall Gray Item
+	DisplayName: Death Brick Wall (Gray)
 	Tooltip: ""
+}
+
+CometTalisman: {
+	DisplayName: Comet Talisman
+	Tooltip: Increases melee critical strike chance by {0}% and critical damage by {1}% while falling
+}
+
+CondensedCrystal: {
+	DisplayName: Condensed Crystal
+	Tooltip:
+		'''
+		Increases magic damage by {0}%
+		Disables magic critical strikes
+		Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+		'''
+}
+
+PenetratorsInsignia: {
+	DisplayName: Penetrators Insignia
+	Tooltip: Increases ranged projectile armor penetration by the projectile's velocity
+}
+
+CursebindersUnravel: {
+	DisplayName: Cursebinder's Unravel
+	Tooltip:
+	'''
+	Right click to deflect incoming attacks
+
+	Deflecting gives you the Striking Moment buff
+	'''
 }

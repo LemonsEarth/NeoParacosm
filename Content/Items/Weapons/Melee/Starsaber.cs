@@ -22,7 +22,7 @@ public class Starsaber : ModItem
         Item.useTime = 10;
         Item.useAnimation = 10;
         Item.useStyle = ItemUseStyleID.Shoot;
-        Item.knockBack = 2;
+        Item.knockBack = 6;
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Green;
         Item.autoReuse = true;

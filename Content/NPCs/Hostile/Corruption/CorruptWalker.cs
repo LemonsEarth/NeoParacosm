@@ -75,7 +75,10 @@ public class CorruptWalker : ModNPC
     {
         NPC.TargetClosest(true);
         NPC.spriteDirection = -NPC.direction;
-
+        /*if (AITimer % 5 == 0)
+        {
+            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitX * 10, ProjectileID.EyeLaser, 10, 1);
+        }*/
         if (AITimer > 600 && !wasHit)
         {
             if (AITimer % 2 == 0)
