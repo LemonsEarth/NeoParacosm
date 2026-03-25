@@ -14,6 +14,8 @@ public class DeflectPlayer : ModPlayer
 {
     public int BlockingTimer { get; set; } = 0;
     public bool Blocking => BlockingTimer > 0;
+    public int DeflectCount { get; set; } = 0;
+    public int SpecialDeflectCount { get; set; } = 5;
 
     public void StartBlocking(int duration)
     {
@@ -79,6 +81,13 @@ public class DeflectPlayer : ModPlayer
         }*/
         if (Blocking)
         {
+            DeflectCount++;
+            if (DeflectCount == SpecialDeflectCount)
+            {
+                SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { Volume = 1f, PitchRange = (0f, 0.4f) }, Player.Center);
+                LemonUtils.DustBurst(10, Player.RandomPos(), DustID.GemRuby, 0, -10, 2, 2.5f);
+                LemonUtils.DustBurst(10, Player.RandomPos(), DustID.GemRuby, 10, 0, 2, 2.5f);
+            }
             SoundEngine.PlaySound(ParacosmSFX.SwordDeflect with { Volume = 0.8f, PitchRange = (0.4f, 0.6f) }, Player.Center);
             LemonUtils.DustBurst(4, Player.Center, DustType<StreakDust>(), 12, 12, 1, 1.2f);
             Player.AddBuff(BuffID.ParryDamageBuff, 120);
@@ -107,22 +116,34 @@ public class DeflectPlayer : ModPlayer
         }*/
         if (Blocking)
         {
+            DeflectCount++;
+            if (DeflectCount == SpecialDeflectCount)
+            {
+                SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { Volume = 1f, PitchRange = (0f, 0.4f) }, Player.Center);
+                LemonUtils.DustBurst(10, Player.RandomPos(), DustID.GemRuby, 0, -10, 2, 2.5f);
+                LemonUtils.DustBurst(10, Player.RandomPos(), DustID.GemRuby, 10, 0, 2, 2.5f);
+            }
             SoundEngine.PlaySound(ParacosmSFX.SwordDeflect with { Volume = 0.8f, PitchRange = (0.4f, 0.6f) }, Player.Center);
             LemonUtils.DustBurst(4, Player.Center, DustType<StreakDust>(), 5, 5, 1, 1.2f);
             Player.AddBuff(BuffID.ParryDamageBuff, 120);
 
-           /* foreach (var projectile in Main.ActiveProjectiles)
-            {
-                if (projectile.owner == Player.whoAmI && projectile.ModProjectile is CursebindersUnravelHeldProjBlocking deflectSword)
-                {
-                    deflectSword.Restart();
-                }
-            }*/
+            /* foreach (var projectile in Main.ActiveProjectiles)
+             {
+                 if (projectile.owner == Player.whoAmI && projectile.ModProjectile is CursebindersUnravelHeldProjBlocking deflectSword)
+                 {
+                     deflectSword.Restart();
+                 }
+             }*/
         }
     }
 
     public override void PreUpdate()
     {
+        if (DeflectCount >= SpecialDeflectCount)
+        {
+            Dust.NewDustDirect(Player.RandomPos(), 2, 2, DustID.GemRuby, Scale: Main.rand.NextFloat(1.2f, 2f)).noGravity = true;
+        }
+
         if (BlockingTimer > 0)
         {
             BlockingTimer--;

@@ -53,15 +53,15 @@ public class CursebindersUnravelHeldProjBlocking : PrimProjectile
         if (AITimer == 0)
         {
             player.GetModPlayer<DeflectPlayer>().StartBlocking(15);
-            rotValue = -30;
+            rotValue = -130;
         }
 
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
-        player.SetDummyItemTime(15);
+        player.SetDummyItemTime(10);
 
         Projectile.velocity = Vector2.Zero;
-        float goalRotation = 180;
+        float goalRotation = -120;
         float lerpSpeed = 1 / 12f;
 
         rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpSpeed * player.GetAttackSpeed(DamageClass.Melee));
@@ -84,10 +84,10 @@ public class CursebindersUnravelHeldProjBlocking : PrimProjectile
     const float ThreePiOverFour = MathHelper.Pi - MathHelper.PiOver4; // dumb rotation and sprite direction stuff
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
-        Vector2 pos = player.Center + new Vector2(-player.direction * (Projectile.width / 2), -Projectile.height / 2).RotatedBy(movedRotation * player.direction) * Projectile.scale;
+        Vector2 pos = player.Center + new Vector2(-player.direction * (Projectile.width / 24), -Projectile.height / 4).RotatedBy((movedRotation - MathHelper.Pi) * player.direction) * Projectile.scale;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation * player.direction + player.direction * ThreePiOverFour);
         Projectile.Center = pos;
-        Projectile.rotation = movedRotation * player.direction + MathHelper.PiOver2 * -player.direction;
+        Projectile.rotation = (movedRotation - MathHelper.Pi) * player.direction + MathHelper.PiOver2 * -player.direction;
         Projectile.spriteDirection = player.direction;
     }
 

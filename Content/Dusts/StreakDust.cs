@@ -31,6 +31,7 @@ namespace NeoParacosm.Content.Dusts
             dust.rotation = dust.velocity.ToRotation() - MathHelper.PiOver2;
             dust.scale *= 0.97f;
             dust.velocity *= 0.94f;
+            dust.color = Color.Lerp(dust.color, Color.White, 1 / 30f);
             if (!dust.noGravity)
             {
                 dust.velocity.Y += 0.1f;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
+using NeoParacosm.Core.Players;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -47,6 +48,22 @@ public class CursebindersUnravelHeldProj : PrimProjectile
         if (!player.Alive())
         {
             Projectile.Kill();
+        }
+
+        if (AITimer == 0)
+        {
+            if (Main.myPlayer == Projectile.owner && Main.LocalPlayer.GetModPlayer<DeflectPlayer>().DeflectCount >= Main.LocalPlayer.GetModPlayer<DeflectPlayer>().SpecialDeflectCount)
+            {
+                LemonUtils.QuickProj(
+                    Projectile,
+                    Projectile.Center,
+                    Projectile.DirectionTo(Main.MouseWorld) * 4,
+                    ProjectileType<CursebinderBigProj>(),
+                    damage: Projectile.damage * MathHelper.Clamp(Main.LocalPlayer.GetModPlayer<DeflectPlayer>().DeflectCount + 10, 0, 30),
+                    ai2: 300
+                    );
+                Main.LocalPlayer.GetModPlayer<DeflectPlayer>().DeflectCount = 0;
+            }
         }
 
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
