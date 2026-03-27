@@ -34,7 +34,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
             {
                 int startX = 0;
                 int endX = Main.maxTilesX;
-                int startY = 0;
+                int startY = 100;
                 int endY = (int)GenVars.worldSurfaceHigh;
                 for (int i = 0; i < MultiStructureGenerator.GetStructureCount(CrimsonVillagePath, NeoParacosm.Instance); i++)
                 {
@@ -46,8 +46,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                         int x = WorldGen.genRand.Next(startX, endX);
                         int y = WorldGen.genRand.Next(startY, endY);
                         Tile tile = Main.tile[x, y];
-                        Tile tileAbove = Main.tile[x, Math.Clamp(y - 1, 0, Main.maxTilesY)];
-
+                        Tile tileAbove = Main.tile[x, y - 1];
                         if (tile.HasTile && IsCrimsonTile(tile.TileType) && !tileAbove.HasTile)
                         {
                             startX = Math.Clamp(x - 150, 0, Main.maxTilesX);
@@ -62,10 +61,38 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                                 attemptCounter++;
                                 continue;
                             }
-                            Point16 point = new Point16(x, y);
-                            MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, point, NeoParacosm.Instance);
+
+                            // The code below generates mounds of dirt, crimson sand etc.
+                            // Crimson grass looks ugly af when its not an edge tile,
+                            // so the "else" part exists solely to generate normal dirt in the inner part of the mount
+                            Point extraDirtPoint = new Point(x + structureDims.X / 2, y);
+                            if (tile.TileType != TileID.CrimsonGrass)
+                            {
+                                WorldUtils.Gen(
+                                    extraDirtPoint,
+                                    new Shapes.Circle(Main.rand.Next(structureDims.X / 2 + 2, structureDims.X / 2 + 5), Main.rand.Next(3, 6)),
+                                    new Actions.SetTile(tile.TileType));
+                            }
+                            else
+                            {
+                                int randWidth = Main.rand.Next(structureDims.X / 2 + 2, structureDims.X / 2 + 5);
+                                int randHeight = Main.rand.Next(3, 6);
+                                WorldUtils.Gen(
+                                    extraDirtPoint,
+                                    new Shapes.Circle(randWidth, randHeight),
+                                    new Actions.SetTile(TileID.CrimsonGrass));
+                                WorldUtils.Gen(
+                                    extraDirtPoint + new Point(0, 1),
+                                    new Shapes.Circle(randWidth, randHeight),
+                                    new Actions.SetTile(TileID.Dirt));
+                            }
+
+                            // Actual structure gen point
+                            Point16 adjustedPoint = new Point16(x, y - structureDims.Y);
+                            // Placing the structure
+                            MultiStructureGenerator.GenerateMultistructureSpecific(CrimsonVillagePath, i, adjustedPoint, NeoParacosm.Instance);
                             //Mod.Logger.Debug($"Generated Crimson House with index [{i}] at coordinates [{x}, {y}]");
-                            GenVars.structures.AddProtectedStructure(structureRect, 5);
+                            GenVars.structures.AddProtectedStructure(structureRect, 3);
                             break;
                         }
 

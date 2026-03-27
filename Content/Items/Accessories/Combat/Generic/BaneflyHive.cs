@@ -2,7 +2,7 @@
 using NeoParacosm.Core.Players;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;
 
 [AutoloadEquip(EquipType.Back)]
 public class BaneflyHive : ModItem

@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Core.Players;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 
 public class SuperStarfallCoating : ModItem
 {

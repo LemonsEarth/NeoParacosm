@@ -1,4 +1,4 @@
-﻿namespace NeoParacosm.Content.Items.Accessories.Combat;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 
 public class WheelGreatshield : ModItem
 {

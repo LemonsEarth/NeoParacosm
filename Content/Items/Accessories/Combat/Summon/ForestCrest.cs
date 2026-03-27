@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.Items.Pickups;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Summon;
 
 public class ForestCrest : ModItem
 {

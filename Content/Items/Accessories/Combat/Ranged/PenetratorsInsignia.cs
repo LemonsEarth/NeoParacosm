@@ -1,7 +1,7 @@
 ﻿using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
 
 public class PenetratorsInsignia : ModItem
 {
@@ -37,7 +37,7 @@ public class PenetratorsInsigniaPlayer : ModPlayer
     }
 }
 
-public class DungeonSkeletonNPC : GlobalNPC
+public class PenetratorsInsigniaDropNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Accessories.Combat;
+using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using ReLogic.Content;
 using System.Collections.Generic;
 using System.IO;

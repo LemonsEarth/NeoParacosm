@@ -2,7 +2,7 @@
 using NeoParacosm.Core.Players;
 using NeoParacosm.Content.Projectiles.Friendly.Melee;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 
 public class SpiritCoating : ModItem
 {

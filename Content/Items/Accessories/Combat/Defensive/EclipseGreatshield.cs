@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 
 [AutoloadEquip(EquipType.Shield)]
 public class EclipseGreatshield : ModItem

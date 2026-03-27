@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using Microsoft.Xna.Framework.Input;
+using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Core.Systems.World.GenPasses;
 using StructureHelper.API;
@@ -26,33 +27,8 @@ public class WorldGenSystem : ModSystem
     {
         /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
-            int Radius = 100 * worldSize;
-            Point startPos = new Point(Main.maxTilesX / 2, (int)GenVars.worldSurfaceLow + 100);
-            //LemonUtils.DustCircle(startPos.ToWorldCoordinates(), 8, 8, DustID.Granite, 10);
-            for (int i = -Radius; i < Radius; i++)
-            {
-                for (int j = -Radius; j < Radius; j++)
-                {
-                    Point pos = startPos + new Point(i, j);
-                    if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > Radius * 16)
-                    {
-                        continue;
-                    }
-                    Tile tile = Main.tile[pos];
-                    //Projectile.NewProjectile(new EntitySource_Misc("gewg"), pos.ToWorldCoordinates(), Vector2.Zero, ProjectileType<DragonRemainsPulseShield>(), 1, 1);
-                    if (tile.HasTile)
-                    {
-                        switch (tile.TileType)
-                        {
-                            case TileID.Dirt or TileID.ClayBlock or TileID.Grass:
-                                //WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
-                                WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
-                                break;
-                        }
-
-                    }
-                }
-            }
+            WorldGen.Convert((int)(Main.LocalPlayer.position.X / 16), (int)(Main.LocalPlayer.position.Y / 16), BiomeConversionID.Crimson, 12, truebbbbb);
+            //WorldUtils.Gen(new Point((int)(Main.LocalPlayer.position.X / 16), (int)(Main.LocalPlayer.position.Y / 16)), new Shapes.Circle(10, 5), new Actions.SetTile(TileID.Dirt));
         }*/
     }
 

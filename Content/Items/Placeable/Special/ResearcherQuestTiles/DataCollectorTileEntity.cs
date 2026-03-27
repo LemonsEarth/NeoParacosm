@@ -1,5 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Items.Accessories.Combat;
+using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Core.Globals.GlobalNPCs;
 using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;

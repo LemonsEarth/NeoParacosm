@@ -1,6 +1,6 @@
 ﻿using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;
 
 public class SealOfAffliction : ModItem
 {

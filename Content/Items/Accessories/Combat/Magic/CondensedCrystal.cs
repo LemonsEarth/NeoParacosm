@@ -1,7 +1,7 @@
 ﻿using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;
 
 public class CondensedCrystal : ModItem
 {

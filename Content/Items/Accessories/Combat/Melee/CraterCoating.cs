@@ -1,7 +1,7 @@
 ﻿using Terraria.GameContent.ItemDropRules;
 using NeoParacosm.Core.Players;
 
-namespace NeoParacosm.Content.Items.Accessories.Combat;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 
 public class CraterCoating : ModItem
 {
