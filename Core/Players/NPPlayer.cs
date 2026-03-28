@@ -128,16 +128,6 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
-        {
-            for (int i = 3; i <= 9; i++)
-            {
-                if (!Player.armor[i].IsAir)
-                {
-                    Player.armor[i].Prefix(PrefixID.Menacing);
-                }
-            }
-        }
         //Dust.QuickDust(new Point(Main.dungeonX, Main.dungeonY), Color.White);
         int researcherIndex = NPC.FindFirstNPC(NPCType<Researcher>());
         if (researcherIndex >= 0 && Main.npc[researcherIndex].Distance(Player.Center) > 500)
