@@ -79,7 +79,7 @@ StarecrowBuff: {
 
 ReducedSpawns: {
 	DisplayName: Reduced Spawns
-	Description: Mods.NeoParacosm.Buffs.ReducedSpawns.Description
+	Description: The spawns' gone!
 }
 
 LightsBaneDebuff2: {
@@ -88,51 +88,89 @@ LightsBaneDebuff2: {
 }
 
 BeFuelDebuff: {
-	DisplayName: Be Fuel Debuff
-	Description: Mods.NeoParacosm.Buffs.BeFuelDebuff.Description
+	DisplayName: Be Fuel
+	Description:
+	'''
+	Your body is fuel...
+	'''
 }
 
 GoldenHeartBuff: {
 	DisplayName: Golden Heart Buff
-	Description: Mods.NeoParacosm.Buffs.GoldenHeartBuff.Description
+	Description:
+	'''
+	The Golden Heart protects you from external and internal anomalies...
+	'''
 }
 
 MagicGuardBuff: {
-	DisplayName: Magic Guard Buff
-	Description: Mods.NeoParacosm.Buffs.MagicGuardBuff.Description
+	DisplayName: Magic Guard
+	Description:
+	'''
+	A magic barrier protects you...
+	'''
 }
 
 ManaGuardBuff: {
-	DisplayName: Mana Guard Buff
-	Description: Mods.NeoParacosm.Buffs.ManaGuardBuff.Description
+	DisplayName: Mana Guard
+	Description:
+	'''
+	Your mana protects you...
+	'''
 }
 
 HolyBladeBuff: {
-	DisplayName: Holy Blade Buff
-	Description: Mods.NeoParacosm.Buffs.HolyBladeBuff.Description
+	DisplayName: Holy Blade
+	Description:
+	'''
+	Your weapons have been blessed!
+	'''
 }
 
 SnowgraveDebuff: {
-	DisplayName: Snowgrave Debuff
-	Description: Mods.NeoParacosm.Buffs.SnowgraveDebuff.Description
+	DisplayName: Snowgrave
+	Description:
+	'''
+	You are cold to the touch!
+	'''
 }
 
 SnowgraveBuff: {
-	DisplayName: Snowgrave Buff
-	Description: Mods.NeoParacosm.Buffs.SnowgraveBuff.Description
+	DisplayName: Snowgraved
+	Description:
+	'''
+	You are cold to the touch!
+	'''
 }
 
 FireAuraBuff: {
-	DisplayName: Fire Aura Buff
-	Description: Mods.NeoParacosm.Buffs.FireAuraBuff.Description
+	DisplayName: Fire Aura
+	Description:
+	'''
+	You are too hot!
+	'''
 }
 
 ShroomedDebuff: {
-	DisplayName: Shroomed Debuff
-	Description: Mods.NeoParacosm.Buffs.ShroomedDebuff.Description
+	DisplayName: Shroomed
+	Description:
+	'''
+	Ooh im shrooming, im shrooming everywhere!!!
+	'''
 }
 
 GloveOfRetaliationBuff: {
-	DisplayName: Glove Of Retaliation Buff
-	Description: Mods.NeoParacosm.Buffs.GloveOfRetaliationBuff.Description
+	DisplayName: Power of Retaliation
+	Description:
+	'''
+	Massively increased melee damage
+	'''
+}
+
+DeathKnightReviveCooldown: {
+	DisplayName: Death Knight Revive Cooldown
+	Description:
+	'''
+	Time left until revive count is decreased
+	'''
 }

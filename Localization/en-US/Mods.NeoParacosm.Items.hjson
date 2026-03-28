@@ -1147,48 +1147,67 @@ CursebindersUnravel: {
 ArmoredBodyAugment: {
 	DisplayName: Armored Body Augment
 	Tooltip:
-	'''
-	Chance to inflict self with Ironskin and Endurance when hit
-	Grants knockback immunity while Ironskin and Endurance are active
-	'''
+		'''
+		Chance to inflict self with Ironskin and Endurance when hit
+		Grants knockback immunity while Ironskin and Endurance are active
+		'''
 }
 
 FlamingBodyAugment: {
 	DisplayName: Flaming Body Augment
-	Tooltip:
-	'''
-	Chance to erupt into bouncing fireballs on hit
-	'''
+	Tooltip: Chance to erupt into bouncing fireballs on hit
 }
 
 HauntedBodyAugment: {
 	DisplayName: Haunted Body Augment
-	Tooltip:
-	'''
-	Chance to summon Shadow Hands when hit
-	'''
+	Tooltip: Chance to summon Shadow Hands when hit
 }
 
 ToxicBodyAugment: {
 	DisplayName: Toxic Body Augment
-	Tooltip:
-	'''
-	Inflicts Poisoned on nearby enemies when hit
-	'''
+	Tooltip: Inflicts Poisoned on nearby enemies when hit
 }
 
 MagicMuzzle: {
 	DisplayName: Magic Muzzle
-	Tooltip:
-	'''
-	Normal bullets have a chance to inflict a random damaging debuff
-	'''
+	Tooltip: Normal bullets have a chance to inflict a random damaging debuff
 }
 
 MagicMossball: {
 	DisplayName: Magic Mossball
+	Tooltip: Grants Mana Regeneration and Magic Power while in the Jungle
+}
+
+DeathKnightHelmet: {
+	SetBonus:
+		'''
+		Reduces max life by 50%
+		Allows you to revive twice upon death
+		Each revive grants stat boosts
+		Emit deathflame upon reviving
+		'''
+	DisplayName: Death Knight Helmet
 	Tooltip:
-	'''
-	Grants Mana Regeneration and Magic Power while in the Jungle
-	'''
+		'''
+		Increases damage by {0}%
+		Increases critical strike chance by {1}%
+		'''
+}
+
+DeathKnightChestplate: {
+	DisplayName: Death Knight Chestplate
+	Tooltip:
+		'''
+		Increases damage by {0}%
+		Increases critical strike chance by {1}%
+		'''
+}
+
+DeathKnightGreaves: {
+	DisplayName: Death Knight Greaves
+	Tooltip:
+		'''
+		Increases movement speed by {0}%
+		Increases critical strike chance by {1}%
+		'''
 }

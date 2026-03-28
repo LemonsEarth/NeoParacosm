@@ -79,7 +79,7 @@ public class LingeringDeathflameFriendly : ModProjectile
         }
         else
         {
-            if (AITimer % 3 == 0)
+            if (AITimer % 8 == 0)
             {
                 Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ash, 0, 0, Scale: 1.5f, newColor: Color.Black).noGravity = true;
                 Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.GemDiamond, 0, 0, Scale: 1.25f, newColor: Color.White).noGravity = true;

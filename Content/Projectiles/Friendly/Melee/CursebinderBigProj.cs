@@ -72,8 +72,9 @@ public class CursebinderBigProj : ModProjectile
     public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
     {
         float _ = 0;
-        bool col1 = Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), topPoint, Projectile.Center, 64, ref _);
-        bool col2 = Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), botPoint, Projectile.Center, 64, ref _);
+        Vector2 centerPos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * Distance;
+        bool col1 = Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), topPoint, centerPos, 64, ref _);
+        bool col2 = Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), botPoint, centerPos, 64, ref _);
         return col1 || col2;
     }
 
