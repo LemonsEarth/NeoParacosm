@@ -38,8 +38,8 @@ public class HeadstoneRing : BaseCatalyst
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-            player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Dark] += darkDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Dark] += darkSpeedBoost / 100f;
+            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Dark] += darkDamageBoost / 100f;
+            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Dark] += darkSpeedBoost / 100f;
         }
     }
 

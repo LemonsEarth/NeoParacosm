@@ -38,8 +38,8 @@ public class Candlestick : BaseCatalyst
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-            player.NPCatalystPlayer().ElementalDamageBoosts[BaseSpell.SpellElement.Fire] += fireDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Fire] += fireSpeedBoost / 100f;
+            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Fire] += fireDamageBoost / 100f;
+            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire] += fireSpeedBoost / 100f;
         }
     }
 

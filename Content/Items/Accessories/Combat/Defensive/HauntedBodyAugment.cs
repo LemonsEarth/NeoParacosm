@@ -41,7 +41,7 @@ public class HauntedBodyAugmentPlayer : ModPlayer
 
     public override void OnHurt(Player.HurtInfo info)
     {
-        if (Active && Main.rand.NextBool(8))
+        if (Active && Main.rand.NextBool(4))
         {
             for (int i = 0; i < 4; i++)
             {

@@ -18,7 +18,7 @@ public class FireAuraPlayer : ModPlayer
         if (Player.HasBuff(BuffType<FireAuraBuff>()))
         {
             float distance = Player.Center.Distance(target.Center);
-            int defReduction = (int)((1 - MathHelper.Clamp((distance / 500f), 0, 1)) * 10 * Player.GetElementalExpertiseBoostMultiplied(BaseSpell.SpellElement.Fire, 2f));
+            int defReduction = (int)((1 - MathHelper.Clamp((distance / 500f), 0, 1)) * 10 * Player.GetElementalExpertiseBoostMultiplied(SpellElement.Fire, 2f));
             modifiers.Defense.Flat -= defReduction;
         }
     }

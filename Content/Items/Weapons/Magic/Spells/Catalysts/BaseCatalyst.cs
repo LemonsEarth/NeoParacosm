@@ -9,7 +9,7 @@ public abstract class BaseCatalyst : ModItem
 {
     public bool BoostIsNotActive(Player player)
     {
-        return !player.NPCatalystPlayer().CatalystBoostActive.ContainsKey(Type) || player.NPCatalystPlayer().CatalystBoostActive[Type] == false;
+        return (!player.NPCatalystPlayer().CatalystBoostActive.ContainsKey(Type) || player.NPCatalystPlayer().CatalystBoostActive[Type] == false) && player.HeldItem.type == Type;
     }
 
     public override void SetDefaults()

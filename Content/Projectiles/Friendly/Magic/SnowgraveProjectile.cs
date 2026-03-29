@@ -40,7 +40,7 @@ public class SnowgraveProjectile : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffType<SnowgraveDebuff>(), (int)(Duration * Projectile.GetOwner().GetElementalExpertiseBoost(BaseSpell.SpellElement.Ice)));
+        target.AddBuff(BuffType<SnowgraveDebuff>(), (int)(Duration * Projectile.GetOwner().GetElementalExpertiseBoost(SpellElement.Ice)));
     }
 
     public override void OnKill(int timeLeft)

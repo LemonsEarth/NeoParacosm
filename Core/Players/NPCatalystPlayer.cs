@@ -12,7 +12,7 @@ public class NPCatalystPlayer : ModPlayer
     /// Each is set to 1f at the start of every Update.
     /// Value is a percentage, so 1f would be a 100% damage increase.
     /// </summary>
-    public Dictionary<BaseSpell.SpellElement, float> ElementalDamageBoosts = new Dictionary<BaseSpell.SpellElement, float>();
+    public Dictionary<SpellElement, float> ElementalDamageBoosts = new Dictionary<SpellElement, float>();
 
     /// <summary>
     /// Speed, Projectile amount, knockback and other misc boosts for each spell element type.
@@ -20,7 +20,7 @@ public class NPCatalystPlayer : ModPlayer
     /// Each is set to 1 at the start of every Update.
     /// Value is a percentage, so 2f could be a 100% speed increase.
     /// </summary>
-    public Dictionary<BaseSpell.SpellElement, float> ElementalExpertiseBoosts = new Dictionary<BaseSpell.SpellElement, float>();
+    public Dictionary<SpellElement, float> ElementalExpertiseBoosts = new Dictionary<SpellElement, float>();
 
     public Dictionary<int, bool> CatalystBoostActive = new Dictionary<int, bool>();
 
@@ -104,16 +104,11 @@ public class NPCatalystPlayer : ModPlayer
         }
     }
 
-    public override void SetStaticDefaults()
-    {
-
-    }
-
-    BaseSpell.SpellElement[] elementsArray;
+    SpellElement[] elementsArray;
     public override void ResetEffects()
     {
-        elementsArray ??= (BaseSpell.SpellElement[])Enum.GetValues(typeof(BaseSpell.SpellElement));
-        foreach (BaseSpell.SpellElement spellDamageType in elementsArray)
+        elementsArray ??= (SpellElement[])Enum.GetValues(typeof(SpellElement));
+        foreach (SpellElement spellDamageType in elementsArray)
         {
             ElementalDamageBoosts[spellDamageType] = 1f;
             ElementalExpertiseBoosts[spellDamageType] = 1f;
@@ -145,7 +140,7 @@ public class NPCatalystPlayer : ModPlayer
         {
             ElementalDamageBoosts[spellElement] *= (1 - Player.manaSickReduction);
         }
-
+        //PrintElementalExpertiseBoosts();
         RemoveBuggedSpells();
     }
 
@@ -162,6 +157,24 @@ public class NPCatalystPlayer : ModPlayer
         if (spellToRemove != null)
         {
             RemoveSpell(spellToRemove);
+        }
+    }
+
+    void PrintElementalDamageBoosts()
+    {
+        Main.NewText("Print elemental damage boosts:");
+        foreach (var kvp in ElementalDamageBoosts)
+        {
+            Main.NewText(kvp);
+        }
+    }
+
+    void PrintElementalExpertiseBoosts()
+    {
+        Main.NewText("Print elemental expertise boosts:");
+        foreach (var kvp in ElementalExpertiseBoosts)
+        {
+            Main.NewText(kvp);
         }
     }
 }

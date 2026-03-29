@@ -62,7 +62,7 @@ public class DarkBlast : ModProjectile
         }
         if (releasedTimer == 1200)
         {
-            Projectile.velocity *= 10 * player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Dark];
+            Projectile.velocity *= 10 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Dark];
             SoundEngine.PlaySound(SoundID.Zombie53 with { Volume = 0.2f, PitchRange = (-1f, -0.8f)}, Projectile.Center);
         }
 

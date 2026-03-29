@@ -30,7 +30,7 @@ public class GreatFireball : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffID.OnFire3, 180);
+        target.AddBuff(BuffID.OnFire3, (int)(240 * Main.player[Projectile.owner].GetElementalExpertiseBoostMultiplied(SpellElement.Fire, 2)));
     }
 
     int releasedTimer = 0;
@@ -71,7 +71,7 @@ public class GreatFireball : ModProjectile
         }
 
         int baseTimeToFire = 300;
-        float fireSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Fire];
+        float fireSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire];
         int minTimeToFire = 60;
         int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (fireSpeedBoost - 1))), minTimeToFire);
         if ((!player.channel || AITimer >= timeAdjusted) && !released)

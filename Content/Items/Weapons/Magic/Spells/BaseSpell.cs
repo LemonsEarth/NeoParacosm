@@ -22,19 +22,6 @@ public abstract class BaseSpell : ModItem
     public abstract Vector2 TargetVector { get; set; }
     public abstract void SpellAction(Player player);
 
-    public enum SpellElement
-    {
-        None,
-        Fire,
-        Pure,
-        Ice,
-        Earth,
-        Lightning,
-        Nature,
-        Holy,
-        Dark
-    }
-
     public HashSet<SpellElement> SpellElements = [];
 
     public virtual int GetDamage(Player player)

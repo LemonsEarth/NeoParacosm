@@ -18,8 +18,8 @@ public class BeFuelDebuff : ModBuff
     public override void Update(Player player, ref int buffIndex)
     {
         player.GetDamage(DamageClass.Generic) += 17f / 100f;
-        player.AddElementalDamageBoost(BaseSpell.SpellElement.Fire, 10f / 100f);
-        player.AddElementalExpertiseBoost(BaseSpell.SpellElement.Fire, 10f / 100f);
+        player.AddElementalDamageBoost(SpellElement.Fire, 10f / 100f);
+        player.AddElementalExpertiseBoost(SpellElement.Fire, 10f / 100f);
     }
 }
 

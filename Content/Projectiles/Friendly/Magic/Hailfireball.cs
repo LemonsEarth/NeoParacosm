@@ -31,7 +31,7 @@ public class Hailfireball : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffID.Frostburn, 180);
+        target.AddBuff(BuffID.Frostburn, (int)(180 * Main.player[Projectile.owner].GetElementalExpertiseBoostMultiplied(SpellElement.Ice, 3)));
     }
 
     public override void AI()
@@ -53,7 +53,7 @@ public class Hailfireball : ModProjectile
             return;
         }
         int baseTimeToFire = 60;
-        float iceSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[BaseSpell.SpellElement.Ice];
+        float iceSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Ice];
         int minTimeToFire = 20;
         int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (iceSpeedBoost - 1))), minTimeToFire);
         if ((!player.channel || AITimer >= timeAdjusted) && !released)

@@ -52,7 +52,7 @@ public class MagicLantern : PrimProjectile
         }
         if (Projectile.TryGetOwner(out Player player))
         {
-            float lightLevel = 3 * Projectile.scale * player.GetElementalExpertiseBoost(Items.Weapons.Magic.Spells.BaseSpell.SpellElement.Pure);
+            float lightLevel = 3 * Projectile.scale * player.GetElementalExpertiseBoost(Items.Weapons.Magic.Spells.SpellElement.Pure);
             Lighting.AddLight(Projectile.Center, lightLevel, lightLevel, lightLevel);
         }
         AITimer++;

@@ -20,27 +20,27 @@ public static partial class LemonUtils
         return player.GetModPlayer<NPPlayer>();
     }
 
-    public static void AddElementalDamageBoost(this Player player, BaseSpell.SpellElement element, float value)
+    public static void AddElementalDamageBoost(this Player player, SpellElement element, float value)
     {
         player.NPCatalystPlayer().ElementalDamageBoosts[element] += value;
     }
 
-    public static void AddElementalExpertiseBoost(this Player player, BaseSpell.SpellElement element, float value)
+    public static void AddElementalExpertiseBoost(this Player player, SpellElement element, float value)
     {
         player.NPCatalystPlayer().ElementalExpertiseBoosts[element] += value;
     }
 
-    public static float GetElementalDamageBoost(this Player player, BaseSpell.SpellElement element)
+    public static float GetElementalDamageBoost(this Player player, SpellElement element)
     {
         return player.NPCatalystPlayer().ElementalDamageBoosts[element];
     }
 
-    public static float GetElementalExpertiseBoost(this Player player, BaseSpell.SpellElement element)
+    public static float GetElementalExpertiseBoost(this Player player, SpellElement element)
     {
         return player.NPCatalystPlayer().ElementalExpertiseBoosts[element];
     }
 
-    public static float GetElementalExpertiseBoostMultiplied(this Player player, BaseSpell.SpellElement element, float mul)
+    public static float GetElementalExpertiseBoostMultiplied(this Player player, SpellElement element, float mul)
     {
         float dec = MathF.Max(player.NPCatalystPlayer().ElementalExpertiseBoosts[element] - 1, 0);
         dec *= 2;

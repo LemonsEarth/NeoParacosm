@@ -306,9 +306,9 @@ Gravesword: {
 	Tooltip: Right Click while airborne to perform a plunge attack, creating Deathflame around the point of impact
 	NPLore:
 		'''
-				[c/888888:A dull blade, made out of shattered tombstone, imbued with deathflame.]
-			[c/888888:It is said that tombstones hold the spirits of those who passed.]
-			[c/888888:Within that pale stone, deathflame may burn eternally.]
+		[c/888888:A dull blade, made out of shattered tombstone, imbued with deathflame.]
+		[c/888888:It is said that tombstones hold the spirits of those who passed.]
+		[c/888888:Within that pale stone, deathflame may burn eternally.]
 		'''
 }
 
@@ -317,10 +317,10 @@ DeathTolls: {
 	Tooltip: Fires homing Deathflame Balls
 	NPLore:
 		'''
-				[c/888888:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
-			[c/888888:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
-			[c/888888:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
-			[c/888888:Death does not follow rules an individual imposes, mortal or Divine.]
+		[c/888888:A large bell, covered in ash. A last-ditch effort to return the dead to death.]
+		[c/888888:Upon each toll, sparks erupt into deathflame, seeking to put the dead back where they belong.]
+		[c/888888:And yet, even with a previous example to follow, those who created this tool only discovered regret.]
+		[c/888888:Death does not follow rules an individual imposes, mortal or Divine.]
 		'''
 }
 
@@ -333,10 +333,10 @@ LamentOfTheLate: {
 		'''
 	NPLore:
 		'''
-				[c/888888:A bow comprised of two arms and an unknown, string-like material.]
-			[c/888888:Its origins are unknown, though it appears to have been created prior to the collapse.]
-			[c/888888:The two arms have been identified to belong to different people, possibly of divine heritage.]
-			[c/888888:Symbolizes an inseparable bond, beyond space, time and death.]
+		[c/888888:A bow comprised of two arms and an unknown, string-like material.]
+		[c/888888:Its origins are unknown, though it appears to have been created prior to the collapse.]
+		[c/888888:The two arms have been identified to belong to different people, possibly of divine heritage.]
+		[c/888888:Symbolizes an inseparable bond, beyond space, time and death.]
 		'''
 }
 
@@ -405,12 +405,12 @@ StarecrowStaff: {
 	DisplayName: Aberrant Deathbird Staff
 	Tooltip: Summons Starecrows to fight for you
 	NPLore:
-		'''
-				[c/888888:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
-			[c/888888:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
-			[c/888888:Aberrant Deathbirds are the last of these flighted terrors.]
-			[c/888888:Also known as Starecrows, due to their curious behaviour.]
-		'''
+	'''
+	[c/888888:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
+	[c/888888:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
+	[c/888888:Aberrant Deathbirds are the last of these flighted terrors.]
+	[c/888888:Also known as Starecrows, due to their curious behaviour.]
+	'''
 }
 
 RuneOfExtinction: {
@@ -593,7 +593,7 @@ LeafSpell: {
 	NPLore:
 		'''
 		[c/00FF00: One of the most basic, yet useful spells.]
-		[c/00FF00: Many opponents fall the moment they realize why a forest is a caster's domain.]
+		[c/00FF00: Many opponents fall the moment they realize a forest is a caster's domain.]
 		'''
 }
 
@@ -1210,4 +1210,82 @@ DeathKnightGreaves: {
 		Increases movement speed by {0}%
 		Increases critical strike chance by {1}%
 		'''
+}
+
+UltimateAugment: {
+	DisplayName: Ultimate Augment
+	Tooltip:
+	'''
+	Activates a random augment effect upon taking more than 10% of your maximum health in damage
+	'''
+}
+
+BlackBallLightning: {
+	DisplayName: Black Ball Lightning
+	Tooltip:
+	'''
+	Increases lightning spell damage by {0}%
+	Increases dark spell damage by {1}%
+	Increases damage reduction by {2}%
+	'''
+}
+
+FieryBrooch: {
+	DisplayName: Fiery Brooch
+	Tooltip:
+	'''
+	Increases fire spell damage by {0}%
+	Increases fire spell expertise by {1}%
+	Increases defense by {2} while in the Underworld
+	'''
+}
+
+ManastoneTablet: {
+	DisplayName: Manastone Tablet
+	Tooltip:
+	'''
+	Increases pure magic spell expertise by {0}%
+	Increases earth spell expertise by {1}%
+	Increases maximum mana by {3}
+	'''
+}
+
+StormflowerBud: {
+	DisplayName: Stormflower Bud
+	Tooltip:
+	'''
+	Increases nature spell damage by {0}%
+	Increases nature spell expertise by {1}%
+	Increases lightning spell expertise by {2}%
+	Increases movement speed by {3}%
+	'''
+	NPLore:
+	'''
+	[c/00FF00: Stormflowers are parasitic lifeforms that spread during thunderstorms.]
+	[c/00FF00: The jungle's vast population allows them to spread very easily.]
+	'''
+}
+
+TossersTalisman: {
+	DisplayName: Tosser's Talisman
+	Tooltip:
+	'''
+	Increases throwable damage by {0}%
+	Increases throwable critical strike chance by {1}%
+	'''
+	NPLore:
+	'''
+	[c/999999:Legend says that there used to be legions of warriors who specialized in throwing their weapons in combat.]
+	[c/999999:Generals soon realized these individuals did not stand out enough to warrant their own legion.]
+	[c/999999:They also cost a fortune to maintain...]
+	[c/999999:And so, they were disbanded.]
+	'''
+}
+
+CyborgsBodyAugment: {
+	DisplayName: Cyborg's Body Augment
+	Tooltip:
+	'''
+	Chance to burst into cluster mines on hit
+	'''
 }

@@ -39,7 +39,7 @@ public class ToxicBodyAugmentPlayer : ModPlayer
 
     public override void OnHurt(Player.HurtInfo info)
     {
-        if (Active && Main.rand.NextBool(4))
+        if (Active && Main.rand.NextBool(6))
         {
             foreach (var npc in Main.ActiveNPCs)
             {

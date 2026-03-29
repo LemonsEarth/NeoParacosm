@@ -11,7 +11,7 @@ public class MagicGuardBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        player.statDefense += (int)(5 * MathF.Pow(player.GetElementalExpertiseBoost(BaseSpell.SpellElement.Pure), 2));
+        player.statDefense += (int)(5 * MathF.Pow(player.GetElementalExpertiseBoost(SpellElement.Pure), 2));
         player.endurance += 5f / 100f;
     }
 }

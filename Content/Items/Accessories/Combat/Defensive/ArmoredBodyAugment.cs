@@ -42,7 +42,7 @@ public class ArmoredBodyAugmentPlayer : ModPlayer
 
     public override void OnHurt(Player.HurtInfo info)
     {
-        if (Active && Main.rand.NextBool(8))
+        if (Active && Main.rand.NextBool(6))
         {
             Player.AddBuff(BuffID.Ironskin, 60 * 30);
             Player.AddBuff(BuffID.Endurance, 60 * 30);

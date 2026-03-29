@@ -89,88 +89,55 @@ LightsBaneDebuff2: {
 
 BeFuelDebuff: {
 	DisplayName: Be Fuel
-	Description:
-	'''
-	Your body is fuel...
-	'''
+	Description: Your body is fuel...
 }
 
 GoldenHeartBuff: {
 	DisplayName: Golden Heart Buff
-	Description:
-	'''
-	The Golden Heart protects you from external and internal anomalies...
-	'''
+	Description: The Golden Heart protects you from external and internal anomalies...
 }
 
 MagicGuardBuff: {
 	DisplayName: Magic Guard
-	Description:
-	'''
-	A magic barrier protects you...
-	'''
+	Description: A magic barrier protects you...
 }
 
 ManaGuardBuff: {
 	DisplayName: Mana Guard
-	Description:
-	'''
-	Your mana protects you...
-	'''
+	Description: Your mana protects you...
 }
 
 HolyBladeBuff: {
 	DisplayName: Holy Blade
-	Description:
-	'''
-	Your weapons have been blessed!
-	'''
+	Description: Your weapons have been blessed!
 }
 
 SnowgraveDebuff: {
 	DisplayName: Snowgrave
-	Description:
-	'''
-	You are cold to the touch!
-	'''
+	Description: You are cold to the touch!
 }
 
 SnowgraveBuff: {
 	DisplayName: Snowgraved
-	Description:
-	'''
-	You are cold to the touch!
-	'''
+	Description: You are cold to the touch!
 }
 
 FireAuraBuff: {
 	DisplayName: Fire Aura
-	Description:
-	'''
-	You are too hot!
-	'''
+	Description: You are too hot!
 }
 
 ShroomedDebuff: {
 	DisplayName: Shroomed
-	Description:
-	'''
-	Ooh im shrooming, im shrooming everywhere!!!
-	'''
+	Description: Ooh im shrooming, im shrooming everywhere!!!
 }
 
 GloveOfRetaliationBuff: {
 	DisplayName: Power of Retaliation
-	Description:
-	'''
-	Massively increased melee damage
-	'''
+	Description: Massively increased melee damage
 }
 
 DeathKnightReviveCooldown: {
 	DisplayName: Death Knight Revive Cooldown
-	Description:
-	'''
-	Time left until revive count is decreased
-	'''
+	Description: Time left until revive count is decreased
 }

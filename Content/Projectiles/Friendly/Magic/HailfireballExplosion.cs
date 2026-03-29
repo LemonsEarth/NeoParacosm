@@ -1,4 +1,5 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -28,7 +29,7 @@ public class HailfireballExplosion : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffID.Frostburn, 180);
+        target.AddBuff(BuffID.Frostburn, (int)(180 * Main.player[Projectile.owner].GetElementalExpertiseBoostMultiplied(SpellElement.Ice, 3)));
     }
 
     public override void AI()

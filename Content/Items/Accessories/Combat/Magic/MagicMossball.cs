@@ -1,4 +1,4 @@
-﻿namespace NeoParacosm.Content.Items.Accessories.Misc;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;
 
 public class MagicMossball : ModItem
 {
