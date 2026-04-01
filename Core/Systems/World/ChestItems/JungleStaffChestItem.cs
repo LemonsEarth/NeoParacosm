@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Ranged;
 using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Core.Systems.World.GenPasses;
 using StructureHelper.API;
@@ -11,10 +12,10 @@ using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Systems.World;
 
-public class MagicMuzzleChestItem : ModSystem
+public class JungleStaffChestItem : ModSystem
 {
     public override void PostWorldGen()
     {
-        LemonUtils.GenerateItemInChest(ItemType<MagicMuzzle>(), 2, 10, true);
+        LemonUtils.GenerateItemInChest(ItemType<JungleStaff>(), 10, 10, true);
     }
 }

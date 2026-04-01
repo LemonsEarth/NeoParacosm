@@ -141,3 +141,13 @@ DeathKnightReviveCooldown: {
 	DisplayName: Death Knight Revive Cooldown
 	Description: Time left until revive count is decreased
 }
+
+ElectrifiedBodyBuff: {
+	DisplayName: Electrified Body Buff
+	Description: Mods.NeoParacosm.Buffs.ElectrifiedBodyBuff.Description
+}
+
+GreenAuraBuff: {
+	DisplayName: Green Aura Buff
+	Description: Mods.NeoParacosm.Buffs.GreenAuraBuff.Description
+}

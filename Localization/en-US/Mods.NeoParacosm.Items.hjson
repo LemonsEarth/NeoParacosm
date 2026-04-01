@@ -405,12 +405,12 @@ StarecrowStaff: {
 	DisplayName: Aberrant Deathbird Staff
 	Tooltip: Summons Starecrows to fight for you
 	NPLore:
-	'''
-	[c/888888:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
-	[c/888888:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
-	[c/888888:Aberrant Deathbirds are the last of these flighted terrors.]
-	[c/888888:Also known as Starecrows, due to their curious behaviour.]
-	'''
+		'''
+		[c/888888:Deathbirds were summoned to anihilate those who created the flame that can burn the Gods.]
+		[c/888888:The divine who manifested them were eventually consumed by the very deathflame that was used by and against them.]
+		[c/888888:Aberrant Deathbirds are the last of these flighted terrors.]
+		[c/888888:Also known as Starecrows, due to their curious behaviour.]
+		'''
 }
 
 RuneOfExtinction: {
@@ -1214,78 +1214,135 @@ DeathKnightGreaves: {
 
 UltimateAugment: {
 	DisplayName: Ultimate Augment
-	Tooltip:
-	'''
-	Activates a random augment effect upon taking more than 10% of your maximum health in damage
-	'''
+	Tooltip: Activates a random augment effect upon taking more than 10% of your maximum health in damage
 }
 
 BlackBallLightning: {
 	DisplayName: Black Ball Lightning
 	Tooltip:
-	'''
-	Increases lightning spell damage by {0}%
-	Increases dark spell damage by {1}%
-	Increases damage reduction by {2}%
-	'''
+		'''
+		Increases lightning spell damage by {0}%
+		Increases dark spell damage by {0}%
+		Increases damage reduction by {1}%
+		'''
 }
 
 FieryBrooch: {
 	DisplayName: Fiery Brooch
 	Tooltip:
-	'''
-	Increases fire spell damage by {0}%
-	Increases fire spell expertise by {1}%
-	Increases defense by {2} while in the Underworld
-	'''
+		'''
+		Increases fire spell damage by {0}%
+		Increases fire spell expertise by {1}%
+		Increases defense by {2} while in the Underworld
+		'''
 }
 
 ManastoneTablet: {
 	DisplayName: Manastone Tablet
 	Tooltip:
-	'''
-	Increases pure magic spell expertise by {0}%
-	Increases earth spell expertise by {1}%
-	Increases maximum mana by {3}
-	'''
+		'''
+		Increases pure magic spell expertise by {0}%
+		Increases earth spell expertise by {1}%
+		Increases maximum mana by {2}
+		'''
 }
 
 StormflowerBud: {
 	DisplayName: Stormflower Bud
 	Tooltip:
-	'''
-	Increases nature spell damage by {0}%
-	Increases nature spell expertise by {1}%
-	Increases lightning spell expertise by {2}%
-	Increases movement speed by {3}%
-	'''
+		'''
+		Increases nature spell damage by {0}%
+		Increases nature spell expertise by {1}%
+		Increases lightning spell expertise by {2}%
+		Increases movement speed by {3}%
+		'''
 	NPLore:
-	'''
-	[c/00FF00: Stormflowers are parasitic lifeforms that spread during thunderstorms.]
-	[c/00FF00: The jungle's vast population allows them to spread very easily.]
-	'''
+		'''
+		[c/00FF00: Stormflowers are parasitic lifeforms that spread during thunderstorms.]
+		[c/00FF00: The jungle's vast population allows them to spread very easily.]
+		'''
 }
 
 TossersTalisman: {
 	DisplayName: Tosser's Talisman
 	Tooltip:
-	'''
-	Increases throwable damage by {0}%
-	Increases throwable critical strike chance by {1}%
-	'''
+		'''
+		Increases throwable damage by {0}%
+		Increases throwable critical strike chance by {1}%
+		'''
 	NPLore:
-	'''
-	[c/999999:Legend says that there used to be legions of warriors who specialized in throwing their weapons in combat.]
-	[c/999999:Generals soon realized these individuals did not stand out enough to warrant their own legion.]
-	[c/999999:They also cost a fortune to maintain...]
-	[c/999999:And so, they were disbanded.]
-	'''
+		'''
+		[c/999999:Legend says that there used to be legions of warriors who specialized in throwing their weapons in combat.]
+		[c/999999:Generals soon realized these individuals did not stand out enough to warrant their own legion.]
+		[c/999999:They also cost a fortune to maintain...]
+		[c/999999:And so, they were disbanded.]
+		'''
 }
 
 CyborgsBodyAugment: {
 	DisplayName: Cyborg's Body Augment
+	Tooltip: Chance to burst into cluster mines on hit
+}
+
+JungleStaff: {
+	DisplayName: Jungle Staff
+	Tooltip:
+		'''
+		Fires a burst of stingers
+		Spawns spore gas around your cursor
+		'''
+}
+
+ElectrifiedBodySpell: {
+	DisplayName: Electrified Body Spell
+	Tooltip: Periodically emit bursts of electricity
+}
+
+GreenAuraSpell: {
+	DisplayName: Green Aura Spell
+	Tooltip:
+		'''
+		Makes you stinky
+		Nearby enemies are poisoned
+		'''
+}
+
+ViralNanomachines: {
+	DisplayName: Viral Nanomachines
 	Tooltip:
 	'''
-	Chance to burst into cluster mines on hit
+	Critical strikes deal 4x times to poisoned enemies
+	'''
+}
+
+MechanicalArm: {
+	DisplayName: Mechanical Arm
+	Tooltip:
+	'''
+	Increases melee and ranged attack speed by {0}%
+	'''
+}
+
+GrenadeAttachment: {
+	DisplayName: Grenade Attachment
+	Tooltip:
+	'''
+	Gun shots are occasionally accompanied by a grenade
+	'''
+}
+
+ObsidianArrowhead: {
+	DisplayName: Obsidian Arrowhead
+	Tooltip:
+	'''
+	Wooden arrows split into shards on impact
+	'''
+}
+
+SharpenedArrowhead: {
+	DisplayName: Sharpened Arrowhead
+	Tooltip:
+	'''
+	Wooden arrows have 10 armor penetration
 	'''
 }

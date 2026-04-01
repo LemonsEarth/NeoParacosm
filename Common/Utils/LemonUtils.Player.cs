@@ -43,7 +43,7 @@ public static partial class LemonUtils
     public static float GetElementalExpertiseBoostMultiplied(this Player player, SpellElement element, float mul)
     {
         float dec = MathF.Max(player.NPCatalystPlayer().ElementalExpertiseBoosts[element] - 1, 0);
-        dec *= 2;
+        dec *= mul;
         return 1 + dec;
     }
 

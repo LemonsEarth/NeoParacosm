@@ -9,8 +9,6 @@ public static partial class LemonUtils
 {
     public static bool NotClient() => Main.netMode != NetmodeID.MultiplayerClient;
 
-    public static int UnderworldDepth => Main.maxTilesY - 200;
-
     /// <summary>
     /// Accelerates an entity towards a position
     /// </summary>
@@ -41,42 +39,6 @@ public static partial class LemonUtils
     public static int NextDirectionInt(this UnifiedRandom rand, int consequent = 1)
     {
         return rand.NextBool(consequent).ToDirectionInt();
-    }
-
-    /// <summary>
-    /// Returns 1 for Small Worlds, 2 for Medium Worlds, 3 for Large Worlds (and bigger?)
-    /// </summary>
-    /// <returns></returns>
-    public static int GetWorldSize()
-    {
-        switch (Main.maxTilesX)
-        {
-            case >= 8400:
-                return 3;
-            case >= 6400:
-                return 2;
-            default:
-                return 1;
-        }
-    }
-
-    public static bool IsDungeonBrick(int tileID)
-    {
-        return tileID == TileID.BlueDungeonBrick || tileID == TileID.GreenDungeonBrick || tileID == TileID.PinkDungeonBrick;
-    }
-
-    /// <summary>
-    /// Returns 1 for Classic and Journey, 2 for Expert, 3 for Master.
-    /// Doubles value if For the Worthy seed is active
-    /// </summary>
-    /// <returns></returns>
-    public static int GetDifficulty()
-    {
-        int difficulty = 1;
-        if (Main.expertMode) difficulty++;
-        if (Main.masterMode) difficulty++;
-        if (Main.getGoodWorld) difficulty *= 2;
-        return difficulty;
     }
 
     public static bool IntersectsExact(this Rectangle rect, Rectangle other)
