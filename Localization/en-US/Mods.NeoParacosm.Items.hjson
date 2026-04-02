@@ -1357,8 +1357,5 @@ MagicSpores: {
 
 OrbsOfSteel: {
 	DisplayName: Orb Of Steel
-	Tooltip:
-	'''
-	Increases critical strike chance by {0}% while inflicted with any poison or fire debuff
-	'''
+	Tooltip: Increases critical strike chance by {0}% while inflicted with any poison or fire debuff
 }

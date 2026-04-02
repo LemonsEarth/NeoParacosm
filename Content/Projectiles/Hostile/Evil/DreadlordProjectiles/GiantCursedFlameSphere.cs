@@ -48,8 +48,6 @@ public class GiantCursedFlameSphere : PrimProjectile
             SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         }
 
-        Projectile.velocity *= 0.97f;
-
         if (TimeLeft == 0)
         {
             TimeLeft = 60;

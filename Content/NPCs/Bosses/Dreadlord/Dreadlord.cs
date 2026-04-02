@@ -1903,14 +1903,68 @@ public partial class Dreadlord : ModNPC
         {
             case 1200:
                 break;
-            case > 1140:
+            case > 1140: // Move to center, scale to normal
                 NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.2f, 0.2f);
-                LerpScale(1f, 1 / 60f);
+                LerpScale(1f, 1 / 30f);
                 break;
-            case > 1080:
+            case > 1080: // Slow down!!!
+                NPC.velocity *= 0.95f;
+                break;
+            case 1080: // Open mouths and roar
+                SetHeadCorruptFrame(MOUTH_OPEN);
+                SetHeadCrimsonFrame(MOUTH_OPEN);
+                PlayRoar(0.3f);
+                PlayRoar();
+                ShakeCorruptHead();
+                ShakeCrimsonHead();
+                LemonUtils.QuickScreenShake(NPC.Center, 10f, 4f, 360, 2000f);
+                break;
+            case > 120: // Lightning, fast ichor projectiles, orbs moving up
+                NPC.velocity = Vector2.Zero;
+                if (AttackTimer % 2 == 0)
+                {
+                    ShakeCorruptHead(0, 12);
+                    ShakeCrimsonHead(0, 12);
+                    
+                }
 
+                if (AttackTimer % 120 == 0)
+                {
+                    LemonUtils.QuickScreenShake(NPC.Center, 60f, 8f, 150, 500);
+
+                    PlayRoar(0.3f);
+                    PlayRoar();
+
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 randomPos = ArenaCenter + new Vector2(Main.rand.NextFloat(- baseArenaDistance / 2, baseArenaDistance / 2), baseArenaDistance);
+                        LemonUtils.QuickProj(NPC, randomPos, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), ProjectileType<GiantCursedFlameSphere>(),
+                            ai0: 0,
+                            ai1: 1.008f,
+                            ai2: AttackTimer - 180 + Main.rand.Next(0, 60));
+                    }
+                }
+
+                if (LemonUtils.NotClient() && AttackTimer % 30 == 0)
+                {
+                    Spawn_LightningAtPos(player.Center - Vector2.UnitY * 1000, 60, 2000);
+                }
+
+                if (LemonUtils.NotClient() && AttackTimer % 60 == 0)
+                {
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 randomPos = player.Center + LemonUtils.RandomVector2Circular(400, 100, 360, 0);
+                        Vector2 velocity = LemonUtils.Sign(randomPos.DirectionTo(player.Center).X, 1) * Vector2.UnitX * 10;
+                        Spawn_IchorSpheres(randomPos, velocity, 60, 90, 1);
+                    }
+                }
+                break;
+            case > 0:
+                ResetMouthFrames();
                 break;
             case 0:
+                
                 AttackTimer = 1200;
                 return;
         }
@@ -1921,7 +1975,10 @@ public partial class Dreadlord : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-        Attack = 5;
+        if (Phase == 1)
+        {
+            //Attack = 5;
+        }
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
             reachedSecondPhase = true;
@@ -1964,18 +2021,22 @@ public partial class Dreadlord : ModNPC
         return randomPos;
     }
 
-    void Spawn_LightningAroundPlayer(float range, int height, int warningDuration, int length)
+    void Spawn_LightningAtPos(Vector2 pos, int warningDuration, int length)
     {
-        Vector2 randPos = player.Center + new Vector2(Main.rand.NextFloat(-range, range), height);
         LemonUtils.QuickProj(
             NPC,
-            randPos,
+            pos,
             Vector2.Zero,
             ProjectileType<LightningWarningProj>(),
-
             ai1: warningDuration,
             ai2: length
             );
+    }
+
+    void Spawn_LightningAroundPlayer(float range, int height, int warningDuration, int length)
+    {
+        Vector2 randPos = player.Center + new Vector2(Main.rand.NextFloat(-range, range), height);
+        Spawn_LightningAtPos(randPos, warningDuration, length);
     }
 
     void Spawn_GiantCursedSphere(Vector2 pos, float acceleration, int duration, float angle = Pi / 8)

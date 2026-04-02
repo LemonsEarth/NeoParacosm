@@ -78,7 +78,7 @@ public class IchorLightning : PrimProjectile
                 Projectile.Center += Projectile.Center.DirectionTo(targetPos) * spacing * Main.rand.NextFloat(0.5f, 1.5f);
                 for (int dc = 0; dc < 6; dc++)
                 {
-                    Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), Main.rand.NextFloat(-6, 6), Main.rand.NextFloat(-6, 6), Scale: Main.rand.NextFloat(0.5f, 0.75f)).noGravity = true;
+                    Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), Main.rand.NextFloat(-2, 2), Main.rand.NextFloat(-2, 2), Scale: Main.rand.NextFloat(0.5f, 0.75f)).noGravity = true;
                 }
                 i += 2;
             }
@@ -86,8 +86,8 @@ public class IchorLightning : PrimProjectile
             positions.Add(Projectile.Center);
             for (int j = 0; j < 20; j++)
             {
-                Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
-                Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
+                Vector2 randVector = new Vector2(Main.rand.NextFloat(-4, 4), Main.rand.NextFloat(-4, 2));
+                Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-4, 4), Main.rand.NextFloat(-4, 2));
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: Color.Coral).noGravity = true;
             }
