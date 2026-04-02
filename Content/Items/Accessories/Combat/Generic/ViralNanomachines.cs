@@ -11,7 +11,7 @@ public class ViralNanomachines : ModItem
         Item.height = 92;
         Item.accessory = true;
         Item.value = Item.buyPrice(0, 5);
-        Item.rare = ItemRarityID.Orange;
+        Item.rare = ItemRarityID.Pink;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)
@@ -24,9 +24,9 @@ public class ViralNanomachines : ModItem
     {
         Recipe recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.Stinger, 6);
-        recipe.AddIngredient(ItemID.BeeWax, 10);
-        recipe.AddRecipeGroup("NeoParacosm:AnyGoldBar", 14);
-        recipe.AddTile(TileID.Anvils);
+        recipe.AddIngredient(ItemID.SpiderFang, 8);
+        recipe.AddIngredient(ItemID.HallowedBar, 10);
+        recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }
 }
@@ -41,7 +41,7 @@ public class ViralNanomachinesPlayer : ModPlayer
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (target.HasBuff(BuffID.Poisoned))
+        if (target.HasBuff(BuffID.Poisoned) || target.HasBuff(BuffID.Venom))
         {
             modifiers.CritDamage += 200f / 100f;
         }

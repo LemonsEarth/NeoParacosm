@@ -93,10 +93,9 @@ public class MushroomGas : ModProjectile
 
         //Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
         var shader = GameShaders.Misc["NeoParacosm:GasShader"];
-        shader.Shader.Parameters["uTime"].SetValue(AITimer);
         shader.Shader.Parameters["distance"].SetValue(1);
-        shader.Shader.Parameters["color"].SetValue(new Vector4(0, 0, 1, Projectile.Opacity) * 2);
-        shader.Shader.Parameters["velocity"].SetValue(new Vector2(-Projectile.velocity.X * 0.001f, 0.5f));
+        shader.Shader.Parameters["color"].SetValue(new Vector4(0, 0, 1, Projectile.Opacity));
+        shader.Shader.Parameters["velocity"].SetValue(new Vector2(0, 0.5f));
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
@@ -104,8 +103,6 @@ public class MushroomGas : ModProjectile
         Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(Projectile.scale * 2, Projectile.scale), SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-
-
         return false;
     }
 

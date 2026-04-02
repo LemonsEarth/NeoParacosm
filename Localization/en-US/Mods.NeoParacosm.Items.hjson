@@ -1309,40 +1309,51 @@ GreenAuraSpell: {
 
 ViralNanomachines: {
 	DisplayName: Viral Nanomachines
-	Tooltip:
-	'''
-	Critical strikes deal 4x times to poisoned enemies
-	'''
+	Tooltip: Critical strikes deal 4x times to poisoned enemies
 }
 
 MechanicalArm: {
 	DisplayName: Mechanical Arm
-	Tooltip:
-	'''
-	Increases melee and ranged attack speed by {0}%
-	'''
+	Tooltip: Increases melee and ranged attack speed by {0}%
 }
 
 GrenadeAttachment: {
 	DisplayName: Grenade Attachment
-	Tooltip:
-	'''
-	Gun shots are occasionally accompanied by a grenade
-	'''
+	Tooltip: Gun shots are occasionally accompanied by a grenade
 }
 
 ObsidianArrowhead: {
 	DisplayName: Obsidian Arrowhead
-	Tooltip:
-	'''
-	Wooden arrows split into shards on impact
-	'''
+	Tooltip: Wooden arrows split into shards on impact
 }
 
 SharpenedArrowhead: {
 	DisplayName: Sharpened Arrowhead
+	Tooltip: Wooden arrows have 10 armor penetration
+}
+
+CorruptRatFur: {
+	DisplayName: Corrupt Rat Fur
 	Tooltip:
 	'''
-	Wooden arrows have 10 armor penetration
+	Increases damage reduction by {0}% while at full hp
+	'''
+}
+
+IchorSacks: {
+	DisplayName: Ichor Sacks
+	Tooltip:
+	'''
+	Inflicts ichor upon getting hit by enemies
+	Halves defense effectiveness
+	'''
+}
+
+MagicSpores: {
+	DisplayName: Magic Spores
+	Tooltip:
+	'''
+	Increases maximum mana by 20
+	You leave behind spore clouds while moving quickly
 	'''
 }

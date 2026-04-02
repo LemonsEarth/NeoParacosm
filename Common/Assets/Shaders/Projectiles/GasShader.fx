@@ -30,7 +30,7 @@ float4 GasShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 
     float4 noiseColor = tex2D(uImage1, adjustedCoords + velocity * uTime);
     noiseColor *= color;
     float4 finalColor = noiseColor * (1 - adjustedDistance) * (sin(uTime) + 7) * 0.1;
-    if (finalColor.r < tolerance && tolerance > 0)
+    if (finalColor.a < tolerance && tolerance > 0)
     {
         finalColor = 0;
     }

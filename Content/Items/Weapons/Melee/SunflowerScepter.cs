@@ -34,8 +34,7 @@ public class SunflowerScepter : ModItem
     {
         CreateRecipe()
             .AddIngredient(ItemID.Sunflower)
-            .AddIngredient(ItemID.Vine, 3)
-            .AddIngredient(ItemID.JungleSpores, 12)
+            .AddIngredient(ItemID.Seed, 20)
             .AddTile(TileID.WorkBenches)
             .Register();
     }
