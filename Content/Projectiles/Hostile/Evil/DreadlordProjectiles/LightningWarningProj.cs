@@ -49,7 +49,7 @@ public class LightningWarningProj : ModProjectile
         }
         if (AITimer % 4 == 0)
         {
-            Dust.NewDustDirect(Projectile.RandomPos(-16), 2, 2, DustType<StreakDust>()).velocity = Vector2.UnitY * 60;
+            Dust.NewDustDirect(Projectile.RandomPos(-32), 2, 2, DustType<StreakDust>()).velocity = Vector2.UnitY * 60;
         }
         Projectile.scale = AITimer / Duration * MathHelper.Clamp(Length / 2000f, 1, 5);
         Projectile.height = (int)(64 * Length / 128);

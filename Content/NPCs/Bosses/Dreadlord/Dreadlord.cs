@@ -65,7 +65,7 @@ public partial class Dreadlord : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
-    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1380];
+    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1380, 1200];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -86,6 +86,7 @@ public partial class Dreadlord : ModNPC
         Slamming,
         Dashing,
         Spirits,
+        LightningAndBalls
     }
 
     public int Phase { get; private set; } = 0;
@@ -180,6 +181,9 @@ public partial class Dreadlord : ModNPC
                     break;
                 case (int)Attacks2.Spirits:
                     Attack_Spirits();
+                    break;
+                case (int)Attacks2.LightningAndBalls:
+                    Attack_LightningAndBalls();
                     break;
 
             }
@@ -1882,7 +1886,7 @@ public partial class Dreadlord : ModNPC
                 break;
             case > 0: // Move to center, scale to normal
                 NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.2f, 0.2f);
-                LerpScale(1f, 1 / 20f);
+                LerpScale(1f, 1 / 60f);
                 break;
             case 0:
                 AttackTimer = 1380;
@@ -1892,10 +1896,32 @@ public partial class Dreadlord : ModNPC
         AttackTimer--;
     }
 
+    void Attack_LightningAndBalls()
+    {
+        SetBodyPartPositions(headLerpSpeed: 1f, bodyLerpSpeed: 1f, legLerpSpeed: 1f);
+        switch (AttackTimer)
+        {
+            case 1200:
+                break;
+            case > 1140:
+                NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.2f, 0.2f);
+                LerpScale(1f, 1 / 60f);
+                break;
+            case > 1080:
+
+                break;
+            case 0:
+                AttackTimer = 1200;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void SwitchAttacks()
     {
         Attack++;
-        Attack = 4;
+        Attack = 5;
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
             reachedSecondPhase = true;

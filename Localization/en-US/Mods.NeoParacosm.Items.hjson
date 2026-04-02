@@ -1334,26 +1334,31 @@ SharpenedArrowhead: {
 
 CorruptRatFur: {
 	DisplayName: Corrupt Rat Fur
-	Tooltip:
-	'''
-	Increases damage reduction by {0}% while at full hp
-	'''
+	Tooltip: Increases damage reduction by {0}% while at full hp
 }
 
 IchorSacks: {
 	DisplayName: Ichor Sacks
 	Tooltip:
-	'''
-	Inflicts ichor upon getting hit by enemies
-	Halves defense effectiveness
-	'''
+		'''
+		Inflicts ichor upon getting hit by enemies
+		Halves defense effectiveness
+		'''
 }
 
 MagicSpores: {
 	DisplayName: Magic Spores
 	Tooltip:
+		'''
+		Increases maximum mana by 20
+		You leave behind spore clouds while moving quickly
+		'''
+}
+
+OrbsOfSteel: {
+	DisplayName: Orb Of Steel
+	Tooltip:
 	'''
-	Increases maximum mana by 20
-	You leave behind spore clouds while moving quickly
+	Increases critical strike chance by {0}% while inflicted with any poison or fire debuff
 	'''
 }
