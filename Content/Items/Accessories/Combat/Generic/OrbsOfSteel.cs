@@ -9,8 +9,8 @@ public class OrbsOfSteel : ModItem
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(critBoost);
     public override void SetDefaults()
     {
-        Item.width = 32;
-        Item.height = 32;
+        Item.width = 46;
+        Item.height = 40;
         Item.accessory = true;
         Item.defense = 6;
         Item.value = Item.sellPrice(0, 3);

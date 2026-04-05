@@ -13,7 +13,7 @@ public class LeafSpell : BaseSpell
         TargetVector = Main.MouseWorld;
         if (LemonUtils.NotClient())
         {
-            int projectileCount = player.GetElementalExpertiseBoost(SpellElement.Nature) >= 1.3f ? 5 : 3;
+            int projectileCount = player.GetElementalExpertiseBoost(SpellElement.Nature) >= 1.3f ? 6 : 3;
             for (int i = 0; i < projectileCount; i++)
             {
                 Vector2 pos = player.Center + Main.rand.NextVector2Circular(80, 80);
