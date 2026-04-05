@@ -42,7 +42,7 @@ public class MushroomCannon : ModItem
     }
 }
 
-public class MushroomNPCs : GlobalNPC
+public class MushroomCannonDropNPC : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
@@ -63,19 +63,15 @@ public class MushroomNPCs : GlobalNPC
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         IItemDropRule dropRule1;
-        IItemDropRule dropRule2;
         switch (npc.type)
         {
             case NPCID.AnomuraFungus or NPCID.MushiLadybug or NPCID.FungiBulb:
                 dropRule1 = ItemDropRule.Common(ItemType<MushroomCannon>(), 20);
-                dropRule2 = ItemDropRule.Common(ItemType<GlowingSporeSack>(), 20);
                 break;
             default:
                 dropRule1 = ItemDropRule.Common(ItemType<MushroomCannon>(), 40);
-                dropRule2 = ItemDropRule.Common(ItemType<GlowingSporeSack>(), 40);
                 break;
         }
         npcLoot.Add(dropRule1);
-        npcLoot.Add(dropRule2);
     }
 }

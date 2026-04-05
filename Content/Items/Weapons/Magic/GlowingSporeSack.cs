@@ -1,6 +1,8 @@
 ﻿using NeoParacosm.Content.Items.Consumables;
+using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 
@@ -44,5 +46,40 @@ public class GlowingSporeSack : ModItem
         }
 
         return false;
+    }
+}
+
+
+public class GlowingSporeSackDropNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+
+    public override void SetStaticDefaults()
+    {
+
+    }
+
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return lateInstantiation && (entity.type == NPCID.FungiBulb
+            || entity.type == NPCID.AnomuraFungus
+            || entity.type == NPCID.MushiLadybug
+            || entity.type == NPCID.ZombieMushroom
+            || entity.type == NPCID.ZombieMushroomHat);
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        IItemDropRule dropRule2;
+        switch (npc.type)
+        {
+            case NPCID.AnomuraFungus or NPCID.MushiLadybug or NPCID.FungiBulb:
+                dropRule2 = ItemDropRule.Common(ItemType<GlowingSporeSack>(), 20);
+                break;
+            default:
+                dropRule2 = ItemDropRule.Common(ItemType<GlowingSporeSack>(), 40);
+                break;
+        }
+        npcLoot.Add(dropRule2);
     }
 }

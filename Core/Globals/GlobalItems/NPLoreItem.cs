@@ -4,14 +4,14 @@ using Terraria.Localization;
 
 namespace NeoParacosm.Core.Globals.GlobalItems;
 
-public class NPGlobalItem : GlobalItem
+public class NPLoreItem : GlobalItem
 {
     public override bool InstancePerEntity => true;
 
 
     public override void SetStaticDefaults()
     {
-        
+
     }
 
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

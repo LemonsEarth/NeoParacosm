@@ -5,7 +5,7 @@ namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Lightning;
 public class BlightningStrikeSpell : BaseSpell
 {
     public override int AttackCooldown => 90;
-    public override int ManaCost => 90;
+    public override int ManaCost => 40;
     public override Vector2 TargetVector { get; set; } = -Vector2.UnitY;
 
     public override void SpellAction(Player player)

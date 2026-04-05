@@ -45,7 +45,6 @@ public class CondensedCrystalPlayer : ModPlayer
     {
         if (Active && proj.CountsAsClass(DamageClass.Magic))
         {
-            Main.NewText((int)Player.GetCritChance(DamageClass.Magic));
             if ((int)Player.GetCritChance(DamageClass.Magic) > 0 && Main.rand.NextBool(100 / (int)Player.GetCritChance(DamageClass.Magic))) // if crit
             {
                 Player.AddBuff(BuffID.ManaRegeneration, 300);

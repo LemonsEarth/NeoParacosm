@@ -59,7 +59,7 @@ DeadForestDebuff: {
 }
 
 DeathflameDebuff: {
-	DisplayName: Deathflame Debuff
+	DisplayName: Deathflame
 	Description: Your soul is on fire...
 }
 
@@ -143,11 +143,26 @@ DeathKnightReviveCooldown: {
 }
 
 ElectrifiedBodyBuff: {
-	DisplayName: Electrified Body Buff
-	Description: Mods.NeoParacosm.Buffs.ElectrifiedBodyBuff.Description
+	DisplayName: Electrified Body
+	Description: You are electrified
 }
 
 GreenAuraBuff: {
-	DisplayName: Green Aura Buff
-	Description: Mods.NeoParacosm.Buffs.GreenAuraBuff.Description
+	DisplayName: Green Aura
+	Description: With flies...
+}
+
+BodyOfThornsBuff: {
+	DisplayName: Body Of Thorns
+	Description: Enemies take contact damage
+}
+
+MerchantsBlessingBuff: {
+	DisplayName: Merchants Blessing
+	Description: More money, perchance.
+}
+
+MinersBlessingBuff: {
+	DisplayName: Miners Blessing
+	Description: Mining away!
 }

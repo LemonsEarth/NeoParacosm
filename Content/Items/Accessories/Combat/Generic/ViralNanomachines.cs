@@ -41,9 +41,16 @@ public class ViralNanomachinesPlayer : ModPlayer
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        if (target.HasBuff(BuffID.Poisoned) || target.HasBuff(BuffID.Venom))
+        if (target.HasBuff(BuffID.Poisoned))
         {
-            modifiers.CritDamage += 200f / 100f;
+            modifiers.CritDamage += 300f / 100f;
+            target.RequestBuffRemoval(BuffID.Poisoned);
+        }
+
+        if (target.HasBuff(BuffID.Venom))
+        {
+            modifiers.CritDamage += 150f / 100f;
+            target.RequestBuffRemoval(BuffID.Venom);
         }
     }
 }

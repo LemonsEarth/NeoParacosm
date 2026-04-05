@@ -1294,12 +1294,12 @@ JungleStaff: {
 }
 
 ElectrifiedBodySpell: {
-	DisplayName: Electrified Body Spell
+	DisplayName: Electrified Body
 	Tooltip: Periodically emit bursts of electricity
 }
 
 GreenAuraSpell: {
-	DisplayName: Green Aura Spell
+	DisplayName: Green Aura
 	Tooltip:
 		'''
 		Makes you stinky
@@ -1309,7 +1309,7 @@ GreenAuraSpell: {
 
 ViralNanomachines: {
 	DisplayName: Viral Nanomachines
-	Tooltip: Critical strikes deal 4x times to poisoned enemies
+	Tooltip: Critical strikes deal massively increased damage to enemies inflicted with Poisoned or Venom
 }
 
 MechanicalArm: {
@@ -1358,4 +1358,44 @@ MagicSpores: {
 OrbsOfSteel: {
 	DisplayName: Orb Of Steel
 	Tooltip: Increases critical strike chance by {0}% while inflicted with any poison or fire debuff
+}
+
+DeathflameBallSpell: {
+	DisplayName: Deathflame Ball
+	Tooltip:
+	'''
+	Fires a deathflame ball that leaves behind deathflame
+	'''
+}
+
+MerchantsBlessingSpell: {
+	DisplayName: Merchants Blessing
+	Tooltip:
+	'''
+	Chance for enemies to drop additional money on death
+	'''
+}
+
+MinersBlessingSpell: {
+	DisplayName: Miners Blessing
+	Tooltip:
+	'''
+	Increases mining and block placement speed
+	'''
+}
+
+BlightningStrikeSpell: {
+	DisplayName: Blightning Strike
+	Tooltip:
+	'''
+	Emits lightning between you and your cursor
+	'''
+}
+
+BodyOfThornsSpell: {
+	DisplayName: Body Of Thorns
+	Tooltip:
+	'''
+	Enemies take contact damage
+	'''
 }

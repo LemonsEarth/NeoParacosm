@@ -111,7 +111,7 @@ public class LingeringDeathflameFriendly : ModProjectile
         }
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(16, 0);
-        Vector2 scale = new Vector2(1, 1 + Projectile.velocity.Y * 0.2f);
+        Vector2 scale = new Vector2(1, 2 + Projectile.velocity.Y * 0.2f);
         Main.EntitySpriteDraw(texture, Projectile.Bottom - Main.screenPosition, texture.Frame(1, 4, 0, Projectile.frame), Color.White, Projectile.rotation, drawOrigin, scale, SpriteEffects.None);
         return false;
     }

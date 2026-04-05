@@ -25,5 +25,6 @@ public class RedLightning : TargetedLightning
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
         Projectile.tileCollide = false;
+        Projectile.DamageType = DamageClass.Magic;
     }
 }
