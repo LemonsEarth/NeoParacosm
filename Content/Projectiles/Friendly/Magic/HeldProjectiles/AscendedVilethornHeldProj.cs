@@ -6,15 +6,9 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 
-public class AscendedVilethornHeldProj : ModProjectile
+public class AscendedVilethornHeldProj : BaseStaffHeldProj
 {
-    int AITimer = 0;
     Vector2 trackingPos;
-
-    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-    {
-
-    }
 
     public override void SetStaticDefaults()
     {
@@ -41,49 +35,30 @@ public class AscendedVilethornHeldProj : ModProjectile
 
     public override void AI()
     {
-        Player player = Projectile.GetOwner();
-        if (!player.Alive())
-        {
-            Projectile.Kill();
-        }
-        Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
-        player.heldProj = Projectile.whoAmI;
+        HeldProjectileControl(Main.MouseWorld);
         if (AITimer == 0)
         {
             trackingPos = Projectile.Center;
         }
-        if (!player.CheckMana((int)MathHelper.Clamp(player.HeldItem.mana / 8, 2, 20), true, true))
+
+        if (AITimer % 30 == 0)
         {
-            Projectile.Kill();
-            return;
-        }
-        if (player.channel)
-        {
-            Projectile.timeLeft = 2;
-            SetPositionRotationDirection(player, player.Center.DirectionTo(Main.MouseWorld).ToRotation());
-            if (AITimer % 30 == 0)
+            if (Main.myPlayer == Projectile.owner)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (Main.rand.NextBool(5))
                 {
-                    if (Main.rand.NextBool(5))
+                    LemonUtils.DustCircle(trackingPos, 8, 5, DustID.ScourgeOfTheCorruptor, 3f);
+                    SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, trackingPos);
+                    for (int i = 0; i < 8; i++)
                     {
-                        LemonUtils.DustCircle(trackingPos, 8, 5, DustID.ScourgeOfTheCorruptor, 3f);
-                        SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, trackingPos);
-                        for (int i = 0; i < 8; i++)
-                        {
-                            LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ProjectileType<VilethornFriendly>(), Projectile.damage / 2);
-                        }
+                        LemonUtils.QuickProj(Projectile, trackingPos, -Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 5, ProjectileType<VilethornFriendly>(), Projectile.damage / 2);
                     }
                 }
             }
-            trackingPos += trackingPos.DirectionTo(Main.MouseWorld) * 5;
-            Dust.NewDustPerfect(trackingPos, DustID.GemEmerald, Scale: 2f).noGravity = true;
-            if (trackingPos.Distance(Main.MouseWorld) < 12)
-            {
-                Projectile.Kill();
-            }
         }
-        else
+        trackingPos += trackingPos.DirectionTo(Main.MouseWorld) * 5;
+        Dust.NewDustPerfect(trackingPos, DustID.GemEmerald, Scale: 2f).noGravity = true;
+        if (trackingPos.Distance(Main.MouseWorld) < 12)
         {
             Projectile.Kill();
         }
@@ -93,20 +68,6 @@ public class AscendedVilethornHeldProj : ModProjectile
     public override void OnKill(int timeLeft)
     {
         LemonUtils.QuickProj(Projectile, trackingPos + Vector2.UnitY * 200, -Vector2.UnitY * 40, ProjectileType<VilethornFriendly>());
-    }
-
-    void SetPositionRotationDirection(Player player, float movedRotation = 0)
-    {
-        Vector2 dir = player.Center.DirectionTo(Main.MouseWorld);
-        float armRotValue = player.direction == 1 ? -MathHelper.PiOver2 : -MathHelper.PiOver2;
-        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation + armRotValue);
-        Projectile.Center = player.Center + dir * 28;
-        Projectile.rotation = movedRotation + MathHelper.PiOver4;
-        Projectile.spriteDirection = 1;
-        if (!dir.HasNaNs())
-        {
-            player.ChangeDir(Math.Sign(dir.X));
-        }
     }
 
     public override bool PreDraw(ref Color lightColor)

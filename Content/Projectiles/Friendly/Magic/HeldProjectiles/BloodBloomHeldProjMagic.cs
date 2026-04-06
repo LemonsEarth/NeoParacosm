@@ -4,10 +4,8 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 
-public class BloodBloomHeldProjMagic : ModProjectile
+public class BloodBloomHeldProjMagic : BaseStaffHeldProj
 {
-    int AITimer = 0;
-
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
@@ -29,49 +27,19 @@ public class BloodBloomHeldProjMagic : ModProjectile
         Projectile.Opacity = 1f;
     }
 
-    void SetPositionRotationDirection(Player player, float movedRotation = 0)
-    {
-        Vector2 dir = player.Center.DirectionTo(Main.MouseWorld);
-        float armRotValue = player.direction == 1 ? -MathHelper.PiOver2 : -MathHelper.PiOver2;
-        player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation + armRotValue);
-        Projectile.Center = player.Center + dir * 28;
-        Projectile.rotation = movedRotation + MathHelper.PiOver4;
-        Projectile.spriteDirection = 1;
-        if (!dir.HasNaNs())
-        {
-            player.ChangeDir(Math.Sign(dir.X));
-        }
-    }
-
     public override void AI()
     {
-        Player player = Projectile.GetOwner();
-        if (!player.Alive() || (Main.myPlayer == Projectile.owner && !Main.mouseRight))
+        HeldProjectileControl(Main.MouseWorld, false);
+        if (!Main.mouseRight)
         {
             Projectile.Kill();
             return;
         }
-        Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
-        player.heldProj = Projectile.whoAmI;
-
+        Player player = Projectile.GetOwner();
         player.SetDummyItemTime(60);
 
-
-        Projectile.timeLeft = 2;
-
-        if (AITimer == 0)
-        {
-
-        }
-
-        if (Main.myPlayer == Projectile.owner)
-        {
-            Vector2 mouseDir = player.Center.DirectionTo(Main.MouseWorld);
-            SetPositionRotationDirection(player, mouseDir.ToRotation());
-        }
-
         int attackCD = (int)(60 / player.GetAttackSpeed(DamageClass.Magic));
-        if (AITimer % attackCD == 0 && player.CheckMana(30, true, false))
+        if (AITimer % attackCD == 0)
         {
             player.manaRegenDelay = 120;
             SoundEngine.PlaySound(SoundID.Item84 with { PitchRange = (-0.6f, -0.3f), MaxInstances = 0 }, Projectile.Center);
@@ -95,11 +63,6 @@ public class BloodBloomHeldProjMagic : ModProjectile
                 }
             }
 
-        }
-        else if (!player.CheckMana(player.GetManaCost(player.HeldItem), false, false))
-        {
-            Projectile.Kill();
-            return;
         }
 
 

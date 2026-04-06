@@ -1314,7 +1314,11 @@ ViralNanomachines: {
 
 MechanicalArm: {
 	DisplayName: Mechanical Arm
-	Tooltip: Increases melee and ranged attack speed by {0}%
+	Tooltip:
+	'''
+	Increases melee and ranged attack speed by {0}%
+	Increases mining and block placement speed
+	'''
 }
 
 GrenadeAttachment: {
@@ -1362,40 +1366,25 @@ OrbsOfSteel: {
 
 DeathflameBallSpell: {
 	DisplayName: Deathflame Ball
-	Tooltip:
-	'''
-	Fires a deathflame ball that leaves behind deathflame
-	'''
+	Tooltip: Fires a deathflame ball that leaves behind deathflame
 }
 
 MerchantsBlessingSpell: {
 	DisplayName: Merchants Blessing
-	Tooltip:
-	'''
-	Chance for enemies to drop additional money on death
-	'''
+	Tooltip: Chance for enemies to drop additional money on death
 }
 
 MinersBlessingSpell: {
 	DisplayName: Miners Blessing
-	Tooltip:
-	'''
-	Increases mining and block placement speed
-	'''
+	Tooltip: Increases mining and block placement speed
 }
 
 BlightningStrikeSpell: {
 	DisplayName: Blightning Strike
-	Tooltip:
-	'''
-	Emits lightning between you and your cursor
-	'''
+	Tooltip: Emits lightning between you and your cursor
 }
 
 BodyOfThornsSpell: {
 	DisplayName: Body Of Thorns
-	Tooltip:
-	'''
-	Enemies take contact damage
-	'''
+	Tooltip: Enemies take contact damage
 }

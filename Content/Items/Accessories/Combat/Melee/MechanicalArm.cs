@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Ranged;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
@@ -20,6 +21,8 @@ public class MechanicalArm : ModItem
     {
         player.GetAttackSpeed(DamageClass.Melee) += attackSpeedBoost / 100f;
         player.GetAttackSpeed(DamageClass.Ranged) += attackSpeedBoost / 100f;
+        player.pickSpeed -= 0.15f;
+        player.tileSpeed += 0.15f;
     }
 }
 
