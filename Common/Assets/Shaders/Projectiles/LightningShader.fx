@@ -24,7 +24,7 @@ float getHashedY(float xCoords, float origCoordsX)
     float leftEdgeY = hash(leftEdge) * origCoordsX; // Y value at that point
     float rightEdge = floor(segmentPosX + 1); // right edge of the segment/left edge of the next segment
     float rightEdgeY = hash(rightEdge) * origCoordsX; // Y value at that point
-    if (rightEdge > (segmentCount - 1)  * lightningLength)
+    if (rightEdge >= segmentCount * lightningLength)
     {
         rightEdgeY = 0;
 
@@ -41,7 +41,7 @@ float4 LightningShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, f
     float yOffset = getHashedY(scaleAdjustedCoords.x, coords.x) * amplitudeMult;
     float yPos = baseY + yOffset;
     
-    float distY = abs(scaleAdjustedCoords.y - yPos) * (1 - coords.x);
+    float distY = abs(scaleAdjustedCoords.y - yPos);
     if (distY < 0.02)
     {
         return 1;

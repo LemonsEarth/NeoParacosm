@@ -87,7 +87,7 @@ public class CrossedWireHeldProj : PrimProjectile
         {
             Vector2 mouseDir = player.Center.DirectionTo(Main.MouseWorld);
             float mouseDistance = player.Center.Distance(Main.MouseWorld);
-            lightningLength = mouseDistance / 100f;
+            lightningLength = (mouseDistance - 25f) / 100f; // Empty 100x100 texture is drawn for the laser
             SetPositionRotationDirection(player, mouseDir.ToRotation());
 
         }
@@ -122,12 +122,12 @@ public class CrossedWireHeldProj : PrimProjectile
         //lightningLength -= 0.5f; // cutting off excess
         LemonUtils.DrawGlow(lightningPos, Color.White, 1f, Projectile.scale * (MathF.Sin(AITimer) + 8) * 0.16f);
         var shader = GameShaders.Misc["NeoParacosm:LightningShader"];
-        shader.Shader.Parameters["lightningLength"].SetValue(1);
-        shader.Shader.Parameters["segmentCount"].SetValue(20);
+        shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
+        shader.Shader.Parameters["segmentCount"].SetValue(randSegmentCount);
         shader.Shader.Parameters["amplitudeMult"].SetValue(0.2f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
         shader.Apply();
 
-        Vector2 lightningScale = new(lightningLength, 1);
+        Vector2 lightningScale = new(lightningLength - 0.25f, 1);
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
         Main.EntitySpriteDraw(
@@ -142,6 +142,10 @@ public class CrossedWireHeldProj : PrimProjectile
 
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile();
+
+        Vector2 endGlowPos = Projectile.Center + Projectile.Center.DirectionTo(Main.MouseWorld) * lightningLength * 100;
+        LemonUtils.DrawGlow(endGlowPos, Color.White, 1f, Projectile.scale * (MathF.Sin(AITimer) + 8) * 0.16f);
+
 
         return false;
     }
