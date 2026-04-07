@@ -116,16 +116,14 @@ public class CrossedWireHeldProj : PrimProjectile
         Main.EntitySpriteDraw(tex, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, tex.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         if (AITimer % 3 == 0)
         {
-            randValue = Main.rand.NextFloat(1, 100);
             randSegmentCount = Main.rand.Next(8, 16);
         }
         Vector2 lightningPos = Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation - MathHelper.PiOver4) * (Projectile.height / 2); // start at tip of the weapon
-        lightningLength -= 0.5f; // cutting off excess
+        //lightningLength -= 0.5f; // cutting off excess
         LemonUtils.DrawGlow(lightningPos, Color.White, 1f, Projectile.scale * (MathF.Sin(AITimer) + 8) * 0.16f);
         var shader = GameShaders.Misc["NeoParacosm:LightningShader"];
-        shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
-        shader.Shader.Parameters["segmentCount"].SetValue(randSegmentCount);
-        shader.Shader.Parameters["random"].SetValue(randValue);
+        shader.Shader.Parameters["lightningLength"].SetValue(1);
+        shader.Shader.Parameters["segmentCount"].SetValue(20);
         shader.Shader.Parameters["amplitudeMult"].SetValue(0.2f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
         shader.Apply();
 

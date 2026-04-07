@@ -38,6 +38,7 @@ public class NeoParacosm : Mod
         LoadMiscShader("FireShader", "Common/Assets/Shaders/Projectiles/FireShader");
         LoadMiscShader("LaserShader", "Common/Assets/Shaders/Projectiles/LaserShader");
         LoadMiscShader("LightningShader", "Common/Assets/Shaders/Projectiles/LightningShader");
+        LoadMiscShader("BigLightningShader", "Common/Assets/Shaders/Projectiles/BigLightningShader");
         LoadMiscShader("SphereShader", "Common/Assets/Shaders/Projectiles/SphereShader");
         LoadMiscShader("AscendedWeaponGlow", "Common/Assets/Shaders/Items/AscendedWeaponGlow");
         LoadMiscShader("DeathbirdWingShader", "Common/Assets/Shaders/NPCs/DeathbirdWingShader");

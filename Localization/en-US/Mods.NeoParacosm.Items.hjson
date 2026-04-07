@@ -1315,10 +1315,10 @@ ViralNanomachines: {
 MechanicalArm: {
 	DisplayName: Mechanical Arm
 	Tooltip:
-	'''
-	Increases melee and ranged attack speed by {0}%
-	Increases mining and block placement speed
-	'''
+		'''
+		Increases melee and ranged attack speed by {0}%
+		Increases mining and block placement speed
+		'''
 }
 
 GrenadeAttachment: {
