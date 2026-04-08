@@ -253,7 +253,7 @@ public class PrimHelper
         {
             return;
         }
-
+        Main.spriteBatch.End();
         BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
         BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
         GraphicsDevice.RasterizerState = RasterizerState.CullNone;
@@ -261,6 +261,7 @@ public class PrimHelper
         GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
         BasicEffect.CurrentTechnique.Passes[0].Apply();
         GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
+        LemonUtils.BeginSpriteBatchProjectile();
     }
 
     public static void DrawPrimitives(BasicEffect BasicEffect, List<VertexPositionColorTexture> vertices)

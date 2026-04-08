@@ -6,7 +6,10 @@ float4 uSourceRect;
 float2 uTargetPosition;
 float2 uScreenPosition;
 float2 uScreenResolution;
-float uTime;
+float time;
+float tolerance;
+float uOpacity;
+float4 uColor;
 float random;
 float lightningLength;
 float amplitudeMult;
@@ -14,7 +17,7 @@ int segmentCount;
 
 float hash(float xCoords) // gets a pseudo random number between -1 and 1
 {
-    return frac(sin((xCoords + 100) * 127) * 45213.61248) * 2.0 - 1.0;
+    return frac(sin((xCoords + 100 + time) * 127) * 45213.61248) * 2.0 - 1.0;
 }
 
 float getHashedY(float xCoords, float origCoordsX)
@@ -22,9 +25,17 @@ float getHashedY(float xCoords, float origCoordsX)
     float segmentPosX = xCoords * segmentCount; // turning coords into segments, where each segment is 1 unit wide
     float fracPosX = frac(segmentPosX); // x position of the current pixel within the segment (used as t for lerping, since at the start it's 0, and at the end it's 1
     float leftEdge = floor(segmentPosX); // left edge of the segment
-    float leftEdgeY = hash(leftEdge) * origCoordsX; // Y value at that point
+    float leftEdgeY = hash(leftEdge); // Y value at that point
+    if (leftEdge <= 0.005)
+    {
+        leftEdgeY = 0;
+    }
     float rightEdge = floor(segmentPosX + 1); // right edge of the segment/left edge of the next segment
-    float rightEdgeY = hash(rightEdge) * origCoordsX; // Y value at that point
+    float rightEdgeY = hash(rightEdge); // Y value at that point
+    if (rightEdge >= segmentCount * lightningLength)
+    {
+        rightEdgeY = 0;
+    }
     return lerp(leftEdgeY, rightEdgeY, fracPosX);
 }
 
@@ -34,15 +45,15 @@ float4 BigLightningShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0
     float2 scaleAdjustedCoords = float2(coords.x * lightningLength, coords.y);
     float baseY = 0.5;
     //float testYOffset = sin(scaleAdjustedCoords.x * 6.28 * 4) * 0.1;
-    float yOffset = getHashedY(scaleAdjustedCoords.x + random, coords.x) * amplitudeMult;
+    float yOffset = getHashedY(scaleAdjustedCoords.x, coords.x) * amplitudeMult;
     float yPos = baseY + yOffset;
     
     float distY = abs(scaleAdjustedCoords.y - yPos);
-    if (distY < 0.02)
+    if (distY < tolerance)
     {
-        return 1;
+        return uColor;
     }
-    return color + (amplitudeMult - distY);
+    return color + (amplitudeMult - distY) * uOpacity;
 }
 
 technique Tech1

@@ -37,9 +37,9 @@ public class CursedFlameSphere : PrimProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f }, Projectile.Center);
         }
-        
+
         foreach (Projectile proj in NPPlayer.BlockProjectileInstances)
         {
             if (Projectile.Hitbox.IntersectsExact(proj.Hitbox))
@@ -77,6 +77,12 @@ public class CursedFlameSphere : PrimProjectile
 
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
         return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile();
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
