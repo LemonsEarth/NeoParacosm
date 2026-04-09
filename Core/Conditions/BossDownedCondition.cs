@@ -1,4 +1,5 @@
-﻿using Terraria.GameContent.ItemDropRules;
+﻿using NeoParacosm.Core.Systems.Data;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Core.Conditions
 {

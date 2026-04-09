@@ -36,7 +36,7 @@ public class GiantUndead : ModNPC
     {
         NPC.width = 100;
         NPC.height = 100;
-        NPC.lifeMax = 600;
+        NPC.lifeMax = 400;
         NPC.defense = 10;
         NPC.damage = 80;
         NPC.HitSound = SoundID.DD2_SkeletonDeath;
@@ -56,7 +56,7 @@ public class GiantUndead : ModNPC
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
         NPC.damage = (int)(NPC.damage * balance * 0.5f);
-        NPC.lifeMax = (Main.expertMode ? 1000 : 600) * ((numPlayers / 2) + 1);
+        NPC.lifeMax = (Main.expertMode ? 600 : 400) * ((numPlayers / 2) + 1);
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

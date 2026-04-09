@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 
@@ -245,7 +247,7 @@ public class StaffKnight : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<RestoreManaSpell>(), 10, minimumDropped: 1, maximumDropped: 3));
     }
 
     public override bool? CanFallThroughPlatforms()

@@ -27,8 +27,46 @@ public class WorldGenSystem : ModSystem
     {
         /*if (Main.keyState.IsKeyDown(Keys.B) && !Main.oldKeyState.IsKeyDown(Keys.B))
         {
-            WorldGen.Convert((int)(Main.LocalPlayer.position.X / 16), (int)(Main.LocalPlayer.position.Y / 16), BiomeConversionID.Crimson, 12, truebbbbb);
-            //WorldUtils.Gen(new Point((int)(Main.LocalPlayer.position.X / 16), (int)(Main.LocalPlayer.position.Y / 16)), new Shapes.Circle(10, 5), new Actions.SetTile(TileID.Dirt));
+            int attemptCount = 0;
+            int maxAttemptCount = 10000;
+            int placedCrosses = 0;
+            int maxPlacedCrosses = 100;
+            List<int> placedCrossXPos = new List<int>();
+
+            while (attemptCount < maxAttemptCount && placedCrosses < maxPlacedCrosses)
+            {
+                int DeadForestRadius = 200 * LemonUtils.GetWorldSize();
+                int startXTile = (int)MathHelper.Clamp(Main.dungeonX - DeadForestRadius, 0, Main.maxTilesX);
+                int maxXTile = (int)MathHelper.Clamp(Main.dungeonX + DeadForestRadius, 0, Main.maxTilesX);
+                int startYTile = (int)MathHelper.Clamp(Main.dungeonY - 80, 0, Main.maxTilesY);
+                int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
+
+                Point point = new Point(Main.rand.Next(startXTile, maxXTile), Main.rand.Next(startYTile, maxYTile));
+
+                Point pointBelow = new Point(point.X, point.Y + 1);
+                Tile tile = Main.tile[point];
+                //Main.NewText(tile.TileType);
+
+                Tile tileBelow = Main.tile[pointBelow];
+
+                if (!tile.HasTile && tileBelow.HasTile && tileBelow.TileType == TileType<DeadDirtBlock>())
+                {
+                    foreach (var placedCrossXCoord in placedCrossXPos)
+                    {
+                        if (MathF.Abs(placedCrossXCoord - point.X) <= 3)
+                        {
+                            attemptCount++;
+                            continue;
+                        }
+                    }
+                    WorldGen.PlaceTile(point.X, point.Y, TileType<HolyCross>());
+                    placedCrosses++;
+                    placedCrossXPos.Add(point.X);
+                }
+
+                attemptCount++;
+            }
+            Main.NewText(placedCrosses);
         }*/
     }
 

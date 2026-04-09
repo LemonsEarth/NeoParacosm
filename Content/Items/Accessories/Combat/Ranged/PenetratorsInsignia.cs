@@ -36,18 +36,3 @@ public class PenetratorsInsigniaPlayer : ModPlayer
         }
     }
 }
-
-public class PenetratorsInsigniaDropNPC : GlobalNPC
-{
-    public override bool InstancePerEntity => true;
-
-    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
-    {
-        return entity.type == NPCID.AngryBones;
-    }
-
-    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-    {
-        npcLoot.Add(ItemDropRule.Common(ItemType<PenetratorsInsignia>(), 20));
-    }
-}

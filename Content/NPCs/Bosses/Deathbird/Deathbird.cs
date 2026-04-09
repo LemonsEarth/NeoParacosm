@@ -94,7 +94,7 @@ public class Deathbird : ModNPC
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
 
-    float projDamage => NPC.damage / 2;
+    float projDamage => NPC.damage;
 
     float wingOutlineScale = 1f;
     float wingScale = 0.9f;
@@ -384,7 +384,13 @@ public class Deathbird : ModNPC
             case HomingDeathfireBallsDuration:
                 if (LemonUtils.NotClient())
                 {
-                    targetPosition = NPC.Center + new Vector2(Main.rand.Next(-250, 250), Main.rand.Next(-250, 250));
+                    int attemptCount = 0;
+                    do
+                    {
+                        targetPosition = NPC.Center + new Vector2(Main.rand.Next(-250, 250), Main.rand.Next(-250, 250));
+                        attemptCount++;
+                    }
+                    while (attemptCount < 100 && Framing.GetTileSafely(targetPosition.ToTileCoordinates()).HasTile);
                 }
                 AttackCount++;
                 NPC.netUpdate = true;
@@ -403,7 +409,7 @@ public class Deathbird : ModNPC
                     SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 50, ai2: 0);
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), ai0: 1500, ai1: 50, ai2: 0);
                     }
                 }
                 break;
@@ -413,7 +419,7 @@ public class Deathbird : ModNPC
                     for (int i = 0; i < 3 * LemonUtils.GetDifficulty(); i++)
                     {
                         Vector2 velocity = Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(2, 5);
-                        LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 60, ai1: NPC.target);
+                        LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), ai0: 60, ai1: NPC.target);
                     }
                 }
                 break;
@@ -453,7 +459,7 @@ public class Deathbird : ModNPC
                     for (int i = -8; i <= 8; i++)
                     {
                         Vector2 pos = NPC.Center + Vector2.UnitX * i * 100;
-                        LemonUtils.QuickProj(NPC, pos, new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(2, 4)), ProjectileType<LingeringDeathflame>(), projDamage, ai0: player.whoAmI, ai1: 420);
+                        LemonUtils.QuickProj(NPC, pos, new Vector2(Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(2, 4)), ProjectileType<LingeringDeathflame>(), ai0: player.whoAmI, ai1: 420);
                     }
                 }
                 break;
@@ -468,7 +474,7 @@ public class Deathbird : ModNPC
                     {
                         for (int i = 0; i < 3; i++)
                         {
-                            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), projDamage, ai0: player.whoAmI, ai1: 360);
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), ai0: player.whoAmI, ai1: 360);
                         }
                     }
                 }
@@ -515,7 +521,7 @@ public class Deathbird : ModNPC
                             Vector2 pos = NPC.Center + new Vector2(16 * i, -8).RotatedBy(AttackCount * MathHelper.ToRadians(50 + AttackCount) * i);
                             Vector2 dir = NPC.Center.DirectionTo(pos);
                             int timeToFire = 60 - (LemonUtils.GetDifficulty() * 5);
-                            LemonUtils.QuickProj(NPC, pos, dir * 10, ProjectileType<DeathbirdFeather>(), projDamage, ai0: timeToFire);
+                            LemonUtils.QuickProj(NPC, pos, dir * 10, ProjectileType<DeathbirdFeather>(), ai0: timeToFire);
                         }
                     }
                     AttackCount++;
@@ -562,7 +568,7 @@ public class Deathbird : ModNPC
                 PlayRoar();
                 if (LemonUtils.NotClient())
                 {
-                    grabProjIdentity = LemonUtils.QuickProj(NPC, NPC.Center + grabOffset, Vector2.Zero, ProjectileType<DeathbirdGrab>(), projDamage, ai0: NPC.whoAmI, ai1: 180).identity;
+                    grabProjIdentity = LemonUtils.QuickProj(NPC, NPC.Center + grabOffset, Vector2.Zero, ProjectileType<DeathbirdGrab>(), ai0: NPC.whoAmI, ai1: 180).identity;
                 }
                 NPC.netUpdate = true;
                 break;
@@ -600,7 +606,7 @@ public class Deathbird : ModNPC
                             for (int i = 0; i < LemonUtils.GetDifficulty(); i++)
                             {
                                 Vector2 velocity = Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2);
-                                LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 20, ai1: NPC.target);
+                                LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), ai0: 20, ai1: NPC.target);
                             }
                         }
                     }
@@ -619,7 +625,7 @@ public class Deathbird : ModNPC
                         for (int i = 0; i < 2 * LemonUtils.GetDifficulty(); i++)
                         {
                             Vector2 velocity = Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(8, 10);
-                            LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 9999, ai1: NPC.target);
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 64), velocity, ProjectileType<DeathflameBall>(), ai0: 9999, ai1: NPC.target);
                         }
                     }
                 }
@@ -645,7 +651,7 @@ public class Deathbird : ModNPC
                 NPC.velocity = Vector2.Zero;
                 if (LemonUtils.NotClient() && (Main.masterMode || Main.getGoodWorld))
                 {
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 500, ai2: 15);
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), ai0: 1500, ai1: 500, ai2: 15);
                 }
                 frameDuration = 12;
                 break;
@@ -668,7 +674,7 @@ public class Deathbird : ModNPC
                         for (int i = -3; i <= 3; i++)
                         {
                             Vector2 direction = NPC.DirectionTo(player.Center).RotatedBy(i * (MathHelper.Pi / 12));
-                            LemonUtils.QuickProj(NPC, NPC.Center, direction * 12, ProjectileType<DeathbirdFeatherSharp>(), projDamage, ai0: NPC.target, ai1: 1, ai2: 9999);
+                            LemonUtils.QuickProj(NPC, NPC.Center, direction * 12, ProjectileType<DeathbirdFeatherSharp>(), ai0: NPC.target, ai1: 1, ai2: 9999);
                         }
                     }
                 }
@@ -682,7 +688,7 @@ public class Deathbird : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, player.Center + new Vector2(Main.rand.Next(-500, 500), -800), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(25, 35), ProjectileType<DeathbirdFeather>(), projDamage, ai0: 75 - (LemonUtils.GetDifficulty() * 5), ai1: 3);
+                        LemonUtils.QuickProj(NPC, player.Center + new Vector2(Main.rand.Next(-500, 500), -800), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(25, 35), ProjectileType<DeathbirdFeather>(), ai0: 75 - (LemonUtils.GetDifficulty() * 5), ai1: 3);
                     }
                 }
                 break;
@@ -726,7 +732,7 @@ public class Deathbird : ModNPC
                         int count = NPC.CountNPCS(NPCType<GiantUndead>()) > 0 ? 1 : 3;
                         for (int i = 0; i < count; i++)
                         {
-                            LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 32), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), projDamage, ai0: NPC.target, ai1: 600);
+                            LemonUtils.QuickProj(NPC, NPC.RandomPos(64, 32), Vector2.UnitY * 3, ProjectileType<LingeringDeathflame>(), ai0: NPC.target, ai1: 600);
                         }
                     }
                 }
@@ -783,7 +789,7 @@ public class Deathbird : ModNPC
                 {
                     for (int i = 0; i < 8; i++)
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 7, ProjectileType<DeathbirdFeatherSharp>(), projDamage, ai0: NPC.target, ai1: 60, ai2: 60);
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 7, ProjectileType<DeathbirdFeatherSharp>(), ai0: NPC.target, ai1: 60, ai2: 60);
                     }
                     AttackCount++;
                 }
@@ -840,7 +846,7 @@ public class Deathbird : ModNPC
                 PlayRoar();
                 if (LemonUtils.NotClient() && (Main.masterMode || Main.getGoodWorld))
                 {
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), projDamage, ai0: 1500, ai1: 60, ai2: 0);
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<SuckyProjectile>(), ai0: 1500, ai1: 60, ai2: 0);
                 }
                 NPC.velocity = Vector2.Zero;
                 for (int i = 0; i < 5; i++)
@@ -857,8 +863,8 @@ public class Deathbird : ModNPC
                     {
                         float randomAngle = MathHelper.ToRadians(Main.rand.Next(-15, 15));
                         Vector2 velocity = Vector2.UnitY.RotatedBy(i * (MathHelper.TwoPi / projAmount)).RotatedBy(randomAngle) * Main.rand.NextFloat(10, 17);
-                        LemonUtils.QuickProj(NPC, NPC.Center, velocity, ProjectileType<DeathflameBall>(), projDamage, ai0: 999, ai1: NPC.target);
-                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(6, 10), ProjectileType<LingeringDeathflame>(), projDamage, ai0: -1, ai1: 300);
+                        LemonUtils.QuickProj(NPC, NPC.Center, velocity, ProjectileType<DeathflameBall>(), ai0: 999, ai1: NPC.target);
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(6, 10), ProjectileType<LingeringDeathflame>(), ai0: -1, ai1: 300);
                     }
 
                 }

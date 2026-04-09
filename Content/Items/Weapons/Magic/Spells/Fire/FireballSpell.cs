@@ -25,7 +25,7 @@ public class FireballSpell : BaseSpell
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.damage = 12;
+        Item.damage = 18;
         Item.width = 40;
         Item.height = 38;
         Item.value = Item.buyPrice(gold: 3);

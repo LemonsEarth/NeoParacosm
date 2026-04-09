@@ -120,7 +120,7 @@ public class TaintedSteed : ModNPC
                     Vector2.Zero,
                     ProjectileType<SuckyProjectile>(),
                     0,
-                    ai0: 1000,
+                    ai0: 600,
                     ai1: 65,
                     ai2: 3
                     );

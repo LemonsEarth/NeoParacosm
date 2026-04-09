@@ -235,7 +235,7 @@ public class ShieldKnight : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ItemType<EclipseGreatshield>(), 20, minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.Common(ItemType<EclipseGreatshield>(), 10, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

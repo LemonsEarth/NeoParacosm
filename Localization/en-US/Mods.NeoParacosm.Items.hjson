@@ -1388,3 +1388,8 @@ BodyOfThornsSpell: {
 	DisplayName: Body Of Thorns
 	Tooltip: Enemies take contact damage
 }
+
+HolyCrossItem: {
+	DisplayName: Holy Cross Item
+	Tooltip: ""
+}

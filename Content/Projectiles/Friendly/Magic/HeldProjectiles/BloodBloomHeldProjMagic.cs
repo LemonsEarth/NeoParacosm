@@ -29,7 +29,7 @@ public class BloodBloomHeldProjMagic : BaseStaffHeldProj
 
     public override void AI()
     {
-        HeldProjectileControl(Main.MouseWorld, false);
+        HeldProjectileControl(Main.MouseWorld, false, 20);
         if (!Main.mouseRight)
         {
             Projectile.Kill();
@@ -37,7 +37,7 @@ public class BloodBloomHeldProjMagic : BaseStaffHeldProj
         }
         Player player = Projectile.GetOwner();
         player.SetDummyItemTime(60);
-
+        //Main.NewText(player.manaRegenDelay);
         int attackCD = (int)(60 / player.GetAttackSpeed(DamageClass.Magic));
         if (AITimer % attackCD == 0)
         {

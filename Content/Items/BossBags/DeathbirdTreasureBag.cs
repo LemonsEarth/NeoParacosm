@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Items.Weapons.Summon;
@@ -34,7 +35,7 @@ public class DeathbirdTreasureBag : ModItem
 
     public override void ModifyItemLoot(ItemLoot itemLoot)
     {
-        itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DeathTolls>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
+        itemLoot.Add(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DarkSpearSpell>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
         itemLoot.Add(ItemDropRule.Common(ItemType<RuneOfExtinction>()));
     }
 }

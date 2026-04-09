@@ -33,7 +33,14 @@ public class NPGlobalNPC : GlobalNPC
             }
             else
             {
-                pool.Add(NPCType<ShieldKnight>(), 0.5f);
+                pool.Add(NPCType<SoulfulSludge>(), 0.7f);
+                pool.Add(NPCType<WingedEyeball>(), 0.6f);
+                pool.Add(NPCType<TaintedSteed>(), 0.5f);
+                pool.Add(NPCType<SpearKnight>(), 0.4f);
+                pool.Add(NPCType<ShieldKnight>(), 0.3f);
+                pool.Add(NPCType<StaffKnight>(), 0.2f);
+                pool.Add(NPCType<BombKnight>(), 0.1f);
+                pool.Add(NPCType<InsatiableDolour>(), 0.1f);
             }
         }
     }

@@ -229,7 +229,7 @@ public class BombKnight : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ItemType<DarkIncendiary>(), 20, minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.Common(ItemType<DarkIncendiary>(), 4, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

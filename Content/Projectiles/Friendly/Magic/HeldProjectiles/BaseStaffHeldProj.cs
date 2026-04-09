@@ -51,6 +51,48 @@ public abstract class BaseStaffHeldProj : ModProjectile
             Projectile.Kill();
             return;
         }
+    }
+
+    public void HeldProjectileControl(Vector2 targetPosition, bool checkLeftClick = true, int manaToConsume = 10)
+    {
+        Player player = Projectile.GetOwner();
+        if (!player.Alive())
+        {
+            Projectile.Kill();
+        }
+        player.heldProj = Projectile.whoAmI;
+        player.SetDummyItemTime(2);
+        if (checkLeftClick && player.channel)
+        {
+            Projectile.timeLeft = 2;
+            SetPositionRotationDirection(player, targetPosition);
+            if (AITimer % ManaConsumeInterval == 0)
+            {
+                if (!player.CheckMana(manaToConsume, true))
+                {
+                    Projectile.Kill();
+                    return;
+                }
+            }
+        }
+        else if (!checkLeftClick)
+        {
+            Projectile.timeLeft = 2;
+            SetPositionRotationDirection(player, targetPosition);
+            if (AITimer % ManaConsumeInterval == 0)
+            {
+                if (!player.CheckMana(manaToConsume, true))
+                {
+                    Projectile.Kill();
+                    return;
+                }
+            }
+        }
+        else
+        {
+            Projectile.Kill();
+            return;
+        }
 
     }
 
