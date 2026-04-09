@@ -114,12 +114,12 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                 int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
 
                 Point point = new Point(Main.rand.Next(startXTile, maxXTile), Main.rand.Next(startYTile, maxYTile));
-
                 Point pointBelow = new Point(point.X, point.Y + 1);
-                Tile tile = Main.tile[point];
-                //Main.NewText(tile.TileType);
 
+                Tile tile = Main.tile[point];
                 Tile tileBelow = Main.tile[pointBelow];
+
+                bool skip = false;
 
                 if (!tile.HasTile && tileBelow.HasTile && tileBelow.TileType == TileType<DeadDirtBlock>())
                 {
@@ -127,9 +127,15 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                     {
                         if (MathF.Abs(placedCrossXCoord - point.X) <= 3)
                         {
-                            attemptCount++;
-                            continue;
+                            skip = true;
+                            break;
                         }
+                    }
+
+                    if (skip)
+                    {
+                        attemptCount++;
+                        continue;
                     }
                     WorldGen.PlaceTile(point.X, point.Y, TileType<HolyCross>());
                     placedCrosses++;
