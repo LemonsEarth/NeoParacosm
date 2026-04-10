@@ -34,7 +34,7 @@ public class AscendedCrimsonRodHeldProj : BaseStaffHeldProj
 
     public override void AI()
     {
-        HeldProjectileControl(Main.MouseWorld);
+        HeldProjectileControl(Main.MouseWorld, true);
         if (AITimer == 0)
         {
             if (Main.myPlayer == Projectile.owner)

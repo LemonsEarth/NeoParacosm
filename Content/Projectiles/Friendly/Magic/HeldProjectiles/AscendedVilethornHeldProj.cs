@@ -35,7 +35,7 @@ public class AscendedVilethornHeldProj : BaseStaffHeldProj
 
     public override void AI()
     {
-        HeldProjectileControl(Main.MouseWorld);
+        HeldProjectileControl(Main.MouseWorld, true);
         if (AITimer == 0)
         {
             trackingPos = Projectile.Center;

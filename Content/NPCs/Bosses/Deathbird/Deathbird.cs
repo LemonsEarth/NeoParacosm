@@ -27,38 +27,8 @@ using Terraria.Graphics.Shaders;
 namespace NeoParacosm.Content.NPCs.Bosses.Deathbird;
 
 [AutoloadBossHead]
-public class Deathbird : ModNPC
+public partial class Deathbird : ModNPC
 {
-    static Asset<Texture2D> headTexture;
-    static Asset<Texture2D> bodyTexture;
-    static Asset<Texture2D> leftLeg1Texture;
-    static Asset<Texture2D> leftLeg2Texture;
-    static Asset<Texture2D> rightLeg1Texture;
-    static Asset<Texture2D> rightLeg2Texture;
-    static Asset<Texture2D> wingsRightTexture;
-    static Asset<Texture2D> wingsLeftTexture;
-
-    struct BodyPart
-    {
-        public Vector2 pos = Vector2.Zero;
-        public Vector2 origin = Vector2.Zero;
-        public float rot = 0;
-
-        public BodyPart(Vector2 pos, Vector2 origin, float rot)
-        {
-            this.pos = pos;
-            this.origin = origin;
-            this.rot = rot;
-        }
-    }
-
-    BodyPart body = new BodyPart();
-    BodyPart head = new BodyPart();
-    BodyPart leftLeg1 = new BodyPart();
-    BodyPart leftLeg2 = new BodyPart();
-    BodyPart rightLeg1 = new BodyPart();
-    BodyPart rightLeg2 = new BodyPart();
-
     ref float AITimer => ref NPC.ai[0];
     public float Attack
     {
@@ -96,10 +66,6 @@ public class Deathbird : ModNPC
 
     float projDamage => NPC.damage;
 
-    float wingOutlineScale = 1f;
-    float wingScale = 0.9f;
-    float darkColorBoost = 0f;
-
     public enum Attacks
     {
         HomingDeathflameBalls,
@@ -114,101 +80,6 @@ public class Deathbird : ModNPC
         LingeringFlameRain,
         ArenaDeathflame,
         DeathflameKamikaze,
-    }
-
-    public override void Load()
-    {
-        headTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdHead");
-        bodyTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdBody");
-        wingsLeftTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdWingsLeft");
-        wingsRightTexture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdWingsRight");
-        leftLeg1Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegLeft1");
-        leftLeg2Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegLeft2");
-        rightLeg1Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegRight1");
-        rightLeg2Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Deathbird/DeathbirdLegRight2");
-    }
-
-    public override void SetStaticDefaults()
-    {
-        Main.npcFrameCount[NPC.type] = 5;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-        NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
-        NPCID.Sets.MPAllowedEnemies[Type] = true;
-        NPCID.Sets.TrailCacheLength[NPC.type] = 5;
-        NPCID.Sets.TrailingMode[NPC.type] = 3;
-        NPCID.Sets.CantTakeLunchMoney[Type] = true;
-        NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-        NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers() { };
-        /*{
-            PortraitScale = 0.2f,
-            PortraitPositionYOverride = -150
-        };*/
-        NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-    }
-
-    public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-    {
-        bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>
-            {
-                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
-                new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
-            });
-    }
-
-    public override void SetDefaults()
-    {
-        NPC.width = 80;
-        NPC.height = 80;
-        NPC.boss = true;
-        NPC.aiStyle = -1;
-        NPC.Opacity = 1;
-        NPC.lifeMax = 8000;
-        NPC.defense = 10;
-        NPC.damage = 40;
-        NPC.HitSound = SoundID.DD2_SkeletonHurt;
-        NPC.DeathSound = SoundID.NPCDeath52;
-        NPC.value = 150000;
-        NPC.noTileCollide = true;
-        NPC.knockBackResist = 0;
-        NPC.noGravity = true;
-        NPC.npcSlots = 10;
-        NPC.SpawnWithHigherTime(30);
-
-        if (!Main.dedServ)
-        {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/Gravefield");
-        }
-    }
-
-    int frameDuration = 6;
-    public override void FindFrame(int frameHeight)
-    {
-        NPC.frameCounter += 1;
-        if (NPC.frameCounter > frameDuration)
-        {
-            NPC.frame.Y += frameHeight;
-            NPC.frameCounter = 0;
-            if (NPC.frame.Y > 4 * frameHeight)
-            {
-                NPC.frame.Y = 0;
-            }
-        }
-    }
-
-    public override float SpawnChance(NPCSpawnInfo spawnInfo)
-    {
-        if (!DownedBossSystem.downedDeathbird && spawnInfo.Player.InModBiome<DeadForestBiome>() && !NPC.AnyNPCs(NPCType<Deathbird>()))
-        {
-            return 1f;
-        }
-        return 0f;
-    }
-
-    public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
-    {
-        NPC.damage = (int)(NPC.damage * balance * 0.5f);
-        NPC.lifeMax = (int)(NPC.lifeMax * balance * 0.5f);
     }
 
     int IntroDuration = 300;
@@ -291,66 +162,6 @@ public class Deathbird : ModNPC
         AITimer++;
     }
 
-    void DefaultBody()
-    {
-        body.pos = NPC.Center;
-        body.origin = bodyTexture.Size() * 0.5f;
-        body.rot = NPC.rotation;
-    }
-    void DefaultHead()
-    {
-        head.pos = body.pos - Vector2.UnitY.RotatedBy(NPC.rotation) * bodyTexture.Height() * 0.5f;
-        head.origin = headTexture.Size() * 0.5f;
-        head.rot = NPC.rotation;
-    }
-    void DefaultLeftLeg1()
-    {
-        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(NPC.rotation) * bodyTexture.Height() * 0.4f;
-        leftLeg1.origin = new Vector2(leftLeg1Texture.Width(), 0);
-        leftLeg1.rot = NPC.rotation;
-    }
-    void DefaultLeftLeg2()
-    {
-        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
-        leftLeg2.origin = new Vector2(leftLeg2Texture.Width(), 0);
-        leftLeg2.rot = NPC.rotation;
-    }
-    void DefaultRightLeg1()
-    {
-        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(NPC.rotation) * bodyTexture.Height() * 0.4f;
-        rightLeg1.origin = Vector2.Zero;
-        rightLeg1.rot = NPC.rotation;
-    }
-    void DefaultRightLeg2()
-    {
-        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
-        rightLeg2.origin = Vector2.Zero;
-        rightLeg2.rot = NPC.rotation;
-    }
-    void SetDefaultBodyPartValues()
-    {
-        DefaultBody();
-        DefaultHead();
-        DefaultLeftLeg1();
-        DefaultLeftLeg2();
-        DefaultRightLeg1();
-        DefaultRightLeg2();
-    }
-    void BasicMovementAnimation()
-    {
-        float headRot = MathHelper.Clamp(NPC.velocity.X * 6, -90, 90);
-        float bodyRot = MathHelper.Clamp(NPC.velocity.X * 3, -60, 60);
-        float legRot = MathHelper.Clamp(NPC.velocity.X * 10, -75, 75);
-        float leg2Rot = MathHelper.Clamp(NPC.velocity.X * 10, -90, 90);
-        head.rot = Utils.AngleLerp(head.rot, MathHelper.ToRadians(headRot), 1 / 20f);
-        body.rot = Utils.AngleLerp(body.rot, MathHelper.ToRadians(bodyRot), 1 / 20f);
-
-        leftLeg1.rot = Utils.AngleLerp(leftLeg1.rot, MathHelper.ToRadians(legRot), 1 / 20f);
-        leftLeg2.rot = Utils.AngleLerp(leftLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 10f);
-
-        rightLeg1.rot = Utils.AngleLerp(rightLeg1.rot, MathHelper.ToRadians(legRot), 1 / 20f);
-        rightLeg2.rot = Utils.AngleLerp(rightLeg2.rot, MathHelper.ToRadians(leg2Rot), 1 / 10f);
-    }
 
     void SwitchAttacks()
     {
@@ -806,11 +617,6 @@ public class Deathbird : ModNPC
         AttackTimer--;
     }
 
-    public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-    {
-        return !(phase == 1 && Attack == (int)Attacks.Grab);
-    }
-
     const int DeathflameKamikazeDuration = 180;
     void DeathflameKamikaze()
     {
@@ -888,11 +694,6 @@ public class Deathbird : ModNPC
             NPC.life = 0;
             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
         }
-    }
-
-    public override bool CheckActive()
-    {
-        return false;
     }
 
     void Intro()
@@ -1006,42 +807,6 @@ public class Deathbird : ModNPC
         AttackTimer++;
     }
 
-    public override void OnKill()
-    {
-        DownedBossSystem.downedDeathbird = true;
-    }
-
-    public override void HitEffect(NPC.HitInfo hit)
-    {
-        if (Main.dedServ) return;
-        if (NPC.life <= 0)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(2f, 4f));
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                Gore.NewGore(NPC.GetSource_FromThis(), NPC.RandomPos(), Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<DeathbirdGore>());
-            }
-            Gore.NewGore(NPC.GetSource_FromThis(), head.pos, Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(4, 8), GoreType<DeathbirdHeadGore>());
-        }
-    }
-
-    public override void ModifyNPCLoot(NPCLoot npcLoot)
-    {
-        LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
-        classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DeathTolls>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
-        npcLoot.Add(classicRule);
-        npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathbirdTreasureBag>()));
-        npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DeathbirdRelicItem>()));
-    }
-
-    public override bool? CanFallThroughPlatforms()
-    {
-        return true;
-    }
-
     void TeleportToPos(Vector2 pos)
     {
         LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.Ash, Main.rand.NextFloat(3f, 4f), color: Color.Black);
@@ -1049,96 +814,4 @@ public class Deathbird : ModNPC
         LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(3f, 4f));
         SoundEngine.PlaySound(SoundID.DD2_SkeletonSummoned with { PitchRange = (0f, 0.2f) }, NPC.Center);
     }
-
-    void SetBodyPartPositions()
-    {
-        body.pos = NPC.Center;
-        head.pos = body.pos - Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.5f;
-        leftLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
-        leftLeg2.pos = leftLeg1.pos + new Vector2(-leftLeg1Texture.Width() * 0.5f, leftLeg1Texture.Height() * 0.8f).RotatedBy(leftLeg1.rot);
-        rightLeg1.pos = body.pos + Vector2.UnitY.RotatedBy(body.rot) * bodyTexture.Height() * 0.4f;
-        rightLeg2.pos = rightLeg1.pos + new Vector2(rightLeg1Texture.Width() * 0.5f, rightLeg1Texture.Height() * 0.8f).RotatedBy(rightLeg1.rot);
-    }
-
-    void PlayRoar()
-    {
-        SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0f, 1f) }, NPC.Center);
-        SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.2f, 0.4f) }, NPC.Center);
-        SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.5f, 0.7f) }, NPC.Center);
-    }
-
-    Color defaultColor => Color.White * NPC.Opacity;
-    bool drawClone = false;
-    Vector2 clonePos = Vector2.Zero;
-    float cloneOpacity = 0f;
-    float cloneScale = 1f;
-    void DrawClone(Vector2 pos, float opacityIncrementValue, float scale)
-    {
-        drawClone = true;
-        clonePos = pos;
-        cloneOpacity += opacityIncrementValue;
-        cloneScale = scale;
-    }
-
-    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-    {
-        if (NPC.Opacity < 1)
-        {
-            return false;
-        }
-
-        // Setting up positions and origin
-
-        //NPC.rotation += MathHelper.ToRadians(1);
-        NPC.rotation = 0;
-
-        // Wings
-        var shader = GameShaders.Misc["NeoParacosm:DeathbirdWingShader"];
-        shader.Shader.Parameters["uTime"].SetValue(AITimer);
-        shader.Shader.Parameters["tolerance"].SetValue(0.5f);
-        shader.Shader.Parameters["darkColorBoost"].SetValue(darkColorBoost);
-        shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.75f);
-
-        // First the "outline"/afterimage/effect wings
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        Vector2 wingLeftPos = body.pos;
-        Vector2 wingLeftOrigin = new Vector2(wingsLeftTexture.Frame(1, 5, 0, 0).Width, wingsLeftTexture.Frame(1, 5, 0, 0).Height / 2);
-        Vector2 wingRightPos = body.pos;
-        Vector2 wingRightOrigin = new Vector2(0, wingsRightTexture.Frame(1, 5, 0, 0).Height / 2);
-        Main.EntitySpriteDraw(wingsLeftTexture.Value, wingLeftPos - Main.screenPosition, wingsLeftTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingLeftOrigin, NPC.scale * wingOutlineScale, SpriteEffects.None, 0);
-        shader.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
-        Main.EntitySpriteDraw(wingsRightTexture.Value, wingRightPos - Main.screenPosition, wingsRightTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingRightOrigin, NPC.scale * wingOutlineScale, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-
-        // Actual wings
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.75f);
-        Main.EntitySpriteDraw(wingsLeftTexture.Value, wingLeftPos - Main.screenPosition, wingsLeftTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingLeftOrigin, NPC.scale * wingScale, SpriteEffects.None, 0);
-        shader.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
-        Main.EntitySpriteDraw(wingsRightTexture.Value, wingRightPos - Main.screenPosition, wingsRightTexture.Frame(1, 5, 0, NPC.frame.Y / 200), Color.White, body.rot, wingRightOrigin, NPC.scale * wingScale, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-
-
-        // Body
-        Main.EntitySpriteDraw(bodyTexture.Value, body.pos - Main.screenPosition, null, defaultColor, body.rot, body.origin, NPC.scale, SpriteEffects.None);
-        Main.EntitySpriteDraw(headTexture.Value, head.pos - Main.screenPosition, null, defaultColor, head.rot, head.origin, NPC.scale, SpriteEffects.None);
-        Main.EntitySpriteDraw(leftLeg1Texture.Value, leftLeg1.pos - Main.screenPosition, null, defaultColor, leftLeg1.rot, leftLeg1.origin, NPC.scale, SpriteEffects.None);
-        Main.EntitySpriteDraw(leftLeg2Texture.Value, leftLeg2.pos - Main.screenPosition, null, defaultColor, leftLeg2.rot, leftLeg2.origin, NPC.scale, SpriteEffects.None);
-        Main.EntitySpriteDraw(rightLeg1Texture.Value, rightLeg1.pos - Main.screenPosition, null, defaultColor, rightLeg1.rot, rightLeg1.origin, NPC.scale, SpriteEffects.None);
-        Main.EntitySpriteDraw(rightLeg2Texture.Value, rightLeg2.pos - Main.screenPosition, null, defaultColor, rightLeg2.rot, rightLeg2.origin, NPC.scale, SpriteEffects.None);
-
-        // Clone
-        if (drawClone && clonePos != Vector2.Zero)
-        {
-            Main.EntitySpriteDraw(headTexture.Value, clonePos - Main.screenPosition, null, Color.White * cloneOpacity, 0f, head.origin, cloneScale, SpriteEffects.None);
-        }
-        return false;
-    }
-
 }
