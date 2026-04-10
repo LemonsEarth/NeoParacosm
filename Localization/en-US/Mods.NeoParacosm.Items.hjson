@@ -1393,3 +1393,8 @@ HolyCrossItem: {
 	DisplayName: Holy Cross Item
 	Tooltip: ""
 }
+
+DecrepitBirdWhistle: {
+	DisplayName: Decrepit Bird Whistle
+	Tooltip: ""
+}
