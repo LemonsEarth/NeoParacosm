@@ -5,7 +5,9 @@ namespace NeoParacosm.Content.Items.Accessories.Combat;
 
 public class RuneOfPeridition : ModItem
 {
-    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs();
+    float damageBoost = 6f;
+    float defenseReduction = 10f;
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost, defenseReduction);
 
     public override void SetStaticDefaults()
     {
@@ -25,7 +27,7 @@ public class RuneOfPeridition : ModItem
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         player.GetModPlayer<RuneOfPeriditionPlayer>().runeOfPeridition = true;
-        player.GetDamage(DamageClass.Generic) += 10f / 100f;
+        player.GetDamage(DamageClass.Generic) += damageBoost / 100f;
     }
 }
 

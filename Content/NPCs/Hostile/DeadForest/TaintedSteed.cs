@@ -164,7 +164,7 @@ public class TaintedSteed : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbird && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
 
     }
 

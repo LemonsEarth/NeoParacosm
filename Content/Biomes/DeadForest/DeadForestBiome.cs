@@ -1,4 +1,9 @@
-﻿using NeoParacosm.Core.Systems.World;
+﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
+using NeoParacosm.Content.NPCs.Hostile.DeadForest;
+using NeoParacosm.Core.Systems.Data;
+using NeoParacosm.Core.Systems.World;
+using System.Collections.Generic;
 
 namespace NeoParacosm.Content.Biomes.DeadForest;
 
@@ -16,6 +21,32 @@ public class DeadForestBiome : ModBiome
     public override bool IsBiomeActive(Player player)
     {
         return GetInstance<BiomeSystem>().deadDirtTileCount >= 1000 && player.ZoneOverworldHeight;
+    }
+}
+
+public class DeadForestBiomeNPC : GlobalNPC
+{
+    public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
+    {
+        if (spawnInfo.Player.InModBiome<DeadForestBiome>())
+        {
+            pool.Clear();
+            if (!DownedBossSystem.downedDeathbirdMini)
+            {
+                pool.Add(NPCType<DeathbirdMini>(), 1f);
+            }
+            else
+            {
+                pool.Add(NPCType<SoulfulSludge>(), 0.9f);
+                pool.Add(NPCType<WingedEyeball>(), 0.8f);
+                pool.Add(NPCType<TaintedSteed>(), 0.7f);
+                pool.Add(NPCType<SpearKnight>(), 0.4f);
+                pool.Add(NPCType<ShieldKnight>(), 0.2f);
+                pool.Add(NPCType<StaffKnight>(), 0.2f);
+                pool.Add(NPCType<BombKnight>(), 0.1f);
+                pool.Add(NPCType<InsatiableDolour>(), 0.1f);
+            }
+        }
     }
 }
 

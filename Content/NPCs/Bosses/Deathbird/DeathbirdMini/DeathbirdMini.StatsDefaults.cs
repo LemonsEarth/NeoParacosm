@@ -2,11 +2,11 @@
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Gores;
+using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Placeable.Relics;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Items.Weapons.Summon;
@@ -25,9 +25,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.NPCs.Bosses.Deathbird;
+namespace NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
 
-public partial class Deathbird : ModNPC
+public partial class DeathbirdMini : ModNPC
 {
     static Asset<Texture2D> headTexture;
     static Asset<Texture2D> bodyTexture;
@@ -82,12 +82,11 @@ public partial class Deathbird : ModNPC
         NPCID.Sets.TrailingMode[NPC.type] = 3;
         NPCID.Sets.CantTakeLunchMoney[Type] = true;
         NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-        NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers() { };
-        /*{
-            PortraitScale = 0.2f,
-            PortraitPositionYOverride = -150
-        };*/
-        NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
+        {
+            Hide = true
+        };
+        NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -141,6 +140,10 @@ public partial class Deathbird : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
+        if (!DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() && !NPC.AnyNPCs(NPCType<DeathbirdMini>()))
+        {
+            return 1f;
+        }
         return 0f;
     }
 
@@ -162,7 +165,7 @@ public partial class Deathbird : ModNPC
 
     public override void OnKill()
     {
-        DownedBossSystem.downedDeathbird = true;
+        DownedBossSystem.downedDeathbirdMini = true;
     }
 
     public override void HitEffect(NPC.HitInfo hit)
@@ -184,11 +187,7 @@ public partial class Deathbird : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
-        classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DarkSpearSpell>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
-        npcLoot.Add(classicRule);
-        npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathbirdTreasureBag>()));
-        npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DeathbirdRelicItem>()));
+        npcLoot.Add(ItemDropRule.Common(ItemType<RuneOfPeridition>()));
     }
 
     public override bool? CanFallThroughPlatforms()
