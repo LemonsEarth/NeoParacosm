@@ -3,10 +3,7 @@
 public class PurpleLightning : TargetedLightning
 {
     protected override Color ShineColor => Color.White;
-    protected override Color DarkColor => Color.DarkBlue;
-    protected override float HorizontalOffsetMin => 10;
-    protected override float HorizontalOffsetMax => 16;
-    protected override float BaseSpacingDenominator => 20;
+    protected override Color DarkColor => Color.DarkMagenta;
 
     public override void SetStaticDefaults()
     {

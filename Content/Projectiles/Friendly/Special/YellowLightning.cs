@@ -4,9 +4,6 @@ public class YellowLightning : TargetedLightning
 {
     protected override Color ShineColor => Color.White;
     protected override Color DarkColor => Color.Yellow;
-    protected override float HorizontalOffsetMin => 20;
-    protected override float HorizontalOffsetMax => 36;
-    protected override float BaseSpacingDenominator => 10;
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.DrawScreenCheckFluff[Type] = 6000;

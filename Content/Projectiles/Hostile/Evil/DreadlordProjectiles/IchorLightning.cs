@@ -7,14 +7,10 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class IchorLightning : PrimProjectile
+public class IchorLightning : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float Length => ref Projectile.ai[1];
-
-    Vector2 originalPos = Vector2.Zero;
-
-    List<Vector2> positions = new List<Vector2>();
 
     public override void SetStaticDefaults()
     {
@@ -51,39 +47,11 @@ public class IchorLightning : PrimProjectile
             random = Main.rand.Next(1, 100);
             PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center + Vector2.UnitY * (Length / 2), (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
-            originalPos = Projectile.Center;
             Projectile.rotation = Projectile.Center.DirectionTo(targetPos).ToRotation();
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f }, Projectile.Center);
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
 
-            /*Vector2 projToPos = targetPos - Projectile.Center;
-            float spacing = projToPos.Length() / 20;
-
-            bool flip = true;
-            int i = 0;
-
-            while (Projectile.Center.Distance(targetPos) > 32)
-            {
-                Vector2 normalVector = projToPos.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
-                Vector2 offset = normalVector * flip.ToDirectionInt() * Main.rand.Next(10, 24);
-                if ((Projectile.Center + offset).Y > targetPos.Y)
-                {
-                    break;
-                }
-                positions.Add(Projectile.Center + offset);
-                positions.Add(Projectile.Center + offset * 0.5f);
-
-                flip = !flip;
-                Projectile.Center += Projectile.Center.DirectionTo(targetPos) * spacing * Main.rand.NextFloat(0.5f, 1.5f);
-                for (int dc = 0; dc < 6; dc++)
-                {
-                    Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1), Scale: Main.rand.NextFloat(0.5f, 0.75f)).noGravity = true;
-                }
-                i += 2;
-            }
-            positions.Add(Projectile.Center);
-            positions.Add(Projectile.Center);*/
             for (int j = 0; j < 10; j++)
             {
                 Vector2 randVector = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
@@ -168,64 +136,12 @@ public class IchorLightning : PrimProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         DrawLightning(1f, 1);
-        /*int quadCount = positions.Count / 2 - 1;
-        if (quadCount <= 0) return false;
-        VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
-        VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
-        {
-            //Color color = Main.rand.NextBool(10) ? Color.White : Color.Yellow;
-            return new VertexPositionColorTexture(new Vector3(pos, 0), color * Projectile.Opacity, Vector2.Zero);
-        }
-        for (int i = 0; i < quadCount; i += 1)
-        {
-            Vector2 left0 = positions[2 * i];
-            Vector2 right0 = positions[2 * i + 1];
-            Vector2 left1 = positions[2 * i + 2];
-            Vector2 right1 = positions[2 * i + 3];
-
-
-            vertices[6 * i] = QuickVertexPCT(left0);
-            vertices[6 * i + 1] = QuickVertexPCT(right0);
-            vertices[6 * i + 2] = QuickVertexPCT(left1);
-
-            vertices[6 * i + 3] = QuickVertexPCT(left1);
-            vertices[6 * i + 4] = QuickVertexPCT(right0);
-            vertices[6 * i + 5] = QuickVertexPCT(right1);
-        }
-        //for (int i = 0; i < positions.Length; i += 1)
-        //{
-        //    Color color = i % 2 == 0 ? Color.Yellow : new Color(130, 120, 200, 255);
-        //    if (i < 3)
-        //    {
-        //        vertices[i] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 1] = new VertexPositionColorTexture(new Vector3(positions[i + 1], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i + 2] = new VertexPositionColorTexture(new Vector3(positions[i + 2], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //    }
-        //    else
-        //    {
-        //        vertices[i * 3] = new VertexPositionColorTexture(new Vector3(positions[i - 2], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 1] = new VertexPositionColorTexture(new Vector3(positions[i - 1], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //        vertices[i * 3 + 2] = new VertexPositionColorTexture(new Vector3(positions[i], 0), Color.Yellow * Projectile.Opacity, Vector2.Zero);
-        //    }
-        //}
-        BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
-        BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
-        GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-        Viewport viewport = GraphicsDevice.Viewport;
-        BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, -1, 10);
-        GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-        BasicEffect.CurrentTechnique.Passes[0].Apply();
-        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
-
-        for (int i = 0; i < 2; i++)
-        {
-            float circleOpacity = Projectile.Opacity + 0.2f;
-            LemonUtils.DrawGlow(originalPos, color, circleOpacity, 2f);
-            LemonUtils.DrawGlow(originalPos, Color.White, circleOpacity, 1f);
-            LemonUtils.DrawGlow(positions.Last(), color, circleOpacity, 2f);
-            LemonUtils.DrawGlow(positions.Last(), Color.White, circleOpacity, 1f);
-        }*/
-
         return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile();
     }
 }

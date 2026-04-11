@@ -5,10 +5,11 @@ using System.Linq;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public abstract class TargetedLightning : PrimProjectile
+public abstract class TargetedLightning : ModProjectile
 {
     protected int AITimer = 0;
     protected ref float Delay => ref Projectile.ai[0];
@@ -25,13 +26,14 @@ public abstract class TargetedLightning : PrimProjectile
         }
     }
 
+    /// <summary>
+    /// Should be the distance between the Projectile Center and Target Position, divided by 100 (width and height of the empty texture used to draw the lightning)
+    /// </summary>
+    float lightningLength = 0;
+
     protected Vector2 originalPos = Vector2.Zero;
-    protected List<Vector2> positions = new List<Vector2>();
     protected virtual Color ShineColor => Color.White;
     protected virtual Color DarkColor => Color.Yellow;
-    protected virtual float BaseSpacingDenominator => 5;
-    protected virtual float HorizontalOffsetMin => 10;
-    protected virtual float HorizontalOffsetMax => 36;
     Color currentColor = Color.White;
 
     public override void SetStaticDefaults()
@@ -53,8 +55,15 @@ public abstract class TargetedLightning : PrimProjectile
         Projectile.tileCollide = false;
     }
 
+    float random = 0;
     public override void AI()
     {
+        if (AITimer == 0)
+        {
+            lightningLength = Projectile.Center.Distance(targetPos) / 100f;
+            random = Main.rand.Next(1, 100);
+            Projectile.rotation = Projectile.Center.DirectionTo(targetPos).ToRotation();
+        }
         if (AITimer < Delay)
         {
             AITimer++;
@@ -63,37 +72,10 @@ public abstract class TargetedLightning : PrimProjectile
         }
         if (AITimer == Delay)
         {
-            PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 12f, 10, 1000f, FullName);
-            Main.instance.CameraModifiers.Add(mod1);
-            originalPos = Projectile.Center;
-            float origToTargetDistance = originalPos.Distance(targetPos);
+            LemonUtils.QuickScreenShake(Main.player[Projectile.owner].Center, 10, 16, 15, 500);
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f }, Projectile.Center);
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0, Volume = 0.75f }, Projectile.Center);
-            Vector2 projToPos = targetPos - Projectile.Center;
-            float spacing = projToPos.Length() / BaseSpacingDenominator;
 
-            bool flip = true;
-
-            while (Projectile.Center.Distance(targetPos) > 32)
-            {
-                Vector2 normalVector = projToPos.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
-                Vector2 offset = normalVector * flip.ToDirectionInt() * Main.rand.NextFloat(HorizontalOffsetMin, HorizontalOffsetMax);
-                if ((Projectile.Center + offset).Distance(originalPos) > origToTargetDistance)
-                {
-                    break;
-                }
-                positions.Add(Projectile.Center + offset);
-                positions.Add(Projectile.Center + offset * 0.5f);
-
-                flip = !flip;
-                Projectile.Center += Projectile.Center.DirectionTo(targetPos) * spacing * Main.rand.NextFloat(0.5f, 1.5f);
-                for (int dc = 0; dc < 6; dc++) // dust count
-                {
-                    Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemDiamond, Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-8, 8), Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
-                }
-            }
-            positions.Add(Projectile.Center);
-            positions.Add(Projectile.Center);
             for (int j = 0; j < 20; j++)
             {
                 Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
@@ -101,9 +83,6 @@ public abstract class TargetedLightning : PrimProjectile
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemDiamond, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemAmber, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
             }
-
-            positions[0] = originalPos;
-            positions[1] = originalPos;
         }
         Projectile.velocity = Vector2.Zero;
         if (Projectile.timeLeft < 30)
@@ -111,14 +90,15 @@ public abstract class TargetedLightning : PrimProjectile
             currentColor = Color.Lerp(DarkColor, ShineColor, Projectile.timeLeft / 15f);
             Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 5f);
         }
+        //Main.NewText(currentColor);
         AITimer++;
     }
 
     public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
     {
         float _ = float.NaN;
-        Vector2 endPos = Projectile.Center;
-        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), originalPos, endPos, Projectile.width, ref _);
+        Vector2 endPos = targetPos;
+        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPos, Projectile.width, ref _);
     }
 
     public override void OnKill(int timeLeft)
@@ -126,50 +106,54 @@ public abstract class TargetedLightning : PrimProjectile
         LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: ShineColor);
     }
 
+    void DrawLightning(float randomMul = 1, float segCountMul = 1)
+    {
+        LemonUtils.DrawGlow(Projectile.Center, DarkColor, Projectile.Opacity + 0.3f, Projectile.scale * 2);
+        LemonUtils.DrawGlow(Projectile.Center, ShineColor, Projectile.Opacity + 0.3f, Projectile.scale);
+        var shader = GameShaders.Misc["NeoParacosm:BigLightningShader"];
+        shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
+        shader.Shader.Parameters["segmentCount"].SetValue(3);
+        shader.Shader.Parameters["time"].SetValue(random * randomMul);
+        shader.Shader.Parameters["tolerance"].SetValue(0.04f);
+        shader.Shader.Parameters["amplitudeMult"].SetValue(0.2f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
+        shader.UseOpacity(Projectile.Opacity);
+        shader.UseColor(currentColor * Projectile.Opacity);
+        shader.Apply();
+
+        Vector2 lightningScale = new(lightningLength, 1);
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
+        Main.EntitySpriteDraw(
+            ParacosmTextures.Empty100Tex.Value,
+            Projectile.Center - Main.screenPosition,
+            null,
+            Color.White,
+            Projectile.rotation,
+            Vector2.UnitY * ParacosmTextures.Empty100Tex.Height() * 0.5f,
+            lightningScale,
+            SpriteEffects.None);
+
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile();
+
+        LemonUtils.DrawGlow(targetPos, DarkColor, Projectile.Opacity + 0.3f, Projectile.scale * 2);
+        LemonUtils.DrawGlow(targetPos, ShineColor, Projectile.Opacity + 0.3f, Projectile.scale);
+
+    }
+
     public override bool PreDraw(ref Color lightColor)
     {
-        int quadCount = positions.Count / 2 - 1;
-        if (quadCount <= 0) return false;
-        VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[quadCount * 6];
-        VertexPositionColorTexture QuickVertexPCT(Vector2 pos)
+        if (AITimer < Delay)
         {
-            return new VertexPositionColorTexture(new Vector3(pos, 0), currentColor * Projectile.Opacity, Vector2.Zero);
+            return false;
         }
-        for (int i = 0; i < quadCount; i += 1)
-        {
-            Vector2 left0 = positions[2 * i];
-            Vector2 right0 = positions[2 * i + 1];
-            Vector2 left1 = positions[2 * i + 2];
-            Vector2 right1 = positions[2 * i + 3];
-
-
-            vertices[6 * i] = QuickVertexPCT(left0);
-            vertices[6 * i + 1] = QuickVertexPCT(right0);
-            vertices[6 * i + 2] = QuickVertexPCT(left1);
-
-            vertices[6 * i + 3] = QuickVertexPCT(left1);
-            vertices[6 * i + 4] = QuickVertexPCT(right0);
-            vertices[6 * i + 5] = QuickVertexPCT(right1);
-        }
-
-        BasicEffect.World = Matrix.CreateTranslation(new Vector3(-Main.screenPosition, 0));
-        BasicEffect.View = Main.GameViewMatrix.TransformationMatrix;
-        GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-        Viewport viewport = GraphicsDevice.Viewport;
-        BasicEffect.Projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, -1, 10);
-        GraphicsDevice.Textures[0] = TextureAssets.MagicPixel.Value;
-        BasicEffect.CurrentTechnique.Passes[0].Apply();
-        GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length / 3);
-
-        for (int i = 0; i < 2; i++)
-        {
-            float circleOpacity = Projectile.Opacity + 0.2f;
-            LemonUtils.DrawGlow(originalPos, DarkColor, circleOpacity, 2f);
-            LemonUtils.DrawGlow(originalPos, ShineColor, circleOpacity, 1f);
-            LemonUtils.DrawGlow(positions.Last(), DarkColor, circleOpacity, 2f);
-            LemonUtils.DrawGlow(positions.Last(), ShineColor, circleOpacity, 1f);
-        }
-
+        DrawLightning(1f, 1);
         return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        LemonUtils.BeginSpriteBatchProjectile();
     }
 }

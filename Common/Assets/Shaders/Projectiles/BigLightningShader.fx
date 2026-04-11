@@ -51,7 +51,8 @@ float4 BigLightningShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0
     float distY = abs(scaleAdjustedCoords.y - yPos);
     if (distY < tolerance)
     {
-        return uColor;
+        float4 col = float4(uColor.r, uColor.g, uColor.b, uOpacity);
+        return col;
     }
     return color + (amplitudeMult - distY) * uOpacity;
 }
