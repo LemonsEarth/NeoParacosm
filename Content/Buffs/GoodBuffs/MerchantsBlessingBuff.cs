@@ -1,9 +1,4 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Core.Players;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Content.Buffs.GoodBuffs;
+﻿namespace NeoParacosm.Content.Buffs.GoodBuffs;
 
 public class MerchantsBlessingBuff : ModBuff
 {

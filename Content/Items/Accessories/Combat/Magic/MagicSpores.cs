@@ -1,6 +1,4 @@
-﻿using Mono.Cecil;
-using NeoParacosm.Core.Players;
-using static System.Net.Mime.MediaTypeNames;
+﻿using NeoParacosm.Core.Players;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;
 

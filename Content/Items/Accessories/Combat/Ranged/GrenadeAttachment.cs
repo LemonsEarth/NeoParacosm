@@ -1,6 +1,4 @@
 ﻿using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
 

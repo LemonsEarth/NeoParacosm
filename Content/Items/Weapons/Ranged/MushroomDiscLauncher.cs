@@ -1,9 +1,7 @@
 ﻿using NeoParacosm.Content.Items.Consumables;
-using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 

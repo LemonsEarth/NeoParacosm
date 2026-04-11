@@ -1,9 +1,5 @@
-﻿using Microsoft.CodeAnalysis.Text;
-using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Players;
-using Terraria.Audio;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;

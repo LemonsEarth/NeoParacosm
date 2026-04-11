@@ -1,11 +1,5 @@
 ﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
-using NeoParacosm.Content.Projectiles.Hostile.Death;
-using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using System.Collections.Generic;
 using Terraria.Audio;
 
 namespace NeoParacosm.Core.Players;

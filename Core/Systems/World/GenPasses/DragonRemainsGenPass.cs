@@ -1,10 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Melee;
-using StructureHelper.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StructureHelper.API;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;

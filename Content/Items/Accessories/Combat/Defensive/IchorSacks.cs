@@ -1,7 +1,5 @@
-﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
-using NeoParacosm.Content.NPCs.Hostile.Crimson;
+﻿using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 

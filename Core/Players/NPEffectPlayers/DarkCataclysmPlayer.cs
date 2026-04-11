@@ -1,7 +1,5 @@
 ﻿using NeoParacosm.Content.Items.BossSummons;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Data;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using static NeoParacosm.Core.Systems.Data.DarkCataclysmSystem;

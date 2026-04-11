@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
-using NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 using Terraria.Audio;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;

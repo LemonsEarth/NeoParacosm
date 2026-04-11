@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Dusts;
+﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 

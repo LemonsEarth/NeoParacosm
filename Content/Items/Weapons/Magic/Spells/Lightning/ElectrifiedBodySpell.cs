@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Buffs.GoodBuffs;
+﻿using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;

@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class SnowgraveDebuff : ModBuff
 {

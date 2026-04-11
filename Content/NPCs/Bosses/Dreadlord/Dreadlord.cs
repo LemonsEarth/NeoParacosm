@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
-using System.Reflection.Metadata;
 using Terraria.Audio;
 using static Microsoft.Xna.Framework.MathHelper;
 
@@ -1925,7 +1924,7 @@ public partial class Dreadlord : ModNPC
                 {
                     ShakeCorruptHead(0, 12);
                     ShakeCrimsonHead(0, 12);
-                    
+
                 }
 
                 if (AttackTimer % 120 == 0)
@@ -1937,7 +1936,7 @@ public partial class Dreadlord : ModNPC
 
                     if (LemonUtils.NotClient())
                     {
-                        Vector2 randomPos = ArenaCenter + new Vector2(Main.rand.NextFloat(- baseArenaDistance / 2, baseArenaDistance / 2), baseArenaDistance);
+                        Vector2 randomPos = ArenaCenter + new Vector2(Main.rand.NextFloat(-baseArenaDistance / 2, baseArenaDistance / 2), baseArenaDistance);
                         LemonUtils.QuickProj(NPC, randomPos, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), ProjectileType<GiantCursedFlameSphere>(),
                             ai0: 0,
                             ai1: 1.008f,
@@ -1964,7 +1963,7 @@ public partial class Dreadlord : ModNPC
                 ResetMouthFrames();
                 break;
             case 0:
-                
+
                 AttackTimer = 1200;
                 return;
         }

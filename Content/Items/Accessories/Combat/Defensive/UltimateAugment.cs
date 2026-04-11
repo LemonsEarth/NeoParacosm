@@ -1,6 +1,4 @@
-﻿using Terraria.Localization;
-
-namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 
 public class UltimateAugment : ModItem
 {

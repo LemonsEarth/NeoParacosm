@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Assets;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 
 public abstract class BaseStaffHeldProj : ModProjectile
 {

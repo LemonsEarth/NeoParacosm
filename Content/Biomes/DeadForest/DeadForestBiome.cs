@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
+﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
 using NeoParacosm.Content.NPCs.Hostile.DeadForest;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.World;

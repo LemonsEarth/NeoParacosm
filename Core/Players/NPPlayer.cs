@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Input;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;

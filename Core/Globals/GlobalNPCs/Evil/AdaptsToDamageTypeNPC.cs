@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
-using NeoParacosm.Content.NPCs.Hostile.Corruption;
+﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
 using NeoParacosm.Content.NPCs.Hostile.Crimson;
 using NeoParacosm.Content.NPCs.Hostile.Special;
 using NeoParacosm.Core.Systems.Data;

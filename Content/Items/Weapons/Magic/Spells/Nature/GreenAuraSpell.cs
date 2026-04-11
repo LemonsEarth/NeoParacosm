@@ -1,9 +1,5 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Dusts;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Content.Buffs.GoodBuffs;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Nature;
 

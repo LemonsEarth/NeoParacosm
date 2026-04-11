@@ -1,12 +1,8 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Items.Accessories.Combat.Magic;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Hostile.DeadForest;
-using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace NeoParacosm.Content.Items.BossSummons;
 
@@ -41,7 +37,7 @@ public class DecrepitBirdWhistle : ModItem
     }
 
     public override bool? UseItem(Player player)
-    {  
+    {
         SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0f, 1f) }, player.Center);
         SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.2f, 0.4f) }, player.Center);
         SoundEngine.PlaySound(SoundID.DD2_WyvernScream with { PitchRange = (0.5f, 0.7f) }, player.Center);

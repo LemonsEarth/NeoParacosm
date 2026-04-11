@@ -1,14 +1,8 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Melee;
 using StructureHelper.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
-using static Terraria.WorldGen;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses
 {

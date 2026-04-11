@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.NPCs.Hostile.DeadForest;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 

@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Magic;
-using NeoParacosm.Content.NPCs.Hostile.Corruption;
+﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 

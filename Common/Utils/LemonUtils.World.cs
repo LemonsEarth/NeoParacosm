@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic;
-using Terraria.Utilities;
-
-namespace NeoParacosm.Common.Utils;
+﻿namespace NeoParacosm.Common.Utils;
 
 /// <summary>
 /// Contains a lot of utillities and global usings

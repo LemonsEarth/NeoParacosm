@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 

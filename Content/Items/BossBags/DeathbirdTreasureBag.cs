@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat;
-using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Items.Weapons.Melee;

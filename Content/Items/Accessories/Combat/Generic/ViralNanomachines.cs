@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Ranged;
-using Terraria.Localization;
-
-namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;
 
 public class ViralNanomachines : ModItem
 {

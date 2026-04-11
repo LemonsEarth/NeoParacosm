@@ -1,11 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
+﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 

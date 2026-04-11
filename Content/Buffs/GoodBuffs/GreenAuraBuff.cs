@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Players;
 
 namespace NeoParacosm.Content.Buffs.GoodBuffs;

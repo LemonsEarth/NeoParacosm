@@ -1,7 +1,4 @@
-﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
-
-namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
 
 public class PenetratorsInsignia : ModItem
 {

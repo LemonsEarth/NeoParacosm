@@ -1,8 +1,4 @@
-﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
-using Terraria.WorldBuilding;
-
-namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
 
 public class ObsidianArrowhead : ModItem
 {

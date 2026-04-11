@@ -1,27 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Gores;
-using NeoParacosm.Content.Items.BossBags;
-using NeoParacosm.Content.Items.Placeable.Relics;
-using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Content.Items.Weapons.Summon;
-using NeoParacosm.Content.NPCs.Hostile.Minions;
-using NeoParacosm.Content.Projectiles.Effect;
-using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
-using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Data;
-using ReLogic.Content;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Deathbird;

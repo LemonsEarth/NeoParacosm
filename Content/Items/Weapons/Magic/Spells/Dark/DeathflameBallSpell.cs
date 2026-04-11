@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 

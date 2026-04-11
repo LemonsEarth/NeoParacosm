@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
