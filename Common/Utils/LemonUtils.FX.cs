@@ -38,6 +38,15 @@ public static partial class LemonUtils
         }
     }
 
+    /// <summary>
+    /// Creates a line of dust between 2 points
+    /// </summary>
+    /// <param name="pos1"></param>
+    /// <param name="pos2"></param>
+    /// <param name="type"></param>
+    /// <param name="distanceBetween"></param>
+    /// <param name="scale"></param>
+    /// <param name="color"></param>
     public static void DustLine(Vector2 pos1, Vector2 pos2, int type, int distanceBetween = 16, float scale = 1, Color color = default)
     {
         if (color == default) color = Color.White;
@@ -61,6 +70,13 @@ public static partial class LemonUtils
         }
     }
 
+    /// <summary>
+    /// Spawns smoke gore
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="pos"></param>
+    /// <param name="minSpeed"></param>
+    /// <param name="maxSpeed"></param>
     public static void SmokeGore(IEntitySource source, Vector2 pos, float minSpeed, float maxSpeed)
     {
         if (!Main.dedServ)
@@ -78,12 +94,25 @@ public static partial class LemonUtils
         return finalPoint;
     }
 
+    /// <summary>
+    /// Returns SpriteEffects.FlipHorizontally if spriteDirection == -1, else SpriteEffects.None.
+    /// </summary>
+    /// <param name="spriteDirection"></param>
+    /// <returns></returns>
     public static SpriteEffects SpriteDirectionToSpriteEffects(int spriteDirection)
     {
         if (spriteDirection == -1) return SpriteEffects.FlipHorizontally;
         return SpriteEffects.None;
     }
 
+    /// <summary>
+    /// Draws a glow ball with the given params.
+    /// Drawing multiple glow balls on top of each other could provide a decent looking effect.
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="color"></param>
+    /// <param name="opacity"></param>
+    /// <param name="scale"></param>
     public static void DrawGlow(Vector2 position, Color color, float opacity, float scale)
     {
         Main.EntitySpriteDraw(ParacosmTextures.GlowBallTexture.Value, position - Main.screenPosition, null, color * opacity, 0f, ParacosmTextures.GlowBallTexture.Size() * 0.5f, scale, SpriteEffects.None);

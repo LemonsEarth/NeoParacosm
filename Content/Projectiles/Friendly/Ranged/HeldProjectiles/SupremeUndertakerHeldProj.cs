@@ -43,7 +43,7 @@ public class SupremeUndertakerHeldProj : ModProjectile
     public override void AI()
     {
         Player player = Projectile.GetOwner();
-        if (!player.Alive())
+        if (!player.IsAlive())
         {
             Projectile.Kill();
         }

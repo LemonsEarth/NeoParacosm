@@ -35,7 +35,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Melee
                 Projectile.damage = Projectile.originalDamage;
                 Speed += 0.1f;
                 Projectile.Opacity += 0.1f;
-                if (Projectile.TryGetOwner(out Player player) && player.Alive())
+                if (Projectile.TryGetOwner(out Player player) && player.IsAlive())
                 {
                     Projectile.scale = MathHelper.Lerp(Projectile.scale, 1f, 1 / 60f);
                     Projectile.velocity = Projectile.Center.DirectionTo(player.Center) * Speed;

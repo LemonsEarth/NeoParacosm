@@ -9,7 +9,7 @@ public abstract class BaseStaffHeldProj : ModProjectile
     public void HeldProjectileControl(Vector2 targetPosition, bool checkLeftClick = true)
     {
         Player player = Projectile.GetOwner();
-        if (!player.Alive())
+        if (!player.IsAlive())
         {
             Projectile.Kill();
         }
@@ -51,7 +51,7 @@ public abstract class BaseStaffHeldProj : ModProjectile
     public void HeldProjectileControl(Vector2 targetPosition, bool checkLeftClick = true, int manaToConsume = 10)
     {
         Player player = Projectile.GetOwner();
-        if (!player.Alive())
+        if (!player.IsAlive())
         {
             Projectile.Kill();
         }

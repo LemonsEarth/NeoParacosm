@@ -67,7 +67,7 @@ public class DarkBlast : ModProjectile
         }
 
 
-        if (!player.Alive() && !released)
+        if (!player.IsAlive() && !released)
         {
             Projectile.Kill();
             return;

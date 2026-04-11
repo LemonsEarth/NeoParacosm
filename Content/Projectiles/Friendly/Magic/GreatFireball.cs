@@ -64,7 +64,7 @@ public class GreatFireball : ModProjectile
 
         Player player = Projectile.GetOwner();
 
-        if (!player.Alive() && !released)
+        if (!player.IsAlive() && !released)
         {
             Projectile.Kill();
             return;

@@ -47,7 +47,7 @@ public class DeathflameBall : ModProjectile
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 3f);
         }
         Player player = Main.player[(int)playerID];
-        if (player.Alive() && AITimer > WaitTime)
+        if (player.IsAlive() && AITimer > WaitTime)
         {
             if (currentSpeed < maxSpeed) currentSpeed += speedAddValue;
             float angleDifference = MathHelper.WrapAngle(Projectile.Center.DirectionTo(player.Center).ToRotation() - Projectile.velocity.ToRotation());

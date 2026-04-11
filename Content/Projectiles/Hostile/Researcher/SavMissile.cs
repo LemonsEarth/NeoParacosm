@@ -50,7 +50,7 @@ public class SavMissile : ModProjectile
                 SoundEngine.PlaySound(SoundID.Zombie67 with { Pitch = 2f, PitchVariance = 0, Volume = 0.25f, MaxInstances = 10 }, Projectile.Center);
             }
             Player player = LemonUtils.GetClosestPlayer(Projectile.Center);
-            if (player != null && player.Alive())
+            if (player != null && player.IsAlive())
             {
                 Projectile.velocity = Projectile.DirectionTo(player.Center) * savedVelocity.Length();
             }

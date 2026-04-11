@@ -46,7 +46,7 @@ public class SunflowerScepterHeldProjMagic : ModProjectile
     public override void AI()
     {
         Player player = Projectile.GetOwner();
-        if (!player.Alive() || (Main.myPlayer == Projectile.owner && !Main.mouseRight))
+        if (!player.IsAlive() || (Main.myPlayer == Projectile.owner && !Main.mouseRight))
         {
             Projectile.Kill();
             return;

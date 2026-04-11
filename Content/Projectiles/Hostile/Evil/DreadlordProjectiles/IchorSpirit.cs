@@ -52,7 +52,7 @@ public class IchorSpirit : ModProjectile
 
         player = LemonUtils.GetClosestPlayer(Projectile.Center, 2000);
 
-        if (player == null || !player.Alive())
+        if (player == null || !player.IsAlive())
         {
             Projectile.Kill();
             return;

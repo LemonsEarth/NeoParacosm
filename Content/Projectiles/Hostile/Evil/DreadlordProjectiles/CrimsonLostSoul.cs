@@ -45,11 +45,11 @@ public class CrimsonLostSoul : ModProjectile
             currentSpeed = Projectile.velocity.Length();
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemRuby, 3f);
         }
-        if (player == null || !player.Alive())
+        if (player == null || !player.IsAlive())
         {
             player = LemonUtils.GetClosestPlayer(Projectile.Center, 1000);
         }
-        if (player != null && player.Alive() && AITimer > WaitTime)
+        if (player != null && player.IsAlive() && AITimer > WaitTime)
         {
             if (currentSpeed < maxSpeed) currentSpeed += speedAddValue;
             float angleDifference = MathHelper.WrapAngle(Projectile.Center.DirectionTo(player.Center).ToRotation() - Projectile.velocity.ToRotation());

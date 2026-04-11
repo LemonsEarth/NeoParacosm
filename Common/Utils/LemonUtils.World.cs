@@ -31,7 +31,8 @@ public static partial class LemonUtils
 
     /// <summary>
     /// Returns 1 for Classic and Journey, 2 for Expert, 3 for Master.
-    /// Doubles value if For the Worthy seed is active
+    /// Doubles value if For the Worthy seed is active.
+    /// Useful for scaling values based on difficulty.
     /// </summary>
     /// <returns></returns>
     public static int GetDifficulty()
@@ -43,6 +44,14 @@ public static partial class LemonUtils
         return difficulty;
     }
 
+    /// <summary>
+    /// Used for naturally generating an item in a vanilla chest. Use the wiki to find the appropriate chest's chestTileFrameX.
+    /// If decreaseChanceDenominatorOnFail is true, the chance of the item generating will increase every unsuccessful attempt
+    /// </summary>
+    /// <param name="itemType"></param>
+    /// <param name="chestTileFrameX"></param>
+    /// <param name="chanceDenominator"></param>
+    /// <param name="decreaseChanceDenominatorOnFail"></param>
     public static void GenerateItemInChest(int itemType, int chestTileFrameX, int chanceDenominator, bool decreaseChanceDenominatorOnFail = false)
     {
         int origChanceDenominator = chanceDenominator;

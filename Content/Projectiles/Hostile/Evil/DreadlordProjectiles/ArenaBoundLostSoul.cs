@@ -41,11 +41,11 @@ public class ArenaBoundLostSoul : ModProjectile
         {
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemRuby, 3f);
         }
-        if (player == null || !player.Alive())
+        if (player == null || !player.IsAlive())
         {
             player = LemonUtils.GetClosestPlayer(Projectile.Center, Range);
         }
-        if (player != null && player.Alive())
+        if (player != null && player.IsAlive())
         {
             Projectile.velocity = Projectile.DirectionTo(player.Center) * ChaseSpeed;
         }

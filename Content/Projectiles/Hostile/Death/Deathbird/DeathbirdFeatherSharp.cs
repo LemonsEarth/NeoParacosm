@@ -51,7 +51,7 @@ public class DeathbirdFeatherSharp : ModProjectile
         }
         else if (AITimer > retargetInterval && AITimer < retargetInterval + rotDuration)
         {
-            if (player.Alive())
+            if (player.IsAlive())
             {
                 Projectile.velocity = Vector2.Zero;
                 float t = (AITimer - retargetInterval) / rotDuration;

@@ -113,7 +113,7 @@ public class IceMage : ModNPC
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
     {
         int tpCooldown = 360;
-        if (tpTimer == 0 && player != null && player.Alive())
+        if (tpTimer == 0 && player != null && player.IsAlive())
         {
             Vector2 chosenPos = NPC.FindSafeTeleportPosition(player.Center, 500, 100, 100);
             if (chosenPos != Vector2.Zero)

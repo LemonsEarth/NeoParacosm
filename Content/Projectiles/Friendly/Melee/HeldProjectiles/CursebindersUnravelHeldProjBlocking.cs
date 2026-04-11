@@ -41,7 +41,7 @@ public class CursebindersUnravelHeldProjBlocking : PrimProjectile
     public override void AI()
     {
         Player player = Projectile.GetOwner();
-        if (!player.Alive())
+        if (!player.IsAlive())
         {
             Projectile.Kill();
         }

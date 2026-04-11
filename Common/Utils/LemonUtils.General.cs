@@ -10,7 +10,7 @@ public static partial class LemonUtils
     public static bool NotClient() => Main.netMode != NetmodeID.MultiplayerClient;
 
     /// <summary>
-    /// Accelerates an entity towards a position
+    /// Accelerates an entity towards a position.
     /// </summary>
     /// <param name="entity"></param>
     /// <param name="pos">The position to accelerate towards</param>
@@ -31,7 +31,7 @@ public static partial class LemonUtils
     }
 
     /// <summary>
-    /// Returns 1 one out of "consequent" times, otherwise -1
+    /// Returns 1 one out of "consequent" times, otherwise -1.
     /// </summary>
     /// <param name="rand"></param>
     /// <param name="consequent"></param>
@@ -54,6 +54,14 @@ public static partial class LemonUtils
         return MathF.Atan2(v1.X * v2.Y - v2.X * v1.Y, v1.X * v2.X + v1.Y * v2.Y);
     }
 
+    /// <summary>
+    /// Similar to Main.rand.NextVector2Circular(), but allows you to specify minimum distance from center
+    /// </summary>
+    /// <param name="circleHalfWidth"></param>
+    /// <param name="circleHalfHeight"></param>
+    /// <param name="minWidth"></param>
+    /// <param name="minHeight"></param>
+    /// <returns></returns>
     public static Vector2 RandomVector2Circular(float circleHalfWidth, float circleHalfHeight, float minWidth = 0, float minHeight = 0)
     {
         float width = 0;
@@ -95,6 +103,12 @@ public static partial class LemonUtils
         return closeness;
     }
 
+    /// <summary>
+    /// Returns the sign of num, or zeroDefault if num = 0
+    /// </summary>
+    /// <param name="num"></param>
+    /// <param name="zeroDefault"></param>
+    /// <returns></returns>
     public static int Sign(float num, int zeroDefault = 0)
     {
         if (num > 0)
@@ -111,6 +125,10 @@ public static partial class LemonUtils
         }
     }
 
+    /// <summary>
+    /// Returns the sign of num, or zeroDefault if num = 0
+    /// Casts zeroDefault to int
+    /// </summary>
     public static int Sign(float num, float zeroDefault = 0)
     {
         int _zeroDefault = (int)zeroDefault;

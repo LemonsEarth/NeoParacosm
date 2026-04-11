@@ -11,12 +11,31 @@ namespace NeoParacosm.Common.Utils;
 public static partial class LemonUtils
 {
     /// <param name="projectile"></param>
-    /// <returns>Projectile.GetOwner()</returns>
+    /// <returns>Main.player[projectile.owner]</returns>
     public static Player GetOwner(this Projectile projectile)
     {
         return Main.player[projectile.owner];
     }
 
+    /// <summary>
+    /// Used as a shorthand for spawning projectiles.
+    /// Automatically checks whether the entity spawning is a Projectile or NPC and adjusts params accordingly.
+    /// If entity is a projectile, the new projectile will inherit its owner and damage.
+    /// If entity is an NPC, the new projectile will inherit its damage, which will be adjusted for difficulty.
+    /// Should not be used for player-spawned projectiles.
+    /// The source is always whateverEntity.GetSource_FromThis(), so use Projectile.NewProjectile() for something more specific.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <param name="position"></param>
+    /// <param name="velocity"></param>
+    /// <param name="type"></param>
+    /// <param name="damage"></param>
+    /// <param name="knockback"></param>
+    /// <param name="owner"></param>
+    /// <param name="ai0"></param>
+    /// <param name="ai1"></param>
+    /// <param name="ai2"></param>
+    /// <returns>The spawned projectile</returns>
     public static Projectile QuickProj(Entity entity, Vector2 position, Vector2 velocity, int type, float damage = -1, float knockback = 1, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
     {
         IEntitySource source = null;
@@ -49,11 +68,21 @@ public static partial class LemonUtils
         return Projectile.NewProjectileDirect(source, position, velocity, type, (int)damage, knockback, owner, ai0, ai1, ai2);
     }
 
+    /// <summary>
+    /// Gets the projectile's texture from TextureAssets.Projectile.
+    /// </summary>
+    /// <param name="projectile"></param>
+    /// <returns></returns>
     public static Texture2D GetTexture(this Projectile projectile)
     {
         return TextureAssets.Projectile[projectile.type].Value;
     }
 
+    /// <summary>
+    /// Manually draws the projectile with the correct origin.
+    /// </summary>
+    /// <param name="projectile"></param>
+    /// <param name="color"></param>
     public static void DrawProjectile(this Projectile projectile, Color color)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
@@ -63,6 +92,12 @@ public static partial class LemonUtils
         Main.EntitySpriteDraw(texture, drawPos, sourceRect, color, projectile.rotation, drawOrigin, projectile.scale, SpriteEffects.None, 0);
     }
 
+    /// <summary>
+    /// Simple afterimage drawing.
+    /// </summary>
+    /// <param name="Projectile"></param>
+    /// <param name="lightColor"></param>
+    /// <param name="opacityMultiplier"></param>
     public static void DrawAfterimages(this Projectile Projectile, Color lightColor, float opacityMultiplier = 1f)
     {
         Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
@@ -76,6 +111,12 @@ public static partial class LemonUtils
         }
     }
 
+    /// <summary>
+    /// Whether a projectile is a true melee projectile.
+    /// Is not 100% guaranteed to be correct.
+    /// </summary>
+    /// <param name="proj"></param>
+    /// <returns></returns>
     public static bool CountsAsTrueMelee(this Projectile proj)
     {
         if (proj.TryGetOwner(out Player owner))
@@ -90,7 +131,8 @@ public static partial class LemonUtils
     }
 
     /// <summary>
-    /// Gets closest chaseable NPC to a position under minDistance, returns null if none found
+    /// Gets closest chaseable NPC to a position under minDistance, returns null if none found.
+    /// Pass in an NPC's whoAmI to exlude them from being returned.
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="maxDistance"></param>
@@ -121,13 +163,19 @@ public static partial class LemonUtils
         return closestEnemy;
     }
 
+    /// <summary>
+    /// Gets closest alive player.
+    /// </summary>
+    /// <param name="pos"></param>
+    /// <param name="maxDistance"></param>
+    /// <returns></returns>
     public static Player GetClosestPlayer(Vector2 pos, float maxDistance = 0)
     {
         Player closestPlayer = null;
         if (maxDistance == 0) maxDistance = 99999;
         foreach (var player in Main.ActivePlayers)
         {
-            if (player.Alive() && (player.Distance(pos) < maxDistance))
+            if (player.IsAlive() && (player.Distance(pos) < maxDistance))
             {
                 if (closestPlayer == null)
                 {
@@ -143,6 +191,12 @@ public static partial class LemonUtils
         return closestPlayer;
     }
 
+    /// <summary>
+    /// Animates the projectile with equal frame duration.
+    /// </summary>
+    /// <param name="proj"></param>
+    /// <param name="frameDuration"></param>
+    /// <param name="maxFrames"></param>
     public static void StandardAnimation(this Projectile proj, int frameDuration, int maxFrames)
     {
         proj.frameCounter++;
@@ -157,6 +211,15 @@ public static partial class LemonUtils
         }
     }
 
+    /// <summary>
+    /// Gets random position on the Projectile's hitbox.
+    /// Increase fluffX and fluffY to expand the range.
+    /// Useful for spawning dusts on the Projectile.
+    /// </summary>
+    /// <param name="proj"></param>
+    /// <param name="fluffX"></param>
+    /// <param name="fluffY"></param>
+    /// <returns></returns>
     public static Vector2 RandomPos(this Projectile proj, float fluffX = 0, float fluffY = 0)
     {
         Vector2 pos = proj.position + new Vector2(Main.rand.NextFloat(-fluffX, proj.width + fluffX), Main.rand.NextFloat(-fluffY, proj.height + fluffY));

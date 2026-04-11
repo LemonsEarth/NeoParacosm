@@ -47,7 +47,7 @@ public class DarkSpear : PrimProjectile
             Projectile.velocity = Vector2.Zero;
         }
 
-        if (!player.Alive() && !released)
+        if (!player.IsAlive() && !released)
         {
             Projectile.Kill();
             return;

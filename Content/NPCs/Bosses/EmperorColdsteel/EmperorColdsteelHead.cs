@@ -542,7 +542,7 @@ public class EmperorColdsteelHead : ModNPC
 
     public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
-        if (player == null || !player.Alive())
+        if (player == null || !player.IsAlive())
         {
             return;
         }

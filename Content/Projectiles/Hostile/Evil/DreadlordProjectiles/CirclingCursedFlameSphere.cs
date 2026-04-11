@@ -60,7 +60,7 @@ public class CirclingCursedFlameSphere : PrimProjectile
             SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f }, Projectile.Center);
 
             Player closestPlayer = LemonUtils.GetClosestPlayer(Projectile.Center, 4000);
-            if (closestPlayer != null && closestPlayer.Alive())
+            if (closestPlayer != null && closestPlayer.IsAlive())
             {
                 Projectile.velocity = Projectile.Center.DirectionTo(closestPlayer.Center) * savedSpeed;
             }
