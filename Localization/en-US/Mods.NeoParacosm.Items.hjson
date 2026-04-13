@@ -1391,9 +1391,11 @@ BodyOfThornsSpell: {
 
 HolyCrossItem: {
 	DisplayName: Placeable Holy Cross
-	Tooltip:
+	Tooltip: "A placeable holy cross"
+	NPLore:
 	'''
-
+	[c/FFFF00:These crosses hail throughout ravaged land.]
+	[c/FFFF00:It is not known who places them, only that they appear when no one is looking.]
 	'''
 }
 
@@ -1403,6 +1405,12 @@ DecrepitBirdWhistle: {
 	'''
 	Calls forth the bringer of death, by death.
 	'''
+	NPLore:
+	'''
+	[c/888888:A whistle used by gravetender knights to call upon the Deathbirds when needed.]
+	[c/888888:Deathbirds laid ruin to the Old Kingdom with their own flame, per their creator's wishes.]
+	[c/888888:Now, they are tasked with exterminating any form of life deemed unholy.]
+	'''
 }
 
 LightningShotel: {
@@ -1411,4 +1419,12 @@ LightningShotel: {
 	'''
 	Getting hit while holding this weapon grants you massively increased attack speed, damage reduction and movement speed, as well as lightning spell damage and expertise
 	'''
+	NPLore:
+	'''
+	[c/FFAA00:Formerly a spear designed to look like a lightning bolt.]
+	[c/FFAA00:The spear and its wielder were damaged in battle by a lightning strike.]
+	[c/FFAA00:The owner, torn, charged into battle with a spear, malformed.]
+	[c/FFAA00:A sight that brought enemies down to their knees.]
+	'''
 }
+

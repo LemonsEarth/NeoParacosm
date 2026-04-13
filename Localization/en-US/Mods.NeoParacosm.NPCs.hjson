@@ -1,11 +1,56 @@
-CrimsonCarrier.DisplayName: Vicious Carrier
-CrimsonCarrierHead.DisplayName: Vicious Carrier?
-CrimsonInfectionForm.DisplayName: Vicious Infection Form
 MarksmanFish.DisplayName: Marksfish
-CrimsonWalker.DisplayName: Crimson Walker
-CrimsonCatalyst.DisplayName: Crimson Catalyst
-CrimsonSentryForm.DisplayName: Crimson Sentry Form
-RotPerfumeValve.DisplayName: Rot Perfume Valve
+
+CrimsonCarrier: {
+	DisplayName: Crimson Carrier
+	Bestiary:
+	'''
+	The Crimson's initial envoys. Their arrival to any location signifies the beginning of the end.
+	'''
+}
+CrimsonCarrierHead.DisplayName: Crimson Carrier?
+
+CrimsonInfectionForm: {
+	DisplayName: Crimson Infection Form
+	Bestiary:
+	'''
+	The smallest of the Crimson's troopers.
+	Unlike other forms of infected creatures, this one contains no traces of matter belonging to other creatures.
+	They attach themselves to living creatures, rapidly sucking out blood, muscles and skin. In that order.
+	'''
+}
+CrimsonWalker: {
+	DisplayName: Crimson Walker
+	Bestiary:
+	'''
+	A human infected by the Crimson.
+	Sacks of ichor grow on its body, which can melt through armor if popped.
+	'''
+}
+CrimsonCatalyst: {
+	DisplayName: Crimson Catalyst
+	Bestiary:
+	'''
+	An object of unknown composition and mechanisms.
+	Has the ability to manifest infected creatures from nearby infected soil and rock.
+	'''
+}
+CrimsonSentryForm: {
+	DisplayName: Crimson Sentry Form
+	Bestiary:
+	'''
+	A plant-like growth on a corpse.
+	The growth itself doesn't appear to originate from the Crimson, rather it is infected by it as well.
+	The corpse appears to move on its own.
+	'''
+}
+RotPerfumeValve: {
+	DisplayName: Rot Perfume Valve
+	Bestiary:
+	'''
+	Appears to be a type of crab taken over by the Crimson.
+	It is able to consume infected grass and stone and convert it into gas, letting the Crimson spread throughout the atmosphere as well.
+	'''
+}
 
 Researcher: {
 	DisplayName: Sav the Researcher
@@ -190,20 +235,6 @@ Researcher: {
 		'''
 }
 
-Marauder.DisplayName: Marauder
-BaneflyEnemy.DisplayName: Banefly
-BaneflyHiveEnemy.DisplayName: Banefly Hive
-CorruptWalker.DisplayName: Lost Person
-CorruptMage.DisplayName: Dark Mage
-DecayingRat.DisplayName: Decaying Rat
-ShadowOrbNPC.DisplayName: Shadow Orb
-
-Deathbird: {
-	DisplayName: Deathbird
-	Bestiary: A big bird
-}
-
-GiantUndead.DisplayName: Giant Undead
 ResearcherNote.DisplayName: Researcher Note
 
 ResearcherBoss: {
@@ -277,24 +308,176 @@ ResearcherBoss: {
 	}
 }
 
-Dreadlord.DisplayName: Dreadlord
-ShieldKnight.DisplayName: Shield Knight
-SpearKnight.DisplayName: Spear Knight
-StaffKnight.DisplayName: Staff Knight
-TaintedSteed.DisplayName: Tainted Steed
-BombKnight.DisplayName: Bomb Knight
-InsatiableDolour.DisplayName: Insatiable Dolour
-WingedEyeball.DisplayName: Winged Eyeball
-SoulfulSludge.DisplayName: Soulful Sludge
-EmperorColdsteelBody.DisplayName: Emperor Coldsteel
-EmperorColdsteelHead.DisplayName: Emperor Coldsteel
-FriendlyGuardian.DisplayName: Friendly Guardian
-IceMage.DisplayName: Ice Mage
-IceMageStatue.DisplayName: Ice Mage Statue
-HeadlessTortoise.DisplayName: Headless Tortoise
-ExplosivePot.DisplayName: Explosive Pot
+Marauder.DisplayName: Marauder
+ShadowOrbNPC.DisplayName: Shadow Orb
+
+BaneflyEnemy: { 
+	DisplayName: Banefly 
+	Bestiary:
+	'''
+	A fly covered in ebonstone. It is unknown how it is able to fly.
+	Baneflies attack in groups, charging at high speeds and piercing right through weaker foes.
+	'''
+}
+
+BaneflyHiveEnemy: { 
+	DisplayName: Banefly Hive 
+	Bestiary:
+	'''
+	A floating hive made of ebonstone. It is unknown how it is able to float.
+	It is able to produce endless Baneflies, given enough time.
+	'''
+}
+
+CorruptWalker: { 
+	DisplayName: Lost Person 
+	Bestiary:
+	'''
+	A lure created by the Corruption. It mimics the visage of an unknown person.
+	Contains Baneflies, which grow impatient as time goes on, causing the vessel to burst open.
+	'''
+}
+
+CorruptMage: { 
+	DisplayName: Dark Mage 
+	Bestiary:
+	'''
+	A mage who delved too deep into his research, and lost his most powerful asset in the process.
+	'''
+}
+
+DecayingRat: { 
+	DisplayName: Decaying Rat 
+	Bestiary:
+	'''
+	A legion of rats that was so hungry they started to eat cursed flames... or so the legend says.
+	They ate so much, little sparks of cursed flame started popping out of their body.
+	They are also excellent diggers.
+	'''
+}
+
+Deathbird: {
+	DisplayName: Deathbird
+	Bestiary:
+	'''
+	An artificial creature that once executed the will of higher beings.
+	Its task was completed long ago, now its purpose is forgotten.
+	Like other beings who roam the ruined lands, it has no mind of own. Not anymore.
+	'''
+}
 
 DeathbirdMini: {
 	DisplayName: Deathbird
 	FleeMessage: The Deathbird fled the scene!
 }
+
+Dreadlord: { 
+	DisplayName: Dreadlord 
+	Bestiary:
+	'''
+	The infected remains of the Dragonlord, Edyiem.
+	The Dragonlord ascended to a higher realm long ago, leaving behind a vessel the world blights deemed "perfect".
+	The ingrained power of a dragon and the Golden Heart contained within were enough to shatter the innate balance of the world.
+	A cataclysm of this scale had brought down many worlds before. The power to stop it is now in your hands, at least briefly.
+	'''
+}
+
+ShieldKnight: { 
+	DisplayName: Gravetender Knight 
+	Bestiary:
+	'''
+	A legion of knights that were granted blessings by the higher beings, infusing their weapons with divine essence.
+	Their task was to keep the ruined lands in check, destroying any they deemed unholy.
+	However, the unending stench of death, the bodies of their former comrades rising and falling, led them to lose sight of themselves.
+	'''
+}
+
+SpearKnight: { 
+	DisplayName: Gravetender Knight 
+	Bestiary:
+	'''
+	A legion of knights that were granted blessings by the higher beings, infusing their weapons with divine essence.
+	Their task was to keep the ruined lands in check, destroying any they deemed unholy.
+	However, the unending stench of death, the bodies of their former comrades rising and falling, led them to lose sight of themselves.
+	'''
+}
+
+StaffKnight: { 
+	DisplayName: Gravetender Knight 
+	Bestiary:
+	'''
+	A legion of knights that were granted blessings by the higher beings, infusing their weapons with divine essence.
+	Their task was to keep the ruined lands in check, destroying any they deemed unholy.
+	However, the unending stench of death, the bodies of their former comrades rising and falling, led them to lose sight of themselves.
+	'''
+}
+
+TaintedSteed: { 
+	DisplayName: Tainted Steed 
+	Bestiary:
+	'''
+	A steed whose body softened into nothingness due to smouldering from deathflame.
+	It repeatedly calls out for its owner, never getting a response.
+	'''
+}
+
+BombKnight: { 
+	DisplayName: Gravetender Knight Destroyer
+	Bestiary:
+	'''
+	Giant, bomb-throwing knights were sent to destroy the homes of those they deemed unholy.
+	Their movement is highly unnatural, suggesting it is not a regular living being.
+	'''
+}
+
+InsatiableDolour: { 
+	DisplayName: Insatiable Dolour 
+	Bestiary:
+	'''
+	A steed whose body softened into nothingness due to smouldering from deathflame.
+	This variant had learned to hunger for any living creature, and has many calories to spare.
+	'''
+}
+
+WingedEyeball: { 
+	DisplayName: Winged Eyeball 
+	Bestiary:
+	'''
+	A creature of unknown origin. Their wings have a similar composition to those of bats, suggesting they may have mutated from them.
+	'''
+}
+
+SoulfulSludge: { 
+	DisplayName: Soulful Sludge 
+	Bestiary:
+	'''
+	Undying souls who fail to find a vessel eventually merge into mud and dirt, forming a mass which knows only agony.
+	'''
+}
+
+IceMage: { 
+	DisplayName: Ice Mage 
+	Bestiary:
+	'''
+	Old sculptors of cold regions became obsessed with magic relating to ice.
+	During their lives, they used their knowledge of magic to build incredible sculptures in seconds.
+	Even in death, they have not forgotten their favorite hobby.
+	'''
+}
+
+HeadlessTortoise: { 
+	DisplayName: Headless Tortoise 
+	Bestiary:
+	'''
+	An giant infected tortoise.
+	It is able to jump off of any surface from any direction by growing tiny, temporary legs wherever necessary.
+	'''
+}
+
+GiantUndead.DisplayName: Giant Undead
+EmperorColdsteelBody.DisplayName: Emperor Coldsteel
+EmperorColdsteelHead.DisplayName: Emperor Coldsteel
+FriendlyGuardian.DisplayName: Friendly Guardian
+IceMageStatue.DisplayName: Ice Mage Statue
+ExplosivePot.DisplayName: Explosive Pot
+
