@@ -1390,11 +1390,25 @@ BodyOfThornsSpell: {
 }
 
 HolyCrossItem: {
-	DisplayName: Holy Cross Item
-	Tooltip: ""
+	DisplayName: Placeable Holy Cross
+	Tooltip:
+	'''
+
+	'''
 }
 
 DecrepitBirdWhistle: {
 	DisplayName: Decrepit Bird Whistle
-	Tooltip: ""
+	Tooltip:
+	'''
+	Calls forth the bringer of death, by death.
+	'''
+}
+
+LightningShotel: {
+	DisplayName: Lightning Shotel
+	Tooltip:
+	'''
+	Getting hit while holding this weapon grants you massively increased attack speed, damage reduction and movement speed, as well as lightning spell damage and expertise
+	'''
 }

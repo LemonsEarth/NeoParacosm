@@ -166,3 +166,8 @@ MinersBlessingBuff: {
 	DisplayName: Miners Blessing
 	Description: Mining away!
 }
+
+OverchargedBuff: {
+	DisplayName: Overcharged Buff
+	Description: Mods.NeoParacosm.Buffs.OverchargedBuff.Description
+}
