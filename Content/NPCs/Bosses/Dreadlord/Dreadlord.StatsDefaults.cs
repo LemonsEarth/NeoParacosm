@@ -65,7 +65,7 @@ public partial class Dreadlord : ModNPC
         bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>
             {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
-                new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
+                //new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
             });
     }
 

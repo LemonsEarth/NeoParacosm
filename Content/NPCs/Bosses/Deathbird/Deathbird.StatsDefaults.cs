@@ -84,7 +84,7 @@ public partial class Deathbird : ModNPC
         bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>
             {
                 new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
-                new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
+                //new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
             });
     }
 
