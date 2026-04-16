@@ -1,4 +1,6 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;
 
@@ -35,5 +37,19 @@ public class HailfireSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Blue;
         SpellElements = [SpellElement.Ice];
+    }
+}
+
+
+public class HailfireSpellDropNPC : GlobalNPC
+{
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.IceElemental;
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.Common(ItemType<HailfireSpell>(), 20, 1, 1));
     }
 }

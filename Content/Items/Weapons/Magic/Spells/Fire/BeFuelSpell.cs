@@ -13,7 +13,7 @@ public class BeFuelSpell : BaseSpell
     {
         TargetVector = player.Center - Vector2.UnitY * 100;
         player.AddBuff(BuffType<BeFuelDebuff>(), 20 * 60);
-        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0f, 0.1f)}, player.Center);
+        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0f, 0.1f) }, player.Center);
         for (int j = 0; j < 6; j++)
         {
             Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
@@ -34,8 +34,13 @@ public class BeFuelSpell : BaseSpell
         SpellElements = [SpellElement.Dark];
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+    public override void AddRecipes()
     {
-        
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.LifeCrystal, 1);
+        recipe.AddIngredient(ItemID.HellstoneBar, 5);
+        recipe.AddIngredient(ItemID.FallenStar, 5);
+        recipe.AddTile(TileID.Bookcases);
+        recipe.Register();
     }
 }

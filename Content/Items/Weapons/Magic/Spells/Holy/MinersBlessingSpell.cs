@@ -26,9 +26,19 @@ public class MinersBlessingSpell : BaseSpell
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Holy, SpellElement.Earth];
     }
+}
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+public class MinersBlessingSpellShopNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
+        return entity.type == NPCID.Demolitionist;
+    }
 
+    public override void ModifyShop(NPCShop shop)
+    {
+        shop.Add(ItemType<MinersBlessingSpell>(), Condition.LanternNight);
     }
 }

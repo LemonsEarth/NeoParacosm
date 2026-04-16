@@ -33,9 +33,4 @@ public class GoldenHeartSpell : BaseSpell
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Holy];
     }
-
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
-    {
-        
-    }
 }

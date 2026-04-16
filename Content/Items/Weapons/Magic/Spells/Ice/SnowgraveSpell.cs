@@ -1,5 +1,7 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;
 
@@ -13,7 +15,7 @@ public class SnowgraveSpell : BaseSpell
     {
         TargetVector = player.Center - Vector2.UnitY * 100;
         player.AddBuff(BuffType<SnowgraveBuff>(), (int)(20 * 60 * (player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Ice] + 1)));
-        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f)}, player.Center);
+        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f) }, player.Center);
         for (int j = 0; j < 6; j++)
         {
             Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
@@ -32,5 +34,18 @@ public class SnowgraveSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Orange;
         SpellElements = [SpellElement.Ice];
+    }
+}
+
+public class SnowgraveSpellDropNPC : GlobalNPC
+{
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.IceBat;
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.Common(ItemType<SnowgraveSpell>(), 50, 1, 1));
     }
 }

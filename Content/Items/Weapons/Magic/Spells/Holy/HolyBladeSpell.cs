@@ -34,8 +34,5 @@ public class HolyBladeSpell : BaseSpell
         SpellElements = [SpellElement.Holy];
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
-    {
-        
-    }
+
 }

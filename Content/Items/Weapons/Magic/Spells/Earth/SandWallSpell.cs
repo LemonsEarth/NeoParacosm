@@ -38,4 +38,13 @@ public class SandWallSpell : BaseSpell
         Item.rare = ItemRarityID.Blue;
         SpellElements = [SpellElement.Earth];
     }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient(ItemID.SandBlock, 10)
+            .AddIngredient(ItemID.FallenStar, 3)
+            .AddTile(TileID.Bookcases)
+            .Register();
+    }
 }

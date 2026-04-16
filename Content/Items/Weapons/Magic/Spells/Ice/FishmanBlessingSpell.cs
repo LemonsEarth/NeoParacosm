@@ -1,4 +1,6 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
+using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;
 
@@ -13,7 +15,7 @@ public class FishmanBlessingSpell : BaseSpell
         TargetVector = player.Center - Vector2.UnitY * 100;
         player.AddBuff(BuffID.Gills, (int)(20 * 60 * (player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Ice] + 1)));
         player.AddBuff(BuffID.Flipper, (int)(20 * 60 * (player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Ice] + 1)));
-        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f)}, player.Center);
+        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.5f, 0.8f) }, player.Center);
         for (int j = 0; j < 6; j++)
         {
             Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
@@ -32,5 +34,19 @@ public class FishmanBlessingSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Ice];
+    }
+}
+
+
+public class FishmansBlessingSpellDropNPC : GlobalNPC
+{
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.Shark;
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<FishmanBlessingSpell>(), 15));
     }
 }

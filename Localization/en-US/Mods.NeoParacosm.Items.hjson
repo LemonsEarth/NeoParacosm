@@ -1452,10 +1452,15 @@ CutWyvernSegment: {
 CircletOfFocus: {
 	DisplayName: Circlet Of Focus
 	Tooltip:
-	'''
-	Increases magic critical strike chance by {0}%
-	Increases maximum mana by {1}
-	Attacking the same enemy consistently increases your magic damage by up to 25%
-	Attacking a different enemy resets the boost
-	'''
+		'''
+		Increases magic critical strike chance by {0}%
+		Increases maximum mana by {1}
+		Attacking the same enemy consistently increases your magic damage by up to 25%
+		Attacking a different enemy resets the boost
+		'''
+}
+
+CrystalBurstSpell: {
+	DisplayName: Crystal Burst Spell
+	Tooltip: ""
 }

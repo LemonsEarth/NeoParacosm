@@ -35,8 +35,11 @@ public class RestoreManaSpell : BaseSpell
         SpellElements = [SpellElement.Dark];
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+    public override void AddRecipes()
     {
-        
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.FallenStar, 3);
+        recipe.AddCondition(Condition.TimeNight);
+        recipe.Register();
     }
 }

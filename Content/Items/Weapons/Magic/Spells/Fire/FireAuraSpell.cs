@@ -13,7 +13,7 @@ public class FireAuraSpell : BaseSpell
     {
         TargetVector = player.Center - Vector2.UnitY * 100;
         player.AddBuff(BuffType<FireAuraBuff>(), (int)(20 * 60 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Fire, 2f)));
-        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0f, 0.1f)}, player.Center);
+        SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0f, 0.1f) }, player.Center);
         for (int j = 0; j < 6; j++)
         {
             Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
@@ -34,8 +34,12 @@ public class FireAuraSpell : BaseSpell
         SpellElements = [SpellElement.Fire];
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+    public override void AddRecipes()
     {
-        
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.InfernoPotion, 1);
+        recipe.AddIngredient(ItemID.FallenStar, 5);
+        recipe.AddTile(TileID.Bookcases);
+        recipe.Register();
     }
 }

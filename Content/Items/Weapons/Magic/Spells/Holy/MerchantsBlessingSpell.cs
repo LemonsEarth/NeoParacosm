@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
@@ -26,9 +27,19 @@ public class MerchantsBlessingSpell : BaseSpell
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Holy];
     }
+}
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+public class MerchantsBlessingSpellShopNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
+        return entity.type == NPCID.Merchant;
+    }
 
+    public override void ModifyShop(NPCShop shop)
+    {
+        shop.Add(ItemType<MerchantsBlessingSpell>(), Condition.LanternNight);
     }
 }

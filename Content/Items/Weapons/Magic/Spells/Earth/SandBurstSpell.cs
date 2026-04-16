@@ -1,4 +1,5 @@
 ﻿using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
 
@@ -16,7 +17,7 @@ public class SandBurstSpell : BaseSpell
             SoundEngine.PlaySound(SoundID.Item7, player.Center);
             for (int i = 0; i < 6; i++)
             {
-                Vector2 dir = player.DirectionTo(Main.MouseWorld).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi/8, MathHelper.Pi/8));
+                Vector2 dir = player.DirectionTo(Main.MouseWorld).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 8, MathHelper.Pi / 8));
                 Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
                     dir * Main.rand.NextFloat(6, 7) * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 3) - Vector2.UnitY * 3,
                     ProjectileID.SandBallGun,
@@ -37,5 +38,18 @@ public class SandBurstSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Blue;
         SpellElements = [SpellElement.Earth];
+    }
+}
+
+public class SandBurstSpellDropNPC : GlobalNPC
+{
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.Antlion;
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.Common(ItemType<SandBurstSpell>(), 20, 1, 1));
     }
 }

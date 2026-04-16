@@ -29,7 +29,7 @@ public class Pebble : ModProjectile
     {
         if (AITimer == 0)
         {
-
+            Projectile.frame = Main.rand.Next(0, 3);
         }
 
         Projectile.rotation = Projectile.velocity.ToRotation();

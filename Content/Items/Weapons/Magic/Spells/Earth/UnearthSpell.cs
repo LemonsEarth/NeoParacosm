@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
+﻿using Terraria.GameContent.ItemDropRules;
+
+namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
 
 public class UnearthSpell : BaseSpell
 {
@@ -41,5 +43,18 @@ public class UnearthSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 1);
         Item.rare = ItemRarityID.Blue;
         SpellElements = [SpellElement.Earth];
+    }
+}
+
+public class UnearthSpellDropNPC : GlobalNPC
+{
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.DuneSplicerHead || entity.type == NPCID.TombCrawlerHead;
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.Common(ItemType<UnearthSpell>(), 10, 1, 1));
     }
 }
