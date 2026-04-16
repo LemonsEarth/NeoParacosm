@@ -55,20 +55,21 @@ public class FireTestProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        // The flame is comprised of two flames
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:FireShader"];
         shader.UseImage1(ParacosmTextures.NoiseTexture);
-        shader.UseColor(Color.White);
+        shader.UseColor(Color.Green);
         shader.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
-        shader.UseColor(Color.Black);
-        shader.Shader.Parameters["flameHeightDownward"].SetValue(1.5f);
+        shader.UseColor(Color.White);
+        shader.Shader.Parameters["flameHeightDownward"].SetValue(1f);
         shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale * 0.5f, SpriteEffects.None, 0);
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         return false;

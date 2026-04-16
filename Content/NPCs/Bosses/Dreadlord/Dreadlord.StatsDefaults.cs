@@ -121,7 +121,7 @@ public partial class Dreadlord : ModNPC
             }
         }
     }
-        #endregion
+    #endregion
 
     public override void SetDefaults()
     {
