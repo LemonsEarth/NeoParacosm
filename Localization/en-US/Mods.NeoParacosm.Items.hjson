@@ -1421,3 +1421,39 @@ LightningShotel: {
 		[c/FFAA00:A sight that brought enemies down to their knees.]
 		'''
 }
+
+ReinforcedTurtleShell: {
+	DisplayName: Reinforced Turtle Shell
+	Tooltip:
+	'''
+	Grants immunity to knockback
+	'''
+}
+
+HellhoundFang: {
+	DisplayName: Hellhound Fang
+	Tooltip:
+	'''
+	True melee hits gain 10 armor penetration
+	'''
+}
+
+BeastGear: {
+	DisplayName: Beast Gear
+	Tooltip:
+	'''
+	True melee hits gain 10 armor penetration
+	Increases damage reduction by {1}% while at full hp
+	Increases flight time by {0}%
+	Grants immunity to knockback
+	Allows you to climb walls
+	'''
+}
+
+CutWyvernSegment: {
+	DisplayName: Cut Wyvern Segment
+	Tooltip:
+	'''
+	Increases flight time by {0}%
+	'''
+}
