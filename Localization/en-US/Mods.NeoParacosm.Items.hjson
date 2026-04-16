@@ -1424,36 +1424,38 @@ LightningShotel: {
 
 ReinforcedTurtleShell: {
 	DisplayName: Reinforced Turtle Shell
-	Tooltip:
-	'''
-	Grants immunity to knockback
-	'''
+	Tooltip: Grants immunity to knockback
 }
 
 HellhoundFang: {
 	DisplayName: Hellhound Fang
-	Tooltip:
-	'''
-	True melee hits gain 10 armor penetration
-	'''
+	Tooltip: True melee hits gain 10 armor penetration
 }
 
 BeastGear: {
 	DisplayName: Beast Gear
 	Tooltip:
-	'''
-	True melee hits gain 10 armor penetration
-	Increases damage reduction by {1}% while at full hp
-	Increases flight time by {0}%
-	Grants immunity to knockback
-	Allows you to climb walls
-	'''
+		'''
+		True melee hits gain 10 armor penetration
+		Increases damage reduction by {1}% while at full hp
+		Increases flight time by {0}%
+		Grants immunity to knockback
+		Allows you to climb walls
+		'''
 }
 
 CutWyvernSegment: {
 	DisplayName: Cut Wyvern Segment
+	Tooltip: Increases flight time by {0}%
+}
+
+CircletOfFocus: {
+	DisplayName: Circlet Of Focus
 	Tooltip:
 	'''
-	Increases flight time by {0}%
+	Increases magic critical strike chance by {0}%
+	Increases maximum mana by {1}
+	Attacking the same enemy consistently increases your magic damage by up to 25%
+	Attacking a different enemy resets the boost
 	'''
 }
