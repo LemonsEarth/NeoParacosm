@@ -48,3 +48,11 @@ public class MagicMuzzleShopNPC : GlobalNPC
         shop.Add(ItemType<MagicMuzzle>(), Condition.DownedMechBossAny);
     }
 }
+
+public class MagicMuzzleChestItem : ModSystem
+{
+    public override void PostWorldGen()
+    {
+        LemonUtils.GenerateItemInChest(ItemType<MagicMuzzle>(), 2, 10, true);
+    }
+}

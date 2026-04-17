@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Nature;
@@ -29,5 +30,20 @@ public class BodyOfThornsSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 2);
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Nature];
+    }
+}
+
+public class BodyOfThornsSpellShopNPC : GlobalNPC
+{
+    public override bool InstancePerEntity => true;
+
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.Dryad;
+    }
+
+    public override void ModifyShop(NPCShop shop)
+    {
+        shop.Add(ItemType<BodyOfThornsSpell>(), Condition.InJungle);
     }
 }

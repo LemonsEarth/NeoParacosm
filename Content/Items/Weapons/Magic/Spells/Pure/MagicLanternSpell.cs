@@ -35,4 +35,14 @@ public class MagicLanternSpell : BaseSpell
         Item.rare = ItemRarityID.Blue;
         SpellElements = [SpellElement.Pure];
     }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.Torch, 10);
+        recipe.AddIngredient(ItemID.Glowstick, 10);
+        recipe.AddIngredient(ItemID.FallenStar, 3);
+        recipe.AddTile(TileID.Bookcases);
+        recipe.Register();
+    }
 }

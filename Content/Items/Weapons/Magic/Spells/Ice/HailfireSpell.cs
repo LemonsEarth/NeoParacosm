@@ -40,7 +40,6 @@ public class HailfireSpell : BaseSpell
     }
 }
 
-
 public class HailfireSpellDropNPC : GlobalNPC
 {
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
@@ -51,5 +50,13 @@ public class HailfireSpellDropNPC : GlobalNPC
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemType<HailfireSpell>(), 20, 1, 1));
+    }
+}
+
+public class HailfireSpellChestItem : ModSystem
+{
+    public override void PostWorldGen()
+    {
+        LemonUtils.GenerateItemInChest(ItemType<HailfireSpell>(), 11, 6, true);
     }
 }

@@ -31,11 +31,6 @@ public class GreenAuraSpell : BaseSpell
         SpellElements = [SpellElement.Nature];
     }
 
-    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
-    {
-
-    }
-
     public override void AddRecipes()
     {
         CreateRecipe()

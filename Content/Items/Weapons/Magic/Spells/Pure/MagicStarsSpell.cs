@@ -1,5 +1,7 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Pure;
 
@@ -66,5 +68,18 @@ public class MagicStarsSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Pure];
+    }
+}
+
+public class MagicStarsSpellDropNPC : GlobalNPC
+{
+    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
+    {
+        return entity.type == NPCID.Tim;
+    }
+
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<MagicStarsSpell>(), 2, 1));
     }
 }

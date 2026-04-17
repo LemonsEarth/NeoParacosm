@@ -37,7 +37,6 @@ public class FishmanBlessingSpell : BaseSpell
     }
 }
 
-
 public class FishmansBlessingSpellDropNPC : GlobalNPC
 {
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
@@ -48,5 +47,13 @@ public class FishmansBlessingSpellDropNPC : GlobalNPC
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ItemType<FishmanBlessingSpell>(), 15));
+    }
+}
+
+public class FishmansBlessingSpellChestItem : ModSystem
+{
+    public override void PostWorldGen()
+    {
+        LemonUtils.GenerateItemInChest(ItemType<FishmanBlessingSpell>(), 17, 4, true);
     }
 }

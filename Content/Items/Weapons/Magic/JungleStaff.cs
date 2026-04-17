@@ -51,3 +51,11 @@ public class JungleStaff : ModItem
         return true;
     }
 }
+
+public class JungleStaffChestItem : ModSystem
+{
+    public override void PostWorldGen()
+    {
+        LemonUtils.GenerateItemInChest(ItemType<JungleStaff>(), 10, 10, true);
+    }
+}

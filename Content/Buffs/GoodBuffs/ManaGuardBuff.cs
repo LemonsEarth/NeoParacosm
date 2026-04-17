@@ -11,9 +11,7 @@ public class ManaGuardBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        player.statDefense += (int)(10 * MathF.Pow(player.GetElementalExpertiseBoost(SpellElement.Pure), 2));
-        player.endurance += 15f / 100f;
-        player.GetDamage(DamageClass.Generic) -= 10f / 100f;
+
     }
 }
 
@@ -23,7 +21,7 @@ public class ManaGuardPlayer : ModPlayer
     {
         if (Player.HasBuff(BuffType<ManaGuardBuff>()))
         {
-            Player.CheckMana((info.Damage * 2) / LemonUtils.GetDifficulty(), true, true);
+            Player.CheckMana(info.SourceDamage, true, true);
             Player.manaRegenDelay = 120;
         }
     }
@@ -33,7 +31,8 @@ public class ManaGuardPlayer : ModPlayer
         if (Player.HasBuff(BuffType<ManaGuardBuff>()))
         {
             float manaPercent = (float)Player.statMana / Player.statManaMax2;
-            float bonusDamage = 1 - manaPercent;
+            float bonusDamage = 1 - manaPercent - 0.5f;
+            bonusDamage = MathHelper.Clamp(bonusDamage, -0.2f * Player.GetElementalExpertiseBoost(SpellElement.Pure), 0.5f);
             modifiers.FinalDamage *= (1 + bonusDamage);
         }
     }

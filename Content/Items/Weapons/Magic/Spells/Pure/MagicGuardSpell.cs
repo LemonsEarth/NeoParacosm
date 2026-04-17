@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
+using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Pure;
@@ -12,8 +13,8 @@ public class MagicGuardSpell : BaseSpell
     public override void SpellAction(Player player)
     {
         TargetVector = player.Center - Vector2.UnitY * 100;
-        player.AddBuff(BuffType<MagicGuardBuff>(), (int)(20 * 60 * player.GetElementalExpertiseBoost(SpellElement.Pure)));
-        SoundEngine.PlaySound(SoundID.Item130 with { PitchRange = (0.5f, 0.6f)}, player.Center);
+        player.AddBuff(BuffType<MagicGuardBuff>(), (int)(10 * 60 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Pure, 7)));
+        SoundEngine.PlaySound(SoundID.Item130 with { PitchRange = (0.5f, 0.6f) }, player.Center);
         for (int j = 0; j < 6; j++)
         {
             Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
@@ -32,5 +33,14 @@ public class MagicGuardSpell : BaseSpell
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Green;
         SpellElements = [SpellElement.Pure];
+    }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemType<RoundShield>(), 1);
+        recipe.AddIngredient(ItemID.FallenStar, 10);
+        recipe.AddTile(TileID.Bookcases);
+        recipe.Register();
     }
 }
