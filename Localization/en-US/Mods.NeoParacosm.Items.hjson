@@ -592,8 +592,8 @@ LeafSpell: {
 	Tooltip: Conjure leaves from the ground and hurl them at enemies
 	NPLore:
 		'''
-		[c/00FF00: One of the most basic, yet useful spells.]
-		[c/00FF00: Many opponents fall the moment they realize a forest is a caster's domain.]
+		[c/00FF00:One of the most basic, yet useful spells.]
+		[c/00FF00:Many opponents fall the moment they realize a forest is a caster's domain.]
 		'''
 }
 
@@ -1462,5 +1462,52 @@ CircletOfFocus: {
 
 CrystalBurstSpell: {
 	DisplayName: Crystal Burst Spell
-	Tooltip: ""
+	Tooltip:
+	'''
+	Fires a burst of crystals, which burst into more crystals
+	'''
+}
+
+SpellBonus: {
+	Damage: {
+		Pure: "[c/78ACFF:Increases pure magic spell damage]"
+		Lightning: "[c/FFAA00:Increases lightning spell damage]"
+		Dark: "[c/888888:Increases dark spell damage]"
+		Fire: "[c/FF5833:Increases fire spell damage]"
+		Ice: "[c/5CCEFF:Increases ice spell damage]"
+		Nature: "[c/00FF00:Increases nature spell damage]"
+		Holy: "[c/FFFF00:Increases holy spell damage]"
+		Earth: "[c/8F5100:Increases earth spell damage]"
+	}
+
+	Expertise: {
+		Pure: "[c/78ACFF:Increases pure magic spell expertise]"
+		Lightning: "[c/FFAA00:Increases lightning spell expertise]"
+		Dark: "[c/888888:Increases dark spell expertise]"
+		Fire: "[c/FF5833:Increases fire spell expertise]"
+		Ice: "[c/5CCEFF:Increases ice spell expertise]"
+		Nature: "[c/00FF00:Increases nature spell expertise]"
+		Holy: "[c/FFFF00:Increases holy spell expertise]"
+		Earth: "[c/8F5100:Increases earth spell expertise]"
+	}
+
+	Both: {
+		Pure: "[c/78ACFF:Increases pure magic spell damage and expertise]"
+		Lightning: "[c/FFAA00:Increases lightning spell damage and expertise]"
+		Dark: "[c/888888:Increases dark spell damage and expertise]"
+		Fire: "[c/FF5833:Increases fire spell damage and expertise]"
+		Ice: "[c/5CCEFF:Increases ice spell damage and expertise]"
+		Nature: "[c/00FF00:Increases nature spell damage and expertise]"
+		Holy: "[c/FFFF00:Increases holy spell damage and expertise]"
+		Earth: "[c/8F5100:Increases earth spell damage and expertise]"
+	}
+}
+
+MagicInspector: {
+	DisplayName: Magic Inspector
+	Tooltip:
+	'''
+	Left click to display spell damage boosts per element
+	Right click to display spell expertise boosts per element
+	'''
 }

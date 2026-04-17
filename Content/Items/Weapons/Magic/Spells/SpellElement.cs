@@ -12,3 +12,10 @@ public enum SpellElement
     Holy,
     Dark
 }
+
+public enum SpellBoostType
+{
+    Damage,
+    Expertise,
+    Both
+}

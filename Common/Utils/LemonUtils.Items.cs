@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.Localization;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -45,5 +47,15 @@ public static partial class LemonUtils
         spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+    }
+
+    public static string GetSpellBonusTooltip(SpellElement element, SpellBoostType boostType)
+    {
+        return Language.GetTextValue($"Mods.NeoParacosm.Items.SpellBonus.{boostType}.{element}");
+    }
+
+    public static TooltipLine QuickArmorSpellBoostTooltipLine(string itemName, SpellElement element, SpellBoostType boostType)
+    {
+        return new TooltipLine(NeoParacosm.Instance, $"NeoParacosm:{itemName}SpellBoost", GetSpellBonusTooltip(element, boostType));
     }
 }

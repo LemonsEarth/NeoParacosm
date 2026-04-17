@@ -24,8 +24,8 @@ public class CrystalBurstSpell : BaseSpell
                     (int)(GetDamage(player) * 0.5f),
                     1f,
                     player.whoAmI,
-                    ai1: 1 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Pure, 2),
-                    ai2: 15 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 4)
+                    ai1: 1 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 0.5f) * player.GetElementalExpertiseBoostMultiplied(SpellElement.Pure, 1),
+                    ai2: 15 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 1)
                     );
             }
         }
@@ -34,7 +34,7 @@ public class CrystalBurstSpell : BaseSpell
     public override void SetDefaults()
     {
         base.SetDefaults();
-        Item.damage = 24;
+        Item.damage = 32;
         Item.width = 40;
         Item.height = 38;
         Item.value = Item.buyPrice(gold: 1);
