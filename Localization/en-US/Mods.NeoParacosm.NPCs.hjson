@@ -475,103 +475,104 @@ IceMageStatue.DisplayName: Ice Mage Statue
 ExplosivePot.DisplayName: Explosive Pot
 
 DragonWorshipper: {
-	DeathMessage: '''{0} has left the premises.'''
+	DeathMessage: "{0} has left the premises."
 	DisplayName: Dragon Worshipper
 	TradeButton: Trade
-	Bestiary:
-	'''
-	Though the age of dragons has long ended, their resolve remains firm. Those who dare to disgrace the dragons shall remember why they were feared for so long.
-	'''
+	Bestiary: Though the age of dragons has long ended, their resolve remains firm. Those who dare to disgrace the dragons shall remember why they were feared for so long.
+
 	StandardDialogue: {
-		T1:
-		'''
-		Greetings, hospitable individual. Want to converse about dragons?
-		'''
+		T1: Greetings, hospitable individual. Want to converse about dragons?
 		T2:
-		'''
-		Did you know that in the deep jungle, "Dragon Hornets" existed?
-		Of course, they weren't related to actual dragons, but they were hunted to extinction regardless.
-		Sick in the head, those people.
-		'''
-		T3:
-		'''
-		I will not be taking my outfit off. It is insulting to my people.
-		'''
+			'''
+			Did you know that in the deep jungle, "Dragon Hornets" existed?
+			Of course, they weren't related to actual dragons, but they were hunted to extinction regardless.
+			Sick in the head, those people.
+			'''
+		T3: I will not be taking my outfit off. It is insulting to my people.
 		T4:
-		'''
-		The other dragon worshippers were hunted down.
-		Not inherently because they worshipped dragons, but because they called themselves "dragon" worshippers.
-		How silly...
-		'''
+			'''
+			The other dragon worshippers were hunted down.
+			Not inherently because they worshipped dragons, but because they called themselves "dragon" worshippers.
+			How silly...
+			'''
 		T5:
-		'''
-		All dragons were mighty and glorius, but one stood above all.
-		It was, without a doubt, Dragonlord Edyiem; first of the Golden Dragons, bearer of the Golden Heart, three-headed giant-slayer.
-		He departed this world long ago to embrace a higher state of being, leaving behind his remains somewhere nearby.
-		'''
+			'''
+			All dragons were mighty and glorius, but one stood above all.
+			It was, without a doubt, Dragonlord Edyiem; first of the Golden Dragons, bearer of the Golden Heart, three-headed giant-slayer.
+			He departed this world long ago to embrace a higher state of being, leaving behind his remains somewhere nearby.
+			'''
 		T6:
-		'''
-		They say the Golden Heart resides in the body of its bearer for centuries after their passing, protecting it from filthy pillagers and rodents.
-		The last known bearer was the Dragonlord, who abandoned this world long ago. I wonder if the Golden Heart's power still resonates from his body...
-		'''
+			'''
+			They say the Golden Heart resides in the body of its bearer for centuries after their passing, protecting it from filthy pillagers and rodents.
+			The last known bearer was the Dragonlord, who abandoned this world long ago. I wonder if the Golden Heart's power still resonates from his body...
+			'''
 		T7:
-		'''
-		Dragons used to be as common as pigeons, except with power far beyond that of the average pigeon.
-		However, certain individuals wanted that power for themselves.
-		They hunted them for their scales and blood, leaving none behind... We must slay them at all costs.
-		'''
+			'''
+			Dragons used to be as common as pigeons, except with power far beyond that of the average pigeon.
+			However, certain individuals wanted that power for themselves.
+			They hunted them for their scales and blood, leaving none behind... We must slay them at all costs.
+			'''
+		T8:
+			'''
+			You might've seen dragon-like creatures flying around the sky. 
+			Know that those serpents are nothing like actual dragons!
+			Just a poor attempt at mimicking their facade.
+			Despite that, they do possess a dragon soul... They probably just ate an already dead dragon or something...
+			'''
 	}
+
 	DCDialogue: {
 		T1:
-		'''
-		Did you see that? A dragon! A real dragon! I can't believe it's a dragon!
-		But it's wrong... Something is wrong!
-		O' the colors! The stench! It is so wrong!
-		'''
+			'''
+			Did you see that? A dragon! A real dragon! I can't believe it's a dragon!
+			But it's wrong... Something is wrong!
+			O' the colors! The stench! It is so wrong!
+			'''
 		T2:
-		'''
-		There is no mistake! There is no error! Yet it is so wrong!
-		That is Dragonlord Edyiem's beautiful corpse, corroded and infected!
-		'''
+			'''
+			There is no mistake! There is no error! Yet it is so wrong!
+			That is Dragonlord Edyiem's beautiful corpse, corroded and infected!
+			'''
 		T3:
-		'''
-		Something real bad is goin' on!
-		You must do something to solve this!
-		Take that imposter down!
-		I can help you!
-		'''
+			'''
+			Something real bad is goin' on!
+			You must do something to solve this!
+			Take that imposter down!
+			I can help you!
+			'''
 		T4:
-		'''
-		This stench... I've smelt it before...
-		Flames that are divine yet unholy... 
-		A deity of evil is making its move...
-		We cannot let the world be destroyed any further!
-		'''
+			'''
+			This stench... I've smelt it before...
+			Flames that are divine yet unholy... 
+			A deity of evil is making its move...
+			We cannot let the world be destroyed any further!
+			'''
 	}
+
 	TownNPCMood: {
-		Content: "Your household is most pleasant. I've no qualms about staying here."
-		NoHome: "Though this coat protects me from bad weather, having a roof over my head would be much more comfortable..."
-		FarFromHome: "This expedition has gone on long enough, I'd say."
-		LoveSpace: "There's a lot of space here, perfect for a massive dragon statue!"
-		DislikeCrowded: "There's a lot of people here who don't appreciate the beauty of dragons..."
-		HateCrowded: "There's too many people here who don't appreciate the beauty of dragons!"
-		LoveBiome: "The vast {BiomeName} has many living creatures, a lot of them are probably descendants of dragons!"
-		LikeBiome: 
-		'''
-		The gigantic creatures that lie in the deep {BiomeName} are truly magnificent. 
-		Too bad the gigantic creatures of the surface were hunted down because of pure, unfiltered greed.
-		The thought of taking the lives of those beautiful wonders of nature became sport for the most unhinged individuals.
-		Monsters they are, I'm telling you, I'm telling you...
-		'''
-		DislikeBiome: "How could anyone like {BiomeName}? It's so cold... Why would anyone want to be cold..."
-		LoveNPC: "That {NPCName} fella sure looks like a dragon to me. Heard he is from the jungle as well..."
-		LikeNPC: "It's good to know people like {NPCName} exist. Preserving nature is a task of utmost importance. We would probably get along."
+		Content: Your household is most pleasant. I've no qualms about staying here.
+		NoHome: Though this coat protects me from bad weather, having a roof over my head would be much more comfortable...
+		FarFromHome: This expedition has gone on long enough, I'd say.
+		LoveSpace: There's a lot of space here, perfect for a massive dragon statue!
+		DislikeCrowded: There's a lot of people here who don't appreciate the beauty of dragons...
+		HateCrowded: There's too many people here who don't appreciate the beauty of dragons!
+		LoveBiome: The vast {BiomeName} has many living creatures, a lot of them are probably descendants of dragons!
+		LikeBiome:
+			'''
+			The gigantic creatures that lie in the deep {BiomeName} are truly magnificent. 
+			Too bad the gigantic creatures of the surface were hunted down because of pure, unfiltered greed.
+			The thought of taking the lives of those beautiful wonders of nature became sport for the most unhinged individuals.
+			Monsters they are, I'm telling you, I'm telling you...
+			'''
+		DislikeBiome: How could anyone like {BiomeName}? It's so cold... Why would anyone want to be cold...
+		LoveNPC: That {NPCName} fella sure looks like a dragon to me. Heard he is from the jungle as well...
+		LikeNPC: It's good to know people like {NPCName} exist. Preserving nature is a task of utmost importance. We would probably get along.
 		DislikeNPC: "{NPCName} hunts innocent creatures for sport. Even worse, he makes equipment for that sole purpose and convinces the youth it's a good thing! He must be disposed of before he does any more damage..."
-		HateNPC: 
-		'''
-		{NPCName}? What is that freak of nature? You're telling me people actually put junk inside of their bodies, then pretend they're high and mighty?!
-		Back in my day, you needed to have faith in the most divine of creatures and beg them to bless you with a fraction of their power, just like nature intended!
-		'''
+		HateNPC:
+			'''
+			{NPCName}? What is that freak of nature? You're telling me people actually put junk inside of their bodies, then pretend they're high and mighty?!
+			Back in my day, you needed to have faith in the most divine of creatures and beg them to bless you with a fraction of their power, just like nature intended!
+			'''
 		LikeNPC_Princess: "{NPCName} is royalty? Good for her, good for her, but my faith won't waver."
 		Princess_LovesNPC: "{NPCName} is so devoted to their cause... I need more people like them around me!"
 	}

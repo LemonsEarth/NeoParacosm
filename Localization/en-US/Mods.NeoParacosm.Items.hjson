@@ -1508,3 +1508,13 @@ MagicInspector: {
 		Right click to display spell expertise boosts per element
 		'''
 }
+
+DragonSoul: {
+	DisplayName: Dragon Soul
+	CurrencyDisplayName: dragon souls
+	Tooltip:
+	'''
+	A soul of a dragon is said to never dissipate.
+	Some individuals may find them precious...
+	'''
+}

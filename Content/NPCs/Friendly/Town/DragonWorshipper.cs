@@ -113,7 +113,7 @@ public class DragonWorshipper : ModNPC
             Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Granite);
         }
 
-        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f}, NPC.Center);
+        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f }, NPC.Center);
         LemonUtils.DustBurst(16, NPC.Center, DustID.GemTopaz, 5, 6, 1.2f, 2f);
         if (LemonUtils.NotClient())
         {
@@ -202,6 +202,7 @@ public class DragonWorshipper : ModNPC
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T5"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T6"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T7"));
+            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T8"));
         }
 
         string chosenChat = chat; // chat is implicitly cast to a string. This is where the random choice is made.
