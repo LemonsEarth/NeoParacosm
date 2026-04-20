@@ -1462,10 +1462,7 @@ CircletOfFocus: {
 
 CrystalBurstSpell: {
 	DisplayName: Crystal Burst Spell
-	Tooltip:
-	'''
-	Fires a burst of crystals, which burst into more crystals
-	'''
+	Tooltip: Fires a burst of crystals, which burst into more crystals
 }
 
 SpellBonus: {
@@ -1506,8 +1503,8 @@ SpellBonus: {
 MagicInspector: {
 	DisplayName: Magic Inspector
 	Tooltip:
-	'''
-	Left click to display spell damage boosts per element
-	Right click to display spell expertise boosts per element
-	'''
+		'''
+		Left click to display spell damage boosts per element
+		Right click to display spell expertise boosts per element
+		'''
 }
