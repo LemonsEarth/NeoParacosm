@@ -79,7 +79,9 @@ public class DragonWorshipper : ModNPC
 
     public override void AI()
     {
-
+        NPC.velocity.X *= 0.95f;
+        NPC.direction = LemonUtils.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X, 1);
+        NPC.spriteDirection = NPC.direction;
     }
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -111,6 +113,20 @@ public class DragonWorshipper : ModNPC
             Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Granite);
         }
 
+        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f}, NPC.Center);
+        LemonUtils.DustBurst(16, NPC.Center, DustID.GemTopaz, 5, 6, 1.2f, 2f);
+        if (LemonUtils.NotClient())
+        {
+            Vector2 tpPos = NPC.FindSafeTeleportPosition(NPC.Center, 800, 200, 200);
+            if (tpPos != Vector2.Zero)
+            {
+                NPC.Center = tpPos;
+            }
+        }
+        NPC.netUpdate = true;
+        LemonUtils.DustBurst(16, NPC.Center, DustID.GemTopaz, 5, 6, 1.2f, 2f);
+        SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f }, NPC.Center);
+
         if (Main.netMode != NetmodeID.Server && NPC.life <= 0)
         {
             for (int i = 0; i < 4; i++)
@@ -118,6 +134,7 @@ public class DragonWorshipper : ModNPC
                 LemonUtils.SmokeGore(NPC.GetSource_FromThis(), NPC.RandomPos(), 2, 4);
             }
         }
+
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -175,9 +192,6 @@ public class DragonWorshipper : ModNPC
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T2"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T3"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T4"));
-            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T5"));
-            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T6"));
-            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T7"));
         }
         else
         {
@@ -185,6 +199,9 @@ public class DragonWorshipper : ModNPC
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T2"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T3"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T4"));
+            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T5"));
+            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T6"));
+            chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.StandardDialogue.T7"));
         }
 
         string chosenChat = chat; // chat is implicitly cast to a string. This is where the random choice is made.
