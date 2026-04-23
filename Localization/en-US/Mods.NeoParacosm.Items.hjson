@@ -1513,8 +1513,38 @@ DragonSoul: {
 	DisplayName: Dragon Soul
 	CurrencyDisplayName: dragon souls
 	Tooltip:
+		'''
+		A soul of a dragon is said to never dissipate.
+		Some individuals may find them precious...
+		'''
+}
+
+AntiblightRings: {
+	DisplayName: Antiblight Rings
+	Tooltip:
 	'''
-	A soul of a dragon is said to never dissipate.
-	Some individuals may find them precious...
+	Makes Cursed Inferno and Ichor deplete faster
+	'''
+}
+
+TrueDragonFruit: {
+	DisplayName: True Dragon Fruit
+	Tooltip:
+	'''
+	Increases damage by {0}%
+	Increases critical strike chance by {1}%
+	Increases damage reduction by {2}%
+	Inflicts you with Hellfire
+	'''
+}
+
+AncientDragonScale: {
+	DisplayName: Ancient Dragon Scale
+	Tooltip:
+	'''
+	Increases fire and lightning spell damage by {0}%
+	Increases fire and lightning spell expertise by {1}%
+	Increases damage reduction by {2}%
+	Increases damage reduction by an additional {3}% when below half hp
 	'''
 }

@@ -91,6 +91,16 @@ public static partial class LemonUtils
         Main.NewText("Player Tile Coords: " + player.Center.ToTileCoordinates());
     }
 
+    public static Rectangle Inflated(this Rectangle rect, float xMul, float yMul)
+    {
+        Rectangle newRect = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+        newRect.Width = (int)(newRect.Width * xMul);
+        newRect.Height = (int)(newRect.Height * yMul);
+        newRect.X -= (int)(newRect.Width * xMul) / 2;
+        newRect.Y -= (int)(newRect.Height * yMul) / 2;
+        return newRect;
+    }
+
     public static float ClosenessToMidpoint(int length, int index)
     {
         if (index >= length || index < 0)

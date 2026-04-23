@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.Accessories.Combat.Magic;
+using NeoParacosm.Content.Items.Currencies;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -227,11 +229,10 @@ public class DragonWorshipper : ModNPC
     // Not completely finished, but below is what the NPC will sell
     public override void AddShops()
     {
-        var npcShop = new NPCShop(Type, ShopName);
-        //.Add<ExampleItem>()
-        //.Add<EquipMaterial>()
-        //.Add<BossItem>()
-        //.Add(new Item(ModContent.ItemType<Items.Placeable.Furniture.ExampleWorkbench>()) { shopCustomPrice = Item.buyPrice(copper: 15) }) // This example sets a custom price, ExampleNPCShop.cs has more info on custom prices and currency.
+        var npcShop = new NPCShop(Type, ShopName)
+        .Add(new Item(ItemType<AncientDragonScale>())
+        { shopCustomPrice = 60, shopSpecialCurrency = DragonSoulCurrencySystem.DragonSoulCurrency },
+        Condition.DownedMechBossAny);
 
         npcShop.Register(); // Name of this shop tab
     }

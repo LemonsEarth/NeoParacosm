@@ -7,8 +7,7 @@ public class DragonSoul : ModItem
 {
     public override void SetStaticDefaults()
     {
-        // Registers a vertical animation with 4 frames and each one will last 5 ticks (1/12 second)
-        Main.RegisterItemAnimation(Type, new DrawAnimationVertical(5, 8));
+        Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 4));
         ItemID.Sets.AnimatesAsSoul[Type] = true; // Makes the item have an animation while in world (not held.). Use in combination with RegisterItemAnimation
 
         ItemID.Sets.ItemIconPulse[Type] = true; // The item pulses while in the player's inventory
@@ -20,8 +19,8 @@ public class DragonSoul : ModItem
     public override void SetDefaults()
     {
         Item.maxStack = Item.CommonMaxStack;
-        Item.width = 18;
-        Item.height = 18;
+        Item.width = 52;
+        Item.height = 52;
         Item.value = Item.sellPrice(0, 0, 0, 0);
         Item.rare = ItemRarityID.Pink;
     }
