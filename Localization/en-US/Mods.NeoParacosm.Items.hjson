@@ -1546,3 +1546,8 @@ AncientDragonScale: {
 		Increases damage reduction by an additional {3}% when below half hp
 		'''
 }
+
+DragonBreathSpell: {
+	DisplayName: Dragon Breath Spell
+	Tooltip: ""
+}
