@@ -20,6 +20,7 @@ public abstract class BaseSpell : ModItem
     /// Vector that controls in what direction the catalyst will be pointing
     /// </summary>
     public abstract Vector2 TargetVector { get; set; }
+    public virtual bool CanCastSpell(Player player) => true;
     public abstract void SpellAction(Player player);
 
     public HashSet<SpellElement> SpellElements = [];

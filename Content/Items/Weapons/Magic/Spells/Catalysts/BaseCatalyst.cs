@@ -27,7 +27,7 @@ public abstract class BaseCatalyst : ModItem
 
     public override bool CanUseItem(Player player)
     {
-        return player.NPCatalystPlayer().SelectedSpell != null;
+        return player.NPCatalystPlayer().SelectedSpell != null && player.NPCatalystPlayer().SelectedSpell.CanCastSpell(player);
     }
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
