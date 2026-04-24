@@ -1548,6 +1548,6 @@ AncientDragonScale: {
 }
 
 DragonBreathSpell: {
-	DisplayName: Dragon Breath Spell
-	Tooltip: ""
+	DisplayName: Dragon's Breath
+	Tooltip: Manifest the power of a dragon to spew flames
 }

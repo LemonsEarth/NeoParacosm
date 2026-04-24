@@ -64,10 +64,9 @@ public class DragonHeadHeldProj : ModProjectile
         {
             Projectile.timeLeft = 30;
             Projectile.frame = 1;
-
             if (AITimer % 5 == 0)
             {
-                if (!player.CheckMana(5, true, false))
+                if (!player.CheckManaButGood(5, true, false))
                 {
                     released = true;
                     return;

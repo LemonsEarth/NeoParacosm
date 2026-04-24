@@ -72,7 +72,7 @@ public class CrossedWireHeldProjOld : PrimProjectile
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
 
-        if (AITimer % 2 == 0 && !player.CheckMana(player.HeldItem.mana, true, false))
+        if (AITimer % 2 == 0 && !player.CheckManaButGood(player.HeldItem.mana, true, false))
         {
             Projectile.Kill();
             return;

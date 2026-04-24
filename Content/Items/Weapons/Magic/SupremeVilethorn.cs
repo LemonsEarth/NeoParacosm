@@ -24,7 +24,7 @@ public class SupremeVilethorn : ModItem
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
-        Item.mana = 15;
+        Item.mana = 10;
         Item.channel = true;
         Item.ArmorPenetration = 10;
     }

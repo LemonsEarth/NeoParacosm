@@ -71,9 +71,8 @@ public class SunflowerScepterHeldProjMagic : ModProjectile
         }
 
         int attackCD = (int)(10 / player.GetAttackSpeed(DamageClass.Magic));
-        if (AITimer % attackCD == 0 && player.CheckMana(15, true, false))
+        if (AITimer % attackCD == 0 && player.CheckManaButGood(5, true, false))
         {
-            player.manaRegenDelay = 60;
             SoundEngine.PlaySound(SoundID.Item39 with { PitchRange = (0.3f, 0.5f) }, Projectile.Center);
             if (Main.myPlayer == Projectile.owner)
             {
@@ -90,12 +89,6 @@ public class SunflowerScepterHeldProjMagic : ModProjectile
             }
 
         }
-        else if (!player.CheckMana(player.GetManaCost(player.HeldItem), false, false))
-        {
-            Projectile.Kill();
-            return;
-        }
-
 
         AITimer++;
     }

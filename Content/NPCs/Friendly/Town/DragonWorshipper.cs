@@ -3,6 +3,7 @@ using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Accessories.Combat.Magic;
 using NeoParacosm.Content.Items.Currencies;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 using NeoParacosm.Core.Conditions;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
@@ -245,6 +246,7 @@ public class DragonWorshipper : ModNPC
     {
         var npcShop = new NPCShop(Type, ShopName);
         AddDragonSoulCurrencyItem(npcShop, ItemType<AncientDragonScale>(), 30);
+        AddDragonSoulCurrencyItem(npcShop, ItemType<DragonBreathSpell>(), 30);
         AddDragonSoulCurrencyItem(npcShop, ItemType<TrueDragonFruit>(), 20, Condition.DownedPirates);
         AddDragonSoulCurrencyItem(npcShop, ItemType<AntiblightRings>(), 20, LemonConditions.DownedResearcher);
 

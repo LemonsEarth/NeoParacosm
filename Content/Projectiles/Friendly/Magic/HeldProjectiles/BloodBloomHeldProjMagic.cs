@@ -41,7 +41,6 @@ public class BloodBloomHeldProjMagic : BaseStaffHeldProj
         int attackCD = (int)(60 / player.GetAttackSpeed(DamageClass.Magic));
         if (AITimer % attackCD == 0)
         {
-            player.manaRegenDelay = 120;
             SoundEngine.PlaySound(SoundID.Item84 with { PitchRange = (-0.6f, -0.3f), MaxInstances = 0 }, Projectile.Center);
             if (Main.myPlayer == Projectile.owner)
             {

@@ -61,7 +61,7 @@ public class SupremeCrimsonRodHeldProj : ModProjectile
             SetPositionRotationDirection(player, player.Center.DirectionTo(Main.projectile[shotprojID].Center).ToRotation());
             if (AITimer % 10 == 0)
             {
-                if (!player.CheckMana(player.HeldItem.mana, true))
+                if (!player.CheckManaButGood(player.HeldItem.mana, true))
                 {
                     Projectile.Kill();
                 }

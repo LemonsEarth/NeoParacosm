@@ -21,7 +21,7 @@ public abstract class BaseStaffHeldProj : ModProjectile
             SetPositionRotationDirection(player, targetPosition);
             if (AITimer % ManaConsumeInterval == 0)
             {
-                if (!player.CheckMana(player.HeldItem.mana, true))
+                if (!player.CheckManaButGood(player.HeldItem.mana, true))
                 {
                     Projectile.Kill();
                     return;
@@ -34,7 +34,7 @@ public abstract class BaseStaffHeldProj : ModProjectile
             SetPositionRotationDirection(player, targetPosition);
             if (AITimer % ManaConsumeInterval == 0)
             {
-                if (!player.CheckMana(player.HeldItem.mana, true))
+                if (!player.CheckManaButGood(player.HeldItem.mana, true))
                 {
                     Projectile.Kill();
                     return;
@@ -63,7 +63,7 @@ public abstract class BaseStaffHeldProj : ModProjectile
             SetPositionRotationDirection(player, targetPosition);
             if (AITimer % ManaConsumeInterval == 0)
             {
-                if (!player.CheckMana(manaToConsume, true))
+                if (!player.CheckManaButGood(manaToConsume, true))
                 {
                     Projectile.Kill();
                     return;
@@ -76,7 +76,7 @@ public abstract class BaseStaffHeldProj : ModProjectile
             SetPositionRotationDirection(player, targetPosition);
             if (AITimer % ManaConsumeInterval == 0)
             {
-                if (!player.CheckMana(manaToConsume, true))
+                if (!player.CheckManaButGood(manaToConsume, true))
                 {
                     Projectile.Kill();
                     return;

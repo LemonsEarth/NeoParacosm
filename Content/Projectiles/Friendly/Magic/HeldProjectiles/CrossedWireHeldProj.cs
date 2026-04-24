@@ -69,7 +69,7 @@ public class CrossedWireHeldProj : PrimProjectile
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
-        if (AITimer % 4 == 0 && !player.CheckMana(player.HeldItem.mana, true, false))
+        if (AITimer % 4 == 0 && !player.CheckManaButGood(player.HeldItem.mana, true, false))
         {
             Projectile.Kill();
             return;

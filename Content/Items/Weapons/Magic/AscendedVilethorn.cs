@@ -25,7 +25,7 @@ public class AscendedVilethorn : ModItem
         Item.shootSpeed = 30;
         Item.noMelee = true;
         Item.noUseGraphic = true;
-        Item.mana = 15;
+        Item.mana = 8;
         Item.channel = true;
         Item.ArmorPenetration = 10;
     }

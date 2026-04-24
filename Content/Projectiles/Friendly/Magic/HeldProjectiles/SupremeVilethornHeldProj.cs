@@ -52,7 +52,7 @@ public class SupremeVilethornHeldProj : ModProjectile
             trackingPos = Projectile.Center;
         }
 
-        if (!player.CheckMana((int)MathHelper.Clamp(player.HeldItem.mana / 8, 2, 20), true, true))
+        if (!player.CheckManaButGood((int)MathHelper.Clamp(player.HeldItem.mana / 8, 2, 20), true, true))
         {
             Projectile.Kill();
             return;

@@ -21,8 +21,7 @@ public class ManaGuardPlayer : ModPlayer
     {
         if (Player.HasBuff(BuffType<ManaGuardBuff>()))
         {
-            Player.CheckMana(info.SourceDamage, true, true);
-            Player.manaRegenDelay = 120;
+            Player.CheckManaButGood(info.SourceDamage, true, true);
         }
     }
 

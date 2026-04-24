@@ -155,4 +155,14 @@ public static partial class LemonUtils
         player.lifeRegenTime = 0;
         player.lifeRegen -= damagePerSecond * 2;
     }
+
+    public static bool CheckManaButGood(this Player player, int cost, bool pay = false, bool blockQuickMana = false)
+    {
+        bool res = player.CheckMana(cost, pay, blockQuickMana);
+        if (res)
+        {
+            player.manaRegenDelay = player.maxRegenDelay;
+        }
+        return res;
+    }
 }
