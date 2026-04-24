@@ -57,7 +57,7 @@ public class NPCatalystPlayer : ModPlayer
             }
             else
             {
-                RemoveSpell(EquippedSpells[EquippedSpells.Count - 1]);
+                RemoveSpell(EquippedSpells[0]);
                 EquippedSpells.Add(spell);
             }
             SelectedSpellIndex = EquippedSpells.Count - 1;
