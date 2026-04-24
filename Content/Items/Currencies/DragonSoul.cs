@@ -1,4 +1,6 @@
-﻿using Terraria.DataStructures;
+﻿using System.Collections.Generic;
+using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI;
 
 namespace NeoParacosm.Content.Items.Currencies;
@@ -45,7 +47,7 @@ public class DragonSoulCurrency : CustomCurrencySingleCoin
     }
 }
 
-public sealed class DragonSoulCurrencySystem : ModSystem
+public class DragonSoulCurrencySystem : ModSystem
 {
     public static int DragonSoulCurrency { get; set; }
 
@@ -58,5 +60,35 @@ public sealed class DragonSoulCurrencySystem : ModSystem
             currencyTextKey: "Mods.NeoParacosm.Items.DragonSoul.CurrencyDisplayName",
             currencyTextColor: Color.Gold
         ));
+    }
+}
+
+public class DragonSoulDropNPC : GlobalNPC
+{
+    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+    {
+        void AddDragonSoul(int denominator, int min, int max)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemType<DragonSoul>(), denominator, min, max));
+        }
+
+        switch (npc.type)
+        {
+            case NPCID.WyvernHead:
+                AddDragonSoul(1, 2, 5);
+                break;
+            case NPCID.FlyingSnake:
+                AddDragonSoul(10, 1, 2);
+                break;
+            case NPCID.Lihzahrd:
+                AddDragonSoul(10, 1, 2);
+                break;
+            case NPCID.LihzahrdCrawler:
+                AddDragonSoul(20, 1, 2);
+                break;
+            case NPCID.DD2Betsy:
+                AddDragonSoul(1, 20, 25);
+                break;
+        }
     }
 }
