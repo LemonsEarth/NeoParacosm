@@ -2,6 +2,7 @@
 using NeoParacosm.Core.Globals.GlobalNPCs;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -139,5 +140,10 @@ public static partial class LemonUtils
             Color color = (npc.GetAlpha(lightColor) * ((npc.oldPos.Length - k) / (float)npc.oldPos.Length)) * opacityMultiplier;
             Main.EntitySpriteDraw(texture, drawPos, sourceRect, color, npc.rotation, drawOrigin, npc.scale, SpriteEffects.None, 0);
         }
+    }
+
+    public static string GetLocKey(this NPC npc)
+    {
+        return $"Mods.NeoParacosm.NPCs.{npc.ModNPC.Name}";
     }
 }

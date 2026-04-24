@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
+using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Accessories.Combat.Magic;
 using NeoParacosm.Content.Items.Currencies;
+using NeoParacosm.Core.Conditions;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +87,15 @@ public class DragonWorshipper : ModNPC
         NPC.velocity.X *= 0.95f;
         NPC.direction = LemonUtils.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X, 1);
         NPC.spriteDirection = NPC.direction;
+        if (!Main.dayTime && NPC.DistanceSQ(new Vector2(NPC.homeTileX, NPC.homeTileY) * 16) > 150 * 150)
+        {
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f }, NPC.Center);
+            LemonUtils.DustBurst(16, NPC.Center, DustID.GemTopaz, 5, 6, 1.2f, 2f);
+            NPC.Center = new Vector2(NPC.homeTileX, NPC.homeTileY - 3) * 16;
+            NPC.netUpdate = true;
+            LemonUtils.DustBurst(16, NPC.Center, DustID.GemTopaz, 5, 6, 1.2f, 2f);
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f }, NPC.Center);
+        }
     }
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -95,9 +107,6 @@ public class DragonWorshipper : ModNPC
     {
         bestiaryEntry.Info.AddRange([
             BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-
-				// Sets your NPC's flavor text in the bestiary. (use localization keys)
-				new FlavorTextBestiaryInfoElement("Mods.NeoParacosm.NPCs.DragonWorshipper.Bestiary"),
         ]);
     }
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -136,7 +145,6 @@ public class DragonWorshipper : ModNPC
                 LemonUtils.SmokeGore(NPC.GetSource_FromThis(), NPC.RandomPos(), 2, 4);
             }
         }
-
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -226,13 +234,19 @@ public class DragonWorshipper : ModNPC
         }
     }
 
-    // Not completely finished, but below is what the NPC will sell
+    void AddDragonSoulCurrencyItem(NPCShop shop, int itemType, int price, params Condition[] conditions)
+    {
+        shop.Add(new Item(itemType)
+        { shopCustomPrice = price, shopSpecialCurrency = DragonSoulCurrencySystem.DragonSoulCurrency },
+        conditions);
+    }
+
     public override void AddShops()
     {
-        var npcShop = new NPCShop(Type, ShopName)
-        .Add(new Item(ItemType<AncientDragonScale>())
-        { shopCustomPrice = 60, shopSpecialCurrency = DragonSoulCurrencySystem.DragonSoulCurrency },
-        Condition.DownedMechBossAny);
+        var npcShop = new NPCShop(Type, ShopName);
+        AddDragonSoulCurrencyItem(npcShop, ItemType<AncientDragonScale>(), 30);
+        AddDragonSoulCurrencyItem(npcShop, ItemType<TrueDragonFruit>(), 20, Condition.DownedPirates);
+        AddDragonSoulCurrencyItem(npcShop, ItemType<AntiblightRings>(), 20, LemonConditions.DownedResearcher);
 
         npcShop.Register(); // Name of this shop tab
     }

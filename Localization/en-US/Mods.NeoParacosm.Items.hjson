@@ -1521,30 +1521,28 @@ DragonSoul: {
 
 AntiblightRings: {
 	DisplayName: Antiblight Rings
-	Tooltip:
-	'''
-	Makes Cursed Inferno and Ichor deplete faster
-	'''
+	Tooltip: Makes Cursed Inferno and Ichor deplete faster
 }
 
 TrueDragonFruit: {
 	DisplayName: True Dragon Fruit
 	Tooltip:
-	'''
-	Increases damage by {0}%
-	Increases critical strike chance by {1}%
-	Increases damage reduction by {2}%
-	Inflicts you with Hellfire
-	'''
+		'''
+		Increases damage by {0}%
+		Increases critical strike chance by {1}%
+		Increases damage reduction by {2}%
+		Increases hurtbox size for projectiles
+		Enable accessory visibility to see the increased hurtbox
+		'''
 }
 
 AncientDragonScale: {
 	DisplayName: Ancient Dragon Scale
 	Tooltip:
-	'''
-	Increases fire and lightning spell damage by {0}%
-	Increases fire and lightning spell expertise by {1}%
-	Increases damage reduction by {2}%
-	Increases damage reduction by an additional {3}% when below half hp
-	'''
+		'''
+		Increases fire and lightning spell damage by {0}%
+		Increases fire and lightning spell expertise by {1}%
+		Increases damage reduction by {2}%
+		Increases damage reduction by an additional {3}% when below half hp
+		'''
 }

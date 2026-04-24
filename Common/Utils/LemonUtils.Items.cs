@@ -58,4 +58,9 @@ public static partial class LemonUtils
     {
         return new TooltipLine(NeoParacosm.Instance, $"NeoParacosm:{itemName}SpellBoost", GetSpellBonusTooltip(element, boostType));
     }
+
+    public static string GetLocKey(this Item item)
+    {
+        return $"Mods.NeoParacosm.NPCs.{item.ModItem.Name}";
+    }
 }

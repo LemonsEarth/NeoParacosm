@@ -91,13 +91,13 @@ public static partial class LemonUtils
         Main.NewText("Player Tile Coords: " + player.Center.ToTileCoordinates());
     }
 
-    public static Rectangle Inflated(this Rectangle rect, float xMul, float yMul)
+    public static Rectangle Inflated(this Rectangle rect, int xChange, int yChange)
     {
         Rectangle newRect = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
-        newRect.Width = (int)(newRect.Width * xMul);
-        newRect.Height = (int)(newRect.Height * yMul);
-        newRect.X -= (int)(newRect.Width * xMul) / 2;
-        newRect.Y -= (int)(newRect.Height * yMul) / 2;
+        newRect.Width += 2 * xChange;
+        newRect.Height += 2 * yChange;
+        newRect.X -= xChange;
+        newRect.Y -= yChange;
         return newRect;
     }
 
@@ -154,5 +154,10 @@ public static partial class LemonUtils
         {
             return _zeroDefault;
         }
+    }
+
+    public static string GetLocKey(string category, string subcategory)
+    {
+        return $"Mods.NeoParacosm.{category}.{subcategory}";
     }
 }

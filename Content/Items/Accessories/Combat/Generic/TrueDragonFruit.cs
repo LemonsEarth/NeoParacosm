@@ -24,7 +24,13 @@ public class TrueDragonFruit : ModItem
         player.GetDamage(DamageClass.Generic) += damageBoost / 100f;
         player.GetCritChance(DamageClass.Generic) += critBoost;
         player.endurance += drBoost / 100f;
-        player.AddBuff(BuffID.OnFire3,2);
+        //player.AddBuff(BuffID.OnFire3, 2);
+
+        if (!hideVisual)
+        {
+            Rectangle inflated = player.Hitbox.Inflated(16, 16);
+            Dust.QuickBox(inflated.TopLeft(), inflated.BottomRight(), 2, Color.White, (d) => d.velocity = Vector2.Zero);
+        }
     }
 }
 
@@ -35,14 +41,34 @@ public class TrueDragonFruitPlayer : ModPlayer
     {
         Active = false;
     }
+}
 
-    public override void UpdateEquips()
+public class TrueDragonFruitProjectile : GlobalProjectile
+{
+    public override bool AppliesToEntity(Projectile entity, bool lateInstantiation)
     {
-        if (Active)
+        return entity.hostile;
+    }
+
+    public override bool? Colliding(Projectile projectile, Rectangle projHitbox, Rectangle targetHitbox)
+    {
+        foreach (var player in Main.ActivePlayers)
         {
-            
-            //Player.width = (int)(Player.defaultWidth * 1.5f);
-            //Player.height = (int)(Player.defaultHeight * 1.5f);
+            if (player.GetModPlayer<TrueDragonFruitPlayer>().Active)
+            {
+                Rectangle inflated = targetHitbox.Inflated(16, 16);
+                if (projHitbox.Intersects(inflated))
+                {
+                    return true;
+                }
+            }
         }
+        return null;
+    }
+
+    public override bool CanHitPlayer(Projectile projectile, Player target)
+    {
+
+        return true;
     }
 }
