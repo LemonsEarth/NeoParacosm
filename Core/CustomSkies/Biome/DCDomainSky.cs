@@ -3,7 +3,7 @@ using NeoParacosm.Core.Systems.Assets;
 using Terraria.Graphics.Effects;
 namespace NeoParacosm.Core.CustomSkies.Biome;
 
-public class DCSky : CustomSky
+public class DCDomainSky : CustomSky
 {
     public bool _isActive = false;
 

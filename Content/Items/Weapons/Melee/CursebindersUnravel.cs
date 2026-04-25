@@ -5,7 +5,6 @@ namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class CursebindersUnravel : ModItem
 {
-    int special = 0;
     public override void SetStaticDefaults()
     {
     }

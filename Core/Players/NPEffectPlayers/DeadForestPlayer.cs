@@ -5,7 +5,7 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
-public partial class DeadForestPlayer : ModPlayer
+public class DeadForestPlayer : ModPlayer
 {
     float desaturateEffectOpacity = 0f;
     float desaturateEffectOpacityTimer = 0f;

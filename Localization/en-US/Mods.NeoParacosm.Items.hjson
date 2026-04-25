@@ -1555,19 +1555,24 @@ DragonBreathSpell: {
 BlazingBuster: {
 	DisplayName: Blazing Buster
 	Tooltip:
-	'''
-	Increases melee damage by {0}%
-	Increases melee speed by {1}%
-	Using items deals damage over time to yourself
-	Effects of Fire Gauntlet
-	'''
+		'''
+		Increases melee damage by {0}%
+		Increases melee speed by {1}%
+		Using items deals damage over time to yourself
+		Effects of Fire Gauntlet
+		'''
 }
 
 InflamedArm: {
 	DisplayName: Inflamed Arm
 	Tooltip:
-	'''
-	Increases ranged attack speed by {0}%
-	Ranged attacks inflict Hellfire
-	'''
+		'''
+		Increases ranged attack speed by {0}%
+		Ranged attacks inflict Hellfire
+		'''
+}
+
+StaffOfTheCataclysm: {
+	DisplayName: Staff Of The Cataclysm
+	Tooltip: ""
 }

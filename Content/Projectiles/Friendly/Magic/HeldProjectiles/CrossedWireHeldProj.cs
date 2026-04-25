@@ -108,7 +108,6 @@ public class CrossedWireHeldProj : PrimProjectile
         return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPos, Projectile.height, ref _);
     }
 
-    float randValue = 0;
     int randSegmentCount = 0;
     public override bool PreDraw(ref Color lightColor)
     {

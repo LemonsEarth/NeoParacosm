@@ -32,6 +32,7 @@ public class NeoParacosm : Mod
         LoadFilterShader("DeathbirdArenaShader", "Common/Assets/Shaders/NPCs/DeathbirdArenaShader", EffectPriority.High);
         LoadFilterShader("NauseaShader", "Common/Assets/Shaders/NauseaShader", (EffectPriority)9999);
         LoadFilterShader("DCEffect", "Common/Assets/Shaders/Biome/DCEffect", (EffectPriority)9999);
+        LoadFilterShader("DCDomainEffect", "Common/Assets/Shaders/Biome/DCDomainEffect", (EffectPriority)9999);
 
         LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader");
         LoadMiscShader("GasShader", "Common/Assets/Shaders/Projectiles/GasShader");
@@ -44,6 +45,7 @@ public class NeoParacosm : Mod
         LoadMiscShader("DeathbirdWingShader", "Common/Assets/Shaders/NPCs/DeathbirdWingShader");
 
         SkyManager.Instance["NeoParacosm:DCSky"] = new DCSky();
+        SkyManager.Instance["NeoParacosm:DCDomainSky"] = new DCDomainSky();
     }
 
     void LoadFilterShader(string name, string path, EffectPriority priority)

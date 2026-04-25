@@ -33,7 +33,6 @@ public class CursebinderBigProj : ModProjectile
         Projectile.localNPCHitCooldown = 60;
     }
 
-    float distanceIncreaseRate = 100; // per second
     Vector2 topPoint;
     Vector2 botPoint;
     public override void AI()

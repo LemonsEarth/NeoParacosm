@@ -3,7 +3,7 @@ using Terraria.Graphics.Effects;
 
 namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
-public partial class NPEffectPlayer : ModPlayer
+public class NPEffectPlayer : ModPlayer
 {
     public int Timer { get; private set; } = 0;
 

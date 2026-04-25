@@ -6,7 +6,7 @@ using static NeoParacosm.Core.Systems.Data.DarkCataclysmSystem;
 
 namespace NeoParacosm.Core.Players.NPEffectPlayers;
 
-public partial class DarkCataclysmPlayer : ModPlayer
+public class DarkCataclysmPlayer : ModPlayer
 {
     int Timer = 0;
     public override void ResetEffects()
