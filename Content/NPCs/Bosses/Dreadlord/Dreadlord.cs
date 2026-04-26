@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
+using System.ComponentModel.DataAnnotations;
 using Terraria.Audio;
 using static Microsoft.Xna.Framework.MathHelper;
 
@@ -64,7 +65,7 @@ public partial class Dreadlord : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
-    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1380, 1200];
+    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -84,8 +85,9 @@ public partial class Dreadlord : ModNPC
         CirclingIchor,
         Slamming,
         Dashing,
+        LightningAndPillars,
         Spirits,
-        LightningAndBalls
+        LightningAndBalls,
     }
 
     public int Phase { get; private set; } = 0;
@@ -177,6 +179,9 @@ public partial class Dreadlord : ModNPC
                     break;
                 case (int)Attacks2.Dashing:
                     Attack_Dashing();
+                    break;
+                case (int)Attacks2.LightningAndPillars:
+                    Attack_LightningAndPillars();
                     break;
                 case (int)Attacks2.Spirits:
                     Attack_Spirits();
@@ -1420,8 +1425,8 @@ public partial class Dreadlord : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickPulse(NPC, HeadCorrupt.DefaultPosition, 2, 10, 5, Color.Lime);
-                        LemonUtils.QuickPulse(NPC, HeadCrimson.DefaultPosition, 2, 10, 5, Color.Yellow);
+                        LemonUtils.QuickPulse(NPC, HeadCorrupt.MiscPosition1, 2, 10, 5, Color.Green);
+                        LemonUtils.QuickPulse(NPC, HeadCrimson.MiscPosition1, 2, 10, 5, Color.Gold);
                     }
                 }
                 break;
@@ -1745,9 +1750,9 @@ public partial class Dreadlord : ModNPC
                                 LemonUtils.QuickProj(
                                     NPC,
                                     HeadCorrupt.MiscPosition1,
-                                    HeadCorrupt.MiscPosition1.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * Main.rand.NextFloat(6, 8),
+                                    HeadCorrupt.MiscPosition1.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 8, Pi / 8)) * Main.rand.NextFloat(4, 6),
                                     ProjectileType<CursedFlameSphere>(),
-                                    ai1: Main.rand.NextFloat(1.005f, 1.025f)
+                                    ai1: Main.rand.NextFloat(1.005f, 1.01f)
                                     );
                             }
                         }
@@ -1760,6 +1765,178 @@ public partial class Dreadlord : ModNPC
                 SetHeadCorruptFrame(MOUTH_CLOSED);
                 AttackTimer = 300;
                 AttackCount++;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Attack_LightningAndPillars()
+    {
+        SetBodyPartPositions(headLerpSpeed: 0.7f, legLerpSpeed: 1f, bodyLerpSpeed: 1f);
+
+        void LightningArray(float topOffset = -2000, int minDuration = 60, int interval = 15, int length = 4000)
+        {
+            float randomOffset = Main.rand.NextFloat(0, 300);
+            for (int i = 0; i <= 8; i++)
+            {
+                Vector2 posLeft = ArenaCenter + new Vector2(-i * 2 * baseArenaDistance / 16f + randomOffset, topOffset);
+                Vector2 posRight = ArenaCenter + new Vector2(i * 2 * baseArenaDistance / 16f + randomOffset, topOffset);
+                int duration = minDuration + i * interval;
+                Spawn_LightningAtPos(posLeft, duration, length);
+                Spawn_LightningAtPos(posRight, duration, length);
+            }
+        }
+
+        switch (AttackTimer)
+        {
+            case 1200:
+                break;
+            case > 1080:
+                NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
+                LerpScale(1f, 1 / 20f);
+                break;
+            case 1080:
+                SetHeadCrimsonFrame(MOUTH_OPEN);
+                SetHeadCorruptFrame(MOUTH_OPEN);
+                PlayRoar(0.2f);
+                if (LemonUtils.NotClient())
+                {
+                    LightningArray();
+                }
+                break;
+            case > 900:
+                LerpScale(1f, 1 / 20f);
+
+                NPC.velocity *= 0.9f;
+                ShakeCrimsonHead(32, 12);
+                if (AttackTimer % 15 == 0)
+                {
+                    Vector2 headOffset = HeadCorrupt.MiscPosition1 + HeadCorrupt.MiscPosition1.DirectionTo(player.Center) * 100;
+                    HeadCorrupt.Position = Vector2.Lerp(HeadCorrupt.Position, headOffset, 1 / 10f);
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.MiscPosition1,
+                            HeadCorrupt.MiscPosition1.DirectionTo(player.Center) * Main.rand.NextFloat(4, 6),
+                            ProjectileType<CursedFlameSphere>(),
+                            ai1: Main.rand.NextFloat(1.01f, 1.025f)
+                            );
+                    }
+                }
+                break;
+            case 900:
+                PlayRoar(0.2f);
+                if (LemonUtils.NotClient())
+                {
+                    LightningArray(interval: 10);
+                }
+                break;
+            case > 600:
+                ShakeCrimsonHead(32, 12);
+                if (AttackTimer % 120 == 0)
+                {
+                    PlayRoar(0.2f);
+                    if (LemonUtils.NotClient())
+                    {
+                        LightningArray(interval: 10);
+                    }
+                }
+
+                if (AttackTimer % 15 == 0)
+                {
+                    Vector2 headOffset = HeadCorrupt.MiscPosition1 + HeadCorrupt.MiscPosition1.DirectionTo(player.Center) * 100;
+                    HeadCorrupt.Position = Vector2.Lerp(HeadCorrupt.Position, headOffset, 1 / 10f);
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.MiscPosition1,
+                            HeadCorrupt.MiscPosition1.DirectionTo(player.Center) * Main.rand.NextFloat(4, 6),
+                            ProjectileType<CursedFlameSphere>(),
+                            ai1: Main.rand.NextFloat(1.01f, 1.025f)
+                            );
+                    }
+                }
+                break;
+            case 600:
+                SetHeadCorruptFrame(MOUTH_CLOSED);
+                SetHeadCrimsonFrame(MOUTH_CLOSED);
+                break;
+            case > 480:
+                break;
+            case 480:
+                SetHeadCrimsonFrame(MOUTH_OPEN);
+                SetHeadCorruptFrame(MOUTH_OPEN);
+                PlayRoar(0.2f);
+                PlayRoar(-0.2f);
+                if (LemonUtils.NotClient())
+                {
+                    LightningArray(interval: 10);
+                }
+                break;
+            case > 0:
+
+                if (AttackTimer > 420 && AttackTimer % 10 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickPulse(NPC, HeadCorrupt.MiscPosition1, 2, 10, 5, Color.Green);
+                        LemonUtils.QuickPulse(NPC, HeadCrimson.MiscPosition1, 2, 10, 5, Color.Gold);
+                    }
+                }
+
+                ShakeCrimsonHead(12, 12);
+                ShakeCorruptHead(12, 12);
+                NPC.Center = NPC.Center - Vector2.UnitY + Main.rand.NextVector2Circular(4, 4);
+
+                if (AttackTimer % 120 == 0)
+                {
+                    PlayRoar(0.2f);
+                    if (LemonUtils.NotClient())
+                    {
+                        LightningArray(interval: 10);
+                    }
+                }
+
+                if (AttackTimer % 15 == 0)
+                {
+                    Vector2 headOffset = HeadCorrupt.MiscPosition1 + HeadCorrupt.MiscPosition1.DirectionTo(player.Center) * 100;
+                    HeadCorrupt.Position = Vector2.Lerp(HeadCorrupt.Position, headOffset, 1 / 10f);
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            HeadCorrupt.MiscPosition1,
+                            HeadCorrupt.MiscPosition1.DirectionTo(player.Center).RotatedBy(Main.rand.NextFloat(-Pi / 24f, Pi / 24f)) * Main.rand.NextFloat(5, 7),
+                            ProjectileType<CursedFlameSphere>(),
+                            ai1: Main.rand.NextFloat(1.025f, 1.05f)
+                            );
+                    }
+                }
+
+                if (AttackTimer % 30 == 0)
+                {
+                    PlayRoar(-0.4f);
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 randomPillarPos = ArenaCenter + new Vector2(Main.rand.NextFloat(-baseArenaDistance, baseArenaDistance), baseArenaDistance);
+                        LemonUtils.QuickProj(
+                            NPC,
+                            randomPillarPos,
+                            Vector2.Zero,
+                            ProjectileType<CorruptPillar>(),
+                            0,
+                            ai0: 300,
+                            ai1: 1920 + Main.rand.Next(-3, 3) * 96,
+                            ai2: Main.rand.Next(30, 90)
+                            );
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = 1200;
                 return;
         }
 
@@ -1976,7 +2153,7 @@ public partial class Dreadlord : ModNPC
         Attack++;
         if (Phase == 1)
         {
-            //Attack = 5;
+            //Attack = 4;
         }
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {

@@ -77,7 +77,7 @@ public partial class Dreadlord : ModNPC
     int damageResistancePerHit = 1;
     public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
     {
-        if (modifiers.DamageType == null) return;
+        if (modifiers.DamageType == null || !LemonUtils.IsHard()) return;
         if (ClassAdaptation.TryGetValue(modifiers.DamageType, out int damageResistance))
         {
             if (damageResistance < maxDamageResistance)

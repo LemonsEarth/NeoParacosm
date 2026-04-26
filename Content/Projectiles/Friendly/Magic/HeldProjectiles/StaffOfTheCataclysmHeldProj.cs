@@ -87,6 +87,7 @@ public class StaffOfTheCataclysmHeldProj : ModProjectile
 
     public void WindUp()
     {
+        Projectile.Opacity = MathHelper.Lerp(0, 1, (float)AITimer / windUpDuration);
         Vector2 basePos = player.Center + new Vector2(0, -Projectile.height * 2);
         Projectile.Center = basePos + new Vector2(0, MathF.Sin(AITimer / 20f) * 16);
         Projectile.rotation = -MathHelper.PiOver4;
@@ -125,7 +126,7 @@ public class StaffOfTheCataclysmHeldProj : ModProjectile
 
     void RandomLightning()
     {
-        if (AITimerAdjusted % 30 == 0 && Main.myPlayer == Projectile.owner)
+        if (AITimerAdjusted % 15 == 0 && Main.myPlayer == Projectile.owner)
         {
             Vector2 topPos = Projectile.Center + new Vector2(Main.rand.NextFloat(-Range, Range), -800);
             Vector2 botPos = topPos + Vector2.UnitY * 1600;
@@ -143,7 +144,7 @@ public class StaffOfTheCataclysmHeldProj : ModProjectile
 
     void TargetedLightning()
     {
-        if (AITimerAdjusted % 60 == 0 && Main.myPlayer == Projectile.owner)
+        if (AITimerAdjusted % 30 == 0 && Main.myPlayer == Projectile.owner)
         {
             NPC closestNPC = LemonUtils.GetClosestNPC(Projectile.Center, Range / 2);
             if (closestNPC == null)
@@ -171,7 +172,7 @@ public class StaffOfTheCataclysmHeldProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity * 0.5f, Projectile.scale * 2);
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity * 0.25f, Projectile.scale * 4);
         return true;
     }
 

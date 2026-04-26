@@ -135,6 +135,10 @@ public class IchorLightning : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        if (AITimer <= 2)
+        {
+            return false;
+        }
         DrawLightning(1f, 1);
         return false;
     }

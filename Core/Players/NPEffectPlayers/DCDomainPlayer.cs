@@ -32,7 +32,8 @@ public class DCDomainPlayer : ModPlayer
             data.UseTargetPosition(staffProj.DomainPos);
             data.UseOpacity(effectOpacity);
             data.Shader.Parameters["range"].SetValue(StaffOfTheCataclysm.Range);
-            if (Player.DistanceSQ(staffProj.DomainPos) < StaffOfTheCataclysm.Range * StaffOfTheCataclysm.Range)
+            float distanceSquared = Player.DistanceSQ(staffProj.DomainPos);
+            if (distanceSquared < StaffOfTheCataclysm.Range * StaffOfTheCataclysm.Range)
             {
                 if (!SkyManager.Instance["NeoParacosm:DCDomainSky"].IsActive())
                 {
@@ -40,6 +41,12 @@ public class DCDomainPlayer : ModPlayer
                 }
 
                 SkyManager.Instance["NeoParacosm:DCDomainSky"].Opacity = effectOpacity;
+
+            }
+
+            if (distanceSquared > StaffOfTheCataclysm.Range * StaffOfTheCataclysm.Range && distanceSquared < 16 * StaffOfTheCataclysm.Range * StaffOfTheCataclysm.Range)
+            {
+                Player.velocity += Player.DirectionTo(staffProj.Projectile.Center) * 0.2f;
             }
         }
         else

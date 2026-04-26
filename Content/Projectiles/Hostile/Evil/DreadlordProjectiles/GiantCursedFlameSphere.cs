@@ -87,13 +87,14 @@ public class GiantCursedFlameSphere : PrimProjectile
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         var shader = GameShaders.Misc["NeoParacosm:FireShader"];
         shader.UseImage1(ParacosmTextures.NoiseTexture);
-        shader.UseColor(Color.Green);
+        shader.UseColor(Color.Green * Projectile.Opacity);
         shader.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
+        shader.Shader.Parameters["moveVector"].SetValue(Vector2.UnitY); // Higher number lowers the height of the flame
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.75f, SpriteEffects.None, 0);
-        shader.UseColor(Color.White);
+        shader.UseColor(Color.White * Projectile.Opacity);
         shader.Shader.Parameters["flameHeightDownward"].SetValue(1f);
         shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.7f * 0.5f, SpriteEffects.None, 0);

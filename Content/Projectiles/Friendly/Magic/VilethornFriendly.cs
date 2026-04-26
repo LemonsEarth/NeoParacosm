@@ -56,7 +56,8 @@ public class VilethornFriendly : ModProjectile
         Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
         Projectile.velocity *= 0.90f;
-        var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.ScourgeOfTheCorruptor);
+        Vector2 dustPos = Projectile.Center + Projectile.DirectionTo(StartPos) * Main.rand.NextFloat(0, Projectile.Distance(StartPos));
+        var dust = Dust.NewDustDirect(dustPos, 2, 2, DustID.ScourgeOfTheCorruptor, Scale: 1f);
         dust.noGravity = true;
 
         if (Projectile.timeLeft < 30)

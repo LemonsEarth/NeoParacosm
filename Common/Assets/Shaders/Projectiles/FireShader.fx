@@ -9,13 +9,14 @@ float2 uScreenResolution;
 float uTime;
 float4 uColor;
 float flameHeightDownward;
+float2 moveVector;
 
 float4 FireShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {
     float2 centeredCoords = coords * 2.0 - 1.0;
     float centeredCoordsLength = length(centeredCoords);
     float4 color = tex2D(uImage0, coords);
-    float4 noiseColor = tex2D(uImage1, float2(coords.x, coords.y + uTime));
+    float4 noiseColor = tex2D(uImage1, float2(coords.x, coords.y) + moveVector * uTime);
     noiseColor.rgb -= pow(coords.y, flameHeightDownward); // multiply more to make it smaller
     noiseColor.rgb = 1-step(noiseColor.rgb, 0.2); // main flame should be black
     noiseColor.rgb = uColor.rgb; // set the color
