@@ -32,7 +32,7 @@ public class BombKnight : ModNPC
         NPC.width = 128;
         NPC.height = 156;
         NPC.lifeMax = 1200;
-        NPC.defense = 25;
+        NPC.defense = 12;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
         NPC.DeathSound = SoundID.NPCDeath55;

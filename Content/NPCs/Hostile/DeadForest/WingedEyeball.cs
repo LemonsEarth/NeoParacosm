@@ -30,7 +30,7 @@ public class WingedEyeball : ModNPC
         NPC.width = 64;
         NPC.height = 64;
         NPC.lifeMax = 180;
-        NPC.defense = 4;
+        NPC.defense = 3;
         NPC.damage = 30;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;

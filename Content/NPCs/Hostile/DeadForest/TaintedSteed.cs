@@ -24,7 +24,7 @@ public class TaintedSteed : ModNPC
         NPC.width = 84;
         NPC.height = 64;
         NPC.lifeMax = 250;
-        NPC.defense = 8;
+        NPC.defense = 5;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCDeath18;
         NPC.DeathSound = SoundID.NPCDeath18;

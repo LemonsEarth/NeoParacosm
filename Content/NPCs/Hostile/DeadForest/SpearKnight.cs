@@ -32,7 +32,7 @@ public class SpearKnight : ModNPC
         NPC.width = 72;
         NPC.height = 64;
         NPC.lifeMax = 500;
-        NPC.defense = 25;
+        NPC.defense = 10;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
         NPC.DeathSound = SoundID.NPCDeath55;

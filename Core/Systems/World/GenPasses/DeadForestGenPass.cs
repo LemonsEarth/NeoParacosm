@@ -17,7 +17,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
         int baseDeadForestTileRadius = 200;
         int DeadForestRadius => baseDeadForestTileRadius * LemonUtils.GetWorldSize();
 
-        bool TileIsDeadDirt(Point point)
+        bool IsTileDeadDirt(Point point)
         {
             return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
         }
@@ -178,7 +178,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                     continue;
                 }
 
-                if (!TileIsDeadDirt(pointTopLeft) || !TileIsDeadDirt(pointTopRight) || !TileIsDeadDirt(pointBottomLeft) || !TileIsDeadDirt(pointBottomRight))
+                if (!IsTileDeadDirt(pointTopLeft) || !IsTileDeadDirt(pointTopRight) || !IsTileDeadDirt(pointBottomLeft) || !IsTileDeadDirt(pointBottomRight))
                 {
                     attemptCount++;
                     continue;
@@ -224,7 +224,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                     continue;
                 }
 
-                if (!TileIsDeadDirt(pointBottomLeft) || !TileIsDeadDirt(pointBottomRight))
+                if (!IsTileDeadDirt(pointBottomLeft) || !IsTileDeadDirt(pointBottomRight))
                 {
                     attemptCount++;
                     continue;

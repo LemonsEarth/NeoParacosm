@@ -8,9 +8,10 @@ public class WorldGenSystem : ModSystem
 {
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        InsertAfterTask(tasks, "Tile Cleanup", "Crimson Village", new CrimsonVillageGenPass("Building Bloody Settlement", 100f));
-        InsertAfterTask(tasks, "Planting Trees", "Dead Forest", new DeadForestGenPass("Spreading Death", 100f));
-        InsertAfterTask(tasks, "Micro Biomes", "Dragon Remains", new DragonRemainsGenPass("Shifting Earth due to Powerful Presence", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonGenpasses("Building Bloody Settlement", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CorruptionGenpasses("Hiding from the plague", 100f));
+        InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading Death", 100f));
+        InsertAfterTask(tasks, "Micro Biomes", new DragonRemainsGenPass("Shifting Earth due to Powerful Presence", 100f));
 
         //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
         //tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
@@ -63,9 +64,10 @@ public class WorldGenSystem : ModSystem
         }*/
     }
 
-    void InsertAfterTask(List<GenPass> tasks, string genpassName, string newGenPassName, GenPass genpass)
+    void InsertAfterTask(List<GenPass> tasks, string genpassName, GenPass genpass)
     {
-        int step = tasks.FindIndex(genpass => genpass.Name.Equals(genpassName));
+        genpass.Name = $"[c/FFFF00:NeoParacosm: {genpass.Name}]";
+        int step = tasks.FindIndex(pass => pass.Name.Equals(genpassName));
         tasks.Insert(step + 1, genpass);
     }
 

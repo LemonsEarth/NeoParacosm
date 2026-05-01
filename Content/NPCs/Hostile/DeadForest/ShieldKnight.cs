@@ -31,7 +31,7 @@ public class ShieldKnight : ModNPC
         NPC.width = 38;
         NPC.height = 58;
         NPC.lifeMax = 500;
-        NPC.defense = 25;
+        NPC.defense = 13;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
         NPC.DeathSound = SoundID.NPCDeath55;

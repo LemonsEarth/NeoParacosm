@@ -37,8 +37,8 @@ public class TearProjectile : PrimProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Drip with { PitchRange = (0f, 1f), Volume = 0.5f}, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Item45 with { PitchRange = (0.2f, 0.5f), Volume = 0.5f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Drip with { PitchRange = (0f, 1f), Volume = 0.8f}, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item45 with { PitchRange = (0.2f, 0.5f), Volume = 0.8f}, Projectile.Center);
         }
 
         Lighting.AddLight(Projectile.Center, 0.8f, 0.8f, 0f);

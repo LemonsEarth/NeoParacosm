@@ -30,7 +30,7 @@ public class SoulfulSludge : ModNPC
         NPC.width = 64;
         NPC.height = 50;
         NPC.lifeMax = 300;
-        NPC.defense = 8;
+        NPC.defense = 4;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.Item167;

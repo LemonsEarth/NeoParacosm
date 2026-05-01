@@ -6,22 +6,22 @@ using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses
 {
-    public class CrimsonVillageGenPass : GenPass
+    public class CrimsonGenpasses : GenPass
     {
-        public CrimsonVillageGenPass(string name, float loadWeight) : base(name, loadWeight) { }
+        public CrimsonGenpasses(string name, float loadWeight) : base(name, loadWeight) { }
 
         readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
+
+        bool IsTileTypeCrimson(int tileType)
+        {
+            return tileType == TileID.Crimstone || tileType == TileID.CrimsonGrass || tileType == TileID.Crimsand;
+        }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
             if (!WorldGen.crimson)
             {
                 return;
-            }
-
-            bool IsCrimsonTile(int tileType)
-            {
-                return tileType == TileID.Crimstone || tileType == TileID.CrimsonGrass || tileType == TileID.Crimsand;
             }
 
             for (int rep = 0; rep < LemonUtils.GetWorldSize(); rep++)
@@ -41,7 +41,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                         int y = WorldGen.genRand.Next(startY, endY);
                         Tile tile = Main.tile[x, y];
                         Tile tileAbove = Main.tile[x, y - 1];
-                        if (tile.HasTile && IsCrimsonTile(tile.TileType) && !tileAbove.HasTile)
+                        if (tile.HasTile && IsTileTypeCrimson(tile.TileType) && !tileAbove.HasTile)
                         {
                             startX = Math.Clamp(x - 150, 0, Main.maxTilesX);
                             endX = Math.Clamp(x + 150, 0, Main.maxTilesX);

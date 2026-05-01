@@ -1591,3 +1591,8 @@ MagicGrenadeAttachment: {
 	DisplayName: Magic Grenade Attachment
 	Tooltip: ""
 }
+
+HolyStaff: {
+	DisplayName: Holy Staff
+	Tooltip: ""
+}
