@@ -441,10 +441,10 @@ RuneOfPeridition: {
 		'''
 	NPLore:
 		'''
-			[c/888888:A fragment of a sacred rune granted to powerful beings.]
-			[c/888888:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
-			[c/888888:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
-			[c/888888:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
+		[c/888888:A fragment of a sacred rune granted to powerful beings.]
+		[c/888888:One singular Rune of Peridition has ever been created; at the time it was known as the "Rune of Rebirth".]
+		[c/888888:Those who possessed this rune would pass on their strength and courage, alongside parts of the rune, to their closest brethren upon their death.]
+		[c/888888:Over time, its powers weakened, yet it still emits a faint glow that attracts adversaries.]
 		'''
 }
 
@@ -1574,5 +1574,20 @@ InflamedArm: {
 
 StaffOfTheCataclysm: {
 	DisplayName: Staff Of The Cataclysm
+	Tooltip: ""
+}
+
+ClingerMouth: {
+	DisplayName: Clinger Mouth
+	Tooltip: ""
+}
+
+MagicClingerMuzzle: {
+	DisplayName: Magic Clinger Muzzle
+	Tooltip: ""
+}
+
+MagicGrenadeAttachment: {
+	DisplayName: Magic Grenade Attachment
 	Tooltip: ""
 }

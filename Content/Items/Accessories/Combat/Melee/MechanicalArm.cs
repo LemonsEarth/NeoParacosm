@@ -4,7 +4,7 @@ namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 
 public class MechanicalArm : ModItem
 {
-    readonly float attackSpeedBoost = 20f;
+    readonly float attackSpeedBoost = 15f;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(attackSpeedBoost);
     public override void SetDefaults()
     {

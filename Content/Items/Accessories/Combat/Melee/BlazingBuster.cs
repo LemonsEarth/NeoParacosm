@@ -5,7 +5,7 @@ namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 public class BlazingBuster : ModItem
 {
     readonly float damageBoost = 15f;
-    readonly float attackSpeedBoost = 22f;
+    readonly float attackSpeedBoost = 18f;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost, attackSpeedBoost);
     public override void SetDefaults()
     {

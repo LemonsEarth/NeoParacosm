@@ -5,7 +5,7 @@ namespace NeoParacosm.Content.Items.Accessories.Combat.Ranged;
 
 public class InflamedArm : ModItem
 {
-    readonly float attackSpeedBoost = 25f;
+    readonly float attackSpeedBoost = 20f;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(attackSpeedBoost);
     public override void SetDefaults()
     {

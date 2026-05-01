@@ -12,8 +12,15 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
         public DeadForestGenPass(string name, float loadWeight) : base(name, loadWeight) { }
 
         readonly string DeadForestPlatformsPath = "Common/Assets/Structures/DeadForestPlatforms";
+        readonly string DeadForestBasementPath = "Common/Assets/Structures/DeadForestBasement";
+        readonly string DeadForestHolyStructurePath = "Common/Assets/Structures/DeadForestHolyStructure";
         int baseDeadForestTileRadius = 200;
         int DeadForestRadius => baseDeadForestTileRadius * LemonUtils.GetWorldSize();
+
+        bool TileIsDeadDirt(Point point)
+        {
+            return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
+        }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -42,8 +49,9 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
             }
 
             GenerateDeadForestPlatforms();
+            GenerateBasement();
+            GenerateHolyStructure();
             GenerateHolyCrosses();
-
         }
 
         void GenerateDeadForestPlatforms()
@@ -97,7 +105,7 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
             int attemptCount = 0;
             int maxAttemptCount = 50000;
             int placedCrosses = 0;
-            int maxPlacedCrosses = 50 * LemonUtils.GetWorldSize();
+            int maxPlacedCrosses = 30 * LemonUtils.GetWorldSize();
             List<int> placedCrossXPos = new List<int>();
 
             while (attemptCount < maxAttemptCount && placedCrosses < maxPlacedCrosses)
@@ -139,6 +147,92 @@ namespace NeoParacosm.Core.Systems.World.GenPasses
                 attemptCount++;
             }
             //Main.NewText(placedCrosses);
+        }
+
+        void GenerateBasement()
+        {
+            Point16 structureDims = Generator.GetStructureDimensions(DeadForestHolyStructurePath, NeoParacosm.Instance);
+
+            int startXTile = (int)MathHelper.Clamp(Main.dungeonX - DeadForestRadius, 0, Main.maxTilesX);
+            int maxXTile = (int)MathHelper.Clamp(Main.dungeonX + DeadForestRadius, 0, Main.maxTilesX);
+            int startYTile = (int)MathHelper.Clamp(Main.dungeonY - 80, 0, Main.maxTilesY);
+            int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
+
+            int maxAttemptCount = 10000;
+            int attemptCount = 0;
+            while (attemptCount < maxAttemptCount)
+            {
+                int randX = Main.rand.Next(startXTile, maxXTile);
+                int randY = Main.rand.Next(startYTile, maxYTile);
+                Point pointTopLeft = new Point(randX, randY);
+                Point pointTopRight = new Point(randX + structureDims.X, randY);
+                Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
+                Point pointBottomRight = new Point(randX + structureDims.X, randY + structureDims.Y);
+
+                Point pointAboveTopLeft = new Point(randX, randY - 1);
+                Point pointAboveTopRight = new Point(randX + structureDims.X, randY - 1);
+
+                if (Main.tile[pointAboveTopLeft].HasTile && Main.tile[pointAboveTopRight].HasTile)
+                {
+                    attemptCount++;
+                    continue;
+                }
+
+                if (!TileIsDeadDirt(pointTopLeft) || !TileIsDeadDirt(pointTopRight) || !TileIsDeadDirt(pointBottomLeft) || !TileIsDeadDirt(pointBottomRight))
+                {
+                    attemptCount++;
+                    continue;
+                }
+
+                Generator.GenerateStructure(DeadForestBasementPath, new Point16(pointTopLeft), NeoParacosm.Instance);
+                break;
+            }
+        }
+
+        void GenerateHolyStructure()
+        {
+            Point16 structureDims = Generator.GetStructureDimensions(DeadForestBasementPath, NeoParacosm.Instance);
+
+            int startXTile = (int)MathHelper.Clamp(Main.dungeonX - DeadForestRadius, 0, Main.maxTilesX);
+            int maxXTile = (int)MathHelper.Clamp(Main.dungeonX + DeadForestRadius, 0, Main.maxTilesX);
+            int startYTile = (int)MathHelper.Clamp(Main.dungeonY - 80, 0, Main.maxTilesY);
+            int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
+
+            int maxAttemptCount = 10000;
+            int attemptCount = 0;
+            while (attemptCount < maxAttemptCount)
+            {
+                int randX = Main.rand.Next(startXTile, maxXTile);
+                int randY = Main.rand.Next(startYTile, maxYTile);
+                Point pointTopLeft = new Point(randX, randY);
+                Point pointTopRight = new Point(randX + structureDims.X, randY);
+                Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
+                Point pointBottomRight = new Point(randX + structureDims.X, randY + structureDims.Y);
+
+                Point pointAboveTopLeft = new Point(randX, randY - 1);
+                Point pointAboveTopRight = new Point(randX + structureDims.X, randY - 1);
+
+                if (Main.tile[pointAboveTopLeft].HasTile && Main.tile[pointAboveTopRight].HasTile)
+                {
+                    attemptCount++;
+                    continue;
+                }
+
+                if (Main.tile[pointTopLeft].HasTile && Main.tile[pointTopRight].HasTile)
+                {
+                    attemptCount++;
+                    continue;
+                }
+
+                if (!TileIsDeadDirt(pointBottomLeft) || !TileIsDeadDirt(pointBottomRight))
+                {
+                    attemptCount++;
+                    continue;
+                }
+
+                Generator.GenerateStructure(DeadForestHolyStructurePath, new Point16(pointTopLeft), NeoParacosm.Instance);
+                break;
+            }
         }
     }
 }

@@ -134,7 +134,7 @@ public class StaffOfTheCataclysmHeldProj : ModProjectile
                 topPos,
                 Vector2.Zero,
                 ProjectileType<YellowLightning>(),
-                ScaledProjDamage(player),
+                ScaledProjDamage(player) * 2,
                 1f,
                 Projectile.owner,
                 ai1: botPos.X,

@@ -211,6 +211,21 @@ public static partial class LemonUtils
         }
     }
 
+    // Should be used in Projectile.OnTileCollide()
+    public static void Reflect(this Projectile Projectile, Vector2 oldVelocity)
+    {
+        if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
+        {
+            Projectile.velocity.X = -oldVelocity.X;
+        }
+
+        // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
+        if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
+        {
+            Projectile.velocity.Y = -oldVelocity.Y;
+        }
+    }
+
     /// <summary>
     /// Gets random position on the Projectile's hitbox.
     /// Increase fluffX and fluffY to expand the range.

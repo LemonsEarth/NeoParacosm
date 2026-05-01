@@ -3,6 +3,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
+using Terraria.GameContent;
 
 namespace NeoParacosm.Core.Players;
 
