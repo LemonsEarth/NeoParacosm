@@ -17,6 +17,7 @@ public class HolyStaffHeldProj : ModProjectile
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+        ProjectileID.Sets.HeldProjDoesNotUsePlayerGfxOffY[Type] = true;
         Main.projFrames[Type] = 1;
     }
 

@@ -1,4 +1,8 @@
-﻿namespace NeoParacosm.Common.Utils;
+﻿using StructureHelper.API;
+using System.Collections.Generic;
+using Terraria.DataStructures;
+
+namespace NeoParacosm.Common.Utils;
 
 /// <summary>
 /// Contains a lot of utillities and global usings
@@ -42,6 +46,59 @@ public static partial class LemonUtils
         if (Main.masterMode) difficulty++;
         if (Main.getGoodWorld) difficulty *= 2;
         return difficulty;
+    }
+
+    public static void GenerateStructureLoot(int structureX, int structureY, Point16 structureDims, List<List<(int, int)>> allPossibleItems)
+    {
+        for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
+        {
+            Chest chest = Main.chest[chestIndex];
+            if (chest == null) continue;
+
+            Rectangle structureRect = new Rectangle(structureX, structureY, structureDims.X, structureDims.Y);
+            if (!structureRect.Contains(chest.x, chest.y))
+            {
+                continue;
+            }
+
+            for (int i = 0; i < allPossibleItems.Count; i++)
+            {
+                List<(int, int)> possibleItems = allPossibleItems[i];
+                (int, int) chosenItem = Main.rand.NextFromCollection(possibleItems);
+                chest.item[i].SetDefaults(chosenItem.Item1);
+                chest.item[i].stack = chosenItem.Item2;
+            }
+        }
+    }
+
+    public static void GenerateStructureLoot(int structureX, int structureY, Point16 structureDims, List<List<(int, int)>> allPossibleItems, float randomizedStackOffsetMin, float randomizedStackOffsetMax)
+    {
+        for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
+        {
+            Chest chest = Main.chest[chestIndex];
+            if (chest == null) continue;
+
+            Rectangle structureRect = new Rectangle(structureX, structureY, structureDims.X, structureDims.Y);
+            if (!structureRect.Contains(chest.x, chest.y))
+            {
+                continue;
+            }
+
+            for (int i = 0; i < allPossibleItems.Count; i++)
+            {
+                List<(int, int)> possibleItems = allPossibleItems[i];
+                (int, int) chosenItem = Main.rand.NextFromCollection(possibleItems);
+                chest.item[i].SetDefaults(chosenItem.Item1);
+                if (chosenItem.Item2 > 1)
+                {
+                    chest.item[i].stack = Main.rand.Next((int)(chosenItem.Item2 * randomizedStackOffsetMin), (int)(chosenItem.Item2 * randomizedStackOffsetMax));
+                }
+                else
+                {
+                    chest.item[i].stack = chosenItem.Item2;
+                }
+            }
+        }
     }
 
     /// <summary>
