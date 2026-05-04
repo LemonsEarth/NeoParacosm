@@ -45,16 +45,3 @@ public class HolyStaff : ModItem
         return false;
     }
 }
-
-public class HolyStaffDropNPC : GlobalNPC
-{
-    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
-    {
-        return entity.type == NPCType<StaffKnight>();
-    }
-
-    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-    {
-        npcLoot.Add(ItemDropRule.Common(ItemType<HolyStaff>(), 20, 1, 1));
-    }
-}

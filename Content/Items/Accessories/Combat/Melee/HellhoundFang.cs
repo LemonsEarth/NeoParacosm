@@ -10,7 +10,7 @@ public class HellhoundFang : ModItem
         Item.height = 44;
         Item.accessory = true;
         Item.value = Item.buyPrice(0, 2);
-        Item.rare = ItemRarityID.Green;
+        Item.rare = ItemRarityID.Yellow;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

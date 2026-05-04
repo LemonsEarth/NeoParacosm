@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Items.Accessories.Combat.Ranged;
+using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;

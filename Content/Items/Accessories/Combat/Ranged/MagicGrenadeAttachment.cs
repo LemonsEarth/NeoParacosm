@@ -56,7 +56,7 @@ public class MagicGrenadeAttachmentPlayer : ModPlayer
 
     public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        if (Active && item.useAmmo == AmmoID.Bullet)
+        if (Active)
         {
             int cd = ((int)(2 * MathHelper.Clamp(60f / item.useTime, 1, 30)));
             if (shootCounter % cd == 0)

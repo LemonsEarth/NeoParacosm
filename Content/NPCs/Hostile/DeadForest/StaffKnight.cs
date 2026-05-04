@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Core.Systems.Data;
@@ -248,6 +249,7 @@ public class StaffKnight : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemType<RestoreManaSpell>(), 10, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<HolyStaff>(), 20, 1, 1));
     }
 
     public override bool? CanFallThroughPlatforms()

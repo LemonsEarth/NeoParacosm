@@ -1574,25 +1574,57 @@ InflamedArm: {
 
 StaffOfTheCataclysm: {
 	DisplayName: Staff Of The Cataclysm
-	Tooltip: ""
+	Tooltip: Expands a domain around the staff after a short delay
 }
 
 ClingerMouth: {
 	DisplayName: Clinger Mouth
-	Tooltip: ""
+	Tooltip: Ranged weapons occasionally fire cursed flames
 }
 
 MagicClingerMuzzle: {
 	DisplayName: Magic Clinger Muzzle
-	Tooltip: ""
+	Tooltip:
+		'''
+		Ranged weapons occasionally fire cursed flames
+		Normal bullets inflict cursed inferno
+		Normal bullets have a chance to inflict a random damaging debuff
+		'''
 }
 
 MagicGrenadeAttachment: {
 	DisplayName: Magic Grenade Attachment
-	Tooltip: ""
+	Tooltip:
+		'''
+		Ranged weapons occasionally fire a grenade that bursts into cursed flames
+		Normal bullets inflict cursed inferno
+		Normal bullets have a chance to inflict a random damaging debuff
+		'''
 }
 
 HolyStaff: {
 	DisplayName: Holy Staff
-	Tooltip: ""
+	Tooltip: Fires a burst of holy blasts
+}
+
+HolySpears: {
+	DisplayName: Holy Spears
+	Tooltip: Throw an array of holy spears that create a vertical burst of holy fire on impact
+}
+
+LightningSpearSpell: {
+	DisplayName: Lightning Spear Spell
+	Tooltip:
+	'''
+	Conjure a lightning spear
+	Hold to charge for more damage
+	'''
+}
+
+LightningTridentSpell: {
+	DisplayName: Lightning Trident Spell
+	Tooltip:
+	'''
+	Conjure a lightning trident that splits into lightning spears if charged
+	'''
 }
