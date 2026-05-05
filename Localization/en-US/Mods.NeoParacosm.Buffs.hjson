@@ -168,6 +168,11 @@ MinersBlessingBuff: {
 }
 
 OverchargedBuff: {
-	DisplayName: Overcharged Buff
-	Description: Mods.NeoParacosm.Buffs.OverchargedBuff.Description
+	DisplayName: Overcharged
+	Description: You are overcharged...
+}
+
+ExplosiveDamageBuff: {
+	DisplayName: Explosive Power
+	Description: Increased damage
 }

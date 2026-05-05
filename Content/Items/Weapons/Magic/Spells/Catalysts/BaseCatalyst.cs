@@ -34,7 +34,7 @@ public abstract class BaseCatalyst : ModItem
     {
         position = player.Center;
         velocity = player.NPCatalystPlayer().SelectedSpell.TargetVector == Vector2.Zero ?
-                                                                           Main.MouseWorld :
+                                                                           player.DirectionTo(Main.MouseWorld) :
                                                                            player.DirectionTo(player.NPCatalystPlayer().SelectedSpell.TargetVector);
     }
 

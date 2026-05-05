@@ -1613,18 +1613,39 @@ HolySpears: {
 }
 
 LightningSpearSpell: {
-	DisplayName: Lightning Spear Spell
+	DisplayName: Lightning Spear
 	Tooltip:
-	'''
-	Conjure a lightning spear
-	Hold to charge for more damage
-	'''
+		'''
+		Conjure a lightning spear
+		Hold to charge for more damage
+		'''
 }
 
 LightningTridentSpell: {
-	DisplayName: Lightning Trident Spell
+	DisplayName: Lightning Trident
+	Tooltip: Conjure a lightning trident that splits into lightning spears if charged
+}
+
+ExplosionSpell: {
+	DisplayName: Explosion
+	Tooltip: Explode, damaging you and nearby enemies
+}
+
+BombVest: {
+	DisplayName: Bomb Vest
+	Tooltip:
+		'''
+		Massivelly reduces damage taken from explosives
+		Grants immunity to knockback from explosives
+		Getting hit by an explosion grants you a temporary 12% damage buff
+		'''
+}
+
+EarthquakeSpell: {
+	DisplayName: Earthquake Spell
 	Tooltip:
 	'''
-	Conjure a lightning trident that splits into lightning spears if charged
+	Knocks nearby enemies high up into the air
+	Emits bursts of pebbles from below
 	'''
 }

@@ -7,6 +7,13 @@ public class BombExplosion : ModProjectile
     public override string Texture => "Terraria/Images/Item_0"; // Use Iron Pickaxe texture cause im lazy
 
     ref float AITimer => ref Projectile.ai[0];
+    ref float Radius => ref Projectile.ai[1];
+
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.Explosive[Type] = true;
+        ProjectileID.Sets.PlayerHurtDamageIgnoresDifficultyScaling[Type] = true;
+    }
 
     public override void SetDefaults()
     {
@@ -28,17 +35,21 @@ public class BombExplosion : ModProjectile
 
     public override void AI()
     {
+        if (AITimer == 0)
+        {
+            //Projectile.damage = Projectile.originalDamage / 4;
+        }
         AITimer++;
     }
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
-        modifiers.FinalDamage *= 4;
+        
     }
 
     public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
     {
-        
+        modifiers.FinalDamage *= 0.5f;
     }
 
     public override void OnKill(int timeLeft)
@@ -54,7 +65,7 @@ public class BombExplosion : ModProjectile
         }
         if (Main.netMode != NetmodeID.MultiplayerClient)
         {
-            int explosionRadius = 5;
+            int explosionRadius = (int)Radius;
             int minTileX = (int)(Projectile.Center.X / 16f - explosionRadius);
             int maxTileX = (int)(Projectile.Center.X / 16f + explosionRadius);
             int minTileY = (int)(Projectile.Center.Y / 16f - explosionRadius);
