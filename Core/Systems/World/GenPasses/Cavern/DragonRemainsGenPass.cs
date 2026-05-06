@@ -3,7 +3,7 @@ using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
-namespace NeoParacosm.Core.Systems.World.GenPasses;
+namespace NeoParacosm.Core.Systems.World.GenPasses.Cavern;
 
 public class DragonRemainsGenPass : GenPass
 {

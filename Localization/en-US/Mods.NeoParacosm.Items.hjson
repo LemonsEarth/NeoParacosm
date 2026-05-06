@@ -1644,8 +1644,8 @@ BombVest: {
 EarthquakeSpell: {
 	DisplayName: Earthquake Spell
 	Tooltip:
-	'''
-	Knocks nearby enemies high up into the air
-	Emits bursts of pebbles from below
-	'''
+		'''
+		Knocks nearby enemies high up into the air
+		Emits bursts of pebbles from below
+		'''
 }

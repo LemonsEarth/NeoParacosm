@@ -1,4 +1,9 @@
 ﻿using NeoParacosm.Core.Systems.World.GenPasses;
+using NeoParacosm.Core.Systems.World.GenPasses.Cavern;
+using NeoParacosm.Core.Systems.World.GenPasses.Corruption;
+using NeoParacosm.Core.Systems.World.GenPasses.Crimson;
+using NeoParacosm.Core.Systems.World.GenPasses.DeadForest;
+using NeoParacosm.Core.Systems.World.GenPasses.Ice;
 using System.Collections.Generic;
 using Terraria.WorldBuilding;
 
@@ -8,13 +13,45 @@ public class WorldGenSystem : ModSystem
 {
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonGenpasses("Building Bloody Settlement", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new CorruptionGenpasses("Hiding from the plague", 100f));
-        InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading Death", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonVillageGenPass("Building bloody settlement", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CorruptBunkerGenPass("Hiding from the plague", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CorruptTowerGenPass("Building a lookout", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new IglooGenPass("Containing warmth", 100f));
+        InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading death", 100f));
+        InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Prebuilding battlegrounds", 100f));
+        InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a crypt", 100f));
+        InsertAfterTask<DeadForestBasementGenPass>(tasks, new DeadForestHolyStructureGenPass("Constructing a place of worship", 100f));
+        InsertAfterTask<DeadForestHolyStructureGenPass>(tasks, new DeadForestHolyCrossesGenPass("Marking graves", 100f));
         InsertAfterTask(tasks, "Micro Biomes", new DragonRemainsGenPass("Shifting Earth due to Powerful Presence", 100f));
 
         //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));
         //tasks.Insert(waterPlantsStep + 1, new PassLegacy("The Depths", GenerateDepths));
+    }
+
+    /// <summary>
+    /// Insert the genpass after the first genpass with the name "genpassName"
+    /// </summary>
+    /// <param name="tasks"></param>
+    /// <param name="genpassName"></param>
+    /// <param name="genpass"></param>
+    void InsertAfterTask(List<GenPass> tasks, string genpassName, GenPass genpass)
+    {
+        genpass.Name = $"[c/FFFF00:NeoParacosm: {genpass.Name}]";
+        int step = tasks.FindIndex(pass => pass.Name.Equals(genpassName));
+        tasks.Insert(step + 1, genpass);
+    }
+
+    /// <summary>
+    /// Insert the genpass after the first genpass of type T
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="tasks"></param>
+    /// <param name="genpass"></param>
+    void InsertAfterTask<T>(List<GenPass> tasks, GenPass genpass) where T : GenPass
+    {
+        genpass.Name = $"[c/FFFF00:NeoParacosm: {genpass.Name}]";
+        int step = tasks.FindIndex(pass => pass is T);
+        tasks.Insert(step + 1, genpass);
     }
 
     public override void PostUpdateWorld()
@@ -64,12 +101,7 @@ public class WorldGenSystem : ModSystem
         }*/
     }
 
-    void InsertAfterTask(List<GenPass> tasks, string genpassName, GenPass genpass)
-    {
-        genpass.Name = $"[c/FFFF00:NeoParacosm: {genpass.Name}]";
-        int step = tasks.FindIndex(pass => pass.Name.Equals(genpassName));
-        tasks.Insert(step + 1, genpass);
-    }
+
 
     /*void GenerateVerticalOceanTunnels()
     {

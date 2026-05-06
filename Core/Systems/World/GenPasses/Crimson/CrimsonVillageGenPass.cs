@@ -4,11 +4,11 @@ using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
-namespace NeoParacosm.Core.Systems.World.GenPasses;
+namespace NeoParacosm.Core.Systems.World.GenPasses.Crimson;
 
-public class CrimsonGenpasses : GenPass
+public class CrimsonVillageGenPass : GenPass
 {
-    public CrimsonGenpasses(string name, float loadWeight) : base(name, loadWeight) { }
+    public CrimsonVillageGenPass(string name, float loadWeight) : base(name, loadWeight) { }
 
     readonly string CrimsonVillagePath = "Common/Assets/Structures/CrimsonVillageHouses";
 

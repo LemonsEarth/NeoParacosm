@@ -46,6 +46,6 @@ public class SnowgraveSpellDropNPC : GlobalNPC
 
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.Common(ItemType<SnowgraveSpell>(), 50, 1, 1));
+        npcLoot.Add(ItemDropRule.Common(ItemType<SnowgraveSpell>(), 75, 1, 1));
     }
 }
