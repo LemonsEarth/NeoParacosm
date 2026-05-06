@@ -1649,3 +1649,32 @@ EarthquakeSpell: {
 		Emits bursts of pebbles from below
 		'''
 }
+
+CerebralHorror: {
+	DisplayName: Cerebral Horror
+	Tooltip: Increases damage, critical strike chance and damage reduction by {0}% while in the dark
+}
+
+CreatureFromTheDeepsHead: {
+	DisplayName: Creature From The Deep's Head
+	Tooltip: ""
+}
+
+FrankensteinsHead: {
+	DisplayName: Frankenstein's Head
+	Tooltip: ""
+}
+
+SwampThingsHead: {
+	DisplayName: Swamp Thing's Head
+	Tooltip: ""
+}
+
+EyezorHead: {
+	DisplayName: Eyezor Head
+	Tooltip:
+		'''
+		Fires lasers towards nearby enemies
+		Hold in your hand to charge for more lasers
+		'''
+}

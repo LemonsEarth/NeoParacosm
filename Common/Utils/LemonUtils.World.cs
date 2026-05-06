@@ -148,4 +148,26 @@ public static partial class LemonUtils
             }
         }
     }
+
+    public static float GetLightingAroundPos(Vector2 point, int tileRange)
+    {
+        float[,] lightingLevels = new float[tileRange * 2 + 1, tileRange * 2 + 1];
+        int tileX = (int)(point.X / 16f);
+        int tileY = (int)(point.Y / 16f);
+        for (int row = -tileRange; row <= tileRange; row++)
+        {
+            for (int col = -tileRange; col <= tileRange; col++)
+            {
+                lightingLevels[row + tileRange, col + tileRange] = Lighting.Brightness(tileX + col, tileY + row);
+            }
+        }
+
+        float sum = 0;
+        foreach (var level in lightingLevels)
+        {
+            sum += level;
+        }
+
+        return sum;
+    }
 }
