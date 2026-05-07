@@ -160,4 +160,9 @@ public static partial class LemonUtils
     {
         return $"Mods.NeoParacosm.{category}.{subcategory}";
     }
+
+    public static void NewText(this object o)
+    {
+        Main.NewText(o ?? "null");
+    }
 }

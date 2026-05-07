@@ -6,7 +6,7 @@ namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
 public class MinersBlessingSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
-    public override int ManaCost => 40;
+    public override int ManaCost => 120;
     public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
 
     public override void SpellAction(Player player)

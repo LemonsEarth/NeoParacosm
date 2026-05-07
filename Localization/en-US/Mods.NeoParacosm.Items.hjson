@@ -1678,3 +1678,78 @@ EyezorHead: {
 		Hold in your hand to charge for more lasers
 		'''
 }
+
+BoneBiterHead: {
+	DisplayName: Bone Biter Head
+	Tooltip: ""
+}
+
+CrystalThresherHead: {
+	DisplayName: Crystal Thresher Head
+	Tooltip: ""
+}
+
+FleshReaverHead: {
+	DisplayName: Flesh Reaver Head
+	Tooltip: ""
+}
+
+SandSharkHead: {
+	DisplayName: Sand Shark Head
+	Tooltip: ""
+}
+
+AnkleBiter: {
+	DisplayName: Ankle Biter
+	Tooltip:
+		'''
+		Fires a burst of 5 bullets
+		Occasionally fires tiny eaters
+		'''
+}
+
+GapingThresher: {
+	DisplayName: Gaping Thresher
+	Tooltip:
+		'''
+		Fires a burst of 5 bullets
+		Occasionally fires short-ranged crystals
+		'''
+}
+
+MeatReaver: {
+	DisplayName: Meat Reaver
+	Tooltip:
+		'''
+		Fires a burst of 5 bullets
+		Occasionally fires bones
+		'''
+}
+
+SandsharkGun: {
+	DisplayName: Sandshark Gun
+	Tooltip:
+		'''
+		Fires a burst of 5 bullets
+		Occasionally fires a sand block
+		'''
+}
+
+BarrenMind: {
+	DisplayName: Barren Mind
+	Tooltip:
+		'''
+		Grants immunity to Suffocation
+		Hold "Down" while standing on sand to sink into it, allowing free movement
+		"Bear in mind, swimming is easier with proper equipment"
+		'''
+}
+
+SigilOfTheCreatureSpell: {
+	DisplayName: Sigil Of The Creature Spell
+	Tooltip:
+	'''
+	Summons a golden sigil that rotates, rapidly firing golden bullets that inflict Midas
+	Up to 3 sigils can be active at once
+	'''
+}

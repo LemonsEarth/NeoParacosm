@@ -6,7 +6,7 @@ namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
 public class GoldenHeartSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
-    public override int ManaCost => 0;
+    public override int ManaCost => 200;
     public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
 
     public override void SpellAction(Player player)
