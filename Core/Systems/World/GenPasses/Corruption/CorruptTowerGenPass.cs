@@ -16,21 +16,6 @@ public class CorruptTowerGenPass : GenPass
 
     readonly string CorruptTowerPath = "Common/Assets/Structures/CorruptTower";
 
-    bool IsTileTypeCorrupt(int tileType)
-    {
-        return tileType == TileID.Ebonstone || tileType == TileID.CorruptGrass || tileType == TileID.Ebonsand;
-    }
-
-    bool IsTileCorrupt(Point point)
-    {
-        return Main.tile[point].HasTile && IsTileTypeCorrupt(Main.tile[point].TileType);
-    }
-
-    bool IsTileEbonstone(Point point)
-    {
-        return Main.tile[point].HasTile && Main.tile[point].TileType == TileID.Ebonstone;
-    }
-
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
         if (WorldGen.crimson)
@@ -63,7 +48,8 @@ public class CorruptTowerGenPass : GenPass
             Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
             Point pointBottomRight = new Point(randX + structureDims.X, randY + structureDims.Y);
 
-            if (Main.tile[pointTop].HasTile && Main.tile[pointTop].WallType == WallID.None || !IsTileCorrupt(pointBottomLeft) || !IsTileCorrupt(pointBottomRight))
+            if (Main.tile[pointTop].HasTile || Main.tile[pointTop].WallType != WallID.None
+                || !LemonUtils.IsTileCorrupt(pointBottomLeft) || !LemonUtils.IsTileCorrupt(pointBottomRight))
             {
                 attemptCount++;
                 continue;
@@ -71,6 +57,11 @@ public class CorruptTowerGenPass : GenPass
 
             Generator.GenerateStructure(CorruptTowerPath, new Point16(pointTopLeft), NeoParacosm.Instance);
             break;
+        }
+
+        if (attemptCount >= maxAttemptCount)
+        {
+            return;
         }
 
         List<List<(int, int)>> items =

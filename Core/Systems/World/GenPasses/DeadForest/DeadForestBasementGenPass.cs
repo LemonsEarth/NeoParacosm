@@ -1,10 +1,13 @@
-﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using NeoParacosm.Content.Items.Accessories.Combat;
+using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
 using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses.DeadForest;
 
@@ -15,11 +18,6 @@ public class DeadForestBasementGenPass : GenPass
     readonly string DeadForestBasementPath = "Common/Assets/Structures/DeadForestBasement";
     int baseDeadForestTileRadius = 200;
     int DeadForestRadius => baseDeadForestTileRadius * LemonUtils.GetWorldSize();
-
-    bool IsTileDeadDirt(Point point)
-    {
-        return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
-    }
 
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
@@ -37,10 +35,12 @@ public class DeadForestBasementGenPass : GenPass
 
         int maxAttemptCount = 10000;
         int attemptCount = 0;
+        int randX = 0;
+        int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            int randX = Main.rand.Next(startXTile, maxXTile);
-            int randY = Main.rand.Next(startYTile, maxYTile);
+            randX = Main.rand.Next(startXTile, maxXTile);
+            randY = Main.rand.Next(startYTile, maxYTile);
             Point pointTopLeft = new Point(randX, randY);
             Point pointTopRight = new Point(randX + structureDims.X, randY);
             Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
@@ -55,7 +55,10 @@ public class DeadForestBasementGenPass : GenPass
                 continue;
             }
 
-            if (!IsTileDeadDirt(pointTopLeft) || !IsTileDeadDirt(pointTopRight) || !IsTileDeadDirt(pointBottomLeft) || !IsTileDeadDirt(pointBottomRight))
+            if (!LemonUtils.IsTileDeadDirt(pointTopLeft)
+                || !LemonUtils.IsTileDeadDirt(pointTopRight)
+                || !LemonUtils.IsTileDeadDirt(pointBottomLeft)
+                || !LemonUtils.IsTileDeadDirt(pointBottomRight))
             {
                 attemptCount++;
                 continue;
@@ -64,5 +67,19 @@ public class DeadForestBasementGenPass : GenPass
             Generator.GenerateStructure(DeadForestBasementPath, new Point16(pointTopLeft), NeoParacosm.Instance);
             break;
         }
+
+        if (attemptCount >= maxAttemptCount)
+        {
+            return;
+        }
+
+        List<List<(int, int)>> items =
+        [
+            [(ItemType<DeathflameBallSpell>(), 1), (ItemType<RuneOfPeridition>(), 1)],
+            [(ItemID.HealingPotion, 10), (ItemID.ManaPotion, 10)],
+            [(ItemID.PoopBlock, 10)],
+        ];
+
+        LemonUtils.GenerateStructureLoot(randX, randY, structureDims, items, 0.8f, 1.5f);
     }
 }

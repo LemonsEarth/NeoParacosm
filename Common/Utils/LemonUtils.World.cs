@@ -1,4 +1,5 @@
-﻿using StructureHelper.API;
+﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 
@@ -169,5 +170,40 @@ public static partial class LemonUtils
         }
 
         return sum;
+    }
+
+    public static bool IsTileTypeCrimson(int tileType)
+    {
+        return tileType == TileID.Crimstone || tileType == TileID.CrimsonGrass || tileType == TileID.Crimsand;
+    }
+
+    public static bool IsTileCrimson(Point point)
+    {
+        return Main.tile[point].HasTile && IsTileTypeCrimson(Main.tile[point].TileType);
+    }
+
+    public static bool IsTileTypeCorrupt(int tileType)
+    {
+        return tileType == TileID.Ebonstone || tileType == TileID.CorruptGrass || tileType == TileID.Ebonsand;
+    }
+
+    public static bool IsTileCorrupt(Point point)
+    {
+        return Main.tile[point].HasTile && IsTileTypeCorrupt(Main.tile[point].TileType);
+    }
+
+    public static bool IsTileDeadDirt(Point point)
+    {
+        return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
+    }
+
+    public static bool IsTileTypeSnowy(int tileType)
+    {
+        return tileType == TileID.IceBlock || tileType == TileID.CorruptIce || tileType == TileID.FleshIce || tileType == TileID.SnowBlock;
+    }
+
+    public static bool IsTileSnowy(Point point)
+    {
+        return Main.tile[point].HasTile && IsTileTypeSnowy(Main.tile[point].TileType);
     }
 }

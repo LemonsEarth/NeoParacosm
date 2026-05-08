@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using StructureHelper.API;
 using System.Collections.Generic;
@@ -9,24 +8,29 @@ using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
-namespace NeoParacosm.Core.Systems.World.GenPasses.Ice;
+namespace NeoParacosm.Core.Systems.World.GenPasses.Crimson;
 
-public class IglooGenPass : GenPass
+public class CrimsonFireplaceHouseGenPass : GenPass
 {
-    public IglooGenPass(string name, float loadWeight) : base(name, loadWeight) { }
+    public CrimsonFireplaceHouseGenPass(string name, float loadWeight) : base(name, loadWeight) { }
 
-    readonly string IglooPath = "Common/Assets/Structures/Igloo";
+    readonly string CrimsonFireplaceHousePath = "Common/Assets/Structures/CrimsonFireplaceHouse";
 
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
-        GenerateIgloo();
+        if (!WorldGen.crimson)
+        {
+            return;
+        }
+
+        GenerateCrimsonFireplaceHouse();
     }
 
-    public void GenerateIgloo()
+    public void GenerateCrimsonFireplaceHouse()
     {
-        Point16 structureDims = Generator.GetStructureDimensions(IglooPath, NeoParacosm.Instance);
-        int startXTile = 400;
-        int maxXTile = Main.maxTilesX - 400;
+        Point16 structureDims = Generator.GetStructureDimensions(CrimsonFireplaceHousePath, NeoParacosm.Instance);
+        int startXTile = 200;
+        int maxXTile = Main.maxTilesX - 200;
         int startYTile = (int)(Main.worldSurface * 0.33f);
         int maxYTile = ((int)Main.worldSurface);
 
@@ -44,15 +48,14 @@ public class IglooGenPass : GenPass
             Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
             Point pointBottomRight = new Point(randX + structureDims.X, randY + structureDims.Y);
 
-            if (Main.tile[pointTop].HasTile
-                || (Main.tile[pointTopLeft].HasTile && Main.tile[pointTopRight].HasTile)
-                || !LemonUtils.IsTileSnowy(pointBottomLeft) || !LemonUtils.IsTileSnowy(pointBottomRight))
+            if (Main.tile[pointTop].HasTile || Main.tile[pointTop].WallType != WallID.None
+                || !LemonUtils.IsTileCrimson(pointBottomLeft) || !LemonUtils.IsTileCrimson(pointBottomRight))
             {
                 attemptCount++;
                 continue;
             }
 
-            Generator.GenerateStructure(IglooPath, new Point16(pointTopLeft), NeoParacosm.Instance);
+            Generator.GenerateStructure(CrimsonFireplaceHousePath, new Point16(pointTopLeft), NeoParacosm.Instance);
             break;
         }
 
@@ -63,15 +66,15 @@ public class IglooGenPass : GenPass
 
         List<List<(int, int)>> items =
         [
-            [(ItemType<SnowgraveSpell>(), 1)],
-            [(ItemID.SnowballLauncher, 1), (ItemID.IceSkates, 1)],
-            [(ItemID.WarmthPotion, 3)],
-            [(ItemID.Snowball, 40)],
-            [(ItemID.BorealWood, 40)],
-            [(ItemID.SnowBlock, 25)],
-            [(ItemID.IceBlock, 25)]
+            [(ItemType<ChainsawGun>(), 1)],
+            [(ItemID.CrimsonHeart, 1), (ItemID.PanicNecklace, 1)],
+            [(ItemID.LifeCrystal, 3)],
+            [(ItemID.RagePotion, 3), (ItemID.WrathPotion, 3)],
+            [(ItemID.CrimtaneBar, 12)],
+            [(ItemID.TungstenBar, 6), (ItemID.SilverBar, 8)],
+            [(ItemID.GoldCoin, 5)],
         ];
 
-        LemonUtils.GenerateStructureLoot(randX, randY, structureDims, items, 1f, 2f);
+        LemonUtils.GenerateStructureLoot(randX, randY, structureDims, items, 0.8f, 2f);
     }
 }

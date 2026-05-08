@@ -14,11 +14,6 @@ public class DeadForestHolyCrossesGenPass : GenPass
     int baseDeadForestTileRadius = 200;
     int DeadForestRadius => baseDeadForestTileRadius * LemonUtils.GetWorldSize();
 
-    bool IsTileDeadDirt(Point point)
-    {
-        return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
-    }
-
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
         GenerateHolyCrosses();

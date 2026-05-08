@@ -15,11 +15,6 @@ public class DeadForestHolyStructureGenPass : GenPass
     int baseDeadForestTileRadius = 200;
     int DeadForestRadius => baseDeadForestTileRadius * LemonUtils.GetWorldSize();
 
-    bool IsTileDeadDirt(Point point)
-    {
-        return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
-    }
-
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
         GenerateHolyStructure();
@@ -61,7 +56,7 @@ public class DeadForestHolyStructureGenPass : GenPass
                 continue;
             }
 
-            if (!IsTileDeadDirt(pointBottomLeft) || !IsTileDeadDirt(pointBottomRight))
+            if (!LemonUtils.IsTileDeadDirt(pointBottomLeft) || !LemonUtils.IsTileDeadDirt(pointBottomRight))
             {
                 attemptCount++;
                 continue;
@@ -71,10 +66,16 @@ public class DeadForestHolyStructureGenPass : GenPass
             break;
         }
 
+        if (attemptCount >= maxAttemptCount)
+        {
+            return;
+        }
+
         List<List<(int, int)>> items =
         [
             [(ItemType<GoldenHeartSpell>(), 1)],
-            [(ItemID.DiamondRing, 1)],
+            [(ItemID.DiamondRing, 1), (ItemID.AngelHalo, 1)],
+            [(ItemID.GoldenCrate, 1), (ItemID.GoldenBugNet, 1), (ItemID.CrossNecklace, 1)],
             [(ItemID.GoldBar, 20), (ItemID.PlatinumBar, 20)],
             [(ItemID.GoldCoin, 10)],
             [(ItemID.GoldenDelight, 3), (ItemID.Milkshake, 3), (ItemID.ApplePie, 3)],

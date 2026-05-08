@@ -1748,8 +1748,8 @@ BarrenMind: {
 SigilOfTheCreatureSpell: {
 	DisplayName: Sigil Of The Creature Spell
 	Tooltip:
-	'''
-	Summons a golden sigil that rotates, rapidly firing golden bullets that inflict Midas
-	Up to 3 sigils can be active at once
-	'''
+		'''
+		Summons a golden sigil that rotates, rapidly firing golden bullets that inflict Midas
+		Up to 3 sigils can be active at once
+		'''
 }

@@ -16,16 +16,6 @@ public class CorruptBunkerGenPass : GenPass
 
     readonly string CorruptBunkerPath = "Common/Assets/Structures/CorruptBunker";
 
-    bool IsTileTypeCorrupt(int tileType)
-    {
-        return tileType == TileID.Ebonstone || tileType == TileID.CorruptGrass || tileType == TileID.Ebonsand;
-    }
-
-    bool IsTileCorrupt(Point point)
-    {
-        return Main.tile[point].HasTile && IsTileTypeCorrupt(Main.tile[point].TileType);
-    }
-
     bool IsTileEbonstone(Point point)
     {
         return Main.tile[point].HasTile && Main.tile[point].TileType == TileID.Ebonstone;
@@ -60,7 +50,10 @@ public class CorruptBunkerGenPass : GenPass
             Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
             Point pointBottomRight = new Point(randX + structureDims.X, randY + structureDims.Y);
 
-            if (!IsTileEbonstone(pointTopLeft) || !IsTileEbonstone(pointTopRight) || !IsTileEbonstone(pointBottomLeft) || !IsTileEbonstone(pointBottomRight))
+            if (!IsTileEbonstone(pointTopLeft)
+                || !IsTileEbonstone(pointTopRight)
+                || !IsTileEbonstone(pointBottomLeft)
+                || !IsTileEbonstone(pointBottomRight))
             {
                 attemptCount++;
                 continue;
@@ -69,5 +62,23 @@ public class CorruptBunkerGenPass : GenPass
             Generator.GenerateStructure(CorruptBunkerPath, new Point16(pointTopLeft), NeoParacosm.Instance);
             break;
         }
+
+        if (attemptCount >= maxAttemptCount)
+        {
+            return;
+        }
+
+        List<List<(int, int)>> items =
+        [
+            [(ItemID.LuckyHorseshoe, 1), (ItemID.BandofRegeneration, 1), (ItemID.AdhesiveBandage, 1)],
+            [(ItemID.DepthMeter, 1), (ItemID.AncientChisel, 1), (ItemID.Sextant, 1)],
+            [(ItemID.GoldWatch, 1), (ItemID.PlatinumWatch, 1)],
+            [(ItemID.HealingPotion, 3), (ItemID.LesserHealingPotion, 10)],
+            [(ItemID.IronBroadsword, 1), (ItemID.SilverBroadsword, 1), (ItemID.GoldBroadsword, 1)],
+            [(ItemID.LeadBow, 1), (ItemID.TungstenBow, 1), (ItemID.PlatinumBow, 1)],
+            [(ItemID.LeadHelmet, 1), (ItemID.TungstenHelmet, 1), (ItemID.PlatinumHelmet, 1)],
+            [(ItemID.IronChainmail, 1), (ItemID.SilverChainmail, 1), (ItemID.GoldChainmail, 1)],
+            [(ItemID.LeadGreaves, 1), (ItemID.SilverGreaves, 1), (ItemID.PlatinumGreaves, 1)],
+        ];
     }
 }

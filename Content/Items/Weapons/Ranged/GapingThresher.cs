@@ -74,7 +74,7 @@ public class GapingThresher : ModItem
         recipe.AddIngredient(ItemType<CrystalThresherHead>(), 1);
         recipe.AddIngredient(ItemID.ClockworkAssaultRifle, 1);
         recipe.AddIngredient(ItemID.Sandgun, 1);
-        recipe.AddIngredient(ItemID.AncientBattleArmorMaterial, 3);
+        recipe.AddIngredient(ItemID.AncientBattleArmorMaterial, 1);
         recipe.AddTile(TileID.Anvils);
         recipe.Register();
     }
