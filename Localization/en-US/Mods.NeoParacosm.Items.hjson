@@ -1753,3 +1753,24 @@ SigilOfTheCreatureSpell: {
 		Up to 3 sigils can be active at once
 		'''
 }
+
+VoidHelmet: {
+	SetBonus: Mods.NeoParacosm.Items.VoidHelmet.SetBonus
+	DisplayName: Void Helmet
+	Tooltip: ""
+}
+
+VoidChestplate: {
+	DisplayName: Void Chestplate
+	Tooltip: ""
+}
+
+VoidGreaves: {
+	DisplayName: Void Greaves
+	Tooltip: ""
+}
+
+VoidGreatsword: {
+	DisplayName: Void Greatsword
+	Tooltip: ""
+}

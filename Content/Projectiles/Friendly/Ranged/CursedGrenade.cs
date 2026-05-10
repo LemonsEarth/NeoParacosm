@@ -1,5 +1,8 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
 using Terraria.Audio;
+using Terraria.Graphics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
@@ -10,8 +13,8 @@ public class CursedGrenade : ModProjectile
 
     public override void SetStaticDefaults()
     {
-        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
-        ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
+        ProjectileID.Sets.TrailCacheLength[Type] = 20;
+        ProjectileID.Sets.TrailingMode[Type] = 2;
         Main.projFrames[Type] = 1;
     }
 
@@ -99,9 +102,22 @@ public class CursedGrenade : ModProjectile
         }
     }
 
+    private VertexStrip _strip;
+    private VertexStrip strip;
+
+    private float StripWidth(float progress)
+    {
+        return MathHelper.Lerp(24f, 0f, progress);
+    }
+
+    private Color StripColor(float progress)
+    {
+        return Color.White;
+    }
+
     public override bool PreDraw(ref Color lightColor)
     {
-        LemonUtils.DrawGlow(Projectile.Center, Color.LightGreen, Projectile.Opacity * 0.6f, Projectile.scale);
+        
         return true;
     }
 }
