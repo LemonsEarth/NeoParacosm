@@ -1574,7 +1574,11 @@ InflamedArm: {
 
 StaffOfTheCataclysm: {
 	DisplayName: Staff Of The Cataclysm
-	Tooltip: Expands a domain around the staff after a short delay
+	Tooltip:
+	'''
+	Expand a domain around the staff after a short delay
+	The domain constantly drains your mana and disappears when you run out of mana
+	'''
 }
 
 ClingerMouth: {

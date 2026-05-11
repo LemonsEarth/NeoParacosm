@@ -37,6 +37,11 @@ public class EyezorHead : ModItem
 
     public override void HoldItem(Player player)
     {
+        if (timeHeld == 299)
+        {
+            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (1.7f, 1.9f)}, player.Center);
+            LemonUtils.DustCircle(player.Center, 8, 8, DustID.GemDiamond, 1.5f);
+        }
         if (timeHeld < 300)
         {
             Vector2 pos = player.Center + Main.rand.NextVector2CircularEdge(32, 32);

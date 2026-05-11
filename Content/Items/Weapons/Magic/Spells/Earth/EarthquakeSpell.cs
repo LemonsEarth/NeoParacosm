@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
@@ -12,7 +13,7 @@ public class EarthquakeSpell : BaseSpell
     public override void SpellAction(Player player)
     {
         TargetVector = Main.MouseWorld;
-
+        SoundEngine.PlaySound(SoundID.Item74 with { Volume = 0.5f, PitchRange = (0.35f, 0.5f) }, player.Center);
         float xSlowDownBase = MathF.Pow(0.5f, player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 2f));
         float yPushBase = 25 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 2f);
         float baseDistance = 400 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 2f);
