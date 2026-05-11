@@ -12,7 +12,7 @@ public static partial class LemonUtils
     /// <returns></returns>
     public static bool IsAlive(this Player player)
     {
-        return (player != null || player.active || !player.dead || !player.ghost);
+        return (player != null && player.active && !player.dead && !player.ghost);
     }
 
     public static NPCatalystPlayer NPCatalystPlayer(this Player player)

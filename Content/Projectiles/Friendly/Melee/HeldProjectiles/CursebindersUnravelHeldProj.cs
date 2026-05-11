@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Players;
+using System.Collections.Generic;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
@@ -8,6 +9,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 public class CursebindersUnravelHeldProj : PrimProjectile
 {
     int AITimer = 0;
+    List<Vector2> playerOldPos = new List<Vector2>();
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -64,6 +66,7 @@ public class CursebindersUnravelHeldProj : PrimProjectile
             }
         }
 
+        Projectile.TrackPlayerOldPos(AITimer == 0, playerOldPos);
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
@@ -103,7 +106,7 @@ public class CursebindersUnravelHeldProj : PrimProjectile
         float botRotOffset = player.direction == 1 ? 3 * MathHelper.PiOver4 : MathHelper.PiOver4;
 
         Main.spriteBatch.End(); // Restarting spritebatch around Primitive Drawing to fix some layering issues
-        PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.DarkRed, Color.Transparent, BasicEffect, topRotOffset, botRotOffset, (int)(Projectile.height * 0.7f), (int)(Projectile.height * 0.7f));
+        PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.DarkRed, Color.Transparent, BasicEffect, playerOldPos, topRotOffset, botRotOffset, (int)(Projectile.height * 0.7f), (int)(Projectile.height * 0.7f));
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         for (int k = Projectile.oldPos.Length - 1; k > 0; k--)

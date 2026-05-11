@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
+using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -12,6 +13,7 @@ public class GraveswordHeldProj : PrimProjectile
 
     ref float special => ref Projectile.ai[0];
     ref float direction => ref Projectile.ai[1];
+    List<Vector2> playerOldPos = new List<Vector2>();
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -51,6 +53,8 @@ public class GraveswordHeldProj : PrimProjectile
         {
             Projectile.Kill();
         }
+
+        Projectile.TrackPlayerOldPos(AITimer == 0, playerOldPos);
 
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
@@ -144,7 +148,7 @@ public class GraveswordHeldProj : PrimProjectile
         if (special == 0)
         {
             Main.spriteBatch.End(); // Restarting spritebatch around Primitive Drawing to fix some layering issues
-            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.Transparent, BasicEffect, topRotOffset, botRotOffset, (int)(Projectile.height * 0.75f), (int)(Projectile.height * 0.75f));
+            PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, Color.Black, Color.Transparent, BasicEffect, playerOldPos, topRotOffset, botRotOffset, (int)(Projectile.height * 0.75f), (int)(Projectile.height * 0.75f));
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         }
 

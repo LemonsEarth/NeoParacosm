@@ -2,6 +2,7 @@
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using ReLogic.Content;
+using System.Collections.Generic;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
@@ -13,6 +14,7 @@ public class StarsaberHeldProj : PrimProjectile
     ref float special => ref Projectile.ai[0];
     ref float direction => ref Projectile.ai[1];
     ref float useCounter => ref Projectile.ai[2];
+    List<Vector2> playerOldPos = new List<Vector2>();
 
     bool alreadyHit = false;
 
@@ -68,6 +70,7 @@ public class StarsaberHeldProj : PrimProjectile
             Projectile.Kill();
         }
 
+        Projectile.TrackPlayerOldPos(AITimer == 0, playerOldPos);
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
@@ -145,7 +148,7 @@ public class StarsaberHeldProj : PrimProjectile
 
         Main.spriteBatch.End(); // Restarting spritebatch around Primitive Drawing to fix some layering issues
         Color color = special == 0 ? new Color(255, 255, 128) * 0.25f : new Color(255, 255, 128);
-        PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, color, Color.Transparent, BasicEffect, topRotOffset, botRotOffset);
+        PrimHelper.DrawHeldProjectilePrimTrailRectangular(Projectile, color, Color.Transparent, BasicEffect, playerOldPos, topRotOffset, botRotOffset);
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
 
         Main.EntitySpriteDraw(texture, drawPos, frame, Color.White, Projectile.rotation, frame.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));

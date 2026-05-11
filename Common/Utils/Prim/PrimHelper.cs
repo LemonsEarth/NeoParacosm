@@ -136,7 +136,13 @@ public class PrimHelper
         DrawPrimitives(BasicEffect, vertices);
     }
 
-    public static void DrawHeldProjectilePrimTrailRectangular(Projectile projectile, Color startColor, Color endColor, BasicEffect BasicEffect, float topVertexRotationOffset, float bottomVertexRotationOffset, int? topDistance = null, int? bottomDistance = null)
+    public static void DrawHeldProjectilePrimTrailRectangular(
+        Projectile projectile,
+        Color startColor,
+        Color endColor,
+        BasicEffect BasicEffect, List<Vector2> playerOldPos,
+        float topVertexRotationOffset, float bottomVertexRotationOffset,
+        int? topDistance = null, int? bottomDistance = null)
     {
         Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
         Rectangle frame = texture.Frame(1, Main.projFrames[projectile.type], 0, 0);
@@ -150,6 +156,12 @@ public class PrimHelper
             {
                 break;
             }
+
+            Vector2 currentPlayerCorrection = projectile.GetOwner().position - playerOldPos[i];
+            Vector2 oldPlayerCorrection = projectile.GetOwner().position - playerOldPos[oldPosIndex];
+
+            currentPos += currentPlayerCorrection;
+            oldPos += oldPlayerCorrection;
 
             float topRot = topVertexRotationOffset + projectile.oldRot[i];
             float botRot = bottomVertexRotationOffset + projectile.oldRot[i];

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -239,5 +240,33 @@ public static partial class LemonUtils
     {
         Vector2 pos = proj.position + new Vector2(Main.rand.NextFloat(-fluffX, proj.width + fluffX), Main.rand.NextFloat(-fluffY, proj.height + fluffY));
         return pos;
+    }
+
+    /// <summary>
+    /// Updates playerOldPos to store projectile owner's positions over time (newest at 0).
+    /// If shouldInitialize is true, playerOldPos will be filled with player.position, so shouldInitialize is something that should only be true once.
+    /// </summary>
+    /// <param name="proj"></param>
+    /// <param name="shouldInitialize"></param>
+    /// <param name="playerOldPos"></param>
+    public static void TrackPlayerOldPos(this Projectile proj, bool shouldInitialize, List<Vector2> playerOldPos)
+    {
+        if (proj.TryGetOwner(out Player player))
+        {
+            if (shouldInitialize)
+            {
+                for (int i = 0; i < ProjectileID.Sets.TrailCacheLength[proj.type]; i++)
+                {
+                    playerOldPos.Add(player.position);
+                }
+            }
+
+            for (int i = playerOldPos.Count - 1; i > 0; i--)
+            {
+                playerOldPos[i] = playerOldPos[i - 1];
+            }
+
+            playerOldPos[0] = player.position;
+        }
     }
 }
