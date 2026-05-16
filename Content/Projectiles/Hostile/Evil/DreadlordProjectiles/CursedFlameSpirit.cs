@@ -33,7 +33,7 @@ public class CursedFlameSpirit : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.CursedInferno, 600);
     }
 
     int despawnTimer = 0;

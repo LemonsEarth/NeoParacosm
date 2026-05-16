@@ -128,7 +128,7 @@ public class IchorSphere : PrimProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.Ichor, 600);
     }
 
     public override void OnKill(int timeLeft)

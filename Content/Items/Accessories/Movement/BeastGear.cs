@@ -31,6 +31,8 @@ public class BeastGear : ModItem
         player.spikedBoots += 2;
         player.noKnockback = true;
         player.wingTimeMax = (int)(player.wingTimeMax * (1 + flightTimeBoost / 100f));
+
+        //player.buffImmune[BuffID.Ichor] = true;
     }
 
     public override void AddRecipes()

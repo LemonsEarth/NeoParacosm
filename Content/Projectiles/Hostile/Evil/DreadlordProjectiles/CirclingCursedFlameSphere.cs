@@ -90,7 +90,7 @@ public class CirclingCursedFlameSphere : PrimProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.CursedInferno, 180);
     }
 
     public override void OnKill(int timeLeft)

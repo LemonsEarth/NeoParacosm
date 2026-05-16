@@ -112,7 +112,7 @@ public class GiantCursedFlameSphere : PrimProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.CursedInferno, 600);
     }
 
     public override void OnKill(int timeLeft)

@@ -92,6 +92,7 @@ public partial class Dreadlord : ModNPC
 
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
+
     #endregion
     #region Constants
 
@@ -131,8 +132,10 @@ public partial class Dreadlord : ModNPC
             AITimer++;
             return;
         }
+
         NPC.width = (int)(284 * NPC.scale);
         NPC.height = (int)(416 * NPC.scale);
+
         DespawnCheck();
         SetBodyPartPositions();
         AttackControl();
@@ -1870,7 +1873,7 @@ public partial class Dreadlord : ModNPC
                 SetHeadCrimsonFrame(MOUTH_OPEN);
                 SetHeadCorruptFrame(MOUTH_OPEN);
                 PlayRoar(0.2f);
-                PlayRoar(-0.2f);
+                PlayRoarAtPlayer(-0.2f);
                 if (LemonUtils.NotClient())
                 {
                     LightningArray(interval: 10);
@@ -1893,7 +1896,7 @@ public partial class Dreadlord : ModNPC
 
                 if (AttackTimer % 120 == 0)
                 {
-                    PlayRoar(0.2f);
+                    PlayRoarAtPlayer(0.2f);
                     if (LemonUtils.NotClient())
                     {
                         LightningArray(interval: 10);
@@ -2153,7 +2156,7 @@ public partial class Dreadlord : ModNPC
         Attack++;
         if (Phase == 1)
         {
-            //Attack = 4;
+            Attack = 0;
         }
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {

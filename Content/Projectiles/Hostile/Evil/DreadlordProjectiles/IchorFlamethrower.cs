@@ -84,6 +84,6 @@ public class IchorFlamethrower : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-        target.AddBuff(BuffID.Ichor, 360);
+        target.AddBuff(BuffID.Ichor, 1200);
     }
 }

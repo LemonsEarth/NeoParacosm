@@ -28,6 +28,12 @@ public partial class Dreadlord : ModNPC
         SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch }, NPC.Center);
     }
 
+    void PlayRoarAtPlayer(float bonusPitch = 0f)
+    {
+        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -1f + bonusPitch });
+        SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch });
+    }
+
     private void AuraBurst(int count, Vector2 speed)
     {
         for (int i = 0; i < count; i++)

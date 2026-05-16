@@ -4,6 +4,15 @@ namespace NeoParacosm.Common.RecipeGroups;
 
 public class AnyRecipeGroups : ModSystem
 {
+    public static readonly string AnyCopperBar = "NeoParacosm:AnyCopperBar";
+    public static readonly string AnySilverBar = "NeoParacosm:AnySilverBar";
+    public static readonly string AnyGoldBar = "NeoParacosm:AnyGoldBar";
+    public static readonly string AnyMythrilBar = "NeoParacosm:AnyMythrilBar";
+    public static readonly string AnyTitaniumBar = "NeoParacosm:AnyTitaniumBar";
+    public static readonly string AnyEvilBar = "NeoParacosm:AnyEvilBar";
+    public static readonly string AnyEvilMaterial = "NeoParacosm:AnyEvilMaterial";
+    public static readonly string AnyEvilMaterial2 = "NeoParacosm:AnyEvilMaterial2";
+
     public override void AddRecipeGroups()
     {
         QuickRecipeGroup("AnyCopperBar", ItemID.CopperBar, ItemID.CopperBar, ItemID.TinBar);

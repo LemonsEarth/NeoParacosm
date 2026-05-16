@@ -37,7 +37,7 @@ public class CursedFlameSphere : PrimProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.75f }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.5f }, Projectile.Center);
         }
 
         foreach (Projectile proj in NPPlayer.BlockProjectileInstances)
@@ -87,7 +87,7 @@ public class CursedFlameSphere : PrimProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.CursedInferno, 180);
     }
 
     public override void OnKill(int timeLeft)

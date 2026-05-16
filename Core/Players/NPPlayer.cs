@@ -5,6 +5,7 @@ using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.GameContent;
+using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;
 
@@ -49,6 +50,8 @@ public class NPPlayer : ModPlayer
 
     public override void PreUpdateMovement()
     {
+        //Main.NewText("hhhh");
+        //LemonUtils.DebugPlayerTileCoords(Player);
         foreach (var projectile in Main.ActiveProjectiles)
         {
             // If walkable projectiles are expanded upon, some HashSet should probably be made for them

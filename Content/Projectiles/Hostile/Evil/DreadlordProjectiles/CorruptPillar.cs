@@ -81,8 +81,8 @@ public class CorruptPillar : ModProjectile
             Projectile.position.X = startPos.X + Main.rand.Next(-16, 16);
             if (AITimer % 10 == 0)
             {
-                SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack with { PitchRange = (-0.4f, -0.2f), Volume = 0.5f }, Projectile.Center);
-                SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack with { PitchRange = (-0.4f, -0.2f), Volume = 0.5f }, Projectile.Center - Vector2.UnitY * Length);
+                SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack with { PitchRange = (-0.4f, -0.2f), Volume = 0.25f }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack with { PitchRange = (-0.4f, -0.2f), Volume = 0.25f }, Projectile.Center - Vector2.UnitY * Length);
             }
             Vector2 randomPos = Main.rand.NextVector2FromRectangle(new Rectangle((int)Projectile.position.X, (int)Projectile.position.Y, 96, 96));
             Gore.NewGoreDirect(

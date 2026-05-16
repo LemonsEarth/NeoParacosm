@@ -199,7 +199,7 @@ public static partial class LemonUtils
 
     public static bool IsTileTypeSnowy(int tileType)
     {
-        return tileType == TileID.IceBlock || tileType == TileID.CorruptIce || tileType == TileID.FleshIce || tileType == TileID.SnowBlock;
+        return tileType == TileID.IceBlock || tileType == TileID.HallowedIce || tileType == TileID.CorruptIce || tileType == TileID.FleshIce || tileType == TileID.SnowBlock;
     }
 
     public static bool IsTileSnowy(Point point)

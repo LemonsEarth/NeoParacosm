@@ -35,7 +35,7 @@ public class IchorLightning : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.Ichor, 300);
     }
     Color color = Color.White;
     Vector2 targetPos => Projectile.Center + Vector2.UnitY * Length;

@@ -1575,10 +1575,10 @@ InflamedArm: {
 StaffOfTheCataclysm: {
 	DisplayName: Staff Of The Cataclysm
 	Tooltip:
-	'''
-	Expand a domain around the staff after a short delay
-	The domain constantly drains your mana and disappears when you run out of mana
-	'''
+		'''
+		Expand a domain around the staff after a short delay
+		The domain constantly drains your mana and disappears when you run out of mana
+		'''
 }
 
 ClingerMouth: {
@@ -1750,10 +1750,44 @@ BarrenMind: {
 }
 
 SigilOfTheCreatureSpell: {
-	DisplayName: Sigil Of The Creature Spell
+	DisplayName: Sigil Of The Demon
 	Tooltip:
 		'''
 		Summons a golden sigil that rotates, rapidly firing golden bullets that inflict Midas
 		Up to 3 sigils can be active at once
 		'''
+}
+
+FrigidFossil: {
+	DisplayName: Frigid Fossil
+	Tooltip:
+		'''
+		A delicate fossil, covered in ice, containing ice
+		Seemingly made of ice
+		'''
+}
+
+FrozenFossilItem: {
+	DisplayName: Frozen Fossil
+	Tooltip: Can be extractinatinateded
+}
+
+IcicleCollectorsBrooch: {
+	DisplayName: Icicle Collector's Brooch
+	Tooltip: Your minions periodically spawn icicles
+}
+
+FrozenBoneBow: {
+	DisplayName: Frozen Bone Bow
+	Tooltip: Hitting enemies causes icicles to fall on them
+}
+
+FrostShuriken: {
+	DisplayName: Frost Shuriken
+	Tooltip: Increases armor penetration each hit
+}
+
+FrostGauntlets: {
+	DisplayName: Frost Gauntlets
+	Tooltip: Enemies burst into frost bolts if hit several times
 }

@@ -33,7 +33,7 @@ public class IchorSpirit : ModProjectile
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
     {
-
+        target.AddBuff(BuffID.Ichor, 600);
     }
 
     Player player = null;
