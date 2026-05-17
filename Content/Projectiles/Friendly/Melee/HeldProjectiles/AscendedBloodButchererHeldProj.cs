@@ -75,7 +75,7 @@ public class AscendedBloodButchererHeldProj : ModProjectile
             chargeAmount = MathHelper.Lerp(0, 1, aiTimerClamped / 180f);
             if (AITimer > 0 && AITimer <= 120 && AITimer % 60 == 0)
             {
-                Projectile.scale = 1 + (AITimer / 60);
+                Projectile.scale = 1 + (AITimer / 60f);
                 Projectile.Resize((int)(64 * Projectile.scale), (int)(64 * Projectile.scale));
                 PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 15f, 6f, 20, 1000f, FullName);
                 Main.instance.CameraModifiers.Add(mod1);

@@ -474,7 +474,7 @@ SupremeBloodButcherer: {
 }
 
 SupremeLightsBane: {
-	DisplayName: Angel's Demise
+	DisplayName: Light's Demise
 	Tooltip: '''"Nothing Personal..."'''
 }
 
@@ -1790,4 +1790,9 @@ FrostShuriken: {
 FrostGauntlets: {
 	DisplayName: Frost Gauntlets
 	Tooltip: Enemies burst into frost bolts if hit several times
+}
+
+StormStick: {
+	DisplayName: Storm Stick
+	Tooltip: ""
 }

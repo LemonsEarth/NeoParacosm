@@ -19,7 +19,7 @@ public class LightningShotel : ModItem
         Item.useStyle = ItemUseStyleID.Swing;
         Item.knockBack = 6;
         Item.value = Item.buyPrice(gold: 15);
-        Item.rare = ItemRarityID.Green;
+        Item.rare = ItemRarityID.LightRed;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
         Item.useTurn = true;
@@ -74,9 +74,9 @@ public class OverchargedBuffPlayer : ModPlayer
 
     public override void OnHurt(Player.HurtInfo info)
     {
-        if (Player.HeldItem.type == ItemType<LightningShotel>() && !Player.HasBuff(BuffType<OverchargedBuff>()))
+        if ((Player.HeldItem.type == ItemType<LightningShotel>() || Player.HeldItem.type == ItemType<StormStick>()) && !Player.HasBuff(BuffType<OverchargedBuff>()))
         {
-            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (0.3f, 0.5f), Volume = 0.5f}, Player.Center);
+            SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (0.3f, 0.5f), Volume = 0.5f }, Player.Center);
             Player.AddBuff(BuffType<OverchargedBuff>(), ((int)(600 * Player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 2f))));
             LemonUtils.DustBurst(10, Player.Center, DustType<StreakDust>(), 5, 5, 1.2f, 2f, Color.Gold);
         }
