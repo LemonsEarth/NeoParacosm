@@ -48,7 +48,6 @@ public partial class Deathbird : ModNPC
     int[] attackDurations2 = { 1200, 720, 1200, 900, 900, 1080, 960 };
     public Player player { get; private set; }
     Vector2 targetPosition = Vector2.Zero;
-
     float projDamage => NPC.damage;
 
     public enum Attacks
