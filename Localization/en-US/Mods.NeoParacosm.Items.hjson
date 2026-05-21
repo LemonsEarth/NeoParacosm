@@ -1148,8 +1148,8 @@ ArmoredBodyAugment: {
 	DisplayName: Armored Body Augment
 	Tooltip:
 		'''
-		Chance to inflict self with Ironskin and Endurance when hit
-		Grants knockback immunity while Ironskin and Endurance are active
+		Chance to grant self Ironskin and Endurance when hit
+		Grants immunity to knockback while Ironskin and Endurance are active
 		'''
 }
 
@@ -1819,8 +1819,31 @@ ClanNecklace: {
 Fulculmination: {
 	DisplayName: Fulculmination
 	Tooltip:
+		'''
+		Getting hit has a chance to emit several lightning strikes
+		If the wearer has "Electrified Body" active, additional lightning strikes occur on contact with NPCs
+		'''
+}
+
+MagiluminationNecklace: {
+	DisplayName: Magilumination Necklace
+	Tooltip:
+		'''
+		Getting hit has a chance to emit several lightning strikes
+		If the wearer has "Electrified Body" active, additional lightning strikes occur on contact with NPCs
+		Increases movement speed after taking damage
+		Increases movement speed and acceleration
+		'''
+}
+
+HorsemansFavor: {
+	DisplayName: Horseman's Favor
+	Tooltip:
 	'''
-	Getting hit has a chance to emit several lightning strikes
-	If the wearer has "Electrified Body" active, additional lightning strikes occur on contact with NPCs
+	While on a non-flying mount:
+	Increases damage by {0}%
+	Increases critical strike chance {1}%
+	Increases damage reduction by {2}%
+	Increases movement speed by {3}%
 	'''
 }

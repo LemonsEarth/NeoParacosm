@@ -102,22 +102,9 @@ public class CursedGrenade : ModProjectile
         }
     }
 
-    private VertexStrip _strip;
-    private VertexStrip strip;
-
-    private float StripWidth(float progress)
-    {
-        return MathHelper.Lerp(24f, 0f, progress);
-    }
-
-    private Color StripColor(float progress)
-    {
-        return Color.White;
-    }
-
     public override bool PreDraw(ref Color lightColor)
     {
-        
+
         return true;
     }
 }

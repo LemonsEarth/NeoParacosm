@@ -3,7 +3,6 @@
 public class FrostGauntletProj : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    bool wasHit = false;
 
     public override void SetStaticDefaults()
     {
