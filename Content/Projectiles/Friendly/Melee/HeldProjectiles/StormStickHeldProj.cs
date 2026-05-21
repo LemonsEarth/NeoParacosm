@@ -24,8 +24,8 @@ public class StormStickHeldProj : ModProjectile
 
             for (int i = 0; i < 8; i++)
             {
-                Vector2 velocity = Vector2.UnitY.RotatedBy(MathHelper.PiOver4 * i) * 4;
-                Dust.NewDustPerfect(target.Center, DustID.GemTopaz, velocity, newColor: Color.Gold).noGravity = true;
+                Vector2 velocity = Vector2.UnitY.RotatedBy(MathHelper.PiOver4 * i) * 8;
+                Dust.NewDustPerfect(target.RandomPos(), DustType<StreakDust>(), velocity, newColor: Color.Gold, Scale: 0.5f).noGravity = true;
             }
 
         }
@@ -103,7 +103,7 @@ public class StormStickHeldProj : ModProjectile
     {
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Projectile.DrawAfterimages(Color.White, 1f);
+        Projectile.DrawAfterimages(Color.White, 4f);
         Projectile.DrawAfterimages(Color.White, 1f);
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         return false;

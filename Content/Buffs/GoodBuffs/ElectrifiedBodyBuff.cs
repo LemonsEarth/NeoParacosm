@@ -35,13 +35,13 @@ public class ElectrifiedBodyPlayer : ModPlayer
                 Dust.NewDustDirect(Player.RandomPos(-Player.width / 2, -Player.height / 2), 2, 2, DustType<StreakDust>(),
                     Main.rand.NextFloat(-dustSpeed, dustSpeed), Main.rand.NextFloat(-dustSpeed, dustSpeed), Scale: Main.rand.NextFloat(0.5f, 0.75f)).noGravity = true;
             }
-
+            //Main.NewText(100 * Player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 4));
             //Dust.NewDustPerfect(Player.Center + Vector2.UnitX * 100 * Player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 5), DustID.GemDiamond, Vector2.Zero, Scale: 4f).noGravity = true;
             foreach (var npc in Main.ActiveNPCs)
             {
-                if (npc.CanBeChasedBy() && npc.Distance(Player.Center) < 100 * Player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 8))
+                if (npc.CanBeChasedBy() && npc.Distance(Player.Center) < 100 * Player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 4))
                 {
-                    npc.SimpleStrikeNPC((int)(90 * Player.GetElementalDamageBoost(SpellElement.Lightning)), 1);
+                    npc.SimpleStrikeNPC((int)(60 * Player.GetElementalDamageBoost(SpellElement.Lightning)), 1);
                 }
             }
         }

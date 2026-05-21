@@ -56,8 +56,15 @@ public abstract class TargetedLightning : ModProjectile
     }
 
     float random = 0;
+
+    public override bool? CanHitNPC(NPC target)
+    {
+        return AITimer >= Delay;
+    }
+
     public override void AI()
     {
+        Projectile.velocity = Vector2.Zero;
         if (AITimer == 0)
         {
             lightningLength = Projectile.Center.Distance(targetPos) / 100f;
@@ -84,7 +91,7 @@ public abstract class TargetedLightning : ModProjectile
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemAmber, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
             }
         }
-        Projectile.velocity = Vector2.Zero;
+
         if (Projectile.timeLeft < 30)
         {
             currentColor = Color.Lerp(DarkColor, ShineColor, Projectile.timeLeft / 15f);

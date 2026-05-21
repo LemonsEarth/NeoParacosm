@@ -247,6 +247,7 @@ public class DragonWorshipper : ModNPC
         var npcShop = new NPCShop(Type, ShopName);
         AddDragonSoulCurrencyItem(npcShop, ItemType<AncientDragonScale>(), 30);
         AddDragonSoulCurrencyItem(npcShop, ItemType<DragonBreathSpell>(), 30);
+        AddDragonSoulCurrencyItem(npcShop, ItemType<Fulculmination>(), 12);
         AddDragonSoulCurrencyItem(npcShop, ItemType<TrueDragonFruit>(), 20, Condition.DownedPirates);
         AddDragonSoulCurrencyItem(npcShop, ItemType<AntiblightRings>(), 20, LemonConditions.DownedResearcher);
 

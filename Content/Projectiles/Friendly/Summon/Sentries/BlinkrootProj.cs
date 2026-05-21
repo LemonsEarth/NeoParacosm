@@ -11,6 +11,7 @@ public class BlinkrootProj : ModProjectile
     public override void SetStaticDefaults()
     {
         Main.projFrames[Projectile.type] = 4;
+        ProjectileID.Sets.SentryShot[Type] = true;
     }
 
     public override void SetDefaults()

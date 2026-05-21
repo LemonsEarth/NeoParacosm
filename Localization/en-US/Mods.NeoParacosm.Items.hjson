@@ -1794,5 +1794,33 @@ FrostGauntlets: {
 
 StormStick: {
 	DisplayName: Storm Stick
-	Tooltip: ""
+	Tooltip: Getting hit while holding this weapon grants you massively increased attack speed, damage reduction and movement speed, as well as lightning spell damage and expertise
+}
+
+ClanSigil: {
+	DisplayName: Clan Sigil
+	Tooltip:
+		'''
+		Nearby teammates gain {0}% damage, {1}% critical strike chance and 2 defense
+		Enable accessory visibility to visualize radius
+		'''
+}
+
+ClanNecklace: {
+	DisplayName: Clan Necklace
+	Tooltip:
+		'''
+		Increases maximum minions by {0}
+		Minions and sentries near you gain {1}% increased damage
+		Enable accessory visibility to visualize radius
+		'''
+}
+
+Fulculmination: {
+	DisplayName: Fulculmination
+	Tooltip:
+	'''
+	Getting hit has a chance to emit several lightning strikes
+	If the wearer has "Electrified Body" active, additional lightning strikes occur on contact with NPCs
+	'''
 }

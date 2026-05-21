@@ -6,6 +6,7 @@ public class ShadowBolt : ModProjectile
     public override void SetStaticDefaults()
     {
         Main.projFrames[Projectile.type] = 1;
+        ProjectileID.Sets.SentryShot[Type] = true;
     }
 
     public override void SetDefaults()

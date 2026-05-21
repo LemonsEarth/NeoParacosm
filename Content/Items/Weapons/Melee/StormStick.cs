@@ -45,7 +45,7 @@ public class StormStick : ModItem
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        SoundEngine.PlaySound(SoundID.Item71 with { PitchRange = (0.3f, 0.6f) }, player.Center);
+        SoundEngine.PlaySound(SoundID.Item1 with { PitchRange = (0.3f, 0.6f) }, player.Center);
         int direction = 1;
         if (useCounter % 2 != 0)
         {

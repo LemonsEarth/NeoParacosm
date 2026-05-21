@@ -5,6 +5,7 @@ using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.GameContent;
+using Terraria.GameContent.Events;
 using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Players;

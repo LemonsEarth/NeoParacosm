@@ -6,6 +6,7 @@ public class WaterfallDrop : ModProjectile
     public override void SetStaticDefaults()
     {
         Main.projFrames[Projectile.type] = 2;
+        ProjectileID.Sets.SentryShot[Type] = true;
     }
 
     public override void SetDefaults()
