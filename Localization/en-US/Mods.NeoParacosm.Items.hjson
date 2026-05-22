@@ -1847,3 +1847,19 @@ HorsemansFavor: {
 		Increases movement speed by {3}%
 		'''
 }
+
+NutcrackersHead: {
+	DisplayName: Nutcracker's Head
+	Tooltip:
+	'''
+	Eating food briefly increases damage by {0}%, but lowers defense by 20% 
+	'''
+}
+
+GingerbreadsWill: {
+	DisplayName: Gingerbread's Will
+	Tooltip:
+	'''
+	Increases movement speed by {0}% and attack speed by {1}% while no food buff is active
+	'''
+}
