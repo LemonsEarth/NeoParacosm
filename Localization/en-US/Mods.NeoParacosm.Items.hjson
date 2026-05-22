@@ -1839,11 +1839,11 @@ MagiluminationNecklace: {
 HorsemansFavor: {
 	DisplayName: Horseman's Favor
 	Tooltip:
-	'''
-	While on a non-flying mount:
-	Increases damage by {0}%
-	Increases critical strike chance {1}%
-	Increases damage reduction by {2}%
-	Increases movement speed by {3}%
-	'''
+		'''
+		While on a non-flying mount:
+		Increases damage by {0}%
+		Increases critical strike chance {1}%
+		Increases damage reduction by {2}%
+		Increases movement speed by {3}%
+		'''
 }
