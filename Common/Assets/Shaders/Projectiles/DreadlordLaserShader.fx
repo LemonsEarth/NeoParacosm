@@ -22,7 +22,7 @@ float4 DreadlordLaserShader(float4 sampleColor : COLOR0, float2 coords : TEXCOOR
     
     float2 centeredCoords = coords * 2.0 - 1.0;
     
-    float distanceToCenterX = distance(abs(centeredCoords.x), 0);
+    float distanceToCenterX = abs(centeredCoords.x);
  
     float4 finalColor = noiseColor * centerColor;
     finalColor *= lerp(centerColor, endColor, distanceToCenterX);

@@ -2156,7 +2156,7 @@ public partial class Dreadlord : ModNPC
         Attack++;
         if (Phase == 1)
         {
-            Attack = 0;
+            //Attack = 0;
         }
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {

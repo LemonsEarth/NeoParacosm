@@ -52,7 +52,7 @@ public class CursedLaser : ModProjectile
         Projectile.friendly = false;
         Projectile.ignoreWater = true;
         Projectile.tileCollide = false;
-        Projectile.timeLeft = 300;
+        Projectile.timeLeft = 9999;
         Projectile.penetrate = -1;
         Projectile.hide = true;
     }
@@ -86,7 +86,7 @@ public class CursedLaser : ModProjectile
         //Dust.NewDustPerfect(dustPos, DustID.GemDiamond, Vector2.UnitY.RotatedBy(Rotation) * Main.rand.NextFloat(9, 15), Scale: Main.rand.NextFloat(2f, 3f), newColor: Color.White).noGravity = true;
         if (TimeLeft - AITimer < 15)
         {
-            scale = Projectile.timeLeft * Size / 5f;
+            scale = (TimeLeft - AITimer) * Size / 5f;
         }
 
         if (AITimer > TimeLeft)

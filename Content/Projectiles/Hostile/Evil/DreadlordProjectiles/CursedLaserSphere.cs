@@ -33,7 +33,7 @@ public class CursedLaserSphere : PrimProjectile
         Projectile.tileCollide = true;
         Projectile.penetrate = 3;
         Projectile.timeLeft = 9999;
-        Projectile.scale = 0.35f;
+        Projectile.scale = 0.3f;
         Projectile.Opacity = 1f;
         Projectile.hide = true;
     }
@@ -65,15 +65,21 @@ public class CursedLaserSphere : PrimProjectile
             TimeLeft = 60;
         }
 
+        if (TimeLeft - AITimer < 5)
+        {
+            Projectile.scale *= 0.9f;
+        }
+
+
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
         }
 
-
+        Projectile.rotation += RotationPerSecond;
         Projectile.Opacity = AITimer / 15f;
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
-        Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
+        //Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
         //Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
         Projectile.StandardAnimation(6, 6);
         AITimer++;
@@ -81,14 +87,16 @@ public class CursedLaserSphere : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        //Main.NewText(Main.GlobalTimeWrappedHourly);
         PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
         Texture2D texture = ParacosmTextures.NoiseTexture.Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;
 
         var shader = GameShaders.Misc["NeoParacosm:SphereShader"];
-        shader.Shader.Parameters["distance"].SetValue(0.7f);
-        shader.Shader.Parameters["borderWidth"].SetValue(0.3f);
+        shader.Shader.Parameters["moveSpeed"].SetValue(-2f);
+        shader.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
+        shader.Shader.Parameters["endColor"].SetValue(Color.Lime.ToVector4());
         Main.spriteBatch.End();
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);

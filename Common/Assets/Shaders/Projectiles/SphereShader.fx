@@ -12,34 +12,29 @@ float moveSpeed;
 float4 uColor;
 float4 color;
 float2 velocity;
-float distance;
 float tolerance;
 float borderWidth;
+float4 centerColor;
+float4 endColor;
 
 float4 SphereShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {
+    float4 baseColor = tex2D(uImage0, coords);
+    
+    float moveValue = moveSpeed * uTime;
+    float2 movedCoords = float2(coords.x, coords.y + moveValue);
+    float4 noiseColor = tex2D(uImage1, movedCoords);
+    
     float2 centeredCoords = coords * 2.0 - 1.0;
+    
     float distanceToCenter = length(centeredCoords);
-   
-    float4 noiseColor = tex2D(uImage0, float2(coords.x, coords.y + uTime));
-   
-    float4 finalColor = 0;
-    float animatedBorderWidth = borderWidth * ((sin(uTime / 12) + 3) * 0.25);
-    float innerRingRadius = distance - animatedBorderWidth;
-    float outerRingRadius = distance + animatedBorderWidth;
-    if (distanceToCenter < distance)
-    {
-        finalColor += noiseColor;
-        finalColor += distanceToCenter;
-    }
-    if (distanceToCenter >= innerRingRadius && distanceToCenter <= outerRingRadius)
-    {
-        float midRadius = distance;
-        finalColor += 1 - (abs(distanceToCenter - midRadius) / animatedBorderWidth);
-    }
-    finalColor.rgb *= float3(0.5, 1, 0.5);
-    return finalColor;
-
+    distanceToCenter = clamp(distanceToCenter, 0, 1);
+ 
+    float4 finalColor = noiseColor * centerColor;
+    finalColor *= lerp(centerColor, endColor, distanceToCenter * 1);
+    finalColor *= (1 - distanceToCenter) * 4;
+    
+    return finalColor * 3;
 }
 
 technique Tech1
