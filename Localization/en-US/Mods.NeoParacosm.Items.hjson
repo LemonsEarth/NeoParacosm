@@ -1862,3 +1862,28 @@ AntlionStaff: {
 	DisplayName: Antlion Staff
 	Tooltip: Summons a stationary antlion that fires sand blocks at enemies
 }
+
+AccursedEuphoria: {
+	DisplayName: Accursed Euphoria
+	Tooltip:
+	'''
+	Increases damage by {0}% to enemies inflicted with Cursed Inferno
+	'''
+}
+
+BlightedEuphoria: {
+	DisplayName: Blighted Euphoria
+	Tooltip:
+	'''
+	Increases damage by {0}% to enemies inflicted with Cursed Inferno
+	Increases damage by {0}% to enemies inflicted with Ichor
+	'''
+}
+
+GoldenEuphoria: {
+	DisplayName: Golden Euphoria
+	Tooltip:
+	'''
+	Increases damage by {0}% to enemies inflicted with Ichor
+	'''
+}
