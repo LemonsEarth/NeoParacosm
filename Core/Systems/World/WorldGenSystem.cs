@@ -4,13 +4,33 @@ using NeoParacosm.Core.Systems.World.GenPasses.Corruption;
 using NeoParacosm.Core.Systems.World.GenPasses.Crimson;
 using NeoParacosm.Core.Systems.World.GenPasses.DeadForest;
 using NeoParacosm.Core.Systems.World.GenPasses.Ice;
+using NeoParacosm.Core.Systems.World.GenPasses.Surface;
 using System.Collections.Generic;
+using System.Reflection;
+using Terraria.GameContent.Tile_Entities;
 using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Systems.World;
 
 public class WorldGenSystem : ModSystem
 {
+    public static FieldInfo displayDollInventory = null;
+
+    public override void Load()
+    {
+        displayDollInventory = typeof(TEDisplayDoll).GetField("_items", BindingFlags.NonPublic | BindingFlags.Instance);
+    }
+
+    public static Item[] GetDisplayDollInventory(TEDisplayDoll td)
+    {
+        return displayDollInventory.GetValue(td) as Item[];
+    }
+
+    public static void SetDisplayDollInventory(TEDisplayDoll td, Item[] items)
+    {
+        displayDollInventory.SetValue(td, items);
+    }
+
     public override void PostWorldGen()
     {
 
@@ -20,13 +40,15 @@ public class WorldGenSystem : ModSystem
     {
         //InsertAfterTask(tasks, "Tile Cleanup", new CrimsonVillageGenPass("Building bloody settlement", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFleshBallGenPass("Amassing corpses", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonBunkerGenPass("Hiding from the red mist", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new CrimsonBunkerGenPass("Hiding from the red mist", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFireplaceHouseGenPass("Destroying what's left", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new CorruptBunkerGenPass("Hiding from the plague", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new CorruptTowerGenPass("Building a lookout", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new CorruptTowerGenPass("Building a lookout", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new IglooGenPass("Containing warmth", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new FrozenFossilsGenPass("Freezing remains", 100f));
         InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading death", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new GoblinWatchtowerGenPass("Building outposts", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new SmallGoblinCampsGenPass("Constructing camps", 100f));
         InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Prebuilding battlegrounds", 100f));
         InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a crypt", 100f));
         InsertAfterTask<DeadForestBasementGenPass>(tasks, new DeadForestHolyStructureGenPass("Constructing a place of worship", 100f));

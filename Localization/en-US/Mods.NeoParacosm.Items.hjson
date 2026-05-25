@@ -1850,16 +1850,15 @@ HorsemansFavor: {
 
 NutcrackersHead: {
 	DisplayName: Nutcracker's Head
-	Tooltip:
-	'''
-	Eating food briefly increases damage by {0}%, but lowers defense by 20% 
-	'''
+	Tooltip: Eating food briefly increases damage by {0}%, but lowers defense by 20%
 }
 
 GingerbreadsWill: {
 	DisplayName: Gingerbread's Will
-	Tooltip:
-	'''
-	Increases movement speed by {0}% and attack speed by {1}% while no food buff is active
-	'''
+	Tooltip: Increases movement speed by {0}% and attack speed by {1}% while no food buff is active
+}
+
+AntlionStaff: {
+	DisplayName: Antlion Staff
+	Tooltip: Summons a stationary antlion that fires sand blocks at enemies
 }

@@ -71,6 +71,29 @@ public class DeadForestHolyStructureGenPass : GenPass
             return;
         }
 
+        // Replace random walls with unsafe ones
+        for (int j = randY; j < randY + structureDims.Y; j++)
+        {
+            for (int i = randX; i < randX + structureDims.X; i++)
+            {
+                if (Main.tile[i, j].WallType == WallID.IronBrick)
+                {
+                    if (Main.rand.NextBool(2))
+                    {
+                        Main.tile[i, j].WallType = WallID.Cave2Unsafe;
+                    }
+                }
+
+                if (Main.tile[i, j].WallType == WallID.Glass)
+                {
+                    if (Main.rand.NextBool(2))
+                    {
+                        Main.tile[i, j].WallType = WallID.None;
+                    }
+                }
+            }
+        }
+
         List<List<(int, int)>> items =
         [
             [(ItemType<GoldenHeartSpell>(), 1)],

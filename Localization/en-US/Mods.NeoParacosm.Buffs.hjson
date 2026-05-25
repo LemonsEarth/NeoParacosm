@@ -179,8 +179,5 @@ ExplosiveDamageBuff: {
 
 NutcrackersHeadBuff: {
 	DisplayName: Nutcracker's Head
-	Description:
-	'''
-	Increased damage, reduced defense
-	'''
+	Description: Increased damage, reduced defense
 }

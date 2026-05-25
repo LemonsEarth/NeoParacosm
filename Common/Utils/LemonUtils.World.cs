@@ -29,6 +29,11 @@ public static partial class LemonUtils
         }
     }
 
+    public static bool HasTile(this Point point)
+    {
+        return Main.tile[point].HasTile;
+    }
+
     public static bool IsDungeonBrick(int tileID)
     {
         return tileID == TileID.BlueDungeonBrick || tileID == TileID.GreenDungeonBrick || tileID == TileID.PinkDungeonBrick;
@@ -177,7 +182,7 @@ public static partial class LemonUtils
         return tileType == TileID.Crimstone || tileType == TileID.CrimsonGrass || tileType == TileID.Crimsand;
     }
 
-    public static bool IsTileCrimson(Point point)
+    public static bool IsTileCrimson(this Point point)
     {
         return Main.tile[point].HasTile && IsTileTypeCrimson(Main.tile[point].TileType);
     }
@@ -187,12 +192,12 @@ public static partial class LemonUtils
         return tileType == TileID.Ebonstone || tileType == TileID.CorruptGrass || tileType == TileID.Ebonsand;
     }
 
-    public static bool IsTileCorrupt(Point point)
+    public static bool IsTileCorrupt(this Point point)
     {
         return Main.tile[point].HasTile && IsTileTypeCorrupt(Main.tile[point].TileType);
     }
 
-    public static bool IsTileDeadDirt(Point point)
+    public static bool IsTileDeadDirt(this Point point)
     {
         return Main.tile[point].HasTile && Main.tile[point].TileType == TileType<DeadDirtBlock>();
     }
@@ -202,8 +207,18 @@ public static partial class LemonUtils
         return tileType == TileID.IceBlock || tileType == TileID.HallowedIce || tileType == TileID.CorruptIce || tileType == TileID.FleshIce || tileType == TileID.SnowBlock;
     }
 
-    public static bool IsTileSnowy(Point point)
+    public static bool IsTileSnowy(this Point point)
     {
         return Main.tile[point].HasTile && IsTileTypeSnowy(Main.tile[point].TileType);
+    }
+
+    public static bool IsTileTypeDirtOrGrass(int tileType)
+    {
+        return tileType == TileID.Dirt || tileType == TileID.Grass;
+    }
+
+    public static bool IsTileDirtOrGrass(this Point point)
+    {
+        return Main.tile[point].HasTile && IsTileTypeDirtOrGrass(Main.tile[point].TileType);
     }
 }

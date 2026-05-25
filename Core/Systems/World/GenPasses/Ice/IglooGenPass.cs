@@ -6,6 +6,7 @@ using NeoParacosm.Content.Items.Weapons.Melee;
 using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
+using Terraria.GameContent.Tile_Entities;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
@@ -59,6 +60,48 @@ public class IglooGenPass : GenPass
         if (attemptCount >= maxAttemptCount)
         {
             return;
+        }
+
+        bool manDone = false;
+        bool womanDone = false;
+        // Replace snow with unsafe walls
+        for (int j = randY; j < randY + structureDims.Y; j++)
+        {
+            for (int i = randX; i < randX + structureDims.X; i++)
+            {
+                if (Main.tile[i, j].WallType == WallID.SnowWallEcho)
+                {
+                    Main.tile[i, j].WallType = WallID.SnowWallUnsafe;
+                }
+
+                if (!manDone && Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.DisplayDoll && Main.tile[i,j].TileFrameX == 0)
+                {
+                    if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity tileEntity) && tileEntity is TEDisplayDoll doll)
+                    {
+                        Item[] dollInventory = WorldGenSystem.GetDisplayDollInventory(doll);
+                        dollInventory[0] = new(ItemID.EskimoHood);
+                        dollInventory[1] = new(ItemID.EskimoCoat);
+                        dollInventory[2] = new(ItemID.EskimoPants);
+                        dollInventory[3] = new(ItemID.BandofStarpower);
+                        WorldGenSystem.SetDisplayDollInventory(doll, dollInventory);
+                        manDone = true;
+                    }
+                }
+
+                if (!womanDone && Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.DisplayDoll && Main.tile[i, j].TileFrameX == 72)
+                {
+                    if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity tileEntity) && tileEntity is TEDisplayDoll doll)
+                    {
+                        Item[] dollInventory = WorldGenSystem.GetDisplayDollInventory(doll);
+                        dollInventory[0] = new(ItemID.PinkEskimoHood);
+                        dollInventory[1] = new(ItemID.PinkEskimoCoat);
+                        dollInventory[2] = new(ItemID.PinkEskimoPants);
+                        dollInventory[3] = new(ItemID.BandofRegeneration);
+                        WorldGenSystem.SetDisplayDollInventory(doll, dollInventory);
+                        womanDone = true;
+                    }
+                }
+            }
         }
 
         List<List<(int, int)>> items =
