@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Systems.Assets;
-using ReLogic.Content;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;

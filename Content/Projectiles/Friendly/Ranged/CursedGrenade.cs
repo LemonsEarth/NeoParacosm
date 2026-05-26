@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
-using Terraria.Audio;
-using Terraria.Graphics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 

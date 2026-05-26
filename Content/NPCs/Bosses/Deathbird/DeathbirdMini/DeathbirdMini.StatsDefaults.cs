@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Gores;
-using NeoParacosm.Content.Items.Accessories.Combat;
 using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;

@@ -1,7 +1,5 @@
-﻿using NeoParacosm.Content.NPCs.Hostile.DeadForest;
-using NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 

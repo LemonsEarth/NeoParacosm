@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
-using NeoParacosm.Content.Items.Pickups;
 using Terraria.DataStructures;
 using Terraria.Localization;
 

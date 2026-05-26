@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
-
-namespace NeoParacosm.Content.Items.Accessories.Misc;
+﻿namespace NeoParacosm.Content.Items.Accessories.Misc;
 
 public class AetherCube : ModItem
 {

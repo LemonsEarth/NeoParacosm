@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
-using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 

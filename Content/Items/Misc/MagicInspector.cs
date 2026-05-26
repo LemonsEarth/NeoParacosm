@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Core.UI.ResearcherUI.Note;
-using Terraria.Chat;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Content.Items.Misc;
+﻿namespace NeoParacosm.Content.Items.Misc;
 
 public class MagicInspector : ModItem
 {

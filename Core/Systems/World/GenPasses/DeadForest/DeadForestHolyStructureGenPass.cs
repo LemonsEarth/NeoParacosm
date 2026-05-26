@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
 using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;

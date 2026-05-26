@@ -3,7 +3,6 @@ using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 

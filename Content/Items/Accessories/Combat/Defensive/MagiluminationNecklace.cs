@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
-
-namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 
 public class MagiluminationNecklace : ModItem
 {

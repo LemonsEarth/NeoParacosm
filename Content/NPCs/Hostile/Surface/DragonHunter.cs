@@ -1,9 +1,7 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Currencies;
-using NeoParacosm.Content.Items.Weapons.Magic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Lightning;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
-using NeoParacosm.Content.Projectiles.Hostile.Ice;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;

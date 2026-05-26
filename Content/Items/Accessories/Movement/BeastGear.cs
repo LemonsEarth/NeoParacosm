@@ -1,7 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 using NeoParacosm.Content.Items.Accessories.Combat.Melee;
-using NeoParacosm.Content.NPCs.Hostile.Corruption;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Movement;

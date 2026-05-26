@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Audio;
-using Terraria.GameContent;
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;
 
 public class PhantomHalberdHeldProj : ModProjectile

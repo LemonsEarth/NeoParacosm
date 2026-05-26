@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;

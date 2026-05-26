@@ -1,13 +1,8 @@
-﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
-using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using StructureHelper.API;
+﻿using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses.Crimson;
 

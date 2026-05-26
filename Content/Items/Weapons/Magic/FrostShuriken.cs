@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.RecipeGroups;
-using NeoParacosm.Content.Items.Materials;
+﻿using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.DataStructures;
 

@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Hostile.Misc;
+﻿using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;

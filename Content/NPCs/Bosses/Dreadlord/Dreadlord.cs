@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
-using System.ComponentModel.DataAnnotations;
 using Terraria.Audio;
 using static Microsoft.Xna.Framework.MathHelper;
 

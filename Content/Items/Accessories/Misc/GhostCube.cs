@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
+﻿using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Accessories.Misc;
 

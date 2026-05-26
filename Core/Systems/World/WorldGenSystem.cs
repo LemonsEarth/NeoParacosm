@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Core.Systems.World.GenPasses;
-using NeoParacosm.Core.Systems.World.GenPasses.Cavern;
+﻿using NeoParacosm.Core.Systems.World.GenPasses.Cavern;
 using NeoParacosm.Core.Systems.World.GenPasses.Corruption;
 using NeoParacosm.Core.Systems.World.GenPasses.Crimson;
 using NeoParacosm.Core.Systems.World.GenPasses.DeadForest;

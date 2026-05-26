@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
-using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;

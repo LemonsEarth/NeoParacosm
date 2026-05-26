@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Players.NPEffectPlayers;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 

@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Items.Placeable.Special.ResearcherQuestTiles;
-using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
+﻿using Terraria.GameContent.Bestiary;
 using Terraria.Localization;
 
 namespace NeoParacosm.Core.Globals.GlobalNPCs;

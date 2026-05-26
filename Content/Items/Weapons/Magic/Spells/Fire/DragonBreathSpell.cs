@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
-using Terraria.GameContent.ItemDropRules;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 

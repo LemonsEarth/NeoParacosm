@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
 

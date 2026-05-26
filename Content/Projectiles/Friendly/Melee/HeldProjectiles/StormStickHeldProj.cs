@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
-using ReLogic.Content;
-using System.Collections.Generic;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee.HeldProjectiles;

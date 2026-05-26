@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Core.UI.ResearcherUI.Note;
-using Terraria.Chat;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
+﻿using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Materials;
 

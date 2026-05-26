@@ -2,7 +2,6 @@
 using NeoParacosm.Core.Globals.GlobalNPCs;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
 
 namespace NeoParacosm.Common.Utils;
 

@@ -1,14 +1,10 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat;
-using NeoParacosm.Content.Items.Accessories.Combat.Generic;
-using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
 using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.IO;
 using Terraria.WorldBuilding;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses.DeadForest;
 

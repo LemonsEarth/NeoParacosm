@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using Terraria.Audio;
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 
