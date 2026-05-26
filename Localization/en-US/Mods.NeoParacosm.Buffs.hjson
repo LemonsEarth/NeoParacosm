@@ -181,3 +181,8 @@ NutcrackersHeadBuff: {
 	DisplayName: Nutcracker's Head
 	Description: Increased damage, reduced defense
 }
+
+AshenForestCrestBuff: {
+	DisplayName: Ashen Forest Crest Buff
+	Description: Increased summon damage by {0}%, movement speed by {1}% and maximum number of sentries by 2
+}

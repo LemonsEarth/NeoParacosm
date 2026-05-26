@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat;
+using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using NeoParacosm.Core.Systems.Data;

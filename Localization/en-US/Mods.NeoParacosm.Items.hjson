@@ -21,9 +21,9 @@ ForestCrest: {
 	DisplayName: Forest Crest
 	Tooltip:
 		'''
-		Increases maximum sentries by {0}
-		Increases movement speed by {1}%
-		Hitting enemies spawns small flowers that grant you increased summon damage and movement speed when picked up
+		Increases maximum number of sentries by {0} and movement speed by {1}%
+		Hitting enemies spawns small flowers
+		Picking up small flowers temporarily increases your summon damage and movement speed
 		'''
 }
 
@@ -1893,22 +1893,38 @@ CurseflameGreatsword: {
 
 PhantomHalberd: {
 	DisplayName: Phantom Halberd
-	Tooltip: ""
+	Tooltip:
+		'''
+		Occasionally heals you on hit
+		Shaking your mouse quickly increases damage
+		'''
 }
 
 AetherCube: {
 	DisplayName: Aether Cube
 	Tooltip:
-	'''
-	Standing still grants you Invisibility and Shimmering for a short duration
-	Shimmering can be disabled by toggling accessory visibility
-	'''
+		'''
+		Standing still grants you Invisibility and Shimmering for a short duration
+		Shimmering can be disabled by toggling accessory visibility
+		'''
 }
 
 GhostCube: {
 	DisplayName: Ghost Cube
+	Tooltip: Standing still grants you Invisibility
+}
+
+AshenForestCrest: {
+	DisplayName: Ashen Forest Crest
 	Tooltip:
 	'''
-	Standing still grants you Invisibility
+	Increases maximum number of sentries by {0} and movement speed by {1}%
+	Hitting enemies spawns ashen flowers
+	Picking up ashen flowers temporarily increases your summon damage, movement speed and maximum number of sentries
 	'''
+}
+
+AshenSmallFlowerPickup: {
+	DisplayName: Ashen Flower
+	Tooltip: ""
 }

@@ -3,10 +3,10 @@ using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Summon;
 
-public class ForestCrest : ModItem
+public class AshenForestCrest : ModItem
 {
-    static readonly int sentryBoost = 1;
-    static readonly float moveSpeedBoost = 5;
+    static readonly int sentryBoost = 2;
+    static readonly float moveSpeedBoost = 10;
 
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(sentryBoost, moveSpeedBoost);
 
@@ -15,7 +15,7 @@ public class ForestCrest : ModItem
         Item.width = 28;
         Item.height = 28;
         Item.accessory = true;
-        Item.value = Item.buyPrice(0, 1);
+        Item.value = Item.sellPrice(0, 2);
         Item.rare = ItemRarityID.Green;
     }
 
@@ -23,22 +23,23 @@ public class ForestCrest : ModItem
     {
         player.maxTurrets += sentryBoost;
         player.moveSpeed += moveSpeedBoost / 100;
-        player.GetModPlayer<ForestCrestPlayer>().forestCrest = true;
+        player.GetModPlayer<AshenForestCrestPlayer>().forestCrest = true;
     }
 
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemID.Wood, 20);
-        recipe.AddIngredient(ItemID.Emerald, 3);
-        recipe.AddIngredient(ItemID.Daybloom, 3);
-        recipe.AddIngredient(ItemID.Sunflower, 1);
+        recipe.AddIngredient(ItemType<ForestCrest>(), 1);
+        recipe.AddIngredient(ItemID.Ruby, 3);
+        recipe.AddIngredient(ItemID.Fireblossom, 8);
+        recipe.AddIngredient(ItemID.AshBlock, 50);
+        recipe.AddIngredient(ItemID.HellstoneBrick, 10);
         recipe.AddTile(TileID.WorkBenches);
         recipe.Register();
     }
 }
 
-public class ForestCrestPlayer : ModPlayer
+public class AshenForestCrestPlayer : ModPlayer
 {
     public bool forestCrest { get; set; } = false;
     int forestCrestPickupCooldown = 0;
@@ -59,7 +60,7 @@ public class ForestCrestPlayer : ModPlayer
         {
             if (Main.rand.NextBool(10) && forestCrestPickupCooldown == 0)
             {
-                Item item = Player.QuickSpawnItemDirect(Player.GetSource_OnHit(victim, "Forest Crest Hit"), ItemType<SmallFlowerPickup>(), 1);
+                Item item = Player.QuickSpawnItemDirect(Player.GetSource_OnHit(victim, "Ashen Forest Crest Hit"), ItemType<AshenSmallFlowerPickup>(), 1);
                 item.position = new Vector2(x, y);
                 NetMessage.SendData(MessageID.SyncItem, number: item.whoAmI, number2: 0);
                 forestCrestPickupCooldown = 30;
@@ -68,10 +69,10 @@ public class ForestCrestPlayer : ModPlayer
     }
 }
 
-public class ForestCrestBuff : ModBuff
+public class AshenForestCrestBuff : ModBuff
 {
-    readonly float speedBoost = 10f;
-    readonly float damageBoost = 10f;
+    readonly float speedBoost = 15f;
+    readonly float damageBoost = 12f;
     public override LocalizedText Description => base.Description.WithFormatArgs(speedBoost, damageBoost);
 
     public override void SetStaticDefaults()
@@ -81,7 +82,8 @@ public class ForestCrestBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        player.moveSpeed += 10f / 100f;
-        player.GetDamage(DamageClass.Summon) += 10f / 100f;
+        player.moveSpeed += speedBoost / 100f;
+        player.GetDamage(DamageClass.Summon) += damageBoost / 100f;
+        player.maxTurrets += 2;
     }
 }

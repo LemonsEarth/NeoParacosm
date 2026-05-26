@@ -4,9 +4,6 @@ namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class PhantomHalberd : ModItem
 {
-    int useCounter = 0;
-    int special = 0;
-    int specialCDTimer = 0;
     public override void SetDefaults()
     {
         Item.damage = 110;
@@ -50,7 +47,6 @@ public class PhantomHalberd : ModItem
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
         Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, ai0: 20);
-        useCounter++;
         return false;
     }
 

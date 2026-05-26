@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat;
+using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Holy;
