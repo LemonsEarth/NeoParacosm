@@ -1865,25 +1865,50 @@ AntlionStaff: {
 
 AccursedEuphoria: {
 	DisplayName: Accursed Euphoria
-	Tooltip:
-	'''
-	Increases damage by {0}% to enemies inflicted with Cursed Inferno
-	'''
+	Tooltip: Increases damage by {0}% to enemies inflicted with Cursed Inferno
 }
 
 BlightedEuphoria: {
 	DisplayName: Blighted Euphoria
 	Tooltip:
-	'''
-	Increases damage by {0}% to enemies inflicted with Cursed Inferno
-	Increases damage by {0}% to enemies inflicted with Ichor
-	'''
+		'''
+		Increases damage by {0}% to enemies inflicted with Cursed Inferno 
+		Increases damage by {0}% to enemies inflicted with Ichor
+		'''
 }
 
 GoldenEuphoria: {
 	DisplayName: Golden Euphoria
+	Tooltip: Increases damage by {0}% to enemies inflicted with Ichor
+}
+
+CurseflameGreatsword: {
+	DisplayName: Curseflame Greatsword
+	Tooltip:
+		'''
+		Inflicts Cursed Inferno on hit
+		Right Click while airborne to perform a plunge attack, creating cursed flames around the point of impact
+		'''
+}
+
+PhantomHalberd: {
+	DisplayName: Phantom Halberd
+	Tooltip: ""
+}
+
+AetherCube: {
+	DisplayName: Aether Cube
 	Tooltip:
 	'''
-	Increases damage by {0}% to enemies inflicted with Ichor
+	Standing still grants you Invisibility and Shimmering for a short duration
+	Shimmering can be disabled by toggling accessory visibility
+	'''
+}
+
+GhostCube: {
+	DisplayName: Ghost Cube
+	Tooltip:
+	'''
+	Standing still grants you Invisibility
 	'''
 }

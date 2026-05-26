@@ -29,6 +29,7 @@ public class MagicInspector : ModItem
         {
             if (player.altFunctionUse != 2)
             {
+                Main.NewText("Elemental Damage Boosts:");
                 foreach (var kvp in player.NPCatalystPlayer().ElementalDamageBoosts)
                 {
                     Main.NewText($"{kvp.Key}: {(int)((kvp.Value - 1) * 100)}%");
@@ -36,6 +37,7 @@ public class MagicInspector : ModItem
             }
             else
             {
+                Main.NewText("Elemental Expertise Boosts:");
                 foreach (var kvp in player.NPCatalystPlayer().ElementalExpertiseBoosts)
                 {
                     Main.NewText($"{kvp.Key}: {(int)((kvp.Value - 1) * 100)}%");
