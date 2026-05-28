@@ -30,6 +30,17 @@ public static partial class LemonUtils
         entity.velocity += new Vector2(XaccelMod * xDecel + xAccel * Math.Sign(direction.X), YaccelMod * yDecel + yAccel * Math.Sign(direction.Y));
     }
 
+    public static void TurningMoveToPos(this Entity entity, Vector2 pos, float turningSpeedDegreesDenominator = 60f, float moveSpeed = 8f)
+    {
+        Vector2 dirToPos = entity.DirectionTo(pos);
+        float angleBetween = MathHelper.ToDegrees(AngleBetween(entity.velocity, dirToPos));
+        //Main.NewText(angleBetween);
+        if (MathF.Abs(angleBetween) > MathHelper.ToRadians(5))
+        {
+            entity.velocity = entity.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(angleBetween / turningSpeedDegreesDenominator)) * moveSpeed;
+        }
+    }
+
     /// <summary>
     /// Returns 1 one out of "consequent" times, otherwise -1.
     /// </summary>

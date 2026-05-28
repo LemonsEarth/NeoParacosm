@@ -1932,37 +1932,34 @@ AshenSmallFlowerPickup: {
 AcidPack: {
 	DisplayName: Acid Pack
 	Tooltip:
-	'''
-	Healing items poison you
-	While inflicted with Poison or Venom, gain a {0}% damage and {1}% critical strike chance boost
-	'''
+		'''
+		Healing items poison you
+		While inflicted with Poison or Venom, gain a {0}% damage and {1}% critical strike chance boost
+		'''
 }
 
 PoisonousStinger: {
 	DisplayName: Poisonous Stinger
 	Tooltip:
-	'''
-	Healing items poison you
-	While inflicted with Poison or Venom, gain a {0}% damage boost
-	'''
+		'''
+		Healing items poison you
+		While inflicted with Poison or Venom, gain a {0}% damage boost
+		'''
 }
 
 OldWaysTalisman: {
 	DisplayName: Old Ways Talisman
-	Tooltip:
-	'''
-	For each missing armor piece, gain a minion slot
-	'''
+	Tooltip: For each missing armor piece, gain a minion slot
 }
 
 SigilOfTheRoots: {
 	DisplayName: Sigil Of The Roots
 	Tooltip:
-	'''
-	For each missing armor piece, gain a minion slot
-	If no armor is worn, increase maximum number of sentries by 1
-	Increases maximum number of sentries by {0} and movement speed by {1}%
-	Hitting enemies spawns ashen flowers
-	Picking up ashen flowers temporarily increases your summon damage, movement speed and maximum number of sentries
-	'''
+		'''
+		For each missing armor piece, gain a minion slot
+		If no armor is worn, increase maximum number of sentries by 1
+		Increases maximum number of sentries by {0} and movement speed by {1}%
+		Hitting enemies spawns ashen flowers
+		Picking up ashen flowers temporarily increases your summon damage, movement speed and maximum number of sentries
+		'''
 }
