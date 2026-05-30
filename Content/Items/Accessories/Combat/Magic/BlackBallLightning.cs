@@ -29,7 +29,6 @@ public class BlackBallLightning : ModItem
 
 public class BlackBallLightningDropNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCType<SpearKnight>()

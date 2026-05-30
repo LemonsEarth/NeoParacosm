@@ -20,7 +20,6 @@ public class BoneBiterHead : ModItem
 
 public class BoneBiterHeadDropNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.SandsharkCorrupt;

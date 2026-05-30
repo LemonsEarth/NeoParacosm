@@ -43,8 +43,6 @@ public class CyborgsBodyAugmentPlayer : ModPlayer
 
 public class CyborgsAugmentShopNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
-
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.Cyborg;

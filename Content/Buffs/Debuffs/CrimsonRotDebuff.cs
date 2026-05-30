@@ -31,7 +31,6 @@ public class CrimsonRotPlayer : ModPlayer
 
 public class CrimsonRotNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
     {
         if (npc.HasBuff(BuffType<CrimsonRotDebuff>()))

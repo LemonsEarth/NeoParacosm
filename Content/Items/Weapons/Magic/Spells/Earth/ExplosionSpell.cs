@@ -42,8 +42,6 @@ public class ExplosionSpell : BaseSpell
 
 public class ExplosionSpellShopNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
-
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.Demolitionist;

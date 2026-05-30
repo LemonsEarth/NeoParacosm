@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
-using NeoParacosm.Core.Systems.Data;
+﻿using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;

@@ -24,7 +24,6 @@ public class CutWyvernSegment : ModItem
 
 public class CutWyvernSegmentDropNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.WyvernHead;

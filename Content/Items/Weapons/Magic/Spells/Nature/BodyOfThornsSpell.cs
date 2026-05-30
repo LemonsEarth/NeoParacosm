@@ -34,8 +34,6 @@ public class BodyOfThornsSpell : BaseSpell
 
 public class BodyOfThornsSpellShopNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
-
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.Dryad;

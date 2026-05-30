@@ -5,8 +5,6 @@ namespace NeoParacosm.Core.Globals.GlobalNPCs;
 
 public class BestiaryNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
-
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.ModNPC != null && entity.ModNPC.Mod == Mod;

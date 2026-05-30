@@ -47,16 +47,9 @@ public class AssassinsBackup : ModItem
 
 public class AngryBonesNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
-
-    public override void SetStaticDefaults()
-    {
-
-    }
-
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
-        return lateInstantiation && (entity.type == NPCID.CursedSkull || entity.type == NPCID.GiantCursedSkull);
+        return (entity.type == NPCID.CursedSkull || entity.type == NPCID.GiantCursedSkull);
     }
 
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)

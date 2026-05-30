@@ -37,7 +37,6 @@ public class DeathflamePlayer : ModPlayer
 
 public class DeathflameNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override void UpdateLifeRegen(NPC npc, ref int damage)
     {
         if (npc.HasBuff(BuffType<DeathflameDebuff>()))

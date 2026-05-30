@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Common.RecipeGroups;
-using NeoParacosm.Content.Items.Accessories.Combat.Summon;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Summon;
 

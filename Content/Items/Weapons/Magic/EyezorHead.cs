@@ -136,7 +136,6 @@ public class PurpleLaserEyezorHeadGlobalProjectile : GlobalProjectile
 
 public class EyezorHeadDropNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.Eyezor;
@@ -146,6 +145,6 @@ public class EyezorHeadDropNPC : GlobalNPC
     {
         npcLoot.Add(ItemDropRule.ByCondition(
             Condition.DownedMechBossAll.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied),
-            ItemType<EyezorHead>(), 10));
+            ItemType<EyezorHead>(), 8));
     }
 }

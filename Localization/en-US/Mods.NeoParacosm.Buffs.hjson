@@ -190,9 +190,9 @@ AshenForestCrestBuff: {
 HeadlessTortoiseShellBuff: {
 	DisplayName: Headless Tortoise Shell Buff
 	Description:
-	'''
-	Increased damage reduction by 10%
-	Increased movement speed by 20%
-	Increased defense by 5
-	'''
+		'''
+		Increased damage reduction by 10%
+		Increased movement speed by 20%
+		Increased defense by 5
+		'''
 }

@@ -20,7 +20,6 @@ public class FrankensteinsHead : ModItem
 
 public class FrankensteinsHeadDropNPC : GlobalNPC
 {
-    public override bool InstancePerEntity => true;
     public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
     {
         return entity.type == NPCID.Frankenstein;

@@ -33,7 +33,7 @@ public class AscendedBallOHurtHeldProj : ModProjectile
 
     public override void Load()
     {
-        chainTexture = Request<Texture2D>("NeoParacosm/Content/Projectiles/Friendly/Melee/HeldProjectiles/AscendedBallOHurtChain");
+        chainTexture = Request<Texture2D>("NeoParacosm/Content/Items/Weapons/Melee/AscendedBallOHurtChain");
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

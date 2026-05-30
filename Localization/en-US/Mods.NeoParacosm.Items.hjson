@@ -1971,8 +1971,10 @@ IchorSyringe: {
 
 HeadlessTortoiseShell: {
 	DisplayName: Headless Tortoise Shell
-	Tooltip:
-	'''
-	While held, increases damage reduction by 5% and buffs nearby teammates when you get hit
-	'''
+	Tooltip: While held, increases damage reduction by 5% and buffs nearby teammates when you get hit
+}
+
+Equinox: {
+	DisplayName: Equinox
+	Tooltip: ""
 }
