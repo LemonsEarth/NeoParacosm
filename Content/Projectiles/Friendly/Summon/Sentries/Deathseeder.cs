@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
+﻿using NeoParacosm.Core.Globals.GlobalNPCs.Misc;
 using System.Linq;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;

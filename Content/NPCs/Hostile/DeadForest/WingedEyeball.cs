@@ -38,8 +38,9 @@ public class WingedEyeball : ModNPC
         NPC.value = 1200;
         NPC.noTileCollide = true;
         NPC.aiStyle = -1;
-        //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0.5f;
+        Banner = Item.NPCtoBanner(NPCID.DemonEye);
+        BannerItem = Item.BannerToItem(Banner);
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -178,7 +179,7 @@ public class WingedEyeball : ModNPC
     {
         if (dashTimer == 0)
         {
-            SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaivePierce with { PitchRange = (0.2f, 0.5f)}, NPC.Center);
+            SoundEngine.PlaySound(SoundID.DD2_GhastlyGlaivePierce with { PitchRange = (0.2f, 0.5f) }, NPC.Center);
             NPC.frame.Y = 4 * 64;
             for (int i = 0; i < 6; i++)
             {

@@ -38,6 +38,8 @@ public class SoulfulSludge : ModNPC
         NPC.noGravity = false;
         NPC.noTileCollide = false;
         NPC.knockBackResist = 0f;
+        Banner = Item.NPCtoBanner(NPCID.MotherSlime);
+        BannerItem = Item.BannerToItem(Banner);
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

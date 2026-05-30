@@ -1,9 +1,12 @@
-﻿using NeoParacosm.Content.Projectiles.Hostile.Evil;
+﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
+using NeoParacosm.Content.Projectiles.Hostile.Evil;
+using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 
@@ -41,6 +44,8 @@ public class IchorNeedle : ModNPC
         NPC.noGravity = true;
         NPC.noTileCollide = false;
         PlayerWhoAmI = -1;
+        Banner = Item.NPCtoBanner(NPCID.IchorSticker);
+        BannerItem = Item.BannerToItem(Banner);
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -197,7 +202,8 @@ public class IchorNeedle : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<IchorSyringe>(), 10, minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.Common(ItemID.Ichor, minimumDropped: 3, maximumDropped: 6));
     }
 
     public override bool? CanFallThroughPlatforms()

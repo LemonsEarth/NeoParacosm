@@ -168,7 +168,7 @@ public class ExplosivePot : ModNPC
                 NPC.StrikeInstantKill();
                 if (LemonUtils.NotClient())
                 {
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<BombExplosion>(), 200);
+                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<BombExplosion>(), 200, ai1: 6);
                 }
                 SoundEngine.PlaySound(SoundID.Item14, NPC.Center);
                 SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);

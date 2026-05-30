@@ -1934,7 +1934,7 @@ AcidPack: {
 	Tooltip:
 		'''
 		Healing items poison you
-		While inflicted with Poison or Venom, gain a {0}% damage and {1}% critical strike chance boost
+		While inflicted with Poison or Venom, increases damage by {0}% and critical strike chance by {1}%
 		'''
 }
 
@@ -1943,7 +1943,7 @@ PoisonousStinger: {
 	Tooltip:
 		'''
 		Healing items poison you
-		While inflicted with Poison or Venom, gain a {0}% damage boost
+		While inflicted with Poison or Venom, increases damage by {0}%
 		'''
 }
 
@@ -1962,4 +1962,17 @@ SigilOfTheRoots: {
 		Hitting enemies spawns ashen flowers
 		Picking up ashen flowers temporarily increases your summon damage, movement speed and maximum number of sentries
 		'''
+}
+
+IchorSyringe: {
+	DisplayName: Ichor-Filled Syringe
+	Tooltip: Landing critical strikes inflicts you and enemies with ichor
+}
+
+HeadlessTortoiseShell: {
+	DisplayName: Headless Tortoise Shell
+	Tooltip:
+	'''
+	While held, increases damage reduction by 5% and buffs nearby teammates when you get hit
+	'''
 }

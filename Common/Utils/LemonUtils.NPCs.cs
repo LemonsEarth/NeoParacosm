@@ -77,6 +77,15 @@ public static partial class LemonUtils
         return Vector2.Zero;
     }
 
+    public static Player GetTarget(this NPC npc)
+    {
+        if (npc.target == -1)
+        {
+            return null;
+        }
+        return Main.player[npc.target];
+    }
+
     /// <summary>
     /// Basic DOT debuff effect.
     /// Should be called in ModNPC.UpdateLifeRegen().

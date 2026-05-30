@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.Projectiles.Friendly.Magic.HeldProjectiles;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;

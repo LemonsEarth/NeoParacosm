@@ -29,6 +29,8 @@ public class BaneflyEnemy : ModNPC
         NPC.knockBackResist = 1f;
         NPC.noGravity = true;
         NPC.noTileCollide = true;
+        Banner = Item.NPCtoBanner(NPCID.Bee);
+        BannerItem = Item.BannerToItem(Banner);
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

@@ -1,4 +1,7 @@
-﻿using NeoParacosm.Core.Systems.Data;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Content.Projectiles.Hostile.Misc;
+using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -16,7 +19,7 @@ public class HeadlessTortoise : ModNPC
 
     public override void SetDefaults()
     {
-        NPC.width = 60;
+        NPC.width = 32;
         NPC.height = 32;
         NPC.lifeMax = 3000;
         NPC.defense = 40;
@@ -25,7 +28,9 @@ public class HeadlessTortoise : ModNPC
         NPC.DeathSound = SoundID.NPCDeath27;
         NPC.value = 15000;
         NPC.aiStyle = -1;
-        NPC.knockBackResist = 0.2f;
+        NPC.knockBackResist = 0.1f;
+        Banner = Item.NPCtoBanner(NPCID.GiantTortoise);
+        BannerItem = Item.BannerToItem(Banner);
     }
 
     public override void FindFrame(int frameHeight)
@@ -76,26 +81,39 @@ public class HeadlessTortoise : ModNPC
         if (!NPC.HasValidTarget)
         {
             AITimer++;
-            NPC.velocity.X = 0;
+            NPC.velocity.X *= 0.95f;
             NPC.velocity.Y += 0.1f;
             NPC.rotation = 0;
             return;
         }
 
         Player player = Main.player[NPC.target];
-        if (Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2) && NPC.Center.Distance(player.Center) < 500)
+        float distanceToPlayer = NPC.Center.Distance(player.Center);
+        float velocityLength = NPC.velocity.Length();
+        if (velocityLength > 1)
+        {
+            NPC.rotation = MathHelper.ToRadians(LemonUtils.Sign(NPC.velocity.X, 1) * AITimer * velocityLength);
+        }
+        if (Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2) && distanceToPlayer < 500)
         {
             if (NPC.collideY || NPC.collideX)
             {
                 NPC.velocity = NPC.DirectionTo(player.Center) * 30;
             }
-            NPC.rotation = MathHelper.Lerp(NPC.rotation, MathHelper.ToRadians(LemonUtils.Sign(NPC.velocity.X, 1) * AITimer * 6), 1 / 300f);
+        }
+        else if (distanceToPlayer < 500)
+        {
+            Dust.NewDustDirect(NPC.RandomPos(10, 10), 2, 2, DustID.Torch, Scale: 3f).noGravity = true;
+            if (LemonUtils.NotClient() && AITimer % 240 == 0)
+            {
+                LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<BombExplosion>(), 100, ai1: 4);
+            }
         }
         else
         {
-            NPC.velocity.X *= 0.6f;
+            NPC.velocity.X *= 0.95f;
             NPC.velocity.Y += 0.1f;
-            NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 1 / 5f);
+            //NPC.rotation = Utils.AngleLerp(NPC.rotation, 0, 1 / 5f);
         }
 
         AITimer++;
@@ -106,9 +124,16 @@ public class HeadlessTortoise : ModNPC
 
     }
 
+    public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+    {
+        NPC.DrawAfterimages(drawColor, 0.5f);
+        return true;
+    }
+
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<HeadlessTortoiseShell>(), 10, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()

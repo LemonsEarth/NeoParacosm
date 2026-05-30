@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 using static Terraria.ID.NPCID;
 
-namespace NeoParacosm.Core.Globals.GlobalNPCs.Evil;
+namespace NeoParacosm.Core.Globals.GlobalNPCs.Misc;
 
 public class DeathseederNPC : GlobalNPC
 {
