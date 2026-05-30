@@ -39,7 +39,7 @@ public class Equinox : ModItem
         int sunID = sun.identity;
 
         Vector2 moonPos = player.MountedCenter + Vector2.UnitY * 33.94f;
-        var moon = Projectile.NewProjectileDirect(source, moonPos, Vector2.Zero, ModContent.ProjectileType<EquinoxMoon>(), damage, knockback, player.whoAmI, ai0: sunID);
+        var moon = Projectile.NewProjectileDirect(source, moonPos, Vector2.Zero, ModContent.ProjectileType<EquinoxMoon>(), damage, knockback, player.whoAmI);
         LemonUtils.DustCircle(moon.Center, 8, 5, DustID.GemDiamond, 2f);
         return false;
     }
