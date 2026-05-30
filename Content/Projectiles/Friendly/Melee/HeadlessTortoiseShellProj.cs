@@ -120,6 +120,8 @@ public class HeadlessTortoiseShellProj : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.DustCircle(Projectile.Center, 8, 2, DustID.Crimson, 2);
+        LemonUtils.DustCircle(Projectile.Center, 6, 5, DustID.Crimslime, 2);
+        SoundEngine.PlaySound(SoundID.Item110 with { Volume = 0.6f}, Projectile.Center);
+
     }
 }
