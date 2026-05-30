@@ -1976,5 +1976,18 @@ HeadlessTortoiseShell: {
 
 Equinox: {
 	DisplayName: Equinox
-	Tooltip: ""
+	Tooltip:
+	'''
+	Hold left click to summon a sun and moon to orbit around you
+	Release to destroy them and summon projectiles
+	Release while they are overlapping to summon more projectiles
+	'''
+}
+
+SpaceShredder: {
+	DisplayName: Space Shredder
+	Tooltip:
+	'''
+	Hold left click to summon small planets to orbit around you
+	'''
 }
