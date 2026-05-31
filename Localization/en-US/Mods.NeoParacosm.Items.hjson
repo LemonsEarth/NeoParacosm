@@ -1977,17 +1977,32 @@ HeadlessTortoiseShell: {
 Equinox: {
 	DisplayName: Equinox
 	Tooltip:
-	'''
-	Hold left click to summon a sun and moon to orbit around you
-	Release to destroy them and summon projectiles
-	Release while they are overlapping to summon more projectiles
-	'''
+		'''
+		Hold left click to summon a sun and moon to orbit around you
+		Release to destroy them and summon projectiles
+		Release while they are overlapping to summon more projectiles
+		'''
 }
 
 SpaceShredder: {
 	DisplayName: Space Shredder
+	Tooltip: Hold left click to summon small planets to orbit around you
+}
+
+FrozenSkull: {
+	DisplayName: Frozen Skull
+	Tooltip:
+		'''
+		Increases damage by {0}
+		Increases critical strike chance by {1}%
+		Getting hit inflicts nearby enemies with Frostburn
+		'''
+}
+
+VampiresVial: {
+	DisplayName: Vampires Vial
 	Tooltip:
 	'''
-	Hold left click to summon small planets to orbit around you
+	Landing true melee strikes shortly after taking damage heals you for up to 50% of the damage taken
 	'''
 }
