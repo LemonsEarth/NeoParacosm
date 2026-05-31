@@ -36,8 +36,8 @@ public class CrimsonBunkerGenPass : GenPass
         int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            randX = Main.rand.Next(startXTile, maxXTile);
-            randY = Main.rand.Next(startYTile, maxYTile);
+            randX = WorldGen.genRand.Next(startXTile, maxXTile);
+            randY = WorldGen.genRand.Next(startYTile, maxYTile);
             Point pointTop = new Point(randX + structureDims.X / 2, randY);
             Point pointLeft = new Point(randX, randY + structureDims.Y / 2);
             Point pointRight = new Point(randX + structureDims.X, randY + structureDims.Y / 2);

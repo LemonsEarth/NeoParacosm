@@ -33,8 +33,8 @@ public class DeadForestHolyStructureGenPass : GenPass
         int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            randX = Main.rand.Next(startXTile, maxXTile);
-            randY = Main.rand.Next(startYTile, maxYTile);
+            randX = WorldGen.genRand.Next(startXTile, maxXTile);
+            randY = WorldGen.genRand.Next(startYTile, maxYTile);
             Point pointTopLeft = new Point(randX, randY);
             Point pointTopRight = new Point(randX + structureDims.X, randY);
             Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
@@ -77,7 +77,7 @@ public class DeadForestHolyStructureGenPass : GenPass
             {
                 if (Main.tile[i, j].WallType == WallID.IronBrick)
                 {
-                    if (Main.rand.NextBool(2))
+                    if (WorldGen.genRand.NextBool(2))
                     {
                         Main.tile[i, j].WallType = WallID.Cave2Unsafe;
                     }
@@ -85,7 +85,7 @@ public class DeadForestHolyStructureGenPass : GenPass
 
                 if (Main.tile[i, j].WallType == WallID.Glass)
                 {
-                    if (Main.rand.NextBool(2))
+                    if (WorldGen.genRand.NextBool(2))
                     {
                         Main.tile[i, j].WallType = WallID.None;
                     }

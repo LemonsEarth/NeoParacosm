@@ -33,8 +33,8 @@ public class IglooGenPass : GenPass
         int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            randX = Main.rand.Next(startXTile, maxXTile);
-            randY = Main.rand.Next(startYTile, maxYTile);
+            randX = WorldGen.genRand.Next(startXTile, maxXTile);
+            randY = WorldGen.genRand.Next(startYTile, maxYTile);
             Point pointTopLeft = new Point(randX, randY);
             Point pointTopRight = new Point(randX + structureDims.X, randY);
             Point pointTop = new Point(randX + structureDims.X / 2, randY);
@@ -70,7 +70,7 @@ public class IglooGenPass : GenPass
                     Main.tile[i, j].WallType = WallID.SnowWallUnsafe;
                 }
 
-                if (!manDone && Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.DisplayDoll && Main.tile[i,j].TileFrameX == 0)
+                if (!manDone && Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.DisplayDoll && Main.tile[i, j].TileFrameX == 0)
                 {
                     if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity tileEntity) && tileEntity is TEDisplayDoll doll)
                     {

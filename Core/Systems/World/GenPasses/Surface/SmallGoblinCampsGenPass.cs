@@ -36,7 +36,7 @@ public class SmallGoblinCampsGenPass : GenPass
         int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            randX = Main.rand.Next(startXTile, maxXTile);
+            randX = WorldGen.genRand.Next(startXTile, maxXTile);
 
             if (randX > Main.maxTilesX * 0.45f && randX < Main.maxTilesX * 0.55f) // Dont generate in center 10th of the world
             {
@@ -44,7 +44,7 @@ public class SmallGoblinCampsGenPass : GenPass
                 continue;
             }
 
-            randY = Main.rand.Next(startYTile, maxYTile);
+            randY = WorldGen.genRand.Next(startYTile, maxYTile);
             Point pointTopLeft = new Point(randX, randY);
             Point pointTopRight = new Point(randX + structureDims.X, randY);
             Point pointTop = new Point(randX + structureDims.X / 2, randY);

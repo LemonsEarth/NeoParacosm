@@ -37,8 +37,8 @@ public class CorruptTowerGenPass : GenPass
         int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            randX = Main.rand.Next(startXTile, maxXTile);
-            randY = Main.rand.Next(startYTile, maxYTile);
+            randX = WorldGen.genRand.Next(startXTile, maxXTile);
+            randY = WorldGen.genRand.Next(startYTile, maxYTile);
             Point pointTopLeft = new Point(randX, randY);
             Point pointTopRight = new Point(randX + structureDims.X, randY);
             Point pointTop = new Point(randX + structureDims.X / 2, randY);

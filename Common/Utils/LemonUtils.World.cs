@@ -211,6 +211,21 @@ public static partial class LemonUtils
         return Main.tile[point].HasTile && IsTileTypeSnowy(Main.tile[point].TileType);
     }
 
+    public static bool IsTileStone(this Point point)
+    {
+        return Main.tile[point].HasTile && Main.tile[point].TileType == TileID.Stone;
+    }
+
+    public static bool IsTileTypeSandy(int tileType)
+    {
+        return tileType == TileID.Sand || tileType == TileID.Sandstone || tileType == TileID.HardenedSand;
+    }
+
+    public static bool IsTileSandy(this Point point)
+    {
+        return Main.tile[point].HasTile && IsTileTypeSandy(Main.tile[point].TileType);
+    }
+
     public static bool IsTileTypeDirtOrGrass(int tileType)
     {
         return tileType == TileID.Dirt || tileType == TileID.Grass;

@@ -31,7 +31,7 @@ public class DeadForestHolyCrossesGenPass : GenPass
             int startYTile = (int)MathHelper.Clamp(Main.dungeonY - 80, 0, Main.maxTilesY);
             int maxYTile = (int)MathHelper.Clamp(Main.dungeonY + 80, 0, Main.maxTilesY);
 
-            Point point = new Point(Main.rand.Next(startXTile, maxXTile), Main.rand.Next(startYTile, maxYTile));
+            Point point = new Point(WorldGen.genRand.Next(startXTile, maxXTile), WorldGen.genRand.Next(startYTile, maxYTile));
             Point pointBelow = new Point(point.X, point.Y + 1);
 
             Tile tile = Main.tile[point];

@@ -48,6 +48,7 @@ public class WorldGenSystem : ModSystem
         InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading death", 100f));
         InsertAfterTask(tasks, "Remove Broken Traps", new GoblinWatchtowerGenPass("Building outposts", 100f));
         InsertAfterTask(tasks, "Remove Broken Traps", new SmallGoblinCampsGenPass("Constructing camps", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new SmallArmoryGenPass("Shedding armor", 100f));
         InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Prebuilding battlegrounds", 100f));
         InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a crypt", 100f));
         InsertAfterTask<DeadForestBasementGenPass>(tasks, new DeadForestHolyStructureGenPass("Constructing a place of worship", 100f));

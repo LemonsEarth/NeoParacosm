@@ -49,8 +49,8 @@ public class CrimsonFleshBallGenPass : GenPass
         int attemptCount = 0;
         while (attemptCount < maxAttemptCount)
         {
-            int randX = Main.rand.Next(startXTile, maxXTile);
-            int randY = Main.rand.Next(startYTile, maxYTile);
+            int randX = WorldGen.genRand.Next(startXTile, maxXTile);
+            int randY = WorldGen.genRand.Next(startYTile, maxYTile);
 
             Point pointTopLeft = new Point(randX, randY);
             Point pointTop = new Point(randX + structureDims.X / 2, randY);

@@ -64,13 +64,13 @@ public class CrimsonVillageGenPass : GenPass
                         {
                             WorldUtils.Gen(
                                 extraDirtPoint,
-                                new Shapes.Circle(Main.rand.Next(structureDims.X / 2 + 2, structureDims.X / 2 + 5), Main.rand.Next(3, 6)),
+                                new Shapes.Circle(WorldGen.genRand.Next(structureDims.X / 2 + 2, structureDims.X / 2 + 5), WorldGen.genRand.Next(3, 6)),
                                 new Actions.SetTile(tile.TileType));
                         }
                         else
                         {
-                            int randWidth = Main.rand.Next(structureDims.X / 2 + 2, structureDims.X / 2 + 5);
-                            int randHeight = Main.rand.Next(3, 6);
+                            int randWidth = WorldGen.genRand.Next(structureDims.X / 2 + 2, structureDims.X / 2 + 5);
+                            int randHeight = WorldGen.genRand.Next(3, 6);
                             WorldUtils.Gen(
                                 extraDirtPoint,
                                 new Shapes.Circle(randWidth, randHeight),
