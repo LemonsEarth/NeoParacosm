@@ -4,6 +4,7 @@ using NeoParacosm.Core.Systems.World.GenPasses.Crimson;
 using NeoParacosm.Core.Systems.World.GenPasses.DeadForest;
 using NeoParacosm.Core.Systems.World.GenPasses.Ice;
 using NeoParacosm.Core.Systems.World.GenPasses.Surface;
+using NeoParacosm.Core.Systems.World.GenPasses.Underworld;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria.GameContent.Tile_Entities;
@@ -38,21 +39,24 @@ public class WorldGenSystem : ModSystem
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
         //InsertAfterTask(tasks, "Tile Cleanup", new CrimsonVillageGenPass("Building bloody settlement", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFleshBallGenPass("Amassing corpses", 100f));
-        InsertAfterTask(tasks, "Remove Broken Traps", new CrimsonBunkerGenPass("Hiding from the red mist", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFireplaceHouseGenPass("Destroying what's left", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new CorruptBunkerGenPass("Hiding from the plague", 100f));
-        InsertAfterTask(tasks, "Remove Broken Traps", new CorruptTowerGenPass("Building a lookout", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new IglooGenPass("Containing warmth", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new FrozenFossilsGenPass("Freezing remains", 100f));
-        InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading death", 100f));
-        InsertAfterTask(tasks, "Remove Broken Traps", new GoblinWatchtowerGenPass("Building outposts", 100f));
-        InsertAfterTask(tasks, "Remove Broken Traps", new SmallGoblinCampsGenPass("Constructing camps", 100f));
-        InsertAfterTask(tasks, "Tile Cleanup", new SmallArmoryGenPass("Shedding armor", 100f));
-        InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Prebuilding battlegrounds", 100f));
-        InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a crypt", 100f));
-        InsertAfterTask<DeadForestBasementGenPass>(tasks, new DeadForestHolyStructureGenPass("Constructing a place of worship", 100f));
-        InsertAfterTask<DeadForestHolyStructureGenPass>(tasks, new DeadForestHolyCrossesGenPass("Marking graves", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFleshBallGenPass("Amassing Corpses Into a Ball", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new CrimsonBunkerGenPass("Constructing a Bunker from the Red Mist", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFireplaceHouseGenPass("Crimson Ruined Home", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new CorruptBunkerGenPass("Constructing Hideout in the Corruption", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new CorruptTowerGenPass("Corrupt Tower", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new LavaCastleGenPass("LavaCastle", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new IglooGenPass("Igloo", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new FrozenFossilsGenPass("Placing Frozen Fossils", 100f));
+        InsertAfterTask(tasks, "Planting Trees", new DeadForestGenPass("Spreading Death", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new GoblinWatchtowerGenPass("Goblin Watchtowers", 100f));
+        InsertAfterTask(tasks, "Remove Broken Traps", new SmallGoblinCampsGenPass("Raising Camps", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new SmallArmoryGenPass("Small Armories", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new LargeArmoryGenPass("Large Armories", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new UndergroundCheckpointGemsGenPass("Underground Checkpoint: Gems", 100f));
+        InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Dead Forest Platforms", 100f));
+        InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a Crypt", 100f));
+        InsertAfterTask<DeadForestBasementGenPass>(tasks, new DeadForestHolyStructureGenPass("Constructing Church", 100f));
+        InsertAfterTask<DeadForestHolyStructureGenPass>(tasks, new DeadForestHolyCrossesGenPass("Marking Graves", 100f));
         InsertAfterTask(tasks, "Micro Biomes", new DragonRemainsGenPass("Shifting Earth due to Powerful Presence", 100f));
 
         //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));

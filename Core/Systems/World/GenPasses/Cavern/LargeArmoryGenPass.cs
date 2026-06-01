@@ -8,17 +8,17 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses.Cavern;
 
-public class SmallArmoryGenPass : GenPass
+public class LargeArmoryGenPass : GenPass
 {
-    public SmallArmoryGenPass(string name, float loadWeight) : base(name, loadWeight) { }
+    public LargeArmoryGenPass(string name, float loadWeight) : base(name, loadWeight) { }
 
-    readonly string SmallArmoryPath = "Common/Assets/Structures/SmallArmory";
+    readonly string LargeArmoryPath = "Common/Assets/Structures/LargeArmory";
 
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
-        for (int i = 0; i < 6 * LemonUtils.GetWorldSize(); i++)
+        for (int i = 0; i < 3 * LemonUtils.GetWorldSize(); i++)
         {
-            GenerateSmallArmory();
+            GenerateLargeArmory();
         }
     }
 
@@ -42,9 +42,9 @@ public class SmallArmoryGenPass : GenPass
         return -1;
     }
 
-    public void GenerateSmallArmory()
+    public void GenerateLargeArmory()
     {
-        Point16 structureDims = Generator.GetStructureDimensions(SmallArmoryPath, NeoParacosm.Instance);
+        Point16 structureDims = Generator.GetStructureDimensions(LargeArmoryPath, NeoParacosm.Instance);
         int startXTile = 200;
         int maxXTile = Main.maxTilesX - 200;
         int startYTile = (int)(Main.rockLayer + 100);
@@ -72,34 +72,35 @@ public class SmallArmoryGenPass : GenPass
                 continue;
             }
 
-            int wallPoints = 0;
+            int points = 0;
+
             if (pointTopLeft.HasTile())
             {
-                wallPoints++;
+                points++;
             }
 
             if (pointTopRight.HasTile())
             {
-                wallPoints++;
+                points++;
             }
 
             if (pointBottomLeft.HasTile())
             {
-                wallPoints++;
+                points++;
             }
 
             if (pointBottomRight.HasTile())
             {
-                wallPoints++;
+                points++;
             }
 
-            if (wallPoints > 3)
+            if (points > 2)
             {
                 attemptCount++;
                 continue;
             }
 
-            Generator.GenerateStructure(SmallArmoryPath, new Point16(pointTopLeft), NeoParacosm.Instance);
+            Generator.GenerateStructure(LargeArmoryPath, new Point16(pointTopLeft), NeoParacosm.Instance);
             break;
         }
 
@@ -108,8 +109,6 @@ public class SmallArmoryGenPass : GenPass
             return;
         }
 
-        bool finishedDoll = false;
-        // Replace snow with unsafe walls
         for (int j = randY; j < randY + structureDims.Y; j++)
         {
             for (int i = randX; i < randX + structureDims.X; i++)
@@ -138,7 +137,7 @@ public class SmallArmoryGenPass : GenPass
                     }
                 }
 
-                if (!finishedDoll && Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.DisplayDoll)
+                if (Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.DisplayDoll)
                 {
                     if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity tileEntity) && tileEntity is TEDisplayDoll doll)
                     {
@@ -147,8 +146,8 @@ public class SmallArmoryGenPass : GenPass
                         dollInventory[1] = new(GetRandomChestplate());
                         dollInventory[2] = new(GetRandomGreaves());
                         dollInventory[3] = new(GetRandomAccessory());
+                        dollInventory[4] = new(GetRandomAccessory());
                         WorldGenSystem.SetDisplayDollInventory(doll, dollInventory);
-                        finishedDoll = true;
                     }
                 }
 
@@ -158,25 +157,41 @@ public class SmallArmoryGenPass : GenPass
 
     int GetRandomHelmet()
     {
-        return WorldGen.genRand.NextFromList(ItemID.TinHelmet, ItemID.CopperHelmet, ItemID.LeadHelmet, ItemID.IronHelmet,
-            ItemID.SilverHelmet, ItemID.TungstenHelmet, ItemID.None);
+        if (Main.rand.NextBool(4))
+        {
+            return ItemID.None;
+        }
+        return WorldGen.genRand.NextFromList(ItemID.AncientIronHelmet, ItemID.NinjaHood,
+            ItemID.AnglerHat, ItemID.AncientShadowHelmet, ItemID.GladiatorHelmet, ItemID.AncientCobaltHelmet);
     }
 
     int GetRandomChestplate()
     {
-        return WorldGen.genRand.NextFromList(ItemID.TinChainmail, ItemID.CopperChainmail, ItemID.LeadChainmail, ItemID.IronChainmail,
-            ItemID.SilverChainmail, ItemID.TungstenChainmail, ItemID.None);
+        if (Main.rand.NextBool(4))
+        {
+            return ItemID.None;
+        }
+        return WorldGen.genRand.NextFromList(ItemID.IronChainmail, ItemID.NinjaShirt,
+            ItemID.AnglerVest, ItemID.AncientShadowScalemail, ItemID.GladiatorBreastplate, ItemID.AncientCobaltBreastplate);
     }
 
     int GetRandomGreaves()
     {
-        return WorldGen.genRand.NextFromList(ItemID.TinGreaves, ItemID.CopperGreaves, ItemID.LeadGreaves, ItemID.IronGreaves,
-            ItemID.SilverGreaves, ItemID.TungstenGreaves, ItemID.None);
+        if (Main.rand.NextBool(4))
+        {
+            return ItemID.None;
+        }
+        return WorldGen.genRand.NextFromList(ItemID.IronGreaves, ItemID.NinjaPants,
+            ItemID.AnglerPants, ItemID.AncientShadowGreaves, ItemID.GladiatorLeggings, ItemID.AncientCobaltLeggings);
     }
 
     int GetRandomAccessory()
     {
-        return WorldGen.genRand.NextFromList(ItemID.Aglet, ItemID.ShoeSpikes, ItemID.ClimbingClaws, ItemID.LuckyHorseshoe,
-            ItemID.IceSkates, ItemID.BandofRegeneration, ItemID.Shackle, ItemID.None);
+        if (Main.rand.NextBool(2))
+        {
+            return ItemID.None;
+        }
+        return WorldGen.genRand.NextFromList(ItemID.CrossNecklace, ItemID.LuckyHorseshoe,
+            ItemID.FeralClaws, ItemID.PhilosophersStone, ItemID.SquireShield, ItemID.AncientChisel, ItemID.HermesBoots, ItemID.CelestialMagnet);
     }
 }

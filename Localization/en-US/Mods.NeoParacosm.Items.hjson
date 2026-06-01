@@ -2003,3 +2003,11 @@ VampiresVial: {
 	DisplayName: Vampires Vial
 	Tooltip: Landing true melee strikes shortly after taking damage heals you for up to 50% of the damage taken
 }
+
+SnakeWhip: {
+	DisplayName: Snake Charmer's Snake
+	Tooltip:
+	'''
+	Gains range every swing
+	'''
+}
