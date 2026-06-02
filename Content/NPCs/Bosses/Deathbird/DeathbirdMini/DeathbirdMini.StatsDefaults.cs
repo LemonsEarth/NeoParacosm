@@ -103,7 +103,7 @@ public partial class DeathbirdMini : ModNPC
 
         if (!Main.dedServ)
         {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/Gravefield");
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/DeathbroughtDeathbringerP1");
         }
     }
 

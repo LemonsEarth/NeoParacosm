@@ -6,6 +6,7 @@ using System.IO;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Minions;
 
@@ -36,8 +37,8 @@ public class GiantUndead : ModNPC
     {
         NPC.width = 100;
         NPC.height = 100;
-        NPC.lifeMax = 400;
-        NPC.defense = 10;
+        NPC.lifeMax = 100;
+        NPC.defense = 5;
         NPC.damage = 80;
         NPC.HitSound = SoundID.DD2_SkeletonDeath;
         NPC.DeathSound = SoundID.DD2_SkeletonSummoned;
@@ -56,7 +57,6 @@ public class GiantUndead : ModNPC
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
         NPC.damage = (int)(NPC.damage * balance * 0.5f);
-        NPC.lifeMax = (Main.expertMode ? 600 : 400) * ((numPlayers / 2) + 1);
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -103,6 +103,8 @@ public class GiantUndead : ModNPC
         }
         if (AITimer == 0)
         {
+            LemonUtils.DustBurst(20, NPC.Center, DustID.GemDiamond, 20, 20, 2.5f, 3.5f);
+            LemonUtils.DustBurst(20, NPC.Center, DustID.Granite, 20, 20, 2.5f, 3.5f, Color.Black);
             startPos = NPC.position;
             if (LemonUtils.NotClient())
             {
@@ -187,22 +189,6 @@ public class GiantUndead : ModNPC
             }
             AttackTimer++;
         }
-        else
-        {
-            if (AITimer % 120 == 0)
-            {
-                if (Main.npc[(int)DeathbirdIndex].life <= Main.npc[(int)DeathbirdIndex].lifeMax * 0.6f)
-                {
-                    if (LemonUtils.NotClient())
-                    {
-                        Main.npc[(int)DeathbirdIndex].HealEffect((int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f));
-                        Main.npc[(int)DeathbirdIndex].life += (int)(Main.npc[(int)DeathbirdIndex].lifeMax * 0.02f);
-                    }
-                }
-                LemonUtils.DustLine(NPC.Center, Main.npc[(int)DeathbirdIndex].Center, DustID.Ash, 16, 3f);
-
-            }
-        }
 
         AITimer++;
     }
@@ -251,7 +237,8 @@ public class GiantUndead : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-
+        npcLoot.Add(ItemDropRule.Common(ItemID.Heart, 1, 3, 5));
+        npcLoot.Add(ItemDropRule.Common(ItemID.Star, 1, 3, 5));
     }
 
     public override bool? CanFallThroughPlatforms()

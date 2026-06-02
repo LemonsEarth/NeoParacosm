@@ -89,7 +89,14 @@ public partial class Deathbird : ModNPC
         {
             phaseTransition = true;
             phase2Reached = true;
+            AttackCount = 0;
             AttackTimer = 0;
+            if (!Main.dedServ)
+            {
+                Main.musicFade[Music] = 0f;
+                Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/DeathbroughtDeathbringerP2");
+                Main.musicFade[Music] = 1f;
+            }
         }
 
         if (phaseTransition)
@@ -713,82 +720,131 @@ public partial class Deathbird : ModNPC
         attackDuration = attackDurations[(int)Attack];
     }
 
-    const int PhaseTransitionDuration = 240;
+    int rainTimer = 0;
+    const int PhaseTransitionDuration = 1620; // phase 2 song "intro" duration
     float maxRainingValue = 0.7f;
     void PhaseTransition()
     {
+        NPC.ShowNameOnHover = false;
         NPC.dontTakeDamage = true;
+        NPC.Opacity = 0f;
         SetDefaultBodyPartValues();
         NPC.velocity = Vector2.Zero;
         frameDuration = 6;
         BasicMovementAnimation();
         drawClone = false;
+
         switch (AttackTimer)
         {
-            case < 120:
-                if (AttackTimer == 0)
-                {
-                    Main.StartRain();
-                }
-                Main.maxRaining = MathHelper.Lerp(Main.maxRaining, maxRainingValue, AttackTimer / 120f);
-                Main.cloudAlpha = MathHelper.Lerp(Main.cloudAlpha, maxRainingValue, AttackTimer / 120f);
-                if (AttackTimer % 10 == 0)
-                {
-                    LemonUtils.DustCircle(NPC.RandomPos(), 16, 12, DustID.GemDiamond, Main.rand.NextFloat(1f, 4f));
-                }
-                PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 10f, 6f, 10, 1000f, FullName);
-                Main.instance.CameraModifiers.Add(mod1);
-                break;
-            case 120:
-                wingOutlineScale = 1.35f;
-                wingScale = 1.1f;
-                darkColorBoost = 1f;
-                LemonUtils.DustCircle(NPC.Center, 24, 24, DustID.GemDiamond, 8f);
-                PunchCameraModifier mod2 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 30f, 6f, 30, 1000f, FullName);
-                Main.instance.CameraModifiers.Add(mod2);
+            case PhaseTransitionDuration:
                 PlayRoar();
-                if (LemonUtils.NotClient())
-                {
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 20, ai2: 5);
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 2, ai1: 20, ai2: 5);
-                    LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 3, ai1: 20, ai2: 5);
-                }
                 break;
-            case < PhaseTransitionDuration:
-                if (AITimer % 20 == 0)
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Vector2 pos = NPC.Center - (Vector2.UnitY * 300).RotatedBy(i * MathHelper.ToRadians(120));
-                        LemonUtils.DustCircle(pos, 8, 8, DustID.Ash, 4f);
-                    }
-                }
 
-                if (AttackTimer <= PhaseTransitionDuration - 150 && AttackTimer % 10 == 0)
+            case > PhaseTransitionDuration - 60:
+                Main.StartRain();
+                Main.maxRaining = MathHelper.Lerp(Main.maxRaining, maxRainingValue, rainTimer / 60f);
+                Main.cloudAlpha = MathHelper.Lerp(Main.cloudAlpha, maxRainingValue, rainTimer / 60f);
+                rainTimer++;
+                break;
+
+            case > PhaseTransitionDuration - 1200:
+                NPC.Center = player.Center - Vector2.UnitY * 300;
+
+                if (AttackTimer % 120 == 0)
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.Zero, ProjectileType<PulseEffect>(), ai0: 1, ai1: 20, ai2: 2);
+                        int count = NPC.CountNPCS(NPCType<GiantUndead>());
+                        if (count < 3)
+                        {
+                            int attemptCount = 0;
+                            Vector2 randomPos = player.Center;
+                            do
+                            {
+                                randomPos = player.Center + LemonUtils.RandomVector2Circular(600, 600, 300, 300);
+                                attemptCount++;
+                            }
+                            while (
+                                attemptCount < 100 &&
+                                (Framing.GetTileSafely(randomPos.ToTileCoordinates()).HasTile ||
+                                !Collision.CanHitLine(player.Center, 2, 2, randomPos, 2, 2))
+                            );
+                            if (!Framing.GetTileSafely(randomPos.ToTileCoordinates()).HasTile && Collision.CanHitLine(player.Center, 2, 2, randomPos, 2, 2))
+                            {
+                                NPC.NewNPCDirect(NPC.GetSource_FromAI(), randomPos, NPCType<GiantUndead>(), ai3: NPC.whoAmI);
+                            }
+                        }
                     }
                 }
                 break;
-            case PhaseTransitionDuration:
-                if (LemonUtils.NotClient())
+            case >= 120:
+                NPC.Center = player.Center - Vector2.UnitY * 300;
+
+                if (LemonUtils.NotClient() && AttackTimer % 60 == 0)
                 {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Vector2 pos = NPC.Center - (Vector2.UnitY * 300).RotatedBy(i * MathHelper.ToRadians(120));
-                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), pos, NPCType<GiantUndead>(), ai3: NPC.whoAmI);
-                    }
+                    LemonUtils.QuickProj(NPC, player.Center + new Vector2(Main.rand.Next(-500, 500), -800), Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-15, 15))) * Main.rand.NextFloat(25, 35), ProjectileType<DeathbirdFeather>(), ai0: 75 - (LemonUtils.GetDifficulty() * 5), ai1: 3);
+
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        NPC.Center,
+                        1, 20, 5
+                        );
                 }
-                phase = 2;
-                phaseTransition = false;
-                Attack = 0;
-                AttackTimer = 0;
-                attackDuration = attackDurations2[(int)Attack];
+                break;
+            case >= 30:
+                NPC.Center = player.Center - Vector2.UnitY * 300;
+
+                if (LemonUtils.NotClient() && AttackTimer % 30 == 0)
+                {
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        NPC.Center,
+                        1, 20, 5
+                        );
+                }
+                break;
+            case > 0:
+                if (LemonUtils.NotClient() && AttackTimer % 10 == 0)
+                {
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        NPC.Center,
+                        1, 20, 5
+                        );
+                }
+                break;
+            case 0:
+                AttackTimer = PhaseTransitionDuration;
+
+                LemonUtils.DustBurst(20, NPC.Center, DustID.GemDiamond, 20, 20, 2.5f, 3.5f);
+                LemonUtils.DustBurst(20, NPC.Center, DustID.Granite, 20, 20, 2.5f, 3.5f, Color.Black);
+
+                LemonUtils.DustBurst(20, NPC.RandomPos(), DustID.GemDiamond, 20, 20, 2.5f, 3.5f);
+                LemonUtils.DustBurst(20, NPC.RandomPos(), DustID.Granite, 20, 20, 2.5f, 3.5f, Color.Black);
+
+                LemonUtils.DustBurst(20, NPC.RandomPos(), DustID.GemDiamond, 20, 20, 2.5f, 3.5f);
+                LemonUtils.DustBurst(20, NPC.RandomPos(), DustID.Granite, 20, 20, 2.5f, 3.5f, Color.Black);
+
+                PunchCameraModifier mod1 = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 10f, 6f, 10, 1000f, FullName);
+                Main.instance.CameraModifiers.Add(mod1);
+
+                if (AttackCount == 1)
+                {
+                    phase = 2;
+                    phaseTransition = false;
+                    NPC.ShowNameOnHover = true;
+                    NPC.Opacity = 1f;
+                    Attack = 0;
+                    AttackTimer = 0;
+                    AttackCount = 0;
+                    attackDuration = attackDurations2[(int)Attack];
+                }
+
+                AttackCount = 1;
                 return;
         }
-        AttackTimer++;
+
+        AttackTimer--;
     }
 
     void TeleportToPos(Vector2 pos)

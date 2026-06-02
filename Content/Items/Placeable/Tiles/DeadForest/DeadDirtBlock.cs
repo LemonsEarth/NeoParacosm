@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using Terraria.GameContent.ItemDropRules;
+
+namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
 public class DeadDirtBlock : ModTile
 {
@@ -45,6 +47,10 @@ public class DeadDirtItem : ModItem
 
     public override void AddRecipes()
     {
-
+        CreateRecipe()
+            .AddIngredient(ItemID.DirtBlock, 100)
+            .AddIngredient(ItemID.Tombstone, 1)
+            .AddCondition(Condition.InGraveyard)
+            .Register();
     }
 }

@@ -2007,7 +2007,18 @@ VampiresVial: {
 SnakeWhip: {
 	DisplayName: Snake Charmer's Snake
 	Tooltip:
-	'''
-	Gains range every swing
-	'''
+		'''
+		Gains range every swing
+		Inflicts Venom
+		'''
+}
+
+ForbiddenSnakeWhip: {
+	DisplayName: Forbidden Snake Whip
+	Tooltip:
+		'''
+		Gains range every swing
+		Every third hit causes a sandnado to appear
+		Inflicts Venom
+		'''
 }

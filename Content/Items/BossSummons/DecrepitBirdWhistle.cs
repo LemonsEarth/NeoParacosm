@@ -26,6 +26,11 @@ public class DecrepitBirdWhistle : ModItem
         Item.consumable = false;
     }
 
+    public override void UseStyle(Player player, Rectangle heldItemFrame)
+    {
+        player.itemLocation += new Vector2(-16 * player.direction, 16);
+    }
+
     public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
     {
         itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossSpawners;

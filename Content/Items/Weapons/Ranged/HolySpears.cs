@@ -30,6 +30,8 @@ public class HolySpears : ModItem
         Item.autoReuse = true;
         Item.shoot = ProjectileType<HolySpearFriendly>();
         Item.shootSpeed = 10;
+        Item.consumable = true;
+        Item.maxStack = Item.CommonMaxStack;
         Item.noMelee = true;
         Item.noUseGraphic = true;
     }
