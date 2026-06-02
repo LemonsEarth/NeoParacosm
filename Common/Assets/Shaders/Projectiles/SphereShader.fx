@@ -32,7 +32,7 @@ float4 SphereShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, floa
  
     float4 finalColor = noiseColor * centerColor;
     finalColor *= lerp(centerColor, endColor, distanceToCenter * 1);
-    finalColor *= (1 - distanceToCenter) * 4;
+    finalColor *= (1 - distanceToCenter);
     
     return finalColor * 3;
 }

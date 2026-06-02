@@ -64,7 +64,7 @@ public partial class Dreadlord : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
-    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200];
+    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200, 1080];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -87,6 +87,7 @@ public partial class Dreadlord : ModNPC
         LightningAndPillars,
         Spirits,
         LightningAndBalls,
+        FlameLasers,
     }
 
     public int Phase { get; private set; } = 0;
@@ -190,6 +191,9 @@ public partial class Dreadlord : ModNPC
                     break;
                 case (int)Attacks2.LightningAndBalls:
                     Attack_LightningAndBalls();
+                    break;
+                case (int)Attacks2.FlameLasers:
+                    Attack_FlameLasers();
                     break;
 
             }
@@ -2150,12 +2154,148 @@ public partial class Dreadlord : ModNPC
         AttackTimer--;
     }
 
+    Vector2 dir;
+    int laserRotDirection = 1;
+    void Attack_FlameLasers()
+    {
+        SetBodyPartPositions(headLerpSpeed: 1f, bodyLerpSpeed: 1f, legLerpSpeed: 1f);
+
+        switch (AttackTimer)
+        {
+            case 1080:
+                break;
+            case > 960:
+                NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.2f, 0.2f);
+                LerpScale(1f, 1 / 60f);
+                Spawn_CursedFlamethrowerPrepDust();
+                if (LemonUtils.NotClient() && AttackTimer % 10 == 0)
+                {
+                    LemonUtils.QuickPulse(NPC, HeadCorrupt.MiscPosition1, 2f, 5f, 5f, Color.GreenYellow);
+                }
+                break;
+            case > 810:
+                NPC.velocity *= 0.95f;
+                SetHeadCorruptFrame(MOUTH_OPEN);
+                targetPosition = HeadCorrupt.MiscPosition1.DirectionTo(player.Center);
+                if (AttackTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_CursedFlames(
+                            HeadCorrupt.MiscPosition1,
+                            targetPosition,
+                            minSpeed: 10 + AttackCount,
+                            maxSpeed: 15 + AttackCount,
+                            slowDownRate: 0.97f
+                            );
+                    }
+                    AttackCount++;
+                }
+                break;
+            case 810:
+                SetHeadCorruptFrame(MOUTH_CLOSED);
+                GreenLaserEnabled = true;
+                break;
+            case > 700:
+                if (AttackTimer == 740)
+                {
+                    SetHeadCorruptFrame(MOUTH_OPEN);
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickPulse(NPC, HeadCorrupt.MiscPosition1, 2f, 15f, 5f, Color.GreenYellow);
+                    }
+                }
+                if (AttackTimer == 710)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_CursedFlames(
+                            HeadCorrupt.MiscPosition1,
+                            targetPosition,
+                            minSpeed: 0,
+                            maxSpeed: 0,
+                            slowDownRate: 0.9f
+                            );
+                    }
+                }
+                break;
+            case 700:
+                GreenLaserEnabled = false;
+                LemonUtils.QuickScreenShake(HeadCorrupt.MiscPosition1, 30, 5, 30, 1000);
+                if (LemonUtils.NotClient())
+                {
+                    Vector2 toPlayer = HeadCorrupt.MiscPosition1.DirectionTo(player.Center);
+                    float startAngle = targetPosition.ToRotation();
+                    laserRotDirection = -LemonUtils.Sign(LemonUtils.AngleBetween(targetPosition, toPlayer), 1f);
+                    LemonUtils.QuickProj(
+                        NPC,
+                        HeadCorrupt.MiscPosition1,
+                        Vector2.Zero,
+                        ProjectileType<CursedLaserSphere>(),
+                        ai0: 580,
+                        ai1: startAngle - PiOver2,
+                        ai2: laserRotDirection * PiOver2 / 60f
+                        );
+                }
+                break;
+            case 120:
+                if (LemonUtils.NotClient())
+                {
+                    Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.02f, 30, ToRadians(22.5f));
+                    Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.03f, 45, ToRadians(22.5f + 11.25f));
+                    Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.04f, 60, ToRadians(22.5f + 6.12f));
+                }
+
+                if (AttackTimer % 10 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_CursedFlames(
+                            HeadCorrupt.MiscPosition1,
+                            targetPosition,
+                            minSpeed: 50,
+                            maxSpeed: 60,
+                            slowDownRate: 0.96f
+                            );
+                    }
+                }
+                break;
+            case > 0:
+                if (AttackTimer % 180 == 0 && LemonUtils.NotClient())
+                {
+                    Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.03f, 30, ToRadians(22.5f));
+
+                }
+
+                if (AttackTimer % 10 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_CursedFlames(
+                            HeadCorrupt.MiscPosition1,
+                            targetPosition,
+                            minSpeed: 0,
+                            maxSpeed: 0,
+                            slowDownRate: 0.9f
+                            );
+                    }
+                }
+                targetPosition = targetPosition.RotatedBy(laserRotDirection * PiOver2 / 60f);
+                break;
+            case 0:
+                AttackTimer = 1080;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void SwitchAttacks()
     {
         Attack++;
         if (Phase == 1)
         {
-            //Attack = 0;
+            //Attack = 7;
         }
         if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {

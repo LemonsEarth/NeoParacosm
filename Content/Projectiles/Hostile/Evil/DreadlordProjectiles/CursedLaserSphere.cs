@@ -56,6 +56,7 @@ public class CursedLaserSphere : PrimProjectile
                 RotationPerSecond
                 );
             savedSpeed = Projectile.velocity.Length();
+            SoundEngine.PlaySound(SoundID.Zombie104 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
         }
@@ -76,7 +77,7 @@ public class CursedLaserSphere : PrimProjectile
             Projectile.Kill();
         }
 
-        Projectile.rotation += RotationPerSecond;
+        Projectile.rotation += RotationPerSecond - MathHelper.PiOver2;
         Projectile.Opacity = AITimer / 15f;
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
         //Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
