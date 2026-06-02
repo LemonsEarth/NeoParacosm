@@ -162,7 +162,7 @@ public partial class Deathbird : ModNPC
         Attack++;
         if (phase == 1) attackDuration = attackDurations[(int)Attack];
         else attackDuration = attackDurations2[(int)Attack];
-        Attack = 2;
+        //Attack = 2;
         AttackCount = 0;
         AttackTimer = 0;
         NPC.Opacity = 1f;
