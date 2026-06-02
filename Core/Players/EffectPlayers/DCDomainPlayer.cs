@@ -3,7 +3,7 @@ using NeoParacosm.Core.Systems.Assets;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Core.Players.NPEffectPlayers;
+namespace NeoParacosm.Core.Players.EffectPlayers;
 
 public class DCDomainPlayer : ModPlayer
 {

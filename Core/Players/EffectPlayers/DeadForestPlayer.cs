@@ -1,9 +1,10 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Core.Players.NPEffectPlayers;
+namespace NeoParacosm.Core.Players.EffectPlayers;
 
 public class DeadForestPlayer : ModPlayer
 {
@@ -18,7 +19,7 @@ public class DeadForestPlayer : ModPlayer
 
     void DeadForestEffects()
     {
-        if (Player.InModBiome<DeadForestBiome>())
+        if (Player.InModBiome<DeadForestBiome>() || NPC.AnyNPCs(NPCType<Deathbird>()))
         {
             desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);
             if (desaturateEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;

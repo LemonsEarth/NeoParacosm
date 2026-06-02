@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using Terraria.Graphics.Effects;
 
-namespace NeoParacosm.Core.Players.NPEffectPlayers;
+namespace NeoParacosm.Core.Players.EffectPlayers;
 
 public class NPEffectPlayer : ModPlayer
 {

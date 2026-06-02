@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Core.Players.NPEffectPlayers;
+using NeoParacosm.Core.Players.EffectPlayers;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;

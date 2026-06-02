@@ -15,8 +15,9 @@ float4 DeathbirdArenaShader(float4 sampleColor : COLOR0, float2 coords : TEXCOOR
 {
     float4 baseColor = tex2D(uImage0, coords);
     float2 normalizedPixelCoords = (uScreenResolution / uScreenResolution.y);
-    float noiseScale = 0.25f;
-    float4 noiseColor = tex2D(uImage1, coords * noiseScale * normalizedPixelCoords + float2(0, time * 0.5));
+    float noiseScale = 0.5;
+    float offset = sin(coords.y * 5 + time) * 0.05;
+    float4 noiseColor = tex2D(uImage1, coords * noiseScale * normalizedPixelCoords + float2(offset * 2, time * 0.5) + uScreenPosition / 16000.0);
     float2 centeredCoords = coords * 2.0 - 1.0;
     float2 targetPos = (uTargetPosition - uScreenPosition) / uScreenResolution;
     float2 targetPos2 = (targetPosition2 - uScreenPosition) / uScreenResolution;

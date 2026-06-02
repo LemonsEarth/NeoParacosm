@@ -4,7 +4,7 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using static NeoParacosm.Core.Systems.Data.DarkCataclysmSystem;
 
-namespace NeoParacosm.Core.Players.NPEffectPlayers;
+namespace NeoParacosm.Core.Players.EffectPlayers;
 
 public class DarkCataclysmPlayer : ModPlayer
 {
