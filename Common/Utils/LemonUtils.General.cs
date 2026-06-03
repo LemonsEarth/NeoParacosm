@@ -66,30 +66,19 @@ public static partial class LemonUtils
     }
 
     /// <summary>
-    /// Similar to Main.rand.NextVector2Circular(), but allows you to specify minimum distance from center
+    /// Get random vector2 within a rectangle
     /// </summary>
-    /// <param name="circleHalfWidth"></param>
-    /// <param name="circleHalfHeight"></param>
+    /// <param name="rectHalfWidth"></param>
+    /// <param name="rectHalfHeight"></param>
     /// <param name="minWidth"></param>
     /// <param name="minHeight"></param>
     /// <returns></returns>
-    public static Vector2 RandomVector2Circular(float circleHalfWidth, float circleHalfHeight, float minWidth = 0, float minHeight = 0)
+    public static Vector2 RandomVector2Rectangular(float rectHalfWidth, float rectHalfHeight, float minWidth = 0, float minHeight = 0)
     {
-        float width = 0;
-        float height = 0;
-        do
-        {
-            width = Main.rand.NextFloat(-circleHalfWidth, circleHalfWidth);
-        }
-        while (Math.Abs(width) <= minWidth);
-
-        do
-        {
-            height = Main.rand.NextFloat(-circleHalfHeight, circleHalfHeight);
-        }
-        while (Math.Abs(height) <= minHeight);
-
-        return new Vector2(width, height);
+        Vector2 u = Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi));
+        u.X *= Main.rand.NextFloat(minWidth, rectHalfWidth);
+        u.Y *= Main.rand.NextFloat(minHeight, rectHalfHeight);
+        return u;
     }
 
     public static void DebugPlayerCenter(Player player)

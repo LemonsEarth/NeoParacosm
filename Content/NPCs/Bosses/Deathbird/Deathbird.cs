@@ -761,7 +761,7 @@ public partial class Deathbird : ModNPC
                             Vector2 randomPos = player.Center;
                             do
                             {
-                                randomPos = player.Center + LemonUtils.RandomVector2Circular(600, 600, 300, 300);
+                                randomPos = player.Center + LemonUtils.RandomVector2Rectangular(600, 600, 300, 300);
                                 attemptCount++;
                             }
                             while (

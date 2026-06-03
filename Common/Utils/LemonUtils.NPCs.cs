@@ -43,7 +43,7 @@ public static partial class LemonUtils
         while (attemptCount < maxAttemptCount)
         {
             Vector2 chosenPos = Vector2.Zero;
-            chosenPos = target + RandomVector2Circular(maxDistanceToTarget, maxDistanceToTarget, minDistanceToTarget, minDistanceToTarget);
+            chosenPos = target + RandomVector2Rectangular(maxDistanceToTarget, maxDistanceToTarget, minDistanceToTarget, minDistanceToTarget);
 
             Point16 topLeftTile = chosenPos.ToTileCoordinates16();
             Point16 bottomRightTile = (chosenPos + new Vector2(npc.width, npc.height)).ToTileCoordinates16();

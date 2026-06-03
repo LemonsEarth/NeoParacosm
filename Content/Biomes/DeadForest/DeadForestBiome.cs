@@ -1,7 +1,9 @@
-﻿using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
 using NeoParacosm.Content.NPCs.Hostile.DeadForest;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.World;
+using ReLogic.Content;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Content.Biomes.DeadForest;
@@ -51,6 +53,12 @@ public class DeadForestBiomeNPC : GlobalNPC
 
 public class DeadForestSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
 {
+    static Asset<Texture2D> bg;
+    public override void Load()
+    {
+        bg = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Backgrounds/thewholefuckingthing");
+    }
+
     public override void ModifyFarFades(float[] fades, float transitionSpeed)
     {
         for (int i = 0; i < fades.Length; i++)
@@ -72,6 +80,12 @@ public class DeadForestSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
                 }
             }
         }
+    }
+
+    public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
+    {
+        //spriteBatch.Draw(bg.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
+        return true;
     }
 
     public override int ChooseFarTexture()

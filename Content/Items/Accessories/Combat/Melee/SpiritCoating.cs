@@ -27,7 +27,7 @@ public class SpiritCoatingPlayer : CoatingPlayer
     public override void OnHitEffect(NPC npc, NPC.HitInfo hit)
     {
         int projType = Main.rand.NextBool(10) ? ProjectileType<SpiritProjHealing>() : ProjectileType<SpiritProjDamage>();
-        Vector2 pos = npc.Center + LemonUtils.RandomVector2Circular(300, 150, 100, 100);
+        Vector2 pos = npc.Center + LemonUtils.RandomVector2Rectangular(300, 150, 100, 100);
         Projectile.NewProjectileDirect(
             Player.GetSource_FromThis(),
             pos,
