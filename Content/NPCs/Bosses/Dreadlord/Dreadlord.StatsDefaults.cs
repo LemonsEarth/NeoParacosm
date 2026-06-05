@@ -153,9 +153,8 @@ public partial class Dreadlord : ModNPC
 
         if (!Main.dedServ)
         {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/EmbodimentOfEvilReborn");
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/EmbodimentOfEvilRebornP1");
         }
-
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -187,6 +186,32 @@ public partial class Dreadlord : ModNPC
 
     public override bool CheckDead()
     {
+        if (!reachedFinalPhase)
+        {
+            NPC.life = NPC.lifeMax;
+            if (!Main.dedServ)
+            {
+                Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/Nothing1Minute");
+            }
+            Phase = 2;
+            Attack = 0;
+            attackDuration = attackDurations3[(int)Attack];
+            AttackCount = 0;
+            AttackCount2 = 0;
+            AttackTimer = 0;
+            shaderIsActive = false;
+            GreenLaserEnabled = false;
+            YellowLaserEnabled = false;
+            NPC.ShowNameOnHover = true;
+            NPC.dontTakeDamage = false;
+            ResetLegFrames();
+            ResetMouthFrames();
+            NPC.Opacity = 1f;
+
+            reachedFinalPhase = true;
+            NPC.dontTakeDamage = true;
+            return false;
+        }
         return true;
     }
 
@@ -194,7 +219,7 @@ public partial class Dreadlord : ModNPC
     public override bool CanHitPlayer(Player target, ref int cooldownSlot)
     {
         cooldownSlot = ImmunityCooldownID.Bosses;
-        return NPC.scale == 1;
+        return NPC.scale == 1 && NPC.ShowNameOnHover;
     }
 
     public override void OnKill()

@@ -33,6 +33,10 @@ public partial class Dreadlord : ModNPC
             {
                 maxVal = Enum.GetValues(typeof(Attacks2)).Length - 1;
             }
+            if (Phase == 2)
+            {
+                maxVal = Enum.GetValues(typeof(Attacks3)).Length - 1;
+            }
 
             if (value > maxVal + diffMod || value < 0)
             {
@@ -66,6 +70,7 @@ public partial class Dreadlord : ModNPC
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
     readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
+    readonly int[] attackDurations3 = [960, 600, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -92,8 +97,16 @@ public partial class Dreadlord : ModNPC
         TeleportDashes,
     }
 
+    public enum Attacks3
+    {
+        FinalIntro,
+        DashExplosions
+    }
+
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
+
+    bool reachedFinalPhase = false;
 
     #endregion
     #region Constants
@@ -128,7 +141,8 @@ public partial class Dreadlord : ModNPC
         player = Main.player[NPC.target];
 
         SetDefaultBodyPartPositions();
-
+        NPC.width = (int)(284 * NPC.scale);
+        NPC.height = (int)(416 * NPC.scale);
         if (AITimer < 540)
         {
             Intro();
@@ -136,14 +150,11 @@ public partial class Dreadlord : ModNPC
             return;
         }
 
-        NPC.width = (int)(284 * NPC.scale);
-        NPC.height = (int)(416 * NPC.scale);
-
         DespawnCheck();
         SetBodyPartPositions();
-        AttackControl();
         ArenaControl();
         AnimateWings(8);
+        AttackControl();
         AITimer++;
     }
 
@@ -204,6 +215,18 @@ public partial class Dreadlord : ModNPC
 
             }
         }
+        else if (Phase == 2)
+        {
+            switch (Attack)
+            {
+                case (int)Attacks3.FinalIntro:
+                    Final_Intro();
+                    break;
+                case (int)Attacks3.DashExplosions:
+                    Final_DashExplosions();
+                    break;
+            }
+        }
         /*int sum = 0;
         foreach (var proj in Main.ActiveProjectiles)
         {
@@ -222,7 +245,8 @@ public partial class Dreadlord : ModNPC
 
     void Intro()
     {
-        //NPC.dontTakeDamage = true;
+        NPC.dontTakeDamage = true;
+        NPC.noTileCollide = true;
 
         if (DarkCataclysmSystem.DCEffectNoFogPosition == Vector2.Zero)
         {
@@ -265,7 +289,6 @@ public partial class Dreadlord : ModNPC
                                      );
                 break;
             case 210:
-                NPC.noTileCollide = true;
                 PlayRoar();
                 LemonUtils.QuickScreenShake(NPC.Center, 60f, 8f, 360, 2000f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -426,6 +449,7 @@ public partial class Dreadlord : ModNPC
 
     void Attack_BallsNLightning()
     {
+        NPC.dontTakeDamage = false;
         if (AttackTimer < 450)
         {
             SetBodyPartPositions(HeadCorrupt.DefaultPosition + Vector2.UnitY * 40,
@@ -2486,6 +2510,161 @@ public partial class Dreadlord : ModNPC
         AttackTimer--; ;
     }
 
+    void Final_Intro()
+    {
+        SetBodyPartPositions(headLerpSpeed: 1f, bodyLerpSpeed: 1f, legLerpSpeed: 1f);
+        switch (AttackTimer)
+        {
+            case 960:
+                LemonUtils.DustBurst(150, NPC.Center, DustID.GreenTorch, 40, 40, 2.5f, 3.5f);
+                LemonUtils.DustBurst(150, NPC.Center, DustID.GemTopaz, 40, 40, 2.5f, 3.5f);
+                if (LemonUtils.NotClient())
+                {
+                    Spawn_ExplodingIchorSphere(NPC.Center, 25f, 0.97f, 5);
+                }
+                break;
+            case >= 900:
+                NPC.velocity = Vector2.Lerp(NPC.velocity, Vector2.Zero, 1 / 10f);
+                NPC.Opacity = Lerp(NPC.Opacity, 0f, 1 / 10f);
+                break;
+            case > 840:
+                NPC.ShowNameOnHover = false;
+                NPC.Center = ArenaCenter;
+                LerpScale(1f, 1f);
+                break;
+            case 840:
+                if (!Main.dedServ)
+                {
+                    Main.musicFade[Music] = 0f;
+                    Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/EmbodimentOfEvilRebornP3");
+                    Main.musicFade[Music] = 1f;
+                }
+                if (LemonUtils.NotClient())
+                {
+                    Spawn_ExplodingIchorSphere(ArenaCenter, 25f, 0.97f, 820 - AttackTimer);
+                }
+                break;
+            case > 180:
+                if (AttackTimer % 45 == 0)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        if (LemonUtils.NotClient())
+                        {
+                            Vector2 randPos = NPC.Center + new Vector2(Main.rand.NextFloat(-1000, 1000), -1200);
+                            LemonUtils.QuickProj(
+                                NPC,
+                                randPos,
+                                Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-Pi / 6, Pi / 6)) * Main.rand.NextFloat(7, 12),
+                                ProjectileType<CursedFlameSphere>()
+                                );
+                        }
+                    }
+                }
+                if (AttackTimer % 30 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_LightningAroundPlayer(900, -1500, 120, 3000);
+                    }
+                }
+
+                if (LemonUtils.NotClient() && AttackTimer % 20 == 0)
+                {
+                    Spawn_ExplodingIchorSphere(ArenaCenter, 20f, 0.97f, 60);
+                }
+                break;
+            case 180:
+                LemonUtils.QuickCameraFocus(ArenaCenter, () => !NPC.active || AttackTimer <= 60);
+                break;
+            case 120:
+                NPC.Opacity = 1f;
+                shaderIsActive = true;
+                NPC.ShowNameOnHover = true;
+                break;
+            case > 0:
+                break;
+            case 0:
+                AttackTimer = 960;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Final_DashExplosions()
+    {
+        SetBodyPartPositions(headLerpSpeed: 1f, bodyLerpSpeed: 1f, legLerpSpeed: 1f);
+
+        switch (AttackTimer)
+        {
+            case 300:
+                AuraBurst(50, -Vector2.UnitY * 30);
+                NPC.Center = player.Center - Vector2.UnitY * 600;
+                AuraBurst(50, -Vector2.UnitY * 30);
+                break;
+            case > 270:
+                LerpScale(1f, 1 / 10f);
+                NPC.velocity = -NPC.DirectionTo(player.Center) * 5;
+                break;
+            case 270:
+                
+                break;
+            case 260:
+                NPC.velocity = -NPC.velocity * 10;
+                break;
+            case > 240:
+                break;
+            case 240:
+                targetPosition = player.Center;
+                break;
+            case 210:
+                Spawn_CirclingIchorSpheres(8, 0, 600, 2, 8);
+                Spawn_CirclingIchorSpheres(8, 0, 600, -2, 8);
+                break;
+            case > 120:
+                NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
+                LerpScale(0.5f, 1 / 30f);
+                if (AttackTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 posVertical = targetPosition + Vector2.UnitY * (1200 - AttackCount * 200);
+                        Vector2 posHorizontal = targetPosition - Vector2.UnitX * (1200 - AttackCount * 200);
+                        Spawn_ExplodingIchorSphere(posVertical, 12, 0.97f, 60);
+                        Spawn_ExplodingIchorSphere(posHorizontal, 12, 0.97f, 60);
+                    }
+                    AttackCount++;
+                }
+                break;
+            case 120:
+                targetPosition = player.Center;
+                AttackCount = 0;
+                break;
+            case > 30:
+                NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
+                LerpScale(0.5f, 1 / 30f);
+                if (AttackTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 posVertical = targetPosition - Vector2.UnitY * (1000 - AttackCount * 200);
+                        Vector2 posHorizontal = targetPosition + Vector2.UnitX * (1000 - AttackCount * 200);
+                        Spawn_ExplodingIchorSphere(posVertical, 12, 0.97f, 60);
+                        Spawn_ExplodingIchorSphere(posHorizontal, 12, 0.97f, 60);
+                    }
+                    AttackCount++;
+                }
+                break;
+            case 0:
+                AttackTimer = 300;
+                AttackCount = 0;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void SwitchAttacks()
     {
         Attack++;
@@ -2493,9 +2672,10 @@ public partial class Dreadlord : ModNPC
         {
             //Attack = 7;
         }
-        if (NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
+        if (Phase == 0 && NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
             reachedSecondPhase = true;
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/EmbodimentOfEvilRebornP2");
             Attack = 0;
             Phase = 1;
         }
@@ -2508,6 +2688,10 @@ public partial class Dreadlord : ModNPC
         {
             attackDuration = attackDurations2[(int)Attack];
         }
+        else if (Phase == 2)
+        {
+            attackDuration = attackDurations3[(int)Attack];
+        }
         AttackCount = 0;
         AttackCount2 = 0;
         AttackTimer = 0;
@@ -2519,7 +2703,6 @@ public partial class Dreadlord : ModNPC
         ResetLegFrames();
         ResetMouthFrames();
         NPC.Opacity = 1f;
-        ResetLegFrames();
     }
 
     Vector2 GetRandomPositionAroundPoint(Vector2 point,
