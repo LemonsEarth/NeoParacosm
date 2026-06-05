@@ -2022,3 +2022,8 @@ ForbiddenSnakeWhip: {
 		Inflicts Venom
 		'''
 }
+
+SoulOfDread: {
+	DisplayName: Soul of Dread
+	Tooltip: While under the effects of a damaging debuff, constantly increase damage, up to {0}% after {1} seconds
+}
