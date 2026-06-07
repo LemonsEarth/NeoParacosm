@@ -129,6 +129,7 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        //Player.stickyBreak = 100;
         //var c = Main.MouseWorld.ToTileCoordinates16();
         //Main.NewText(Main.tile[c].TileFrameX);
         //Main.projectile.Where(p => p.active).Count().NewText();

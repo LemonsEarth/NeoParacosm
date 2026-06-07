@@ -150,6 +150,31 @@ public static partial class LemonUtils
         }
     }
 
+    /// <summary>
+    /// If the NPC has a valid target, despawn when the distance between them is > hasValidTargetDistance.
+    /// Else, despawn when the distance between them is > doesntHaveValidTargetDistance.
+    /// </summary>
+    /// <param name="NPC"></param>
+    /// <param name="hasValidTargetDistance"></param>
+    /// <param name="doesntHaveValidTargetDistance"></param>
+    /// <returns>Whether the NPC despawned or not</returns>
+    public static bool CheckAndDespawn(this NPC NPC, float hasValidTargetDistance = 2000, float doesntHaveValidTargetDistance = 1000)
+    {
+        if (NPC.GetTarget() != null)
+        {
+            float distance = 0;
+            distance = NPC.HasValidTarget ? hasValidTargetDistance : doesntHaveValidTargetDistance;
+
+            if (NPC.GetTarget().Distance(NPC.Center) > distance)
+            {
+                NPC.active = false;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public static string GetLocKey(this NPC npc)
     {
         return $"Mods.NeoParacosm.NPCs.{npc.ModNPC.Name}";

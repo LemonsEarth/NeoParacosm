@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using NeoParacosm.Content.Items.Accessories.Movement;
+using System.Collections.Generic;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Content.NPCs.Hostile.SolarEclipse;
 
@@ -10,6 +14,7 @@ public class JumpingSpider : ModNPC
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 4;
+        NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
     }
 
     public override void SetDefaults()
@@ -27,6 +32,11 @@ public class JumpingSpider : ModNPC
         NPC.knockBackResist = 0.6f;
     }
 
+    public override void OnSpawn(IEntitySource source)
+    {
+        NPC.scale = Main.rand.NextFloat(0.8f, 1.5f);
+    }
+
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
     {
 
@@ -42,7 +52,7 @@ public class JumpingSpider : ModNPC
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
     {
-
+        target.AddBuff(BuffID.Venom, 180);
     }
 
     public override bool PreAI()
@@ -63,7 +73,24 @@ public class JumpingSpider : ModNPC
         {
             NPC.velocity += NPC.Center.DirectionTo(Main.player[NPC.target].Center) * 10 - Vector2.UnitY * 5;
             AITimer = 0;
+            WorldUtils.Gen(
+                NPC.Center.ToTileCoordinates(),
+                new Shapes.Circle((int)(3 * NPC.scale)),
+                new Actions.Custom((i, j, args) =>
+                {
+                    if (!Main.tile[i, j].HasTile)
+                    {
+                        WorldGen.PlaceTile(i, j, TileID.Cobweb);
+                    }
+                    return true;
+                }
+                ));
             NPC.noTileCollide = true;
+        }
+
+        if (NPC.CheckAndDespawn(2000, 1000))
+        {
+            return;
         }
 
         if (NPC.velocity.Y > 0)
@@ -110,7 +137,8 @@ public class JumpingSpider : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemID.SpiderFang, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<JumpingSpiderLeg>(), 20, minimumDropped: 1, maximumDropped: 1));
     }
 
     public override bool? CanFallThroughPlatforms()
