@@ -10,8 +10,8 @@ public class SoulOfDread : ModItem
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(maxDamage, maxDuration);
     public override void SetDefaults()
     {
-        Item.width = 64;
-        Item.height = 64;
+        Item.width = 58;
+        Item.height = 60;
         Item.accessory = true;
         Item.value = Item.sellPrice(0, 10);
         Item.rare = ItemRarityID.Expert;
@@ -49,9 +49,8 @@ public class SoulOfDreadPlayer : ModPlayer
                 timer -= 5;
                 if (timer < 0) timer = 0;
             }
-
-            float rate = timer / SoulOfDread.maxDamage;
-            float dmgBoost = timer / rate;
+            float dmgBoost = MathHelper.Lerp(0, SoulOfDread.maxDamage, (float)timer / (SoulOfDread.maxDuration * 60f));
+            
             Player.GetDamage(DamageClass.Generic) += dmgBoost / 100f;
         }
         else
