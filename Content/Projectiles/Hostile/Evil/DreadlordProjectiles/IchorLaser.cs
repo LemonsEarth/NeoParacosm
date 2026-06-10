@@ -9,7 +9,7 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class CursedLaser : ModProjectile
+public class IchorLaser : ModProjectile
 {
     public override string Texture => ParacosmTextures.Empty100TexPath;
 
@@ -114,7 +114,7 @@ public class CursedLaser : ModProjectile
         var shader = GameShaders.Misc["NeoParacosm:DreadlordLaserShader"];
         shader.Shader.Parameters["moveSpeed"].SetValue(-2f);
         shader.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
-        shader.Shader.Parameters["endColor"].SetValue(Color.Lime.ToVector4());
+        shader.Shader.Parameters["endColor"].SetValue(Color.Gold.ToVector4());
         Main.spriteBatch.End();
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;

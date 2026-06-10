@@ -215,6 +215,11 @@ public partial class Dreadlord : ModNPC
         return true;
     }
 
+    public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
+    {
+        return NPC.dontTakeDamage ? false : null;
+    }
+
     // Disable contact damage when "in background"
     public override bool CanHitPlayer(Player target, ref int cooldownSlot)
     {

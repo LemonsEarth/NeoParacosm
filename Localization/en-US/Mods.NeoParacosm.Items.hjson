@@ -2024,15 +2024,15 @@ ForbiddenSnakeWhip: {
 }
 
 SoulOfDread: {
-	DisplayName: Soul of Dread
+	DisplayName: Heart of Dread
 	Tooltip: While under the effects of a damaging debuff, constantly increase damage, up to {0}% after {1} seconds
 }
 
 JumpingSpiderLeg: {
 	DisplayName: Jumping Spider Leg
 	Tooltip:
-	'''
-	Allows you to move freely through cobwebs
-	Massively increases jump height
-	'''
+		'''
+		Allows you to move freely through cobwebs
+		Massively increases jump height
+		'''
 }

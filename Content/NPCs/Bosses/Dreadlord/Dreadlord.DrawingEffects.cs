@@ -165,7 +165,7 @@ public partial class Dreadlord : ModNPC
     void LerpScale(float targetScale, float time)
     {
         // rounding stuff
-        if (targetScale == 1f && MathF.Abs(targetScale - NPC.scale) < 0.05f)
+        if (targetScale == 1f && MathF.Abs(targetScale - NPC.scale) < 0.02f)
         {
             NPC.scale = 1f;
         }
@@ -265,7 +265,8 @@ public partial class Dreadlord : ModNPC
             {
                 var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
                 shader.Shader.Parameters["uTime"].SetValue(AITimer);
-                shader.Shader.Parameters["color"].SetValue(Color.Yellow.ToVector4() * NPC.Opacity);
+                float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
+                shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4() * NPC.Opacity);
                 shader.Shader.Parameters["moveSpeed"].SetValue(2f);
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);

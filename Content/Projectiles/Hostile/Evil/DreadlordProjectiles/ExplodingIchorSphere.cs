@@ -27,7 +27,7 @@ public class ExplodingIchorSphere : PrimProjectile
         Projectile.hostile = false;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
-        Projectile.tileCollide = true;
+        Projectile.tileCollide = false;
         Projectile.penetrate = 3;
         Projectile.timeLeft = 9999;
         Projectile.scale = 1f;

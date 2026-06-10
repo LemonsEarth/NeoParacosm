@@ -191,3 +191,5 @@ SpaceShredderPlanet.DisplayName: Space Shredder Planet
 SnakeWhipProjectile.DisplayName: Snake Whip Projectile
 ForbiddenSnakeWhipProjectile.DisplayName: Forbidden Snake Whip Projectile
 ExplodingIchorSphere.DisplayName: Exploding Ichor Sphere
+IchorLaser.DisplayName: Ichor Laser
+IchorLaserSphere.DisplayName: Ichor Laser Sphere
