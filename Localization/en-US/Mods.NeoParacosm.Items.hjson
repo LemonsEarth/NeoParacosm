@@ -2039,8 +2039,15 @@ JumpingSpiderLeg: {
 
 DragonClaw: {
 	DisplayName: Dragon Claw
-	Tooltip:
-	'''
-	Hit an enemy to embed the claw in them, guaranteeing critical hits for the next 5 seconds
-	'''
+	Tooltip: Hit an enemy to embed the claw in them, guaranteeing critical hits for the next 5 seconds
+}
+
+InfernoSpell: {
+	DisplayName: Inferno Spell
+	Tooltip: ""
+}
+
+PoisonGasSpell: {
+	DisplayName: Poison Gas Spell
+	Tooltip: ""
 }

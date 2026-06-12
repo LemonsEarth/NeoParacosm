@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+﻿using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
@@ -131,6 +132,7 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        //Dust.NewDustPerfect(Main.MouseWorld, DustType<FireDust>(), Vector2.Zero, newColor: Color.Red);
         //Player.stickyBreak = 100;
         //var c = Main.MouseWorld.ToTileCoordinates16();
         //Main.NewText(Main.tile[c].TileFrameX);

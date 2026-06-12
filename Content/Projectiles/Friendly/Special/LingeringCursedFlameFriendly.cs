@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Dusts;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -68,12 +69,10 @@ public class LingeringCursedFlameFriendly : ModProjectile
                     }
                 }
             }
-            for (int i = 0; i < 3; i++)
-            {
-                Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
-                Dust.NewDustPerfect(randomPos, DustID.GemEmerald, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f) * height, Scale: 2.5f).noGravity = true;
-                Dust.NewDustPerfect(randomPos, DustID.GemDiamond, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f) * height, Scale: 1.5f, newColor: Color.White).noGravity = true;
-            }
+            Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
+            Dust.NewDustPerfect(randomPos, DustType<FireDust>(), -Vector2.UnitY * 0, newColor: Color.Lime, Scale: 0.5f);
+            Dust.NewDustPerfect(randomPos, DustID.GemEmerald, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f) * height, Scale: 1.5f).noGravity = true;
+
             Projectile.velocity.X = 0;
         }
         else

@@ -47,8 +47,8 @@ public class DragonClawHeldProj : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 64;
-        Projectile.height = 64;
+        Projectile.width = 42;
+        Projectile.height = 42;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = true;
@@ -122,13 +122,18 @@ public class DragonClawHeldProj : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-
+        if (HitNPCWhoAmI != -1)
+        {
+            LemonUtils.DustBurst(8, Projectile.Center, DustID.GemDiamond, 5, 5, 2.0f, 2.5f);
+            LemonUtils.DustBurst(8, Projectile.Center, DustID.Crimson, 5, 5, 2.0f, 2.5f);
+            SoundEngine.PlaySound(SoundID.Tink with { PitchRange = (-0.4f, -0.2f)}, Projectile.Center);
+        }
     }
 
     const float ThreePiOverFour = MathHelper.Pi - MathHelper.PiOver4; // dumb rotation and sprite direction stuff
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
-        Vector2 pos = player.Center + new Vector2(-player.direction * (Projectile.width / 2), -Projectile.height / 2).RotatedBy(movedRotation * player.direction) * Projectile.scale;
+        Vector2 pos = player.Center + new Vector2(-player.direction * (Projectile.width / 1f), -Projectile.height / 1f).RotatedBy(movedRotation * player.direction) * Projectile.scale;
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, movedRotation * player.direction + player.direction * ThreePiOverFour);
         Projectile.Center = pos;
         if (Direction == -1)

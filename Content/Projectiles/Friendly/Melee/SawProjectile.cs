@@ -39,6 +39,7 @@ public class SawProjectile : ModProjectile
         Projectile.timeLeft = 300;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 10;
+        Projectile.DamageType = DamageClass.Melee;
     }
 
     public override void AI()

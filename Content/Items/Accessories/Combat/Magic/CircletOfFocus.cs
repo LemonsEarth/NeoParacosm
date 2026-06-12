@@ -13,7 +13,7 @@ public class CircletOfFocus : ModItem
         Item.height = 32;
         Item.accessory = true;
         Item.value = Item.buyPrice(0, 2);
-        Item.rare = ItemRarityID.Green;
+        Item.rare = ItemRarityID.Pink;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

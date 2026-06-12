@@ -47,7 +47,7 @@ public class MagicGrenadeAttachmentPlayer : ModPlayer
             target.AddBuff(Main.rand.NextFromList(BuffID.ShadowFlame, BuffID.OnFire3, BuffID.Frostburn2, BuffID.Venom, BuffID.Ichor), 480);
         }
 
-        if (Active)
+        if (Active && proj.type == ProjectileID.Bullet)
         {
             target.AddBuff(BuffID.CursedInferno, 480);
         }
@@ -56,7 +56,7 @@ public class MagicGrenadeAttachmentPlayer : ModPlayer
 
     public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-        if (Active)
+        if (Active && item.DamageType.CountsAsClass(DamageClass.Ranged))
         {
             int cd = ((int)(2 * MathHelper.Clamp(60f / item.useTime, 1, 30)));
             if (shootCounter % cd == 0)
