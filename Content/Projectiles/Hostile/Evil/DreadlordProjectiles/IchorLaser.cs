@@ -69,9 +69,16 @@ public class IchorLaser : ModProjectile
 
     public override void AI()
     {
-        laserLength = 20;
+        laserLength = 30;
         if (AITimer == 0)
         {
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.type == ProjectileType<CorruptPillar>())
+                {
+                    proj.Kill();
+                }
+            }
             SoundEngine.PlaySound(SoundID.Item92 with { MaxInstances = 0, PitchRange = (-0.5f, -0.3f) }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.Zombie103 with { MaxInstances = 0 }, Projectile.Center);
             if (Size == 0) Size = 1;

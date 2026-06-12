@@ -70,7 +70,7 @@ public partial class Dreadlord : ModNPC
     /// </summary>
     readonly int[] attackDurations = [600, 1080, 1080, 1080, 1320];
     readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
-    readonly int[] attackDurations3 = [960, 600, 600, 1200, 1200, 1380, 1200, 1080, 1800];
+    readonly int[] attackDurations3 = [960, 600, 600, 1200, 1200, 1800];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -103,13 +103,17 @@ public partial class Dreadlord : ModNPC
         DashExplosions,
         IchorSpam,
         Lasers,
-        LaserSpirits
+        LaserSpirits,
+        Final_Mayhem
     }
 
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
 
     bool reachedFinalPhase = false;
+
+    bool doDepleteHealth = false;
+    int phase3Timer = 0;
 
     #endregion
     #region Constants
@@ -153,12 +157,24 @@ public partial class Dreadlord : ModNPC
             return;
         }
 
+        if (Phase == 2 && doDepleteHealth)
+        {
+            FinalPhaseHealthDepletion();
+            phase3Timer++;
+        }
         DespawnCheck();
         SetBodyPartPositions();
         ArenaControl();
         AnimateWings(8);
         AttackControl();
         AITimer++;
+    }
+
+    void FinalPhaseHealthDepletion()
+    {
+        float duration = 5040;
+        float lerpT = phase3Timer / duration;
+        NPC.life = (int)Lerp(NPC.lifeMax, 0, lerpT);
     }
 
     void AttackControl()
@@ -236,6 +252,9 @@ public partial class Dreadlord : ModNPC
                     break;
                 case (int)Attacks3.LaserSpirits:
                     Final_LaserSpirits();
+                    break;
+                case (int)Attacks3.Final_Mayhem:
+                    Final_Mayhem();
                     break;
             }
         }
@@ -2217,7 +2236,7 @@ public partial class Dreadlord : ModNPC
         {
             case 1080:
                 break;
-            case > 960:
+            case > 960: // Prep short flamethrower
                 NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.2f, 0.2f);
                 LerpScale(1f, 1 / 60f);
                 Spawn_CursedFlamethrowerPrepDust();
@@ -2226,7 +2245,7 @@ public partial class Dreadlord : ModNPC
                     LemonUtils.QuickPulse(NPC, HeadCorrupt.MiscPosition1, 2f, 5f, 5f, Color.GreenYellow);
                 }
                 break;
-            case > 810:
+            case > 810: // Fire short flamethrower, save dir to player
                 NPC.velocity *= 0.95f;
                 SetHeadCorruptFrame(MOUTH_OPEN);
                 targetPosition = HeadCorrupt.MiscPosition1.DirectionTo(player.Center);
@@ -2245,11 +2264,11 @@ public partial class Dreadlord : ModNPC
                     AttackCount++;
                 }
                 break;
-            case 810:
+            case 810: // Enable green laser, close mouth
                 SetHeadCorruptFrame(MOUTH_CLOSED);
                 GreenLaserEnabled = true;
                 break;
-            case > 700:
+            case > 700: // Pulse and stationary flames as fx
                 if (AttackTimer == 740)
                 {
                     SetHeadCorruptFrame(MOUTH_OPEN);
@@ -2272,7 +2291,7 @@ public partial class Dreadlord : ModNPC
                     }
                 }
                 break;
-            case 700:
+            case 700: // Spawn giant cursed sphere and laser (ends at 120), note the > 0 case below
                 GreenLaserEnabled = false;
                 LemonUtils.QuickScreenShake(HeadCorrupt.MiscPosition1, 30, 5, 30, 1000);
                 if (LemonUtils.NotClient())
@@ -2286,7 +2305,7 @@ public partial class Dreadlord : ModNPC
                 }
                 NPC.netUpdate = true;
                 break;
-            case 120:
+            case 120: // Once the laser is gone, spawn 3 giant cursed spheres that explode in sequence
                 if (LemonUtils.NotClient())
                 {
                     Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.02f, 30, ToRadians(22.5f));
@@ -2294,21 +2313,19 @@ public partial class Dreadlord : ModNPC
                     Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.04f, 60, ToRadians(22.5f + 6.12f));
                 }
 
-                if (AttackTimer % 10 == 0)
+                if (LemonUtils.NotClient())
                 {
-                    if (LemonUtils.NotClient())
-                    {
-                        Spawn_CursedFlames(
-                            HeadCorrupt.MiscPosition1,
-                            targetPosition,
-                            minSpeed: 50,
-                            maxSpeed: 60,
-                            slowDownRate: 0.96f
-                            );
-                    }
+                    Spawn_CursedFlames(
+                        HeadCorrupt.MiscPosition1,
+                        targetPosition,
+                        minSpeed: 50,
+                        maxSpeed: 60,
+                        slowDownRate: 0.96f
+                        );
                 }
+
                 break;
-            case > 0:
+            case > 0: // Periodically spawn giant cursed spheres, spew cursed flames
                 if (AttackTimer % 180 == 0 && LemonUtils.NotClient())
                 {
                     Spawn_GiantCursedSphere(HeadCorrupt.MiscPosition1, 1.03f, 30, ToRadians(22.5f));
@@ -2343,27 +2360,27 @@ public partial class Dreadlord : ModNPC
 
         switch (AttackTimer)
         {
-            case 600:
+            case 600: // Activate shader, roar, and spawn dust
                 PlayRoar();
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 shaderIsActive = true;
                 break;
-            case > 540:
+            case > 540: // Move up and fade out
                 NPC.velocity = -Vector2.UnitY * 10;
                 LerpScale(0.1f, 1 / 30f);
                 NPC.Opacity = Lerp(NPC.Opacity, 0f, 1 / 30f);
                 break;
-            case 540:
+            case 540: // Go invisible fully
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 NPC.ShowNameOnHover = false;
                 NPC.dontTakeDamage = true;
                 NPC.Opacity = 0f;
                 break;
-            case > 510:
+            case > 510: // Don't move
                 NPC.velocity = Vector2.Zero;
                 break;
-            case 510:
+            case 510: // Become damageable, show name, teleport to a position around player
                 PlayRoar();
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 NPC.ShowNameOnHover = true;
@@ -2374,20 +2391,20 @@ public partial class Dreadlord : ModNPC
                 }
                 NPC.netUpdate = true;
                 break;
-            case > 480:
+            case > 480: // Fade in
                 LerpScale(1f, 1 / 20f);
                 targetPosition = player.Center;
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 20f);
                 break;
-            case > 450:
+            case > 450: // Keep fading in, move away from player
                 LerpScale(1f, 1 / 20f);
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 20f);
                 NPC.velocity = -NPC.DirectionTo(targetPosition) * 5;
                 break;
-            case 450:
+            case 450: // Dash
                 NPC.velocity = NPC.DirectionTo(targetPosition) * 50;
                 break;
-            case > 420:
+            case > 420: // Trailing exploding ichor spheres
                 if (AITimer % 5 == 0)
                 {
                     if (LemonUtils.NotClient())
@@ -2396,7 +2413,7 @@ public partial class Dreadlord : ModNPC
                     }
                 }
                 break;
-            case 420:
+            case 420: // Teleport around player again
                 NPC.velocity = Vector2.Zero;
                 PlayRoar();
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
@@ -2408,17 +2425,17 @@ public partial class Dreadlord : ModNPC
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 targetPosition = player.Center;
                 break;
-            case > 405:
+            case > 405: // Move away from player, track via targetPosition
                 targetPosition = player.Center;
                 NPC.velocity = -NPC.DirectionTo(targetPosition) * 5;
                 break;
-            case > 380:
+            case > 380: // Move away from saved target position
                 NPC.velocity = -NPC.DirectionTo(targetPosition) * 5;
                 break;
-            case 380:
+            case 380: // Dash
                 NPC.velocity = NPC.DirectionTo(targetPosition) * 50;
                 break;
-            case > 350:
+            case > 350: // Trailing exploding ichor spheres
                 if (AITimer % 5 == 0)
                 {
                     if (LemonUtils.NotClient())
@@ -2427,12 +2444,12 @@ public partial class Dreadlord : ModNPC
                     }
                 }
                 break;
-            case > 300:
+            case > 300: // Slow down, fade out
                 NPC.velocity *= 0.96f;
                 LerpScale(0.1f, 1 / 30f);
                 NPC.Opacity = Lerp(NPC.Opacity, 0f, 1 / 30f);
                 break;
-            case 300:
+            case 300: // Deactivate shader, become invisible and invincible, teleport around player
                 shaderIsActive = false;
                 PlayRoar();
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
@@ -2446,7 +2463,7 @@ public partial class Dreadlord : ModNPC
                 }
                 NPC.netUpdate = true;
                 break;
-            case > 260:
+            case > 260: // Become vincible and visible, move legs outward
                 NPC.ShowNameOnHover = true;
                 NPC.dontTakeDamage = false;
                 SetLegCorruptFrame(LEG_ATTACK);
@@ -2456,7 +2473,7 @@ public partial class Dreadlord : ModNPC
                 LerpScale(1f, 1 / 20f);
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 20f);
                 break;
-            case 260:
+            case 260: // Spawn giant cursed Spheres
                 LerpScale(1f, 1 / 20f);
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 20f);
                 if (LemonUtils.NotClient())
@@ -2467,25 +2484,25 @@ public partial class Dreadlord : ModNPC
                     Spawn_GiantCursedSphere(ballPos, 1.07f, 55, ToRadians(22.5f + 6.12f));
                 }
                 break;
-            case > 225:
+            case > 225: // Lerp to normal
                 LerpScale(1f, 1 / 30f);
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 30f);
                 break;
-            case > 210:
+            case > 210: // Move legs inward
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, -ToRadians(45), 1 / 10f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, ToRadians(45), 1 / 10f);
                 break;
-            case > 180:
+            case > 180: // Move legs outward again
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, ToRadians(30), 1 / 15f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, -ToRadians(30), 1 / 15f);
                 break;
-            case 180:
+            case 180: // Spawn meatball
                 if (LemonUtils.NotClient())
                 {
                     Spawn_GiantMeatball(Body.Position + Vector2.UnitY * (Body.Height / 2), 15, 30, 180, 8);
                 }
                 break;
-            case > 165:
+            case > 165: // Move legs inward again
                 LegCorrupt.Rotation = Utils.AngleLerp(LegCorrupt.Rotation, -ToRadians(45), 1 / 16f);
                 LegCrimson.Rotation = Utils.AngleLerp(LegCrimson.Rotation, ToRadians(45), 1 / 16f);
                 break;
@@ -2493,7 +2510,7 @@ public partial class Dreadlord : ModNPC
                 break;
             case 150:
                 break;
-            case > 0:
+            case > 0: // Move legs back, if the attack is on its 3rd loop, spawn a spiral of exploding ichor spheres
                 if (AttackCount == 3)
                 {
                     Vector2 basePos = NPC.Center;
@@ -2565,6 +2582,10 @@ public partial class Dreadlord : ModNPC
                 }
                 break;
             case > 180:
+                float hpLerpDuration = (841 - 181);
+                float hpLerpT = (hpLerpDuration - (AttackTimer - 181)) / hpLerpDuration;
+                NPC.life = (int)Lerp(67, NPC.lifeMax, hpLerpT);
+
                 if (AttackTimer % 45 == 0)
                 {
                     for (int i = 0; i < 2; i++)
@@ -2628,6 +2649,7 @@ public partial class Dreadlord : ModNPC
 
     void Final_DashExplosions()
     {
+        doDepleteHealth = true;
         SetBodyPartPositions(headLerpSpeed: 1f, bodyLerpSpeed: 1f, legLerpSpeed: 1f);
         shaderIsActive = true;
         switch (AttackTimer)
@@ -2727,7 +2749,7 @@ public partial class Dreadlord : ModNPC
                         if (LemonUtils.NotClient())
                         {
                             Vector2 basePos = player.Center + LemonUtils.RandomVector2Rectangular(400, 400, 300, 300);
-                            LemonUtils.QuickPulse(NPC, basePos, 2f, 2f, 5f, Color.Gold);
+                            LemonUtils.QuickPulse(NPC, basePos, 3f, 3f, 5f, Color.Gold);
                             for (int i = 0; i < 6; i++)
                             {
                                 Vector2 pos = basePos + Main.rand.NextVector2Circular(72, 72);
@@ -2755,18 +2777,20 @@ public partial class Dreadlord : ModNPC
         switch (AttackTimer)
         {
             case > 960:
-                NPC.MoveToPos(ArenaCenter, 0.2f, 0.2f, 0.2f, 0.2f);
-                LerpScale(1f, 1 / 30f);
+                NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.3f, 0.3f);
+                LerpScale(1f, 1 / 60f);
                 break;
             case 960:
                 if (LemonUtils.NotClient())
                 {
-                    LemonUtils.QuickLaser(NPC, HeadCorrupt.MiscPosition1, Vector2.UnitY * baseArenaDistance, 240, 2f, Color.Lime);
-                    LemonUtils.QuickLaser(NPC, HeadCrimson.MiscPosition1, Vector2.UnitY * baseArenaDistance, 240, 2f, Color.Gold);
+                    LemonUtils.QuickLaser(NPC, HeadCorrupt.MiscPosition1, Vector2.UnitY * baseArenaDistance, 240, 1f, Color.Lime);
+                    LemonUtils.QuickLaser(NPC, HeadCrimson.MiscPosition1, Vector2.UnitY * baseArenaDistance, 240, 1f, Color.Gold);
                 }
+                LerpScale(1f, 1 / 60f);
                 NPC.velocity = Vector2.Zero;
                 break;
             case > 720:
+                LerpScale(1f, 1 / 60f);
                 if (LemonUtils.NotClient() && AttackTimer % 20 == 0)
                 {
                     LemonUtils.QuickPulse(
@@ -2809,14 +2833,14 @@ public partial class Dreadlord : ModNPC
                     }
                 }
 
-                if (AttackTimer % 30 == 0)
+                if (AttackTimer % 30 == 0 && AttackTimer > 30)
                 {
                     if (AttackCount == 0) // if hasn't spawned indicator, spawn indicator
                     {
                         if (LemonUtils.NotClient())
                         {
                             targetPosition = Main.rand.NextVector2CircularEdge(baseArenaDistance, baseArenaDistance);
-                            LemonUtils.QuickLaser(NPC, HeadCrimson.MiscPosition1, targetPosition, 30, 2f, Color.Gold);
+                            LemonUtils.QuickLaser(NPC, HeadCrimson.MiscPosition1, targetPosition, 30, 1f, Color.Gold);
                         }
                         AttackCount = 1;
                     }
@@ -2850,13 +2874,31 @@ public partial class Dreadlord : ModNPC
             case 1200:
                 if (LemonUtils.NotClient())
                 {
-                    LemonUtils.QuickLaser(NPC, HeadCorrupt.MiscPosition1, -Vector2.UnitX * baseArenaDistance, 120, 2, Color.Lime);
-                    LemonUtils.QuickLaser(NPC, HeadCrimson.MiscPosition1, Vector2.UnitX * baseArenaDistance, 120, 2, Color.Gold);
+                    LemonUtils.QuickLaser(NPC, HeadCorrupt.MiscPosition1, -Vector2.UnitX * baseArenaDistance, 120, 1, Color.Lime);
+                    LemonUtils.QuickLaser(NPC, HeadCrimson.MiscPosition1, Vector2.UnitX * baseArenaDistance, 120, 1, Color.Gold);
                 }
                 break;
             case > 1080:
+                if (LemonUtils.NotClient() && AttackTimer % 20 == 0)
+                {
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        HeadCrimson.Position,
+                        3, 30, 5,
+                        Color.Yellow
+                        );
+
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        HeadCorrupt.Position,
+                        3, 30, 5,
+                        Color.LightGreen
+                        );
+                }
                 break;
             case 1080:
+                SetHeadCorruptFrame(MOUTH_OPEN);
+                SetHeadCrimsonFrame(MOUTH_OPEN);
                 if (LemonUtils.NotClient())
                 {
                     Spawn_CursedLaserSphere(900, Pi, 1, 0);
@@ -2866,6 +2908,19 @@ public partial class Dreadlord : ModNPC
             case > 180:
                 if (LemonUtils.NotClient() && AttackTimer % 60 == 0)
                 {
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        HeadCrimson.Position,
+                        3, 30, 5,
+                        Color.Yellow
+                        );
+
+                    LemonUtils.QuickPulse(
+                        NPC,
+                        HeadCorrupt.Position,
+                        3, 30, 5,
+                        Color.LightGreen
+                        );
                     float randRotSpeed = Main.rand.NextFloat(1, 3);
                     float randMovingOutSpeed = Main.rand.NextFloat(5, 8);
                     Spawn_CirclingIchorSpheres(12, 0, (int)(AttackTimer - 180), randRotSpeed, randMovingOutSpeed);
@@ -2873,6 +2928,9 @@ public partial class Dreadlord : ModNPC
 
                     Spawn_CirclingFlameSpheres(12, 60, 5, 10);
                 }
+                break;
+            case > 0:
+                ResetMouthFrames();
                 break;
             case 0:
                 AttackTimer = 1200;
@@ -2882,12 +2940,176 @@ public partial class Dreadlord : ModNPC
         AttackTimer--;
     }
 
+    void Final_Mayhem()
+    {
+        SetBodyPartPositions(headLerpSpeed: 1f, bodyLerpSpeed: 1f, legLerpSpeed: 1f);
+        shaderIsActive = true;
+        switch (AttackTimer)
+        {
+            case 180:
+                PlayRoar(-0.3f);
+                PlayRoar(0.3f);
+                SetHeadCorruptFrame(MOUTH_OPEN);
+                SetHeadCrimsonFrame(MOUTH_OPEN);
+                LemonUtils.QuickScreenShake(NPC.Center, 20f, 8f, 60, 2000);
+                break;
+            case > 0:
+                if (AttackTimer % 60 == 0)
+                {
+                    for (int i = 0; i < LemonUtils.GetDifficulty(); i++)
+                    {
+                        if (LemonUtils.NotClient())
+                        {
+                            Spawn_LightningAroundPlayer(1000, -baseArenaDistance, 90 + Main.rand.Next(-60, 60), baseArenaDistance * 2);
+                        }
+                    }
+                }
+
+                switch (AttackCount)
+                {
+                    case 1:
+                        if (AttackTimer % 10 == 0)
+                        {
+                            for (int i = 0; i < 1 * LemonUtils.GetDifficulty(); i++)
+                            {
+                                if (LemonUtils.NotClient())
+                                {
+                                    LemonUtils.QuickProj(
+                                        NPC,
+                                        HeadCorrupt.MiscPosition1,
+                                        Vector2.UnitY.RotatedByRandom(Pi * 2) * Main.rand.NextFloat(3, 6),
+                                        ProjectileType<CursedFlameSphere>(),
+
+                                        ai1: Main.rand.NextFloat(1.02f, 1.04f)
+                                        );
+                                }
+                            }
+                        }
+                        break;
+                    case 2:
+                        if (AttackTimer % 20 == 0)
+                        {
+                            if (LemonUtils.NotClient())
+                            {
+                                Vector2 pos = NPC.Center - Vector2.UnitY.RotatedBy(AttackCount2 + TwoPi / 7f) * 400;
+                                Spawn_GiantCursedSphere(pos, 1.02f, 60);
+                            }
+                            AttackCount2++;
+                        }
+                        break;
+                    case 3:
+                        if (AttackTimer % 10 == 0)
+                        {
+                            if (LemonUtils.NotClient())
+                            {
+                                Vector2 pos = ArenaCenter + Main.rand.NextVector2Circular(baseArenaDistance, baseArenaDistance);
+                                Spawn_ExplodingIchorSphere(pos, 18, 0.97f, 60f);
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (AttackTimer % 10 == 0)
+                        {
+                            float distance = DarkCataclysmSystem.DCEffectNoFogDistance;
+                            Vector2 position = new Vector2(ArenaCenter.X - 8 * 300 + AttackCount2 * 300, ArenaCenter.Y + distance * 1.5f);
+                            if (LemonUtils.NotClient())
+                            {
+                                LemonUtils.QuickProj(
+                                    NPC,
+                                    position,
+                                    Vector2.Zero,
+                                    ProjectileType<CorruptPillar>(),
+                                    0,
+                                    ai0: 1200,
+                                    ai1: 2400 + Main.rand.Next(-3, 3) * 96,
+                                    ai2: Main.rand.Next(10, 30)
+                                    );
+                            }
+                            if (AttackCount2 <= 9)
+                            {
+                                AttackCount2++;
+                            }
+                        }
+                        break;
+                    case 5:
+                        if (LemonUtils.NotClient())
+                        {
+                            if (AttackTimer % 60 == 0)
+                            {
+                                for (int i = 0; i < 8; i++)
+                                {
+                                    if (LemonUtils.NotClient())
+                                    {
+                                        LemonUtils.QuickProj(
+                                            NPC,
+                                            HeadCorrupt.MiscPosition1,
+                                            HeadCorrupt.MiscPosition1.DirectionTo(player.Center + player.velocity * 75).RotatedBy(Main.rand.NextFloat(-Pi / 4, Pi / 4)) * Main.rand.NextFloat(3, 6),
+                                            ProjectileType<CursedFlameSphere>(),
+                                            ai1: Main.rand.NextFloat(1.005f, 1.02f)
+                                            );
+                                    }
+                                }
+                            }
+
+                            if (AttackTimer % 10 == 0)
+                            {
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    Vector2 pos = HeadCrimson.MiscPosition1 + Main.rand.NextVector2Circular(72, 72);
+                                    Spawn_IchorSpheres(pos, Vector2.UnitY * 10, 60 + i * 5, 120, 1.01f);
+                                }
+                            }
+                        }
+                        break;
+                    case 6:
+                        EnableLasers(true);
+                        targetPosition = player.Center;
+                        break;
+                    default:
+                        AuraBurst(20, Vector2.UnitY * -10);
+                        LemonUtils.DustBurst(20, NPC.RandomPos(64, 64), DustID.GemTopaz, 10, 10, 1.5f, 3.5f);
+                        EnableLasers(false);
+                        if (AttackTimer == 150 && AttackCount == 7)
+                        {
+                            if (LemonUtils.NotClient())
+                            {
+                                float rot = HeadCrimson.MiscPosition1.DirectionTo(targetPosition).ToRotation();
+                                Spawn_IchorLaserSphere(300, rot, 1, 0);
+                            }
+                            if (LemonUtils.NotClient())
+                            {
+                                float rot = HeadCorrupt.MiscPosition1.DirectionTo(targetPosition).ToRotation();
+                                Spawn_CursedLaserSphere(300, rot, 1, 0);
+                            }
+                        }
+                        break;
+                }
+
+                if (AttackTimer % 3 == 0)
+                {
+                    ShakeCorruptHead(16);
+                    ShakeCrimsonHead(16);
+                    NPC.Center += Main.rand.NextVector2CircularEdge(2, 2);
+                }
+                break;
+            case 0:
+                AttackTimer = 180;
+                AttackCount2 = 0;
+                AttackCount++;
+                return;
+        }
+
+        NPC.MoveToPos(ArenaCenter, 0.1f, 0.1f, 0.2f, 0.2f);
+
+        AttackTimer--;
+    }
+
     void SwitchAttacks()
     {
         Attack++;
         if (Phase == 2)
         {
-            //Attack = 3;
+            //Attack = 5;
         }
         if (Phase == 0 && NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
@@ -2946,7 +3168,7 @@ public partial class Dreadlord : ModNPC
         BackLegs.Rotation = Utils.AngleLerp(BackLegs.Rotation, ToRadians(legRot), 1 / 90f);
     }
 
-    void Spawn_LightningAtPos(Vector2 pos, int warningDuration, int length)
+    void Spawn_LightningAtPos(Vector2 pos, int warningDuration, float length)
     {
         LemonUtils.QuickProj(
             NPC,
@@ -2958,7 +3180,7 @@ public partial class Dreadlord : ModNPC
             );
     }
 
-    void Spawn_LightningAroundPlayer(float range, int height, int warningDuration, int length)
+    void Spawn_LightningAroundPlayer(float range, float height, int warningDuration, float length)
     {
         Vector2 randPos = player.Center + new Vector2(Main.rand.NextFloat(-range, range), height);
         Spawn_LightningAtPos(randPos, warningDuration, length);

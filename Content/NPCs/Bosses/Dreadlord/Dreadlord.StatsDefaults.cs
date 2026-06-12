@@ -188,7 +188,8 @@ public partial class Dreadlord : ModNPC
     {
         if (!reachedFinalPhase)
         {
-            NPC.life = NPC.lifeMax;
+            NPC.dontTakeDamage = false;
+            NPC.life = 67;
             if (!Main.dedServ)
             {
                 Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/Nothing1Minute");
@@ -203,7 +204,6 @@ public partial class Dreadlord : ModNPC
             GreenLaserEnabled = false;
             YellowLaserEnabled = false;
             NPC.ShowNameOnHover = true;
-            NPC.dontTakeDamage = false;
             ResetLegFrames();
             ResetMouthFrames();
             NPC.Opacity = 1f;

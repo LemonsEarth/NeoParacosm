@@ -2036,3 +2036,11 @@ JumpingSpiderLeg: {
 		Massively increases jump height
 		'''
 }
+
+DragonClaw: {
+	DisplayName: Dragon Claw
+	Tooltip:
+	'''
+	Hit an enemy to embed the claw in them, guaranteeing critical hits for the next 5 seconds
+	'''
+}
