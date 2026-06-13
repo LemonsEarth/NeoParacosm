@@ -22,7 +22,11 @@ public class FireDust : ModDust
 
     public override bool Update(Dust dust)
     { // Calls every frame the dust is active
-        dust.alpha += 4;
+        if (dust.customData == null || ((int)(dust.customData) == 0))
+        {
+            dust.customData = 4;
+        }
+        dust.alpha += (int)(dust.customData);
         dust.position += dust.velocity;
         dust.rotation += MathHelper.ToRadians(5);
         //dust.scale *= 0.94f;

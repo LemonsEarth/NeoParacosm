@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
+﻿using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
 using SteelSeries.GameSense.DeviceZone;
 using Terraria.Audio;
@@ -174,6 +175,17 @@ public partial class Dreadlord : ModNPC
     {
         float duration = 5040;
         float lerpT = phase3Timer / duration;
+        if (lerpT >= 1f)
+        {
+            NPC.dontTakeDamage = false;
+            NPC.SimpleStrikeNPC(999999, 1);
+            if (LemonUtils.NotClient())
+            {
+                Spawn_ExplodingIchorSphere(NPC.Center, 30, 0.98f, 5);
+                Spawn_ExplodingIchorSphere(NPC.Center, 30, 0.97f, 5);
+                Spawn_ExplodingIchorSphere(NPC.Center, 30, 0.95f, 5);
+            }
+        }
         NPC.life = (int)Lerp(NPC.lifeMax, 0, lerpT);
     }
 
@@ -236,6 +248,15 @@ public partial class Dreadlord : ModNPC
         }
         else if (Phase == 2)
         {
+            NPC.dontTakeDamage = true;
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 dustPos = ArenaCenter + new Vector2(Main.rand.NextFloat(-baseArenaDistance, baseArenaDistance), baseArenaDistance * Main.rand.NextFloat(0f, 0.9f));
+                Color dustColor = Main.rand.NextBool() ? Color.Lime : Color.Gold;
+
+                var dust = Dust.NewDustPerfect(dustPos, DustType<FireDust>(), -Vector2.UnitY * Main.rand.NextFloat(10, 20), Alpha: 160, newColor: dustColor, Scale: Main.rand.NextFloat(1f, 2f));
+                dust.customData = 2;
+            }
             switch (Attack)
             {
                 case (int)Attacks3.FinalIntro:
@@ -315,8 +336,8 @@ public partial class Dreadlord : ModNPC
                 break;
             case < 180:
                 LerpScale(1f, 1 / 30f);
-                SetBodyPartPositions(HeadCorrupt.DefaultPosition + new Vector2(0, 40),
-                                     HeadCrimson.DefaultPosition + new Vector2(0, 40),
+                SetBodyPartPositions(HeadCorrupt.DefaultPosition + new Vector2(0, 20),
+                                     HeadCrimson.DefaultPosition + new Vector2(0, 20),
                                      LegCorrupt.DefaultPosition,
                                      LegCrimson.DefaultPosition,
                                      Body.DefaultPosition + new Vector2(0, 20),
@@ -2742,21 +2763,35 @@ public partial class Dreadlord : ModNPC
                 NPC.netUpdate = true;
                 break;
             case > 0:
+                if (AttackTimer % 30 == 0 && LemonUtils.NotClient())
+                {
+                    Color color = Main.rand.NextBool() ? Color.Gold : Color.Lime;
+                    LemonUtils.QuickPulse(NPC, NPC.Center, 3, 3, 3, color);
+                }
                 if (AttackTimer % 60 == 0)
                 {
                     for (int k = 0; k < 2; k++)
                     {
                         if (LemonUtils.NotClient())
                         {
-                            Vector2 basePos = player.Center + LemonUtils.RandomVector2Rectangular(400, 400, 300, 300);
-                            LemonUtils.QuickPulse(NPC, basePos, 3f, 3f, 5f, Color.Gold);
-                            for (int i = 0; i < 6; i++)
+                            if (AttackCount % 2 == 0)
                             {
-                                Vector2 pos = basePos + Main.rand.NextVector2Circular(72, 72);
-                                Spawn_IchorSpheres(pos, Vector2.UnitY * 10, 60 + i * 5, 120, 1.01f);
+                                Vector2 basePos = player.Center + LemonUtils.RandomVector2Rectangular(400, 400, 300, 300);
+                                LemonUtils.QuickPulse(NPC, basePos, 3f, 3f, 5f, Color.Gold);
+                                for (int i = 0; i < 6; i++)
+                                {
+                                    Vector2 pos = basePos + Main.rand.NextVector2Circular(72, 72);
+                                    Spawn_IchorSpheres(pos, Vector2.UnitY * 10, 60 + i * 5, 120, 1.01f);
+                                }
+                            }
+                            else
+                            {
+                                Vector2 basePos = player.Center + LemonUtils.RandomVector2Rectangular(500, 500, 400, 400);
+                                Spawn_GiantCursedSphere(basePos, 1.02f, 15);
                             }
                         }
                     }
+                    AttackCount++;
                 }
                 LerpScale(0.5f, 1 / 20f);
                 NPC.MoveToPos(targetPosition, 0.1f, 0.1f, 0.2f, 0.2f);
@@ -2820,7 +2855,7 @@ public partial class Dreadlord : ModNPC
                 SetHeadCrimsonFrame(MOUTH_OPEN);
                 if (LemonUtils.NotClient())
                 {
-                    Spawn_CursedLaserSphere(690, PiOver2, 1, PiOver2 / 55f);
+                    Spawn_CursedLaserSphere(690, PiOver2, 1, PiOver2 / 75f);
                     Spawn_IchorLaserSphere(30, PiOver2, 1, 0);
                 }
                 break;
@@ -2926,7 +2961,7 @@ public partial class Dreadlord : ModNPC
                     Spawn_CirclingIchorSpheres(12, 0, (int)(AttackTimer - 180), randRotSpeed, randMovingOutSpeed);
                     Spawn_CirclingIchorSpheres(12, 0, (int)(AttackTimer - 180), -randRotSpeed, randMovingOutSpeed);
 
-                    Spawn_CirclingFlameSpheres(12, 60, 5, 10);
+                    Spawn_CirclingFlameSpheres(12, 60, 5, 8);
                 }
                 break;
             case > 0:
@@ -2951,6 +2986,11 @@ public partial class Dreadlord : ModNPC
                 PlayRoar(0.3f);
                 SetHeadCorruptFrame(MOUTH_OPEN);
                 SetHeadCrimsonFrame(MOUTH_OPEN);
+                if (LemonUtils.NotClient())
+                {
+                    Color color = AttackCount % 2 == 0 ? Color.Gold : Color.Lime;
+                    LemonUtils.QuickPulse(NPC, NPC.Center, 3, 30, 5, color);
+                }
                 LemonUtils.QuickScreenShake(NPC.Center, 20f, 8f, 60, 2000);
                 break;
             case > 0:
@@ -3010,8 +3050,8 @@ public partial class Dreadlord : ModNPC
                     case 4:
                         if (AttackTimer % 10 == 0)
                         {
-                            float distance = DarkCataclysmSystem.DCEffectNoFogDistance;
-                            Vector2 position = new Vector2(ArenaCenter.X - 8 * 300 + AttackCount2 * 300, ArenaCenter.Y + distance * 1.5f);
+                            Vector2 startPos = new Vector2(ArenaCenter.X - baseArenaDistance, ArenaCenter.Y + baseArenaDistance * 1.5f);
+                            Vector2 position = startPos + new Vector2(AttackCount2 * 250, 0);
                             if (LemonUtils.NotClient())
                             {
                                 LemonUtils.QuickProj(
@@ -3025,10 +3065,8 @@ public partial class Dreadlord : ModNPC
                                     ai2: Main.rand.Next(10, 30)
                                     );
                             }
-                            if (AttackCount2 <= 9)
-                            {
-                                AttackCount2++;
-                            }
+
+                            AttackCount2++;
                         }
                         break;
                     case 5:
@@ -3068,6 +3106,10 @@ public partial class Dreadlord : ModNPC
                     default:
                         AuraBurst(20, Vector2.UnitY * -10);
                         LemonUtils.DustBurst(20, NPC.RandomPos(64, 64), DustID.GemTopaz, 10, 10, 1.5f, 3.5f);
+                        if (AttackTimer % 20 == 0 && LemonUtils.NotClient())
+                        {
+                            LemonUtils.QuickPulse(NPC, NPC.Center, 3, 30, 5, Color.Gold);
+                        }
                         EnableLasers(false);
                         if (AttackTimer == 150 && AttackCount == 7)
                         {

@@ -199,8 +199,5 @@ HeadlessTortoiseShellBuff: {
 
 GoblinDebuff: {
 	DisplayName: Mark of the Goblins
-	Description:
-	'''
-	Massively increased spawn rates
-	'''
+	Description: Massively increased spawn rates
 }

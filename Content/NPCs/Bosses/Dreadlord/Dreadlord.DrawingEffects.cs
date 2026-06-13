@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using ReLogic.Content;
 using Terraria.Audio;
@@ -55,7 +56,19 @@ public partial class Dreadlord : ModNPC
     public override void HitEffect(NPC.HitInfo hit)
     {
         if (Main.dedServ) return;
-
+        if (NPC.life <= 0)
+        {
+            AuraBurst(20, Vector2.UnitY * -10);
+            LemonUtils.DustBurst(20, NPC.Center, DustID.GemTopaz, 10, 10, 1.5f, 3.5f);
+            LemonUtils.DustBurst(20, NPC.Center, DustType<FireDust>(), 20, 20, 1f, 2f, Color.Lime);
+            LemonUtils.DustBurst(20, NPC.Center, DustType<FireDust>(), 20, 20, 1f, 2f, Color.Gold);
+            if (LemonUtils.NotClient())
+            {
+                LemonUtils.QuickPulse(NPC, NPC.Center, 4, 30, 5, Color.Gold);
+                LemonUtils.QuickPulse(NPC, NPC.Center, 3, 30, 5, Color.Gold);
+                LemonUtils.QuickPulse(NPC, NPC.Center, 2, 30, 5, Color.Gold);
+            }
+        }
     }
 
     public void SetDefaultBodyPartPositions()
@@ -251,7 +264,7 @@ public partial class Dreadlord : ModNPC
 
         Vector2 drawPos = neckBase;
 
-        while (distanceLeft > -texture.Height() * 0.9f * NPC.scale)
+        while (distanceLeft > -texture.Height() * 0.75f * NPC.scale)
         {
             Main.EntitySpriteDraw(texture.Value,
                 drawPos - Main.screenPosition,
@@ -283,8 +296,8 @@ public partial class Dreadlord : ModNPC
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
             }
-            drawPos += baseToDestination * texture.Height() * 0.9f * NPC.scale;
-            distanceLeft -= texture.Height() * 0.9f * NPC.scale;
+            drawPos += baseToDestination * texture.Height() * 0.75f * NPC.scale;
+            distanceLeft -= texture.Height() * 0.75f * NPC.scale;
         }
     }
 
