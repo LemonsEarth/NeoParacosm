@@ -196,3 +196,11 @@ HeadlessTortoiseShellBuff: {
 		Increased defense by 5
 		'''
 }
+
+GoblinDebuff: {
+	DisplayName: Mark of the Goblins
+	Description:
+	'''
+	Massively increased spawn rates
+	'''
+}

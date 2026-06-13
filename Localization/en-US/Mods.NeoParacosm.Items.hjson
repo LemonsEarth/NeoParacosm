@@ -2044,10 +2044,16 @@ DragonClaw: {
 
 InfernoSpell: {
 	DisplayName: Inferno Spell
-	Tooltip: ""
+	Tooltip:
+	'''
+	Fire a tiny fireball that explodes after a short duration
+	'''
 }
 
 PoisonGasSpell: {
 	DisplayName: Poison Gas Spell
-	Tooltip: ""
+	Tooltip:
+	'''
+	Fire a burst of poison gas
+	'''
 }
