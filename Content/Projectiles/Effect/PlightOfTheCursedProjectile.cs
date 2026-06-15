@@ -2,9 +2,10 @@
 
 namespace NeoParacosm.Content.Projectiles.Effect;
 
-public class SkullOfAvariceProjectile : ModProjectile
+public class PlightOfTheCursedProjectile : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
+    ref float Volume => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
     {
@@ -29,10 +30,10 @@ public class SkullOfAvariceProjectile : ModProjectile
     {
         if (AITimer == 0)
         {
-            Projectile.frame = Main.rand.Next(0, 4);
-            SoundEngine.PlaySound(SoundID.Zombie105 with { Pitch = -0.5f, Volume = 2f, MaxInstances = 0 }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Zombie105 with { Pitch = -0.5f, Volume = 2f, MaxInstances = 0 }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Zombie105 with { Pitch = -0.5f, Volume = 2f, MaxInstances = 0 }, Projectile.Center);
+            Projectile.frame = Main.rand.Next(1, 4);
+            SoundEngine.PlaySound(SoundID.Zombie105 with { Pitch = -0.2f, Volume = Volume, MaxInstances = 0 }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Zombie105 with { Pitch = -0.2f, Volume = Volume, MaxInstances = 0 }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Zombie105 with { Pitch = -0.2f, Volume = Volume, MaxInstances = 0 }, Projectile.Center);
         }
         Projectile.Opacity = MathHelper.Lerp(Projectile.Opacity, 0, AITimer / 120f);
         Projectile.velocity = -Vector2.UnitY * 2;

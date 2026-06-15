@@ -181,7 +181,7 @@ public class Marauder : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<SkullOfAvarice>(), 4, 2));
+        //npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<SkullOfAvarice>(), 4, 2));
     }
 
     public override bool? CanFallThroughPlatforms()

@@ -33,11 +33,6 @@ CrimsonSacrificeDebuff: {
 	Description: Increased damage, attack speed and life regen
 }
 
-SkullOfAvariceDebuff: {
-	DisplayName: Skull Of Avarice
-	Description: Are you sure it's worth it?
-}
-
 BaneflyHiveBuff: {
 	DisplayName: Banefly Hive
 	Description: The hive protects you, for now...
@@ -183,12 +178,12 @@ NutcrackersHeadBuff: {
 }
 
 AshenForestCrestBuff: {
-	DisplayName: Ashen Forest Crest Buff
+	DisplayName: Ashen Forest Crest
 	Description: Increased summon damage by {0}%, movement speed by {1}% and maximum number of sentries by 2
 }
 
 HeadlessTortoiseShellBuff: {
-	DisplayName: Headless Tortoise Shell Buff
+	DisplayName: Headless Tortoise Shell
 	Description:
 		'''
 		Increased damage reduction by 10%
@@ -200,4 +195,9 @@ HeadlessTortoiseShellBuff: {
 GoblinDebuff: {
 	DisplayName: Mark of the Goblins
 	Description: Massively increased spawn rates
+}
+
+PlightOfTheCursedDebuff: {
+	DisplayName: Plight Of The Cursed
+	Description: Are you sure?
 }

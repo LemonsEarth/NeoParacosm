@@ -28,6 +28,7 @@ public class SoulOfDreadPlayer : ModPlayer
 {
     public bool Active { get; set; } = false;
     int timer = 0;
+    bool hasDamagingDebuff = false;
     public override void ResetEffects()
     {
         Active = false;
@@ -38,6 +39,25 @@ public class SoulOfDreadPlayer : ModPlayer
         if (Active)
         {
             if (Player.lifeRegen < 0)
+            {
+                hasDamagingDebuff = true;
+            }
+            else
+            {
+                hasDamagingDebuff = false;
+            }
+        }
+        else
+        {
+            hasDamagingDebuff = false;
+        }
+    }
+
+    public override void UpdateEquips()
+    {
+        if (Active)
+        {
+            if (hasDamagingDebuff)
             {
                 if (timer < SoulOfDread.maxDuration * 60)
                 {
@@ -50,7 +70,7 @@ public class SoulOfDreadPlayer : ModPlayer
                 if (timer < 0) timer = 0;
             }
             float dmgBoost = MathHelper.Lerp(0, SoulOfDread.maxDamage, (float)timer / (SoulOfDread.maxDuration * 60f));
-            
+
             Player.GetDamage(DamageClass.Generic) += dmgBoost / 100f;
         }
         else

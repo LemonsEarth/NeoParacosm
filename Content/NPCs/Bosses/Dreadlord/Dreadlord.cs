@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
-using SteelSeries.GameSense.DeviceZone;
 using Terraria.Audio;
 using static Microsoft.Xna.Framework.MathHelper;
 

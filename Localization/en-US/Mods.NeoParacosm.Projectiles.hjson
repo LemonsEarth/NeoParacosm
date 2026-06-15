@@ -19,7 +19,6 @@ AscendedUndertakerHeldProj.DisplayName: Ascended Undertaker
 DragonRemainsPulseShield.DisplayName: Pulse Shield
 CorruptCarrierProj.DisplayName: Corrupt Bomb
 CrimsonCarrierProj.DisplayName: Crimson Bomb
-SkullOfAvariceProjectile.DisplayName: Skull Of Avarice
 Banefly.DisplayName: Banefly
 CorruptBolt.DisplayName: Corrupt Bolt
 CorruptStaffHeldProj.DisplayName: Corrupt Staff
@@ -196,3 +195,4 @@ IchorLaserSphere.DisplayName: Ichor Laser Sphere
 DragonClawHeldProj.DisplayName: Dragon Claw Held Proj
 InfernoProj.DisplayName: Inferno Proj
 PoisonGasProj.DisplayName: Poison Gas Proj
+PlightOfTheCursedProjectile.DisplayName: Plight Of The Cursed Projectile
