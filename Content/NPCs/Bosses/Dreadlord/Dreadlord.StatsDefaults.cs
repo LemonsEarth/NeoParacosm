@@ -1,8 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.BossBags;
+using NeoParacosm.Content.Items.Placeable.Relics;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
+using NeoParacosm.Content.Items.Weapons.Melee;
+using NeoParacosm.Content.Items.Weapons.Ranged;
+using NeoParacosm.Content.Items.Weapons.Summon;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 
@@ -234,7 +242,11 @@ public partial class Dreadlord : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-
+        //LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
+        //classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DarkSpearSpell>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
+        //npcLoot.Add(classicRule);
+        npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathbirdTreasureBag>()));
+        npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DreadlordRelicItem>()));
     }
 
     public override void BossLoot(ref int potionType)

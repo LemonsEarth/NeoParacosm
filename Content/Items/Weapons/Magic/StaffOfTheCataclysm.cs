@@ -1,4 +1,5 @@
-﻿using Terraria.DataStructures;
+﻿using NeoParacosm.Content.Items.Weapons.Melee;
+using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 
@@ -41,5 +42,15 @@ public class StaffOfTheCataclysm : ModItem
     {
         Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, ai1: Range);
         return false;
+    }
+
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemType<SupremeVilethorn>(), 1);
+        recipe.AddIngredient(ItemType<SupremeCrimsonRod>(), 1);
+        recipe.AddTile(TileID.MythrilAnvil);
+        recipe.Register();
     }
 }

@@ -269,4 +269,9 @@ public static partial class LemonUtils
             playerOldPos[0] = player.position;
         }
     }
+
+    public static void Resize(this Projectile proj, float newWidth, float newHeight)
+    {
+        proj.Resize((int)newWidth, (int)newHeight);
+    }
 }

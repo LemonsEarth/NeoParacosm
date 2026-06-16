@@ -2083,23 +2083,39 @@ PlightOfTheCursed: {
 FrightOfTheScourge: {
 	DisplayName: Fright Of The Scourge
 	Tooltip:
-	'''
-	Cycles through 4 classes every 10 seconds
-	Increases damage of current class by {0}%
-	'''
+		'''
+		Cycles through 4 classes every 10 seconds
+		Increases damage of current class by {0}%
+		'''
 }
 
 MightOfTheBesieger: {
 	DisplayName: Might Of The Besieger
 	Tooltip:
-	'''
-	Increases maximum life by {0}%
-	Grants immunity to most damaging debuffs
-	Increases damage taken by {1}%
-	'''
+		'''
+		Increases maximum life by {0}%
+		Grants immunity to most damaging debuffs
+		Increases damage taken by {1}%
+		'''
 }
 
 SightOfTheSiblings: {
 	DisplayName: Sight Of The Siblings
 	Tooltip: ""
+}
+
+DreadlordRelicItem: {
+	DisplayName: Dreadlord Relic
+	Tooltip: ""
+}
+
+BloodyAftermath: {
+	DisplayName: Bloody Aftermath
+	Tooltip:
+		'''
+		Critical hits spawn crimson spikes
+		Right click after 20 hits to perform a slash storm
+		Can be charged for increased size and damage
+		Fully charged attacks count as 5 hits
+		'''
 }
