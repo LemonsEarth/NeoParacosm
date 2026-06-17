@@ -83,8 +83,8 @@ public abstract class TargetedLightning : ModProjectile
             {
                 Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
                 Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
-                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemDiamond, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
-                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemAmber, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
+                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.TintableDustLighted, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: ShineColor).noGravity = true;
+                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.TintableDustLighted, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: DarkColor).noGravity = true;
             }
         }
 

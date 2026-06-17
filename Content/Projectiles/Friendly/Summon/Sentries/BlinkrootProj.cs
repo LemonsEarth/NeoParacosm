@@ -32,7 +32,7 @@ public class BlinkrootProj : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-0.3f, 0.3f) }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Item29 with {Volume = 0.5f, PitchRange = (-0.3f, 0.3f) }, Projectile.Center);
         for (int i = 0; i < 2; i++)
         {
             Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz);

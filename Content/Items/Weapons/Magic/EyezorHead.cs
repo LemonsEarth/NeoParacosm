@@ -37,7 +37,7 @@ public class EyezorHead : ModItem
     {
         if (timeHeld == 299)
         {
-            SoundEngine.PlaySound(SoundID.Roar with { PitchRange = (1.7f, 1.9f)}, player.Center);
+            SoundEngine.PlaySound(SoundID.Roar with {Volume = 0.5f, PitchRange = (1.7f, 1.9f)}, player.Center);
             LemonUtils.DustCircle(player.Center, 8, 8, DustID.GemDiamond, 1.5f);
         }
         if (timeHeld < 300)

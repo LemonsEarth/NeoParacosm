@@ -2,6 +2,11 @@
 
 public class BranchedOfLifedBuff : ModBuff
 {
+    public override void SetStaticDefaults()
+    {
+        Main.buffNoTimeDisplay[Type] = true;
+    }
+
     public override void Update(Player player, ref int buffIndex)
     {
         //player.GetModPlayer<ParacosmPlayer>().branchedOfLifed = true;
@@ -16,8 +21,8 @@ public class BranchedOfLifedPlayer : ModPlayer
     {
         if (Player.HasBuff(BuffType<BranchedOfLifedBuff>()))
         {
-            Player.GetDamage(DamageClass.Generic) += 12f / 100f;
-            Player.GetCritChance(DamageClass.Generic) += 8f / 100f;
+            Player.GetDamage(DamageClass.Generic) += 5f / 100f;
+            Player.GetCritChance(DamageClass.Generic) += 5;
             Player.manaCost *= 0.8f;
             Player.lifeRegen += 2;
 
@@ -34,9 +39,9 @@ public class BranchedOfLifedPlayer : ModPlayer
                         4 => BuffID.Rage,
                         _ => BuffID.Ironskin
                     };
-                    Player.AddBuff(buffID, 1200);
+                    Player.AddBuff(buffID, 600);
                 }
-                bofBuffTimer = 300;
+                bofBuffTimer = 600;
 
             }
         }

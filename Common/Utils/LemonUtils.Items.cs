@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
@@ -47,6 +48,41 @@ public static partial class LemonUtils
         spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.End();
         spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+    }
+
+    public static void DrawDreadlordWeaponGlowInInventory(int itemType, Vector2 position, float scale, SpriteBatch spriteBatch)
+    {
+        Texture2D glowTexture = TextureAssets.Item[itemType].Value;
+        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
+        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
+        float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
+        shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
+        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        shader.Apply();
+        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+    }
+
+    public static void DrawDreadlordWeaponGlowInWorld(Item item, float rotation, float scale, SpriteBatch spriteBatch)
+    {
+        Texture2D glowTexture = TextureAssets.Item[item.type].Value;
+        Vector2 drawPos = item.Center - Main.screenPosition;
+        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
+        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
+        float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
+        shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
+        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        shader.Apply();
+        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
+        spriteBatch.End();
+        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public static string GetSpellBonusTooltip(SpellElement element, SpellBoostType boostType)

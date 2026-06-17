@@ -2119,3 +2119,13 @@ BloodyAftermath: {
 		Fully charged attacks count as 5 hits
 		'''
 }
+
+DivineFlesh: {
+	DisplayName: Divine Flesh
+	Tooltip: ""
+}
+
+NightmareScale: {
+	DisplayName: Nightmare Scale
+	Tooltip: ""
+}

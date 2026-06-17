@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Projectiles.Friendly.Melee;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
@@ -22,7 +23,7 @@ public class BloodyAftermath : ModItem
         Item.UseSound = SoundID.Item1;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.knockBack = 6;
-        Item.value = Item.buyPrice(gold: 1);
+        Item.value = Item.sellPrice(gold: 10);
         Item.rare = ItemRarityID.Red;
         Item.autoReuse = true;
         Item.shoot = ProjectileType<BloodyAftermathSlash>();
@@ -49,38 +50,13 @@ public class BloodyAftermath : ModItem
 
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
-        Texture2D glowTexture = TextureAssets.Item[Type].Value;
-        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
-        shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+        LemonUtils.DrawDreadlordWeaponGlowInInventory(Type, position, scale, spriteBatch);
         return false;
     }
 
     public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
     {
-        Texture2D glowTexture = TextureAssets.Item[Type].Value;
-        Vector2 drawPos = Item.Center - Main.screenPosition;
-        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
-        shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
+        LemonUtils.DrawDreadlordWeaponGlowInWorld(Item, rotation, scale, spriteBatch);
         return false;
     }
 
@@ -89,7 +65,7 @@ public class BloodyAftermath : ModItem
         if (player.altFunctionUse == 2 && player.GetModPlayer<BloodyAftermathPlayer>().HitCount >= BloodyAftermathPlayer.MAX_HIT_COUNT)
         {
             player.GetModPlayer<BloodyAftermathPlayer>().HitCount = 0;
-            SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 0.5f, PitchRange = (-0.8f, -0.2f)}, player.Center);
+            SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 0.5f, PitchRange = (-0.8f, -0.2f) }, player.Center);
             SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 0.5f, PitchRange = (0.2f, 0.8f) }, player.Center);
 
             LemonUtils.DustBurst(8, player.Center, DustType<FireDust>(), 4, 4, 0.5f, 1.5f, Color.Red);
@@ -145,6 +121,8 @@ public class BloodyAftermath : ModItem
         Recipe recipe = CreateRecipe();
         recipe.AddIngredient(ItemType<SupremeLightsBane>(), 1);
         recipe.AddIngredient(ItemType<SupremeBloodButcherer>(), 1);
+        recipe.AddIngredient(ItemType<NightmareScale>(), 12);
+        recipe.AddIngredient(ItemType<DivineFlesh>(), 12);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }
