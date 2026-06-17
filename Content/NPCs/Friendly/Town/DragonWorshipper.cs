@@ -85,7 +85,7 @@ public class DragonWorshipper : ModNPC
         NPC.velocity.X *= 0.95f;
         NPC.direction = LemonUtils.Sign(NPC.DirectionTo(Main.LocalPlayer.Center).X, 1);
         NPC.spriteDirection = NPC.direction;
-        if (!Main.dayTime && NPC.DistanceSQ(new Vector2(NPC.homeTileX, NPC.homeTileY) * 16) > 150 * 150)
+        if (!Main.dayTime && NPC.homeTileX > 0 && NPC.homeTileY > 0 && NPC.DistanceSQ(new Vector2(NPC.homeTileX, NPC.homeTileY) * 16) > 150 * 150)
         {
             SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0.8f, 0.9f), Volume = 0.9f }, NPC.Center);
             LemonUtils.DustBurst(16, NPC.Center, DustID.GemTopaz, 5, 6, 1.2f, 2f);

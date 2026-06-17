@@ -31,6 +31,11 @@ public class BloodyAftermathSlash : ModProjectile
             }
         }
 
+        float speed = Projectile.scale * Projectile.scale;
+        LemonUtils.DustBurst(2, target.Center, DustType<FireDust>(), speed, speed, 0.5f, 1f, Color.Red);
+        LemonUtils.DustBurst(2, target.Center, DustType<FireDust>(), speed, speed, 0.5f, 1f, Color.DarkRed);
+        LemonUtils.DustBurst(2, target.Center, DustType<FireDust>(), speed, speed, 0.5f, 1f, Color.Black);
+
         BloodyAftermathPlayer baPlayer = Projectile.GetOwner().GetModPlayer<BloodyAftermathPlayer>();
         if (baPlayer.HitCount < BloodyAftermathPlayer.MAX_HIT_COUNT)
         {
