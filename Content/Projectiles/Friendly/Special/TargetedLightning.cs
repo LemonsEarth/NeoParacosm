@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Systems.Assets;
+using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
@@ -49,6 +50,12 @@ public abstract class TargetedLightning : ModProjectile
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
         Projectile.tileCollide = false;
+        Projectile.hide = true;
+    }
+
+    public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+    {
+        overPlayers.Add(index);
     }
 
     float random = 0;

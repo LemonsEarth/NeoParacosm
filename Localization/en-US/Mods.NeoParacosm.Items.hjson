@@ -2122,10 +2122,20 @@ BloodyAftermath: {
 
 DivineFlesh: {
 	DisplayName: Divine Flesh
-	Tooltip: ""
+	Tooltip: Blighted flesh of a fallen deity...
 }
 
 NightmareScale: {
 	DisplayName: Nightmare Scale
-	Tooltip: ""
+	Tooltip: Blighted scales of a fallen dragon...
+}
+
+FleshTwister: {
+	DisplayName: Flesh Twister
+	Tooltip:
+	'''
+	Hold to spin the blades around yourself and charge up
+	Release to have the blades follow your cursor
+	Phantom blades travel between you and the blades, striking hit enemies with lightning
+	'''
 }

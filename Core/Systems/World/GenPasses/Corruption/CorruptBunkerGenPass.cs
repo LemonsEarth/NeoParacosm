@@ -1,4 +1,5 @@
-﻿using StructureHelper.API;
+﻿using NeoParacosm.Content.Items.Accessories.Misc;
+using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.IO;
@@ -37,10 +38,12 @@ public class CorruptBunkerGenPass : GenPass
 
         int maxAttemptCount = 1000000;
         int attemptCount = 0;
+        int randX = 0;
+        int randY = 0;
         while (attemptCount < maxAttemptCount)
         {
-            int randX = WorldGen.genRand.Next(startXTile, maxXTile);
-            int randY = WorldGen.genRand.Next(startYTile, maxYTile);
+            randX = WorldGen.genRand.Next(startXTile, maxXTile);
+            randY = WorldGen.genRand.Next(startYTile, maxYTile);
             Point pointTopLeft = new Point(randX, randY);
             Point pointTopRight = new Point(randX + structureDims.X, randY);
             Point pointBottomLeft = new Point(randX, randY + structureDims.Y);
@@ -66,6 +69,7 @@ public class CorruptBunkerGenPass : GenPass
 
         List<List<(int, int)>> items =
         [
+            [(ItemType<StarTablet>(), 1)],
             [(ItemID.LuckyHorseshoe, 1), (ItemID.BandofRegeneration, 1), (ItemID.AdhesiveBandage, 1)],
             [(ItemID.DepthMeter, 1), (ItemID.AncientChisel, 1), (ItemID.Sextant, 1)],
             [(ItemID.GoldWatch, 1), (ItemID.PlatinumWatch, 1)],
@@ -76,5 +80,8 @@ public class CorruptBunkerGenPass : GenPass
             [(ItemID.IronChainmail, 1), (ItemID.SilverChainmail, 1), (ItemID.GoldChainmail, 1)],
             [(ItemID.LeadGreaves, 1), (ItemID.SilverGreaves, 1), (ItemID.PlatinumGreaves, 1)],
         ];
+
+        LemonUtils.GenerateStructureLoot(randX, randY, structureDims, items, 0.8f, 1.5f);
+
     }
 }

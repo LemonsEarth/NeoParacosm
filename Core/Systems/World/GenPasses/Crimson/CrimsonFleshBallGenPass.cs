@@ -1,4 +1,5 @@
-﻿using StructureHelper.API;
+﻿using NeoParacosm.Content.Items.Accessories.Misc;
+using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.IO;
@@ -29,9 +30,11 @@ public class CrimsonFleshBallGenPass : GenPass
 
         List<List<(int, int)>> items =
         [
+            [(ItemType<HeartTablet>(), 1)],
             [(ItemID.TheUndertaker, 1), (ItemID.TheRottedFork, 1), (ItemID.CrimsonRod, 1)],
             [(ItemID.CrimsonHeart, 1), (ItemID.PanicNecklace, 1)],
-            [(ItemID.TheUndertaker, 1), (ItemID.CrimsonHeart, 1), (ItemID.TheRottedFork, 1), (ItemID.PanicNecklace, 1), (ItemID.CrimsonRod, 1)],
+            [(ItemID.CrimtaneBar, 5)],
+            [(ItemID.Vertebrae, 5)],
         ];
 
         LemonUtils.GenerateStructureLoot(tileX, tileY, structureDims, items, 0.8f, 1.5f);
