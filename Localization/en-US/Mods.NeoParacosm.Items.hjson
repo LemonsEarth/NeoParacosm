@@ -2133,9 +2133,48 @@ NightmareScale: {
 FleshTwister: {
 	DisplayName: Flesh Twister
 	Tooltip:
+		'''
+		Hold to spin the blades around yourself and charge up
+		Release to have the blades follow your cursor
+		Phantom blades travel between you and the blades, striking hit enemies with lightning
+		'''
+}
+
+FrozenHeartTablet: {
+	DisplayName: Frozen Heart Tablet
+	Tooltip: Increases healing potion healing by {0}
+}
+
+HeartTablet: {
+	DisplayName: Heart Tablet
+	Tooltip:
+		'''
+		Increases healing potion healing by {0}
+		Increases life regeneration
+		Can be consumed for Regeneration
+		'''
+}
+
+StarTablet: {
+	DisplayName: Star Tablet
+	Tooltip: 
 	'''
-	Hold to spin the blades around yourself and charge up
-	Release to have the blades follow your cursor
-	Phantom blades travel between you and the blades, striking hit enemies with lightning
+	Increases mana potion restoration by {0}
+	Can be consumed for Mana Regeneration
+	'''
+}
+
+CursedSun: {
+	DisplayName: Cursed Sun
+	Tooltip: ""
+}
+
+DualDragonfire: {
+	DisplayName: Dual Dragonfire
+	Tooltip:
+	'''
+	Left click to fire Cursed Flames
+	Right click to fire Ichor Flames
+	Uses gel for ammo
 	'''
 }

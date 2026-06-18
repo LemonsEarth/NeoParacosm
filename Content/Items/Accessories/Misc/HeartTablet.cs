@@ -1,9 +1,13 @@
 ﻿using NeoParacosm.Content.Items.Materials;
+using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Misc;
 
 public class HeartTablet : ModItem
 {
+    public static int RestorationBoost { get; set; } = 25;
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(RestorationBoost);
+
     public override void SetDefaults()
     {
         Item.width = 32;
@@ -12,6 +16,13 @@ public class HeartTablet : ModItem
         Item.value = Item.sellPrice(0, 2);
         Item.rare = ItemRarityID.Blue;
         Item.lifeRegen = 2;
+        Item.consumable = true;
+        Item.buffTime = 60 * 60 * 10; // 10 minutes
+        Item.buffType = BuffID.Regeneration;
+        Item.useStyle = ItemUseStyleID.EatFood;
+        Item.useTime = 30;
+        Item.useAnimation = 30;
+        Item.UseSound = SoundID.Tink;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)
@@ -23,6 +34,7 @@ public class HeartTablet : ModItem
     {
         Recipe recipe1 = CreateRecipe();
         recipe1.AddIngredient(ItemID.LifeCrystal);
+        recipe1.AddIngredient(ItemID.Diamond, 3);
         recipe1.AddIngredient(ItemID.StoneBlock, 25);
         recipe1.AddTile(TileID.Anvils);
         recipe1.Register();
@@ -42,7 +54,7 @@ public class HeartTabletPlayer : ModPlayer
     {
         if (Active)
         {
-            healValue += 25;
+            healValue += HeartTablet.RestorationBoost;
         }
     }
 }

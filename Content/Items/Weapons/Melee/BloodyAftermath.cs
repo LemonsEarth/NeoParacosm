@@ -65,7 +65,6 @@ public class BloodyAftermath : ModItem
         if (player.altFunctionUse == 2 && player.GetModPlayer<BloodyAftermathPlayer>().HitCount >= BloodyAftermathPlayer.MAX_HIT_COUNT)
         {
             player.GetModPlayer<BloodyAftermathPlayer>().HitCount = 0;
-            SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 0.5f, PitchRange = (-0.8f, -0.2f) }, player.Center);
             SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 0.5f, PitchRange = (0.2f, 0.8f) }, player.Center);
 
             LemonUtils.DustBurst(8, player.Center, DustType<FireDust>(), 4, 4, 0.5f, 1.5f, Color.Red);

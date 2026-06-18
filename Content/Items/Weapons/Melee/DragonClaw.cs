@@ -1,4 +1,5 @@
-﻿using Terraria.DataStructures;
+﻿using NeoParacosm.Content.Items.Materials;
+using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class DragonClaw : ModItem
@@ -46,6 +47,15 @@ public class DragonClaw : ModItem
         Projectile.NewProjectile(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, ai0: special, ai1: direction);
         useCounter++;
         return false;
+    }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.FetidBaghnakhs, 1);
+        recipe.AddIngredient(ItemType<DivineFlesh>(), 10);
+        recipe.AddTile(TileID.MythrilAnvil);
+        recipe.Register();
     }
 }
 

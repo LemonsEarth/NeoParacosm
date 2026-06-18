@@ -47,6 +47,15 @@ public class BloodyAftermathSlash : ModProjectile
             {
                 baPlayer.HitCount++;
             }
+
+            if (baPlayer.HitCount >= BloodyAftermathPlayer.MAX_HIT_COUNT)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath52 with { Volume = 0.5f, PitchRange = (-0.8f, -0.2f) }, baPlayer.Player.Center);
+
+                LemonUtils.DustBurst(8, baPlayer.Player.Center, DustType<FireDust>(), 2, 2, 0.5f, 1.5f, Color.Red);
+                LemonUtils.DustBurst(8, baPlayer.Player.Center, DustType<FireDust>(), 2, 2, 0.5f, 1.5f, Color.DarkRed);
+                LemonUtils.DustBurst(8, baPlayer.Player.Center, DustType<FireDust>(), 2, 2, 0.5f, 1.5f, Color.Black);
+            }
         }
     }
 

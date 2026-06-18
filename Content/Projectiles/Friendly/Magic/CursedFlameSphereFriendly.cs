@@ -4,9 +4,9 @@ using NeoParacosm.Core.Players;
 using Terraria.Audio;
 using Terraria.GameContent;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
+namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class CursedFlameSphere : PrimProjectile
+public class CursedFlameSphereFriendly : PrimProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
@@ -22,15 +22,16 @@ public class CursedFlameSphere : PrimProjectile
     {
         Projectile.width = 32;
         Projectile.height = 32;
-        Projectile.hostile = true;
-        Projectile.friendly = false;
+        Projectile.hostile = false;
+        Projectile.friendly = true;
         Projectile.ignoreWater = false;
         Projectile.tileCollide = true;
         Projectile.penetrate = 3;
         Projectile.timeLeft = 300;
         Projectile.scale = 1f;
-        Projectile.usesLocalNPCImmunity = true;
-        Projectile.localNPCHitCooldown = 60;
+        Projectile.DamageType = DamageClass.Magic;
+        Projectile.usesIDStaticNPCImmunity = true;
+        Projectile.idStaticNPCHitCooldown = 30;
     }
 
     float savedSpeed = 1f;
@@ -40,16 +41,6 @@ public class CursedFlameSphere : PrimProjectile
         {
             savedSpeed = Projectile.velocity.Length();
             SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.5f }, Projectile.Center);
-        }
-
-        foreach (Projectile proj in NPPlayer.BlockProjectileInstances)
-        {
-            if (Projectile.Hitbox.IntersectsExact(proj.Hitbox))
-            {
-                proj.ai[0] -= 30;
-                Projectile.Kill();
-                return;
-            }
         }
 
         Lighting.AddLight(Projectile.Center, 0.5f, 0.8f, 1f);
@@ -87,14 +78,15 @@ public class CursedFlameSphere : PrimProjectile
         LemonUtils.BeginSpriteBatchProjectile();
     }
 
-    public override void OnHitPlayer(Player target, Player.HurtInfo info)
+
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffID.CursedInferno, 180);
+        target.AddBuff(BuffID.CursedInferno, 300);
     }
 
     public override void OnKill(int timeLeft)
     {
-        if (LemonUtils.NotClient())
+        if (Projectile.owner == Main.myPlayer)
         {
             LemonUtils.QuickPulse(Projectile, Projectile.Center, 2, 2f, 5f, Color.LightGreen);
         }

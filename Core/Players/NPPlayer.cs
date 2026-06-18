@@ -4,6 +4,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.DataStructures;
 using Terraria.Graphics;
 
@@ -136,7 +137,12 @@ public class NPPlayer : ModPlayer
         //Player.stickyBreak = 100;
         //var c = Main.MouseWorld.ToTileCoordinates16();
         //Main.NewText(Main.tile[c].TileFrameX);
-        //Main.projectile.Where(p => p.active).Count().NewText();
+        /*int c = 0;
+        foreach (var p in Main.ActiveProjectiles)
+        {
+            c++;
+        }
+        Main.NewText(c);*/
         //Dust.QuickDust(new Point(Main.dungeonX, Main.dungeonY), Color.White);
         int researcherIndex = NPC.FindFirstNPC(NPCType<Researcher>());
         if (researcherIndex >= 0 && Main.npc[researcherIndex].Distance(Player.Center) > 500)

@@ -1,9 +1,12 @@
 ﻿using NeoParacosm.Content.Items.Materials;
+using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Misc;
 
 public class FrozenHeartTablet : ModItem
 {
+    public static int RestorationBoost { get; set; } = 25;
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(RestorationBoost);
     public override void SetDefaults()
     {
         Item.width = 32;
@@ -43,7 +46,7 @@ public class FrozenHeartTabletPlayer : ModPlayer
     {
         if (Active)
         {
-            healValue += 25;
+            healValue += FrozenHeartTablet.RestorationBoost;
         }
     }
 }
