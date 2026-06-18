@@ -2157,11 +2157,11 @@ HeartTablet: {
 
 StarTablet: {
 	DisplayName: Star Tablet
-	Tooltip: 
-	'''
-	Increases mana potion restoration by {0}
-	Can be consumed for Mana Regeneration
-	'''
+	Tooltip:
+		'''
+		Increases mana potion restoration by {0}
+		Can be consumed for Mana Regeneration
+		'''
 }
 
 CursedSun: {
@@ -2172,9 +2172,14 @@ CursedSun: {
 DualDragonfire: {
 	DisplayName: Dual Dragonfire
 	Tooltip:
-	'''
-	Left click to fire Cursed Flames
-	Right click to fire Ichor Flames
-	Uses gel for ammo
-	'''
+		'''
+		Left click to fire Cursed Flames
+		Right click to fire Ichor Flames
+		Uses gel for ammo
+		'''
+}
+
+TheMalformer: {
+	DisplayName: The Malformer
+	Tooltip: ""
 }
