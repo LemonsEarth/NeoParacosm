@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>ModPlayer Snippet</Title>
+			<Shortcut>modplayer</Shortcut>
+		</Header>
+		<Snippet>
+			<Code Language="CSharp">
+				<![CDATA[public class XPlayer : ModPlayer
+                        {
+                            public bool Active { get; set; } = false;
+                            public override void ResetEffects()
+                            {
+                                Active = false;
+                            }
+                        }$end$]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

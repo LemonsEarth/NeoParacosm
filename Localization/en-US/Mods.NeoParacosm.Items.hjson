@@ -2187,17 +2187,25 @@ TheMalformer: {
 CurseCallerStaff: {
 	DisplayName: Curse Caller Staff
 	Tooltip:
-	'''
-	Summons a small cursed spirit to protect you
-	The spirit teleports around nearby enemies, firing projectiles in 4 directions
-	'''
+		'''
+		Summons a small cursed spirit to protect you
+		The spirit teleports around nearby enemies, firing projectiles in 4 directions
+		'''
 }
 
 SpiritCallerStaff: {
 	DisplayName: Spirit Caller Staff
 	Tooltip:
+		'''
+		Summons a small ichor spirit to protect you
+		The spirit dashes towards nearby enemies, leaving a trail of fire
+		'''
+}
+
+ArcaneStone: {
+	DisplayName: Arcane Stone
+	Tooltip:
 	'''
-	Summons a small ichor spirit to protect you
-	The spirit dashes towards nearby enemies, leaving a trail of fire
+	Your minions may explode, dealing 4x their damage to nearby enemies
 	'''
 }
