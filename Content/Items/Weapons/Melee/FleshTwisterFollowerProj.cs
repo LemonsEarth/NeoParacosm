@@ -13,7 +13,7 @@ namespace NeoParacosm.Content.Items.Weapons.Melee;
 public class FleshTwisterFollowerProj : ModProjectile
 {
     int AITimer = 0;
-    ref float WaitTime => ref Projectile.ai[0];
+    ref float TimeLeft => ref Projectile.ai[0];
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
@@ -28,7 +28,7 @@ public class FleshTwisterFollowerProj : ModProjectile
         for (int i = 0; i < 3; i++)
         {
             Vector2 pos = target.Center + new Vector2(Main.rand.NextFloat(-100, 100), -500);
-            Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<PurpleLightning>(), Projectile.damage / 3, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<PurpleLightning>(), Projectile.damage, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
         }
     }
 
@@ -41,8 +41,8 @@ public class FleshTwisterFollowerProj : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 16;
-        Projectile.height = 16;
+        Projectile.width = 66;
+        Projectile.height = 66;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
@@ -52,7 +52,7 @@ public class FleshTwisterFollowerProj : ModProjectile
         Projectile.DamageType = DamageClass.Melee;
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
-        Projectile.localNPCHitCooldown = 60;
+        Projectile.localNPCHitCooldown = 30;
         Projectile.hide = true;
     }
 
@@ -64,50 +64,28 @@ public class FleshTwisterFollowerProj : ModProjectile
     public override void AI()
     {
         Player player = Projectile.GetOwner();
-        if (!player.IsAlive())
+
+        if (AITimer >= TimeLeft)
         {
             Projectile.Kill();
             return;
         }
 
-        if (AITimer < WaitTime)
+        if (TimeLeft - AITimer < 30)
         {
-            AITimer++;
-            return;
+            Projectile.Opacity -= 1 / 30f;
         }
 
-        Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         Projectile.rotation = MathHelper.ToRadians(AITimer * 18);
-        Projectile.velocity = Vector2.Zero;
-
-        Projectile mainProj = Main.projectile.FirstOrDefault(p => p.active && p.type == ProjectileType<FleshTwisterHeldProj>() && Projectile.owner == player.whoAmI, null);
-
-        if (mainProj == null)
-        {
-            Projectile.Kill();
-            return;
-        }
-
-        if (Projectile.DistanceSQ(mainProj.Center) < 16 * 16)
-        {
-            Projectile.Kill();
-            return;
-        }
-
-        Projectile.Center = Vector2.Lerp(playerCenter, mainProj.Center, ((AITimer - WaitTime) * player.GetAttackSpeed(DamageClass.Melee)) / 60f);
 
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        if (AITimer < WaitTime)
-        {
-            return false;
-        }
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        Main.EntitySpriteDraw(texture, drawPos, null, new Color(175, 170, 255) * 0.8f, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
+        Main.EntitySpriteDraw(texture, drawPos, null, new Color(175, 170, 255) * 0.8f * Projectile.Opacity, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
         return false;
     }
 

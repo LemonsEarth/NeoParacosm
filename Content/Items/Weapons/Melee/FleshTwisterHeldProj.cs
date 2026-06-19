@@ -29,6 +29,8 @@ public class FleshTwisterHeldProj : ModProjectile
     int chargeCount = 0;
     bool collided = false;
     ref float HitCount => ref Projectile.ai[0];
+    Vector2 toMouse;
+    float toMouseDistance;
 
     static Asset<Texture2D> chainTexture;
 
@@ -39,14 +41,15 @@ public class FleshTwisterHeldProj : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        /*if (released)
+        if (released)
         {
             for (int i = 0; i < 3; i++)
             {
                 Vector2 pos = target.Center + new Vector2(Main.rand.NextFloat(-100, 100), -500);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<PurpleLightning>(), Projectile.damage / 3, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), pos, Vector2.Zero, ProjectileType<PurpleLightning>(), Projectile.damage, 1f, Projectile.owner, ai1: target.Center.X, ai2: target.Center.Y);
             }
-        }*/
+        }
+
     }
 
     public override void SetStaticDefaults()
@@ -72,8 +75,6 @@ public class FleshTwisterHeldProj : ModProjectile
         Projectile.localNPCHitCooldown = 10;
     }
 
-    int releasedDuration = 45;
-    float lerpValue = 0;
     public override void AI()
     {
         Player player = Projectile.GetOwner();
@@ -85,12 +86,21 @@ public class FleshTwisterHeldProj : ModProjectile
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
         Projectile.timeLeft = 6000;
-        Projectile.rotation = MathHelper.ToRadians(AITimer * 18);
+        Projectile.rotation = MathHelper.ToRadians(AITimer * 36);
         Projectile.velocity = Vector2.Zero;
 
         if (!player.channel && !released)
         {
             released = true;
+            if (Main.myPlayer == Projectile.owner)
+            {
+                savedMousePos = Main.MouseWorld;
+            }
+            Projectile.netUpdate = true;
+
+            toMouse = player.DirectionTo(savedMousePos);
+            toMouseDistance = player.Distance(savedMousePos);
+            toMouseDistance.NewText();
         }
 
         if (player.channel && !released)
@@ -107,36 +117,34 @@ public class FleshTwisterHeldProj : ModProjectile
 
         if (released)
         {
-            if (releasedTimer < chargeCount * 90 * player.GetAttackSpeed(DamageClass.Melee))
+            Vector2 targetPos = player.Center + toMouse * toMouseDistance;
+            toMouse = toMouse.RotatedBy(MathHelper.TwoPi * 1.5f * player.GetAttackSpeed(DamageClass.Melee) / 60f);
+
+            float duration = chargeCount * 60 * player.GetAttackSpeed(DamageClass.Melee);
+            if (releasedTimer > duration)
             {
-                Vector2 targetPos = Main.MouseWorld + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(AITimer * 6)) * 32;
-                Projectile.Center = Vector2.Lerp(Projectile.Center, targetPos, 1 / 10f);
-                if (releasedTimer % 30 == 0)
+                Projectile.Kill();
+                return;
+            }
+
+            Projectile.Center = Vector2.Lerp(playerCenter, targetPos, MathHelper.Clamp(releasedTimer * player.GetAttackSpeed(DamageClass.Melee) / 30f, 0f, 1f));
+            if (releasedTimer % 10 == 0)
+            {
+                if (LemonUtils.NotClient())
                 {
-                    if (LemonUtils.NotClient())
-                    {
-                        Projectile.NewProjectile(
-                            Projectile.GetSource_FromAI(),
-                            playerCenter,
-                            Vector2.Zero,
-                            ProjectileType<FleshTwisterFollowerProj>(),
-                            Projectile.damage,
-                            Projectile.knockBack,
-                            Projectile.owner,
-                            ai0: 30
-                            );
-                    }
+                    Projectile.NewProjectile(
+                        Projectile.GetSource_FromAI(),
+                        Projectile.Center,
+                        Vector2.Zero,
+                        ProjectileType<FleshTwisterFollowerProj>(),
+                        Projectile.damage,
+                        Projectile.knockBack,
+                        Projectile.owner,
+                        ai0: 180
+                        );
                 }
             }
-            else
-            {
-                Projectile.Center = Vector2.Lerp(Projectile.Center, playerCenter, 1 / 3f);
-                if (Projectile.Center.DistanceSQ(playerCenter) < 24 * 24)
-                {
-                    Projectile.Kill();
-                    return;
-                }
-            }
+
             releasedTimer++;
         }
 

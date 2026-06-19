@@ -2134,9 +2134,9 @@ FleshTwister: {
 	DisplayName: Flesh Twister
 	Tooltip:
 		'''
-		Hold to spin the blades around yourself and charge up
-		Release to have the blades follow your cursor
-		Phantom blades travel between you and the blades, striking hit enemies with lightning
+		Hold to charge the blades up
+		Release to spin the blades around you
+		While released, periodically spawns phantom blades that strike enemies with lightning
 		'''
 }
 
@@ -2204,8 +2204,5 @@ SpiritCallerStaff: {
 
 ArcaneStone: {
 	DisplayName: Arcane Stone
-	Tooltip:
-	'''
-	Your minions may explode, dealing 4x their damage to nearby enemies
-	'''
+	Tooltip: Your minions may explode, dealing 4x their damage to nearby enemies
 }
