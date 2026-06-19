@@ -2183,3 +2183,21 @@ TheMalformer: {
 	DisplayName: The Malformer
 	Tooltip: ""
 }
+
+CurseCallerStaff: {
+	DisplayName: Curse Caller Staff
+	Tooltip:
+	'''
+	Summons a small cursed spirit to protect you
+	The spirit teleports around nearby enemies, firing projectiles in 4 directions
+	'''
+}
+
+SpiritCallerStaff: {
+	DisplayName: Spirit Caller Staff
+	Tooltip:
+	'''
+	Summons a small ichor spirit to protect you
+	The spirit dashes towards nearby enemies, leaving a trail of fire
+	'''
+}

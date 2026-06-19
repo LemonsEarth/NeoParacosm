@@ -46,6 +46,7 @@ public class Starecrow : ModProjectile
         Player owner = Projectile.GetOwner();
         if (IsPlayerAlive(owner) == false)
         {
+            Projectile.Kill();
             return;
         }
         Projectile.frameCounter++;

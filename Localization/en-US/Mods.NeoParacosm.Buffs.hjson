@@ -201,3 +201,13 @@ PlightOfTheCursedDebuff: {
 	DisplayName: Plight Of The Cursed
 	Description: Are you sure?
 }
+
+SmallCursedSpiritBuff: {
+	DisplayName: Small Cursed Spirit
+	Description: The cursed spirit protects you...
+}
+
+SmallIchorSpiritBuff: {
+	DisplayName: Small Ichor Spirit Buff
+	Description: The ichor spirit protects you...
+}
