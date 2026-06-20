@@ -7,11 +7,11 @@ public class EarthquakeSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 30;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
+        
         SoundEngine.PlaySound(SoundID.Item74 with { Volume = 0.5f, PitchRange = (0.35f, 0.5f) }, player.Center);
         float xSlowDownBase = MathF.Pow(0.5f, player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 2f));
         float yPushBase = 25 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Earth, 2f);

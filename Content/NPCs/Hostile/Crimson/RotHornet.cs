@@ -14,8 +14,6 @@ public class RotHornet : ModNPC
     int AttackTimer = 0;
     bool doBurst = false;
 
-    Vector2 targetPos;
-
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 2;

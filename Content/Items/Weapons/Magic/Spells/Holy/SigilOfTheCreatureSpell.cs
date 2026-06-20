@@ -6,7 +6,10 @@ public class SigilOfTheCreatureSpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 40;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+    public override Vector2 GetTargetVector(Player player)
+    {
+        return Main.MouseWorld;
+    }
 
     public override bool CanCastSpell(Player player)
     {
@@ -15,7 +18,6 @@ public class SigilOfTheCreatureSpell : BaseSpell
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
         Projectile.NewProjectileDirect(
             player.GetSource_FromThis(),
             Main.MouseWorld,

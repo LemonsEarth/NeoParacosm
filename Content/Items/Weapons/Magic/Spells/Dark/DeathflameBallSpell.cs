@@ -6,11 +6,11 @@ public class DeathflameBallSpell : BaseSpell
 {
     public override int AttackCooldown => 90;
     public override int ManaCost => 40;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
+        
         if (LemonUtils.NotClient())
         {
             float dirMul = 6 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire] * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Dark];

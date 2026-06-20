@@ -7,11 +7,11 @@ public class GoldenHeartSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 200;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         player.AddBuff(BuffType<GoldenHeartBuff>(), (int)(30 * 60 * player.GetElementalExpertiseBoost(SpellElement.Holy)));
         SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.8f, 0.9f) }, player.Center);
         for (int j = 0; j < 6; j++)

@@ -7,11 +7,11 @@ public class BeFuelSpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 0;
-    public override Vector2 TargetVector { get; set; } = -Vector2.UnitY;
+      public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         player.AddBuff(BuffType<BeFuelDebuff>(), 20 * 60);
         SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0f, 0.1f) }, player.Center);
         for (int j = 0; j < 6; j++)

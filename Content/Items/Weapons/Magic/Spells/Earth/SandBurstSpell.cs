@@ -7,11 +7,13 @@ public class SandBurstSpell : BaseSpell
 {
     public override int AttackCooldown => 24;
     public override int ManaCost => 18;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+    public override Vector2 GetTargetVector(Player player)
+    {
+        return Main.MouseWorld;
+    }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
         if (LemonUtils.NotClient())
         {
             SoundEngine.PlaySound(SoundID.Item7, player.Center);

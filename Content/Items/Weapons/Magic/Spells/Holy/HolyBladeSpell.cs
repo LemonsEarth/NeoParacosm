@@ -7,11 +7,11 @@ public class HolyBladeSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 160;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         player.AddBuff(BuffType<HolyBladeBuff>(), (int)(40 * 60 * player.GetElementalExpertiseBoost(SpellElement.Holy)));
         SoundEngine.PlaySound(SoundID.DD2_EtherianPortalDryadTouch with { PitchRange = (0.4f, 0.5f) }, player.Center);
         for (int j = 0; j < 6; j++)

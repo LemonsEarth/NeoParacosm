@@ -8,11 +8,11 @@ public class MagicStarsSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 120;
-    public override Vector2 TargetVector { get; set; } = -Vector2.UnitY;
+      public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         SoundEngine.PlaySound(SoundID.Item28, player.Center);
         if (LemonUtils.NotClient())
         {

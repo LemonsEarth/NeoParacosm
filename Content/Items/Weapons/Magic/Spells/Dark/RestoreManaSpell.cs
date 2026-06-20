@@ -6,11 +6,10 @@ public class RestoreManaSpell : BaseSpell
 {
     public override int AttackCooldown => 10;
     public override int ManaCost => 0;
-    public override Vector2 TargetVector { get; set; } = -Vector2.UnitY;
+    public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
         float boostAdjusted = 1 + (player.GetElementalExpertiseBoost(SpellElement.Dark) - 1) * 3;
         player.RestoreMana((int)(30 * MathF.Max(boostAdjusted, 0)));
         player.statLife -= 7;

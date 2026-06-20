@@ -7,14 +7,14 @@ public class LightningSpearSpell : BaseSpell
 {
     public override int AttackCooldown => 20;
     public override int ManaCost => 25;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+    public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
+
         if (LemonUtils.NotClient())
         {
-            Vector2 vel = player.DirectionTo(TargetVector) * 20;
+            Vector2 vel = player.DirectionTo(GetTargetVector(player)) * 20;
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
                 vel,
                 ProjectileType<LightningSpear>(),

@@ -10,7 +10,6 @@ namespace NeoParacosm.Content.NPCs.Hostile.Crimson;
 public class IchorNeedle : ModNPC
 {
     int AITimer = 0;
-    int AttackTimer = 0;
 
     ref float MoveSpeed => ref NPC.ai[0];
     ref float PlayerWhoAmI => ref NPC.ai[1];

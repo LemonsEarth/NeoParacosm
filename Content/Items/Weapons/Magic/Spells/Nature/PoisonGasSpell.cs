@@ -9,11 +9,11 @@ public class PoisonGasSpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 30;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+    public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
+
         SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { Volume = 0.7f, PitchRange = (1.8f, 2f) }, player.Center);
         SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath with { Volume = 0.7f, PitchRange = (0.8f, 1f) }, player.Center);
 

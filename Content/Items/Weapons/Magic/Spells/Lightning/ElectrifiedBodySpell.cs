@@ -10,11 +10,11 @@ public class ElectrifiedBodySpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 0;
-    public override Vector2 TargetVector { get; set; } = -Vector2.UnitY;
+      public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         player.AddBuff(BuffType<ElectrifiedBodyBuff>(), ((int)(20 * 60 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 2))));
         SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.3f, 0.4f) }, player.Center);
         for (int j = 0; j < 6; j++)

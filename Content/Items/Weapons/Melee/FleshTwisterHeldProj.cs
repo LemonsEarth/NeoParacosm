@@ -27,8 +27,6 @@ public class FleshTwisterHeldProj : ModProjectile
     }
 
     int chargeCount = 0;
-    bool collided = false;
-    ref float HitCount => ref Projectile.ai[0];
     Vector2 toMouse;
     float toMouseDistance;
 

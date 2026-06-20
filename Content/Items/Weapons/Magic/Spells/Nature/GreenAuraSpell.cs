@@ -7,11 +7,11 @@ public class GreenAuraSpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 60;
-    public override Vector2 TargetVector { get; set; } = -Vector2.UnitY;
+      public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         player.AddBuff(BuffType<GreenAuraBuff>(), ((int)(20 * 60 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Nature, 2))));
         SoundEngine.PlaySound(SoundID.Item16 with { PitchRange = (0.3f, 0.4f) }, player.Center);
         for (int j = 0; j < 6; j++)

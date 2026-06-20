@@ -6,16 +6,15 @@ public class DarkRendSpell : BaseSpell
 {
     public override int AttackCooldown => 45;
     public override int ManaCost => 15;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+    public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
         if (LemonUtils.NotClient())
         {
             for (int i = -2; i <= 2; i++)
             {
-                Vector2 baseDirection = player.DirectionTo(TargetVector) * 0.5f;
+                Vector2 baseDirection = player.DirectionTo(GetTargetVector(player)) * 0.5f;
                 Vector2 rotatedDirection = baseDirection.RotatedBy(MathHelper.ToRadians(5) * i);
                 Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
                     rotatedDirection,

@@ -7,11 +7,11 @@ public class MagicLanternSpell : BaseSpell
 {
     public override int AttackCooldown => 45;
     public override int ManaCost => 40;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = Main.MouseWorld;
+        
         SoundEngine.PlaySound(SoundID.Item28, player.Center);
         if (LemonUtils.NotClient())
         {

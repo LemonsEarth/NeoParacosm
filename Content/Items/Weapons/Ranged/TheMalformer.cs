@@ -6,7 +6,6 @@ namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class TheMalformer : ModItem
 {
-    int timer = 0;
     public override void SetDefaults()
     {
         Item.damage = 80;

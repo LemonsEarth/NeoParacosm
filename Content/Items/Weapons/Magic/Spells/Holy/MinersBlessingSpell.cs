@@ -7,11 +7,11 @@ public class MinersBlessingSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 120;
-    public override Vector2 TargetVector { get; set; } = Main.MouseWorld;
+     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        TargetVector = player.Center - Vector2.UnitY * 100;
+
         player.AddBuff(BuffType<MinersBlessingBuff>(), (int)(20 * 60 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Holy, 4)));
         SoundEngine.PlaySound(SoundID.Tink with { PitchRange = (0.6f, 0.7f) }, player.Center);
     }
