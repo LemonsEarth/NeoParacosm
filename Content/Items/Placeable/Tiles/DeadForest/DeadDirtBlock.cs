@@ -1,6 +1,4 @@
-﻿using Terraria.GameContent.ItemDropRules;
-
-namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
 public class DeadDirtBlock : ModTile
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Items.Weapons.Melee;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;

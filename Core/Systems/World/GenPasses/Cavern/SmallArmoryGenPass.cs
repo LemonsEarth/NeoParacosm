@@ -1,10 +1,8 @@
 ﻿using StructureHelper.API;
-using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Tile_Entities;
 using Terraria.IO;
 using Terraria.WorldBuilding;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses.Cavern;
 

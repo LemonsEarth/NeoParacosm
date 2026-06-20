@@ -1,8 +1,5 @@
-﻿using NeoParacosm.Content.Items.Armor.Generic.DeathKnight;
-using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using NeoParacosm.Content.Items.Materials;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Armor.Generic.FrozenFossil;

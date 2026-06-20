@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Terraria.GameContent.ItemDropRules;
+﻿using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Master;

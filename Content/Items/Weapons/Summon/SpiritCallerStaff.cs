@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;
 using Terraria.DataStructures;
 

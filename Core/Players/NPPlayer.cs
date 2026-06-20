@@ -1,12 +1,8 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
-using System.Linq;
-using Terraria.DataStructures;
-using Terraria.Graphics;
 
 namespace NeoParacosm.Core.Players;
 

@@ -1,7 +1,6 @@
 ﻿using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
-using Terraria.GameContent.Tile_Entities;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 

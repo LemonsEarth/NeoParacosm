@@ -1,8 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
-using NeoParacosm.Content.Projectiles;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
-using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;
 using Terraria.GameContent;

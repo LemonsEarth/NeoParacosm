@@ -1,7 +1,5 @@
 ﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
 using System.IO;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;

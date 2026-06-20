@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Materials;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Misc;
 

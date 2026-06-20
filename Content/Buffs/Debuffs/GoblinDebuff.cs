@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.NPCs.Hostile.Special;
-
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class GoblinDebuff : ModBuff
 {

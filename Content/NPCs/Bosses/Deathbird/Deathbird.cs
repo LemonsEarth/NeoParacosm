@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.NPCs.Hostile.Minions;
-using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using NeoParacosm.Core.Systems.Assets;

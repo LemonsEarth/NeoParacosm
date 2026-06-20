@@ -2,11 +2,6 @@
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Content.Items.Weapons.Summon;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.DataStructures;

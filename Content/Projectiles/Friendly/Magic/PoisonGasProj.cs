@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;

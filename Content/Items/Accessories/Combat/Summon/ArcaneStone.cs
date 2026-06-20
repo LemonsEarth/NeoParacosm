@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Common.RecipeGroups;
-using NeoParacosm.Content.Projectiles.Friendly.Summon;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Summon;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 

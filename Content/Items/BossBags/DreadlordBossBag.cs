@@ -1,10 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
-using NeoParacosm.Content.Items.Weapons.Melee;
-using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Content.Items.Weapons.Summon;
 using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.BossBags;
