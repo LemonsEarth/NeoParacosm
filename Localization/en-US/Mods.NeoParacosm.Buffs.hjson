@@ -211,3 +211,8 @@ SmallIchorSpiritBuff: {
 	DisplayName: Small Ichor Spirit
 	Description: The ichor spirit protects you...
 }
+
+ArcaneSkullBuff: {
+	DisplayName: Vow of Arcane 
+	Description: Increased damage and life regeneration
+}

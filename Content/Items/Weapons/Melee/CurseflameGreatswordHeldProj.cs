@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
 using System.Collections.Generic;
@@ -62,7 +63,10 @@ public class CurseflameGreatswordHeldProj : PrimProjectile
         player.SetDummyItemTime(2);
 
         Projectile.velocity = Vector2.Zero;
-
+        if (AITimer % 5 == 0)
+        {
+            Dust.NewDustPerfect(Projectile.RandomPos(-16, -16), DustType<FireDust>(), Vector2.Zero, newColor: Color.Lime, Scale: Main.rand.NextFloat(0.5f, 1f));
+        }
         if (special != 0)
         {
             player.StopExtraJumpInProgress();

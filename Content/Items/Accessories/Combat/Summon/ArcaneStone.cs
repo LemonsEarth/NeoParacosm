@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Summon;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
@@ -28,6 +29,32 @@ public class ArcaneStonePlayer : ModPlayer
     public override void ResetEffects()
     {
         Active = false;
+    }
+
+    public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource)
+    {
+        if (Main.myPlayer == Player.whoAmI)
+        {
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.owner == Player.whoAmI && proj.minion)
+                {
+                    Projectile.NewProjectileDirect(
+                        proj.GetSource_FromThis(),
+                        proj.Center,
+                        Vector2.Zero,
+                        ProjectileType<ArcaneStoneProjectile>(),
+                        proj.damage * 4,
+                        proj.knockBack,
+                        proj.owner,
+                        ai0: 1f,
+                        ai1: proj.width,
+                        ai2: proj.height
+                        );
+                    proj.Kill();
+                }
+            }
+        }
     }
 }
 

@@ -2182,10 +2182,10 @@ DualDragonfire: {
 TheMalformer: {
 	DisplayName: The Malformer
 	Tooltip:
-	'''
-	Summons a stationary gun that gets flung at your cursor after firing several shots
-	Right click to destroy all flung guns
-	'''
+		'''
+		Summons a stationary gun that gets flung at your cursor after firing several shots
+		Right click to destroy all flung guns
+		'''
 }
 
 CurseCallerStaff: {
@@ -2213,10 +2213,7 @@ ArcaneStone: {
 
 IcicleRainSpell: {
 	DisplayName: Icicle Rain
-	Tooltip:
-	'''
-	Summons an icy sphere above you that rains down icicles
-	'''
+	Tooltip: Summons an icy sphere above you that rains down icicles
 }
 
 DreadlordBossBag: {
@@ -2227,8 +2224,17 @@ DreadlordBossBag: {
 InfectedEnhancer: {
 	DisplayName: Infected Enhancer
 	Tooltip:
+		'''
+		Use to open a special interface
+		Allows you to enchance infection-based items, such as the Light's Bane and Crimson Rod
+		'''
+}
+
+ArcaneSkull: {
+	DisplayName: Arcane Skull
+	Tooltip:
 	'''
-	Use to open a special interface
-	Allows you to enchance infection-based items, such as the Light's Bane and Crimson Rod
+	Your minions may explode, dealing 4x their damage to nearby enemies
+	When a minion dies, you briefly gain increased damage and life regeneration
 	'''
 }
