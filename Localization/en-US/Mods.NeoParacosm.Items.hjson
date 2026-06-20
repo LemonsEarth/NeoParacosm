@@ -2211,3 +2211,13 @@ IcicleRainSpell: {
 	DisplayName: Icicle Rain Spell
 	Tooltip: ""
 }
+
+DreadlordBossBag: {
+	DisplayName: Dreadlord Boss Bag
+	Tooltip: ""
+}
+
+InfectedEnhancer: {
+	DisplayName: Infected Enhancer
+	Tooltip: ""
+}

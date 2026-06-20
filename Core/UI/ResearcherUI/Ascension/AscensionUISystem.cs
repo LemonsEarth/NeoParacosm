@@ -59,6 +59,7 @@ public class AscensionUISystem : ModSystem
     internal void ShowUI()
     {
         userInterface?.SetState(UI);
+        //UI.OnInitialize();
     }
 
     internal void HideUI()

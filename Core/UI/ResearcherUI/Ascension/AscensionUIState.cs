@@ -25,8 +25,8 @@ public class AscensionUIState : UIState
         InItemPanel = new InItemPanel();
         InItemPanel.Width.Set(64, 0f);
         InItemPanel.Height.Set(64, 0f);
-        InItemPanel.HAlign = 0.25f;
-        InItemPanel.VAlign = 0.5f;
+        InItemPanel.HAlign = 0.2f;
+        InItemPanel.VAlign = 1f;
 
         UIText InText = new UIText("In");
         InText.HAlign = 0.5f;
@@ -38,8 +38,8 @@ public class AscensionUIState : UIState
         OutItemPanel = new OutItemPanel();
         OutItemPanel.Width.Set(64, 0f);
         OutItemPanel.Height.Set(64, 0f);
-        OutItemPanel.HAlign = 0.75f;
-        OutItemPanel.VAlign = 0.5f;
+        OutItemPanel.HAlign = 0.8f;
+        OutItemPanel.VAlign = 1f;
 
         UIText OutText = new UIText("Out");
         OutText.HAlign = 0.5f;
@@ -48,11 +48,16 @@ public class AscensionUIState : UIState
 
         MainPanel.Append(OutItemPanel);
 
+        UIText infoText = new UIText("Place an infected item to ascend");
+        infoText.HAlign = 0.5f;
+        infoText.VAlign = 0.1f;
+        MainPanel.Append(infoText);
+
         CloseButton = new UIImageButton(Request<Texture2D>("NeoParacosm/Common/Assets/Textures/UI/CloseButton"));
         CloseButton.Width.Set(32, 0f);
         CloseButton.Height.Set(32, 0f);
-        CloseButton.VAlign = 0.5f;
         CloseButton.HAlign = 0.5f;
+        CloseButton.VAlign = 0.9f;
         CloseButton.OnLeftClick += OnButtonClick;
         MainPanel.Append(CloseButton);
     }
