@@ -100,7 +100,6 @@ public class FleshTwisterHeldProj : ModProjectile
 
             toMouse = player.DirectionTo(savedMousePos);
             toMouseDistance = player.Distance(savedMousePos);
-            toMouseDistance.NewText();
         }
 
         if (player.channel && !released)
@@ -121,6 +120,12 @@ public class FleshTwisterHeldProj : ModProjectile
             toMouse = toMouse.RotatedBy(MathHelper.TwoPi * 1.5f * player.GetAttackSpeed(DamageClass.Melee) / 60f);
 
             float duration = chargeCount * 60 * player.GetAttackSpeed(DamageClass.Melee);
+
+            if (duration - releasedTimer < 30)
+            {
+                Projectile.Opacity -= 1 / 30f;
+            }
+
             if (releasedTimer > duration)
             {
                 Projectile.Kill();
@@ -157,19 +162,23 @@ public class FleshTwisterHeldProj : ModProjectile
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
         Vector2 startPos = Projectile.GetOwner().Center;
-        Vector2 chainDrawPos = startPos;
-        int segmentCount = (int)(Projectile.Center.Distance(startPos) / 12) + 1;
+        int segmentCount = (int)(Projectile.Center.Distance(startPos) / 10) + 1;
         int segmentsDrawn = 0;
 
-        Vector2 StartToProj = startPos.DirectionTo(Projectile.Center);
+        Vector2 startToProj = startPos.DirectionTo(Projectile.Center);
+        float startToProjDistance = startPos.Distance(Projectile.Center);
 
         while (segmentsDrawn < segmentCount)
         {
-            Main.EntitySpriteDraw(chainTexture.Value, chainDrawPos - Main.screenPosition, null, Color.White * Projectile.Opacity, StartToProj.ToRotation() + -MathHelper.PiOver2, new Vector2(8, 8), Projectile.scale, SpriteEffects.None);
-            chainDrawPos += StartToProj * 12 * Projectile.scale;
+            Vector2 controlPoint = startPos + (Projectile.Center - startPos) * 0.5f;
+            controlPoint += startToProj.RotatedBy(MathHelper.PiOver2) * 60;
+            Vector2 chainPos = LemonUtils.BezierCurve(startPos, Projectile.Center, controlPoint, segmentsDrawn / (float)segmentCount);
+            Vector2 nextChainPos = LemonUtils.BezierCurve(startPos, Projectile.Center, controlPoint, (segmentsDrawn + 1) / (float)segmentCount);
+            float rotation = chainPos.DirectionTo(nextChainPos).ToRotation() - MathHelper.PiOver2;
+            Main.EntitySpriteDraw(chainTexture.Value, chainPos - Main.screenPosition, null, Color.White * Projectile.Opacity, rotation, new Vector2(8, 8), Projectile.scale, SpriteEffects.None);
             segmentsDrawn++;
         }
-        LemonUtils.DrawAfterimages(Projectile, lightColor, 0.2f);
+
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
         return false;
     }

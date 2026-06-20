@@ -47,7 +47,7 @@ public class FleshTwisterFollowerProj : ModProjectile
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
         Projectile.tileCollide = false;
-        Projectile.penetrate = 4;
+        Projectile.penetrate = 1;
         Projectile.timeLeft = 600;
         Projectile.DamageType = DamageClass.Melee;
         Projectile.Opacity = 1f;
@@ -85,6 +85,7 @@ public class FleshTwisterFollowerProj : ModProjectile
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
+        LemonUtils.DrawGlow(Projectile.Center, new Color(175, 170, 255), Projectile.Opacity * 0.3f, Projectile.scale * 1.5f);
         Main.EntitySpriteDraw(texture, drawPos, null, new Color(175, 170, 255) * 0.8f * Projectile.Opacity, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection), 0);
         return false;
     }

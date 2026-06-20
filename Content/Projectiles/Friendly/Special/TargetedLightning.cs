@@ -118,8 +118,8 @@ public abstract class TargetedLightning : ModProjectile
 
     void DrawLightning(float randomMul = 1, float segCountMul = 1)
     {
-        LemonUtils.DrawGlow(Projectile.Center, DarkColor, Projectile.Opacity + 0.3f, Projectile.scale * 2);
-        LemonUtils.DrawGlow(Projectile.Center, ShineColor, Projectile.Opacity + 0.3f, Projectile.scale);
+        LemonUtils.DrawGlow(Projectile.Center, DarkColor, Projectile.Opacity + 0.3f, Projectile.scale * 1f);
+        LemonUtils.DrawGlow(Projectile.Center, ShineColor, Projectile.Opacity + 0.3f, Projectile.scale * 0.5f);
         var shader = GameShaders.Misc["NeoParacosm:BigLightningShader"];
         shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
         shader.Shader.Parameters["segmentCount"].SetValue(3);
@@ -146,9 +146,8 @@ public abstract class TargetedLightning : ModProjectile
         Main.spriteBatch.End();
         LemonUtils.BeginSpriteBatchProjectile();
 
-        LemonUtils.DrawGlow(targetPos, DarkColor, Projectile.Opacity + 0.3f, Projectile.scale * 2);
-        LemonUtils.DrawGlow(targetPos, ShineColor, Projectile.Opacity + 0.3f, Projectile.scale);
-
+        LemonUtils.DrawGlow(targetPos, DarkColor, Projectile.Opacity + 0.3f, Projectile.scale * 1f);
+        LemonUtils.DrawGlow(targetPos, ShineColor, Projectile.Opacity + 0.3f, Projectile.scale * 0.5f);
     }
 
     public override bool PreDraw(ref Color lightColor)

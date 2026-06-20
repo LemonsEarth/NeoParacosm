@@ -48,8 +48,12 @@ float4 BigLightningShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0
     float yOffset = getHashedY(scaleAdjustedCoords.x, coords.x) * amplitudeMult;
     float yPos = baseY + yOffset;
     
+    float2 centeredCoords = coords * 2.0 - 1.0;
+    
+    float toleranceAdjust = min((1 - abs(centeredCoords.x)) * 2, 1) * tolerance;
+    
     float distY = abs(scaleAdjustedCoords.y - yPos);
-    if (distY < tolerance)
+    if (distY < toleranceAdjust)
     {
         float4 col = float4(uColor.r, uColor.g, uColor.b, uOpacity);
         return col;
