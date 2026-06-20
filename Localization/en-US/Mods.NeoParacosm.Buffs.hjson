@@ -208,6 +208,6 @@ SmallCursedSpiritBuff: {
 }
 
 SmallIchorSpiritBuff: {
-	DisplayName: Small Ichor Spirit Buff
+	DisplayName: Small Ichor Spirit
 	Description: The ichor spirit protects you...
 }

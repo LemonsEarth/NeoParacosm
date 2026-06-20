@@ -2208,16 +2208,23 @@ ArcaneStone: {
 }
 
 IcicleRainSpell: {
-	DisplayName: Icicle Rain Spell
-	Tooltip: ""
+	DisplayName: Icicle Rain
+	Tooltip:
+	'''
+	Summons an icy sphere above you that rains down icicles
+	'''
 }
 
 DreadlordBossBag: {
-	DisplayName: Dreadlord Boss Bag
+	DisplayName: Treasure Bag (Dreadlord)
 	Tooltip: ""
 }
 
 InfectedEnhancer: {
 	DisplayName: Infected Enhancer
-	Tooltip: ""
+	Tooltip:
+	'''
+	Use to open a special interface
+	Allows you to enchance infection-based items, such as the Light's Bane and Crimson Rod
+	'''
 }
