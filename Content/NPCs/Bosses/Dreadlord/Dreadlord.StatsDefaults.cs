@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.BossBags;
+using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
@@ -242,10 +243,11 @@ public partial class Dreadlord : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
-        //classicRule.OnSuccess(ItemDropRule.OneFromOptions(1, ItemType<Gravesword>(), ItemType<DarkSpearSpell>(), ItemType<HeadstoneRing>(), ItemType<LamentOfTheLate>(), ItemType<StarecrowStaff>()));
-        //npcLoot.Add(classicRule);
-        npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathbirdTreasureBag>()));
+        LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
+        classicRule.OnSuccess(ItemDropRule.Common(ItemType<NightmareScale>(), 1, 18, 30));
+        classicRule.OnSuccess(ItemDropRule.Common(ItemType<DivineFlesh>(), 1, 18, 30));
+        npcLoot.Add(classicRule);
+        npcLoot.Add(ItemDropRule.BossBag(ItemType<DreadlordBossBag>()));
         npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DreadlordRelicItem>()));
     }
 
