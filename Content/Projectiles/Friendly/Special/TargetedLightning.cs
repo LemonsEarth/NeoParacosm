@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
 using Terraria.Audio;
@@ -86,12 +87,20 @@ public abstract class TargetedLightning : ModProjectile
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (-0.2f, 0.2f), MaxInstances = 1, Volume = 0.35f }, Projectile.Center);
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0, Volume = 0.75f }, Projectile.Center);
 
-            for (int j = 0; j < 20; j++)
+            for (int j = 0; j < 5; j++)
             {
                 Vector2 randVector = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
                 Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-8, 8), Main.rand.NextFloat(-8, 2));
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.TintableDustLighted, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: ShineColor).noGravity = true;
                 Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.TintableDustLighted, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: DarkColor).noGravity = true;
+            }
+
+            for (int j = 0; j < 4; j++)
+            {
+                Vector2 randVector = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 6f;
+                Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 6f;
+                Dust.NewDustPerfect(targetPos, DustType<StreakDust>(), randVector, Scale: Main.rand.NextFloat(1f, 1.5f)).noGravity = true;
+                Dust.NewDustPerfect(targetPos, DustType<StreakDust>(), randVector2, Scale: Main.rand.NextFloat(1f, 1.5f), newColor: DarkColor).noGravity = true;
             }
         }
 
