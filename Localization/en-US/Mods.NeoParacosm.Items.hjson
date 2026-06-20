@@ -2181,7 +2181,11 @@ DualDragonfire: {
 
 TheMalformer: {
 	DisplayName: The Malformer
-	Tooltip: ""
+	Tooltip:
+	'''
+	Summons a stationary gun that gets flung at your cursor after firing several shots
+	Right click to destroy all flung guns
+	'''
 }
 
 CurseCallerStaff: {

@@ -104,6 +104,23 @@ public class TheMalformerHeldProj : ModProjectile
                 }
                 Projectile.netUpdate = true;
             }
+
+            if (Main.myPlayer == Projectile.owner && Main.mouseRight && Main.mouseRightRelease)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 pos = Projectile.Center + LemonUtils.RandomVector2Rectangular(1000, 1000, 900, 900);
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        pos,
+                        pos.DirectionTo(Projectile.Center).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * Main.rand.NextFloat(20, 26),
+                        ProjectileType<CursedTracerBullet>(),
+                        Projectile.damage
+                        );
+                }
+                Projectile.Kill();
+            }
+            Projectile.netUpdate = true;
         }
 
         AITimer++;
