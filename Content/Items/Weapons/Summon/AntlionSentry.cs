@@ -1,4 +1,4 @@
-﻿namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+﻿namespace NeoParacosm.Content.Items.Weapons.Summon;
 
 public class AntlionSentry : ModProjectile
 {

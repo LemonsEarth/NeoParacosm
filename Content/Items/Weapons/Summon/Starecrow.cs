@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
 public class Starecrow : ModProjectile
 {

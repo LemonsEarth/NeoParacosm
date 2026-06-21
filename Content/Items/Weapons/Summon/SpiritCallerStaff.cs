@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
@@ -48,7 +47,7 @@ public class SpiritCallerStaff : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-        //recipe.AddIngredient(ItemType<SupremeMusket>(), 1);
+        recipe.AddIngredient(ItemType<QuichorStaff>(), 1);
         recipe.AddIngredient(ItemType<DivineFlesh>(), 12);
         recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();

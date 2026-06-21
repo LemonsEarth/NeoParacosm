@@ -216,3 +216,8 @@ ArcaneSkullBuff: {
 	DisplayName: Vow of Arcane
 	Description: Increased damage and life regeneration
 }
+
+QuichorBuff: {
+	DisplayName: Quichor
+	Description: Quichors protect you...
+}

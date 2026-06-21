@@ -1,8 +1,9 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+using Terraria.Audio;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
-public class GiantShiverthorn : ModProjectile
+public class Waterfaller : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float AttackTimer => ref Projectile.ai[1];
@@ -14,7 +15,7 @@ public class GiantShiverthorn : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 58;
+        Projectile.width = 60;
         Projectile.height = 50;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
@@ -26,18 +27,22 @@ public class GiantShiverthorn : ModProjectile
 
     public override void AI()
     {
-        closestEnemy = LemonUtils.GetClosestNPC(Projectile.Center, 1000);
+        closestEnemy = GetClosestNPC(1000);
 
         Projectile.velocity.Y = 10f;
         if (closestEnemy != null)
         {
-            if (AttackTimer == 90)
+            if (AttackTimer == 60)
             {
                 if (LemonUtils.NotClient())
                 {
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.Center.DirectionTo(closestEnemy.Center) * 5, ProjectileType<IceProjectile>(), Projectile.damage, 1f, Projectile.owner);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Vector2 offset = new Vector2(Main.rand.NextFloat(-40, 40), -500 + Main.rand.NextFloat(-40, 40));
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), closestEnemy.Center + offset, Vector2.UnitY * 2, ProjectileType<WaterfallDrop>(), Projectile.damage, 1f, Projectile.owner);
+                    }
                 }
-                SoundEngine.PlaySound(SoundID.Item28 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item21 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
                 AttackTimer = 0;
             }
             AttackTimer++;
@@ -59,6 +64,27 @@ public class GiantShiverthorn : ModProjectile
         }
         Lighting.AddLight(Projectile.Center, 0, 0, 5);
         AITimer++;
+    }
+
+    public NPC GetClosestNPC(int distance)
+    {
+        NPC closestEnemy = null;
+        foreach (var npc in Main.ActiveNPCs)
+        {
+            if (npc.CanBeChasedBy() && Projectile.Center.Distance(npc.Center) < distance)
+            {
+                if (closestEnemy == null)
+                {
+                    closestEnemy = npc;
+                }
+                float distanceToNPC = Projectile.Center.DistanceSQ(npc.Center);
+                if (distanceToNPC < Projectile.Center.DistanceSQ(closestEnemy.Center))
+                {
+                    closestEnemy = npc;
+                }
+            }
+        }
+        return closestEnemy;
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)

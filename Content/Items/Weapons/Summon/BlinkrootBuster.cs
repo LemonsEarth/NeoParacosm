@@ -1,20 +1,21 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+using Terraria.Audio;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
-public class Waterfaller : ModProjectile
+public class BlinkrootBuster : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float AttackTimer => ref Projectile.ai[1];
     NPC closestEnemy;
     public override void SetStaticDefaults()
     {
-        Main.projFrames[Projectile.type] = 2;
+        Main.projFrames[Projectile.type] = 3;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 60;
+        Projectile.width = 58;
         Projectile.height = 50;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
@@ -31,17 +32,17 @@ public class Waterfaller : ModProjectile
         Projectile.velocity.Y = 10f;
         if (closestEnemy != null)
         {
-            if (AttackTimer == 60)
+            if (AttackTimer == 120)
             {
                 if (LemonUtils.NotClient())
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        Vector2 offset = new Vector2(Main.rand.NextFloat(-40, 40), -500 + Main.rand.NextFloat(-40, 40));
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), closestEnemy.Center + offset, Vector2.UnitY * 2, ProjectileType<WaterfallDrop>(), Projectile.damage, 1f, Projectile.owner);
+                        Vector2 offset = new Vector2(Main.rand.NextFloat(-20, 20), Main.rand.NextFloat(-20, 20));
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), closestEnemy.Center + offset, Vector2.Zero, ProjectileType<BlinkrootProj>(), Projectile.damage, 1f, Projectile.owner);
                     }
                 }
-                SoundEngine.PlaySound(SoundID.Item21 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item4 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
                 AttackTimer = 0;
             }
             AttackTimer++;
@@ -51,17 +52,18 @@ public class Waterfaller : ModProjectile
             AttackTimer = 0;
         }
 
+        int frameDur = 20;
         Projectile.frameCounter++;
-        if (Projectile.frameCounter == 20)
+        if (Projectile.frameCounter == frameDur)
         {
             Projectile.frameCounter = 0;
             Projectile.frame++;
-            if (Projectile.frame >= 2)
+            if (Projectile.frame == 3)
             {
                 Projectile.frame = 0;
             }
         }
-        Lighting.AddLight(Projectile.Center, 0, 0, 5);
+        Lighting.AddLight(Projectile.Center, 5, 5, 0);
         AITimer++;
     }
 

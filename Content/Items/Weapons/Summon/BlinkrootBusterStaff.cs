@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
 

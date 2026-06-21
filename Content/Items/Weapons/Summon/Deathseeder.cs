@@ -1,21 +1,22 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Core.Globals.GlobalNPCs.Misc;
+using System.Linq;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
-public class BlinkrootBuster : ModProjectile
+public class Deathseeder : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    ref float AttackTimer => ref Projectile.ai[1];
+
     NPC closestEnemy;
     public override void SetStaticDefaults()
     {
-        Main.projFrames[Projectile.type] = 3;
+        Main.projFrames[Projectile.type] = 4;
     }
 
     public override void SetDefaults()
     {
-        Projectile.width = 58;
-        Projectile.height = 50;
+        Projectile.width = 54;
+        Projectile.height = 56;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
         Projectile.tileCollide = true;
@@ -29,40 +30,54 @@ public class BlinkrootBuster : ModProjectile
         closestEnemy = GetClosestNPC(1000);
 
         Projectile.velocity.Y = 10f;
-        if (closestEnemy != null)
+        if (AITimer % 300 == 0 && AITimer > 0)
         {
-            if (AttackTimer == 120)
+            LemonUtils.DustCircle(Projectile.Top, 16, 8, DustID.Shadowflame, 2f);
+            if (LemonUtils.NotClient())
             {
-                if (LemonUtils.NotClient())
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        Vector2 offset = new Vector2(Main.rand.NextFloat(-20, 20), Main.rand.NextFloat(-20, 20));
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), closestEnemy.Center + offset, Vector2.Zero, ProjectileType<BlinkrootProj>(), Projectile.damage, 1f, Projectile.owner);
-                    }
-                }
-                SoundEngine.PlaySound(SoundID.Item4 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-                AttackTimer = 0;
+                NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
+                npc.damage = Projectile.damage;
+                npc.lifeMax = Projectile.GetOwner().statLifeMax2 / 2;
+                npc.defense = Projectile.GetOwner().statDefense / 2;
+                NetMessage.SendData(MessageID.SyncNPC);
             }
-            AttackTimer++;
-        }
-        else
-        {
-            AttackTimer = 0;
         }
 
-        int frameDur = 20;
+        /* if (closestEnemy != null)
+         {
+             if (AttackTimer == 90)
+             {
+                 if (LemonUtils.NotClient())
+                 {
+                     LemonUtils.QuickProj(Projectile, closestEnemy.Center + Vector2.UnitY * 100, -Vector2.UnitY * 20, ProjectileType<VilethornFriendly>());
+                 }
+                 SoundEngine.PlaySound(SoundID.Item43 with { Volume = 0.5f, PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+
+                 AttackTimer = 0;
+             }
+             AttackTimer++;
+         }
+         else
+         {
+             AttackTimer = 0;
+         }*/
+
+        /*if (AITimer % 60 == 0)
+        {
+            LemonUtils.QuickProj(Projectile, Projectile.RandomPos(16, 16), Main.rand.NextVector2Circular(2, 2), ProjectileType<RotGas>());
+        }*/
+
         Projectile.frameCounter++;
-        if (Projectile.frameCounter == frameDur)
+        if (Projectile.frameCounter == 20)
         {
             Projectile.frameCounter = 0;
             Projectile.frame++;
-            if (Projectile.frame == 3)
+            if (Projectile.frame >= 4)
             {
                 Projectile.frame = 0;
             }
         }
-        Lighting.AddLight(Projectile.Center, 5, 5, 0);
+        Lighting.AddLight(Projectile.Center, 3, 0, 5);
         AITimer++;
     }
 

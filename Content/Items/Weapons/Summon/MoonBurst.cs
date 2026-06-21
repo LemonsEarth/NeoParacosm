@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
 public class MoonBurst : ModProjectile
 {

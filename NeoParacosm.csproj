@@ -13,7 +13,7 @@
 	  </Reference>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Core\Systems\World\ChestItems\" />
+	  <Folder Include="Content\Projectiles\Friendly\Summon\Minions\" />
 	</ItemGroup>
 
 	<!-- References -->

@@ -644,7 +644,7 @@ GoldenHeartSpell: {
 }
 
 LightningStrikeSpell: {
-	DisplayName: Lightning Strike Spell
+	DisplayName: Lightning Strike
 	Tooltip: Casts a lightning bolt from the sky
 	NPLore:
 		'''
@@ -690,7 +690,7 @@ ManaGuardSpell: {
 }
 
 MagicLanternSpell: {
-	DisplayName: Magic Lantern Spell
+	DisplayName: Magic Lantern
 	Tooltip: Cast forth a sphere of light that decays over time
 	NPLore:
 		'''
@@ -699,25 +699,9 @@ MagicLanternSpell: {
 		'''
 }
 
-RObsidianHelmet: {
-	SetBonus: Mods.NeoParacosm.Items.RObsidianHelmet.SetBonus
-	DisplayName: Obsidian-Reinforced Stone
-	Tooltip: Reduces movement speed by {0}%
-}
-
 StoneHelmet: {
 	SetBonus: Allows you to eat gems to gain different buffs
 	DisplayName: Stone Helmet
-	Tooltip: Reduces movement speed by {0}%
-}
-
-RObsidianBoots: {
-	DisplayName: Obsidian-Reinforced Stone Boots
-	Tooltip: Reduces movement speed by {0}%
-}
-
-RObsidianBreastplate: {
-	DisplayName: Obsidian-Reinforced Stone Breastplate
 	Tooltip: Reduces movement speed by {0}%
 }
 
@@ -823,7 +807,7 @@ HailfireSpell: {
 }
 
 SnowgraveSpell: {
-	DisplayName: Snowgrave Spell
+	DisplayName: Snowgrave
 	Tooltip:
 		'''
 		Grants you the blessing of the buried snowdwellers
@@ -833,7 +817,7 @@ SnowgraveSpell: {
 }
 
 FireAuraSpell: {
-	DisplayName: Fire Aura Spell
+	DisplayName: Fire Aura
 	Tooltip: Grants you a fiery aura that reduces enemy defense the closer they are to you
 }
 
@@ -856,7 +840,7 @@ LightningRod: {
 }
 
 ThunderstormSpell: {
-	DisplayName: Thunderstorm Spell
+	DisplayName: Thunderstorm
 	Tooltip: Cast forth several bolts of lightning
 }
 
@@ -888,7 +872,7 @@ SandWallSpell: {
 }
 
 UnearthSpell: {
-	DisplayName: Unearth Spell
+	DisplayName: Unearth
 	Tooltip:
 		'''
 		Knocks nearby enemies high up into the air
@@ -1055,7 +1039,7 @@ CreminiCremator: {
 
 WheelGreatshield: {
 	DisplayName: Wheel Greatshield
-	Tooltip: Increases movement speed and grants immunity to knockback upon contact damage
+	Tooltip: Increases movement speed and grants immunity to knockback from contact damage
 }
 
 IceCometStaff: {
@@ -1451,7 +1435,7 @@ CircletOfFocus: {
 }
 
 CrystalBurstSpell: {
-	DisplayName: Crystal Burst Spell
+	DisplayName: Crystal Burst
 	Tooltip: Fires a burst of crystals, which burst into more crystals
 }
 
@@ -1636,7 +1620,7 @@ BombVest: {
 }
 
 EarthquakeSpell: {
-	DisplayName: Earthquake Spell
+	DisplayName: Earthquake
 	Tooltip:
 		'''
 		Knocks nearby enemies high up into the air
@@ -2033,12 +2017,12 @@ DragonClaw: {
 }
 
 InfernoSpell: {
-	DisplayName: Inferno Spell
+	DisplayName: Inferno
 	Tooltip: Fire a tiny fireball that explodes after a short duration
 }
 
 PoisonGasSpell: {
-	DisplayName: Poison Gas Spell
+	DisplayName: Poison Gas
 	Tooltip: Fire a burst of poison gas
 }
 
@@ -2269,22 +2253,30 @@ GoldenSpiritTablet: {
 MysticCrystal: {
 	DisplayName: Mystic Crystal
 	Tooltip:
-	'''
-	Increases magic damage by {0}%
-	Increases pure magic and ice spell damage and expertise by {1}%
-	Disables magic critical strikes
-	Hits that would have been critical strikes give you Mana Regeneration and Mana Power
-	'''
+		'''
+		Increases magic damage by {0}%
+		Increases pure magic and ice spell damage and expertise by {1}%
+		Disables magic critical strikes
+		Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+		'''
 }
 
 MysticCrystalBrooch: {
 	DisplayName: Mystic Crystal Brooch
 	Tooltip:
+		'''
+		Increases magic and summon damage by {0}%
+		Increases pure magic and ice spell damage and expertise by {1}%
+		Disables magic critical strikes
+		Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+		Your minions periodically spawn icicles
+		'''
+}
+
+QuichorStaff: {
+	DisplayName: Quichor Staff
+	Tooltip:
 	'''
-	Increases magic and summon damage by {0}%
-	Increases pure magic and ice spell damage and expertise by {1}%
-	Disables magic critical strikes
-	Hits that would have been critical strikes give you Mana Regeneration and Mana Power
-	Your minions periodically spawn icicles
+	Summons a quichor to protect you
 	'''
 }

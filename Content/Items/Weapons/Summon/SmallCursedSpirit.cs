@@ -1,10 +1,10 @@
 ﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Projectiles.Friendly.Ranged;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using System.IO;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Minions;
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
-public class SmallIchorSpirit : ModProjectile
+public class SmallCursedSpirit : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float AttackTimer => ref Projectile.ai[1];
@@ -77,7 +77,7 @@ public class SmallIchorSpirit : ModProjectile
             DustType<FireDust>(),
             -Vector2.UnitY * Main.rand.NextFloat(0.5f, 2f),
             Alpha: 150,
-            newColor: Color.Gold,
+            newColor: Color.Lime,
             Scale: Main.rand.NextFloat(0.3f, 0.6f));
 
         Projectile.StandardAnimation(6, 4);
@@ -108,35 +108,28 @@ public class SmallIchorSpirit : ModProjectile
 
     void AttackBehavior(Player player, NPC npc)
     {
-        if (AttackTimer == 240)
+        if (AttackTimer % 180 == 0)
         {
-            Projectile.velocity = Projectile.DirectionTo(npc.Center) * 20;
-        }
-        if (AttackTimer > 240)
-        {
-            Projectile.MoveToPos(npc.Center, 0.1f, 0.1f, Speed * 10f, Speed * 10f);
-            if (Main.myPlayer == Projectile.owner && AttackTimer % 5 == 0)
+            if (Main.myPlayer == Projectile.owner)
             {
-                LemonUtils.QuickProj(
-                    Projectile,
-                    Projectile.Center,
-                    Vector2.Zero,
-                    ProjectileType<IchorFlamethrowerFriendly>(),
-                    Projectile.damage,
-                    Projectile.knockBack,
-                    Projectile.owner,
-                    ai0: 20, ai1: 0.95f, ai2: 0f);
+                targetPos = npc.Center + Vector2.UnitY.RotatedBy(Main.rand.NextFloat(0, 4) * MathHelper.PiOver2) * (npc.height * 2);
             }
+            Projectile.netUpdate = true;
 
-            if (AttackTimer > 360)
+            LemonUtils.DustBurst(6, Projectile.Center, DustType<FireDust>(), 2, 2, 0.5f, 0.75f, Color.Lime);
+            Projectile.Center = targetPos;
+            LemonUtils.DustBurst(6, Projectile.Center, DustType<FireDust>(), 2, 2, 0.5f, 0.75f, Color.Lime);
+
+            if (Main.myPlayer == Projectile.owner)
             {
-                AttackTimer = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver2) * 2, ProjectileType<CursedFlameSphereFriendly>(), ai1: 1.03f);
+                }
             }
         }
-        else
-        {
-            Projectile.MoveToPos(npc.Center, 0.1f, 0.1f, Speed, Speed);
-        }
+
+        Projectile.MoveToPos(npc.Center, 0.1f, 0.1f, Speed, Speed);
 
     }
 
@@ -148,8 +141,8 @@ public class SmallIchorSpirit : ModProjectile
     void PassiveBehavior(Player player)
     {
         int group = (Projectile.minionPos / 4) + 1;
-        float diagonalDistance = 64 * group;
-        Vector2 pos = player.Center + Vector2.UnitY.RotatedBy(MathHelper.PiOver2 * Projectile.minionPos) * diagonalDistance;
+        float diagonalDistance = 48 * group;
+        Vector2 pos = player.Center + Vector2.One.RotatedBy(MathHelper.PiOver2 * Projectile.minionPos) * diagonalDistance;
         Projectile.MoveToPos(pos, 0.3f, 0.3f, 0.2f, 0.2f);
     }
 
@@ -157,11 +150,11 @@ public class SmallIchorSpirit : ModProjectile
     {
         if (owner.dead || !owner.active)
         {
-            owner.ClearBuff(BuffType<SmallIchorSpiritBuff>());
+            owner.ClearBuff(BuffType<SmallCursedSpiritBuff>());
             return false;
         }
 
-        if (owner.HasBuff(BuffType<SmallIchorSpiritBuff>()))
+        if (owner.HasBuff(BuffType<SmallCursedSpiritBuff>()))
         {
             Projectile.timeLeft = 2;
         }
@@ -169,7 +162,7 @@ public class SmallIchorSpirit : ModProjectile
     }
 }
 
-public class SmallIchorSpiritBuff : ModBuff
+public class SmallCursedSpiritBuff : ModBuff
 {
     public override void SetStaticDefaults()
     {
@@ -179,7 +172,7 @@ public class SmallIchorSpiritBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        if (player.ownedProjectileCounts[ProjectileType<SmallIchorSpirit>()] > 0)
+        if (player.ownedProjectileCounts[ProjectileType<SmallCursedSpirit>()] > 0)
         {
             player.buffTime[buffIndex] = 18000;
         }

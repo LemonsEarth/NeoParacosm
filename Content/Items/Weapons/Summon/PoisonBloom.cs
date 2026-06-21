@@ -1,6 +1,8 @@
-﻿namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
-public class FireBloom : ModProjectile
+namespace NeoParacosm.Content.Items.Weapons.Summon;
+
+public class PoisonBloom : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     NPC closestEnemy;
@@ -21,28 +23,16 @@ public class FireBloom : ModProjectile
         Projectile.friendly = false;
         Projectile.sentry = true;
     }
-    float attackSpeed = 0;
+
     public override void AI()
     {
         closestEnemy = GetClosestNPC(1000);
 
         Projectile.velocity.Y = 10f;
-        if (closestEnemy != null)
+        if (Main.myPlayer == Projectile.owner && AITimer % 60 == 0 && closestEnemy != null)
         {
-            attackSpeed = Projectile.Center.Distance(closestEnemy.Center) / 10;
-            if (attackSpeed < 10)
-            {
-                attackSpeed = 10;
-            }
-        }
-        if (Main.myPlayer == Projectile.owner && closestEnemy != null && AITimer >= attackSpeed)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Lava);
-            }
-            Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, -Vector2.UnitY.RotatedBy(MathHelper.ToRadians(Main.rand.Next(-60, 60))) * 6, ProjectileID.BallofFire, Projectile.damage, 2f, Projectile.owner);
-            AITimer = 0;
+            Vector2 spawnPos = Projectile.position + new Vector2(Main.rand.Next(0, Projectile.width), Main.rand.Next(0, 20));
+            Projectile.NewProjectile(Projectile.GetSource_FromAI(), spawnPos, (closestEnemy.Center - spawnPos).SafeNormalize(Vector2.Zero) * 10, ProjectileType<PoisonBloomPetal>(), Projectile.damage, 2f, Projectile.owner);
             Projectile.netUpdate = true;
         }
 
@@ -57,15 +47,7 @@ public class FireBloom : ModProjectile
                 Projectile.frame = 0;
             }
         }
-        if (closestEnemy != null)
-        {
-            AITimer++;
-        }
-        else
-        {
-            AITimer = 0;
-        }
-        Lighting.AddLight(Projectile.Center, 5, 3, 0);
+        AITimer++;
     }
 
     public NPC GetClosestNPC(int distance)

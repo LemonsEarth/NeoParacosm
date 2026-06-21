@@ -1,9 +1,10 @@
 ﻿using NeoParacosm.Content.Buffs.GoodBuffs;
 using NeoParacosm.Content.NPCs.Friendly.Special;
 using NeoParacosm.Content.Projectiles.Effect;
+using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 using Terraria.Audio;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+namespace NeoParacosm.Content.Items.Weapons.Summon;
 
 public class BranchOfLifeSentry : ModProjectile
 {
