@@ -4,7 +4,7 @@ using System.IO;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
 
-public class Quichor : ModProjectile
+public class Occulpt : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float AttackTimer => ref Projectile.ai[1];
@@ -32,7 +32,7 @@ public class Quichor : ModProjectile
         ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
         Main.projPet[Projectile.type] = true;
         ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-        ProjectileID.Sets.SummonTagDamageMultiplier[Type] = 0.25f;
+        ProjectileID.Sets.SummonTagDamageMultiplier[Type] = 0.75f;
     }
 
     public override void SetDefaults()
@@ -108,7 +108,19 @@ public class Quichor : ModProjectile
             dashStartPos = Projectile.Center;
             if (Main.myPlayer == Projectile.owner)
             {
-                targetPos = npc.RandomPos();
+                for (int i = 0; i < 3; i++)
+                {
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        Projectile.Center,
+                        Vector2.UnitY.RotatedByRandom(6.28f) * 5,
+                        ProjectileType<CursedFlamethrowerFriendly>(),
+                        Projectile.damage,
+                        Projectile.knockBack,
+                        Projectile.owner,
+                        ai0: 15, ai1: 0.95f, ai2: 0f);
+                    targetPos = npc.RandomPos();
+                }
             }
             Projectile.netUpdate = true;
         }
@@ -117,17 +129,17 @@ public class Quichor : ModProjectile
 
         Dust.NewDustPerfect(
             Projectile.RandomPos(),
-            DustID.GemTopaz,
+            DustID.CursedTorch,
             startToTarget * 5,
-            newColor: Color.Gold,
+            newColor: Color.Lime,
             Scale: Main.rand.NextFloat(0.6f, 1f)).noGravity = true;
 
         Projectile.rotation = startToTarget.ToRotation();
         float targetHitboxDiagonal = new Vector2(npc.width, npc.height).Length();
         Vector2 realTargetPos = dashStartPos + startToTarget * (dashStartPos.Distance(targetPos) + targetHitboxDiagonal * 2);
-        Projectile.Center = Vector2.Lerp(dashStartPos, realTargetPos, AttackTimer / 20f);
+        Projectile.Center = Vector2.Lerp(dashStartPos, realTargetPos, MathHelper.Clamp(AttackTimer / 20f, 0f, 1f));
         AttackTimer++;
-        if (AttackTimer > 20f)
+        if (AttackTimer > 120f)
         {
             AttackTimer = 0f;
         }
@@ -142,8 +154,8 @@ public class Quichor : ModProjectile
     {
         Projectile.rotation = MathHelper.ToRadians(AITimer * 3);
         int group = (Projectile.minionPos / 4) + 1;
-        float diagonalDistance = 64 * group;
-        Vector2 pos = player.Center + Vector2.UnitY.RotatedBy(MathHelper.PiOver2 * Projectile.minionPos) * diagonalDistance;
+        float diagonalDistance = 48 * group;
+        Vector2 pos = player.Center + Vector2.One.RotatedBy(MathHelper.PiOver2 * Projectile.minionPos) * diagonalDistance;
         Projectile.MoveToPos(pos, 0.3f, 0.3f, 0.2f, 0.2f);
     }
 
@@ -151,11 +163,11 @@ public class Quichor : ModProjectile
     {
         if (owner.dead || !owner.active)
         {
-            owner.ClearBuff(BuffType<QuichorBuff>());
+            owner.ClearBuff(BuffType<OcculptBuff>());
             return false;
         }
 
-        if (owner.HasBuff(BuffType<QuichorBuff>()))
+        if (owner.HasBuff(BuffType<OcculptBuff>()))
         {
             Projectile.timeLeft = 2;
         }
@@ -171,15 +183,11 @@ public class Quichor : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        if (Main.rand.NextBool(300))
-        {
-            target.AddBuff(BuffID.Ichor, 300);
-            Projectile.Kill();
-        }
+        //target.AddBuff(BuffID.Ichor, 90);
     }
 }
 
-public class QuichorBuff : ModBuff
+public class OcculptBuff : ModBuff
 {
     public override void SetStaticDefaults()
     {
@@ -189,7 +197,7 @@ public class QuichorBuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        if (player.ownedProjectileCounts[ProjectileType<Quichor>()] > 0)
+        if (player.ownedProjectileCounts[ProjectileType<Occulpt>()] > 0)
         {
             player.buffTime[buffIndex] = 18000;
         }

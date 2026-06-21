@@ -2275,8 +2275,10 @@ MysticCrystalBrooch: {
 
 QuichorStaff: {
 	DisplayName: Quichor Staff
-	Tooltip:
-	'''
-	Summons a quichor to protect you
-	'''
+	Tooltip: Summons a Quichor to protect you
+}
+
+OcculptStaff: {
+	DisplayName: Occulpt Staff
+	Tooltip: Summons an Occulpt to protect you
 }

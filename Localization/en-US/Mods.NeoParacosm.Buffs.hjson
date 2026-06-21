@@ -221,3 +221,8 @@ QuichorBuff: {
 	DisplayName: Quichor
 	Description: Quichors protect you...
 }
+
+OcculptBuff: {
+	DisplayName: Occulpt Buff
+	Description: Occulpts protect you...
+}

@@ -1,9 +1,10 @@
 ﻿using NeoParacosm.Content.Items.Materials;
+using NeoParacosm.Core.Systems.Assets;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
 
-public class CurseCallerStaff : ModItem
+public class OcculptStaff : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -16,15 +17,15 @@ public class CurseCallerStaff : ModItem
         Item.height = 48;
         Item.mana = 12;
         Item.noMelee = true;
-        Item.damage = 100;
+        Item.damage = 6;
         Item.DamageType = DamageClass.Summon;
         Item.useStyle = ItemUseStyleID.Swing;
         Item.useTime = 20;
         Item.useAnimation = 20;
-        Item.UseSound = SoundID.DD2_FlameburstTowerShot;
-        Item.buffType = BuffType<SmallCursedSpiritBuff>();
-        Item.shoot = ProjectileType<SmallCursedSpirit>();
-        Item.rare = ItemRarityID.Red;
+        Item.UseSound = SFX.SummonStaff;
+        Item.buffType = BuffType<OcculptBuff>();
+        Item.shoot = ProjectileType<Occulpt>();
+        Item.rare = ItemRarityID.Orange;
         Item.value = Item.sellPrice(0, 3);
     }
 
@@ -42,14 +43,5 @@ public class CurseCallerStaff : ModItem
             projectile.originalDamage = Item.damage;
         }
         return false;
-    }
-
-    public override void AddRecipes()
-    {
-        Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemType<OcculptStaff>(), 1);
-        recipe.AddIngredient(ItemType<NightmareScale>(), 12);
-        recipe.AddTile(TileID.MythrilAnvil);
-        recipe.Register();
     }
 }
