@@ -19,6 +19,8 @@ public class EclipseGreatshield : ModItem
     {
         player.GetModPlayer<EclipseGreatshieldPlayer>().eclipseGreatshield = true;
     }
+
+    //override hold
 }
 
 public class EclipseGreatshieldPlayer : ModPlayer

@@ -16,7 +16,7 @@ public class MagicSpores : ModItem
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         player.statManaMax2 += 20;
-        if (Main.myPlayer == player.whoAmI && NPPlayer.timer % 10 == 0 && player.velocity.LengthSquared() > 5 * 5)
+        if (Main.myPlayer == player.whoAmI && NPPlayer.Timer % 10 == 0 && player.velocity.LengthSquared() > 5 * 5)
         {
             Projectile.NewProjectileDirect(
                 player.GetSource_Accessory(Item),

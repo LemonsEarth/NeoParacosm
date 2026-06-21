@@ -20,7 +20,7 @@ public class IcicleCollectorsBrooch : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        if (player.whoAmI == Main.myPlayer && timer % 60 == 0)
+        if (player.whoAmI == Main.myPlayer && timer % 30 == 0)
         {
             foreach (var proj in Main.ActiveProjectiles)
             {

@@ -24,7 +24,7 @@ public class GreenAuraPlayer : ModPlayer
         {
             Player.AddBuff(BuffID.Stinky, 2);
 
-            if (Main.myPlayer == Player.whoAmI && NPPlayer.timer % 30 == 0)
+            if (Main.myPlayer == Player.whoAmI && NPPlayer.Timer % 30 == 0)
             {
                 foreach (var npc in Main.ActiveNPCs)
                 {

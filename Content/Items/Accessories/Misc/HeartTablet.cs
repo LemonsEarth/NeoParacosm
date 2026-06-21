@@ -14,7 +14,6 @@ public class HeartTablet : ModItem
         Item.accessory = true;
         Item.value = Item.sellPrice(0, 2);
         Item.rare = ItemRarityID.Blue;
-        Item.lifeRegen = 2;
         Item.consumable = true;
         Item.buffTime = 60 * 60 * 10; // 10 minutes
         Item.buffType = BuffID.Regeneration;

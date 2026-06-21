@@ -25,7 +25,7 @@ public class FireAuraPlayer : ModPlayer
 
     public override void UpdateEquips()
     {
-        if (Player.HasBuff(BuffType<FireAuraBuff>()) && NPPlayer.timer % 120 == 0)
+        if (Player.HasBuff(BuffType<FireAuraBuff>()) && NPPlayer.Timer % 120 == 0)
         {
             if (Main.myPlayer == Player.whoAmI)
             {

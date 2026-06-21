@@ -2150,7 +2150,6 @@ HeartTablet: {
 	Tooltip:
 		'''
 		Increases healing potion healing by {0}
-		Increases life regeneration
 		Can be consumed for Regeneration
 		'''
 }
@@ -2233,8 +2232,59 @@ InfectedEnhancer: {
 ArcaneSkull: {
 	DisplayName: Arcane Skull
 	Tooltip:
+		'''
+		Your minions may explode, dealing 4x their damage to nearby enemies
+		When a minion dies, you briefly gain increased damage and life regeneration
+		'''
+}
+
+SpiritTablet: {
+	DisplayName: Spirit Tablet
+	Tooltip:
+		'''
+		Increases healing potion health restoration by {0}
+		Increases mana potion mana restoration by {1}
+		'''
+}
+
+StoneHeart: {
+	DisplayName: Stone Heart
+	Tooltip:
+		'''
+		Increases maximum life by {0}
+		Poison and On Fire! deplete faster
+		'''
+}
+
+GoldenSpiritTablet: {
+	DisplayName: Golden Spirit Tablet
+	Tooltip:
+		'''
+		Increases healing potion health restoration by {0}
+		Increases mana potion mana restoration by {1}
+		Has a 25% chance to double health and mana restoration instead
+		'''
+}
+
+MysticCrystal: {
+	DisplayName: Mystic Crystal
+	Tooltip:
 	'''
-	Your minions may explode, dealing 4x their damage to nearby enemies
-	When a minion dies, you briefly gain increased damage and life regeneration
+	Increases magic damage by {0}%
+	Increases pure magic and ice spell damage and expertise by {1}%
+	Disables magic critical strikes
+	Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+	'''
+}
+
+MysticCrystalBrooch: {
+	DisplayName: Mystic Crystal Brooch
+	Tooltip:
+	'''
+	Increases magic and summon damage by {0}%
+	Increases pure magic and ice spell damage and expertise by {1}%
+	Disables magic critical strikes
+	Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+	Your minions periodically spawn icicles
 	'''
 }

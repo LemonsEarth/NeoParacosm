@@ -8,11 +8,14 @@ namespace NeoParacosm.Core.Players;
 
 public class NPPlayer : ModPlayer
 {
-    public static int timer = 0;
+    public static int Timer { get; set; } = 0;
     public bool NoMusic { get; set; } = false;
     public bool Grabbed { get; set; } = false;
     public bool FastFall { get; set; } = false;
 
+    /// <summary>
+    /// A collection of projectile types that should behave as blocks, like CorruptPillar.
+    /// </summary>
     public static HashSet<int> BlockProjectiles { get; set; } = new HashSet<int>();
     public static List<Projectile> BlockProjectileInstances { get; set; } = new List<Projectile>();
 
@@ -146,7 +149,7 @@ public class NPPlayer : ModPlayer
             AscensionUISystem UISystem = GetInstance<AscensionUISystem>();
             UISystem.HideUI();
         }
-        timer++;
+        Timer++;
     }
 
     /// <summary>

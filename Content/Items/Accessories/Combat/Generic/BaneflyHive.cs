@@ -43,7 +43,7 @@ public class BaneflyHivePlayer : ModPlayer
     {
         if (Player.HasBuff(BuffType<BaneflyHiveBuff>()))
         {
-            if (NPPlayer.timer % 300 == 0 && Main.myPlayer == Player.whoAmI)
+            if (NPPlayer.Timer % 300 == 0 && Main.myPlayer == Player.whoAmI)
             {
                 for (int i = 0; i < 4; i++)
                 {

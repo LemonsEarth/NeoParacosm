@@ -26,7 +26,7 @@ public class ElectrifiedBodyPlayer : ModPlayer
 
     public override void UpdateEquips()
     {
-        if (Main.myPlayer == Player.whoAmI && Player.HasBuff(BuffType<ElectrifiedBodyBuff>()) && NPPlayer.timer % 180 == 0)
+        if (Main.myPlayer == Player.whoAmI && Player.HasBuff(BuffType<ElectrifiedBodyBuff>()) && NPPlayer.Timer % 180 == 0)
         {
             SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (0.1f, 0.5f), Volume = 0.5f}, Player.Center);
             float dustSpeed = Player.GetElementalExpertiseBoostMultiplied(SpellElement.Lightning, 2) * 2;

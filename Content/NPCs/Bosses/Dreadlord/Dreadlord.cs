@@ -146,7 +146,6 @@ public partial class Dreadlord : ModNPC
             NPC.TargetClosest(false);
         }
         player = Main.player[NPC.target];
-
         SetDefaultBodyPartPositions();
         NPC.width = (int)(284 * NPC.scale);
         NPC.height = (int)(416 * NPC.scale);

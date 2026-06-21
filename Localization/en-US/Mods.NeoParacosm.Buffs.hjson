@@ -213,6 +213,6 @@ SmallIchorSpiritBuff: {
 }
 
 ArcaneSkullBuff: {
-	DisplayName: Vow of Arcane 
+	DisplayName: Vow of Arcane
 	Description: Increased damage and life regeneration
 }

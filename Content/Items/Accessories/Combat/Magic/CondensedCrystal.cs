@@ -4,7 +4,7 @@ namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;
 
 public class CondensedCrystal : ModItem
 {
-    readonly float damageBoost = 10f;
+    readonly float damageBoost = 7f;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost);
     public override void SetDefaults()
     {
@@ -27,6 +27,7 @@ public class CondensedCrystal : ModItem
             .AddIngredient(ItemID.FallenStar, 6)
             .AddIngredient(ItemID.Diamond, 8)
             .AddRecipeGroup("NeoParacosm:AnyGoldBar", 12)
+            .AddRecipeGroup("NeoParacosm:AnyEvilMaterial", 12)
             .AddTile(TileID.Anvils)
             .Register();
     }
