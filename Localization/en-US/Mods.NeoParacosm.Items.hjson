@@ -2275,7 +2275,11 @@ MysticCrystalBrooch: {
 
 QuichorStaff: {
 	DisplayName: Quichor Staff
-	Tooltip: Summons a Quichor to protect you
+	Tooltip:
+	'''
+	Summons a Quichor to protect you
+	Quichors may inflict the enemy with Ichor on hit, which causes them to disappear
+	'''
 }
 
 OcculptStaff: {
