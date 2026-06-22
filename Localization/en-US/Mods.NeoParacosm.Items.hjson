@@ -2276,13 +2276,55 @@ MysticCrystalBrooch: {
 QuichorStaff: {
 	DisplayName: Quichor Staff
 	Tooltip:
-	'''
-	Summons a Quichor to protect you
-	Quichors may inflict the enemy with Ichor on hit, which causes them to disappear
-	'''
+		'''
+		Summons a Quichor to protect you
+		Quichors may inflict the enemy with Ichor on hit, which causes them to disappear
+		'''
 }
 
 OcculptStaff: {
 	DisplayName: Occulpt Staff
 	Tooltip: Summons an Occulpt to protect you
+}
+
+CursedCandlestick: {
+	DisplayName: Cursed Candlestick
+	Tooltip:
+	'''
+	Increases fire spell damage by {0}%
+	Increases fire spell expertise by {1}%
+	Increases dark spell damage by {2}%
+	'''
+}
+
+GoldenEye: {
+	DisplayName: Golden Eye
+	Tooltip:
+	'''
+	Increases fire spell damage by {0}%
+	Increases fire spell expertise by {1}%
+	Increases dark spell expertise by {2}%
+	Inflicts the user with Ichor while held
+	'''
+}
+
+LivingVine: {
+	DisplayName: Living Vine
+	Tooltip:
+	'''
+	Increases magic spell damage by {0}%
+	Increases magic spell expertise by {1}%
+	Increases nature spell damage by {2}%
+	Increases nature spell expertise by {3}%
+	'''
+}
+
+SpiritGlove: {
+	DisplayName: Spirit Glove
+	Tooltip:
+	'''
+	Increases pure magic spell damage by {0}%
+	Increases holy spell expertise by {1}%
+	Increases dark spell expertise by {2}%
+	'''
 }

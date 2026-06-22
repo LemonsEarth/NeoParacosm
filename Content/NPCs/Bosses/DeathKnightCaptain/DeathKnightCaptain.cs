@@ -153,7 +153,6 @@ public partial class DeathKnightCaptain : ModNPC
         }
 
         DespawnCheck();
-        ArenaControl();
         AttackControl();
         AITimer++;
     }

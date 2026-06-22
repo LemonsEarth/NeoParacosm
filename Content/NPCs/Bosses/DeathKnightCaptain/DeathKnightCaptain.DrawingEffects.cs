@@ -5,14 +5,13 @@ using ReLogic.Content;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
+namespace NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 
 // This boss is spread across multiple files
 // This file contains drawing and visual/audio effect logic
 
 public partial class DeathKnightCaptain : ModNPC
 {
-
     private void AuraBurst(int count, Vector2 speed)
     {
         for (int i = 0; i < count; i++)

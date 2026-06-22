@@ -8,26 +8,13 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 
-namespace NeoParacosm.Content.NPCs.Bosses.DeathbroughtDeathbringerP1;
+namespace NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 
 // This boss is spread across multiple files
 // This file essential ModNPC overrides and loading assets
 
 public partial class DeathKnightCaptain : ModNPC
 {
-    #region Body Parts
-    public DreadlordBodyPart HeadCorrupt { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart HeadCrimson { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart WingCorrupt { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart WingCrimson { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart LegCorrupt { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart LegCrimson { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart Body { get; private set; } = new DreadlordBodyPart();
-    public DreadlordBodyPart BackLegs { get; private set; } = new DreadlordBodyPart();
-
-    public static Asset<Texture2D> NeckTextureCorrupt { get; private set; }
-    public static Asset<Texture2D> NeckTextureCrimson { get; private set; }
-    #endregion
 
     public override void Load()
     {
