@@ -3,7 +3,7 @@ using NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 using NeoParacosm.Core.UI.ResearcherUI.Note;
 using Terraria.DataStructures;
 
-namespace NeoParacosm.Content.Items.Misc;
+namespace NeoParacosm.Content.Items.Tools;
 
 public class InfectedEnhancer : ModItem
 {

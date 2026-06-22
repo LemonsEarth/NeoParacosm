@@ -262,7 +262,7 @@ AscendedBallOHurt: {
 AscendedShadowHelmet: {
 	SetBonus:
 		'''
-		Shadow Orbs spawn around hit enemies
+		Eater eggs spawn around hit enemies
 		Destroy them to unleash several tiny eaters
 		'''
 	DisplayName: Ascended Shadow Helmet
@@ -2290,41 +2290,46 @@ OcculptStaff: {
 CursedCandlestick: {
 	DisplayName: Cursed Candlestick
 	Tooltip:
-	'''
-	Increases fire spell damage by {0}%
-	Increases fire spell expertise by {1}%
-	Increases dark spell damage by {2}%
-	'''
+		'''
+		Increases fire spell damage by {0}%
+		Increases fire spell expertise by {1}%
+		Increases dark spell damage by {2}%
+		'''
 }
 
 GoldenEye: {
 	DisplayName: Golden Eye
 	Tooltip:
-	'''
-	Increases fire spell damage by {0}%
-	Increases fire spell expertise by {1}%
-	Increases dark spell expertise by {2}%
-	Inflicts the user with Ichor while held
-	'''
+		'''
+		Increases fire spell damage by {0}%
+		Increases fire spell expertise by {1}%
+		Increases dark spell expertise by {2}%
+		Inflicts the user with Ichor while held
+		'''
 }
 
 LivingVine: {
 	DisplayName: Living Vine
 	Tooltip:
-	'''
-	Increases magic spell damage by {0}%
-	Increases magic spell expertise by {1}%
-	Increases nature spell damage by {2}%
-	Increases nature spell expertise by {3}%
-	'''
+		'''
+		Increases magic spell damage by {0}%
+		Increases magic spell expertise by {1}%
+		Increases nature spell damage by {2}%
+		Increases nature spell expertise by {3}%
+		'''
 }
 
 SpiritGlove: {
 	DisplayName: Spirit Glove
 	Tooltip:
-	'''
-	Increases pure magic spell damage by {0}%
-	Increases holy spell expertise by {1}%
-	Increases dark spell expertise by {2}%
-	'''
+		'''
+		Increases pure magic spell damage by {0}%
+		Increases holy spell expertise by {1}%
+		Increases dark spell expertise by {2}%
+		'''
+}
+
+GiantPickaxe: {
+	DisplayName: Giant Pickaxe
+	Tooltip: ""
 }
