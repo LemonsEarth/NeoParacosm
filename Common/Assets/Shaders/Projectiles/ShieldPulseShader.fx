@@ -15,8 +15,8 @@ bool alwaysVisible;
 
 float4 ShieldPulseShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
-    float4 noiseColorBase = tex2D(noiseTexture, coords + float2(uTime / 100.0, uTime / 100.0));
-    float4 noiseColor = tex2D(noiseTexture, coords + float2(uTime / 100.0, uTime / 100.0));
+    float4 noiseColorBase = tex2D(noiseTexture, coords + float2((uTime + noiseTimeX) / 100.0, (uTime + noiseTimeY) / 100.0));
+    float4 noiseColor = tex2D(noiseTexture, coords + float2((uTime + noiseTimeX) / 100.0, (uTime + noiseTimeY) / 100.0));
     float2 centeredCoords = coords * 2.0 - 1.0;
     float coordsLength = length(centeredCoords);
     if (coordsLength > frac(time * speed))

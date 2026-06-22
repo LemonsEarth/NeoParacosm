@@ -44,6 +44,9 @@ public class ResearcherBoss : ModNPC
     ref float AttackTimer => ref NPC.ai[2];
     ref float AttackCount => ref NPC.ai[3];
 
+    bool doDeathTimer = false;
+    int DeathTimer = 0;
+
     float attackDuration = 0;
     int[] attackDurations = { 600, 600, 720, 480, 960 };
     public Player player { get; private set; }
@@ -112,7 +115,7 @@ public class ResearcherBoss : ModNPC
         NPC.Opacity = 1;
         NPC.lifeMax = 80000;
         NPC.defense = 40;
-        NPC.damage = 40;
+        NPC.damage = 100;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 300000;
@@ -169,6 +172,26 @@ public class ResearcherBoss : ModNPC
         Dust.NewDustPerfect(NPC.Center + Vector2.UnitX * (Main.rand.NextFloat(8, 16) * -NPC.direction), DustID.IceTorch, Vector2.UnitY * Main.rand.NextFloat(0.5f, 1.5f));
         Lighting.AddLight(NPC.Center, 0.5f, 0.25f, 1f);
         shieldTimer++;
+
+        if (DeathTimer == 900 && LemonUtils.NotClient())
+        {
+            //NPC.dontTakeDamage = false;
+            //NPC.defense = 9000;
+            Projectile.NewProjectileDirect(
+                NPC.GetSource_FromAI(),
+                NPC.Center + Vector2.UnitY * 6000,
+                -Vector2.UnitY * 100,
+                ProjectileType<DreadlordJumpscareProj>(),
+                5,
+                10f,
+                ai0: 90
+                );
+        }
+
+        if (doDeathTimer)
+        {
+            DeathTimer++;
+        }
 
         if (ShouldTalk())
         {
@@ -238,6 +261,11 @@ public class ResearcherBoss : ModNPC
             <= 100f => lastPart - 6,
             _ => -1
         };
+
+        if (currentPart == lastPart)
+        {
+            doDeathTimer = true;
+        }
 
         return currentPart;
     }
@@ -347,7 +375,7 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>());
                     }
                 }
                 break;
@@ -383,7 +411,7 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>());
                     }
                 }
 
@@ -393,7 +421,7 @@ public class ResearcherBoss : ModNPC
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center,
                             NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 2,
-                            ProjectileType<SavMissile>(), NPC.damage / 2, ai1: 120);
+                            ProjectileType<SavMissile>(), ai1: 120);
                     }
                 }
                 break;
@@ -402,7 +430,7 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 14, ProjectileType<SavBlast>(), NPC.damage / 2);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 14, ProjectileType<SavBlast>());
                     }
                 }
                 break;
@@ -420,7 +448,7 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 12, ProjectileType<SavBlast>());
                     }
                 }
 
@@ -430,7 +458,7 @@ public class ResearcherBoss : ModNPC
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center,
                             NPC.DirectionTo(targetPosition).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4)) * 5,
-                            ProjectileType<SavMissile>(), NPC.damage / 2, ai1: 60);
+                            ProjectileType<SavMissile>(), ai1: 60);
                     }
                 }
                 break;
@@ -528,7 +556,7 @@ public class ResearcherBoss : ModNPC
                     {
                         LemonUtils.QuickProj(NPC, NPC.Center,
                             NPC.DirectionTo(targetPosition).RotatedBy(i * MathHelper.ToRadians(5)) * 10,
-                            ProjectileType<SavBlast>(), NPC.damage / 2, ai1: 1.02f);
+                            ProjectileType<SavBlast>(), ai1: 1.02f);
                     }
                 }
                 AttackTimer = SAV_BLAST_DIRECT_DURATION;
@@ -589,7 +617,7 @@ public class ResearcherBoss : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>(), NPC.damage / 2);
+                        LemonUtils.QuickProj(NPC, NPC.Center, NPC.DirectionTo(targetPosition) * 12, ProjectileType<SavBlast>());
                     }
                 }
                 break;
@@ -703,7 +731,7 @@ public class ResearcherBoss : ModNPC
         shader.Shader.Parameters["noiseTimeY"].SetValue(shieldTimer * 2.5f);
         shader.Shader.Parameters["alwaysVisible"].SetValue(true);
         shader.Shader.Parameters["speed"].SetValue(1f);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(2f);
+        shader.Shader.Parameters["colorMultiplier"].SetValue(1f);
         float introClampedAITimer = Math.Clamp(AITimer, 0, IntroDuration);
         shieldColor = Color.Lerp(shieldColor, Color.DeepSkyBlue, 1 / 10f);
         shader.Shader.Parameters["color"].SetValue(shieldColor.ToVector4() * (introClampedAITimer / IntroDuration));

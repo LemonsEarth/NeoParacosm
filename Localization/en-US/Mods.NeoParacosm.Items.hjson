@@ -480,7 +480,7 @@ SupremeMusket: {
 
 SupremeUndertaker: {
 	DisplayName: Enemy of Machines
-	Tooltip: '''"Last Stand"'''
+	Tooltip: '''"Standoff"'''
 }
 
 DeathbirdTreasureBag: {
