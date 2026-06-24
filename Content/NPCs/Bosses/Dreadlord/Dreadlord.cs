@@ -140,7 +140,6 @@ public partial class Dreadlord : ModNPC
     {
         //Main.NewText(AttackTimer);
         StandardLegAnimation();
-        DarkCataclysmSystem.DreadlordAlive = true;
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
             NPC.TargetClosest(false);

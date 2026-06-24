@@ -21,7 +21,7 @@ public class CorruptMage : ModNPC
         NPC.height = 48;
         NPC.lifeMax = 100;
         NPC.defense = 12;
-        NPC.damage = 20;
+        NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 1000;

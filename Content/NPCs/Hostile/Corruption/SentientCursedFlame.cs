@@ -107,7 +107,7 @@ public class SentientCursedFlame : ModNPC
                 {
                     for (int i = 0; i < 8; i++)
                     {
-                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 2, ProjectileType<CursedFlameSphere>(), ai1: 1.03f);
+                        LemonUtils.QuickProj(NPC, NPC.Center, Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4) * 2, ProjectileType<CursedFlameSphere>(), damage: NPC.damage * 2, ai1: 1.03f);
                     }
                 }
             }

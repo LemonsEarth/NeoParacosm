@@ -47,7 +47,7 @@ public class SentientIchor : ModNPC
         NPC.height = 48;
         NPC.lifeMax = 400;
         NPC.defense = 0;
-        NPC.damage = 40;
+        NPC.damage = 60;
         NPC.HitSound = SoundID.NPCHit11 with { PitchRange = (-0.3f, -0.1f) };
         NPC.DeathSound = SoundID.NPCDeath15 with { PitchRange = (-0.3f, -0.1f) };
         NPC.value = 1000;
@@ -162,6 +162,7 @@ public class SentientIchor : ModNPC
                 position,
                 direction.RotatedBy(Main.rand.NextFloat(-angle, angle)) * Main.rand.NextFloat(minSpeed, maxSpeed),
                 ProjectileType<IchorFlamethrower>(),
+                damage: NPC.damage * 2,
                 ai0: duration,
                 ai1: slowDownRate,
                 ai2: Main.rand.NextFloat(-turningAngle, turningAngle)

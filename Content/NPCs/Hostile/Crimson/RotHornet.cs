@@ -25,7 +25,7 @@ public class RotHornet : ModNPC
         NPC.height = 46;
         NPC.lifeMax = 400;
         NPC.defense = 12;
-        NPC.damage = 20;
+        NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 5000;

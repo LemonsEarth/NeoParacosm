@@ -1,4 +1,6 @@
-﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
+﻿using NeoParacosm.Common.RecipeGroups;
+using NeoParacosm.Content.Items.Materials;
+using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 using NeoParacosm.Content.Projectiles.Effect;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
@@ -85,8 +87,13 @@ public class AncientCallingHorn : ModItem
     public override void AddRecipes()
     {
         Recipe recipe = CreateRecipe();
-
-        recipe.AddTile(TileID.Anvils);
+        recipe.AddRecipeGroup(AnyRecipeGroups.AnyTitaniumBar, 16);
+        recipe.AddIngredient(ItemType<SoulOfBlightDesert>(), 50);
+        recipe.AddIngredient(ItemType<SoulOfBlightIce>(), 50);
+        recipe.AddIngredient(ItemType<SoulOfBlightJungle>(), 50);
+        recipe.AddIngredient(ItemType<SoulOfBlightSpace>(), 50);
+        recipe.AddIngredient(ItemType<SoulOfBlightUnderworld>(), 50);
+        recipe.AddTile(TileID.MythrilAnvil);
         recipe.Register();
     }
 }

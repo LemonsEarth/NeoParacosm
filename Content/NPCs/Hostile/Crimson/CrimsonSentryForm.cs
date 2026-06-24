@@ -20,7 +20,7 @@ public class CrimsonSentryForm : ModNPC
         NPC.height = 72;
         NPC.lifeMax = 130;
         NPC.defense = 3;
-        NPC.damage = 10;
+        NPC.damage = 50;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 100;

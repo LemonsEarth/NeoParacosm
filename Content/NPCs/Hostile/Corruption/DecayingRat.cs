@@ -20,7 +20,7 @@ public class DecayingRat : ModNPC
         NPC.height = 42;
         NPC.lifeMax = 60;
         NPC.defense = 4;
-        NPC.damage = 20;
+        NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath4;
         NPC.aiStyle = NPCAIStyleID.Fighter;

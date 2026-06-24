@@ -2333,3 +2333,28 @@ GiantPickaxe: {
 	DisplayName: Giant Pickaxe
 	Tooltip: ""
 }
+
+SoulOfBlightDesert: {
+	DisplayName: Soul Of Blight (Desert)
+	Tooltip: ""
+}
+
+SoulOfBlightIce: {
+	DisplayName: Soul Of Blight (Ice)
+	Tooltip: ""
+}
+
+SoulOfBlightJungle: {
+	DisplayName: Soul Of Blight (Jungle)
+	Tooltip: ""
+}
+
+SoulOfBlightSpace: {
+	DisplayName: Soul Of Blight (Space)
+	Tooltip: ""
+}
+
+SoulOfBlightUnderworld: {
+	DisplayName: Soul Of Blight (Underworld)
+	Tooltip: ""
+}

@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Core.Systems.Data;
+﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
+
+namespace NeoParacosm.Core.Systems.Data;
 
 /// <summary>
 /// Controls Dark Cataclysm effect params and whether it is active globally.
@@ -18,9 +20,9 @@ public class DarkCataclysmSystem : ModSystem
     public static float DCEffectFogSpeed = 1f;
     public static float DCEffectFogColorMultiplier = 1f;
     public static bool AncientCallingHornInUse = false; // Set in DarkCataclysmPlayer
-    public static bool DreadlordAlive = false; // Set in Dreadlord AI
-    // Only reset when Ancient Calling Horn isn't being used and Dreadlord isn't alive, as they manipulate the fog distance, position etc.
-    static bool ShouldReset => !AncientCallingHornInUse && !DreadlordAlive;
+
+    // Only reset fields when Ancient Calling Horn isn't being used and Dreadlord isn't alive, as they manipulate the fog distance, position etc.
+    static bool ShouldReset => !AncientCallingHornInUse && !NPC.AnyNPCs(NPCType<Dreadlord>());
 
     public override void PreUpdateItems()
     {
@@ -39,7 +41,7 @@ public class DarkCataclysmSystem : ModSystem
 
     public override void PreUpdateNPCs()
     {
-        DreadlordAlive = false;
+
     }
 
     public override void PostUpdateNPCs()

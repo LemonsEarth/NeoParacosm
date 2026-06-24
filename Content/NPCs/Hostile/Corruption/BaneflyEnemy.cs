@@ -21,7 +21,7 @@ public class BaneflyEnemy : ModNPC
         NPC.height = 16;
         NPC.lifeMax = 10;
         NPC.defense = 0;
-        NPC.damage = 20;
+        NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
         NPC.DeathSound = SoundID.NPCDeath1;
         NPC.value = 500;
