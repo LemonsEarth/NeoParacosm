@@ -54,12 +54,11 @@ public class SoulOfBlightDropNPC : GlobalNPC
     static void AddSoulOfBlight(ref GlobalLoot globalLoot, Condition biomeCondition, int soulID)
     {
         var dcActiveCondition = new LeadingConditionRule(LemonConditions.DarkCataclysmActive.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied));
-        var leadingBiomeCondition = new LeadingConditionRule(biomeCondition.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied));
-        globalLoot.Add(
-            dcActiveCondition.OnSuccess(
+        dcActiveCondition.OnSuccess(
                 ItemDropRule.ByCondition(
                     biomeCondition.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied),
-                    soulID, 3, 1, 3)));
+                    soulID, 3, 1, 3));
+        globalLoot.Add(dcActiveCondition);
     }
 
     public override void ModifyGlobalLoot(GlobalLoot globalLoot)

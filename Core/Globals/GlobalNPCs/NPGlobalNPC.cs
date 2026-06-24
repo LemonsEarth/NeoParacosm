@@ -19,6 +19,7 @@ public class NPGlobalNPC : GlobalNPC
         }
     }
 
+
     public override bool PreAI(NPC npc)
     {
         if (DarkCataclysmSystem.DarkCataclysmActive)

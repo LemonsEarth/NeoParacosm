@@ -51,6 +51,7 @@ public class NPPlayer : ModPlayer
 
     public override void PreUpdateMovement()
     {
+
         //ResearcherQuest.Progress = ResearcherQuest.ProgressState.DownedPlantera;
         //Main.NewText("hhhh");
         //LemonUtils.DebugPlayerTileCoords(Player);
