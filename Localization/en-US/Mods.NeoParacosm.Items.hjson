@@ -2376,8 +2376,8 @@ RoarOfDreadlordSpell: {
 FireblinkSpell: {
 	DisplayName: Fireblink
 	Tooltip:
-	'''
-	Dash towards your mouse cursor at high speeds
-	While dashing, reduces contact damage taken by 25% and creates explosions when hit
-	'''
+		'''
+		Dash towards your mouse cursor at high speeds
+		While dashing, reduces contact damage taken by 25% and creates explosions when hit
+		'''
 }

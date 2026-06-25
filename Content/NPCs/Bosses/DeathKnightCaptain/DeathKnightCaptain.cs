@@ -131,9 +131,6 @@ public partial class DeathKnightCaptain : ModNPC
 #pragma warning disable IDE1006 // Naming Styles
     public Player player { get; private set; }
 #pragma warning restore IDE1006 // Naming Styles
-    Vector2 NPCToPlayer => NPC.DirectionTo(player.Center);
-
-    Vector2 ArenaCenter => DarkCataclysmSystem.DCEffectNoFogPosition == Vector2.Zero ? player.Center : DarkCataclysmSystem.DCEffectNoFogPosition;
 
     public override void AI()
     {
@@ -143,9 +140,8 @@ public partial class DeathKnightCaptain : ModNPC
             NPC.TargetClosest(false);
         }
         player = Main.player[NPC.target];
-        NPC.width = (int)(284 * NPC.scale);
-        NPC.height = (int)(416 * NPC.scale);
-        if (AITimer < 540)
+
+        if (AITimer < 600)
         {
             Intro();
             AITimer++;
@@ -198,7 +194,56 @@ public partial class DeathKnightCaptain : ModNPC
 
     void Intro()
     {
-
+        switch (AttackTimer)
+        {
+            case < 300:
+                canFallThroughPlatforms = true;
+                NPC.Center = player.Center - Vector2.UnitY * 200;
+                NPC.Opacity = 0f;
+                Dust.NewDustPerfect(
+                    NPC.Center,
+                    DustType<StreakDust>(),
+                    Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(2, 4),
+                    newColor: Color.Gold
+                    ).noGravity = true;
+                NPC.rotation = -MathHelper.PiOver2;
+                SetFrame(Crouching1);
+                break;
+            case 300:
+                LemonUtils.DustBurst(20, NPC.Center, DustType<StreakDust>(), 10, 10, 0.5f, 2f, Color.Yellow);
+                break;
+            case < 330:
+                NPC.Opacity = 1f;
+                for (int i = 0; i < 3; i++)
+                {
+                    Dust.NewDustPerfect(
+                        NPC.Center,
+                        DustType<StreakDust>(),
+                        Vector2.UnitY.RotatedByRandom(6.28f) * Main.rand.NextFloat(8, 12),
+                        newColor: Color.Gold
+                        ).noGravity = true;
+                }
+                break;
+            case 330:
+                NPC.velocity = Vector2.UnitY * 30;
+                LemonUtils.QuickProj(
+                    NPC,
+                    NPC.Center - Vector2.UnitY * 600,
+                    Vector2.Zero,
+                    ProjectileType<LightningWarningProj>(),
+                    ai1: 2,
+                    ai2: 1200
+                    );
+                SetFrame(ArmFrontDashing);
+                break;
+            case < 360:
+                break;
+            case < 600:
+                canFallThroughPlatforms = false;
+                break;
+        }
+        AttackTimer++;
+        Attack = 0;
         attackDuration = attackDurations[(int)Attack];
     }
 

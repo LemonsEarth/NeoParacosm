@@ -15,7 +15,7 @@ namespace NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 
 public partial class DeathKnightCaptain : ModNPC
 {
-
+    bool canFallThroughPlatforms = false;
     public override void Load()
     {
 
@@ -66,6 +66,7 @@ public partial class DeathKnightCaptain : ModNPC
         NPC.noGravity = true;
         NPC.npcSlots = 10;
         NPC.SpawnWithHigherTime(30);
+        CurrentFrame = StandingNormal;
 
         if (!Main.dedServ)
         {
@@ -139,6 +140,6 @@ public partial class DeathKnightCaptain : ModNPC
 
     public override bool? CanFallThroughPlatforms()
     {
-        return false;
+        return canFallThroughPlatforms;
     }
 }
