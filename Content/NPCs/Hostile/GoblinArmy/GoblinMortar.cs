@@ -192,6 +192,7 @@ public class GoblinMortar : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Wood, minimumDropped: 20, maximumDropped: 40));
+        npcLoot.Add(ItemDropRule.Common(ItemID.IronBar, 3, minimumDropped: 1, maximumDropped: 3));
 
     }
 

@@ -1,4 +1,5 @@
-﻿using Terraria.Localization;
+﻿using NeoParacosm.Content.Items.Materials;
+using Terraria.Localization;
 
 namespace NeoParacosm.Common.RecipeGroups;
 
@@ -12,6 +13,7 @@ public class AnyRecipeGroups : ModSystem
     public static readonly string AnyEvilBar = "NeoParacosm:AnyEvilBar";
     public static readonly string AnyEvilMaterial = "NeoParacosm:AnyEvilMaterial";
     public static readonly string AnyEvilMaterial2 = "NeoParacosm:AnyEvilMaterial2";
+    public static readonly string AnySoulOfBlight = "NeoParacosm:AnySoulOfBlight";
 
     public override void AddRecipeGroups()
     {
@@ -23,6 +25,8 @@ public class AnyRecipeGroups : ModSystem
         QuickRecipeGroup("AnyEvilBar", ItemID.DemoniteBar, ItemID.DemoniteBar, ItemID.CrimtaneBar);
         QuickRecipeGroup("AnyEvilMaterial", ItemID.ShadowScale, ItemID.ShadowScale, ItemID.TissueSample);
         QuickRecipeGroup("AnyEvilMaterial2", ItemID.Ichor, ItemID.Ichor, ItemID.CursedFlame);
+        QuickRecipeGroup("AnySoulOfBlight",
+            ItemType<SoulOfBlightDesert>(), ItemType<SoulOfBlightDesert>(), ItemType<SoulOfBlightIce>(), ItemType<SoulOfBlightJungle>(), ItemType<SoulOfBlightSpace>(), ItemType<SoulOfBlightUnderworld>());
     }
 
     void QuickRecipeGroup(string name, int mainItem, params int[] validItems)

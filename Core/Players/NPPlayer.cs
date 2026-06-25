@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Content.NPCs.Hostile.GoblinArmy;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
@@ -51,7 +52,6 @@ public class NPPlayer : ModPlayer
 
     public override void PreUpdateMovement()
     {
-
         //ResearcherQuest.Progress = ResearcherQuest.ProgressState.DownedPlantera;
         //Main.NewText("hhhh");
         //LemonUtils.DebugPlayerTileCoords(Player);

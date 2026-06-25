@@ -2358,3 +2358,26 @@ SoulOfBlightUnderworld: {
 	DisplayName: Soul Of Blight (Underworld)
 	Tooltip: ""
 }
+
+BlightedHealingPotion: {
+	DisplayName: Blighted Healing Potion
+	Tooltip:
+		'''
+		Cures most debuffs
+		Increased potion sickness duration
+		'''
+}
+
+RoarOfDreadlordSpell: {
+	DisplayName: Roar of The Dreadlord
+	Tooltip: Summon a dragon head to roar, dealing damage and inflicting nearby enemies with Cursed Inferno
+}
+
+FireblinkSpell: {
+	DisplayName: Fireblink
+	Tooltip:
+	'''
+	Dash towards your mouse cursor at high speeds
+	While dashing, reduces contact damage taken by 25% and creates explosions when hit
+	'''
+}

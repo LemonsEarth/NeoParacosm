@@ -226,3 +226,8 @@ OcculptBuff: {
 	DisplayName: Occulpt Buff
 	Description: Occulpts protect you...
 }
+
+FireblinkDebuff: {
+	DisplayName: Fireblink Debuff
+	Description: Mods.NeoParacosm.Buffs.FireblinkDebuff.Description
+}
