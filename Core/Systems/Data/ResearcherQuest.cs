@@ -27,6 +27,7 @@ public class ResearcherQuest : ModSystem
         DownedMechBoss,
         DownedPlantera,
         DownedResearcher,
+        DownedDreadlord
     }
 
     public override void PostUpdateWorld()

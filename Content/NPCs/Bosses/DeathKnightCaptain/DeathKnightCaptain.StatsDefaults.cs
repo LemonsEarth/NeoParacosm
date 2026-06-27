@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
+using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.DataStructures;
@@ -70,7 +73,7 @@ public partial class DeathKnightCaptain : ModNPC
 
         if (!Main.dedServ)
         {
-            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/DeathbroughtDeathbringerP1");
+            Music = MusicID.Boss1;
         }
     }
 
@@ -118,9 +121,23 @@ public partial class DeathKnightCaptain : ModNPC
         return NPC.scale == 1 && NPC.ShowNameOnHover;
     }
 
+    public override float SpawnChance(NPCSpawnInfo spawnInfo)
+    {
+        if (DownedBossSystem.downedDeathbirdMini
+            && NPC.downedPlantBoss
+            && spawnInfo.Player.InModBiome<DeadForestBiome>()
+            && !DownedBossSystem.downedDeathKnightCaptain
+            && !NPC.AnyNPCs(NPCType<DeathKnightCaptain>()))
+        {
+            return 1f;
+        }
+        return 0f;
+    }
+
     public override void OnKill()
     {
-
+        DownedBossSystem.downedDeathKnightCaptain = true;
+        NPC.SetEventFlagCleared(ref DownedBossSystem.downedDeathKnightCaptain, -1);
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

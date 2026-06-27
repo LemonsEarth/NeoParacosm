@@ -2,11 +2,14 @@
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
+using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using static NeoParacosm.Core.Systems.Data.ResearcherQuest;
+using static tModPorter.ProgressUpdate;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 
@@ -233,6 +236,11 @@ public partial class Dreadlord : ModNPC
 
     public override void OnKill()
     {
+        DownedBossSystem.downedDreadlord = true;
+
+        ResearcherQuest.Progress = ProgressState.DownedDreadlord;
+
+        NPC.SetEventFlagCleared(ref DownedBossSystem.downedDreadlord, -1);
 
     }
 

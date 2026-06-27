@@ -58,7 +58,9 @@ float4 BigLightningShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0
         float4 col = float4(uColor.r, uColor.g, uColor.b, uOpacity);
         return col;
     }
-    return color + (amplitudeMult - distY) * uOpacity;
+    
+    float fade = (amplitudeMult - distY) * toleranceAdjust;
+    return color + fade * uOpacity;
 }
 
 technique Tech1

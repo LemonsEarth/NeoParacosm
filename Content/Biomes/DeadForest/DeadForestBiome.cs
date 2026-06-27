@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
+using NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 using NeoParacosm.Content.NPCs.Hostile.DeadForest;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.World;
@@ -35,6 +36,10 @@ public class DeadForestBiomeNPC : GlobalNPC
             if (!DownedBossSystem.downedDeathbirdMini)
             {
                 pool.Add(NPCType<DeathbirdMini>(), 1f);
+            }
+            else if (NPC.downedPlantBoss && !DownedBossSystem.downedDeathKnightCaptain)
+            {
+                pool.Add(NPCType<DeathKnightCaptain>(), 1f);
             }
             else
             {

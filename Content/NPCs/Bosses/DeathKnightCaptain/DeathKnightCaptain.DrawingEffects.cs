@@ -40,12 +40,52 @@ public partial class DeathKnightCaptain : ModNPC
         CurrentFrame = frame;
     }
 
-    private void AuraBurst(int count, Vector2 speed)
+    void PassiveDust()
     {
-        for (int i = 0; i < count; i++)
-        {
-            Dust.NewDustDirect(NPC.RandomPos(200, 100), 2, 2, DustID.GemTopaz, speed.X, speed.Y, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
-        }
+        Vector2 dustPos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * (NPC.height / 2) 
+            + Vector2.UnitY.RotatedBy(NPC.rotation + MathHelper.PiOver2) * Main.rand.NextFloat(-16, 16);
+        Vector2 dustVel = NPC.Center.DirectionTo(dustPos);
+
+        Dust.NewDustPerfect(dustPos, DustType<FireDust>(), dustVel, newColor: Color.Black, Scale: 0.5f).noGravity = true;
+        //Dust.NewDustPerfect(dustPos, DustID.GemDiamond, Vector2.UnitY, Scale: 1.5f, newColor: Color.White).noGravity = true;
+    }
+
+    public void SpawnDust()
+    {
+        Dust.NewDustPerfect(NPC.RandomPos(), DustType<FireDust>(), Vector2.Zero, newColor: Color.Black, Scale: 1f).noGravity = true;
+        Dust.NewDustPerfect(NPC.RandomPos(), DustType<FireDust>(), Vector2.Zero, newColor: Color.Black, Scale: 0.5f).noGravity = true;
+        Dust.NewDustPerfect(NPC.RandomPos(), DustID.GemDiamond, Vector2.Zero, Scale: 2.5f, newColor: Color.White).noGravity = true;
+        Dust.NewDustPerfect(NPC.RandomPos(), DustID.GemDiamond, Vector2.Zero, Scale: 1.5f, newColor: Color.White).noGravity = true;
+    }
+
+    private void TeleportEffect(int count, float speedX, float speedY)
+    {
+        LemonUtils.DustBurst(count, NPC.Center, DustType<FireDust>(), speedX, speedY, 0.5f, 1.2f, Color.Black);
+        LemonUtils.DustBurst(count, NPC.Center, DustID.GemDiamond, speedX, speedY, 1.5f, 3.2f);
+        SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+    }
+
+    public void LookTowards(Vector2 point)
+    {
+        Vector2 dirToPoint = NPC.Center.DirectionTo(point);
+        NPC.spriteDirection = LemonUtils.Sign(dirToPoint.X, 1);
+        NPC.rotation = NPC.spriteDirection == 1 ? dirToPoint.ToRotation() : dirToPoint.ToRotation() + MathHelper.Pi;
+    }
+
+    public void GoInvisible()
+    {
+        NPC.Opacity = 0f;
+        NPC.dontTakeDamage = true;
+        NPC.ShowNameOnHover = false;
+        TeleportEffect(8, 6, 6);
+    }
+
+    public void GoVisible()
+    {
+        NPC.Opacity = 1f;
+        NPC.dontTakeDamage = false;
+        NPC.ShowNameOnHover = true;
+        TeleportEffect(8, 6, 6);
     }
 
 

@@ -764,7 +764,11 @@ StarCrystal: {
 
 AncientCallingHorn: {
 	DisplayName: Ancient Calling Horn
-	Tooltip: An ancient instrument used for communing with dragons, amped with the energy of afflicted souls
+	Tooltip: 
+	'''
+	Not consumable
+	An ancient instrument used for communing with dragons, amped with the energy of afflicted souls
+	'''
 	NPLore:
 		'''
 		[c/FF9E03:Many centuries ago, dragons were subjects of worship, overseeing civilizations and granting their followers power.]
@@ -1375,7 +1379,11 @@ HolyCrossItem: {
 
 DecrepitBirdWhistle: {
 	DisplayName: Decrepit Bird Whistle
-	Tooltip: Calls forth the bringer of death, by death.
+	Tooltip:
+	'''
+	Not consumable
+	Calls forth the bringer of death, by death.
+	'''
 	NPLore:
 		'''
 		[c/888888:A whistle used by gravetender knights to call upon the Deathbirds when needed.]
@@ -2380,4 +2388,13 @@ FireblinkSpell: {
 		Dash towards your mouse cursor at high speeds
 		While dashing, reduces contact damage taken by 25% and creates explosions when hit
 		'''
+}
+
+LostOrders: {
+	DisplayName: Lost Orders
+	Tooltip:
+	'''
+	Not consumable
+	Calls forth the Death Knight Captain
+	'''
 }

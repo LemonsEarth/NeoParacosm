@@ -152,6 +152,7 @@ public partial class Deathbird : ModNPC
     public override void OnKill()
     {
         DownedBossSystem.downedDeathbird = true;
+        NPC.SetEventFlagCleared(ref DownedBossSystem.downedDeathbird, -1);
     }
 
     public override void HitEffect(NPC.HitInfo hit)

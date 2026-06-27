@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
+using NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 
@@ -19,9 +20,9 @@ public class DeadForestPlayer : ModPlayer
 
     void DeadForestEffects()
     {
-        if (Player.InModBiome<DeadForestBiome>() || NPC.AnyNPCs(NPCType<Deathbird>()))
+        if (Player.InModBiome<DeadForestBiome>() || NPC.AnyNPCs(NPCType<Deathbird>()) || NPC.AnyNPCs(NPCType<DeathKnightCaptain>()))
         {
-            desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);
+            desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 120f);
             if (desaturateEffectOpacityTimer < 60) desaturateEffectOpacityTimer++;
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DesaturateShader").GetShader();
             data.UseProgress(desaturateEffectOpacity);
@@ -30,7 +31,7 @@ public class DeadForestPlayer : ModPlayer
         }
         else
         {
-            desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 60f);
+            desaturateEffectOpacity = MathHelper.Lerp(0, maxDesaturateValue, desaturateEffectOpacityTimer / 120f);
             if (desaturateEffectOpacityTimer > 0) desaturateEffectOpacityTimer--;
             if (desaturateEffectOpacityTimer <= 0)
             {
