@@ -1,4 +1,5 @@
-﻿using Terraria.DataStructures;
+﻿using NeoParacosm.Content.NPCs.Hostile.Corruption;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI;
 
@@ -88,6 +89,11 @@ public class DragonSoulDropNPC : GlobalNPC
             case NPCID.DD2Betsy:
                 AddDragonSoul(1, 20, 25);
                 break;
+        }
+
+        if (npc.type == NPCType<CorruptWyvernHead>())
+        {
+            AddDragonSoul(1, 4, 6);
         }
     }
 }

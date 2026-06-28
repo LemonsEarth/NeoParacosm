@@ -72,7 +72,7 @@ public partial class DeathKnightCaptain : ModNPC
     /// <summary>
     /// Attack durations indexed by Attack field
     /// </summary>
-    readonly int[] attackDurations = [720, 900, 1080, 1080, 1320];
+    readonly int[] attackDurations = [540, 900, 750, 900, 360];
     readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
     readonly int[] attackDurations3 = [960, 600, 600, 1200, 1200, 1800];
 
@@ -83,6 +83,9 @@ public partial class DeathKnightCaptain : ModNPC
     {
         SpearThrowing,
         BombsAndBallLightning,
+        Dashing,
+        LightningSpearsDirect,
+        Tired
     }
 
     public enum Attacks2
@@ -123,6 +126,7 @@ public partial class DeathKnightCaptain : ModNPC
 
     public override void AI()
     {
+        doDrawPredictiveLaser = false;
         //attackDurations[0] = 540;
         //Main.NewText(AttackTimer);
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
@@ -156,6 +160,15 @@ public partial class DeathKnightCaptain : ModNPC
                 case (int)Attacks.BombsAndBallLightning:
                     Attack_BombsAndBallLightning();
                     break;
+                case (int)Attacks.Dashing:
+                    Attack_Dashing();
+                    break;
+                case (int)Attacks.LightningSpearsDirect:
+                    Attack_LightningSpearsDirect();
+                    break;
+                case (int)Attacks.Tired:
+                    Attack_Tired();
+                    break;
             }
         }
         else if (Phase == 1)
@@ -187,9 +200,9 @@ public partial class DeathKnightCaptain : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-        if (Phase == 2)
+        if (Phase == 0)
         {
-            //Attack = 5;
+            //Attack = 3;
         }
 
         if (Phase == 0)
@@ -261,13 +274,10 @@ public partial class DeathKnightCaptain : ModNPC
                 break;
             case 210:
                 NPC.velocity = Vector2.UnitY * 60;
-                LemonUtils.QuickProj(
-                    NPC,
-                    NPC.Center - Vector2.UnitY * 600,
-                    Vector2.Zero,
-                    ProjectileType<HolyLightning>(),
-                    ai1: 1800
-                    );
+                if (LemonUtils.NotClient())
+                {
+                    Spawn_Lightning(NPC.Center - Vector2.UnitY * 600, 1800);
+                }
                 SetFrame(ArmFrontDashing);
                 break;
             case < 240:
@@ -402,9 +412,9 @@ public partial class DeathKnightCaptain : ModNPC
                 {
                     if (AttackCount2 == 1)
                     {
-                        Spawn_LightningBall(NPC.Center, NPC.DirectionTo(player.Center) * 2, 60, 800, 160);
+                        Spawn_LightningBall(NPC.Center, NPC.DirectionTo(player.Center) * 2, 60, 720, 160);
                     }
-                    float randDir = Main.rand.NextDirectionInt();
+                    float randDir = Main.rand.NextSign();
                     targetPosition = player.Center + new Vector2(randDir * 1000, -400); // start position
                     targetPosition2 = player.Center + new Vector2(-randDir * 1000, -400); // end position
                 }
@@ -417,7 +427,7 @@ public partial class DeathKnightCaptain : ModNPC
                 {
                     if (LemonUtils.NotClient())
                     {
-                        Spawn_Bomb(-Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-Pi / 6f, Pi / 6f) * 3), 30);
+                        Spawn_Bomb(-Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-Pi / 6f, Pi / 6f) * 3), 60);
                     }
                 }
                 SpawnDust();
@@ -461,6 +471,162 @@ public partial class DeathKnightCaptain : ModNPC
         AttackTimer--;
     }
 
+    void Attack_Dashing()
+    {
+        //Main.NewText(AttackTimer);
+        switch (AttackTimer)
+        {
+            case 150:
+                if (LemonUtils.NotClient())
+                {
+                    AttackCount = Main.rand.NextSign(); // Side
+                    //AttackCount.NewText();
+                }
+                NPC.netUpdate = true;
+                NPC.velocity = Vector2.Zero;
+                LookTowards(player.Center);
+                TeleportEffect(12, 8, 8);
+                targetPosition = player.Center + new Vector2(AttackCount * 500, 0);
+                NPC.Center = targetPosition;
+                TeleportEffect(12, 8, 8);
+                LemonUtils.DustLine(NPC.Center, player.Center + new Vector2(AttackCount * 500, 0), DustType<FireDust>(), 5, 0.75f, Color.Black);
+                SetFrame(Crouching1);
+                //SoundEngine.PlaySound(SoundID.NPCDeath10 with { PitchRange = (-1f, -0.8f), MaxInstances = 2}, NPC.Center);
+                break;
+            case > 105:
+                doDrawPredictiveLaser = true;
+                if (LemonUtils.NotClient() && AttackTimer % 4 == 0)
+                {
+                    Spawn_SmallLightning(NPC.Center, Vector2.UnitY.RotatedByRandom(6.28f), 64f, 90f);
+                }
+                targetPosition = player.Center + new Vector2(AttackCount * 500, 0);
+                NPC.Center = targetPosition;
+                targetPosition2 = player.Center + new Vector2(500 * -AttackCount, player.velocity.Y * 60);
+                LookTowards(targetPosition2);
+                break;
+            case > 75:
+                LookTowards(targetPosition2);
+                break;
+            case 75:
+                //GoInvisible();
+                SetFrame(Dashing);
+                if (LemonUtils.NotClient())
+                {
+                    Vector2 dir = NPC.Center.DirectionTo(targetPosition2);
+                    Spawn_SmallLightning(NPC.Center - dir * 500, dir, 2000, 2002);
+                }
+                break;
+            case > 60:
+                bool extraCondition = LemonUtils.IsHard() || attackDuration <= 300;
+                if (AttackTimer % 2 == 0 && extraCondition)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_Lightning(NPC.Center + new Vector2(Main.rand.NextFloat(-48, 48), -600), 1800);
+                    }
+                }
+                NPC.Center = Vector2.Lerp(targetPosition, targetPosition2, AttackCount2 / 15f);
+                SpawnDust();
+                AttackCount2++;
+                break;
+            case 60:
+                SetFrame(Crouching1);
+                NPC.Center = targetPosition2;
+                //GoVisible();
+                bool extraCondition2 = LemonUtils.IsHard() || attackDuration <= 600;
+                if (LemonUtils.NotClient() && extraCondition2)
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        Spawn_LightningWarning(NPC.Center + new Vector2(-AttackCount * 100 * (i + 1), -1200), 10 * i, 2400);
+                    }
+                }
+                break;
+            case > 0:
+                LookTowards(NPC.Center + Vector2.UnitX);
+                break;
+            case 0:
+                AttackTimer = 150;
+                AttackCount2 = 0;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Attack_LightningSpearsDirect()
+    {
+        switch (AttackTimer)
+        {
+            case 120:
+                TeleportEffect(8, 4, 4);
+                if (LemonUtils.NotClient())
+                {
+                    int attCount = 0;
+                    do
+                    {
+                        targetPosition = player.Center + Main.rand.NextVector2CircularEdge(400, 400);
+                        attCount++;
+                    }
+                    while (!Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2) && attCount < 100);
+                }
+
+                NPC.netUpdate = true;
+                NPC.Center = targetPosition;
+                TeleportEffect(8, 4, 4);
+                SetFrame(ArmUpNormal2);
+                break;
+            case > 0:
+                LookTowards(player.Center);
+                if (AttackTimer % 90 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        for (int i = 0; i < AttackCount; i++)
+                        {
+                            Spawn_HolyLightningSpear(
+                                NPC.Top - Vector2.UnitY.RotatedBy(PiOver4 * i) * 120,
+                                50 + LemonUtils.GetDifficulty() * 10,
+                                180,
+                                30 + 10 * i);
+                        }
+                    }
+
+                }
+
+                if (AttackTimer == 60)
+                {
+                    SetFrame(ArmFrontNormal2);
+                }
+                break;
+            case 0:
+                AttackTimer = 120;
+                AttackCount++;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Attack_Tired()
+    {
+        switch (AttackTimer)
+        {
+            case 120:
+                LookTowards(NPC.Center + Vector2.UnitX * 5 * LemonUtils.Sign(NPC.DirectionTo(player.Center).X, 1));
+                SetFrame(Tired1);
+                break;
+            case 60:
+                SetFrame(Tired2);
+                break;
+            case 0:
+                AttackTimer = 120;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void Spawn_LightningBall(Vector2 pos, Vector2 velocity, int waitTime, int duration, float avgLength)
     {
         LemonUtils.QuickProj(
@@ -487,6 +653,18 @@ public partial class DeathKnightCaptain : ModNPC
             );
     }
 
+    void Spawn_HolyLightningSpear(Vector2 pos, float speed, int timeLeft, int waitTime)
+    {
+        LemonUtils.QuickProj(
+            NPC,
+            pos,
+            Vector2.UnitX * speed,
+            ProjectileType<HolyLightningSpear>(),
+            ai0: timeLeft,
+            ai1: waitTime
+            );
+    }
+
     void Spawn_Bomb(Vector2 velocity, int WaitTime)
     {
         LemonUtils.QuickProj(
@@ -497,6 +675,18 @@ public partial class DeathKnightCaptain : ModNPC
             ai0: WaitTime,
             ai1: NPC.target,
             ai2: 15f
+            );
+    }
+
+    void Spawn_LightningWarning(Vector2 pos, int warningDuration, float length)
+    {
+        LemonUtils.QuickProj(
+            NPC,
+            pos,
+            Vector2.Zero,
+            ProjectileType<HolyLightningWarningProj>(),
+            ai1: warningDuration,
+            ai2: length
             );
     }
 
@@ -514,5 +704,29 @@ public partial class DeathKnightCaptain : ModNPC
                 ai1: Main.rand.NextFloat(minLength, maxLength)
                 );
         }
+    }
+
+    void Spawn_SmallLightning(Vector2 pos, Vector2 dir, float minLength, float maxLength)
+    {
+        LemonUtils.QuickProj(
+            NPC,
+            pos,
+            dir,
+            ProjectileType<HolyLightningSmall>(),
+            ai0: 0,
+            ai1: Main.rand.NextFloat(minLength, maxLength)
+            );
+
+    }
+
+    void Spawn_Lightning(Vector2 pos, float length)
+    {
+        LemonUtils.QuickProj(
+            NPC,
+            pos,
+            Vector2.Zero,
+            ProjectileType<HolyLightning>(),
+            ai1: length
+            );
     }
 }

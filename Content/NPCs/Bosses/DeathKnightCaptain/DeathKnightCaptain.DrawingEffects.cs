@@ -35,6 +35,9 @@ public partial class DeathKnightCaptain : ModNPC
     Point Dashing => new Point(1, 5);
     Point ArmFrontDashing => new Point(1, 6);
 
+    Point Tired1 => new Point(0, 7);
+    Point Tired2 => new Point(1, 7);
+
     void SetFrame(Point frame)
     {
         CurrentFrame = frame;
@@ -42,7 +45,7 @@ public partial class DeathKnightCaptain : ModNPC
 
     void PassiveDust()
     {
-        Vector2 dustPos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * (NPC.height / 2) 
+        Vector2 dustPos = NPC.Center + Vector2.UnitY.RotatedBy(NPC.rotation) * (NPC.height / 2)
             + Vector2.UnitY.RotatedBy(NPC.rotation + MathHelper.PiOver2) * Main.rand.NextFloat(-16, 16);
         Vector2 dustVel = NPC.Center.DirectionTo(dustPos);
 
@@ -95,10 +98,16 @@ public partial class DeathKnightCaptain : ModNPC
     }
 
 
+    bool doDrawPredictiveLaser = false;
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
+        if (doDrawPredictiveLaser)
+        {
+            Vector2 target = player.Center + new Vector2(500 * -AttackCount, player.velocity.Y * 60) * 2;
+            LemonUtils.DrawLaser(NPC.Center, target, 0.7f, Color.LightYellow);
+        }
         Texture2D texture = TextureAssets.Npc[NPC.type].Value;
-        Rectangle sourceRect = texture.Frame(2, 7, CurrentFrame.X, CurrentFrame.Y);
+        Rectangle sourceRect = texture.Frame(2, 8, CurrentFrame.X, CurrentFrame.Y);
 
         Main.EntitySpriteDraw(
             texture,

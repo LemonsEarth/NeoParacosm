@@ -47,7 +47,7 @@ public static partial class LemonUtils
     /// <param name="rand"></param>
     /// <param name="consequent"></param>
     /// <returns></returns>
-    public static int NextDirectionInt(this UnifiedRandom rand, int consequent = 1)
+    public static int NextSign(this UnifiedRandom rand, int consequent = 2)
     {
         return rand.NextBool(consequent).ToDirectionInt();
     }

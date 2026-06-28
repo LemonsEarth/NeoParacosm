@@ -194,12 +194,16 @@ public class DragonWorshipper : ModNPC
     {
         WeightedRandom<string> chat = new WeightedRandom<string>();
 
-        if (ResearcherQuest.Progress >= ResearcherQuest.ProgressState.DownedResearcher && DarkCataclysmSystem.DarkCataclysmActive)
+        if (DarkCataclysmSystem.DarkCataclysmActive)
         {
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T1"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T2"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T3"));
             chat.Add(Language.GetTextValue("Mods.NeoParacosm.NPCs.DragonWorshipper.DCDialogue.T4"));
+        }
+        else if (DownedBossSystem.downedDreadlord)
+        {
+
         }
         else
         {
@@ -247,6 +251,7 @@ public class DragonWorshipper : ModNPC
         AddDragonSoulCurrencyItem(npcShop, ItemType<Fulculmination>(), 12);
         AddDragonSoulCurrencyItem(npcShop, ItemType<TrueDragonFruit>(), 20, Condition.DownedPirates);
         AddDragonSoulCurrencyItem(npcShop, ItemType<AntiblightRings>(), 20, LemonConditions.DownedResearcher);
+        AddDragonSoulCurrencyItem(npcShop, ItemType<RoarOfDreadlordSpell>(), 20, LemonConditions.DownedDreadlord);
 
         npcShop.Register(); // Name of this shop tab
     }

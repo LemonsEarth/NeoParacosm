@@ -10,7 +10,7 @@ public class HolyLightningSmall : ModProjectile
 {
     public override string Texture => ParacosmTextures.Empty100TexPath;
     int AITimer = 0;
-    ref float Delay => ref Projectile.ai[0];
+    ref float DontDrawGlow => ref Projectile.ai[0];
     ref float Length => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
@@ -77,7 +77,7 @@ public class HolyLightningSmall : ModProjectile
             //positions[1] = originalPos;
 
             //SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (0.2f, 0.8f), MaxInstances = 1, Volume = 0.35f }, targetPos);
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 1, Volume = 0.6f }, targetPos);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 5, Volume = 0.6f }, targetPos);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
             //SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, targetPos);
         }
@@ -106,8 +106,11 @@ public class HolyLightningSmall : ModProjectile
 
     void DrawLightning(float randomMul = 1, float segCountMul = 1)
     {
-        LemonUtils.DrawGlow(Projectile.Center, Color.LightYellow, Projectile.Opacity + 0.3f, Projectile.scale);
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity + 0.3f, Projectile.scale * 0.5f);
+        if (DontDrawGlow == 0)
+        {
+            LemonUtils.DrawGlow(Projectile.Center, Color.LightYellow, Projectile.Opacity + 0.3f, Projectile.scale);
+            LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity + 0.3f, Projectile.scale * 0.5f);
+        }
 
         var shader = GameShaders.Misc["NeoParacosm:BigLightningShader"];
         shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);

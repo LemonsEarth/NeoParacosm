@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
 using NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 using NeoParacosm.Content.NPCs.Hostile.DeadForest;
@@ -22,7 +23,10 @@ public class DeadForestBiome : ModBiome
 
     public override bool IsBiomeActive(Player player)
     {
-        return GetInstance<BiomeSystem>().deadDirtTileCount >= 1000 && player.ZoneOverworldHeight;
+        bool tileCheck = GetInstance<BiomeSystem>().deadDirtTileCount >= 1000 && player.ZoneOverworldHeight;
+        if (tileCheck) return true;
+        bool bossCheck = NPC.AnyNPCs(NPCType<Deathbird>()) || NPC.AnyNPCs(NPCType<DeathbirdMini>()) || NPC.AnyNPCs(NPCType<DeathKnightCaptain>());
+        return bossCheck;
     }
 }
 

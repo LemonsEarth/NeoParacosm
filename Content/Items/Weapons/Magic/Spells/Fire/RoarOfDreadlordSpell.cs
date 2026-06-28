@@ -16,7 +16,6 @@ public class RoarOfDreadlordSpell : BaseSpell
 
     public override void SpellAction(Player player)
     {
-
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
@@ -43,10 +42,10 @@ public class RoarOfDreadlordSpell : BaseSpell
 
     public override void AddRecipes()
     {
-        Recipe recipe = CreateRecipe();
+        /*Recipe recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.SpellTome, 1);
         recipe.AddIngredient(ItemType<NightmareScale>(), 10);
         recipe.AddTile(TileID.CrystalBall);
-        recipe.Register();
+        recipe.Register();*/
     }
 }
