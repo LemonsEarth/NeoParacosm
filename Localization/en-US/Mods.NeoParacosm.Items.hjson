@@ -2398,3 +2398,13 @@ LostOrders: {
 		Calls forth the Death Knight Captain
 		'''
 }
+
+StaffOfProtection: {
+	DisplayName: Staff Of Protection
+	Tooltip:
+	'''
+	Requires 3 minion slots to use
+	Summons a shield that orbits around you
+	Projectiles that hit you near a shield have their damage reduced by 10%
+	'''
+}

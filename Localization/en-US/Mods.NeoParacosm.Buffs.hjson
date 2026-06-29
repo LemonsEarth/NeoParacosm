@@ -218,16 +218,21 @@ ArcaneSkullBuff: {
 }
 
 QuichorBuff: {
-	DisplayName: Quichor
+	DisplayName: Quichory
 	Description: Quichors protect you...
 }
 
 OcculptBuff: {
-	DisplayName: Occulpt Buff
+	DisplayName: Occulpted
 	Description: Occulpts protect you...
 }
 
 FireblinkDebuff: {
-	DisplayName: Fireblink Debuff
-	Description: Mods.NeoParacosm.Buffs.FireblinkDebuff.Description
+	DisplayName: Fireblinking
+	Description: Don't blink, you'll miss it...
+}
+
+StaffOfProtectionBuff: {
+	DisplayName: Staff Of Protection
+	Description: The shields do their thing...
 }
