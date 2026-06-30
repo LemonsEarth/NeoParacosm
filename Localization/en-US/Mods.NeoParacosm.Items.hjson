@@ -2402,9 +2402,19 @@ LostOrders: {
 StaffOfProtection: {
 	DisplayName: Staff Of Protection
 	Tooltip:
-	'''
-	Requires 3 minion slots to use
-	Summons a shield that orbits around you
-	Projectiles that hit you near a shield have their damage reduced by 10%
-	'''
+		'''
+		Requires 3 minion slots to use
+		Summons a shield that orbits around you
+		Projectiles that hit you near a shield have their damage reduced by 10%
+		'''
+}
+
+ImmortalEnergy: {
+	DisplayName: Immortal Energy
+	Tooltip:
+		'''
+		While respawning, spirits appear around you
+		Clicking on a spirit reduces your remaining respawn time by 2 seconds
+		Up to 5 spirits can spawn per death
+		'''
 }

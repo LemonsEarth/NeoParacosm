@@ -58,7 +58,7 @@ public partial class DeathKnightCaptain : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1f;
-        NPC.lifeMax = 40000;
+        NPC.lifeMax = 15000;
         NPC.defense = 30;
         NPC.damage = 100;
         NPC.HitSound = SoundID.NPCHit4;
@@ -106,7 +106,14 @@ public partial class DeathKnightCaptain : ModNPC
 
     public override bool CheckDead()
     {
-
+        if (Phase == 0)
+        {
+            Phase = 1;
+            NPC.dontTakeDamage = true;
+            NPC.life = 1;
+            doPhaseTransition = true;
+            return false;
+        }
         return true;
     }
 
@@ -118,7 +125,7 @@ public partial class DeathKnightCaptain : ModNPC
     public override bool CanHitPlayer(Player target, ref int cooldownSlot)
     {
         cooldownSlot = ImmunityCooldownID.Bosses;
-        return NPC.scale == 1 && NPC.ShowNameOnHover;
+        return !NPC.dontTakeDamage;
     }
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)

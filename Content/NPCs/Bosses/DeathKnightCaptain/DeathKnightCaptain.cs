@@ -73,8 +73,7 @@ public partial class DeathKnightCaptain : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [540, 900, 750, 900, 360];
-    readonly int[] attackDurations2 = [1600, 1200, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
-    readonly int[] attackDurations3 = [960, 600, 600, 1200, 1200, 1800];
+    readonly int[] attackDurations2 = [600, 1200, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -101,20 +100,10 @@ public partial class DeathKnightCaptain : ModNPC
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
 
+    bool doPhaseTransition = false;
+    int phaseTransitionTimer = 0;
+
     bool reachedFinalPhase = false;
-
-    bool doDepleteHealth = false;
-    int phase3Timer = 0;
-
-    #endregion
-    #region Constants
-
-    // Animation frame constants
-    const int MOUTH_CLOSED = 0;
-    const int MOUTH_OPEN = 1;
-
-    const int LEG_STANDARD = 0;
-    const int LEG_ATTACK = 1;
     #endregion
 
     Vector2 targetPosition = Vector2.Zero;
@@ -144,6 +133,13 @@ public partial class DeathKnightCaptain : ModNPC
 
         PassiveDust();
         DespawnCheck();
+
+        if (doPhaseTransition)
+        {
+            PhaseTransition();
+            return;
+        }
+
         AttackControl();
         AITimer++;
     }
@@ -181,15 +177,7 @@ public partial class DeathKnightCaptain : ModNPC
 
             }*/
         }
-        else if (Phase == 2)
-        {
-            /*switch (Attack)
-            {
-                case (int)Attacks3.FinalIntro:
-                    Final_Intro();
-                    break;
-            }*/
-        }
+
         attackDuration--;
         if (attackDuration <= 0)
         {
@@ -213,10 +201,7 @@ public partial class DeathKnightCaptain : ModNPC
         {
             attackDuration = attackDurations2[(int)Attack];
         }
-        else if (Phase == 2)
-        {
-            attackDuration = attackDurations3[(int)Attack];
-        }
+
         AttackCount = 0;
         AttackCount2 = 0;
         AttackTimer = 0;
@@ -307,6 +292,69 @@ public partial class DeathKnightCaptain : ModNPC
             }
         }
         attackDuration = attackDurations[(int)Attack];
+    }
+
+    void PhaseTransition()
+    {
+        switch (phaseTransitionTimer)
+        {
+            case 0:
+                NPC.Opacity = 1f;
+                NPC.ShowNameOnHover = true;
+                TeleportEffect(8, 6, 6);
+                SetFrame(Tired1);
+                LookTowards(NPC.Center + Vector2.UnitX * LemonUtils.Sign(player.Center.X - NPC.Center.X, 1));
+                break;
+            case < 60:
+
+                break;
+            case 60:
+                SetFrame(Tired2);
+                break;
+            case < 240:
+                float lifeLerpT = (phaseTransitionTimer - 60f) / (240f - 60f - 1f);
+                NPC.life = (int)Lerp(1, NPC.lifeMax, lifeLerpT);
+                SetFrame(Crouching1);
+                int dustCount = phaseTransitionTimer / 60;
+                for (int i = 0; i < dustCount; i++)
+                {
+                    Dust.NewDustPerfect(
+                        NPC.RandomPos(16 * dustCount, 16 * dustCount),
+                        DustType<FireDust>(),
+                        -Vector2.UnitY * Main.rand.NextFloat(0, 2f * dustCount),
+                        newColor: Color.Black,
+                        Scale: Main.rand.NextFloat(0.25f, 0.6f)
+                        );
+                }
+                break;
+            case < 270:
+                SetFrame(StandingNormal);
+                break;
+            case < 280:
+                SetFrame(Crouching1);
+                break;
+            case < 370:
+                int dustCount2 = phaseTransitionTimer / 60;
+                for (int i = 0; i < dustCount2; i++)
+                {
+                    Vector2 pos = NPC.Center + new Vector2(Main.rand.NextFloat(-32 * dustCount2, 32 * dustCount2), Main.rand.NextFloat(850, 950));
+                    Dust.NewDustPerfect(
+                        pos,
+                        DustType<FireDust>(),
+                        -Vector2.UnitY * Main.rand.NextFloat(30, 60f * dustCount2),
+                        newColor: Color.Black,
+                        Scale: Main.rand.NextFloat(2f, 2f + 0.3f * dustCount2)
+                        );
+                }
+                break;
+            case 370:
+                doPhaseTransition = false;
+                NPC.dontTakeDamage = false;
+                break;
+        }
+
+        phaseTransitionTimer++;
+        Attack = 0;
     }
 
     void Attack_SpearThrowing()
