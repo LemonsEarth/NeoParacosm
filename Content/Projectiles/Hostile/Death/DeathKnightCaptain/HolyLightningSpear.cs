@@ -24,8 +24,8 @@ public class HolyLightningSpear : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 64;
-        Projectile.height = 64;
+        Projectile.width = 32;
+        Projectile.height = 32;
         Projectile.friendly = false;
         Projectile.hostile = true;
         Projectile.timeLeft = 600;

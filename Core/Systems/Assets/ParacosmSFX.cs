@@ -7,8 +7,11 @@ public class ParacosmSFX : ModSystem
     public static SoundStyle UndertakerGunshot { get; private set; }
     public static SoundStyle Thunder { get; private set; }
     public static SoundStyle ElectricBurst { get; private set; }
+    public static SoundStyle FireBurst { get; private set; }
     public static SoundStyle ChurchBell { get; private set; }
     public static SoundStyle AncientCallingHorn { get; private set; }
+    public static SoundStyle DeathKnightGroan { get; private set; }
+    public static SoundStyle DeathKnightGrunt { get; private set; }
     public static SoundStyle SniperShot { get; private set; }
     public static SoundStyle SniperScope { get; private set; }
     public static SoundStyle SwordDeflect { get; private set; }
@@ -16,9 +19,12 @@ public class ParacosmSFX : ModSystem
     {
         UndertakerGunshot = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/UndertakerGunshot");
         ElectricBurst = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/ElectricBurst");
+        FireBurst = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/FireBurst");
         ChurchBell = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/ChurchBell");
         Thunder = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/Thunder");
         AncientCallingHorn = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/AncientCallingHorn");
+        DeathKnightGroan = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/DeathKnightGroan");
+        DeathKnightGrunt = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/DeathKnightGrunt");
         SniperShot = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SniperShot");
         SniperScope = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SniperScope");
         SwordDeflect = new SoundStyle("NeoParacosm/Common/Assets/Audio/SFX/SwordDeflect");

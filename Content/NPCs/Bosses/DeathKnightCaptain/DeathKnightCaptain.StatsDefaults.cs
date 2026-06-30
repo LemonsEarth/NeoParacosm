@@ -4,6 +4,9 @@ using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
+using NeoParacosm.Content.Projectiles.Hostile.Death;
+using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
+using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -70,7 +73,10 @@ public partial class DeathKnightCaptain : ModNPC
         NPC.npcSlots = 10;
         NPC.SpawnWithHigherTime(30);
         CurrentFrame = StandingNormal;
-
+        projectileTypesToDestroy = [
+            ProjectileType<LingeringDeathflame>(), ProjectileType<DarkIncendiaryProjHostile>(), ProjectileType<HolyLightningSpear>(),
+            ProjectileType<LightningBall>()
+            ];
         if (!Main.dedServ)
         {
             Music = MusicID.Boss1;

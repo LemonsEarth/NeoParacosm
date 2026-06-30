@@ -4,6 +4,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
+using System.Linq;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using static Microsoft.Xna.Framework.MathHelper;
@@ -73,7 +74,7 @@ public partial class DeathKnightCaptain : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [540, 900, 750, 900, 360];
-    readonly int[] attackDurations2 = [600, 1200, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
+    readonly int[] attackDurations2 = [720, 720, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -89,14 +90,15 @@ public partial class DeathKnightCaptain : ModNPC
 
     public enum Attacks2
     {
-
+        DashingSuper,
+        LightningSpearSpam
     }
 
     public enum Attacks3
     {
 
     }
-
+    int[] projectileTypesToDestroy;
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
 
@@ -169,13 +171,16 @@ public partial class DeathKnightCaptain : ModNPC
         }
         else if (Phase == 1)
         {
-            /*switch (Attack)
+            switch (Attack)
             {
-                case (int)Attacks2.Pillars:
-                    Attack_Pillars();
+                case (int)Attacks2.DashingSuper:
+                    Attack_DashingSuper();
+                    break;
+                case (int)Attacks2.LightningSpearSpam:
+                    Attack_LightningSpearSpam();
                     break;
 
-            }*/
+            }
         }
 
         attackDuration--;
@@ -299,6 +304,13 @@ public partial class DeathKnightCaptain : ModNPC
         switch (phaseTransitionTimer)
         {
             case 0:
+                foreach (var proj in Main.ActiveProjectiles)
+                {
+                    if (proj.hostile && projectileTypesToDestroy.Contains(proj.type))
+                    {
+                        proj.Kill();
+                    }
+                }
                 NPC.Opacity = 1f;
                 NPC.ShowNameOnHover = true;
                 TeleportEffect(8, 6, 6);
@@ -309,9 +321,11 @@ public partial class DeathKnightCaptain : ModNPC
 
                 break;
             case 60:
+                SoundEngine.PlaySound(ParacosmSFX.DeathKnightGroan);
                 SetFrame(Tired2);
                 break;
             case < 240:
+                NPC.velocity = Main.rand.NextVector2Circular(0.75f, 0.75f);
                 float lifeLerpT = (phaseTransitionTimer - 60f) / (240f - 60f - 1f);
                 NPC.life = (int)Lerp(1, NPC.lifeMax, lifeLerpT);
                 SetFrame(Crouching1);
@@ -328,26 +342,35 @@ public partial class DeathKnightCaptain : ModNPC
                 }
                 break;
             case < 270:
+                NPC.velocity = Main.rand.NextVector2Circular(0.5f, 0.5f);
                 SetFrame(StandingNormal);
                 break;
             case < 280:
+                NPC.velocity = Vector2.Zero;
                 SetFrame(Crouching1);
+                break;
+            case 280:
+                LemonUtils.QuickScreenShake(NPC.Center, 20, 8, 60, 2000);
+                SoundEngine.PlaySound(ParacosmSFX.FireBurst, NPC.Center);
                 break;
             case < 370:
                 int dustCount2 = phaseTransitionTimer / 60;
                 for (int i = 0; i < dustCount2; i++)
                 {
-                    Vector2 pos = NPC.Center + new Vector2(Main.rand.NextFloat(-32 * dustCount2, 32 * dustCount2), Main.rand.NextFloat(850, 950));
+                    Vector2 pos = NPC.Center + new Vector2(Main.rand.NextFloat(-16 * dustCount2, 16 * dustCount2), Main.rand.NextFloat(-64, 120));
                     Dust.NewDustPerfect(
                         pos,
                         DustType<FireDust>(),
-                        -Vector2.UnitY * Main.rand.NextFloat(30, 60f * dustCount2),
+                        -Vector2.UnitY * Main.rand.NextFloat(3, 3f * dustCount2),
+                        Alpha: 120,
                         newColor: Color.Black,
-                        Scale: Main.rand.NextFloat(2f, 2f + 0.3f * dustCount2)
+                        Scale: Main.rand.NextFloat(1f, 1f + 0.2f * dustCount2)
                         );
                 }
                 break;
             case 370:
+                SwitchAttacks();
+                Attack = 0;
                 doPhaseTransition = false;
                 NPC.dontTakeDamage = false;
                 break;
@@ -644,6 +667,7 @@ public partial class DeathKnightCaptain : ModNPC
 
                 if (AttackTimer == 60)
                 {
+                    SoundEngine.PlaySound(ParacosmSFX.DeathKnightGrunt with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
                     SetFrame(ArmFrontNormal2);
                 }
                 break;
@@ -669,6 +693,141 @@ public partial class DeathKnightCaptain : ModNPC
                 break;
             case 0:
                 AttackTimer = 120;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Attack_DashingSuper()
+    {
+        switch (AttackTimer)
+        {
+            case 120:
+                if (LemonUtils.NotClient())
+                {
+                    AttackCount = Main.rand.NextSign(); // Side
+                    //AttackCount.NewText();
+                }
+                NPC.netUpdate = true;
+                NPC.velocity = Vector2.Zero;
+                LookTowards(player.Center);
+                TeleportEffect(12, 8, 8);
+                targetPosition = player.Center + new Vector2(AttackCount * 500, 0);
+                NPC.Center = targetPosition;
+                TeleportEffect(12, 8, 8);
+                SoundEngine.PlaySound(ParacosmSFX.DeathKnightGrunt with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+                LemonUtils.DustLine(NPC.Center, player.Center + new Vector2(AttackCount * 500, 0), DustType<FireDust>(), 5, 0.75f, Color.Black);
+                SetFrame(Crouching1);
+                //SoundEngine.PlaySound(SoundID.NPCDeath10 with { PitchRange = (-1f, -0.8f), MaxInstances = 2}, NPC.Center);
+                break;
+            case > 75:
+                doDrawPredictiveLaser = true;
+                if (LemonUtils.NotClient() && AttackTimer % 4 == 0)
+                {
+                    Spawn_SmallLightning(NPC.Center, Vector2.UnitY.RotatedByRandom(6.28f), 64f, 90f);
+                }
+                targetPosition = player.Center + new Vector2(AttackCount * 500, 0);
+                NPC.Center = targetPosition;
+                targetPosition2 = player.Center + new Vector2(500 * -AttackCount, player.velocity.Y * 60);
+                LookTowards(targetPosition2);
+                break;
+            case > 45:
+                LookTowards(targetPosition2);
+                break;
+            case 45:
+                //GoInvisible();
+                SetFrame(Dashing);
+                if (LemonUtils.NotClient())
+                {
+                    Vector2 dir = NPC.Center.DirectionTo(targetPosition2);
+                    Spawn_SmallLightning(NPC.Center - dir * 500, dir, 2000, 2002);
+                }
+                break;
+            case > 30:
+                if (AttackTimer % 2 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_Lightning(NPC.Center + new Vector2(Main.rand.NextFloat(-48, 48), -600), 1800);
+                    }
+                }
+                NPC.Center = Vector2.Lerp(targetPosition, targetPosition2, AttackCount2 / 15f);
+                SpawnDust();
+                AttackCount2++;
+                break;
+            case 30:
+                SetFrame(Crouching1);
+                NPC.Center = targetPosition2;
+                //GoVisible();
+                if (LemonUtils.NotClient())
+                {
+                    for (int i = 0; i < 8; i++)
+                    {
+                        Spawn_LightningWarning(NPC.Center + new Vector2(-AttackCount * 100 * (i + 1), -1200), 10 * i, 2400);
+                    }
+                }
+                break;
+            case > 0:
+                LookTowards(NPC.Center + Vector2.UnitX);
+                break;
+            case 0:
+                AttackTimer = 120;
+                AttackCount2 = 0;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Attack_LightningSpearSpam()
+    {
+        switch (AttackTimer)
+        {
+            case 90:
+                SetFrame(ArmUpNormal2);
+                TeleportEffect(8, 6, 6);
+                if (LemonUtils.NotClient())
+                {
+                    NPC.Center = player.Center + Main.rand.NextVector2CircularEdge(400, 400);
+                }
+                NPC.netUpdate = true;
+                TeleportEffect(8, 6, 6);
+                break;
+            case 60:
+                if (AttackCount == 0)
+                {
+                    AttackCount = 1;
+                }
+                else if (AttackCount == 1)
+                {
+                    AttackCount = 0;
+                }
+
+                if (LemonUtils.NotClient())
+                {
+                    int waitTime = AttackCount == 1 ? 120 : 60;
+                    Vector2 basePosOffset = Vector2.UnitY.RotatedBy(PiOver4 + Main.rand.Next(0, 4) * PiOver2) * 400;
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Vector2 spawnPos = player.Center - basePosOffset.RotatedBy(i * PiOver2 / 6f);
+                        Spawn_HolyLightningSpear(
+                            spawnPos,
+                             30 + LemonUtils.GetDifficulty() * 10,
+                             240,
+                             waitTime
+                             );
+                    }
+                }
+                break;
+            case 30:
+                SetFrame(ArmFrontNormal2);
+                break;
+            case > 0:
+                LookTowards(player.Center);
+                break;
+            case 0:
+                AttackTimer = 90;
                 return;
         }
 
