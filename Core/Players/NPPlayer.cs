@@ -1,8 +1,6 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Content.NPCs.Hostile.GoblinArmy;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
-using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
 

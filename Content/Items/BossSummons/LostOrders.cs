@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 using NeoParacosm.Content.NPCs.Hostile.DeadForest;
 using Terraria.Audio;

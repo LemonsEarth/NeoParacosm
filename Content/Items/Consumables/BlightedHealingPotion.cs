@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Common.RecipeGroups;
-using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
 namespace NeoParacosm.Content.Items.Consumables;
 

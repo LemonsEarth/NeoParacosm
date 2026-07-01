@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
-using NeoParacosm.Core.Systems.Assets;
-using ReLogic.Content;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 

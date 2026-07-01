@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Items.Weapons.Summon;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;

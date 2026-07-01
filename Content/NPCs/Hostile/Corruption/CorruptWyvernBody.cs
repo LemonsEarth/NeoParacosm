@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
-using System;
-using Terraria;
-using Terraria.GameContent.Bestiary;
-using Terraria.ID;
-using Terraria.ModLoader;
+﻿using NeoParacosm.Content.Projectiles.Hostile.Evil;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
 

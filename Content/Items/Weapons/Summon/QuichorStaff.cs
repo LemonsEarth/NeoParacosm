@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Core.Systems.Assets;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;

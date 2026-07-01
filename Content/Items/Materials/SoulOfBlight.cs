@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Core.Conditions;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI;
 
 namespace NeoParacosm.Content.Items.Materials;
 

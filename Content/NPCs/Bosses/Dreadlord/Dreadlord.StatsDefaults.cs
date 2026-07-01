@@ -9,7 +9,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using static NeoParacosm.Core.Systems.Data.ResearcherQuest;
-using static tModPorter.ProgressUpdate;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Dreadlord;
 

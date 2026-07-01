@@ -1,12 +1,9 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
-using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Data;
 using System.Linq;
 using Terraria.Audio;
-using Terraria.Graphics.Shaders;
 using static Microsoft.Xna.Framework.MathHelper;
 
 namespace NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;

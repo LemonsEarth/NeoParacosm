@@ -1,12 +1,5 @@
-﻿
-using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.NPCs.Bosses.ResearcherBoss;
-using NeoParacosm.Core.Systems.Assets;
-using System.IO;
-using System.Linq;
+﻿using NeoParacosm.Content.NPCs.Bosses.ResearcherBoss;
 using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Effect;
 

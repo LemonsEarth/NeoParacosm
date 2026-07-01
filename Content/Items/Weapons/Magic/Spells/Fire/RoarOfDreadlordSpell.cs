@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Fire;
 

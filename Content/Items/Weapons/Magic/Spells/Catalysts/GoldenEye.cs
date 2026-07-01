@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.RecipeGroups;
-using ReLogic.Content;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;
 

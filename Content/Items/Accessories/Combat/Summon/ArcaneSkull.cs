@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Summon;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Summon;
 

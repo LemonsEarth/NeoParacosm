@@ -1,9 +1,7 @@
-﻿using Microsoft.CodeAnalysis.Text;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
-using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;

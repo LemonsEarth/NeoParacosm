@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Projectiles.Friendly.Ranged;
-using System.IO;
-
-namespace NeoParacosm.Content.Items.Weapons.Summon;
+﻿namespace NeoParacosm.Content.Items.Weapons.Summon;
 
 public class StaffOfProtectionMinion : ModProjectile
 {

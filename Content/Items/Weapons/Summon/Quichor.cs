@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Projectiles.Friendly.Ranged;
-using System.IO;
+﻿using System.IO;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
 

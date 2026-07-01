@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Dusts;
+﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;

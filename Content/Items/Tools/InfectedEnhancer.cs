@@ -1,7 +1,4 @@
 ﻿using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using NeoParacosm.Core.UI.ResearcherUI.Dialogue;
-using NeoParacosm.Core.UI.ResearcherUI.Note;
-using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Tools;
 

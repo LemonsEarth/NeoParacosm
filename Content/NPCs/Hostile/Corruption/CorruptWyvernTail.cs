@@ -1,11 +1,4 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework;
-using System;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-
-namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
+﻿namespace NeoParacosm.Content.NPCs.Hostile.Corruption;
 
 public class CorruptWyvernTail : ModNPC
 {

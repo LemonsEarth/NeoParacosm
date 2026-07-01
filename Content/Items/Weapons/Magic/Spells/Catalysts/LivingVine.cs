@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria.GameContent.ItemDropRules;
+﻿using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Catalysts;

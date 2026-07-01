@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Interactable;
 using Terraria.DataStructures;
-using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Misc;
 
