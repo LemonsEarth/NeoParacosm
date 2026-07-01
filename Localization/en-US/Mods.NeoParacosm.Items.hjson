@@ -2418,3 +2418,8 @@ ImmortalEnergy: {
 		Up to 5 spirits can spawn per death
 		'''
 }
+
+PrisonBrickItem: {
+	DisplayName: Prison Brick Item
+	Tooltip: ""
+}

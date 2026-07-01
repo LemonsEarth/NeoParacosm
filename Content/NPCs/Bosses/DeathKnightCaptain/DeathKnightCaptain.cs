@@ -38,10 +38,6 @@ public partial class DeathKnightCaptain : ModNPC
             {
                 maxVal = Enum.GetValues(typeof(Attacks2)).Length - 1;
             }
-            if (Phase == 2)
-            {
-                maxVal = Enum.GetValues(typeof(Attacks3)).Length - 1;
-            }
 
             if (value > maxVal + diffMod || value < 0)
             {
@@ -74,7 +70,7 @@ public partial class DeathKnightCaptain : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [540, 900, 750, 900, 360];
-    readonly int[] attackDurations2 = [720, 720, 1200, 1200, 1200, 1380, 1200, 1080, 1800];
+    readonly int[] attackDurations2 = [720, 720, 960];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -91,13 +87,10 @@ public partial class DeathKnightCaptain : ModNPC
     public enum Attacks2
     {
         DashingSuper,
-        LightningSpearSpam
+        LightningSpearSpam,
+        LightningBallSpears,
     }
 
-    public enum Attacks3
-    {
-
-    }
     int[] projectileTypesToDestroy;
     public int Phase { get; private set; } = 0;
     bool reachedSecondPhase = false;
@@ -179,7 +172,9 @@ public partial class DeathKnightCaptain : ModNPC
                 case (int)Attacks2.LightningSpearSpam:
                     Attack_LightningSpearSpam();
                     break;
-
+                case (int)Attacks2.LightningBallSpears:
+                    Attack_LightningBallSpears();
+                    break;
             }
         }
 
@@ -353,15 +348,15 @@ public partial class DeathKnightCaptain : ModNPC
                 LemonUtils.QuickScreenShake(NPC.Center, 20, 8, 60, 2000);
                 SoundEngine.PlaySound(ParacosmSFX.FireBurst, NPC.Center);
                 break;
-            case < 370:
+            case < 350:
                 int dustCount2 = phaseTransitionTimer / 60;
                 for (int i = 0; i < dustCount2; i++)
                 {
-                    Vector2 pos = NPC.Center + new Vector2(Main.rand.NextFloat(-16 * dustCount2, 16 * dustCount2), Main.rand.NextFloat(-64, 120));
+                    Vector2 pos = NPC.RandomPos();
                     Dust.NewDustPerfect(
                         pos,
                         DustType<FireDust>(),
-                        -Vector2.UnitY * Main.rand.NextFloat(3, 3f * dustCount2),
+                        Main.rand.NextVector2Unit() * Main.rand.NextFloat(3, 3f * dustCount2),
                         Alpha: 120,
                         newColor: Color.Black,
                         Scale: Main.rand.NextFloat(1f, 1f + 0.2f * dustCount2)
@@ -834,6 +829,71 @@ public partial class DeathKnightCaptain : ModNPC
         AttackTimer--;
     }
 
+    void Attack_LightningBallSpears()
+    {
+        LookTowards(player.Center);
+        switch (AttackTimer)
+        {
+            case 240:
+                if (AttackCount == 1)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_LightningBall(NPC.Center, Vector2.UnitY * 2.5f, 90, 900, 100);
+                    }
+                }
+
+                if (LemonUtils.NotClient())
+                {
+                    targetPosition = Main.rand.NextVector2CircularEdge(300, 300); // offset from player
+                }
+                NPC.netUpdate = true;
+                break;
+            case > 150:
+                NPC.MoveToPos(player.Center + targetPosition, 0.2f, 0.2f, 0.3f, 0.3f);
+                break;
+            case > 120:
+                NPC.velocity *= 0.93f;
+                break;
+            case 120:
+                NPC.velocity = Vector2.Zero;
+                SetFrame(ArmUpNormal2);
+                if (LemonUtils.NotClient())
+                {
+                    Spawn_HolyLightningSpear(NPC.Top, 50 + LemonUtils.GetDifficulty() * 10, 180, 60);
+                }
+                break;
+            case > 60:
+                break;
+            case 60:
+                SetFrame(ArmFrontNormal2);
+                targetPosition2 = NPC.Top.DirectionTo(player.Center);
+                break;
+            case > 0:
+                if (AttackTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 perp = targetPosition2.RotatedBy(PiOver2) * Main.rand.NextFloat(-100, 100);
+                        Vector2 spawnPos = NPC.Center - targetPosition2 * 500 + perp;
+                        Spawn_HolyLightningStraightSpear(
+                            spawnPos,
+                            targetPosition2 * (50 + LemonUtils.GetDifficulty() * 10),
+                            180, 1
+                            );
+                    }
+                }
+                break;
+            case 0:
+                AttackTimer = 240;
+                AttackCount++;
+                SetFrame(StandingNormal);
+                return;
+        }
+
+        AttackTimer--;
+    }
+
     void Spawn_LightningBall(Vector2 pos, Vector2 velocity, int waitTime, int duration, float avgLength)
     {
         LemonUtils.QuickProj(
@@ -867,6 +927,18 @@ public partial class DeathKnightCaptain : ModNPC
             pos,
             Vector2.UnitX * speed,
             ProjectileType<HolyLightningSpear>(),
+            ai0: timeLeft,
+            ai1: waitTime
+            );
+    }
+
+    void Spawn_HolyLightningStraightSpear(Vector2 pos, Vector2 velocity, int timeLeft, int waitTime)
+    {
+        LemonUtils.QuickProj(
+            NPC,
+            pos,
+            velocity,
+            ProjectileType<HolyLightningStraightSpear>(),
             ai0: timeLeft,
             ai1: waitTime
             );
