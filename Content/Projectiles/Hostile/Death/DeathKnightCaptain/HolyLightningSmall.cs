@@ -11,6 +11,7 @@ public class HolyLightningSmall : ModProjectile
     int AITimer = 0;
     ref float DontDrawGlow => ref Projectile.ai[0];
     ref float Length => ref Projectile.ai[1];
+    ref float TimeLeftMultiplier => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -44,47 +45,25 @@ public class HolyLightningSmall : ModProjectile
     Vector2 savedVelocity;
     public override void AI()
     {
-
         if (AITimer == 0)
         {
+            if (TimeLeftMultiplier <= 0) TimeLeftMultiplier = 1;
+            Projectile.timeLeft = (int)(Projectile.timeLeft * TimeLeftMultiplier);
             savedVelocity = Projectile.velocity;
             Projectile.velocity = Vector2.Zero;
             random = Main.rand.Next(1, 100);
             PunchCameraModifier mod1 = new PunchCameraModifier(Projectile.Center + Vector2.UnitY * (Length / 2), (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 10f, 6f, 10, 1000f, FullName);
             Main.instance.CameraModifiers.Add(mod1);
             Projectile.rotation = Projectile.Center.DirectionTo(targetPos).ToRotation();
-            //SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (0.2f, 0.8f), MaxInstances = 1, Volume = 0.35f }, Projectile.Center);
-            //SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
-            //SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, Projectile.Center);
 
-            /*for (int j = 0; j < 10; j++)
-            {
-                Vector2 randVector = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
-                Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
-                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
-                Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustType<StreakDust>(), randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: Color.Gold).noGravity = true;
-            }
-            for (int j = 0; j < 10; j++)
-            {
-                Vector2 randVector = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
-                Vector2 randVector2 = new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1));
-                Dust.NewDustDirect(targetPos, 2, 2, DustType<StreakDust>(), randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
-                Dust.NewDustDirect(targetPos, 2, 2, DustType<StreakDust>(), randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f), newColor: Color.Gold).noGravity = true;
-            }*/
-
-            //positions[0] = originalPos;
-            //positions[1] = originalPos;
-
-            //SoundEngine.PlaySound(ParacosmSFX.ElectricBurst with { PitchRange = (0.2f, 0.8f), MaxInstances = 1, Volume = 0.35f }, targetPos);
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 5, Volume = 0.6f }, targetPos);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, targetPos);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
-            //SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (-0.8f, -0.2f), MaxInstances = 0, Volume = 1f }, targetPos);
         }
         Projectile.velocity = Vector2.Zero;
-        if (Projectile.timeLeft < 30)
+        if (Projectile.timeLeft < 30 * TimeLeftMultiplier)
         {
-            color = Color.Lerp(Color.Gold, Color.White, Projectile.timeLeft / 15f);
-            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / 10f);
+            color = Color.Lerp(Color.Gold, Color.White, Projectile.timeLeft / (15f * TimeLeftMultiplier));
+            Projectile.Opacity = MathHelper.Lerp(0, 1, Projectile.timeLeft / (10f * TimeLeftMultiplier));
         }
         AITimer++;
     }
@@ -107,8 +86,8 @@ public class HolyLightningSmall : ModProjectile
     {
         if (DontDrawGlow == 0)
         {
-            LemonUtils.DrawGlow(Projectile.Center, Color.LightYellow, Projectile.Opacity + 0.3f, Projectile.scale);
-            LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity + 0.3f, Projectile.scale * 0.5f);
+            LemonUtils.DrawGlow(Projectile.Center, Color.LightYellow, Projectile.Opacity, Projectile.scale * Length / 100f);
+            LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale * 0.5f * Length / 100f);
         }
 
         var shader = GameShaders.Misc["NeoParacosm:BigLightningShader"];

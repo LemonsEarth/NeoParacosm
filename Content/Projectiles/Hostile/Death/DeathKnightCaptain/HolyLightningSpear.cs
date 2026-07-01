@@ -49,7 +49,7 @@ public class HolyLightningSpear : ModProjectile
         {
             LemonUtils.DustBurst(20, Projectile.Center, DustType<StreakDust>(), 10, 10, 0.5f, 2f, Color.LightYellow);
 
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 5, Volume = 0.6f }, Projectile.Center);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
             random = Main.rand.Next(1, 100);
             savedVelocity = Projectile.velocity;
@@ -71,7 +71,7 @@ public class HolyLightningSpear : ModProjectile
         else if (AITimer == WaitTime)
         {
             Projectile.velocity = Vector2.UnitX.RotatedBy(Projectile.rotation) * savedVelocity.Length();
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 5, Volume = 0.6f }, Projectile.Center);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
         }
 
