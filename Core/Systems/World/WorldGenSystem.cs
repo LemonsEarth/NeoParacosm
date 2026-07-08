@@ -52,6 +52,7 @@ public class WorldGenSystem : ModSystem
         InsertAfterTask(tasks, "Remove Broken Traps", new SmallGoblinCampsGenPass("Raising Camps", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new SmallArmoryGenPass("Small Armories", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new LargeArmoryGenPass("Large Armories", 100f));
+        InsertAfterTask(tasks, "Tile Cleanup", new PrisonCellGenPass("Prison Cells", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new UndergroundCheckpointGemsGenPass("Underground Checkpoint: Gems", 100f));
         InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Dead Forest Platforms", 100f));
         InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a Crypt", 100f));

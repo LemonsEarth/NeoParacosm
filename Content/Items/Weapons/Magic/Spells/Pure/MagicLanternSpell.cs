@@ -7,11 +7,11 @@ public class MagicLanternSpell : BaseSpell
 {
     public override int AttackCooldown => 45;
     public override int ManaCost => 40;
-     public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
+    public override Vector2 GetTargetVector(Player player) { return Main.MouseWorld; }
 
     public override void SpellAction(Player player)
     {
-        
+
         SoundEngine.PlaySound(SoundID.Item28, player.Center);
         if (LemonUtils.NotClient())
         {
@@ -41,7 +41,7 @@ public class MagicLanternSpell : BaseSpell
         Recipe recipe = CreateRecipe();
         recipe.AddIngredient(ItemID.Torch, 10);
         recipe.AddIngredient(ItemID.Glowstick, 10);
-        recipe.AddIngredient(ItemID.FallenStar, 3);
+        recipe.AddIngredient(ItemID.FallenStar, 5);
         recipe.AddTile(TileID.Bookcases);
         recipe.Register();
     }

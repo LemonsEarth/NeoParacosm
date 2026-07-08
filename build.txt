@@ -1,5 +1,5 @@
 displayName = NextParacosm
 author = LemonEarth
 version = 0.1
-modReferences = StructureHelper
+modReferences = StructureHelper, SubworldLibrary
 buildIgnore = .vs\*, Properties\*, *.csproj, *.user, obj\*, bin\*, *.config, .git\*, .github\*, LICENSE, README.md, .editorconfig, .gitignore, .gitattributes

@@ -11,7 +11,8 @@ public class PrisonBrickBlock : ModTile
         //Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
         HitSound = SoundID.Dig;
-
+        MinPick = 55;
+        MineResist = 2;
         DustType = DustID.Dirt;
         Main.tileMerge[TileType<DeadDirtBlock>()][Type] = true;
         TileID.Sets.ChecksForMerge[Type] = true;
@@ -49,6 +50,7 @@ public class PrisonBrickItem : ModItem
         CreateRecipe()
             .AddIngredient(ItemID.GrayBrick, 50)
             .AddRecipeGroup(AnyRecipeGroups.AnyGoldBar)
-            .AddTile(TileID.Anvils);
+            .AddTile(TileID.Anvils)
+            .Register();
     }
 }

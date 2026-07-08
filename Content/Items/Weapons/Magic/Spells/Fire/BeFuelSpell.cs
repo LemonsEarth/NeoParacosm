@@ -7,7 +7,7 @@ public class BeFuelSpell : BaseSpell
 {
     public override int AttackCooldown => 30;
     public override int ManaCost => 0;
-      public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
+    public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
 
     public override void SpellAction(Player player)
     {
@@ -31,7 +31,7 @@ public class BeFuelSpell : BaseSpell
         Item.height = 38;
         Item.value = Item.buyPrice(gold: 3);
         Item.rare = ItemRarityID.Green;
-        SpellElements = [SpellElement.Dark];
+        SpellElements = [SpellElement.Fire];
     }
 
     public override void AddRecipes()

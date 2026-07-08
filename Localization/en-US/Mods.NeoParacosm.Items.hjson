@@ -2420,6 +2420,30 @@ ImmortalEnergy: {
 }
 
 PrisonBrickItem: {
-	DisplayName: Prison Brick Item
+	DisplayName: Prison Brick
+	Tooltip: ""
+}
+
+CaptainsStormGear: {
+	DisplayName: Captain's Storm Gear
+	Tooltip:
+		'''
+		Grants you an extra lightning jump
+		Additionally, performing any double jump or dashing creates a lightning burst
+		'''
+}
+
+InvisibleManSpell: {
+	DisplayName: Invisible Man
+	Tooltip: Grants you invisibility
+}
+
+PrisonBrickWallItem: {
+	DisplayName: Prison Brick Wall
+	Tooltip: ""
+}
+
+OldHerosFracture: {
+	DisplayName: "Old Hero's Fracture"
 	Tooltip: ""
 }

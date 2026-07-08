@@ -3,6 +3,7 @@ using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace NeoParacosm.Core.Players;
 
@@ -12,6 +13,8 @@ public class NPPlayer : ModPlayer
     public bool NoMusic { get; set; } = false;
     public bool Grabbed { get; set; } = false;
     public bool FastFall { get; set; } = false;
+
+    bool dodestroy = false;
 
     /// <summary>
     /// A collection of projectile types that should behave as blocks, like CorruptPillar.
