@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Items.Armor.Generic.DeathKnight;
 using NeoParacosm.Content.Items.BossBags;
+using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
@@ -154,9 +155,10 @@ public partial class DeathKnightCaptain : ModNPC
     {
         LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
         classicRule.OnSuccess(ItemDropRule.FewFromOptions(2, 1, ItemType<DeathKnightHelmet>(), ItemType<DeathKnightChestplate>(), ItemType<DeathKnightGreaves>()));
+        classicRule.OnSuccess(ItemDropRule.Common(ItemType<KnightsLostSoul>(), 1, 10, 16));
         //classicRule.OnSuccess(ItemDropRule.Common(ItemType<DivineFlesh>(), 1, 18, 30));
         npcLoot.Add(classicRule);
-        npcLoot.Add(ItemDropRule.BossBag(ItemType<KnightsRoamingSoul>()));
+        npcLoot.Add(ItemDropRule.BossBag(ItemType<DeathKnightTreasureBag>()));
         //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DreadlordRelicItem>()));
     }
 

@@ -382,7 +382,7 @@ Dreadlord: {
 }
 
 ShieldKnight: {
-	DisplayName: Gravetender Knight
+	DisplayName: Death Knight
 	Bestiary:
 		'''
 		A legion of knights that were granted blessings by the higher beings, infusing their weapons with divine essence.
@@ -392,7 +392,7 @@ ShieldKnight: {
 }
 
 SpearKnight: {
-	DisplayName: Gravetender Knight
+	DisplayName: Death Knight
 	Bestiary:
 		'''
 		A legion of knights that were granted blessings by the higher beings, infusing their weapons with divine essence.
@@ -402,7 +402,7 @@ SpearKnight: {
 }
 
 StaffKnight: {
-	DisplayName: Gravetender Knight
+	DisplayName: Death Knight
 	Bestiary:
 		'''
 		A legion of knights that were granted blessings by the higher beings, infusing their weapons with divine essence.
@@ -421,7 +421,7 @@ TaintedSteed: {
 }
 
 BombKnight: {
-	DisplayName: Gravetender Knight Destroyer
+	DisplayName: Death Knight Destroyer
 	Bestiary:
 		'''
 		Giant, bomb-throwing knights were sent to destroy the homes of those they deemed unholy.

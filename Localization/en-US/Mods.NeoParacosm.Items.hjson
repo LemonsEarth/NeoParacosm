@@ -485,7 +485,7 @@ SupremeUndertaker: {
 
 DeathbirdTreasureBag: {
 	DisplayName: Treasure Bag (Deathbird)
-	Tooltip: "Right click to open"
+	Tooltip: Right click to open
 }
 
 DeathbirdRelicItem: {
@@ -2209,7 +2209,7 @@ IcicleRainSpell: {
 
 DreadlordBossBag: {
 	DisplayName: Treasure Bag (Dreadlord)
-	Tooltip: "Right click to open"
+	Tooltip: Right click to open
 }
 
 InfectedEnhancer: {
@@ -2430,12 +2430,24 @@ CaptainsStormGear: {
 		'''
 		Grants you an extra lightning jump
 		Additionally, performing any double jump or dashing creates a lightning burst
+		Chaining these actions increases lightning burst damage
+		'''
+	NPLore:
+		'''
+		[c/888888:Death Knight Captains mastered the divine lightning bestowed upon them by the higher beings.]
+		[c/888888:Aside from combat, it was also very useful as a movement tool.]
 		'''
 }
 
 InvisibleManSpell: {
 	DisplayName: Invisible Man
 	Tooltip: Grants you invisibility
+	NPLore:
+		'''
+		[c/888888:A spell invented by imprisoned sorcerers.]
+		[c/888888:Was attempted to be used for escaping prison cells deep underground, however, going invisible wasn't enough to escape a tough cell.]
+		[c/888888:Most users of this spell ended up accidentally blowing themselves up, because they could not see their own body when casting other spells.]
+		'''
 }
 
 PrisonBrickWallItem: {
@@ -2448,7 +2460,36 @@ OldHerosFracture: {
 	Tooltip: ""
 }
 
-KnightsRoamingSoul: {
-	DisplayName: Knight's Roaming Soul
-	Tooltip: "Right click to open"
+DeathKnightTreasureBag: {
+	DisplayName: Treasure Bag (Death Knight)
+	Tooltip: Right click to open
+}
+
+KnightsLostSoul: {
+	DisplayName: Knight's Lost Soul
+	Tooltip: Fragment of the Death Knight Captain's Soul
+	NPLore:
+		'''
+		[c/888888:The Death Knight Legion was formed by the higher beings to regulate the land after its purge.]
+		[c/888888:Captains were among the most elite warriors in the world, and were granted the power to wield divine lightning.]
+		[c/888888:They, too, eventually succumbed to the sufferring around them, for deathflame ravages mind, body and spirit.]
+		'''
+}
+
+HolyLightningTorrentSpell: {
+	DisplayName: Holy Lightning Torrent
+	Tooltip:
+		'''
+		Hurl a holy lightning spear forward
+		Can be charged for additional lightning spears
+		'''
+}
+
+CaptainsArsenal: {
+	DisplayName: Captains Arsenal
+	Tooltip:
+		'''
+		Hurl many holy spears at once
+		Every few throws, tosses Dark Incendiaries around you as well
+		'''
 }

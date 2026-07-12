@@ -1,18 +1,22 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class HolyLightningSpearFriendly : ModProjectile
+public class HolyLightningTorrentSpellHeldProj : ModProjectile
 {
     public override string Texture => ParacosmTextures.Empty100TexPath;
     int AITimer = 0;
-    ref float TimeLeft => ref Projectile.ai[0];
-    ref float WaitTime => ref Projectile.ai[1];
+    ref float ChargeAmount => ref Projectile.ai[0];
+    ref float DirectionX => ref Projectile.ai[1];
+    ref float DirectionY => ref Projectile.ai[2];
     float Length = 120f;
+    int releasedTimer = 0;
+    bool released = false;
 
     public override void SetStaticDefaults()
     {
@@ -41,7 +45,6 @@ public class HolyLightningSpearFriendly : ModProjectile
 
     Color color = Color.LightYellow;
     float random = 0;
-    Vector2 savedVelocity;
     public override void AI()
     {
         if (AITimer == 0)
@@ -51,22 +54,70 @@ public class HolyLightningSpearFriendly : ModProjectile
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
             random = Main.rand.Next(1, 100);
-            savedVelocity = Projectile.velocity;
             Projectile.velocity = Vector2.Zero;
         }
 
-        if (AITimer < WaitTime)
+        Player player = Projectile.GetOwner();
+
+        if (!player.channel && !released)
         {
-            Projectile.rotation = savedVelocity.ToRotation();
-        }
-        else if (AITimer == WaitTime)
-        {
-            Projectile.velocity = savedVelocity;
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
+            released = true;
+            Vector2 direction = Vector2.UnitX.RotatedBy(Projectile.rotation);
+            DirectionX = direction.X;
+            DirectionY = direction.Y;
+            Projectile.velocity = direction * 60;
+
+            for (int i = 0; i < (ChargeAmount / 10) * player.GetElementalExpertiseBoost(SpellElement.Holy); i++)
+            {
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    LemonUtils.QuickProj(
+                            Projectile,
+                            player.Center - direction * 800 * Main.rand.NextFloat(1f, 1.4f) + direction.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(-128, 128),
+                            direction * 80 * player.GetElementalExpertiseBoost(SpellElement.Lightning),
+                            ProjectileType<HolyLightningSpearFriendly>(),
+                            Projectile.damage,
+                            Projectile.knockBack,
+                            Projectile.owner,
+                            ai0: 180,
+                            ai1: 60 + i * 5
+                        );
+                }
+            }
         }
 
-        if (AITimer > TimeLeft)
+        if (!released)
+        {
+            Projectile.Center = player.Top;
+            player.SetDummyItemTime(2);
+            player.heldProj = Projectile.whoAmI;
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Projectile.rotation = player.DirectionTo(Main.MouseWorld).ToRotation();
+            }
+            if (ChargeAmount < 120)
+            {
+                ChargeAmount++;
+            }
+
+            if (ChargeAmount == 119)
+            {
+                SoundEngine.PlaySound(SFX.CrystalBall, player.Center);
+                LemonUtils.DustBurst(20, Projectile.Center, DustType<StreakDust>(), 10, 10, 0.5f, 2f, Color.LightYellow);
+            }
+
+            if (AITimer % 5 == 0)
+            {
+                Projectile.netUpdate = true;
+            }
+        }
+
+        if (released)
+        {
+            releasedTimer++;
+        }
+
+        if (releasedTimer > 90)
         {
             Projectile.Kill();
             return;

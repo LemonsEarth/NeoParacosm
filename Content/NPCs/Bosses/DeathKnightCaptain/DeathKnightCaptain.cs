@@ -126,7 +126,10 @@ public partial class DeathKnightCaptain : ModNPC
             return;
         }
 
-        PassiveDust();
+        if (!(Phase == 1 && Attack == (int)Attacks2.LightningExplosion)) // Big lightning ball
+        {
+            PassiveDust();
+        }
         DespawnCheck();
 
         if (doPhaseTransition)
@@ -679,7 +682,7 @@ public partial class DeathKnightCaptain : ModNPC
 
                 if (AttackTimer == 60)
                 {
-                   // SoundEngine.PlaySound(ParacosmSFX.DeathKnightGrunt with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+                    // SoundEngine.PlaySound(ParacosmSFX.DeathKnightGrunt with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
                     SetFrame(ArmFrontNormal2);
                 }
                 break;
@@ -1063,7 +1066,7 @@ public partial class DeathKnightCaptain : ModNPC
                         Vector2 velocity1 = NPC.DirectionTo(pos1) * (50 + LemonUtils.GetDifficulty() * 10);
                         Vector2 velocity2 = NPC.DirectionTo(pos2) * (50 + LemonUtils.GetDifficulty() * 10);
 
-                        Spawn_HolyLightningStraightSpear(pos1, velocity1, 180, (int)(60 + (1-progress) * 60));
+                        Spawn_HolyLightningStraightSpear(pos1, velocity1, 180, (int)(60 + (1 - progress) * 60));
                         Spawn_HolyLightningStraightSpear(pos2, velocity2, 180, (int)(60 + (1 - progress) * 60));
                     }
 

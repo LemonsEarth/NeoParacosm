@@ -6,7 +6,7 @@ using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.BossBags;
 
-public class KnightsRoamingSoul : ModItem
+public class DeathKnightTreasureBag : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -19,8 +19,8 @@ public class KnightsRoamingSoul : ModItem
     {
         Item.maxStack = Item.CommonMaxStack;
         Item.consumable = true;
-        Item.width = 38;
-        Item.height = 28;
+        Item.width = 32;
+        Item.height = 32;
         Item.rare = ItemRarityID.Expert;
         Item.expert = true;
     }
@@ -33,6 +33,7 @@ public class KnightsRoamingSoul : ModItem
     public override void ModifyItemLoot(ItemLoot itemLoot)
     {
         itemLoot.Add(ItemDropRule.Common(ItemType<CaptainsStormGear>()));
+        itemLoot.Add(ItemDropRule.Common(ItemType<KnightsLostSoul>(), 1, 14, 20));
         itemLoot.Add(ItemDropRule.FewFromOptions(2, 1, ItemType<DeathKnightHelmet>(), ItemType<DeathKnightChestplate>(), ItemType<DeathKnightGreaves>()));
     }
 }
