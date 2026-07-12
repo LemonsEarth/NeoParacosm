@@ -1,4 +1,6 @@
 ﻿using NeoParacosm.Content.Biomes.DeadForest;
+using NeoParacosm.Content.Items.Armor.Generic.DeathKnight;
+using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
@@ -6,6 +8,7 @@ using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 
@@ -54,8 +57,8 @@ public partial class DeathKnightCaptain : ModNPC
         NPC.boss = true;
         NPC.aiStyle = -1;
         NPC.Opacity = 1f;
-        NPC.lifeMax = 15000;
-        NPC.defense = 30;
+        NPC.lifeMax = 60000;
+        NPC.defense = 60;
         NPC.damage = 100;
         NPC.HitSound = SoundID.NPCHit4;
         NPC.DeathSound = SoundID.NPCDeath6;
@@ -70,9 +73,10 @@ public partial class DeathKnightCaptain : ModNPC
             ProjectileType<LingeringDeathflame>(), ProjectileType<DarkIncendiaryProjHostile>(), ProjectileType<HolyLightningSpear>(),
             ProjectileType<LightningBall>()
             ];
+
         if (!Main.dedServ)
         {
-            Music = MusicID.Boss1;
+            Music = MusicLoader.GetMusicSlot(Mod, "Common/Assets/Audio/Music/DeathOrder");
         }
     }
 
@@ -80,10 +84,10 @@ public partial class DeathKnightCaptain : ModNPC
     {
         NPC.NP().SetDamageReductions(
             (DamageClass.Melee, 10f),
-            (DamageClass.Ranged, 10f),
-            (DamageClass.Magic, 10f),
-            (DamageClass.Summon, 10f),
-            (DamageClass.SummonMeleeSpeed, 60f)
+            (DamageClass.Ranged, 15f),
+            (DamageClass.Magic, 25f),
+            (DamageClass.Summon, 33f),
+            (DamageClass.SummonMeleeSpeed, 10f)
             );
     }
 
@@ -148,11 +152,11 @@ public partial class DeathKnightCaptain : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
-        //classicRule.OnSuccess(ItemDropRule.Common(ItemType<NightmareScale>(), 1, 18, 30));
+        LeadingConditionRule classicRule = new LeadingConditionRule(new Conditions.NotExpert());
+        classicRule.OnSuccess(ItemDropRule.FewFromOptions(2, 1, ItemType<DeathKnightHelmet>(), ItemType<DeathKnightChestplate>(), ItemType<DeathKnightGreaves>()));
         //classicRule.OnSuccess(ItemDropRule.Common(ItemType<DivineFlesh>(), 1, 18, 30));
-        //npcLoot.Add(classicRule);
-        //npcLoot.Add(ItemDropRule.BossBag(ItemType<DreadlordBossBag>()));
+        npcLoot.Add(classicRule);
+        npcLoot.Add(ItemDropRule.BossBag(ItemType<KnightsRoamingSoul>()));
         //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ItemType<DreadlordRelicItem>()));
     }
 

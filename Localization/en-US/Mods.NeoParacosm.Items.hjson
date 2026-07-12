@@ -485,7 +485,7 @@ SupremeUndertaker: {
 
 DeathbirdTreasureBag: {
 	DisplayName: Treasure Bag (Deathbird)
-	Tooltip: ""
+	Tooltip: "Right click to open"
 }
 
 DeathbirdRelicItem: {
@@ -2209,7 +2209,7 @@ IcicleRainSpell: {
 
 DreadlordBossBag: {
 	DisplayName: Treasure Bag (Dreadlord)
-	Tooltip: ""
+	Tooltip: "Right click to open"
 }
 
 InfectedEnhancer: {
@@ -2444,6 +2444,11 @@ PrisonBrickWallItem: {
 }
 
 OldHerosFracture: {
-	DisplayName: "Old Hero's Fracture"
+	DisplayName: Old Hero's Fracture
 	Tooltip: ""
+}
+
+KnightsRoamingSoul: {
+	DisplayName: Knight's Roaming Soul
+	Tooltip: "Right click to open"
 }

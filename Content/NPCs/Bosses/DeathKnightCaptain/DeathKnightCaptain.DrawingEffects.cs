@@ -91,6 +91,22 @@ public partial class DeathKnightCaptain : ModNPC
     public override void HitEffect(NPC.HitInfo hit)
     {
         if (Main.dedServ) return;
+
+        if (NPC.life <= 0)
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                Vector2 pos = NPC.RandomPos();
+                Dust.NewDustPerfect(
+                    pos,
+                    DustType<FireDust>(),
+                    Main.rand.NextVector2Unit() * Main.rand.NextFloat(3, 10),
+                    Alpha: 120,
+                    newColor: Color.Black,
+                    Scale: Main.rand.NextFloat(1f, 3f)
+                    );
+            }
+        }
     }
 
 

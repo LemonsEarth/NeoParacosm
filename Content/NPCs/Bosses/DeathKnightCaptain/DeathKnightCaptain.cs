@@ -135,6 +135,14 @@ public partial class DeathKnightCaptain : ModNPC
             return;
         }
 
+        if (Phase == 1 && LemonUtils.IsHard())
+        {
+            if (LemonUtils.NotClient() && AITimer % 60 == 0)
+            {
+                Spawn_LightningWarning(NPC.Center + new Vector2(Main.rand.NextFloat(-1000, 1000), -1200), 120, 2400);
+            }
+        }
+
         AttackControl();
         AITimer++;
     }
@@ -671,7 +679,7 @@ public partial class DeathKnightCaptain : ModNPC
 
                 if (AttackTimer == 60)
                 {
-                    SoundEngine.PlaySound(ParacosmSFX.DeathKnightGrunt with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
+                   // SoundEngine.PlaySound(ParacosmSFX.DeathKnightGrunt with { PitchRange = (-0.2f, 0.2f) }, NPC.Center);
                     SetFrame(ArmFrontNormal2);
                 }
                 break;
@@ -990,6 +998,7 @@ public partial class DeathKnightCaptain : ModNPC
 
     void Attack_LightningExplosion()
     {
+        NPC.dontTakeDamage = true;
         switch (AttackTimer)
         {
             case 900:
