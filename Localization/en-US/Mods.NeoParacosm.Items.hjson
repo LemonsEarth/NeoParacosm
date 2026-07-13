@@ -2493,3 +2493,13 @@ CaptainsArsenal: {
 		Every few throws, tosses Dark Incendiaries around you as well
 		'''
 }
+
+BallLightning: {
+	DisplayName: Ball Lightning
+	Tooltip: ""
+}
+
+ArcaneLight: {
+	DisplayName: Arcane Light
+	Tooltip: Chance to heal the lowest health player on your team
+}
