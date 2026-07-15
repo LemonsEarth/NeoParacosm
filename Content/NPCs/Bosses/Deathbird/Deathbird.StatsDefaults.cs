@@ -7,6 +7,7 @@ using NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;
 using NeoParacosm.Content.Items.Weapons.Melee;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Items.Weapons.Summon;
+using NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -105,6 +106,7 @@ public partial class Deathbird : ModNPC
         NPC.knockBackResist = 0;
         NPC.noGravity = true;
         NPC.npcSlots = 10;
+        NPC.BossBar = GetInstance<DeathbirdBossBar>();
         NPC.SpawnWithHigherTime(30);
 
         if (!Main.dedServ)

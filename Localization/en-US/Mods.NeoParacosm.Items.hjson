@@ -1159,7 +1159,7 @@ MagicMossball: {
 DeathKnightHelmet: {
 	SetBonus:
 		'''
-		Reduces max life by 50%
+		Reduces maximum life by 50%
 		Allows you to revive twice upon death
 		Each revive grants stat boosts
 		Emit deathflame upon reviving
@@ -2429,7 +2429,7 @@ CaptainsStormGear: {
 	Tooltip:
 		'''
 		Grants you an extra lightning jump
-		Additionally, performing any double jump or dashing creates a lightning burst
+		Performing any double jump or dashing creates a lightning burst
 		Chaining these actions increases lightning burst damage
 		'''
 	NPLore:
@@ -2461,7 +2461,7 @@ OldHerosFracture: {
 }
 
 DeathKnightTreasureBag: {
-	DisplayName: Treasure Bag (Death Knight)
+	DisplayName: Treasure Bag (Death Knight Captain)
 	Tooltip: Right click to open
 }
 

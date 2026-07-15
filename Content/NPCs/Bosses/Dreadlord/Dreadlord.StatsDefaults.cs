@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
+using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -147,6 +148,7 @@ public partial class Dreadlord : ModNPC
         NPC.noGravity = true;
         NPC.npcSlots = 10;
         NPC.SpawnWithHigherTime(30);
+        NPC.BossBar = GetInstance<DreadlordBossBar>();
 
         HeadCorrupt.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordHeadCorrupt");
         HeadCrimson.Texture = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordHeadCrimson");

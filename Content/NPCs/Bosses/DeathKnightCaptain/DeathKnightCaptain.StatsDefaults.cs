@@ -70,6 +70,7 @@ public partial class DeathKnightCaptain : ModNPC
         NPC.npcSlots = 10;
         NPC.SpawnWithHigherTime(30);
         CurrentFrame = StandingNormal;
+        NPC.BossBar = GetInstance<DeathKnightCaptainBossBar>();
         projectileTypesToDestroy = [
             ProjectileType<LingeringDeathflame>(), ProjectileType<DarkIncendiaryProjHostile>(), ProjectileType<HolyLightningSpear>(),
             ProjectileType<LightningBall>()
