@@ -44,7 +44,7 @@ public class DeadTreeSapling : ModTile
         TileID.Sets.SwaysInWindBasic[Type] = true;
         TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
-        DustType = DustID.Grass;
+        DustType = DustID.Ash;
 
         AdjTiles = [TileID.Saplings];
     }

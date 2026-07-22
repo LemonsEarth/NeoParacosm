@@ -7,7 +7,7 @@ public class PrisonBrickWall : ModWall
         Main.wallHouse[Type] = false;
         DustType = DustID.Ash;
 
-        AddMapEntry(new Color(105, 99, 94));
+        AddMapEntry(new Color(75, 69, 64));
     }
 
     public override void NumDust(int i, int j, bool fail, ref int num)

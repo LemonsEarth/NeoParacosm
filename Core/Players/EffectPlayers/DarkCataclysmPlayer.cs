@@ -27,13 +27,14 @@ public class DarkCataclysmPlayer : ModPlayer
             AncientCallingHornInUse = true;
             Player.NPPlayer().NoMusic = true;
         }
+
         if (DarkCataclysmActive)
         {
-            DCEffectFogOpacity = MathHelper.Lerp(DCEffectFogOpacity, DCEffectMaxFogOpacity, 1 / 60f);
-            DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 60f);
+            DCEffectFogOpacity = MathHelper.Lerp(DCEffectFogOpacity, DCEffectMaxFogOpacity, 1 / 180f);
+            DCEffectOpacity = MathHelper.Lerp(0, 0.4f, DCEffectOpacityTimer / 180f);
             DCEffectNoFogDistanceCurrent = MathHelper.Lerp(DCEffectNoFogDistanceCurrent, DCEffectNoFogDistance, 1 / 120f);
 
-            if (DCEffectOpacityTimer < 60) DCEffectOpacityTimer++;
+            if (DCEffectOpacityTimer < 180) DCEffectOpacityTimer++;
             ScreenShaderData data = Filters.Scene.Activate("NeoParacosm:DCEffect").GetShader();
             data.UseImage(ParacosmTextures.NoiseTexture.Value);
             data.Shader.Parameters["time"].SetValue(DCEffectFogSpeed * Timer / 100f);
@@ -71,7 +72,7 @@ public class DarkCataclysmPlayer : ModPlayer
         }
         else
         {
-            DCEffectOpacity = MathHelper.Lerp(0, 0.6f, DCEffectOpacityTimer / 60f);
+            DCEffectOpacity = MathHelper.Lerp(0, 0.6f, DCEffectOpacityTimer / 180f);
             SkyManager.Instance["NeoParacosm:DCSky"].Opacity = DCEffectOpacity;
             if (DCEffectOpacityTimer > 0) DCEffectOpacityTimer--;
             if (DCEffectOpacityTimer <= 0)

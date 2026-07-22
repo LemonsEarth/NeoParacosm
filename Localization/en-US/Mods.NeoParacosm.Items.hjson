@@ -2503,3 +2503,12 @@ ArcaneLight: {
 	DisplayName: Arcane Light
 	Tooltip: Chance to heal the lowest health player on your team
 }
+
+NPCSpawner: {
+	DisplayName: NPC Spawner
+	Tooltip:
+		'''
+		Dev Item 
+		Do not use if you don't know what you're doing
+		'''
+}

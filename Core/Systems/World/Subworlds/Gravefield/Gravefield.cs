@@ -31,7 +31,7 @@ public class Gravefield : Subworld
 
     public override void Unload()
     {
-        bg.Dispose();
+        //bg.Dispose();
     }
 
     public override void OnLoad()
