@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Core.Systems.Assets;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;

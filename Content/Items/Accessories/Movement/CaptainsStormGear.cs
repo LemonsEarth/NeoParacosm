@@ -1,8 +1,5 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
-using System.Collections.Generic;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Movement;

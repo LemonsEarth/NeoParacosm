@@ -1,8 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Misc;
-using NeoParacosm.Core.Systems.Data;
 using System.Linq;
-using Terraria.DataStructures;
-using Terraria.ModLoader.Config;
 
 namespace NeoParacosm.Core.Commands;
 

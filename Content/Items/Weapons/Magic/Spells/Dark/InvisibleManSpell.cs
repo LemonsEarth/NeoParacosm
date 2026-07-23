@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using Terraria.Audio;
+﻿using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Dark;

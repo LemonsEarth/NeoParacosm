@@ -1,7 +1,4 @@
-﻿using Ionic.Zlib;
-using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Core.Platforms;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.DataStructures;

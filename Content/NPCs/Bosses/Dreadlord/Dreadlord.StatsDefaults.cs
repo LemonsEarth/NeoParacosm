@@ -2,7 +2,6 @@
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
-using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;

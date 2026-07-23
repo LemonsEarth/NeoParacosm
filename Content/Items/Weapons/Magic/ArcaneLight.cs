@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Core.Systems.Assets;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 

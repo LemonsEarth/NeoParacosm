@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
-using Steamworks;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 

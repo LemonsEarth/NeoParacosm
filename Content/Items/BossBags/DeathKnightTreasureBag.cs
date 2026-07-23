@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
-using NeoParacosm.Content.Items.Accessories.Movement;
+﻿using NeoParacosm.Content.Items.Accessories.Movement;
 using NeoParacosm.Content.Items.Armor.Generic.DeathKnight;
 using NeoParacosm.Content.Items.Materials;
 using Terraria.GameContent.ItemDropRules;

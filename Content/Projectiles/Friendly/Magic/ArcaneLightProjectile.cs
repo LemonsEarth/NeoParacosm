@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Core.Systems.Assets;
 using System.Linq;
-using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
