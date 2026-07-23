@@ -311,7 +311,7 @@ ResearcherBoss: {
 }
 
 Marauder.DisplayName: Marauder
-ShadowOrbNPC.DisplayName: Shadow Orb
+ShadowOrbNPC.DisplayName: Eater Egg
 
 BaneflyEnemy: {
 	DisplayName: Banefly
@@ -592,3 +592,8 @@ CorruptWyvernHead.DisplayName: Corrupt Wyvern Head
 CorruptWyvernTail.DisplayName: Corrupt Wyvern Tail
 SentientSawblade.DisplayName: Sentient Sawblade
 FacelessCommoner.DisplayName: Faceless Commoner
+FacelessArcher.DisplayName: Faceless Archer
+SenselessRat.DisplayName: Senseless Rat
+FacelessSpearman.DisplayName: Faceless Spearman
+DimmedWarlock.DisplayName: Dimmed Warlock
+CommonFighterTest.DisplayName: Common Fighter Test

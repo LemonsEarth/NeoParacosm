@@ -34,6 +34,26 @@ public static partial class LemonUtils
     }
 
     /// <summary>
+    /// Returns true if the NPC's target is below the NPC's bottom point + bottomMargin, false if not. Returns null if the NPC has no target.
+    /// </summary>
+    /// <returns></returns>
+    public static bool? ShouldFallThroughPlatforms(this NPC NPC, float bottomMargin = 8)
+    {
+        if (NPC.HasValidTarget)
+        {
+            if (NPC.GetTarget().Top.Y > NPC.Bottom.Y + bottomMargin)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
     /// Attempts to find a safe position to teleport.
     /// </summary>
     /// <returns>Chosen position. Returns Vector2.Zero if no safe position is found.</returns>

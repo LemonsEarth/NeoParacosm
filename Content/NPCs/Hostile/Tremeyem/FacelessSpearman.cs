@@ -14,7 +14,7 @@ using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Tremeyem;
 
-public class FacelessCommoner : ModNPC
+public class FacelessSpearman : ModNPC
 {
     int AITimer = 0;
     bool stabbing = false;
@@ -24,8 +24,6 @@ public class FacelessCommoner : ModNPC
 
     int stabbingCooldownTimer = 0;
     int stabbingCooldown = 60;
-
-    int doneNothingTimer = 0;
 
     public override void SendExtraAI(BinaryWriter writer)
     {
@@ -67,8 +65,8 @@ public class FacelessCommoner : ModNPC
         {
             if (LemonUtils.NotClient())
             {
-                if (stabbingPrepDuration == 0) stabbingPrepDuration = Main.rand.Next(30, 45);
-                if (stabbingStabDuration == 0) stabbingStabDuration = Main.rand.Next(30, 45);
+                if (stabbingPrepDuration == 0) stabbingPrepDuration = Main.rand.Next(90, 120);
+                if (stabbingStabDuration == 0) stabbingStabDuration = Main.rand.Next(60, 90);
             }
             NPC.netUpdate = true;
         }
@@ -108,29 +106,12 @@ public class FacelessCommoner : ModNPC
         float verticalDistance = MathF.Abs(toPlayer.Y);
 
         bool verticalCheck = verticalDistance < NPC.height * 0.5f;
-        bool horizontalCheck = horizontalDistance < 128;
+        bool horizontalCheck = horizontalDistance < 300;
         bool canHitLine = Collision.CanHitLine(NPC.Center, 2, 2, player.Center, 2, 2);
 
         if (verticalCheck && horizontalCheck && canHitLine)
         {
             stabbing = true;
-            doneNothingTimer = 0;
-        }
-
-        if (!canHitLine)
-        {
-            if (doneNothingTimer < 300)
-            {
-                if (!NPC.HasBuff(BuffID.Confused))
-                {
-                    doneNothingTimer++;
-                }
-            }
-            else
-            {
-                NPC.AddBuff(BuffID.Confused, 180);
-                doneNothingTimer = 0;
-            }
         }
     }
 
@@ -150,12 +131,12 @@ public class FacelessCommoner : ModNPC
             SoundEngine.PlaySound(SoundID.Item1 with { PitchRange = (0.3f, 0.6f), Volume = 0.75f }, NPC.Center);
             NPC.knockBackResist = 0f;
             NPC.spriteDirection = -LemonUtils.Sign(toPlayer.X, 1);
-            NPC.velocity = new Vector2(LemonUtils.Sign(toPlayer.X, 1) * 15, 0);
+            NPC.velocity = new Vector2(LemonUtils.Sign(toPlayer.X, 1) * 30, 0);
         }
         else
         {
             NPC.velocity.Y = 0;
-            NPC.velocity.X *= 0.93f;
+            NPC.velocity.X *= 0.97f;
         }
 
         if (stabbingTimer > stabbingPrepDuration + stabbingStabDuration)
@@ -174,7 +155,7 @@ public class FacelessCommoner : ModNPC
         if (NPC.HasValidTarget)
         {
             Vector2 toPlayer = NPC.GetTarget().Center - NPC.Center;
-            NPC.spriteDirection = -LemonUtils.Sign(NPC.velocity.X, 1);
+            NPC.spriteDirection = -LemonUtils.Sign(toPlayer.X, 1);
         }
         if (AITimer == 0)
         {
@@ -207,22 +188,15 @@ public class FacelessCommoner : ModNPC
         {
             if (NPC.collideY)
             {
-                if (NPC.velocity.X != 0)
+                NPC.frameCounter++;
+                if (NPC.frameCounter > walkingFrameDuration)
                 {
-                    NPC.frameCounter++;
-                    if (NPC.frameCounter > walkingFrameDuration)
+                    NPC.frame.Y += frameHeight;
+                    NPC.frameCounter = 0;
+                    if (NPC.frame.Y > walkingMaxFrame * frameHeight)
                     {
-                        NPC.frame.Y += frameHeight;
-                        NPC.frameCounter = 0;
-                        if (NPC.frame.Y > walkingMaxFrame * frameHeight)
-                        {
-                            NPC.frame.Y = 0;
-                        }
+                        NPC.frame.Y = 0;
                     }
-                }
-                else
-                {
-                    NPC.frame.Y = 0;
                 }
             }
             else

@@ -184,6 +184,18 @@ public class GoblinMortar : ModNPC
         AITimer++;
     }
 
+    public override void HitEffect(NPC.HitInfo hit)
+    {
+        if (Main.dedServ) return;
+        Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.Iron, 2, 2).noGravity = true;
+        if (NPC.life <= 0)
+        {
+            LemonUtils.SmokeGore(NPC.GetSource_FromAI(), NPC.RandomPos(), 2, 2);
+            LemonUtils.SmokeGore(NPC.GetSource_FromAI(), NPC.RandomPos(), 2, 2);
+            LemonUtils.SmokeGore(NPC.GetSource_FromAI(), NPC.RandomPos(), 2, 2);
+        }
+    }
+
     public override void OnKill()
     {
 

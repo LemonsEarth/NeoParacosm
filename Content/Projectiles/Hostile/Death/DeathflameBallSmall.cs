@@ -17,8 +17,8 @@ public class DeathflameBallSmall : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 16;
-        Projectile.height = 16;
+        Projectile.width = 32;
+        Projectile.height = 32;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = false;
@@ -56,10 +56,10 @@ public class DeathflameBallSmall : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 1, 1, 1);
 
-        for (float i = 0; i < 2; i++)
+        for (float i = 0; i < 1; i++)
         {
-            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(1, 2), newColor: Color.Black).noGravity = true;
-            Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.1f).noGravity = true;
+            Dust.NewDustPerfect(Projectile.RandomPos(), DustID.Ash, Scale: Main.rand.NextFloat(1, 2), newColor: Color.Black).noGravity = true;
+            Dust.NewDustPerfect(Projectile.RandomPos(), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.1f).noGravity = true;
         }
 
         Projectile.rotation = Projectile.velocity.ToRotation();
