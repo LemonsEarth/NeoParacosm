@@ -27,8 +27,8 @@ public class CommonFighterTest : ModNPC
 
     public override void SetDefaults()
     {
-        NPC.width = 28;
-        NPC.height = 56;
+        NPC.width = 24;
+        NPC.height = 48;
         NPC.lifeMax = 100;
         NPC.defense = 3;
         NPC.damage = 40;
@@ -69,26 +69,47 @@ public class CommonFighterTest : ModNPC
         if (NPC.velocity.Y < 0) return false;
         Vector2 NPCBottom = new Vector2(NPC.Bottom.X, NPC.Bottom.Y + 8);
         Point NPCBottomPoint = NPCBottom.ToTileCoordinates();
-        return Framing.GetTileSafely(NPCBottomPoint).HasTile;
+        return NPCBottomPoint.HasSolidTile();
+    }
+
+    public bool NextStepHasTile()
+    {
+        Vector2 NPCBottom = new Vector2(NPC.Bottom.X, NPC.Bottom.Y + 8);
+        Point NPCBottomPoint = NPCBottom.ToTileCoordinates();
+        NPCBottomPoint.X += 1;
+        return NPCBottomPoint.HasSolidTile();
     }
 
     public float MovementSpeed { get; set; } = 5f;
+    public float ChaseSpeed { get; set; } = 8f;
     public float Acceleration { get; set; } = 0.1f;
     public float JumpHeight { get; set; } = 80f;
     public float AggroRange { get; set; } = 400f;
     public float MaxTargetDistance { get; set; } = 800f;
 
     public State CurrentState { get; set; } = State.Patrolling;
+    public Vector2 OriginalHomePosition { get; set; }
     public Vector2 HomePosition { get; set; }
     public int CantSeeTargetTimer { get; set; } = 0;
     public Vector2 LastSeenTargetPos { get; set; }
     public Vector2 TargetPos { get; set; }
     public Vector2 DirToTargetPos => NPC.Center.DirectionTo(LastSeenTargetPos);
 
+    public bool CanJump { get; set; } = false;
+
     public int PatrolTimer { get; set; } = 0;
     public int PatrolDistance { get; set; } = 160;
+    public float MaxHomePositionDistance { get; set; } = 160;
+    public float TooFarFromHomeTimer { get; set; } = 0;
+    public float SwitchHomePositionInterval { get; set; } = 300;
     public int SwitchPatrolPositionInterval { get; set; } = 180;
+    public int CantReachPatrolPositionTimer { get; set; } = 0;
     public Vector2 CurrentPatrolPos { get; set; }
+
+    public bool DoTeleportToHome { get; set; }
+
+    public int InvestigatingTimer { get; set; } = 0;
+    public int InvestigatingDuration { get; set; } = 300;
 
     public void TryFindTarget()
     {
@@ -135,7 +156,7 @@ public class CommonFighterTest : ModNPC
             CantSeeTargetTimer = 0;
         }
 
-        if (CantSeeTargetTimer > 360)
+        if (CantSeeTargetTimer > InvestigatingDuration)
         {
             NPC.target = -1;
             CantSeeTargetTimer = 0;
@@ -170,6 +191,12 @@ public class CommonFighterTest : ModNPC
             case State.Patrolling:
                 PatrollingBehavior();
                 break;
+            case State.Chasing:
+                ChasingBehavior();
+                break;
+            case State.Investigating:
+                InvestigatingBehavior();
+                break;
         }
     }
 
@@ -180,19 +207,19 @@ public class CommonFighterTest : ModNPC
         {
             return false;
         }
-        Tile posTile = Framing.GetTileSafely(posTileCoords.X, posTileCoords.Y);
-        if (!posTile.HasTile)
+
+        if (!posTileCoords.HasSolidTile())
         {
             for (int y = 1; y < 7; y++)
             {
-                if (!WorldGen.InWorld(posTileCoords.X, posTileCoords.Y + y))
+                Point belowPos = new Point(posTileCoords.X, posTileCoords.Y + y);
+                if (!WorldGen.InWorld(belowPos.X, belowPos.Y))
                 {
                     return false;
                 }
-                Tile belowPosTile = Framing.GetTileSafely(posTileCoords.X, posTileCoords.Y + y);
-                if (belowPosTile.HasTile)
+                if (belowPos.HasSolidTile())
                 {
-                    position = new Vector2(posTileCoords.X, posTileCoords.Y + y).ToWorldCoordinates();
+                    position = belowPos.ToWorldCoordinates();
                     return true;
                 }
             }
@@ -201,14 +228,14 @@ public class CommonFighterTest : ModNPC
 
         for (int y = 1; y < 7; y++)
         {
-            if (!WorldGen.InWorld(posTileCoords.X, posTileCoords.Y - y))
+            Point abovePos = new Point(posTileCoords.X, posTileCoords.Y - y);
+            if (!WorldGen.InWorld(abovePos.X, abovePos.Y))
             {
                 return false;
             }
-            Tile belowPosTile = Framing.GetTileSafely(posTileCoords.X, posTileCoords.Y - y);
-            if (!belowPosTile.HasTile)
+            if (!abovePos.HasSolidTile())
             {
-                position = new Vector2(posTileCoords.X, posTileCoords.Y - y).ToWorldCoordinates();
+                position = abovePos.ToWorldCoordinates();
                 return true;
             }
         }
@@ -217,6 +244,22 @@ public class CommonFighterTest : ModNPC
 
     public void PatrollingBehavior()
     {
+        Dust.NewDustPerfect(CurrentPatrolPos, DustID.GemDiamond, Vector2.Zero).noGravity = true;
+        if (DoTeleportToHome)
+        {
+            if (NPC.DistanceSQ(HomePosition) < 40 * 40)
+            {
+                DoTeleportToHome = false;
+            }
+            NPC.Opacity -= 1 / 60f;
+            if (NPC.Opacity <= 0f)
+            {
+                NPC.Center = HomePosition;
+                NPC.Opacity = 1f;
+                LemonUtils.DustBurst(10, NPC.Center, DustID.GemDiamond, 5, 5, 1.2f, 2f);
+            }
+        }
+        InvestigatingTimer = 0;
         if (PatrolTimer >= SwitchPatrolPositionInterval || AITimer == 0)
         {
             Vector2 patrolPos = HomePosition + new Vector2(Main.rand.NextFloat(-PatrolDistance, PatrolDistance), 0);
@@ -225,20 +268,30 @@ public class CommonFighterTest : ModNPC
                 CurrentPatrolPos = patrolPos;
                 PatrolTimer = 0;
             }
+            else
+            {
+                NPC.velocity = Vector2.Zero;
+            }
         }
 
-        if (NPC.DistanceSQ(CurrentPatrolPos) > 40 * 40)
+        if (MathF.Abs(NPC.Center.X - CurrentPatrolPos.X) > 16)
         {
-            MoveToPos(CurrentPatrolPos);
-            float stepSpeed = 1f;
-            float gfxOffY = 0;
+            if (!Collision.CanHitLine(NPC.Center, 2, 2, CurrentPatrolPos, 2, 2))
+            {
+                if (CantReachPatrolPositionTimer >= 300)
+                {
+                    DoTeleportToHome = true;
+                    CantReachPatrolPositionTimer = 0;
 
-            Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
-            
-            NPC.spriteDirection = -LemonUtils.Sign(NPC.velocity.X, 1);
+                }
+                CantReachPatrolPositionTimer++;
+            }
+            MoveToPos(CurrentPatrolPos, MovementSpeed);
+            FacePosition(CurrentPatrolPos);
         }
         else
         {
+            CantReachPatrolPositionTimer = 0;
             NPC.velocity.X = 0f;
         }
 
@@ -248,26 +301,77 @@ public class CommonFighterTest : ModNPC
         }
     }
 
-    public void MoveToPos(Vector2 position)
+    public void ChasingBehavior()
+    {
+        Dust.NewDustPerfect(LastSeenTargetPos, DustID.GemDiamond, Vector2.Zero).noGravity = true;
+        CantReachPatrolPositionTimer = 0;
+        InvestigatingTimer = 0;
+        MoveToPos(LastSeenTargetPos, MovementSpeed);
+        FacePosition(LastSeenTargetPos);
+
+        if (LastSeenTargetPos.Y < NPC.Top.Y && IsGrounded() && !NextStepHasTile())
+        {
+            NPC.velocity.Y = -JumpHeight;
+        }
+    }
+
+    public void InvestigatingBehavior()
+    {
+        Dust.NewDustPerfect(LastSeenTargetPos, DustID.GemDiamond, Vector2.Zero).noGravity = true;
+        CantReachPatrolPositionTimer = 0;
+        MoveToPos(LastSeenTargetPos, MovementSpeed);
+        FacePosition(LastSeenTargetPos);
+
+        if (LastSeenTargetPos.Y < NPC.Top.Y && IsGrounded() && !NextStepHasTile())
+        {
+            NPC.velocity.Y = -JumpHeight;
+        }
+
+        if (InvestigatingTimer < InvestigatingDuration)
+        {
+            InvestigatingTimer++;
+        }
+    }
+
+    public void FacePosition(Vector2 pos)
+    {
+        float toPosition = pos.X - NPC.Center.X;
+        NPC.spriteDirection = -LemonUtils.Sign(toPosition, 1);
+    }
+
+    public void MoveToPos(Vector2 position, float speed)
     {
         float dirX = LemonUtils.Sign(NPC.Center.DirectionTo(position).X, 1);
-        if (MathF.Abs(NPC.velocity.X) < MovementSpeed)
+        if (dirX == 1 && NPC.velocity.X < speed)
+        {
+            NPC.velocity.X += dirX * Acceleration;
+        }
+        else if (dirX == -1 && NPC.velocity.X > -speed)
         {
             NPC.velocity.X += dirX * Acceleration;
         }
 
-        Point npcCenterTilePoint = NPC.Center.ToTileCoordinates();
-        for (int x = 1; x < 3; x++)
+        if (LemonUtils.Sign(NPC.velocity.X, 1) != dirX)
         {
-            Point pointInFront = new Point(2 * LemonUtils.Sign(NPC.velocity.X, 1), 0);
-            Point tilePointInFront = npcCenterTilePoint + pointInFront;
-            Tile tileInFront = Framing.GetTileSafely(tilePointInFront);
-            if (tileInFront.HasTile && IsGrounded())
+            NPC.velocity *= 0.9f;
+        }
+
+        Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+        int tileHeight = NPC.height / 16;
+        for (int j = -tileHeight / 2; j <= tileHeight / 2; j++)
+        {
+            int xVelSign = LemonUtils.Sign(NPC.velocity.X, 1);
+            Vector2 NPCFrontPosition = NPC.Center + new Vector2(xVelSign * NPC.width, 0);
+            Point npcCenterTilePoint = NPCFrontPosition.ToTileCoordinates();
+            npcCenterTilePoint.Y += j;
+
+            Point tilePointInFront = npcCenterTilePoint;
+            //LemonUtils.DustPoint(tilePointInFront);
+            if (tilePointInFront.HasSolidTile() && IsGrounded())
             {
-                NPC.velocity.Y -= JumpHeight;
+                NPC.velocity.Y = -JumpHeight;
                 break;
             }
-
         }
     }
 
@@ -275,6 +379,7 @@ public class CommonFighterTest : ModNPC
     {
         if (AITimer == 0)
         {
+            OriginalHomePosition = NPC.Center;
             HomePosition = NPC.Center;
             CurrentPatrolPos = HomePosition;
             MovementSpeed = 2f;
@@ -289,12 +394,17 @@ public class CommonFighterTest : ModNPC
 
         CheckTarget();
         SetCurrentState();
-        StateControl();
-        //Main.NewText(NPC.target);
-        Dust.NewDustPerfect(CurrentPatrolPos, DustID.GemDiamond, Vector2.Zero).noGravity = true;
 
-        /*Dust.NewDustPerfect(LastSeenTargetPos, DustID.GemDiamond, Vector2.Zero).noGravity = true;
-        for (int i = 0; i < 32; i++)
+        if (IsGrounded())
+        {
+            CanJump = true;
+        }
+
+        StateControl();
+        //Main.NewText(CurrentState);
+        //Main.NewText(NPC.target);
+
+        /*for (int i = 0; i < 32; i++)
         {
             Dust.NewDustPerfect(NPC.Center - Vector2.UnitY.RotatedBy(i * MathHelper.TwoPi / 32f + MathHelper.ToRadians(AITimer)) * 400, DustID.GemRuby, Vector2.Zero).noGravity = true;
         }*/

@@ -33,6 +33,12 @@ public static partial class LemonUtils
         return Main.tile[point].HasTile;
     }
 
+    public static bool HasSolidTile(this Point point)
+    {
+        Tile tile = Framing.GetTileSafely(point);
+        return tile.HasTile && Main.tileSolid[tile.TileType];
+    }
+
     public static bool IsDungeonBrick(int tileID)
     {
         return tileID == TileID.BlueDungeonBrick || tileID == TileID.GreenDungeonBrick || tileID == TileID.PinkDungeonBrick;

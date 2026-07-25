@@ -52,6 +52,18 @@ public static partial class LemonUtils
         return rand.NextBool(consequent).ToDirectionInt();
     }
 
+    /// <summary>
+    /// Spawns ruby dust at point
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
+    public static Dust DustPoint(Point point)
+    {
+        Dust dust = Dust.NewDustPerfect(point.ToWorldCoordinates(), DustID.GemRuby, Vector2.Zero);
+        dust.noGravity = true;
+        return dust;
+    }
+
     public static bool IntersectsExact(this Rectangle rect, Rectangle other)
     {
         return (other.Left <= rect.Right &&
