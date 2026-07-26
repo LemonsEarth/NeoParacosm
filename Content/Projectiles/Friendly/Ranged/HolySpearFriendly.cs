@@ -29,6 +29,8 @@ public class HolySpearFriendly : ModProjectile
         Projectile.penetrate = 3;
         Projectile.timeLeft = 600;
         Projectile.scale = 1f;
+        Projectile.usesLocalNPCImmunity = true;
+        Projectile.localNPCHitCooldown = 60;
     }
 
     float savedSpeed = 1f;

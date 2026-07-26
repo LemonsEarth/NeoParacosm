@@ -12,7 +12,7 @@ namespace NeoParacosm.Content.Biomes.DeadForest;
 
 public class DeadForestBiome : ModBiome
 {
-    public override int Music => MusicID.Graveyard;
+    public override int Music => MusicLoader.GetMusicSlot("NeoParacosm/Common/Assets/Audio/Music/NoMansLand");
     public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<DeadForestSurfaceBackgroundStyle>();
     //public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
     public override string BestiaryIcon => base.BestiaryIcon;

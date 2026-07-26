@@ -1982,7 +1982,7 @@ FrozenSkull: {
 }
 
 VampiresVial: {
-	DisplayName: Vampires Vial
+	DisplayName: Vampire's Vial
 	Tooltip: Landing true melee strikes shortly after taking damage heals you for up to 50% of the damage taken
 }
 
@@ -1996,7 +1996,7 @@ SnakeWhip: {
 }
 
 ForbiddenSnakeWhip: {
-	DisplayName: Forbidden Snake Whip
+	DisplayName: Forbidden Noodle
 	Tooltip:
 		'''
 		Gains range every swing
@@ -2486,7 +2486,7 @@ HolyLightningTorrentSpell: {
 }
 
 CaptainsArsenal: {
-	DisplayName: Captains Arsenal
+	DisplayName: Captain's Arsenal
 	Tooltip:
 		'''
 		Hurl many holy spears at once
@@ -2511,4 +2511,14 @@ NPCSpawner: {
 		Dev Item 
 		Do not use if you don't know what you're doing
 		'''
+}
+
+DeathflameChandelier: {
+	DisplayName: Deathflame Chandelier
+	Tooltip: ""
+}
+
+PrisonDoor: {
+	DisplayName: Prison Door
+	Tooltip: ""
 }

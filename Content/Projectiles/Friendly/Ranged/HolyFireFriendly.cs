@@ -26,6 +26,8 @@ public class HolyFireFriendly : ModProjectile
         Projectile.timeLeft = 9999;
         Projectile.scale = 1f;
         Projectile.extraUpdates = 5;
+        Projectile.usesLocalNPCImmunity = true;
+        Projectile.localNPCHitCooldown = 60;
     }
 
     float savedSpeed = 1f;

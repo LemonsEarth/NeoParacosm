@@ -39,7 +39,7 @@ public class DeathbirdFeather : ModProjectile
         {
             if (IndicatorLength == 0) IndicatorLength = 1;
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
-            SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0f, 0.2f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (0f, 0.2f), MaxInstances = 3 }, Projectile.Center);
         }
 
         Lighting.AddLight(Projectile.Center, 1, 1, 0);
