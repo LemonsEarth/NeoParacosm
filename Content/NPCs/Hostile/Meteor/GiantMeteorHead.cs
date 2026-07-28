@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Items.Accessories.Movement;
 using NeoParacosm.Content.Items.Weapons.Ranged;
 using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Content.Projectiles.Hostile.Misc;
@@ -103,6 +104,8 @@ public class GiantMeteorHead : ModNPC
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
         npcLoot.Add(ItemDropRule.Common(ItemType<MeteorFragments>(), 1, minimumDropped: 65, maximumDropped: 80));
+        npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<GravityRing>(), 10, 5));
+        npcLoot.Add(ItemDropRule.Common(ItemID.Meteorite, 1, minimumDropped: 5, maximumDropped: 10));
     }
 
     public override bool? CanFallThroughPlatforms()

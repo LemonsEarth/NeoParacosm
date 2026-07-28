@@ -2560,5 +2560,10 @@ MeteorCore: {
 
 GravityArrow: {
 	DisplayName: Gravity Arrow
-	Tooltip: ""
+	Tooltip: Pulls in nearby enemies on hit
+}
+
+GravityRing: {
+	DisplayName: Gravity Ring
+	Tooltip: Grants control over gravity
 }
