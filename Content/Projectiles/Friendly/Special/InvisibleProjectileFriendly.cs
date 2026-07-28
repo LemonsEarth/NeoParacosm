@@ -29,30 +29,51 @@ public class InvisibleProjectileFriendly : ModProjectile
         Projectile.scale = 1f;
     }
 
+    int timeLeft = 60;
+
     public override void AI()
     {
         if (AITimer == 0)
         {
+            // using velocity X to store timeleft since other ai values are used for other things
+            if (Projectile.velocity != Vector2.Zero)
+            {
+                timeLeft = (int)Projectile.velocity.X;
+                Projectile.timeLeft = timeLeft;
+            }
+            Projectile.velocity = Vector2.Zero;
+        }
+
+        if (FollowNPCID >= 0)
+        {
+            if (Main.npc[(int)FollowNPCID] == null || !Main.npc[(int)FollowNPCID].active)
+            {
+                Projectile.Kill();
+            }
+            Projectile.position = Main.npc[(int)FollowNPCID].position;
 
         }
-        if (FollowNPCID <= -1 || Main.npc[(int)FollowNPCID] == null || !Main.npc[(int)FollowNPCID].active)
-        {
-            Projectile.Kill();
-        }
+
         Projectile.width = (int)Width;
         Projectile.height = (int)Height;
-        Projectile.position = Main.npc[(int)FollowNPCID].position;
+
         Projectile.velocity = Vector2.Zero;
 
         AITimer++;
     }
 
-    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    public override bool? CanHitNPC(NPC target)
     {
         if (target.whoAmI == FollowNPCID)
         {
-            modifiers.FinalDamage *= 0f;
+            return false;
         }
+        return null;
+    }
+
+    public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+    {
+
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

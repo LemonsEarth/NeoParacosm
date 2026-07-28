@@ -2522,3 +2522,43 @@ PrisonDoor: {
 	DisplayName: Prison Door
 	Tooltip: ""
 }
+
+GrayKey: {
+	DisplayName: Gray Key
+	Tooltip: Can be used to unlock common prison doors
+}
+
+GateKey: {
+	DisplayName: Gate Key
+	Tooltip: Can be used to unlock giant gates with gold latches
+}
+
+GiantGate: {
+	DisplayName: Giant Gate
+	Tooltip: ""
+}
+
+GravityFieldSpell: {
+	DisplayName: Gravity Field
+	Tooltip: Creates a field that amplifies gravity of enemies within
+}
+
+Crossblade: {
+	DisplayName: Crossblade
+	Tooltip: Right click after landing 10 hits to fire a burst of arrows
+}
+
+MeteorFragments: {
+	DisplayName: Meteor Fragments
+	Tooltip: Throws a volley of explosive meteor fragments
+}
+
+MeteorCore: {
+	DisplayName: Meteor Core
+	Tooltip: Throw a meteor core that pulls in nearby enemies before exploding
+}
+
+GravityArrow: {
+	DisplayName: Gravity Arrow
+	Tooltip: ""
+}

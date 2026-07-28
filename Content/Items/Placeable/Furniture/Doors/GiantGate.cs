@@ -11,7 +11,7 @@ using Terraria.ObjectData;
 
 namespace NeoParacosm.Content.Items.Placeable.Furniture.Doors;
 
-public class PrisonDoorClosed : ModTile
+public class GiantGateClosed : ModTile
 {
     public override void SetStaticDefaults()
     {
@@ -33,7 +33,16 @@ public class PrisonDoorClosed : ModTile
 
         // Placement
         // In addition to copying from the TileObjectData.Something templates, modders can copy from specific tile types. CopyFrom won't copy subtile data, so style specific properties won't be copied, such as how Obsidian doors are immune to lava.
-        TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.ClosedDoor, 0));
+        TileObjectData.newTile.UsesCustomCanPlace = true;
+        TileObjectData.newTile.StyleHorizontal = false;
+        TileObjectData.newTile.Width = 2;
+        TileObjectData.newTile.Height = 6;
+        TileObjectData.newTile.CoordinateWidth = 16;
+        TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 16];
+        TileObjectData.newTile.CoordinatePadding = 2;
+        TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+        TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+        // Additional edits here, such as lava immunity, alternate placements, and subtiles
         TileObjectData.addTile(Type);
     }
 
@@ -46,7 +55,7 @@ public class PrisonDoorClosed : ModTile
     {
         foreach (var player in Main.ActivePlayers)
         {
-            if (player.ConsumeItem(ItemType<GrayKey>()))
+            if (player.ConsumeItem(ItemType<GateKey>()))
             {
                 WorldGen.KillTile(i, j);
                 return true;
@@ -58,7 +67,7 @@ public class PrisonDoorClosed : ModTile
 
     public override void NumDust(int i, int j, bool fail, ref int num)
     {
-        num = 4;
+        num = 15;
     }
 
     public override void MouseOver(int i, int j)
@@ -66,17 +75,17 @@ public class PrisonDoorClosed : ModTile
         Player player = Main.LocalPlayer;
         player.noThrow = 2;
         player.cursorItemIconEnabled = true;
-        player.cursorItemIconID = ItemType<GrayKey>();
+        player.cursorItemIconID = ItemType<GateKey>();
     }
 }
 
-public class PrisonDoor : ModItem
+public class GiantGate : ModItem
 {
     public override void SetDefaults()
     {
-        Item.DefaultToPlaceableTile(TileType<PrisonDoorClosed>());
-        Item.width = 14;
-        Item.height = 28;
+        Item.DefaultToPlaceableTile(TileType<GiantGateClosed>());
+        Item.width = 16;
+        Item.height = 48;
         Item.value = 150;
     }
 }

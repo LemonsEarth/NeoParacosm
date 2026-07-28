@@ -93,8 +93,8 @@ public class CorruptMage : ModNPC
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
         int chanceBoost = NPC.downedBoss2 ? 4 : 1;
-        return (spawnInfo.Player.ZoneCorrupt && (spawnInfo.Player.ZoneSkyHeight || spawnInfo.Player.ZoneOverworldHeight)) ? 
-            0.02f * chanceBoost 
+        return (spawnInfo.Player.ZoneCorrupt && (spawnInfo.Player.ZoneSkyHeight || spawnInfo.Player.ZoneOverworldHeight)) ?
+            0.02f * chanceBoost
             : 0f;
     }
 

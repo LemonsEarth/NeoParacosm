@@ -29,7 +29,7 @@ public class TripleCrossbow : ModItem
         Item.autoReuse = true;
         Item.shoot = ProjectileID.PurificationPowder;
         Item.useAmmo = AmmoID.Arrow;
-        Item.shootSpeed = 100;
+        Item.shootSpeed = 10;
         Item.noMelee = true;
     }
 
