@@ -1,9 +1,9 @@
 ﻿using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
-namespace NeoParacosm.Content.Items.Accessories.Movement;
+namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 
-public class GravityRing : ModItem
+public class MagicOilOfFire : ModItem
 {
     public override void SetDefaults()
     {
@@ -16,6 +16,6 @@ public class GravityRing : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.AddBuff(BuffID.Gravitation, 2);
+        player.AddBuff(BuffID.WeaponImbueFire, 2);
     }
 }

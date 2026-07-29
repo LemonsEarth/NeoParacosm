@@ -2035,7 +2035,7 @@ PoisonGasSpell: {
 }
 
 BlightOfTheDevourer: {
-	DisplayName: Blight Of The Devourer
+	DisplayName: Blight Of The Body
 	Tooltip:
 		'''
 		Increases mining speed by {0}%
@@ -2566,4 +2566,24 @@ GravityArrow: {
 GravityRing: {
 	DisplayName: Gravity Ring
 	Tooltip: Grants control over gravity
+}
+
+MagicOilOfFire: {
+	DisplayName: Magic Oil of Fire
+	Tooltip: Effect of Flask of Fire
+}
+
+ArcheryRing: {
+	DisplayName: Archery Ring
+	Tooltip: Grants enhanced archery ability
+}
+
+Greatbow: {
+	DisplayName: Greatbow
+	Tooltip: Arrows have increased piercing and velocity
+}
+
+GreatPull: {
+	DisplayName: Great Pull
+	Tooltip: Arrows pull in nearby enemies on hit
 }

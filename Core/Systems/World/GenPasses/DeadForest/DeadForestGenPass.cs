@@ -13,14 +13,15 @@ public class DeadForestGenPass : GenPass
 
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
-        Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30);
+        Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30); // Point around to generate the dead forest
+
         for (int i = -DeadForestRadius; i < DeadForestRadius; i++)
         {
             for (int j = -DeadForestRadius; j < DeadForestRadius; j++)
             {
                 Point pos = startPos + new Point(i, j);
-                pos = new Point(Math.Clamp(pos.X, 0, Main.maxTilesX), Math.Clamp(pos.Y, 0, Main.maxTilesY));
-                if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > DeadForestRadius * 16)
+                pos = new Point(Math.Clamp(pos.X, 0, Main.maxTilesX), Math.Clamp(pos.Y, 0, Main.maxTilesY)); // Clamp to world
+                if (startPos.ToWorldCoordinates().Distance(pos.ToWorldCoordinates()) > DeadForestRadius * 16) // The dead forest is circular
                 {
                     continue;
                 }

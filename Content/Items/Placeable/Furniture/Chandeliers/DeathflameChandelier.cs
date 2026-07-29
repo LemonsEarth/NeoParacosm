@@ -147,7 +147,7 @@ public class DeathflameChandelierBlock : ModTile
 
     public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset)
     {
-       
+
     }
 }
 

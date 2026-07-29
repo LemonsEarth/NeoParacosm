@@ -1,4 +1,5 @@
-﻿using StructureHelper.API;
+﻿using NeoParacosm.Content.Items.Accessories.Combat.Melee;
+using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.IO;
@@ -68,6 +69,7 @@ public class LavaCastleGenPass : GenPass
 
         List<List<(int, int)>> items =
         [
+            [(ItemType<MagicOilOfFire>(), 1)],
             [(ItemID.GoldPickaxe, 1), (ItemID.GoldAxe, 1)],
             [(ItemID.GoldBroadsword, 1), (ItemID.RubyStaff, 1)],
             [(ItemID.LavaCharm, 1), (ItemID.ObsidianRose, 1)],

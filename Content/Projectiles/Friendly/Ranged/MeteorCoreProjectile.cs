@@ -75,7 +75,7 @@ public class MeteorCoreProjectile : ModProjectile
         }
         else if (AITimer >= Duration / 2f)
         {
-            Projectile.velocity = Vector2.Zero;
+            Projectile.velocity = Main.rand.NextVector2CircularEdge(0.5f, 0.5f);
 
             if (AITimer % 120 == 0)
             {
@@ -95,7 +95,7 @@ public class MeteorCoreProjectile : ModProjectile
         }
         else
         {
-            Projectile.velocity = Vector2.Zero;
+            Projectile.velocity = Main.rand.NextVector2CircularEdge(0.5f, 0.5f);
 
         }
 

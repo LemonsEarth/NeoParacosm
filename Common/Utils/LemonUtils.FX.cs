@@ -38,6 +38,18 @@ public static partial class LemonUtils
         }
     }
 
+    public static void DustRing(Vector2 position, float radius, int count, int dustType, float speed)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Dust.NewDustPerfect(
+                position - Vector2.UnitY.RotatedBy(i * (MathHelper.TwoPi / count) + MathHelper.ToRadians((float)Main.timeForVisualEffects * speed)) * radius,
+                dustType,
+                Vector2.Zero
+                ).noGravity = true;
+        }
+    }
+
     /// <summary>
     /// Creates a line of dust between 2 points
     /// </summary>
