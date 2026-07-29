@@ -60,6 +60,10 @@ public class GravitySuckyProjFriendly : ModProjectile
                 }
             }
         }
+        if (AITimer / cycleDuration >= 1)
+        {
+            Projectile.Kill();
+        }
         Projectile.velocity = Vector2.Zero;
         AITimer++;
     }
@@ -91,4 +95,9 @@ public class GravitySuckyProjFriendly : ModProjectile
         return false;
     }
 
+    public override void PostDraw(Color lightColor)
+    {
+        Main.spriteBatch.End();
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+    }
 }

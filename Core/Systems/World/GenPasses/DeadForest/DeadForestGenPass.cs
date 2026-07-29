@@ -13,7 +13,7 @@ public class DeadForestGenPass : GenPass
 
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
-        Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30); // Point around to generate the dead forest
+        Point startPos = new Point(Main.dungeonX, Main.dungeonY + 30); // Point around which to generate the dead forest
 
         for (int i = -DeadForestRadius; i < DeadForestRadius; i++)
         {

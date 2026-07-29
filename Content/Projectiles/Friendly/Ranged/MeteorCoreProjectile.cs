@@ -21,8 +21,8 @@ public class MeteorCoreProjectile : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 44;
-        Projectile.height = 44;
+        Projectile.width = 22;
+        Projectile.height = 22;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = false;
@@ -49,7 +49,6 @@ public class MeteorCoreProjectile : ModProjectile
     {
         if (AITimer == 0)
         {
-            Projectile.frame = Main.rand.Next(0, 3);
             originalVelocity = Projectile.velocity;
         }
 
@@ -128,7 +127,7 @@ public class MeteorCoreProjectile : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-
-        return true;
+        Projectile.DrawProjectile(lightColor);
+        return false;
     }
 }
