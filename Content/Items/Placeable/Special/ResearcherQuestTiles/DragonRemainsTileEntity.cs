@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Effect;
+﻿using NeoParacosm.Content.Projectiles.EffectProjectiles;
 using NeoParacosm.Core.Systems.Data;
 using Terraria.DataStructures;
 

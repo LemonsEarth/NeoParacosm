@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Effect;
+﻿using NeoParacosm.Content.Projectiles.EffectProjectiles;
 using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Accessories.Master;

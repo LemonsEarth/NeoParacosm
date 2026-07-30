@@ -4,7 +4,7 @@ using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Effect;
+namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
 public class DragonRemainsPulseShield : ModProjectile
 {

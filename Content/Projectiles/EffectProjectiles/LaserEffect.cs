@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace NeoParacosm.Content.Projectiles.Effect;
+namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
 public class LaserEffect : ModProjectile
 {

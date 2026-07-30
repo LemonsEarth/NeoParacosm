@@ -4,7 +4,7 @@ using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using System.Collections.Generic;
 
-namespace NeoParacosm.Content.Projectiles.Effect;
+namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
 public class PlayerTrailProj : PrimProjectile
 {

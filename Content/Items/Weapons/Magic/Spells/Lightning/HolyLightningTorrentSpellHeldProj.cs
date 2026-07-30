@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
+namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Lightning;
 
 public class HolyLightningTorrentSpellHeldProj : ModProjectile
 {

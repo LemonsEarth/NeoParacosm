@@ -2,7 +2,7 @@
 using NeoParacosm.Core.Players;
 using Terraria.GameContent;
 
-namespace NeoParacosm.Content.Projectiles.Effect;
+namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
 public class SpellSwapProjectile : ModProjectile
 {

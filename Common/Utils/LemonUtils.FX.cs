@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles.Effect;
+using NeoParacosm.Content.Projectiles.EffectProjectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.UI;
 using Terraria.DataStructures;

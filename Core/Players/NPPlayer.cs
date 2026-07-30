@@ -1,4 +1,6 @@
-﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+﻿using Microsoft.Xna.Framework.Input;
+using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
@@ -12,6 +14,8 @@ public class NPPlayer : ModPlayer
     public bool NoMusic { get; set; } = false;
     public bool Grabbed { get; set; } = false;
     public bool FastFall { get; set; } = false;
+    public static int counter1 = 0;
+    public static int counter2 = 0;
 
     bool dodestroy = false;
 
@@ -135,6 +139,34 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        counter1.NewText();
+        counter2.NewText();
+        if (Main.keyState.IsKeyDown(Keys.U) && !Main.oldKeyState.IsKeyDown(Keys.U))
+        {
+            for (int i = 0; i < 500; i++)
+            {
+                Projectile.NewProjectileDirect(
+                    Player.GetSource_FromThis(),
+                    Player.Center + Main.rand.NextVector2Circular(500, 500),
+                    Vector2.Zero,
+                    ProjectileType<GiantCursedFlameSphere>(),
+                    0, 0, ai2: 300
+                    );
+            }
+        }
+        if (Main.keyState.IsKeyDown(Keys.I) && !Main.oldKeyState.IsKeyDown(Keys.I))
+        {
+            for (int i = 0; i < 500; i++)
+            {
+                Projectile.NewProjectileDirect(
+                    Player.GetSource_FromThis(),
+                    Player.Center + Main.rand.NextVector2Circular(500, 500),
+                    Vector2.Zero,
+                    ProjectileType<GiantCursedFlameSphereFriendly>(),
+                    0, 0, ai2: 300
+                    );
+            }
+        }
         //Dust.NewDustPerfect(Main.MouseWorld, DustType<FireDust>(), Vector2.Zero, newColor: Color.Red);
         //Player.stickyBreak = 100;
         //var c = Main.MouseWorld.ToTileCoordinates16();

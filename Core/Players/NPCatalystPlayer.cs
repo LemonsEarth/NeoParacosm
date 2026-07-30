@@ -1,5 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.Projectiles.Effect;
+using NeoParacosm.Content.Projectiles.EffectProjectiles;
 using NeoParacosm.Core.Systems.Misc;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;

@@ -1,7 +1,7 @@
 ﻿using NeoParacosm.Content.NPCs.Bosses.ResearcherBoss;
 using Terraria.Audio;
 
-namespace NeoParacosm.Content.Projectiles.Effect;
+namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
 public class DreadlordJumpscareProj : ModProjectile
 {
