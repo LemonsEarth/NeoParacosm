@@ -5,7 +5,6 @@ namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class FleshTwister : ModItem
 {
-    int useCounter = 0;
     public override void SetDefaults()
     {
         Item.damage = 150;

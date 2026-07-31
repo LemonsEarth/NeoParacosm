@@ -14,12 +14,6 @@ public class SnakeWhipProjectile : ModProjectile
         set => Projectile.ai[0] = value;
     }
 
-    private float RangeMultiplier
-    {
-        get => Projectile.ai[1];
-        set => Projectile.ai[1] = value;
-    }
-
     public override void SetStaticDefaults()
     {
         // This makes the projectile use whip collision detection and allows flasks to be applied to it.
@@ -52,29 +46,6 @@ public class SnakeWhipProjectile : ModProjectile
         target.AddBuff(BuffID.Venom, 60);
         Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
         Projectile.damage = (int)(Projectile.damage * 0.5f); // Multihit penalty. Decrease the damage the more enemies the whip hits.
-    }
-
-    // This method draws a line between all points of the whip, in case there's empty space between the sprites.
-    private void DrawLine(List<Vector2> list)
-    {
-        Texture2D texture = TextureAssets.FishingLine.Value;
-        Rectangle frame = texture.Frame();
-        Vector2 origin = new Vector2(frame.Width / 2, 2);
-
-        Vector2 pos = list[0];
-        for (int i = 0; i < list.Count - 1; i++)
-        {
-            Vector2 element = list[i];
-            Vector2 diff = list[i + 1] - element;
-
-            float rotation = diff.ToRotation() - MathHelper.PiOver2;
-            Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
-            Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
-
-            Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
-
-            pos += diff;
-        }
     }
 
     public override bool PreDraw(ref Color lightColor)

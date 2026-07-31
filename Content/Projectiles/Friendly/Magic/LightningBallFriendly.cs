@@ -39,7 +39,6 @@ public class LightningBallFriendly : ModProjectile
         //target.AddBuff(BuffType<DeathflameDebuff>(), 30);
     }
 
-    float speed = 1;
     Vector2 savedSpeed;
     public override void AI()
     {

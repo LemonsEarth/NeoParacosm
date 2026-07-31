@@ -20,7 +20,7 @@ public class SentientIchor : ModNPC
     ref float IdleTimer => ref NPC.ai[3];
     bool doExplode = false;
     int AttackTimer = 0;
-    float attackSpeed = 1;
+
     Vector2 TargetPos
     {
         get

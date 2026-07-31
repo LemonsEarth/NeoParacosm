@@ -14,7 +14,7 @@ public class StarsaberHeldProj : PrimProjectile
 
     ref float special => ref Projectile.ai[0];
     ref float direction => ref Projectile.ai[1];
-    ref float useCounter => ref Projectile.ai[2];
+
     List<Vector2> playerOldPos = new List<Vector2>();
 
     bool alreadyHit = false;

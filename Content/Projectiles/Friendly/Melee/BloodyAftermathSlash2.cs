@@ -8,7 +8,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 public class BloodyAftermathSlash2 : ModProjectile
 {
     int AITimer = 0;
-    int chargeTimer = 0;
+
     ref float FlipVertically => ref Projectile.ai[0];
     ref float Direction => ref Projectile.ai[1];
     ref float Delay => ref Projectile.ai[2];

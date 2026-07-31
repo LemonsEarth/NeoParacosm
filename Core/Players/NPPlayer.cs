@@ -17,8 +17,6 @@ public class NPPlayer : ModPlayer
     public static int counter1 = 0;
     public static int counter2 = 0;
 
-    bool dodestroy = false;
-
     /// <summary>
     /// A collection of projectile types that should behave as blocks, like CorruptPillar.
     /// </summary>

@@ -8,7 +8,6 @@ public class EquinoxMoon : ModProjectile
 {
     int AITimer = 0;
 
-    ref float RotSpeed => ref Projectile.ai[0];
     ref float PosX => ref Projectile.ai[1];
     ref float PosY => ref Projectile.ai[2];
     public override void SetStaticDefaults()

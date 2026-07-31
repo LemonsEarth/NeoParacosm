@@ -16,18 +16,12 @@ public partial class DeathKnightCaptain : ModNPC
     Point CurrentFrame;
 
     Point StandingNormal => new Point(0, 0);
-    Point Walk1Normal => new Point(0, 1);
-    Point Walk2Normal => new Point(0, 2);
-    Point ArmUpNormal => new Point(0, 3);
-    Point ArmFrontNormal => new Point(0, 4);
+
     Point ArmUpNormal2 => new Point(0, 5);
     Point ArmFrontNormal2 => new Point(0, 6);
 
     Point Crouching1 => new Point(1, 0);
-    Point Crouching2 => new Point(1, 1);
-    Point Crouching3 => new Point(1, 2);
-    Point ArmUpCrouching => new Point(1, 3);
-    Point ArmFrontCrouching => new Point(1, 4);
+
     Point Dashing => new Point(1, 5);
     Point ArmFrontDashing => new Point(1, 6);
 

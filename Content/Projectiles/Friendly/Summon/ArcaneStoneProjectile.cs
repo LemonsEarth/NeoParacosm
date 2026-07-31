@@ -9,7 +9,7 @@ public class ArcaneStoneProjectile : ModProjectile
     public override string Texture => ParacosmTextures.Empty100TexPath;
 
     int AITimer = 0;
-    ref float ScaleMul => ref Projectile.ai[0];
+
     ref float SizeX => ref Projectile.ai[1];
     ref float SizeY => ref Projectile.ai[2];
     public override void SetStaticDefaults()

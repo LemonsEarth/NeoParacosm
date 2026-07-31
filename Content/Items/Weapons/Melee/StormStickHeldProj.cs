@@ -8,10 +8,6 @@ public class StormStickHeldProj : ModProjectile
 {
     int AITimer = 0;
 
-    ref float special => ref Projectile.ai[0];
-    ref float direction => ref Projectile.ai[1];
-    ref float useCounter => ref Projectile.ai[2];
-
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         if (Main.LocalPlayer.HasBuff(BuffType<OverchargedBuff>()))

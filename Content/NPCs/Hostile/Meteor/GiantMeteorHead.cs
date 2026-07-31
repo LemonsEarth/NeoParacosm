@@ -14,7 +14,6 @@ namespace NeoParacosm.Content.NPCs.Hostile.Meteor;
 public class GiantMeteorHead : ModNPC
 {
     int AITimer = 0;
-    int AttackTimer = 0;
 
     public override void SetStaticDefaults()
     {

@@ -7,7 +7,6 @@ public class DarkIncendiaryProjFriendly : ModProjectile
 {
     int AITimer = 0;
     ref float WaitTime => ref Projectile.ai[0];
-    ref float PlayerID => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
     {

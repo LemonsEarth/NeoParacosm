@@ -12,7 +12,6 @@ public class BloodyAftermathSlash : ModProjectile
 {
     int AITimer = 0;
     int chargeTimer = 0;
-    bool flipVertically = false;
     bool released = false;
     ref float FlipVertically => ref Projectile.ai[0];
     ref float Direction => ref Projectile.ai[1];

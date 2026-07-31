@@ -17,11 +17,6 @@ public class EmperorColdsteelBody : ModNPC
         get { return (int)NPC.ai[1]; }
     }
 
-    int SegmentNum
-    {
-        get { return (int)NPC.ai[2]; }
-    }
-
     int AttackTimer = 0;
     int AttackCount = 0;
     float RandNum = 0;

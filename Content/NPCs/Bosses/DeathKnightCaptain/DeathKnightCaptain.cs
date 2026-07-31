@@ -93,12 +93,9 @@ public partial class DeathKnightCaptain : ModNPC
 
     int[] projectileTypesToDestroy;
     public int Phase { get; private set; } = 0;
-    bool reachedSecondPhase = false;
 
     bool doPhaseTransition = false;
     int phaseTransitionTimer = 0;
-
-    bool reachedFinalPhase = false;
     #endregion
 
     Vector2 targetPosition = Vector2.Zero;

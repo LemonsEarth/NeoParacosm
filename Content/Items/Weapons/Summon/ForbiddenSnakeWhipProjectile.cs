@@ -14,12 +14,6 @@ public class ForbiddenSnakeWhipProjectile : ModProjectile
         set => Projectile.ai[0] = value;
     }
 
-    private float RangeMultiplier
-    {
-        get => Projectile.ai[1];
-        set => Projectile.ai[1] = value;
-    }
-
     public override void SetStaticDefaults()
     {
         // This makes the projectile use whip collision detection and allows flasks to be applied to it.

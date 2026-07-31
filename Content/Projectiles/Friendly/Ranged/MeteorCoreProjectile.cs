@@ -10,7 +10,6 @@ public class MeteorCoreProjectile : ModProjectile
 {
     int AITimer = 0;
     ref float Duration => ref Projectile.ai[0];
-    ref float SlowDownRate => ref Projectile.ai[1];
 
     public override void SetStaticDefaults()
     {

@@ -9,7 +9,7 @@ public class CursebinderBigProj : ModProjectile
 
     int AITimer = 0;
     ref float Distance => ref Projectile.ai[0];
-    ref float Power => ref Projectile.ai[1];
+
     ref float Timeleft => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()

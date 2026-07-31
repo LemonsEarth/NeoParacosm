@@ -6,7 +6,7 @@ public class DragonClaw : ModItem
 {
     int useCounter = 0;
     int special = 0;
-    int specialCDTimer = 0;
+
     public override void SetDefaults()
     {
         Item.damage = 45;

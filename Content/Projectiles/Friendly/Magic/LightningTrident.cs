@@ -131,11 +131,6 @@ public class LightningTrident : ModProjectile
         AITimer++;
     }
 
-    void Split()
-    {
-        
-    }
-
     public override bool? CanHitNPC(NPC target)
     {
         if (!released) return false;

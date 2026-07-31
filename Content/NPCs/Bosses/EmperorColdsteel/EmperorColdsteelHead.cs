@@ -219,17 +219,6 @@ public class EmperorColdsteelHead : ModNPC
         AITimer++;
     }
 
-    void DoDrawFlashlight(Color color)
-    {
-        drawFlashlight = true;
-        flashlightColor = color;
-    }
-
-    void StopDrawingFlashlight()
-    {
-        drawFlashlight = false;
-    }
-
     void MoveToPos(Vector2 pos, float turningSpeedDegreesDenominator = 60f, float moveSpeed = 8f)
     {
         Vector2 dirToPos = NPC.DirectionTo(pos);

@@ -3,7 +3,7 @@
 public class StaffOfProtectionMinion : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    ref float AttackTimer => ref Projectile.ai[1];
+
     ref float Speed => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()

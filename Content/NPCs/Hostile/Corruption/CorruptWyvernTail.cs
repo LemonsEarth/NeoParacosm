@@ -9,11 +9,6 @@ public class CorruptWyvernTail : ModNPC
         get { return (int)NPC.ai[1]; }
     }
 
-    int HeadNPC
-    {
-        get { return (int)NPC.ai[2]; }
-    }
-
     public override void SetStaticDefaults()
     {
         NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;

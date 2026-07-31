@@ -159,22 +159,4 @@ public class NPCatalystPlayer : ModPlayer
             RemoveSpell(spellToRemove);
         }
     }
-
-    void PrintElementalDamageBoosts()
-    {
-        Main.NewText("Print elemental damage boosts:");
-        foreach (var kvp in ElementalDamageBoosts)
-        {
-            Main.NewText(kvp);
-        }
-    }
-
-    void PrintElementalExpertiseBoosts()
-    {
-        Main.NewText("Print elemental expertise boosts:");
-        foreach (var kvp in ElementalExpertiseBoosts)
-        {
-            Main.NewText(kvp);
-        }
-    }
 }

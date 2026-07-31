@@ -9,8 +9,6 @@ namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 public class PlayerTrailProj : PrimProjectile
 {
     int AITimer = 0;
-    ref float Width => ref Projectile.ai[1];
-    ref float Height => ref Projectile.ai[2];
 
     public override string Texture => ParacosmTextures.Empty100TexPath;
 

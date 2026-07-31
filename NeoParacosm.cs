@@ -21,6 +21,7 @@ public class NeoParacosm : Mod
 
     public NeoParacosm()
     {
+        MusicAutoloadingEnabled = false;
         MusicSkipsVolumeRemap = true;
     }
 

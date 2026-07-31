@@ -7,7 +7,7 @@ public class DreadlordJumpscareProj : ModProjectile
 {
     int AITimer = 0;
     ref float Timeleft => ref Projectile.ai[0];
-    ref float Scale => ref Projectile.ai[1];
+
     ref float ResearcherBossWhoAmI => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()

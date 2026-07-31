@@ -7,7 +7,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 public class IcicleRainBall : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
-    ref float Mode => ref Projectile.ai[1];
+
     bool released = false;
 
     public override void SetStaticDefaults()
