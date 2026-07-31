@@ -2590,5 +2590,9 @@ GreatPull: {
 
 GravityHammer: {
 	DisplayName: Gravity Hammer
-	Tooltip: ""
+	Tooltip:
+	'''
+	Hitting an enemy repels nearby enemies
+	Right click to pull in nearby enemies instead
+	'''
 }
