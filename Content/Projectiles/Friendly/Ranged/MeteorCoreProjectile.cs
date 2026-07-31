@@ -1,6 +1,5 @@
 ﻿using Mono.Cecil;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using Terraria.Audio;
 using static System.Net.Mime.MediaTypeNames;
 

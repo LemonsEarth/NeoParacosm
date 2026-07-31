@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Common.RecipeGroups;
 using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Projectiles.Hostile.Misc;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.DataStructures;

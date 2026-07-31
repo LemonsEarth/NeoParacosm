@@ -6,7 +6,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Misc;
+namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
 public class GravitySuckyProjFriendly : ModProjectile
 {
@@ -56,7 +56,9 @@ public class GravitySuckyProjFriendly : ModProjectile
             {
                 if (npc.CanBeChasedBy() && npc.knockBackResist > 0f && npc.Distance(Projectile.Center) < distance)
                 {
-                    npc.velocity += npc.DirectionTo(Projectile.Center) * npc.Distance(Projectile.Center) / strengthDenominator * npc.knockBackResist;
+                    float force = (npc.Distance(Projectile.Center) / strengthDenominator) * npc.knockBackResist;
+                    Vector2 dirToProjectile = (Projectile.Center - npc.Center).SafeNormalize(Vector2.Zero);
+                    npc.velocity += dirToProjectile * force;
                 }
             }
         }

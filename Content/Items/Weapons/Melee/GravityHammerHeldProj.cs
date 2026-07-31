@@ -1,15 +1,49 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
-public class BloodBloomHeldProjMelee : ModProjectile
+public class GravityHammerHeldProj : ModProjectile
 {
     int AITimer = 0;
 
+    ref float PushOrPull => ref Projectile.ai[0];
+    ref float Hit => ref Projectile.ai[1];
+
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        LemonUtils.DustBurst(8, target.RandomPos(), DustID.GemRuby, 5, 5, 1.5f, 2.5f);
+        //LemonUtils.DustBurst(8, target.RandomPos(), DustID.GemRuby, 5, 5, 1.5f, 2.5f);
+        if (Hit > 0 || (rotValue > goalRotation - 75)) return;
+        if (Main.myPlayer == Projectile.owner)
+        {
+            if (PushOrPull == -1)
+            {
+                LemonUtils.QuickProj(
+                    Projectile,
+                    Projectile.GetOwner().Center,
+                    Vector2.Zero,
+                    ProjectileType<GravityRepelProjFriendly>(),
+                    0,
+                    ai0: 300,
+                    ai1: 10,
+                    ai2: 2
+                    );
+            }
+            else
+            {
+                LemonUtils.QuickProj(
+                    Projectile,
+                    target.Center,
+                    Vector2.Zero,
+                    ProjectileType<GravitySuckyProjFriendly>(),
+                    ai0: 300,
+                    ai1: 60,
+                    ai2: 30
+                    );
+            }
+        }
+        Hit++;
     }
 
     public override void SetStaticDefaults()
@@ -21,8 +55,8 @@ public class BloodBloomHeldProjMelee : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 128;
-        Projectile.height = 128;
+        Projectile.width = 104;
+        Projectile.height = 104;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.ignoreWater = true;
@@ -50,7 +84,6 @@ public class BloodBloomHeldProjMelee : ModProjectile
         {
             rotValue = -140;
         }
-
         Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter);
         player.heldProj = Projectile.whoAmI;
         player.SetDummyItemTime(2);
@@ -61,8 +94,8 @@ public class BloodBloomHeldProjMelee : ModProjectile
         Projectile.velocity = Vector2.Zero;
 
         SetPositionRotationDirection(player, 0);
-
-        rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpSpeed * player.GetAttackSpeed(DamageClass.Melee));
+        float hitMul = Hit > 0 ? 2f : 1f;
+        rotValue = MathHelper.Lerp(rotValue, goalRotation, lerpSpeed * player.GetAttackSpeed(DamageClass.Melee) * hitMul);
         if (rotValue > goalRotation - 10) Projectile.Kill();
         SetPositionRotationDirection(player, MathHelper.ToRadians(rotValue));
 
@@ -82,7 +115,6 @@ public class BloodBloomHeldProjMelee : ModProjectile
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
-
 
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         return false;

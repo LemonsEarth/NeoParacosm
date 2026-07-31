@@ -1,5 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Projectiles.Hostile.Misc;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
