@@ -11,6 +11,7 @@ using ReLogic.Content;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using NeoParacosm.Core.CustomSkies.Biome;
+using NeoParacosm.Core;
 
 namespace NeoParacosm;
 

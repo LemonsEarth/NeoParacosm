@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.DataStructures;
@@ -16,6 +17,11 @@ public static partial class LemonUtils
     public static Player GetOwner(this Projectile projectile)
     {
         return Main.player[projectile.owner];
+    }
+
+    public static void QueueToShaderRenderer(this ModProjectile projectile)
+    {
+        ProjectileShaderRenderer.Instance.Queue(projectile);
     }
 
     /// <summary>

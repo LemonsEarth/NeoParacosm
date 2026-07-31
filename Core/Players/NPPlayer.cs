@@ -137,7 +137,7 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        counter1.NewText();
+        /*counter1.NewText();
         counter2.NewText();
         if (Main.keyState.IsKeyDown(Keys.U) && !Main.oldKeyState.IsKeyDown(Keys.U))
         {
@@ -164,7 +164,7 @@ public class NPPlayer : ModPlayer
                     0, 0, ai2: 300
                     );
             }
-        }
+        }*/
         //Dust.NewDustPerfect(Main.MouseWorld, DustType<FireDust>(), Vector2.Zero, newColor: Color.Red);
         //Player.stickyBreak = 100;
         //var c = Main.MouseWorld.ToTileCoordinates16();

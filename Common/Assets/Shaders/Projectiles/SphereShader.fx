@@ -16,6 +16,7 @@ float tolerance;
 float borderWidth;
 float4 centerColor;
 float4 endColor;
+float distance;
 
 float4 SphereShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {

@@ -152,11 +152,11 @@ public class GiantCursedFlameSphereFriendly : ModProjectile, IShaderProjectile
         }
         if (Main.myPlayer == Projectile.owner)
         {
-            /*LemonUtils.QuickPulse(Projectile, Projectile.Center, 3, 30, 5, Color.LightGreen);
+            LemonUtils.QuickPulse(Projectile, Projectile.Center, 3, 30, 5, Color.LightGreen);
             for (int i = 0; i < 16; i++)
             {
                 LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * MathHelper.Pi / 8f) * 2, ProjectileType<CursedFlameSphereFriendly>(), ai1: SpeedUP);
-            }*/
+            }
         }
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.CursedTorch, 2f);
     }

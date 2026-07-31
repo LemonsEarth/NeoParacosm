@@ -2,13 +2,16 @@
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class GiantCursedFlameSphere : PrimProjectile
+public class GiantCursedFlameSphere : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("FireShader");
+
     int AITimer = 0;
     ref float Angle => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
@@ -72,45 +75,38 @@ public class GiantCursedFlameSphere : PrimProjectile
         {
             SpeedUP = 1f;
         }
-        //Dust.NewDustDirect(Projectile.RandomPos(32, 32), 2, 2, DustID.GemEmerald, 0, Main.rand.NextFloat(-10, -5), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
-        //Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
+
         Projectile.StandardAnimation(6, 6);
         AITimer++;
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public void DrawProjectile()
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
         Texture2D texture = ParacosmTextures.Empty100Tex.Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
-
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        var shader = GameShaders.Misc["NeoParacosm:FireShader"];
-        shader.UseImage1(ParacosmTextures.NoiseTexture);
-        shader.UseColor(Color.Green * Projectile.Opacity);
-        shader.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
-        shader.Shader.Parameters["moveVector"].SetValue(Vector2.UnitY); // Higher number lowers the height of the flame
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        NPPlayer.counter1++;
-        shader.Apply();
+        ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
+        ShaderData.UseColor(Color.Green * Projectile.Opacity);
+        ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
+        ShaderData.Shader.Parameters["moveVector"].SetValue(Vector2.UnitY); // Higher number lowers the height of the flame
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.75f, SpriteEffects.None, 0);
-        shader.UseColor(Color.White * Projectile.Opacity);
-        shader.Shader.Parameters["flameHeightDownward"].SetValue(1f);
-        shader.Apply();
+        ShaderData.UseColor(Color.White * Projectile.Opacity);
+        ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1f);
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.7f * 0.5f, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        NPPlayer.counter1++;
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
+
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        NPPlayer.counter1++;
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
@@ -129,11 +125,11 @@ public class GiantCursedFlameSphere : PrimProjectile
         }
         if (LemonUtils.NotClient())
         {
-            /*LemonUtils.QuickPulse(Projectile, Projectile.Center, 3, 30, 5, Color.LightGreen);
+            LemonUtils.QuickPulse(Projectile, Projectile.Center, 3, 30, 5, Color.LightGreen);
             for (int i = 0; i < 16; i++)
             {
                 LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.UnitY.RotatedBy(i * Angle) * 2, ProjectileType<CursedFlameSphere>(), ai1: SpeedUP);
-            }*/
+            }
         }
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.CursedTorch, 2f);
     }

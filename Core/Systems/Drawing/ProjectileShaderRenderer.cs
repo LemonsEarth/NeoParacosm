@@ -31,11 +31,6 @@ public class ProjectileShaderRenderer : ModSystem
         RenderStatesByEffect.Add(GameShaders.Misc[key], projRenderState);
     }
 
-    public override void PostSetupContent()
-    {
-
-    }
-
     public override void Load()
     {
         LoadMiscShader("ShieldPulseShader", "Common/Assets/Shaders/Projectiles/ShieldPulseShader", BlendState.Additive);
