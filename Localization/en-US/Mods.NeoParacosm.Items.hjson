@@ -2600,8 +2600,8 @@ GravityHammer: {
 Horizon: {
 	DisplayName: Horizon
 	Tooltip:
-	'''
-	Throw an axe that automatically slashes enemies near your cursor
-	Every third axe leaves a trail of solar explosions
-	'''
+		'''
+		Throw an axe that automatically slashes enemies near your cursor
+		Every third axe leaves a trail of solar explosions
+		'''
 }
