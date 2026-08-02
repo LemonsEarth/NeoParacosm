@@ -2591,8 +2591,17 @@ GreatPull: {
 GravityHammer: {
 	DisplayName: Gravity Hammer
 	Tooltip:
+		'''
+		Hitting an enemy repels nearby enemies
+		Right click to pull in nearby enemies instead
+		'''
+}
+
+Horizon: {
+	DisplayName: Horizon
+	Tooltip:
 	'''
-	Hitting an enemy repels nearby enemies
-	Right click to pull in nearby enemies instead
+	Throw an axe that automatically slashes enemies near your cursor
+	Every third axe leaves a trail of solar explosions
 	'''
 }

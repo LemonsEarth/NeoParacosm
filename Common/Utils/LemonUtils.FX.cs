@@ -142,7 +142,7 @@ public static partial class LemonUtils
         Main.instance.CameraModifiers.Add(mod);
     }
 
-    public static Projectile QuickPulse(Entity sourceEntity, Vector2 pos, float speed, float scale, float colorMult, Color? color = null, Entity? entityToFollow = null)
+    public static Projectile QuickPulse(Entity sourceEntity, Vector2 pos, float speed, float scale, float colorMult, Color? color = null, Entity entityToFollow = null)
     {
         if (color == null)
         {

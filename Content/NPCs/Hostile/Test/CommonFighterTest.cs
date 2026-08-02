@@ -313,6 +313,11 @@ public class CommonFighterTest : ModNPC
         {
             NPC.velocity.Y = -JumpHeight;
         }
+
+        if (LastSeenTargetPos.Y < NPC.Top.Y && IsGrounded() && MathF.Abs(LastSeenTargetPos.X - NPC.Center.X) < JumpHeight * JumpHeight)
+        {
+            NPC.velocity.Y = -JumpHeight;
+        }
     }
 
     public void InvestigatingBehavior()

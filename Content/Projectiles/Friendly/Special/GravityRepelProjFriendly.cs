@@ -44,7 +44,7 @@ public class GravityRepelProjFriendly : ModProjectile
             {
                 Vector2 dustPos = Projectile.Center;
                 Vector2 dir = Vector2.UnitY.RotatedByRandom(6.28f);
-                Dust.NewDustPerfect(dustPos, DustType<StreakDust>(), dir * Main.rand.NextFloat(distance / 20f, distance / 15f)).noGravity = true;
+                Dust.NewDustPerfect(dustPos, DustType<StreakDust>(), dir * Main.rand.NextFloat(distance / 40f, distance / 30f)).noGravity = true;
             }
             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen with { PitchRange = (-0.9f, -0.8f), Volume = 0.7f, MaxInstances = 3 }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen with { PitchRange = (0.8f, 0.9f), Volume = 0.7f, MaxInstances = 3 }, Projectile.Center);

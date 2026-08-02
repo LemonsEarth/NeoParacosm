@@ -9,9 +9,6 @@
     </PropertyGroup>
 
 	<ItemGroup>
-		<LaunchProfilePlugin Include="tomat.enablemod" />
-		<LaunchProfilePlugin Include="lolxd87.splashskip" />
-		<LaunchProfilePlugin Include="tomat.assethotreloading" />
 	  <Reference Include="StructureHelper">
 	    <HintPath>lib\StructureHelper.dll</HintPath>
 	  </Reference>
