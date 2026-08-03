@@ -6,8 +6,10 @@ using Terraria.Localization;
 namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 
 [AutoloadEquip(EquipType.Head)]
-public class AscendedShadowHelmet : ModItem
+public class AscendedShadowHelmet : AscendedGlowItem
 {
+    public override int OriginalItemID => ItemID.ShadowHelmet;
+    public override Color Color => Color.Purple;
     static readonly float damageBoost = 4;
     static readonly float critBoost = 6;
 
@@ -43,18 +45,6 @@ public class AscendedShadowHelmet : ModItem
     {
         player.setBonus = setBonusText.Value;
         player.GetModPlayer<AscendedShadowArmorPlayer>().AscendedShadowArmor = true;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.ShadowHelmet, position, scale, frame, spriteBatch, Color.Purple);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.ShadowHelmet, rotation, scale, spriteBatch, Color.Purple);
-        return false;
     }
 }
 

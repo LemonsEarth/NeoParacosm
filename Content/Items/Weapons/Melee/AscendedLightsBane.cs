@@ -5,9 +5,10 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
-public class AscendedLightsBane : ModItem
+public class AscendedLightsBane : AscendedGlowItem
 {
-    int timer = 0;
+    public override int OriginalItemID => ItemID.LightsBane;
+    public override Color Color => Color.Purple;
     int altFireCD = 0;
 
     public static HashSet<NPC> hitNPCs { get; set; } = new();
@@ -68,20 +69,6 @@ public class AscendedLightsBane : ModItem
     public override bool CanUseItem(Player player)
     {
         return player.ownedProjectileCounts[Item.shoot] <= 0;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.LightsBane, position, scale, frame, spriteBatch, Color.Purple);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.LightsBane, rotation, scale, spriteBatch, Color.Purple);
-        return false;
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

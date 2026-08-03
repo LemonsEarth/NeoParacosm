@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
-public class AscendedUndertaker : ModItem
+public class AscendedUndertaker : AscendedGlowItem
 {
-    int timer = 0;
+    public override int OriginalItemID => ItemID.TheUndertaker;
+    public override Color Color => Color.Yellow;
+
     public override void SetDefaults()
     {
         Item.damage = 24;
@@ -30,20 +31,6 @@ public class AscendedUndertaker : ModItem
     public override bool CanUseItem(Player player)
     {
         return true;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.TheUndertaker, position, scale, frame, spriteBatch, Color.Yellow);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.TheUndertaker, rotation, scale, spriteBatch, Color.Yellow);
-        return false;
     }
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

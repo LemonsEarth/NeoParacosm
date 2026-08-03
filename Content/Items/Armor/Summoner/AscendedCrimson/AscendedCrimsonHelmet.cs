@@ -6,8 +6,10 @@ using Terraria.Localization;
 namespace NeoParacosm.Content.Items.Armor.Summoner.AscendedCrimson;
 
 [AutoloadEquip(EquipType.Head)]
-public class AscendedCrimsonHelmet : ModItem
+public class AscendedCrimsonHelmet : AscendedGlowItem
 {
+    public override int OriginalItemID => ItemID.CrimsonHelmet;
+    public override Color Color => Color.Yellow;
     static readonly float damageBoost = 5;
     static readonly int sentryBoost = 1;
 
@@ -18,8 +20,6 @@ public class AscendedCrimsonHelmet : ModItem
 
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost, sentryBoost);
     public static LocalizedText setBonusText;
-
-    int timer = 0;
 
     public override void SetStaticDefaults()
     {
@@ -60,20 +60,6 @@ public class AscendedCrimsonHelmet : ModItem
             player.AddBuff(BuffType<CrimsonSacrificeDebuff>(), 600);
             player.AddBuff(BuffType<CrimsonSacrificeCooldown>(), 3600);
         }
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.CrimsonHelmet, position, scale, frame, spriteBatch, Color.Yellow);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.CrimsonHelmet, rotation, scale, spriteBatch, Color.Yellow);
-        return false;
     }
 }
 

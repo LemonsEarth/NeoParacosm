@@ -4,11 +4,12 @@ using Terraria.Localization;
 namespace NeoParacosm.Content.Items.Armor.Summoner.AscendedCrimson;
 
 [AutoloadEquip(EquipType.Legs)]
-public class AscendedCrimsonGreaves : ModItem
+public class AscendedCrimsonGreaves : AscendedGlowItem
 {
+    public override int OriginalItemID => ItemID.CrimsonGreaves;
+    public override Color Color => Color.Yellow;
     static readonly float moveSpeedBoost = 12;
     static readonly int minionBoost = 1;
-    int timer = 0;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(moveSpeedBoost, minionBoost);
 
     public override void SetDefaults()
@@ -25,20 +26,5 @@ public class AscendedCrimsonGreaves : ModItem
         player.moveSpeed += moveSpeedBoost / 100;
         player.jumpSpeedBoost += 1;
         player.maxMinions += minionBoost;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.CrimsonGreaves, position, scale, frame, spriteBatch, Color.Yellow);
-        return false;
-    }
-
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.CrimsonGreaves, rotation, scale, spriteBatch, Color.Yellow);
-        return false;
     }
 }

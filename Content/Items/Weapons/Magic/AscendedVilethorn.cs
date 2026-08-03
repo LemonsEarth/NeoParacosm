@@ -2,9 +2,10 @@
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 
-public class AscendedVilethorn : ModItem
+public class AscendedVilethorn : AscendedGlowItem
 {
-    int timer = 0;
+    public override int OriginalItemID => ItemID.Vilethorn;
+    public override Color Color => Color.YellowGreen;
     public override void SetDefaults()
     {
         Item.damage = 12;
@@ -32,20 +33,6 @@ public class AscendedVilethorn : ModItem
     public override bool CanUseItem(Player player)
     {
         return player.ownedProjectileCounts[Item.shoot] <= 0;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Vilethorn, position, scale, frame, spriteBatch, Color.YellowGreen);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Vilethorn, rotation, scale, spriteBatch, Color.YellowGreen);
-        return false;
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

@@ -2,9 +2,11 @@
 using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
-public class SupremeMusket : ModItem
+public class SupremeMusket : AscendedGlowItem
 {
-    int timer = 0;
+    public override int OriginalItemID => ItemID.Musket;
+    public override Color Color => Color.Magenta;
+
     public override void SetDefaults()
     {
         Item.damage = 40;
@@ -31,20 +33,6 @@ public class SupremeMusket : ModItem
     public override bool CanUseItem(Player player)
     {
         return true;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInInventory(Item, ItemID.Musket, position, scale, frame, spriteBatch, Color.Magenta);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        timer++;
-        LemonUtils.DrawAscendedWeaponGlowInWorld(Item, ItemID.Musket, rotation, scale, spriteBatch, Color.Magenta);
-        return false;
     }
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
