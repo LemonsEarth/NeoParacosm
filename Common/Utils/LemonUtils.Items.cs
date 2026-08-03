@@ -22,13 +22,13 @@ public static partial class LemonUtils
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
         shader.Shader.Parameters["color"].SetValue(color.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
+        shader.UseImage1(ParacosmTextures.NoiseTexture);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         shader.Apply();
         spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public static void DrawAscendedWeaponGlowInInventory(Item item, int originalItemID, Vector2 position, float scale, Rectangle frame, SpriteBatch spriteBatch, Color color)
@@ -40,13 +40,13 @@ public static partial class LemonUtils
         var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
         shader.Shader.Parameters["color"].SetValue(color.ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
+        shader.UseImage1(ParacosmTextures.NoiseTexture);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
         shader.Apply();
         spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+        spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
     }
 
     public static void DrawDreadlordWeaponGlowInInventory(int itemType, Vector2 position, float scale, SpriteBatch spriteBatch)
@@ -58,12 +58,12 @@ public static partial class LemonUtils
         shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
         spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.UIScaleMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
     }
 
     public static void DrawDreadlordWeaponGlowInWorld(Item item, float rotation, float scale, SpriteBatch spriteBatch)
@@ -76,12 +76,12 @@ public static partial class LemonUtils
         shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
         shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         shader.Apply();
         spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public static string GetSpellBonusTooltip(SpellElement element, SpellBoostType boostType)
