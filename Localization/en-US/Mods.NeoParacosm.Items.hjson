@@ -2605,3 +2605,8 @@ Horizon: {
 		Every third axe leaves a trail of solar explosions
 		'''
 }
+
+StoneSwordspear: {
+	DisplayName: Stone Swordspear
+	Tooltip: ""
+}
