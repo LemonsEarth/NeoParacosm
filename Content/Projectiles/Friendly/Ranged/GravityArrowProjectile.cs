@@ -65,6 +65,7 @@ public class GravityArrowProjectile : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
+        LemonUtils.DustBurst(4, Projectile.Center, DustID.WoodFurniture, 5, 5, 1.5f, 2f);
         SoundEngine.PlaySound(SoundID.Dig, Projectile.position); // Plays the basic sound most projectiles make when hitting blocks.
         if (Main.myPlayer == Projectile.owner)
         {

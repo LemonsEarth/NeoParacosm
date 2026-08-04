@@ -21,7 +21,7 @@ public class StoneSwordspear : ModItem
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.knockBack = 4;
         Item.value = Item.sellPrice(gold: 1);
-        Item.rare = ItemRarityID.Green;
+        Item.rare = ItemRarityID.Yellow;
         Item.autoReuse = true;
         Item.shoot = ProjectileType<StoneSwordspearHeldProj>();
         Item.shootSpeed = 30;
