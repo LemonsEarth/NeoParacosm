@@ -2646,16 +2646,16 @@ CharmOfTheLostSea: {
 }
 
 AncientDartTrapItem: {
-	DisplayName: Ancient Dart Trap Item
+	DisplayName: Ancient Dart Trap
 	Tooltip: ""
 }
 
 AncientSpearTrapItem: {
-	DisplayName: Ancient Spear Trap Item
+	DisplayName: Ancient Spear Trap
 	Tooltip: ""
 }
 
 AncientSpikeTrapItem: {
-	DisplayName: Ancient Spike Trap Item
+	DisplayName: Ancient Spike Trap
 	Tooltip: ""
 }
