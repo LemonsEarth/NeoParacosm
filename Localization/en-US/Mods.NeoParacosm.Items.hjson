@@ -2639,8 +2639,23 @@ MediumBonePileItem: {
 CharmOfTheLostSea: {
 	DisplayName: Charm Of The Lost Sea
 	Tooltip:
-	'''
-	Summons a Water Spirit to protect you
-	Scales with summon damage boosts
-	'''
+		'''
+		Summons a Water Spirit to protect you
+		Scales with summon damage boosts
+		'''
+}
+
+AncientDartTrapItem: {
+	DisplayName: Ancient Dart Trap Item
+	Tooltip: ""
+}
+
+AncientSpearTrapItem: {
+	DisplayName: Ancient Spear Trap Item
+	Tooltip: ""
+}
+
+AncientSpikeTrapItem: {
+	DisplayName: Ancient Spike Trap Item
+	Tooltip: ""
 }

@@ -8,7 +8,6 @@ global using NeoParacosm.Common.Utils;
 global using static Terraria.ModLoader.ModContent;
 
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using NeoParacosm.Core.CustomSkies.Biome;
