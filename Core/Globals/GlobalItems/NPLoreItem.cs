@@ -8,7 +8,6 @@ public class NPLoreItem : GlobalItem
 {
     public override bool InstancePerEntity => true;
 
-
     public override void SetStaticDefaults()
     {
 

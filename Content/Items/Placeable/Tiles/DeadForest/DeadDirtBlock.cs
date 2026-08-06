@@ -13,8 +13,9 @@ public class DeadDirtBlock : ModTile
         Main.tileMerge[TileID.Stone][Type] = true;
         Main.tileMerge[TileID.Sand][Type] = true;
         Main.tileMerge[TileID.SnowBlock][Type] = true;
+        //Main.tileMerge[TileType<BonestoneBlock>()][Type] = true;
         TileID.Sets.ChecksForMerge[Type] = true;
-        AddMapEntry(new Color(105, 99, 94));
+        AddMapEntry(new Color(77, 71, 71));
     }
 
     public override void RandomUpdate(int i, int j)
@@ -45,7 +46,7 @@ public class DeadDirtItem : ModItem
 
     public override void AddRecipes()
     {
-        CreateRecipe()
+        CreateRecipe(100)
             .AddIngredient(ItemID.DirtBlock, 100)
             .AddIngredient(ItemID.Tombstone, 1)
             .AddCondition(Condition.InGraveyard)

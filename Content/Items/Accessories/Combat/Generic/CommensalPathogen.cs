@@ -34,24 +34,28 @@ public class CommensalPathogen : ModItem
 
 public class CommensalPathogenPlayer : ModPlayer
 {
-    public List<Projectile> CrimsonTendrils { get; set; } = new List<Projectile>();
-
     public override void ResetEffects()
     {
-        CrimsonTendrils.RemoveAll(p => !p.active);
     }
 
     public override void PostUpdateEquips()
     {
         if (Player.HasBuff(BuffType<CrimsonTendrilBuff>()))
         {
-            if (CrimsonTendrils.Count < 3)
+            int crimsonTendrilCount = 0;
+            foreach (var proj in Main.ActiveProjectiles)
+            {
+                if (proj.type == ProjectileType<CrimsonTendrilFriendly>() && proj.owner == Player.whoAmI)
+                {
+                    crimsonTendrilCount++;
+                }
+            }
+            if (crimsonTendrilCount < 3)
             {
                 if (Main.myPlayer == Player.whoAmI)
                 {
                     int damage = Main.hardMode ? 60 : 30;
                     Projectile p = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center, Vector2.Zero, ProjectileType<CrimsonTendrilFriendly>(), (int)Player.GetTotalDamage(DamageClass.Generic).ApplyTo(damage), 2f, Player.whoAmI);
-                    CrimsonTendrils.Add(p);
                 }
             }
         }

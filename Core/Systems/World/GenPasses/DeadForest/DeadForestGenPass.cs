@@ -33,6 +33,9 @@ public class DeadForestGenPass : GenPass
                         case TileID.Dirt or TileID.ClayBlock or TileID.Grass or TileID.Sand or TileID.CorruptGrass or TileID.CrimsonGrass or TileID.Ebonsand or TileID.Crimsand:
                             WorldGen.ConvertTile(pos.X, pos.Y, TileType<DeadDirtBlock>());
                             break;
+                        case TileID.Stone or TileID.Sandstone:
+                            WorldGen.ConvertTile(pos.X, pos.Y, TileType<BonestoneBlock>());
+                            break;
                     }
                 }
             }

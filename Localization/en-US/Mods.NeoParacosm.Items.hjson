@@ -2608,21 +2608,39 @@ Horizon: {
 
 StoneSwordspear: {
 	DisplayName: Stone Swordspear
-	Tooltip:
-	'''
-	Can be charged for increased damage
-	'''
+	Tooltip: Can be charged for increased damage
 }
 
 HunterBow: {
 	DisplayName: Hunter Bow
-	Tooltip:
-	'''
-	Standing still gradually increases critical strike chance
-	'''
+	Tooltip: Standing still gradually increases critical strike chance
 }
 
 FlameStaff: {
 	DisplayName: Flame Staff
 	Tooltip: ""
+}
+
+BonestoneBlockItem: {
+	DisplayName: Bonestone Block
+	Tooltip: ""
+}
+
+LargeBonePileItem: {
+	DisplayName: Large Bone Pile
+	Tooltip: ""
+}
+
+MediumBonePileItem: {
+	DisplayName: Medium Bone Pile
+	Tooltip: ""
+}
+
+CharmOfTheLostSea: {
+	DisplayName: Charm Of The Lost Sea
+	Tooltip:
+	'''
+	Summons a Water Spirit to protect you
+	Scales with summon damage boosts
+	'''
 }

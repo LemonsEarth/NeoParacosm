@@ -3,6 +3,7 @@ global using System;
 global using Terraria;
 global using Terraria.ID;
 global using Terraria.ModLoader;
+global using ReLogic.Content;
 global using NeoParacosm.Common.Utils;
 global using static Terraria.ModLoader.ModContent;
 
