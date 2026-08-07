@@ -52,7 +52,7 @@ public class WaterSpirit : ModProjectile
             Projectile.Kill();
             return;
         }
-        if (closestEnemy != null)
+        if (closestEnemy != null && closestEnemy.DistanceSQ(Projectile.Center) < 400 * 400)
         {
             Vector2 dir = Projectile.DirectionTo(closestEnemy.Center);
             Projectile.spriteDirection = LemonUtils.Sign(Projectile.Center.X - closestEnemy.Center.X, 1);
