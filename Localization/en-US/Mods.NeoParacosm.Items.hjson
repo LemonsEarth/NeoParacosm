@@ -2659,3 +2659,8 @@ AncientSpikeTrapItem: {
 	DisplayName: Ancient Spike Trap
 	Tooltip: ""
 }
+
+ThunderClap: {
+	DisplayName: Thunder Clap
+	Tooltip: ""
+}
