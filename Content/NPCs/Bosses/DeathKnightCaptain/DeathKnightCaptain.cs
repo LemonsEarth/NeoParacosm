@@ -837,6 +837,10 @@ public partial class DeathKnightCaptain : ModNPC
                 break;
             case > 0:
                 LookTowards(player.Center);
+                if (LemonUtils.NotClient() && AttackTimer % 25 == 0)
+                {
+                    Spawn_LightningWarning(player.Center + new Vector2(Main.rand.NextFloat(-1200, 1200), -1400), 180, 2600);
+                }
                 break;
             case 0:
                 AttackTimer = 90;

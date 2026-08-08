@@ -22,7 +22,11 @@ public class DeathflamePlayer : ModPlayer
     {
         if (Player.HasBuff(BuffType<DeathflameDebuff>()))
         {
-            Player.DOTDebuff((int)(Player.statLifeMax2 * 0.07f));
+            int damage = (int)(Player.statLifeMax2 * 0.07f);
+            if (Player.statLife > damage * 2)
+            {
+                Player.DOTDebuff(damage);
+            }
         }
     }
 
@@ -43,7 +47,10 @@ public class DeathflameNPC : GlobalNPC
         {
             float damagePerSecond = npc.lifeMax * 0.005f + 10;
             if (damagePerSecond > 50) damagePerSecond = 50;
-            npc.DOTDebuff(damagePerSecond, ref damage);
+            if (npc.life > damagePerSecond * 2)
+            {
+                npc.DOTDebuff(damagePerSecond, ref damage);
+            }
         }
     }
 }
