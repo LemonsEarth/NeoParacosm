@@ -2664,3 +2664,18 @@ ThunderClap: {
 	DisplayName: Thunder Clap
 	Tooltip: ""
 }
+
+SpearDecoItem: {
+	DisplayName: Spear Deco Item
+	Tooltip: ""
+}
+
+ArrowDecoItem: {
+	DisplayName: Arrow Deco Item
+	Tooltip: ""
+}
+
+SwordDecoItem: {
+	DisplayName: Sword Deco Item
+	Tooltip: ""
+}

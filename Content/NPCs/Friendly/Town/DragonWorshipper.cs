@@ -43,9 +43,7 @@ public class DragonWorshipper : ModNPC
         {
 
         };
-
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-
         NPC.Happiness
             .SetBiomeAffection<OceanBiome>(AffectionLevel.Like)
             .SetBiomeAffection<SnowBiome>(AffectionLevel.Dislike)

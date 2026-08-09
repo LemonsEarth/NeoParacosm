@@ -8,7 +8,8 @@ public class DeadDirtBlock : ModTile
         //Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
         HitSound = SoundID.Dig;
-
+        TileID.Sets.Grass[Type] = true;
+        TileID.Sets.Conversion.Grass[Type] = true;
         DustType = DustID.Dirt;
         Main.tileMerge[TileID.Stone][Type] = true;
         Main.tileMerge[TileID.Sand][Type] = true;
@@ -20,7 +21,22 @@ public class DeadDirtBlock : ModTile
 
     public override void RandomUpdate(int i, int j)
     {
+        Tile tile = Main.tile[i, j];
+        Tile tileAbove = Main.tile[i, j - 1];
+        if (WorldGen.genRand.NextBool(10) && !tileAbove.HasTile && tileAbove.LiquidAmount == 0 && !tile.LeftSlope && !tile.RightSlope && !tile.IsHalfBlock)
+        {
+            tileAbove.TileType = (ushort)TileType<DeadShortPlants>();
+            tileAbove.HasTile = true;
+            tileAbove.TileFrameX = (short)(WorldGen.genRand.Next(0, 8) * 18);
+            tileAbove.TileFrameY = 0;
 
+            WorldGen.SquareTileFrame(i, j - 1, true);
+
+            if (Main.dedServ)
+            {
+                NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
+            }
+        }
     }
 
     public override void NumDust(int i, int j, bool fail, ref int num)
