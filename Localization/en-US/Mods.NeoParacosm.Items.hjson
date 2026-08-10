@@ -315,7 +315,7 @@ DeathTolls: {
 }
 
 LamentOfTheLate: {
-	DisplayName: Lament Of The Late
+	DisplayName: Lament of The Late
 	Tooltip:
 		'''
 		Fires an arrow into the sky
@@ -340,7 +340,7 @@ BlinkrootBusterStaff: {
 }
 
 BranchOfLife: {
-	DisplayName: Branch Of Life
+	DisplayName: Branch of Life
 	Tooltip:
 		'''
 		Grants nearby players the Blessing of the Jungle Heart
@@ -404,7 +404,7 @@ StarecrowStaff: {
 }
 
 RuneOfExtinction: {
-	DisplayName: Rune Of Extinction
+	DisplayName: Rune of Extinction
 	Tooltip:
 		'''
 		Killing an enemy heals you for 20 hp
@@ -421,7 +421,7 @@ RuneOfExtinction: {
 }
 
 RuneOfPeridition: {
-	DisplayName: Rune Of Peridition
+	DisplayName: Rune of Peridition
 	Tooltip:
 		'''
 		Dying heals players on your team for 33% of their max life
@@ -439,7 +439,7 @@ RuneOfPeridition: {
 }
 
 SealOfAffliction: {
-	DisplayName: Seal Of Affliction
+	DisplayName: Seal of Affliction
 	Tooltip: Increases damage by {0}% for each active debuff
 }
 
@@ -994,7 +994,7 @@ AllForOneLocket: {
 }
 
 GloveOfRetaliation: {
-	DisplayName: Glove Of Retaliation
+	DisplayName: Glove of Retaliation
 	Tooltip: Taking more than 10% of your maximum health in contact damage briefly increases your melee damage by 300%
 }
 
@@ -1338,7 +1338,7 @@ MagicSpores: {
 }
 
 OrbsOfSteel: {
-	DisplayName: Orb Of Steel
+	DisplayName: Orb of Steel
 	Tooltip: Increases critical strike chance by {0}% while inflicted with any poison or fire debuff
 }
 
@@ -1363,7 +1363,7 @@ BlightningStrikeSpell: {
 }
 
 BodyOfThornsSpell: {
-	DisplayName: Body Of Thorns
+	DisplayName: Body of Thorns
 	Tooltip: Enemies take contact damage
 }
 
@@ -1432,7 +1432,7 @@ CutWyvernSegment: {
 }
 
 CircletOfFocus: {
-	DisplayName: Circlet Of Focus
+	DisplayName: Circlet of Focus
 	Tooltip:
 		'''
 		Increases magic critical strike chance by {0}%
@@ -1555,7 +1555,7 @@ InflamedArm: {
 }
 
 StaffOfTheCataclysm: {
-	DisplayName: Staff Of The Cataclysm
+	DisplayName: Staff of The Cataclysm
 	Tooltip:
 		'''
 		Expand a domain around the staff after a short delay
@@ -1732,7 +1732,7 @@ BarrenMind: {
 }
 
 SigilOfTheCreatureSpell: {
-	DisplayName: Sigil Of The Demon
+	DisplayName: Sigil of The Demon
 	Tooltip:
 		'''
 		Summons a golden sigil that rotates, rapidly firing golden bullets that inflict Midas
@@ -1935,7 +1935,7 @@ OldWaysTalisman: {
 }
 
 SigilOfTheRoots: {
-	DisplayName: Sigil Of The Roots
+	DisplayName: Sigil of The Roots
 	Tooltip:
 		'''
 		For each missing armor piece, gain a minion slot
@@ -2035,7 +2035,7 @@ PoisonGasSpell: {
 }
 
 BlightOfTheDevourer: {
-	DisplayName: Blight Of The Body
+	DisplayName: Blight of The Body
 	Tooltip:
 		'''
 		Increases mining speed by {0}%
@@ -2045,7 +2045,7 @@ BlightOfTheDevourer: {
 }
 
 BlightOfTheMind: {
-	DisplayName: Blight Of The Mind
+	DisplayName: Blight of The Mind
 	Tooltip:
 		'''
 		Getting hit inflicts you with Confused
@@ -2054,7 +2054,7 @@ BlightOfTheMind: {
 }
 
 NightOfTheWatcher: {
-	DisplayName: Night Of The Watcher
+	DisplayName: Night of The Watcher
 	Tooltip:
 		'''
 		Increases max minions by {0} while above half health and your max minions is 1
@@ -2063,7 +2063,7 @@ NightOfTheWatcher: {
 }
 
 PlightOfTheCursed: {
-	DisplayName: Plight Of The Cursed
+	DisplayName: Plight of The Cursed
 	Tooltip:
 		'''
 		Killed enemies have a chance to roll their loot 5 times
@@ -2073,7 +2073,7 @@ PlightOfTheCursed: {
 }
 
 FrightOfTheScourge: {
-	DisplayName: Fright Of The Scourge
+	DisplayName: Fright of The Scourge
 	Tooltip:
 		'''
 		Cycles through 4 classes every 10 seconds
@@ -2082,7 +2082,7 @@ FrightOfTheScourge: {
 }
 
 MightOfTheBesieger: {
-	DisplayName: Might Of The Besieger
+	DisplayName: Might of The Besieger
 	Tooltip:
 		'''
 		Increases maximum life by {0}%
@@ -2092,7 +2092,7 @@ MightOfTheBesieger: {
 }
 
 SightOfTheSiblings: {
-	DisplayName: Sight Of The Siblings
+	DisplayName: Sight of The Siblings
 	Tooltip: ""
 }
 
@@ -2343,27 +2343,27 @@ GiantPickaxe: {
 }
 
 SoulOfBlightDesert: {
-	DisplayName: Soul Of Blight (Desert)
+	DisplayName: Soul of Blight (Desert)
 	Tooltip: ""
 }
 
 SoulOfBlightIce: {
-	DisplayName: Soul Of Blight (Ice)
+	DisplayName: Soul of Blight (Ice)
 	Tooltip: ""
 }
 
 SoulOfBlightJungle: {
-	DisplayName: Soul Of Blight (Jungle)
+	DisplayName: Soul of Blight (Jungle)
 	Tooltip: ""
 }
 
 SoulOfBlightSpace: {
-	DisplayName: Soul Of Blight (Space)
+	DisplayName: Soul of Blight (Space)
 	Tooltip: ""
 }
 
 SoulOfBlightUnderworld: {
-	DisplayName: Soul Of Blight (Underworld)
+	DisplayName: Soul of Blight (Underworld)
 	Tooltip: ""
 }
 
@@ -2400,7 +2400,7 @@ LostOrders: {
 }
 
 StaffOfProtection: {
-	DisplayName: Staff Of Protection
+	DisplayName: Staff of Protection
 	Tooltip:
 		'''
 		Requires 3 minion slots to use
@@ -2637,7 +2637,7 @@ MediumBonePileItem: {
 }
 
 CharmOfTheLostSea: {
-	DisplayName: Charm Of The Lost Sea
+	DisplayName: Charm of the Lost Sea
 	Tooltip:
 		'''
 		Summons a Water Spirit to protect you
@@ -2666,16 +2666,32 @@ ThunderClap: {
 }
 
 SpearDecoItem: {
-	DisplayName: Spear Deco Item
+	DisplayName: Embedded Spear 
 	Tooltip: ""
 }
 
 ArrowDecoItem: {
-	DisplayName: Arrow Deco Item
+	DisplayName: Embedded Arrow
 	Tooltip: ""
 }
 
 SwordDecoItem: {
-	DisplayName: Sword Deco Item
+	DisplayName: Embedded Sword
 	Tooltip: ""
+}
+
+MagicOilOfBlight: {
+	DisplayName: Magic Oil of Blight
+	Tooltip:
+	'''
+	Melee attacks inflict Cursed Inferno and Ichor
+	'''
+}
+
+MagicOilOfFrostburn: {
+	DisplayName: Magic Oil of Frostburn
+	Tooltip:
+	'''
+	Melee attacks inflict Frostburn
+	'''
 }
