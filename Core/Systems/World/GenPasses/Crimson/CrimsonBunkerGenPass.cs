@@ -70,8 +70,12 @@ public class CrimsonBunkerGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(CrimsonBunkerPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            bool success = LemonUtils.SafeGenerateProtectedStructure(CrimsonBunkerPath, new Point16(pointTopLeft), new Rectangle(randX, randY, structureDims.X, structureDims.Y));
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

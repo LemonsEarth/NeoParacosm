@@ -58,8 +58,13 @@ public class CorruptBunkerGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(CorruptBunkerPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            Rectangle structureRect = new Rectangle(randX, randY, structureDims.X, structureDims.Y);
+            bool success = LemonUtils.SafeGenerateProtectedStructure(CorruptBunkerPath, new Point16(pointTopLeft), structureRect);
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

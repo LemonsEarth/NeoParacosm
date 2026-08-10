@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using Terraria.GameContent.Events;
+
+namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
 public class DeadDirtBlock : ModTile
 {
@@ -8,12 +10,8 @@ public class DeadDirtBlock : ModTile
         //Main.tileMergeDirt[Type] = true;
         Main.tileBlockLight[Type] = true;
         HitSound = SoundID.Dig;
-        TileID.Sets.Grass[Type] = true;
-        TileID.Sets.Conversion.Grass[Type] = true;
         DustType = DustID.Dirt;
         Main.tileMerge[TileID.Stone][Type] = true;
-        Main.tileMerge[TileID.Sand][Type] = true;
-        Main.tileMerge[TileID.SnowBlock][Type] = true;
         //Main.tileMerge[TileType<BonestoneBlock>()][Type] = true;
         TileID.Sets.ChecksForMerge[Type] = true;
         AddMapEntry(new Color(77, 71, 71));
@@ -26,6 +24,10 @@ public class DeadDirtBlock : ModTile
         if (WorldGen.genRand.NextBool(10) && !tileAbove.HasTile && tileAbove.LiquidAmount == 0 && !tile.LeftSlope && !tile.RightSlope && !tile.IsHalfBlock)
         {
             tileAbove.TileType = (ushort)TileType<DeadShortPlants>();
+            if (WorldGen.genRand.NextBool())
+            {
+                tileAbove.TileType = (ushort)TileType<ShortBones>();
+            }
             tileAbove.HasTile = true;
             tileAbove.TileFrameX = (short)(WorldGen.genRand.Next(0, 8) * 18);
             tileAbove.TileFrameY = 0;

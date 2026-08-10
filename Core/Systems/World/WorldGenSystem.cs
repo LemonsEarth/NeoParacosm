@@ -57,7 +57,7 @@ public class WorldGenSystem : ModSystem
         InsertAfterTask<DeadForestGenPass>(tasks, new DeadForestPlatformsGenPass("Dead Forest Platforms", 100f));
         InsertAfterTask<DeadForestPlatformsGenPass>(tasks, new DeadForestBasementGenPass("Building a Crypt", 100f));
         InsertAfterTask<DeadForestBasementGenPass>(tasks, new DeadForestHolyStructureGenPass("Constructing Church", 100f));
-        InsertAfterTask<DeadForestHolyStructureGenPass>(tasks, new DeadForestHolyCrossesGenPass("Marking Graves", 100f));
+        InsertAfterTask<DeadForestHolyStructureGenPass>(tasks, new DeadForestRandomStuffGenPass("Marking Graves", 100f));
         InsertAfterTask(tasks, "Micro Biomes", new DragonRemainsGenPass("Shifting Earth due to Powerful Presence", 100f));
 
         //int waterPlantsStep = tasks.FindIndex(genpass => genpass.Name.Equals("Water Plants"));

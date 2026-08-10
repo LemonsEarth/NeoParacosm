@@ -97,8 +97,14 @@ public class SmallArmoryGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(SmallArmoryPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            Rectangle structureRect = new Rectangle(randX, randY, structureDims.X, structureDims.Y);
+
+            bool success = LemonUtils.SafeGenerateStructure(SmallArmoryPath, new Point16(pointTopLeft), structureRect);
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

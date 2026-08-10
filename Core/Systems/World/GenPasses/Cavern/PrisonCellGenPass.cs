@@ -55,8 +55,13 @@ public class PrisonCellGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(PrisonCellPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            Rectangle structureRect = new Rectangle(randX, randY, structureDims.X, structureDims.Y);
+            bool success = LemonUtils.SafeGenerateStructure(PrisonCellPath, new Point16(pointTopLeft), structureRect);
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

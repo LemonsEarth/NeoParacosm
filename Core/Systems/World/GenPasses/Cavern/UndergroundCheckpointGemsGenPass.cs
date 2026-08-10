@@ -54,8 +54,12 @@ public class UndergroundCheckpointGemsGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(UndergroundCheckpointGemsPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            bool success = LemonUtils.SafeGenerateStructure(UndergroundCheckpointGemsPath, new Point16(pointTopLeft), new Rectangle(randX, randY, structureDims.X, structureDims.Y));
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

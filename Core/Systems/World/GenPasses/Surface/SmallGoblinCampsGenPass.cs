@@ -68,6 +68,12 @@ public class SmallGoblinCampsGenPass : GenPass
                 continue;
             }
 
+            if (!GenVars.structures.CanPlace(new Rectangle(randX, randY, structureDims.X, structureDims.Y)))
+            {
+                attemptCount++;
+                continue;
+            }
+
             MultiStructureGenerator.GenerateMultistructureSpecific(SmallGoblinCampsPath, index, new Point16(pointTopLeft), NeoParacosm.Instance);
             break;
         }

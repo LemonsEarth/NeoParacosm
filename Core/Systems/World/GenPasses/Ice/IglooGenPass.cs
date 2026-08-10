@@ -49,8 +49,12 @@ public class IglooGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(IglooPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            bool success = LemonUtils.SafeGenerateProtectedStructure(IglooPath, new Point16(pointTopLeft), new Rectangle(randX, randY, structureDims.X, structureDims.Y));
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

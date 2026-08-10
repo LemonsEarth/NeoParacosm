@@ -62,7 +62,7 @@ public class SpearDeco : ModTile
             texture,
             drawPos,
             frame,
-            Color.White,
+            Lighting.GetColor(i, j),
             rotation,
             origin,
             1f,

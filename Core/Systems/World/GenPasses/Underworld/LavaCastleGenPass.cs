@@ -58,8 +58,12 @@ public class LavaCastleGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(LavaCastlePath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            bool success = LemonUtils.SafeGenerateProtectedStructure(LavaCastlePath, new Point16(pointTopLeft), new Rectangle(randX, randY, structureDims.X, structureDims.Y));
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

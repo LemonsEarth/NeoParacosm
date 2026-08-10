@@ -18,4 +18,13 @@ public class MagicOilOfFire : ModItem
     {
         player.AddBuff(BuffID.WeaponImbueFire, 2);
     }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.BottledWater, 1);
+        recipe.AddIngredient(ItemID.Hellstone, 30);
+        recipe.AddTile(TileID.AlchemyTable);
+        recipe.Register();
+    }
 }

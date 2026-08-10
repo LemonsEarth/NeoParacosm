@@ -1,6 +1,8 @@
 ﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using StructureHelper.API;
 using System.Collections.Generic;
 using Terraria.DataStructures;
+using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -26,6 +28,29 @@ public static partial class LemonUtils
             default:
                 return 1;
         }
+    }
+
+    public static bool SafeGenerateStructure(string path, Point16 pos, Rectangle structureRect)
+    {
+        if (!GenVars.structures.CanPlace(structureRect))
+        {
+            return false;
+        }
+
+        Generator.GenerateStructure(path, pos, NeoParacosm.Instance);
+        return true;
+    }
+
+    public static bool SafeGenerateProtectedStructure(string path, Point16 pos, Rectangle structureRect)
+    {
+        if (!GenVars.structures.CanPlace(structureRect))
+        {
+            return false;
+        }
+
+        Generator.GenerateStructure(path, pos, NeoParacosm.Instance);
+        GenVars.structures.AddProtectedStructure(structureRect);
+        return true;
     }
 
     public static bool HasTile(this Point point)

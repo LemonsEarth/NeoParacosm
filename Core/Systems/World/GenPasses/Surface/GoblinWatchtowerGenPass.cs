@@ -64,8 +64,12 @@ public class GoblinWatchtowerGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(GoblinWatchtowerPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            bool success = LemonUtils.SafeGenerateProtectedStructure(GoblinWatchtowerPath, new Point16(pointTopLeft), new Rectangle(randX, randY, structureDims.X, structureDims.Y));
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)

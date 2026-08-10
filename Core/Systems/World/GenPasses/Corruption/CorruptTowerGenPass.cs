@@ -52,8 +52,12 @@ public class CorruptTowerGenPass : GenPass
                 continue;
             }
 
-            Generator.GenerateStructure(CorruptTowerPath, new Point16(pointTopLeft), NeoParacosm.Instance);
-            break;
+            bool success = LemonUtils.SafeGenerateProtectedStructure(CorruptTowerPath, new Point16(pointTopLeft), new Rectangle(randX, randY, structureDims.X, structureDims.Y));
+            if (success)
+            {
+                break;
+            }
+            attemptCount++;
         }
 
         if (attemptCount >= maxAttemptCount)
