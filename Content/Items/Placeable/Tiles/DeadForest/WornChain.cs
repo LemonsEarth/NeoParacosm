@@ -26,6 +26,11 @@ public class WornChain : ModTile
         HitSound = SoundID.Tink;
     }
 
+    public override void NumDust(int i, int j, bool fail, ref int num)
+    {
+        num = 3;
+    }
+
     public override bool CanDrop(int i, int j)
     {
         return false;

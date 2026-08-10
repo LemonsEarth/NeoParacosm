@@ -2701,6 +2701,10 @@ ShieldDecoItem: {
 }
 
 ChainReleaseItem: {
-	DisplayName: Chain Release Item
-	Tooltip: ""
+	DisplayName: Chain Release Block
+	Tooltip:
+	'''
+	Places many chains in the direction it's facing
+	If there is a chain already in front of it, it will destroy chains instead
+	'''
 }

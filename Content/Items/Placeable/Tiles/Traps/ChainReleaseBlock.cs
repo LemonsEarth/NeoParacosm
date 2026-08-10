@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿using Microsoft.Build.Tasks;
+using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 using System.Collections.Generic;
 using Terraria.Localization;
 
@@ -59,7 +60,7 @@ public class ChainReleaseBlock : ModTile
         return false;
     }
 
-    public const int MAX_CHAIN_DISTANCE = 40;
+    public const int MAX_CHAIN_DISTANCE = 60;
     public override void HitWire(int i, int j)
     {
         Tile tile = Main.tile[i, j];
@@ -96,7 +97,32 @@ public class ChainReleaseBlock : ModTile
                     tileInFront = Main.tile[x, y];
                 }
             }
+
+            if (Main.netMode != NetmodeID.SinglePlayer)
+            {
+                Rectangle syncRect = new Rectangle(i, j, 1, 1);
+                if (horizontalDirection == -1)
+                {
+                    syncRect.X -= count;
+                    syncRect.Width = count;
+                }
+                else if (horizontalDirection == 1)
+                {
+                    syncRect.Width = count;
+                }
+                else if (verticalDirection == -1)
+                {
+                    syncRect.Y -= count;
+                    syncRect.Height = count;
+                }
+                else if (verticalDirection == 1)
+                {
+                    syncRect.Height = count;
+                }
+                NetMessage.SendTileSquare(-1, syncRect.X, syncRect.Y, syncRect.Width, syncRect.Height);
+            }
         }
+
     }
 }
 
