@@ -2666,7 +2666,7 @@ ThunderClap: {
 }
 
 SpearDecoItem: {
-	DisplayName: Embedded Spear 
+	DisplayName: Embedded Spear
 	Tooltip: ""
 }
 
@@ -2682,16 +2682,15 @@ SwordDecoItem: {
 
 MagicOilOfBlight: {
 	DisplayName: Magic Oil of Blight
-	Tooltip:
-	'''
-	Melee attacks inflict Cursed Inferno and Ichor
-	'''
+	Tooltip: Melee attacks inflict Cursed Inferno and Ichor
 }
 
 MagicOilOfFrostburn: {
 	DisplayName: Magic Oil of Frostburn
-	Tooltip:
-	'''
-	Melee attacks inflict Frostburn
-	'''
+	Tooltip: Melee attacks inflict Frostburn
+}
+
+WornChainItem: {
+	DisplayName: Worn Chain Item
+	Tooltip: ""
 }
