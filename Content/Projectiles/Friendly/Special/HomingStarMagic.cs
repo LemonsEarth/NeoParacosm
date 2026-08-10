@@ -4,11 +4,12 @@ using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public class HomingStar : PrimProjectile
+public class HomingStarMagic : PrimProjectile
 {
     int AITimer = 0;
     ref float WaitTime => ref Projectile.ai[0];
     ref float TimeLeft => ref Projectile.ai[1];
+    ref float Speed => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -23,13 +24,13 @@ public class HomingStar : PrimProjectile
         Projectile.height = 50;
         Projectile.friendly = true;
         Projectile.timeLeft = 9999;
-        Projectile.penetrate = 3;
+        Projectile.penetrate = 4;
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
         Projectile.scale = 0.75f;
         Projectile.tileCollide = false;
-        Projectile.DamageType = DamageClass.Generic;
+        Projectile.DamageType = DamageClass.Magic;
     }
 
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -44,6 +45,7 @@ public class HomingStar : PrimProjectile
 
     Vector2 startVelocity;
     NPC closestNPC;
+    float rotPs = 0;
     public override void AI()
     {
         Player player = Projectile.GetOwner();
@@ -67,21 +69,23 @@ public class HomingStar : PrimProjectile
         {
             if (closestNPC != null && closestNPC.active)
             {
-                Projectile.MoveToPos(closestNPC.Center, 0.1f, 0.1f, 0.8f, 0.8f);
+                rotPs += 1;
+                Projectile.MoveToPos(closestNPC.Center, 0.1f, 0.05f, Speed, Speed);
             }
         }
+        Projectile.rotation += MathHelper.ToRadians(rotPs);
 
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
             return;
         }
-
         AITimer++;
     }
 
     public override void OnKill(int timeLeft)
     {
+
         Dust.NewDustPerfect(Projectile.Center, DustID.GemEmerald);
         LemonUtils.DustCircle(Projectile.Center, 8, 3, DustID.GemDiamond, 2f);
         SoundEngine.PlaySound(SoundID.Item29 with { Volume = 0.1f, PitchRange = (0.2f, 0.4f) }, Projectile.Center);
@@ -91,7 +95,7 @@ public class HomingStar : PrimProjectile
     {
         PrimHelper.DrawBasicProjectilePrimTrailTriangular(
             Projectile,
-            Color.White,
+            Color.DarkSlateBlue,
             Color.Transparent,
             BasicEffect,
             topVertexRotation: -MathHelper.PiOver2,
@@ -100,9 +104,9 @@ public class HomingStar : PrimProjectile
             bottomDistance: 8
             );
         Texture2D texture = Projectile.GetTexture();
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, 0.5f, Projectile.scale * 2);
+        LemonUtils.DrawGlow(Projectile.Center, Color.DarkSlateBlue, 0.5f, Projectile.scale * 2);
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None);
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, 1f, Projectile.scale);
+        LemonUtils.DrawGlow(Projectile.Center, Color.LightYellow, 1f, Projectile.scale);
         return false;
     }
 }

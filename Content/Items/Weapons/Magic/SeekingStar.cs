@@ -1,10 +1,11 @@
 ﻿using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using NeoParacosm.Content.Projectiles.Friendly.Special;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 
-public class FrostShuriken : ModItem
+public class SeekingStar : ModItem
 {
     public override void SetStaticDefaults()
     {
@@ -17,8 +18,8 @@ public class FrostShuriken : ModItem
         Item.DamageType = DamageClass.Magic;
         Item.width = 28;
         Item.height = 30;
-        Item.useTime = 45;
-        Item.useAnimation = 45;
+        Item.useTime = 90;
+        Item.useAnimation = 90;
         Item.useStyle = ItemUseStyleID.Shoot;
         Item.knockBack = 3;
         Item.value = Item.sellPrice(gold: 1);
@@ -26,28 +27,30 @@ public class FrostShuriken : ModItem
         Item.UseSound = SoundID.DD2_BetsysWrathShot with { PitchRange = (1f, 1.5f) };
         Item.autoReuse = true;
         Item.mana = 12;
-        Item.shoot = ProjectileType<FrostShurikenProj>();
-        Item.shootSpeed = 10;
+        Item.shoot = ProjectileType<HomingStarMagic>();
+        Item.shootSpeed = 5;
         Item.noMelee = true;
     }
 
     public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
     {
-
-        return true;
+        Projectile.NewProjectileDirect(
+            source,
+            position,
+            velocity,
+            type,
+            damage,
+            knockback,
+            player.whoAmI,
+            60,
+            180,
+            0.3f
+            );
+        return false;
     }
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
     {
 
-    }
-
-    public override void AddRecipes()
-    {
-        Recipe recipe = CreateRecipe();
-        recipe.AddIngredient(ItemType<FrigidFossil>(), 10);
-        recipe.AddIngredient(ItemID.ManaCrystal, 2);
-        recipe.AddTile(TileID.IceMachine);
-        recipe.Register();
     }
 }

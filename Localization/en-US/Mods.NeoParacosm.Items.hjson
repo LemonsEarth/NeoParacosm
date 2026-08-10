@@ -2703,8 +2703,18 @@ ShieldDecoItem: {
 ChainReleaseItem: {
 	DisplayName: Chain Release Block
 	Tooltip:
-	'''
-	Places many chains in the direction it's facing
-	If there is a chain already in front of it, it will destroy chains instead
-	'''
+		'''
+		Places many chains in the direction it's facing
+		If there is a chain already in front of it, it will destroy chains instead
+		'''
+}
+
+ShootingStar: {
+	DisplayName: Shooting Star
+	Tooltip: Critical hits create homing stars
+}
+
+SeekingStar: {
+	DisplayName: Seeking Star
+	Tooltip: ""
 }

@@ -32,7 +32,7 @@ public class StarsaberHeldProj : PrimProjectile
                 ProjectileType<HomingStar>(),
                 Projectile.damage / 3,
                 3f,
-                ai0: 45f,
+                ai0: 0f,
                 ai1: 90f
                 );
         }
