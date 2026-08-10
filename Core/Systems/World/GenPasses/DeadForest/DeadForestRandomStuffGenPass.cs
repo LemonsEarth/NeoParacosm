@@ -22,7 +22,7 @@ public class DeadForestRandomStuffGenPass : GenPass
         int attemptCount = 0;
         int maxAttemptCount = 50000;
         int placedCrosses = 0;
-        int maxPlacedCrosses = 30 * LemonUtils.GetWorldSize();
+        int maxPlacedCrosses = 15 * LemonUtils.GetWorldSize();
         List<int> placedCrossXPos = new List<int>();
 
         while (attemptCount < maxAttemptCount && placedCrosses < maxPlacedCrosses)
@@ -88,7 +88,7 @@ public class DeadForestRandomStuffGenPass : GenPass
             if (!tile.HasTile && tileBelow.HasTile &&
                 (tileBelow.TileType == TileType<DeadDirtBlock>() || tileBelow.TileType == TileType<BonestoneBlock>()))
             {
-                int randomTile = WorldGen.genRand.NextFromList(TileType<ArrowDeco>(), TileType<SwordDeco>(), TileType<SpearDeco>());
+                int randomTile = WorldGen.genRand.NextFromList(TileType<ArrowDeco>(), TileType<SwordDeco>(), TileType<SpearDeco>(), TileType<ShieldDeco>());
                 WorldGen.PlaceTile(point.X, point.Y, randomTile);
                 placedCount++;
             }

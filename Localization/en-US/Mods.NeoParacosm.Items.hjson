@@ -2691,6 +2691,16 @@ MagicOilOfFrostburn: {
 }
 
 WornChainItem: {
-	DisplayName: Worn Chain Item
+	DisplayName: Worn Chain
+	Tooltip: ""
+}
+
+ShieldDecoItem: {
+	DisplayName: Embedded Shield
+	Tooltip: ""
+}
+
+ChainReleaseItem: {
+	DisplayName: Chain Release Item
 	Tooltip: ""
 }
