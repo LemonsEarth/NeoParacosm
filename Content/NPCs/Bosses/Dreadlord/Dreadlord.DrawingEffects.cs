@@ -25,14 +25,16 @@ public partial class Dreadlord : ModNPC
 
     void PlayRoar(float bonusPitch = 0f)
     {
-        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -1f + bonusPitch }, NPC.Center);
-        SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -1f + bonusPitch, MaxInstances = 5 }, NPC.Center);
+        SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch, MaxInstances = 5 }, NPC.Center);
+        SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { Pitch = bonusPitch, Volume = 0.5f, MaxInstances = 5 }, NPC.Center);
     }
 
     void PlayRoarAtPlayer(float bonusPitch = 0f)
     {
-        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -1f + bonusPitch });
-        SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch });
+        SoundEngine.PlaySound(SoundID.Roar with { Pitch = -1f + bonusPitch, MaxInstances = 5 });
+        SoundEngine.PlaySound(SoundID.NPCDeath62 with { Pitch = -0.5f + bonusPitch, MaxInstances = 5 });
+        SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { Pitch = bonusPitch, Volume = 0.5f, MaxInstances = 5 }, NPC.Center);
     }
 
     private void AuraBurst(int count, Vector2 speed)

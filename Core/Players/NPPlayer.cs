@@ -66,6 +66,7 @@ public class NPPlayer : ModPlayer
             }
             BlockProjectileCollision(projectile);
         }
+        //Main.NewText(WorldGen.AllowedToSpreadInfections);
     }
 
     /// <summary>

@@ -2008,6 +2008,8 @@ ForbiddenSnakeWhip: {
 SoulOfDread: {
 	DisplayName: Heart of Dread
 	Tooltip: While under the effects of a damaging debuff, constantly increase damage, up to {0}% after {1} seconds
+	InfectionSpreadEnabled: Infection spread is enabled!
+	InfectionSpreadDisabled: Infection spread is disabled!
 }
 
 JumpingSpiderLeg: {

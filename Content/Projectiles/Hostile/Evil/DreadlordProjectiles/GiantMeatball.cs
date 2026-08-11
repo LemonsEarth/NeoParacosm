@@ -42,8 +42,8 @@ public class GiantMeatball : ModProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0 }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0 }, Projectile.Center);
         }
 
         if (AITimer > TimeLeft)
@@ -56,7 +56,7 @@ public class GiantMeatball : ModProjectile
         {
             if (AITimer % pulseInterval == 0)
             {
-                SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f), Volume = 0.5f }, Projectile.Center);
+                SoundEngine.PlaySound(SoundID.DD2_DarkMageSummonSkeleton with { PitchRange = (-0.2f, 0.2f), Volume = 0.5f, MaxInstances = 0 }, Projectile.Center);
                 Projectile.scale = 0.7f;
             }
             Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.RedMoss, 0, Main.rand.NextFloat(5, 10), Scale: Main.rand.NextFloat(2f, 4f)).noGravity = true;
@@ -109,9 +109,9 @@ public class GiantMeatball : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-        SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-        SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0 }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0 }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 0 }, Projectile.Center);
         LemonUtils.QuickPulse(Projectile, Projectile.Center, 1.5f, 15, 5, Color.Red);
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.Crimson, 2f);
         for (int i = 0; i < 8; i++)

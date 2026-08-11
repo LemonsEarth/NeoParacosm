@@ -45,8 +45,8 @@ public class IchorLaser : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 280;
-        Projectile.height = 280;
+        Projectile.width = 140;
+        Projectile.height = 140;
         Projectile.hostile = true;
         Projectile.friendly = false;
         Projectile.ignoreWater = true;

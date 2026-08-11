@@ -1,4 +1,7 @@
-﻿using Terraria.Localization;
+﻿using Terraria.Chat;
+using Terraria.GameContent.Creative;
+using Terraria.Localization;
+using static NeoParacosm.Core.LocalizationReferences.Mods.NeoParacosm.Items.SoulOfDread;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;
 
@@ -15,6 +18,29 @@ public class SoulOfDread : ModItem
         Item.value = Item.sellPrice(0, 10);
         Item.rare = ItemRarityID.Expert;
         Item.expert = true;
+        Item.useTime = 30;
+        Item.useAnimation = 30;
+        Item.useStyle = ItemUseStyleID.HoldUp;
+    }
+
+    public override bool? UseItem(Player player)
+    {
+        if (player.ItemAnimationJustStarted)
+        {
+            
+            if (LemonUtils.NotClient())
+            {
+                if (WorldGen.AllowedToSpreadInfections)
+                {
+                    ChatHelper.BroadcastChatMessage(this.GetLocalization("InfectionSpreadEnabled").ToNetworkText(), Color.Purple);
+                }
+                else
+                {
+                    ChatHelper.BroadcastChatMessage(this.GetLocalization("InfectionSpreadDisabled").ToNetworkText(), Color.Purple);
+                }
+            }
+        }
+        return null;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

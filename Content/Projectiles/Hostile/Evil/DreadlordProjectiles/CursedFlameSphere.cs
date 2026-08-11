@@ -39,7 +39,7 @@ public class CursedFlameSphere : PrimProjectile
         if (AITimer == 0)
         {
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.5f }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item92 with { PitchRange = (2f, 2.3f), Volume = 0.7f }, Projectile.Center);
         }
 
         foreach (Projectile proj in NPPlayer.BlockProjectileInstances)
@@ -99,9 +99,9 @@ public class CursedFlameSphere : PrimProjectile
             LemonUtils.QuickPulse(Projectile, Projectile.Center, 2, 2f, 5f, Color.LightGreen);
         }
         LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.CursedTorch, 2f);
-        SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, Projectile.Center);
-        SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, Projectile.Center);
-        SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f, MaxInstances = 3 }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f, MaxInstances = 3 }, Projectile.Center);
+        SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f, MaxInstances = 3 }, Projectile.Center);
         /*for (int i = 0; i < 4; i++)
         {
             LemonUtils.QuickProj(Projectile, Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(i * MathHelper.PiOver2) * (savedSpeed / 4f), ProjectileType<SavDroneProjectile>());

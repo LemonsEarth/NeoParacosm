@@ -44,8 +44,8 @@ public class ExplodingIchorSphere : PrimProjectile
                 FlameSpeed = 10;
             }
             savedSpeed = Projectile.velocity.Length();
-            SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 5 }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 5 }, Projectile.Center);
         }
 
         if (TimeLeft == 0)
@@ -115,9 +115,9 @@ public class ExplodingIchorSphere : PrimProjectile
         if (!Main.dedServ)
         {
             Vector2 movedPos = Vector2.Lerp(Projectile.Center, Main.LocalPlayer.Center, 0.8f);
-            SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f) }, movedPos);
-            SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f) }, movedPos);
-            SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (-0.2f, 0.2f) }, movedPos);
+            SoundEngine.PlaySound(SoundID.Zombie103 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 5 }, movedPos);
+            SoundEngine.PlaySound(SoundID.NPCHit52 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 5 }, movedPos);
+            SoundEngine.PlaySound(SoundID.Item14 with { PitchRange = (-0.2f, 0.2f), MaxInstances = 5 }, movedPos);
         }
         if (LemonUtils.NotClient())
         {

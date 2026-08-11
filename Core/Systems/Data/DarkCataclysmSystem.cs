@@ -59,7 +59,7 @@ public class DarkCataclysmSystem : ModSystem
         {
             DCEffectNoFogDistance = 2000;
             DCEffectMaxFogOpacity = 1f;
-            DCEffectFogSpeed = 25;
+            DCEffectFogSpeed = 5f;
             DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.DarkRed, 1 / 60f);
             DCEffectFogColorMultiplier = 10;
         }
