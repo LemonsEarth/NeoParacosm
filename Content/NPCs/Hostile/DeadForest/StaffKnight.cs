@@ -43,7 +43,7 @@ public class StaffKnight : ModNPC
     {
         NPC.width = 72;
         NPC.height = 66;
-        NPC.lifeMax = 500;
+        NPC.lifeMax = 240;
         NPC.defense = 5;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;

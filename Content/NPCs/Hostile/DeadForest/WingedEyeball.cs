@@ -29,7 +29,7 @@ public class WingedEyeball : ModNPC
     {
         NPC.width = 64;
         NPC.height = 64;
-        NPC.lifeMax = 180;
+        NPC.lifeMax = 80;
         NPC.defense = 3;
         NPC.damage = 30;
         NPC.HitSound = SoundID.NPCHit1;
@@ -243,7 +243,7 @@ public class WingedEyeball : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.8f : 0f;
 
     }
 

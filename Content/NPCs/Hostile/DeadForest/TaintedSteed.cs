@@ -59,7 +59,10 @@ public class TaintedSteed : ModNPC
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
     {
-
+        if (projectile.penetrate > 0)
+        {
+            projectile.penetrate -= 3;
+        }
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
@@ -121,7 +124,7 @@ public class TaintedSteed : ModNPC
                     ProjectileType<SuckyProjectile>(),
                     0,
                     ai0: 600,
-                    ai1: 65,
+                    ai1: 150,
                     ai2: 3
                     );
             }
@@ -164,7 +167,7 @@ public class TaintedSteed : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.7f : 0f;
 
     }
 

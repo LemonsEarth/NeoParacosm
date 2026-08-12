@@ -29,7 +29,7 @@ public class SoulfulSludge : ModNPC
     {
         NPC.width = 64;
         NPC.height = 50;
-        NPC.lifeMax = 300;
+        NPC.lifeMax = 120;
         NPC.defense = 4;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
@@ -67,7 +67,10 @@ public class SoulfulSludge : ModNPC
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
     {
-
+        if (projectile.penetrate > 0)
+        {
+            projectile.penetrate -= 3;
+        }
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
@@ -200,7 +203,7 @@ public class SoulfulSludge : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.9f : 0f;
     }
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)

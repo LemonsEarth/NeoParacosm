@@ -45,6 +45,7 @@ public class MoltenClockworkPlayer : ModPlayer
         {
             return;
         }
+
         if (proj.CountsAsClass(DamageClass.Ranged))
         {
             target.AddBuff(BuffID.OnFire3, 180);

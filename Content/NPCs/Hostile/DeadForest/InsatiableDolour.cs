@@ -28,8 +28,8 @@ public class InsatiableDolour : ModNPC
     {
         NPC.width = 84;
         NPC.height = 64;
-        NPC.lifeMax = 500;
-        NPC.defense = 16;
+        NPC.lifeMax = 400;
+        NPC.defense = 8;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCDeath18;
         NPC.DeathSound = SoundID.NPCDeath18;
@@ -64,7 +64,10 @@ public class InsatiableDolour : ModNPC
 
     public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
     {
-
+        if (projectile.penetrate > 0)
+        {
+            projectile.penetrate -= 5;
+        }
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
@@ -202,7 +205,7 @@ public class InsatiableDolour : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.02f : 0f;
 
     }
 

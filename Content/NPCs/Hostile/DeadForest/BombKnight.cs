@@ -31,7 +31,7 @@ public class BombKnight : ModNPC
     {
         NPC.width = 128;
         NPC.height = 156;
-        NPC.lifeMax = 1200;
+        NPC.lifeMax = 400;
         NPC.defense = 12;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
@@ -223,7 +223,7 @@ public class BombKnight : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.02f : 0f;
 
     }
 

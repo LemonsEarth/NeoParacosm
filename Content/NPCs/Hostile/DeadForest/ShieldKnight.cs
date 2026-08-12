@@ -30,7 +30,7 @@ public class ShieldKnight : ModNPC
     {
         NPC.width = 38;
         NPC.height = 58;
-        NPC.lifeMax = 500;
+        NPC.lifeMax = 300;
         NPC.defense = 13;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
@@ -229,7 +229,7 @@ public class ShieldKnight : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.2f : 0f;
 
     }
 

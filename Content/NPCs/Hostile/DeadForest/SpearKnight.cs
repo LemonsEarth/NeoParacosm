@@ -31,7 +31,7 @@ public class SpearKnight : ModNPC
     {
         NPC.width = 72;
         NPC.height = 64;
-        NPC.lifeMax = 500;
+        NPC.lifeMax = 270;
         NPC.defense = 10;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit4;
@@ -208,7 +208,7 @@ public class SpearKnight : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.1f : 0f;
+        return DownedBossSystem.downedDeathbirdMini && spawnInfo.Player.InModBiome<DeadForestBiome>() ? 0.2f : 0f;
 
     }
 

@@ -78,6 +78,18 @@ public class ThunderClapGlobalNPC : GlobalNPC
         if (HitCount >= 15)
         {
             int npcCount = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                Vector2 dir = Vector2.UnitY.RotatedBy(i * MathHelper.PiOver4 + Main.rand.NextFloat(-MathHelper.Pi / 6f, MathHelper.Pi / 6f));
+                LemonUtils.QuickProj(
+                    projectile,
+                    npc.Center,
+                    dir,
+                    ProjectileType<HolyLightningFriendly>(),
+                    ai0: 0,
+                    ai1: Main.rand.NextFloat(128 * 0.75f, 128 * 1.25f)
+                    );
+            }
             foreach (var otherNPC in Main.ActiveNPCs)
             {
                 if (npcCount >= 8)

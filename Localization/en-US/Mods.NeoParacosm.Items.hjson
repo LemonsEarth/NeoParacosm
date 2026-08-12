@@ -773,7 +773,7 @@ AncientCallingHorn: {
 		'''
 		[c/FF9E03:Many centuries ago, dragons were subjects of worship, overseeing civilizations and granting their followers power.]
 		[c/FF9E03:All have either journeyed to lands far away or were hunted down by those who despise them or those devoted to them.]
-		[c/FF9E03:With the exception of the Dragonlord, Edyiem, who abandoned his mortal flesh and ascended to a higher realm a century ago.]
+		[c/FF9E03:With the exception of the Dragonlord, Ediyem, who abandoned his mortal flesh and ascended to a higher realm a century ago.]
 		[c/FF9E03:The Dragonlord was a bearer of the Golden Heart. It is said that the Heart remains inside of his discarded flesh to this very day.]
 		'''
 }
@@ -2663,7 +2663,7 @@ AncientSpikeTrapItem: {
 }
 
 ThunderClap: {
-	DisplayName: Thunder Clap
+	DisplayName: Thunderclap
 	Tooltip: ""
 }
 

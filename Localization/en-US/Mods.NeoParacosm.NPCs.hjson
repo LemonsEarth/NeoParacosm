@@ -374,7 +374,7 @@ Dreadlord: {
 	DisplayName: Dreadlord
 	Bestiary:
 		'''
-		The infected remains of the Dragonlord, Edyiem.
+		The infected remains of the Dragonlord, Ediyem.
 		The Dragonlord ascended to a higher realm long ago, leaving behind a vessel the world blights deemed "perfect".
 		The ingrained power of a dragon and the Golden Heart contained within were enough to shatter the innate balance of the world.
 		A cataclysm of this scale had brought down many worlds before. The power to stop it is now in your hands, at least briefly.
@@ -462,7 +462,7 @@ HeadlessTortoise: {
 	DisplayName: Headless Tortoise
 	Bestiary:
 		'''
-		An giant infected tortoise.
+		A giant infected tortoise.
 		It is able to jump off of any surface from any direction by growing tiny, temporary legs wherever necessary.
 		'''
 }
@@ -498,7 +498,7 @@ DragonWorshipper: {
 		T5:
 			'''
 			All dragons were mighty and glorius, but one stood above all.
-			It was, without a doubt, Dragonlord Edyiem; first of the Golden Dragons, bearer of the Golden Heart, three-headed giant-slayer.
+			It was, without a doubt, Dragonlord Ediyem; first of the Golden Dragons, bearer of the Golden Heart, three-headed giant-slayer.
 			He departed this world long ago to embrace a higher state of being, leaving behind his remains somewhere nearby.
 			'''
 		T6:
@@ -531,7 +531,7 @@ DragonWorshipper: {
 		T2:
 			'''
 			There is no mistake! There is no error! Yet it is so wrong!
-			That is Dragonlord Edyiem's beautiful corpse, corroded and infected!
+			That is Dragonlord Ediyem's beautiful corpse, corroded and infected!
 			'''
 		T3:
 			'''
@@ -578,24 +578,128 @@ DragonWorshipper: {
 	}
 }
 
-DragonHunter.DisplayName: Dragon Hunter
-IchorNeedle.DisplayName: Ichor Needle
-RotHornet.DisplayName: Rot Hornet
-JumpingSpider.DisplayName: Jumping Spider
-GoblinBanner.DisplayName: Goblin Banner
-GoblinMortar.DisplayName: Goblin Mortar
-SentientCursedFlame.DisplayName: Sentient Cursed Flame
-SentientIchor.DisplayName: Sentient Ichor
-DeathKnightCaptain.DisplayName: Death Knight Captain
+DragonHunter: {
+	DisplayName: Dragon Hunter
+	Bestiary:
+		'''
+		Dragon hunters resented the rule and authority dragons held. 
+		They brought them to near-extinction and absorbed their power over the elements.
+		'''
+}
+
+IchorNeedle: {
+	DisplayName: Ichor Needle
+	Bestiary: An offshoot of the regular Ichor Stickers, these disguisting creatures seek to inject their targets with corrosive ichor directly.
+}
+
+RotHornet: {
+	DisplayName: Rot Hornet
+	Bestiary: An unusual characteristic of hornets is their adaptability to their environment, which suggests this species isn't entirely under the control of the Crimson.
+}
+
+JumpingSpider: {
+	DisplayName: Jumping Spider
+	Bestiary: A demonic freak of nature. Creatures like these pose a threat not just to warriors and explorers, but the balance of the whole world.
+}
+
+GoblinBanner: {
+	DisplayName: Goblin Banner
+	Bestiary: A tiny goblin stands behind the banner, holding it up and boosting morale of their fellow brethren.
+}
+
+GoblinMortar: {
+	DisplayName: Goblin Mortar
+	Bestiary: The most devious invention by the goblin clan. It allows ambushes over tall-but-not-too-tall walls and fortifications.
+}
+
+SentientCursedFlame: {
+	DisplayName: Sentient Cursed Flame
+	Bestiary: Fire that burns long enough eventually becomes infused with the very will of the life it burns. That will seeks nothing more than someone to free it.
+}
+
+SentientIchor: {
+	DisplayName: Sentient Ichor
+	Bestiary: Fire that burns long enough eventually becomes infused with the very will of the life it burns. That will seeks nothing more than someone to free it.
+}
+
+DeathKnightCaptain: {
+	DisplayName: Death Knight Captain
+	Bestiary:
+		'''
+		The highest, most elite knights of the Death Knight legion received the title of "Captain".
+		They were bestowed the power to wield divine lightning, relinquishing their weapons in order to smite down the dead that now roamed their home.
+		But, one after another, their comrades fell, succumbing to the tragedy around them. And they would soon follow.
+		Despite their deprived state, they may still answer the call of their lost men.
+		'''
+}
+
 CorruptWyvernBody.DisplayName: Corrupt Wyvern
-CorruptWyvernHead.DisplayName: Corrupt Wyvern
+
+CorruptWyvernHead: {
+	DisplayName: Corrupt Wyvern
+	Bestiary:
+		'''
+		Wyverns were admired by many for their majestic appearance and elegant movement.
+		This monstrosity has none of that.
+		'''
+}
+
 CorruptWyvernTail.DisplayName: Corrupt Wyvern
-SentientSawblade.DisplayName: Sentient Sawblade
-FacelessCommoner.DisplayName: Faceless Commoner
-FacelessArcher.DisplayName: Faceless Archer
-SenselessRat.DisplayName: Senseless Rat
-FacelessSpearman.DisplayName: Faceless Spearman
-DimmedWarlock.DisplayName: Dimmed Warlock
-CommonFighterTest.DisplayName: Common Fighter Test
-GiantMeteorHead.DisplayName: Giant Meteor Head
-ClericMercenary.DisplayName: Cleric Mercenary
+
+SentientSawblade: {
+	DisplayName: Sentient Sawblade
+	Bestiary:
+		'''
+		A literal living sawblade. 
+		Nobody knows how it works, some believe it escaped from the Dungeon, or a similar, horrible place.
+		'''
+}
+
+FacelessCommoner: {
+	DisplayName: Faceless Commoner
+	Bestiary: ""
+}
+
+FacelessArcher: {
+	DisplayName: Faceless Archer
+	Bestiary: ""
+}
+
+SenselessRat: {
+	DisplayName: Senseless Rat
+	Bestiary: ""
+}
+
+FacelessSpearman: {
+	DisplayName: Faceless Spearman
+	Bestiary: ""
+}
+
+DimmedWarlock: {
+	DisplayName: Dimmed Warlock
+	Bestiary: ""
+}
+
+CommonFighterTest: {
+	DisplayName: Common Fighter Test
+	Bestiary: ""
+}
+
+GiantMeteorHead: {
+	DisplayName: Giant Meteor Head
+	Bestiary: When meteor heads are hurled close together, their gravitational pull is significantly magnified and becomes unstable, occasionally pulling in anything nearby with great force.
+}
+
+ClericMercenary: {
+	DisplayName: Cleric Mercenary
+	Bestiary: Clerics that were secretly scam artists eventually found themselves working for foreign armies, using various incantations to support their effort.
+}
+
+SkullCrab: {
+	DisplayName: Snailcrab
+	Bestiary:
+		'''
+		A snail that found a home within a giant skull. While slithering over ruined land, they pick up scattered bones, which soon become their legs.
+		The hollow skull combined with its slimy body results in many stray souls getting trapped inside.
+		'''
+}

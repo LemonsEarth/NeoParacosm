@@ -56,7 +56,7 @@ public class HolyLightningFriendly : ModProjectile
             Main.instance.CameraModifiers.Add(mod1);
             Projectile.rotation = Projectile.Center.DirectionTo(targetPos).ToRotation();
 
-            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, targetPos);
+            SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 5, Volume = 0.6f }, targetPos);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
         }
         Projectile.velocity = Vector2.Zero;
