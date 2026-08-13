@@ -12,6 +12,7 @@ namespace NeoParacosm.Content.Biomes.DeadForest;
 
 public class DeadForestBiome : ModBiome
 {
+    public static int BiomeID => GetInstance<DeadForestBiome>().Type;
     public override int Music => MusicLoader.GetMusicSlot("NeoParacosm/Common/Assets/Audio/Music/NoMansLand");
     public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<DeadForestSurfaceBackgroundStyle>();
     //public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
@@ -53,10 +54,9 @@ public class DeadForestBiomeNPC : GlobalNPC
 
 public class DeadForestSurfaceBackgroundStyle : ModSurfaceBackgroundStyle
 {
-    static Asset<Texture2D> bg;
     public override void Load()
     {
-        bg = Request<Texture2D>("NeoParacosm/Common/Assets/Textures/Backgrounds/thewholefuckingthing");
+
     }
 
     public override void ModifyFarFades(float[] fades, float transitionSpeed)

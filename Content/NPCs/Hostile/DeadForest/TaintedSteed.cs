@@ -32,6 +32,7 @@ public class TaintedSteed : ModNPC
         NPC.aiStyle = NPCAIStyleID.Unicorn;
         //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0f;
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -128,8 +129,8 @@ public class TaintedSteed : ModNPC
                     ai2: 3
                     );
             }
-            SoundEngine.PlaySound(SoundID.NPCDeath18 with { PitchRange = (0.25f, 0.5f)}, NPC.Center);
-            SoundEngine.PlaySound(SoundID.Zombie54 with { PitchRange = (-0.5f, -0.25f)}, NPC.Center);
+            SoundEngine.PlaySound(SoundID.NPCDeath18 with { PitchRange = (0.25f, 0.5f) }, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Zombie54 with { PitchRange = (-0.5f, -0.25f) }, NPC.Center);
         }
 
         AITimer++;

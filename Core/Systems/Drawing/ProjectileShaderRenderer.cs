@@ -62,7 +62,6 @@ public class ProjectileShaderRenderer : ModSystem
                 proj.DrawProjectile();
             }
             Main.spriteBatch.End();
-            NPPlayer.counter2++;
         }
 
         foreach (var effect in ProjectilesByEffect.Keys)

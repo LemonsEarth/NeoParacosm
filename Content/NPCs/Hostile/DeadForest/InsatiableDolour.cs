@@ -37,6 +37,7 @@ public class InsatiableDolour : ModNPC
         NPC.aiStyle = NPCAIStyleID.Unicorn;
         //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0.3f;
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -165,8 +166,8 @@ public class InsatiableDolour : ModNPC
                     ai2: 3
                     );
             }
-            SoundEngine.PlaySound(SoundID.NPCDeath18 with { PitchRange = (0.25f, 0.5f)}, NPC.Center);
-            SoundEngine.PlaySound(SoundID.Zombie54 with { PitchRange = (-0.5f, -0.25f)}, NPC.Center);
+            SoundEngine.PlaySound(SoundID.NPCDeath18 with { PitchRange = (0.25f, 0.5f) }, NPC.Center);
+            SoundEngine.PlaySound(SoundID.Zombie54 with { PitchRange = (-0.5f, -0.25f) }, NPC.Center);
 
         }
 
@@ -196,7 +197,7 @@ public class InsatiableDolour : ModNPC
         Vector2 drawOrigin = sourceRect.Size() * 0.5f;
         for (int k = NPC.oldPos.Length - 1; k >= 0; k--)
         {
-            Vector2 drawPos = (NPC.oldPos[k] + drawOrigin - Main.screenPosition);
+            Vector2 drawPos = (NPC.oldPos[k] + drawOrigin - screenPos);
             Color color = k == 0 ? Color.White : Color.Black * 0.5f;
             Main.EntitySpriteDraw(texture, drawPos, sourceRect, color, NPC.rotation, drawOrigin, NPC.scale, LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection), 0);
         }

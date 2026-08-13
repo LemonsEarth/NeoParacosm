@@ -50,7 +50,7 @@ public class LingeringDeathflame : ModProjectile
         if (AITimer == 0)
         {
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
-            SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown with { PitchRange = (0f, 0.2f), MaxInstances = 3 }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown with { PitchRange = (0f, 0.2f), MaxInstances = 8 }, Projectile.Center);
         }
 
         if (Projectile.velocity.Y == 0)

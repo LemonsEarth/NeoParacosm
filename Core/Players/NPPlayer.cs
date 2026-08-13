@@ -14,8 +14,6 @@ public class NPPlayer : ModPlayer
     public bool NoMusic { get; set; } = false;
     public bool Grabbed { get; set; } = false;
     public bool FastFall { get; set; } = false;
-    public static int counter1 = 0;
-    public static int counter2 = 0;
 
     /// <summary>
     /// A collection of projectile types that should behave as blocks, like CorruptPillar.

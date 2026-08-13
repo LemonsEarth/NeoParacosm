@@ -117,7 +117,7 @@ public partial class DeathKnightCaptain : ModNPC
 
         Main.EntitySpriteDraw(
             texture,
-            NPC.Center - Main.screenPosition,
+            NPC.Center - screenPos,
             sourceRect,
             Color.White * NPC.Opacity,
             NPC.rotation,

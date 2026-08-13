@@ -40,6 +40,7 @@ public class SoulfulSludge : ModNPC
         NPC.knockBackResist = 0f;
         Banner = Item.NPCtoBanner(NPCID.MotherSlime);
         BannerItem = Item.BannerToItem(Banner);
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -190,13 +191,13 @@ public class SoulfulSludge : ModNPC
         // Sine waves go from (0.75 to 1.25)
         // 1 when 0
         scaleX = (MathF.Sin(AITimer / 24f) * 0.1f + 1) * NPC.scale;
-
         // 1.25 when 0
+
         scaleY = (MathF.Sin(AITimer / 24f + MathHelper.PiOver2) * 0.1f + 1) * NPC.scale;
         Texture2D texture = TextureAssets.Npc[NPC.type].Value;
         Rectangle sourceRect = NPC.frame;
         Vector2 drawOrigin = new Vector2(sourceRect.Width * 0.5f, sourceRect.Height);
-        Main.EntitySpriteDraw(texture, NPC.position + drawOrigin - Main.screenPosition, sourceRect, drawColor, NPC.rotation, drawOrigin, new Vector2(scaleX, scaleY), LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection), 0);
+        Main.EntitySpriteDraw(texture, NPC.position + drawOrigin - screenPos, sourceRect, drawColor, NPC.rotation, drawOrigin, new Vector2(scaleX, scaleY), LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection), 0);
 
         return false;
     }

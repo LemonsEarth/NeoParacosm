@@ -39,6 +39,7 @@ public class BombKnight : ModNPC
         NPC.value = 10000;
         NPC.aiStyle = NPCAIStyleID.Fighter;
         NPC.knockBackResist = 0.2f;
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -214,7 +215,7 @@ public class BombKnight : ModNPC
         Vector2 drawOrigin = sourceRect.Size() * 0.5f;
         for (int k = NPC.oldPos.Length - 1; k >= 0; k--)
         {
-            Vector2 drawPos = (NPC.oldPos[k] + drawOrigin - Main.screenPosition);
+            Vector2 drawPos = (NPC.oldPos[k] + drawOrigin - screenPos);
             Color color = k == 0 ? Color.White : Color.Black * 0.5f;
             Main.EntitySpriteDraw(texture, drawPos, sourceRect, color, NPC.rotation, drawOrigin, NPC.scale, LemonUtils.SpriteDirectionToSpriteEffects(-NPC.spriteDirection), 0);
         }

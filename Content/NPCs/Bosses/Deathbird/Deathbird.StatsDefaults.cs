@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Placeable.Relics;
@@ -82,10 +83,9 @@ public partial class Deathbird : ModNPC
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
     {
         bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement>
-            {
-                new MoonLordPortraitBackgroundProviderBestiaryInfoElement(),
-                //new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
-            });
+        {
+            //new FlavorTextBestiaryInfoElement(this.GetLocalizedValue("Bestiary")),
+        });
     }
 
     public override void SetDefaults()
@@ -107,6 +107,7 @@ public partial class Deathbird : ModNPC
         NPC.npcSlots = 10;
         NPC.BossBar = GetInstance<DeathbirdBossBar>();
         NPC.SpawnWithHigherTime(30);
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
 
         if (!Main.dedServ)
         {

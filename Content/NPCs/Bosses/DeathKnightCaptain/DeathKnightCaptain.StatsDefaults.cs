@@ -71,6 +71,7 @@ public partial class DeathKnightCaptain : ModNPC
         NPC.SpawnWithHigherTime(30);
         CurrentFrame = StandingNormal;
         NPC.BossBar = GetInstance<DeathKnightCaptainBossBar>();
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
         projectileTypesToDestroy = [
             ProjectileType<LingeringDeathflame>(), ProjectileType<DarkIncendiaryProjHostile>(), ProjectileType<HolyLightningSpear>(),
             ProjectileType<LightningBall>()

@@ -40,6 +40,7 @@ public class SkullCrab : ModNPC
         NPC.aiStyle = NPCAIStyleID.Fighter;
         //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0.8f;
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -217,7 +218,7 @@ public class SkullCrab : ModNPC
 
         Main.EntitySpriteDraw(
             texture,
-            drawPos - Main.screenPosition,
+            drawPos - screenPos,
             NPC.frame,
             drawColor,
             NPC.rotation,

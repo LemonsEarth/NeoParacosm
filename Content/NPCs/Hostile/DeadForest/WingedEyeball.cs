@@ -41,6 +41,7 @@ public class WingedEyeball : ModNPC
         NPC.knockBackResist = 0.5f;
         Banner = Item.NPCtoBanner(NPCID.DemonEye);
         BannerItem = Item.BannerToItem(Banner);
+        SpawnModBiomes = [DeadForestBiome.BiomeID];
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

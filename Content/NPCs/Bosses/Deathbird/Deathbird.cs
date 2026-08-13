@@ -96,7 +96,6 @@ public partial class Deathbird : ModNPC
                 Main.musicFade[Music] = 1f;
             }
         }
-
         if (phaseTransition)
         {
             PhaseTransition();
@@ -124,6 +123,7 @@ public partial class Deathbird : ModNPC
         }
         else if (phase == 2)
         {
+            wingScale = 1.2f;
             darkColorBoost = (float)Math.Sin(AITimer / 20f) * 0.5f + 1f;
             switch (Attack)
             {
