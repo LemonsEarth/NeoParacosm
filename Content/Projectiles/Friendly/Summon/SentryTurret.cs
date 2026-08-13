@@ -100,7 +100,6 @@ public class SentryTurret : ModProjectile
             {
                 if (TimeLeft - AITimer > 24)
                 {
-
                     Projectile.frameCounter++;
                     if (Projectile.frame < 3 && Projectile.frameCounter % 6 == 0)
                     {
