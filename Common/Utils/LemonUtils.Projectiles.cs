@@ -170,6 +170,33 @@ public static partial class LemonUtils
         return closestEnemy;
     }
 
+    public static NPC GetClosestNPCWithLOS(Entity entity, float maxDistance = 0, params int[] excludeWhoAmIs)
+    {
+        NPC closestEnemy = null;
+        Vector2 pos = entity.Center;
+        if (maxDistance == 0) maxDistance = 99999;
+        foreach (var npc in Main.ActiveNPCs)
+        {
+            if (excludeWhoAmIs.Contains(npc.whoAmI))
+            {
+                continue;
+            }
+            if (npc.CanBeChasedBy() && Collision.CanHit(entity, npc) && (npc.Distance(pos) < maxDistance))
+            {
+                if (closestEnemy == null)
+                {
+                    closestEnemy = npc;
+                }
+                float distanceToNPC = pos.Distance(npc.Center);
+                if (distanceToNPC < pos.Distance(closestEnemy.Center))
+                {
+                    closestEnemy = npc;
+                }
+            }
+        }
+        return closestEnemy;
+    }
+
     /// <summary>
     /// Gets closest alive player.
     /// </summary>
