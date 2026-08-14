@@ -3,8 +3,10 @@ using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
+using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace NeoParacosm.Core.Players;
 
@@ -136,6 +138,27 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        if (Main.mouseLeft && Main.mouseLeftRelease)
+        {
+            //Stopwatch watch = Stopwatch.StartNew();
+            for (int i = 0; i < 10000; i++)
+            {
+                //Dust.NewDustPerfect(Main.MouseWorld, DustID.GemDiamond, Main.rand.NextVector2Circular(5, 5)).noGravity = true;
+                ParticleSystem.SpawnParticle(ParticleID.TestParticle, Main.MouseWorld, Main.rand.NextVector2Circular(5, 5));
+            }
+            //watch.Stop();
+            //Main.NewText("Count:" + ParticleSystem.ActiveParticleCount);
+            //Main.NewText("Time:" + watch.Elapsed.TotalMilliseconds);
+        }
+        /*int c = 0;
+        foreach (var dust in Main.dust)
+        {
+            if (dust.active)
+            {
+                c++;
+            }
+        }
+        Main.NewText(c);*/
         /*counter1.NewText();
         counter2.NewText();
         if (Main.keyState.IsKeyDown(Keys.U) && !Main.oldKeyState.IsKeyDown(Keys.U))
