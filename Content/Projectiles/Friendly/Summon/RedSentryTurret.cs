@@ -9,7 +9,7 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon;
 
-public class SentryTurret : ModProjectile
+public class RedSentryTurret : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float TimeLeft => ref Projectile.ai[1];
@@ -41,8 +41,8 @@ public class SentryTurret : ModProjectile
 
     public override void SetDefaults()
     {
-        Projectile.width = 24;
-        Projectile.height = 18;
+        Projectile.width = 30;
+        Projectile.height = 22;
         Projectile.penetrate = -1;
         Projectile.DamageType = DamageClass.Summon;
         Projectile.tileCollide = true;
@@ -93,7 +93,7 @@ public class SentryTurret : ModProjectile
             {
                 landed = true;
                 Projectile.Center -= Vector2.UnitY * 20;
-                Projectile.Resize(24, 58);
+                Projectile.Resize(30, 58);
             }
 
             if (landed)
@@ -111,12 +111,12 @@ public class SentryTurret : ModProjectile
                     Projectile.frameCounter++;
                     if (Projectile.frame > 0 && Projectile.frameCounter % 6 == 0)
                     {
-                        Projectile.Resize(24, Projectile.height - 8);
+                        Projectile.Resize(30, Projectile.height - 8);
                         Projectile.frame--;
                     }
                 }
 
-                if (closestEnemy != null && closestEnemy.DistanceSQ(Projectile.Center) < 400 * 400)
+                if (closestEnemy != null && closestEnemy.DistanceSQ(Projectile.Center) < 600 * 600)
                 {
                     Vector2 dir = Projectile.DirectionTo(closestEnemy.Center);
                     float targetRotation = dir.ToRotation();
@@ -133,16 +133,25 @@ public class SentryTurret : ModProjectile
                     {
                         Projectile.spriteDirection = 1;
                     }
-                    if (AITimer % 60 == 0)
+                    if (AITimer % 20 == 0)
                     {
+                        int projType = ProjectileID.Bullet;
+                        foreach (var item in player.inventory)
+                        {
+                            if (item.ammo == AmmoID.Bullet)
+                            {
+                                projType = item.shoot;
+                                break;
+                            }
+                        }
                         SoundEngine.PlaySound(SFX.Gunshot with { PitchRange = (0.2f, 0.5f) }, Projectile.Center);
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Projectile.NewProjectileDirect(
                                 Projectile.GetSource_FromAI(),
                                 Projectile.Center,
-                                dir * 10,
-                                ProjectileID.Bullet,
+                                dir * 15,
+                                projType,
                                 Projectile.damage,
                                 Projectile.knockBack,
                                 Projectile.owner

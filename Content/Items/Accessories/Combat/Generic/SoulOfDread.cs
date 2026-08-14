@@ -1,7 +1,6 @@
 ﻿using Terraria.Chat;
 using Terraria.GameContent.Creative;
 using Terraria.Localization;
-using static NeoParacosm.Core.LocalizationReferences.Mods.NeoParacosm.Items.SoulOfDread;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;
 
@@ -27,7 +26,7 @@ public class SoulOfDread : ModItem
     {
         if (player.ItemAnimationJustStarted)
         {
-            
+
             if (LemonUtils.NotClient())
             {
                 if (WorldGen.AllowedToSpreadInfections)

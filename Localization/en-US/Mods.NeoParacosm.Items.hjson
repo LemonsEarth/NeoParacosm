@@ -2664,10 +2664,7 @@ AncientSpikeTrapItem: {
 
 ThunderClap: {
 	DisplayName: Thunderclap
-	Tooltip:
-	'''
-	Consecutive attacks on the same enemy release bursts of lightning that can damage nearby enemies
-	'''
+	Tooltip: Consecutive attacks on the same enemy release bursts of lightning that can damage nearby enemies
 }
 
 SpearDecoItem: {
@@ -2725,10 +2722,20 @@ SeekingStar: {
 }
 
 EmblemOfTheSentry: {
-	DisplayName: Emblem Of The Sentry
+	DisplayName: Emblem of the Sentry
 	Tooltip:
 		'''
 		Periodically construct sentries around you to attack nearby enemies
 		Scales with summon damage
 		'''
+}
+
+EmblemOfTheCentury: {
+	DisplayName: Emblem of the Century
+	Tooltip:
+	'''
+	Periodically construct red sentries around you to attack nearby enemies
+	Red sentries use bullet types from your inventory
+	Scales with summon damage
+	'''
 }
