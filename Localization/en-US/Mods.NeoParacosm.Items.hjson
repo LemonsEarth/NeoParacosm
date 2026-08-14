@@ -2733,9 +2733,9 @@ EmblemOfTheSentry: {
 EmblemOfTheCentury: {
 	DisplayName: Emblem of the Century
 	Tooltip:
-	'''
-	Periodically construct red sentries around you to attack nearby enemies
-	Red sentries use bullet types from your inventory
-	Scales with summon damage
-	'''
+		'''
+		Periodically construct red sentries around you to attack nearby enemies
+		Red sentries use bullet types from your inventory
+		Scales with summon damage
+		'''
 }
