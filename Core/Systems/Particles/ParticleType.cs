@@ -7,6 +7,11 @@ public abstract class ParticleType : ILoadable
 {
     public Asset<Texture2D> Texture { get; protected set; }
 
+    public void Kill(ref Particle particle)
+    {
+        particle.shouldDie = true;
+    }
+
     public virtual void Draw(Particle particle)
     {
         Main.spriteBatch.Draw(
@@ -22,7 +27,7 @@ public abstract class ParticleType : ILoadable
             );
     }
 
-    public virtual void Update(ref Particle particle)
+    public virtual void Update(ref Particle particle, int i)
     {
 
     }

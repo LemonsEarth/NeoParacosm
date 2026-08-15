@@ -6,7 +6,7 @@ namespace NeoParacosm.Core.Systems.Particles;
 
 public class ParticleSystem : ModSystem
 {
-    public const int MAX_PARTICLES = 10000;
+    public const int MAX_PARTICLES = 50000;
     public static Particle[] Particles { get; private set; } = new Particle[MAX_PARTICLES];
     public static int ActiveParticleCount { get; private set; } = 0;
     public static ParticleType[] TypesByID { get; private set; } = new ParticleType[ParticleID.Count];
@@ -25,6 +25,11 @@ public class ParticleSystem : ModSystem
     public override void SetStaticDefaults()
     {
         InitializeTypesByID();
+        InitializeParticles();
+    }
+
+    public override void ClearWorld()
+    {
         InitializeParticles();
     }
 
@@ -66,10 +71,10 @@ public class ParticleSystem : ModSystem
         for (int i = 0; i < ActiveParticleCount; i++)
         {
             ref Particle particle = ref Particles[i];
-            TypesByID[particle.type].Update(ref particle);
+            TypesByID[particle.type].Update(ref particle, i);
             particle.position += particle.velocity;
-            particle.timeLeft--;
-            if (particle.timeLeft <= 0)
+            particle.timer++;
+            if (particle.shouldDie)
             {
                 KillParticle(i);
                 i--;
@@ -77,17 +82,31 @@ public class ParticleSystem : ModSystem
         }
     }
 
+    public static int ReplacementIndex = 0;
     public static void SpawnParticle(int type, Vector2 position, Vector2 velocity, Color color = default, float scale = 1f)
     {
-        if (ActiveParticleCount >= MAX_PARTICLES)
-        {
-            return;
-        }
-
         if (color == default)
         {
             color = Color.White;
         }
+        if (ActiveParticleCount >= MAX_PARTICLES)
+        {
+            Particles[ReplacementIndex].active = true;
+            Particles[ReplacementIndex].type = type;
+            Particles[ReplacementIndex].position = position;
+            Particles[ReplacementIndex].velocity = velocity;
+            Particles[ReplacementIndex].color = color;
+            Particles[ReplacementIndex].scale = scale;
+            Particles[ReplacementIndex].shouldDie = false;
+            Particles[ReplacementIndex].timer = 0;
+            ReplacementIndex++;
+            if (ReplacementIndex >= MAX_PARTICLES)
+            {
+                ReplacementIndex = 0;
+            }
+            return;
+        }
+        ReplacementIndex = 0;
 
         Particles[ActiveParticleCount].active = true;
         Particles[ActiveParticleCount].type = type;
@@ -95,7 +114,8 @@ public class ParticleSystem : ModSystem
         Particles[ActiveParticleCount].velocity = velocity;
         Particles[ActiveParticleCount].color = color;
         Particles[ActiveParticleCount].scale = scale;
-        Particles[ActiveParticleCount].timeLeft = 60;
+        Particles[ActiveParticleCount].shouldDie = false;
+        Particles[ActiveParticleCount].timer = 0;
         ActiveParticleCount++;
     }
 

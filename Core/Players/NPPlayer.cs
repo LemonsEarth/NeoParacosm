@@ -138,18 +138,18 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        if (Main.mouseLeft && Main.mouseLeftRelease)
+        /*if (Main.mouseLeft && Main.mouseLeftRelease)
         {
-            //Stopwatch watch = Stopwatch.StartNew();
+            Stopwatch watch = Stopwatch.StartNew();
             for (int i = 0; i < 10000; i++)
             {
                 //Dust.NewDustPerfect(Main.MouseWorld, DustID.GemDiamond, Main.rand.NextVector2Circular(5, 5)).noGravity = true;
                 ParticleSystem.SpawnParticle(ParticleID.TestParticle, Main.MouseWorld, Main.rand.NextVector2Circular(5, 5));
             }
-            //watch.Stop();
-            //Main.NewText("Count:" + ParticleSystem.ActiveParticleCount);
-            //Main.NewText("Time:" + watch.Elapsed.TotalMilliseconds);
-        }
+            watch.Stop();
+            Main.NewText("Time:" + watch.Elapsed.TotalMilliseconds);
+            Main.NewText("Count:" + ParticleSystem.ActiveParticleCount);
+        }*/
         /*int c = 0;
         foreach (var dust in Main.dust)
         {

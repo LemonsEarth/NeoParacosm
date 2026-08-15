@@ -2739,3 +2739,12 @@ EmblemOfTheCentury: {
 		Scales with summon damage
 		'''
 }
+
+EmblemOfTheEnergy: {
+	DisplayName: Emblem Of The Energy
+	Tooltip:
+	'''
+	Periodically construct solar sentries around you to attack nearby enemies
+	Scales with summon damage
+	'''
+}

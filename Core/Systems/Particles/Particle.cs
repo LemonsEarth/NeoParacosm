@@ -4,14 +4,30 @@ namespace NeoParacosm.Core.Systems.Particles;
 
 public struct Particle
 {
+    /// <summary>
+    /// The ParticleID of the particle.
+    /// </summary>
     public int type = -1;
     public bool active;
+    /// <summary>
+    /// If true, the particle will be killed during the next update.
+    /// </summary>
+    public bool shouldDie;
+    /// <summary>
+    /// Timer that increases by 1 every update.
+    /// </summary>
+    public int timer;
 
+    /// <summary>
+    /// World position of the particle.
+    /// </summary>
     public Vector2 position;
+    /// <summary>
+    /// Velocity that is added to the particle's position every update;
+    /// </summary>
     public Vector2 velocity;
     public float rotation;
     public float scale;
-    public int timeLeft;
 
     public Color color;
     public Rectangle? frame;
@@ -20,21 +36,12 @@ public struct Particle
     {
         type = -1;
         active = false;
+        shouldDie = false;
+        timer = 0;
         position = Vector2.Zero;
         velocity = Vector2.Zero;
         rotation = 0f;
         scale = 1f;
-        timeLeft = 0;
         color = Color.White;
-    }
-
-    public Particle(int _type, Vector2 _position, Vector2 _velocity, Color _color = default, float _scale = 1f)
-    {
-        type = _type;
-        position = _position;
-        velocity = _velocity;
-        scale = _scale;
-        timeLeft = 0;
-        color = _color;
     }
 }

@@ -9,7 +9,7 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon;
 
-public class RedSentryTurret : ModProjectile
+public class SolarSentryTurret : ModProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     ref float TimeLeft => ref Projectile.ai[1];
@@ -133,7 +133,7 @@ public class RedSentryTurret : ModProjectile
                     {
                         Projectile.spriteDirection = 1;
                     }
-                    if (AITimer % 20 == 0)
+                    if (AITimer % 5 == 0)
                     {
                         int projType = ProjectileID.Bullet;
                         foreach (var item in player.inventory)
@@ -144,14 +144,15 @@ public class RedSentryTurret : ModProjectile
                                 break;
                             }
                         }
-                        SoundEngine.PlaySound(SFX.Gunshot with { PitchRange = (0.2f, 0.5f) }, Projectile.Center);
+                        //SoundEngine.PlaySound(SFX.Gunshot with { PitchRange = (0.2f, 0.5f), Volume = 0.4f }, Projectile.Center);
+                        SoundEngine.PlaySound(SFX.LaserMachinegun with { PitchRange = (0.2f, 0.5f), Volume = 0.6f }, Projectile.Center);
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Projectile.NewProjectileDirect(
-                                Projectile.GetSource_FromAI(),
-                                Projectile.Center,
-                                dir * 15,
-                                projType,
+                            Projectile.GetSource_FromAI(),
+                                Projectile.Center + Vector2.UnitX.RotatedBy(Projectile.rotation) * ((Projectile.width * 0.4f) * Projectile.spriteDirection),
+                                dir * 10,
+                                ProjectileID.HeatRay,
                                 Projectile.damage,
                                 Projectile.knockBack,
                                 Projectile.owner
