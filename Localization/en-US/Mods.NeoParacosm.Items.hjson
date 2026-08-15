@@ -2741,10 +2741,18 @@ EmblemOfTheCentury: {
 }
 
 EmblemOfTheEnergy: {
-	DisplayName: Emblem Of The Energy
+	DisplayName: Emblem of the Energy
+	Tooltip:
+		'''
+		Periodically construct solar sentries around you to attack nearby enemies
+		Scales with summon damage
+		'''
+}
+
+GravityTrapItem: {
+	DisplayName: Gravity Trap
 	Tooltip:
 	'''
-	Periodically construct solar sentries around you to attack nearby enemies
-	Scales with summon damage
+	When activated, pushes enemies downward in an area around it
 	'''
 }
