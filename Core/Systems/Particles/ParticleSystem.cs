@@ -38,7 +38,7 @@ public class ParticleSystem : ModSystem
     /// </summary>
     /// <param name="typeInstance"></param>
     /// <returns>its index within the list.</returns>
-    public int RegisterParticle(ParticleType typeInstance)
+    public static int RegisterParticle(ParticleType typeInstance)
     {
         int particleID = TypesByID.Count;
         TypesByID.Add(typeInstance);
@@ -51,8 +51,7 @@ public class ParticleSystem : ModSystem
     /// </summary>
     public void InitializeTypesByID()
     {
-        ParticleID.TestParticle = RegisterParticle(new TestParticle());
-        ParticleID.DeadForestPassiveParticle = RegisterParticle(new DeadForestPassiveParticle());
+        ParticleID.RegisterParticles();
 
         for (int i = 0; i < ParticleID.Count; i++)
         {

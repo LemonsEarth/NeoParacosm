@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Particles;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Systems.Particles;
@@ -9,6 +10,12 @@ namespace NeoParacosm.Core.Systems.Particles;
 /// </summary>
 public abstract class ParticleID
 {
+    public static void RegisterParticles()
+    {
+        TestParticle = ParticleSystem.RegisterParticle(new TestParticle());
+        DeadForestPassiveParticle = ParticleSystem.RegisterParticle(new DeadForestPassiveParticle());
+    }
+
     public static int Count => ParticleSystem.TypesByID.Count;
     public static int TestParticle;
     public static int DeadForestPassiveParticle;
