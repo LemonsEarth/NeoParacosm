@@ -54,7 +54,7 @@ public class DeadDirtBlock : ModTile
             }
         }
 
-        if (Main.rand.NextBool(10))
+        if (Main.rand.NextBool(50))
         {
             ParticleSystem.SpawnParticle(
                 ParticleID.DeadForestPassiveParticle,

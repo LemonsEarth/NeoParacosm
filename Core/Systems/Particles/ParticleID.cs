@@ -14,9 +14,11 @@ public abstract class ParticleID
     {
         TestParticle = ParticleSystem.RegisterParticle(new TestParticle());
         DeadForestPassiveParticle = ParticleSystem.RegisterParticle(new DeadForestPassiveParticle());
+        Streak = ParticleSystem.RegisterParticle(new StreakParticle());
     }
 
     public static int Count => ParticleSystem.TypesByID.Count;
     public static int TestParticle;
     public static int DeadForestPassiveParticle;
+    public static int Streak;
 }

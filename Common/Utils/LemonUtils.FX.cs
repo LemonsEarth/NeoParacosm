@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Projectiles.EffectProjectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
@@ -79,6 +80,20 @@ public static partial class LemonUtils
         for (int i = 0; i < count; i++)
         {
             Dust.NewDustPerfect(pos, dustID, new Vector2(Main.rand.NextFloat(-randXSpeed, randXSpeed), Main.rand.NextFloat(-randYSpeed, randYSpeed)), Scale: Main.rand.NextFloat(minScale, maxScale), newColor: color).noGravity = true;
+        }
+    }
+
+    public static void ParticleBurst(int count, Vector2 pos, int particleID, float randXSpeed, float randYSpeed, float minScale, float maxScale, Color color = default)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            ParticleSystem.SpawnParticle(
+                particleID, 
+                pos, 
+                new Vector2(Main.rand.NextFloat(-randXSpeed, randXSpeed), Main.rand.NextFloat(-randYSpeed, randYSpeed)),
+                color: color,
+                scale: Main.rand.NextFloat(minScale, maxScale)
+                );
         }
     }
 

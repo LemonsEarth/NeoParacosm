@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
@@ -51,7 +52,8 @@ public class HolyLightningWarningProj : ModProjectile
         }
         if (AITimer % 4 == 0)
         {
-            Dust.NewDustDirect(Projectile.RandomPos(-32), 2, 2, DustType<StreakDust>()).velocity = Vector2.UnitY * 60;
+            //Old: Dust.NewDustDirect(Projectile.RandomPos(-32), 2, 2, DustType<StreakDust>()).velocity = Vector2.UnitY * 60;
+            ParticleSystem.SpawnParticle(ParticleID.Streak, Projectile.RandomPos(-32), Vector2.UnitY * 60);
         }
         Projectile.scale = AITimer / Duration * MathHelper.Clamp(Length / 2000f, 1, 5);
         Projectile.height = (int)(64 * Length / 128);

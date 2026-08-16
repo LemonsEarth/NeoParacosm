@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
@@ -46,7 +47,7 @@ public class HolyLightningStraightSpear : ModProjectile
     {
         if (AITimer == 0)
         {
-            LemonUtils.DustBurst(20, Projectile.Center, DustType<StreakDust>(), 10, 10, 0.5f, 2f, Color.LightYellow);
+            LemonUtils.ParticleBurst(20, Projectile.Center, ParticleID.Streak, 10, 10, 0.5f, 2f, Color.LightYellow);
 
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);

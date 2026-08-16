@@ -67,7 +67,7 @@ public partial class DeathKnightCaptain : ModNPC
     /// Attack durations indexed by Attack field
     /// </summary>
     readonly int[] attackDurations = [540, 900, 750, 900, 360];
-    readonly int[] attackDurations2 = [720, 720, 900, 960, 960, 900, 360];
+    readonly int[] attackDurations2 = [720, 720, 1800, 2400, 960, 900, 360];
 
     /// <summary>
     /// Attacks that can be performed (order matters)
@@ -109,7 +109,7 @@ public partial class DeathKnightCaptain : ModNPC
     public override void AI()
     {
         doDrawPredictiveLaser = false;
-        //attackDurations[0] = 540;
+        //attackDurations2[3] = 2400;
         //Main.NewText(AttackTimer);
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
@@ -211,7 +211,7 @@ public partial class DeathKnightCaptain : ModNPC
         Attack++;
         if (Phase == 1)
         {
-            //Attack = 0;
+            //Attack = 3;
         }
 
         if (Phase == 0)
@@ -841,7 +841,7 @@ public partial class DeathKnightCaptain : ModNPC
                 break;
             case > 0:
                 LookTowards(player.Center);
-                if (LemonUtils.NotClient() && AttackTimer % 25 == 0)
+                if (LemonUtils.NotClient() && AttackTimer % 45 == 0)
                 {
                     Spawn_LightningWarning(player.Center + new Vector2(Main.rand.NextFloat(-1200, 1200), -1400), 180, 2600);
                 }
@@ -880,7 +880,8 @@ public partial class DeathKnightCaptain : ModNPC
             case > 180:
                 SpawnDust();
                 SetFrame(Dashing);
-                if (AttackTimer % 20 == 0)
+                int interval = AttackCount <= 2 ? 40 : 20;
+                if (AttackTimer % interval == 0)
                 {
                     NPC.velocity = NPC.DirectionTo(player.Center) * 40;
                     LookTowards(player.Center);
@@ -934,6 +935,7 @@ public partial class DeathKnightCaptain : ModNPC
                 break;
             case 0:
                 AttackTimer = 300;
+                AttackCount++;
                 return;
         }
 
@@ -951,6 +953,15 @@ public partial class DeathKnightCaptain : ModNPC
                     if (LemonUtils.NotClient())
                     {
                         Spawn_LightningBall(NPC.Center, Vector2.UnitY * 2.5f, 90, 900, 100);
+                    }
+                }
+
+                if (AttackCount == 6)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Spawn_LightningBall(NPC.Center + Vector2.UnitX * 200, Vector2.UnitY * 2.5f, 120, 1140, 150);
+                        Spawn_LightningBall(NPC.Center - Vector2.UnitX * 200, Vector2.UnitY * 3.5f, 120, 1140, 100);
                     }
                 }
 
