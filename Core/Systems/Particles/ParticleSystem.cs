@@ -7,9 +7,26 @@ namespace NeoParacosm.Core.Systems.Particles;
 public class ParticleSystem : ModSystem
 {
     public const int MAX_PARTICLES = 50000;
+    /// <summary>
+    /// Contains all particles in the world, active or inactive.<br></br>
+    /// Active particles are always at the beginning of the array.
+    /// </summary>
     public static Particle[] Particles { get; private set; } = new Particle[MAX_PARTICLES];
+
+    /// <summary>
+    /// Keeps track of how many active particles there are.
+    /// </summary>
     public static int ActiveParticleCount { get; private set; } = 0;
+
+    /// <summary>
+    /// Maps ParticleID values to ParticleType instances.
+    /// </summary>
     public static List<ParticleType> TypesByID { get; private set; } = new List<ParticleType>();
+
+    /// <summary>
+    /// Index of the next particle to be replaced in case of the cap being reached.
+    /// </summary>
+    static int ReplacementIndex = 0;
 
     public override void Load()
     {
@@ -35,10 +52,10 @@ public class ParticleSystem : ModSystem
     }
 
     /// <summary>
-    /// Adds the ParticleType instance to the list of particle types.
+    /// Adds the ParticleType to the list of particle types.
     /// </summary>
     /// <param name="typeInstance"></param>
-    /// <returns>its index within the list.</returns>
+    /// <returns>The new ParticleID of the added particle type.</returns>
     public static int RegisterParticle(ParticleType typeInstance)
     {
         int particleID = TypesByID.Count;
@@ -47,8 +64,7 @@ public class ParticleSystem : ModSystem
     }
 
     /// <summary>
-    /// Adds particle types to TypesByID and sets the appropriate ParticleID value.
-    /// When creating new particles, make sure to add them here as well as in ParticleID.
+    /// Registers all particle types and calls load on them (for example, to load textures).
     /// </summary>
     public void InitializeTypesByID()
     {
@@ -60,6 +76,9 @@ public class ParticleSystem : ModSystem
         }
     }
 
+    /// <summary>
+    /// Populates the particles list with empty particles.
+    /// </summary>
     public static void InitializeParticles()
     {
         for (int i = 0; i < MAX_PARTICLES; i++)
@@ -68,9 +87,18 @@ public class ParticleSystem : ModSystem
         }
     }
 
-    public static void DrawParticles()
+    public static void BeginDefaultParticleSpriteBatch()
     {
         Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.Default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+    }
+
+    /// <summary>
+    /// Draws all active particles.<br></br>
+    /// See ParticleSystem.BeginDefaultParticleSpriteBatch() to view spriteBatch state.
+    /// </summary>
+    public static void DrawParticles()
+    {
+        BeginDefaultParticleSpriteBatch();
         for (int i = 0; i < ActiveParticleCount; i++)
         {
             TypesByID[Particles[i].type].Draw(Particles[i]);
@@ -83,6 +111,11 @@ public class ParticleSystem : ModSystem
         UpdateParticles();
     }
 
+    /// <summary>
+    /// Calls ParticleType.Update() on all active particles,
+    /// adjusts their position by their velocity,
+    /// increases their timers and kills particles that shouldDie.
+    /// </summary>
     public static void UpdateParticles()
     {
         for (int i = 0; i < ActiveParticleCount; i++)
@@ -98,8 +131,17 @@ public class ParticleSystem : ModSystem
             }
         }
     }
-
-    static int ReplacementIndex = 0;
+    /// <summary>
+    /// Spawns a new particle into the world. Returns a reference to the newly spawned particle.
+    /// </summary>
+    /// <param name="type">The ParticleID of the particle.</param>
+    /// <param name="position">World position of the particle.</param>
+    /// <param name="velocity"></param>
+    /// <param name="color">Color to draw the particle in. Default is Color.White.<br></br>
+    /// Change the opacity param if you only want to change visibility.</param>
+    /// <param name="opacity">Opacity of the particle.</param>
+    /// <param name="scale"></param>
+    /// <returns>A reference to the newly spawned particle.</returns>
     public static ref Particle SpawnParticle(int type, Vector2 position, Vector2 velocity, Color color = default, float opacity = 1f, float scale = 1f)
     {
         if (color == default)
