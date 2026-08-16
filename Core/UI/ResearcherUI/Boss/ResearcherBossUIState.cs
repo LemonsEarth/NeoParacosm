@@ -47,7 +47,7 @@ public class ResearcherBossUIState : UIState
 
     public override void OnDeactivate()
     {
-        
+
     }
 
     int charIndex = 0;
