@@ -21,6 +21,8 @@ public class ResearcherBossUIState : UIState
         textPanel.HAlign = 0.5f;
         textPanel.VAlign = 0.6f;
         textPanel.TextHAlign = 0f;
+        textPanel.BackgroundColor = new Color(120, 0, 250) * 0.4f;
+        textPanel.BorderColor = new Color(120, 0, 250);
         Append(textPanel);
     }
 
@@ -107,7 +109,7 @@ public class ResearcherBossUIState : UIState
                 GetInstance<ResearcherBossUISystem>().HideUI();
             }
         }
-        
+
         textPanel.SetText(displayedText);
         timer++;
     }

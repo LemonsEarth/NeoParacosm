@@ -690,6 +690,7 @@ public class ResearcherBoss : ModNPC
     public override void OnKill()
     {
         ResearcherQuest.Progress = ResearcherQuest.ProgressState.DownedResearcher;
+        DarkCataclysmSystem.DarkCataclysmActive = true;
     }
 
     public override void HitEffect(NPC.HitInfo hit)

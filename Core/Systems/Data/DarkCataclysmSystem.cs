@@ -1,4 +1,6 @@
 ﻿using NeoParacosm.Content.NPCs.Bosses.Dreadlord;
+using System.IO;
+using Terraria.ModLoader.IO;
 
 namespace NeoParacosm.Core.Systems.Data;
 
@@ -8,7 +10,7 @@ namespace NeoParacosm.Core.Systems.Data;
 /// </summary>
 public class DarkCataclysmSystem : ModSystem
 {
-    public static bool DarkCataclysmActive => ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedResearcher;
+    public static bool DarkCataclysmActive { get; set; } = false;
     public static float DCEffectOpacity = 0f;
     public static float DCEffectOpacityTimer = 0f;
     public static Color DCEffectFogColor = Color.White;
@@ -27,21 +29,6 @@ public class DarkCataclysmSystem : ModSystem
     public override void PreUpdateItems()
     {
         AncientCallingHornInUse = false;
-    }
-
-    public override void PostUpdateItems()
-    {
-
-    }
-
-    public override void PreUpdatePlayers()
-    {
-
-    }
-
-    public override void PreUpdateNPCs()
-    {
-
     }
 
     public override void PostUpdateNPCs()
@@ -63,5 +50,36 @@ public class DarkCataclysmSystem : ModSystem
             DCEffectFogColor = Color.Lerp(DCEffectFogColor, Color.DarkRed, 1 / 60f);
             DCEffectFogColorMultiplier = 10;
         }
+    }
+
+    public override void ClearWorld()
+    {
+        DarkCataclysmActive = false;
+    }
+
+    public override void SaveWorldData(TagCompound tag)
+    {
+        if (DarkCataclysmActive)
+        {
+            tag[nameof(DarkCataclysmActive)] = true;
+        }
+    }
+
+    public override void LoadWorldData(TagCompound tag)
+    {
+        DarkCataclysmActive = tag.ContainsKey(nameof(DarkCataclysmActive));
+    }
+
+    public override void NetSend(BinaryWriter writer)
+    {
+        BitsByte flags = new BitsByte();
+        flags[0] = DarkCataclysmActive;
+        writer.Write(flags);
+    }
+
+    public override void NetReceive(BinaryReader reader)
+    {
+        BitsByte flags = reader.ReadByte();
+        DarkCataclysmActive = flags[0];
     }
 }

@@ -30,6 +30,7 @@ public class ParticleSystem : ModSystem
 
     public override void ClearWorld()
     {
+        ActiveParticleCount = 0;
         InitializeParticles();
     }
 

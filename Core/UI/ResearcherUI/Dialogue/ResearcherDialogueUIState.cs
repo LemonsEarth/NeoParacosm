@@ -11,8 +11,12 @@ namespace NeoParacosm.Core.UI.ResearcherUI.Dialogue;
 
 public class ResearcherDialogueUIState : UIState
 {
+    Color panelBackgroundColor = new Color(40, 40, 40, 1f) * 0.2f;
+    Color panelBorderColor = Color.Black;
+
     UIPanel MainPanel;
     UIText DialogueText;
+    UIText DialogueProgressText;
     UITextPanel<string> NamePanel;
 
     UIPanel TalkOptionsPanel;
@@ -41,6 +45,8 @@ public class ResearcherDialogueUIState : UIState
         MainPanel.Height.Set(0, 0.35f);
         MainPanel.HAlign = 0.1f;
         MainPanel.VAlign = 0.9f;
+        MainPanel.BackgroundColor = panelBackgroundColor;
+        MainPanel.BorderColor = panelBorderColor;
         MainPanel.SetPadding(24);
         Append(MainPanel);
 
@@ -53,11 +59,22 @@ public class ResearcherDialogueUIState : UIState
         DialogueText.TextOriginX = 0;
         MainPanel.Append(DialogueText);
 
+        DialogueProgressText = new UIText(string.Empty, 0.5f);
+        DialogueProgressText.Width.Set(0, 0.1f);
+        DialogueProgressText.Height.Set(0, 0.1f);
+        DialogueProgressText.HAlign = 1f;
+        DialogueProgressText.VAlign = 1f;
+        DialogueProgressText.IsWrapped = true;
+        DialogueProgressText.TextOriginX = 0;
+        MainPanel.Append(DialogueProgressText);
+
 
         // Name Panel and Name
         NamePanel = new UITextPanel<string>(string.Empty, 1, false);
         NamePanel.HAlign = 0.06f;
         NamePanel.VAlign = 0.56f;
+        NamePanel.BackgroundColor = panelBackgroundColor;
+        NamePanel.BorderColor = panelBorderColor;
         Append(NamePanel);
 
 
@@ -66,7 +83,9 @@ public class ResearcherDialogueUIState : UIState
         TalkOptionsPanel.Width.Set(0, 0.07f);
         TalkOptionsPanel.Height.Set(0, 0.20f);
         TalkOptionsPanel.HAlign = 0.6f;
-        TalkOptionsPanel.VAlign = 0.75f;
+        TalkOptionsPanel.VAlign = 0.73f;
+        TalkOptionsPanel.BackgroundColor = panelBackgroundColor;
+        TalkOptionsPanel.BorderColor = panelBorderColor;
         TalkOptionsPanel.SetPadding(24);
         Append(TalkOptionsPanel);
 
@@ -97,6 +116,7 @@ public class ResearcherDialogueUIState : UIState
 
     void ProgressDialogue()
     {
+        Progress = (ProgressState)MathHelper.Clamp((int)Progress, 0, 6);
         if (Progress == ProgressState.CollectedData && talkAmount == 3)
         {
             Progress = ProgressState.TalkedAfterCollectingData;
@@ -110,7 +130,7 @@ public class ResearcherDialogueUIState : UIState
         }
 
         TextToDisplay = Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.TalkDialogue.Progress.P{(int)Progress}.T{talkAmount}");
-        TextToDisplay += "\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)Progress]}"; // dialogue left
+        DialogueProgressText.SetText("\n\n" + $"{talkAmount + 1}/{ProgressTextAmount[(int)Progress]}", 1f, false); // dialogue left
         talkAmount++;
     }
 
@@ -119,7 +139,7 @@ public class ResearcherDialogueUIState : UIState
         timer = 0;
         charIndex = 0;
         DialogueText.SetText(string.Empty);
-        NamePanel.SetText(Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.DisplayName"), CalculateTextSize() * 1.2f, true);
+        NamePanel.SetText(Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.DisplayName"), CalculateTextSize() * 1f, true);
     }
 
     private void OnTalkButtonClick(UIMouseEvent evt, UIElement listeningElement)
@@ -209,6 +229,12 @@ public class ResearcherDialogueUIState : UIState
                 }
             }
         }
+
+        panelBorderColor = Color.Lerp(Color.Black, Color.White, MathHelper.Clamp(MathF.Sin(timer / 48f), 0, 1));
+        MainPanel.BorderColor = panelBorderColor;
+        TalkOptionsPanel.BorderColor = panelBorderColor;
+        NamePanel.BorderColor = panelBorderColor;
+
         timer++;
     }
 

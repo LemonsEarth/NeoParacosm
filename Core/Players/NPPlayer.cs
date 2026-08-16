@@ -3,6 +3,7 @@ using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
+using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
@@ -138,6 +139,7 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        //Main.NewText(DarkCataclysmSystem.DarkCataclysmActive);
         /*if (Main.mouseLeft && Main.mouseLeftRelease)
         {
             Stopwatch watch = Stopwatch.StartNew();

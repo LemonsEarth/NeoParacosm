@@ -238,7 +238,8 @@ public partial class Dreadlord : ModNPC
     {
         DownedBossSystem.downedDreadlord = true;
 
-        ResearcherQuest.Progress = ProgressState.DownedDreadlord;
+        Progress = ProgressState.DownedDreadlord;
+        DarkCataclysmSystem.DarkCataclysmActive = false;
 
         NPC.SetEventFlagCleared(ref DownedBossSystem.downedDreadlord, -1);
 
