@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Systems.Particles;
 
+/// <summary>
+/// Contains all particle ids which can be used when calling ParticleSystem.SpawnParticle().
+/// Particle IDs have to be assigned manually in ParticleSystem.InitializeTypesByID().
+/// </summary>
 public abstract class ParticleID
 {
-    public const int Count = 1;
-    public const int TestParticle = 0;
+    public static int Count => ParticleSystem.TypesByID.Count;
+    public static int TestParticle;
+    public static int DeadForestPassiveParticle;
 }

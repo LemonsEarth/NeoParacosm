@@ -18,7 +18,7 @@ public abstract class ParticleType : ILoadable
             Texture.Value,
             particle.position - Main.screenPosition,
             particle.frame,
-            particle.color,
+            particle.color * particle.opacity,
             particle.rotation,
             particle.frame == null ? Texture.Size() * 0.5f : particle.frame.Value.Size() * 0.5f,
             particle.scale,
@@ -27,7 +27,20 @@ public abstract class ParticleType : ILoadable
             );
     }
 
-    public virtual void Update(ref Particle particle, int i)
+    /// <summary>
+    /// Called when a particle is spawned
+    /// </summary>
+    /// <param name="particle"></param>
+    public virtual void OnSpawn(ref Particle particle)
+    {
+
+    }
+
+    /// <summary>
+    /// Called after dusts have been updated
+    /// </summary>
+    /// <param name="particle"></param>
+    public virtual void Update(ref Particle particle)
     {
 
     }

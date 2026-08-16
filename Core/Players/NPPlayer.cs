@@ -141,10 +141,10 @@ public class NPPlayer : ModPlayer
         /*if (Main.mouseLeft && Main.mouseLeftRelease)
         {
             Stopwatch watch = Stopwatch.StartNew();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 1; i++)
             {
                 //Dust.NewDustPerfect(Main.MouseWorld, DustID.GemDiamond, Main.rand.NextVector2Circular(5, 5)).noGravity = true;
-                ParticleSystem.SpawnParticle(ParticleID.TestParticle, Main.MouseWorld, Main.rand.NextVector2Circular(5, 5));
+                ParticleSystem.SpawnParticle(ParticleID.DeadForestPassiveParticle, Main.MouseWorld, Main.rand.NextVector2Circular(5, 5), Color.White);
             }
             watch.Stop();
             Main.NewText("Time:" + watch.Elapsed.TotalMilliseconds);

@@ -30,6 +30,7 @@ public struct Particle
     public float scale;
 
     public Color color;
+    public float opacity;
     public Rectangle? frame;
 
     public Particle()
@@ -43,5 +44,6 @@ public struct Particle
         rotation = 0f;
         scale = 1f;
         color = Color.White;
+        opacity = 1f;
     }
 }

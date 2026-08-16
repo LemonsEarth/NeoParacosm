@@ -1,4 +1,5 @@
-﻿using Terraria.GameContent.Events;
+﻿using NeoParacosm.Core.Systems.Particles;
+using Terraria.GameContent.Events;
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
@@ -51,6 +52,15 @@ public class DeadDirtBlock : ModTile
             {
                 NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
             }
+        }
+
+        if (Main.rand.NextBool(10))
+        {
+            ParticleSystem.SpawnParticle(
+                ParticleID.DeadForestPassiveParticle,
+                new Vector2(i * 16 + 8, j * 16 + 8),
+                -Vector2.UnitY * Main.rand.NextFloat(0.5f, 1.2f),
+                Color.White, 0f);
         }
     }
 

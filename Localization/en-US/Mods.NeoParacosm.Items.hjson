@@ -2751,8 +2751,5 @@ EmblemOfTheEnergy: {
 
 GravityTrapItem: {
 	DisplayName: Gravity Trap
-	Tooltip:
-	'''
-	When activated, pushes enemies downward in an area around it
-	'''
+	Tooltip: When activated, pushes enemies downward in an area around it
 }

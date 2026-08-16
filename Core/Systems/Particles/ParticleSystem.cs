@@ -9,7 +9,7 @@ public class ParticleSystem : ModSystem
     public const int MAX_PARTICLES = 50000;
     public static Particle[] Particles { get; private set; } = new Particle[MAX_PARTICLES];
     public static int ActiveParticleCount { get; private set; } = 0;
-    public static ParticleType[] TypesByID { get; private set; } = new ParticleType[ParticleID.Count];
+    public static List<ParticleType> TypesByID { get; private set; } = new List<ParticleType>();
 
     public override void Load()
     {
@@ -33,9 +33,26 @@ public class ParticleSystem : ModSystem
         InitializeParticles();
     }
 
+    /// <summary>
+    /// Adds the ParticleType instance to the list of particle types.
+    /// </summary>
+    /// <param name="typeInstance"></param>
+    /// <returns>its index within the list.</returns>
+    public int RegisterParticle(ParticleType typeInstance)
+    {
+        int particleID = TypesByID.Count;
+        TypesByID.Add(typeInstance);
+        return particleID;
+    }
+
+    /// <summary>
+    /// Adds particle types to TypesByID and sets the appropriate ParticleID value.
+    /// When creating new particles, make sure to add them here as well as in ParticleID.
+    /// </summary>
     public void InitializeTypesByID()
     {
-        TypesByID[ParticleID.TestParticle] = new TestParticle();
+        ParticleID.TestParticle = RegisterParticle(new TestParticle());
+        ParticleID.DeadForestPassiveParticle = RegisterParticle(new DeadForestPassiveParticle());
 
         for (int i = 0; i < ParticleID.Count; i++)
         {
@@ -43,7 +60,7 @@ public class ParticleSystem : ModSystem
         }
     }
 
-    public void InitializeParticles()
+    public static void InitializeParticles()
     {
         for (int i = 0; i < MAX_PARTICLES; i++)
         {
@@ -71,7 +88,7 @@ public class ParticleSystem : ModSystem
         for (int i = 0; i < ActiveParticleCount; i++)
         {
             ref Particle particle = ref Particles[i];
-            TypesByID[particle.type].Update(ref particle, i);
+            TypesByID[particle.type].Update(ref particle);
             particle.position += particle.velocity;
             particle.timer++;
             if (particle.shouldDie)
@@ -82,43 +99,57 @@ public class ParticleSystem : ModSystem
         }
     }
 
-    public static int ReplacementIndex = 0;
-    public static void SpawnParticle(int type, Vector2 position, Vector2 velocity, Color color = default, float scale = 1f)
+    static int ReplacementIndex = 0;
+    public static ref Particle SpawnParticle(int type, Vector2 position, Vector2 velocity, Color color = default, float opacity = 1f, float scale = 1f)
     {
         if (color == default)
         {
             color = Color.White;
         }
+
+        // Replacing "old" particles
         if (ActiveParticleCount >= MAX_PARTICLES)
         {
-            Particles[ReplacementIndex].active = true;
-            Particles[ReplacementIndex].type = type;
-            Particles[ReplacementIndex].position = position;
-            Particles[ReplacementIndex].velocity = velocity;
-            Particles[ReplacementIndex].color = color;
-            Particles[ReplacementIndex].scale = scale;
-            Particles[ReplacementIndex].shouldDie = false;
-            Particles[ReplacementIndex].timer = 0;
+            ref Particle particle1 = ref Particles[ReplacementIndex];
+            particle1.active = true;
+            particle1.type = type;
+            particle1.position = position;
+            particle1.velocity = velocity;
+            particle1.color = color;
+            particle1.opacity = opacity;
+            particle1.scale = scale;
+            particle1.shouldDie = false;
+            particle1.timer = 0;
+            TypesByID[particle1.type].OnSpawn(ref particle1);
             ReplacementIndex++;
             if (ReplacementIndex >= MAX_PARTICLES)
             {
                 ReplacementIndex = 0;
             }
-            return;
+            return ref particle1;
         }
         ReplacementIndex = 0;
 
-        Particles[ActiveParticleCount].active = true;
-        Particles[ActiveParticleCount].type = type;
-        Particles[ActiveParticleCount].position = position;
-        Particles[ActiveParticleCount].velocity = velocity;
-        Particles[ActiveParticleCount].color = color;
-        Particles[ActiveParticleCount].scale = scale;
-        Particles[ActiveParticleCount].shouldDie = false;
-        Particles[ActiveParticleCount].timer = 0;
+        ref Particle particle = ref Particles[ActiveParticleCount];
+        particle.active = true;
+        particle.type = type;
+        particle.position = position;
+        particle.velocity = velocity;
+        particle.color = color;
+        particle.opacity = opacity;
+        particle.scale = scale;
+        particle.shouldDie = false;
+        particle.timer = 0;
+        TypesByID[particle.type].OnSpawn(ref particle);
         ActiveParticleCount++;
+        return ref particle;
     }
 
+    /// <summary>
+    /// Kills the particle at index. 
+    /// Switches the spots of that particle and the last active particle to make sure all active particles are next to each other in the array.
+    /// </summary>
+    /// <param name="index"></param>
     public static void KillParticle(int index)
     {
         if (ActiveParticleCount == 1)
