@@ -246,3 +246,6 @@ SentryTurret.DisplayName: Sentry Turret
 RedSentryTurret.DisplayName: Red Sentry Turret
 SolarSentryTurret.DisplayName: Solar Sentry Turret
 EnhancedBullet.DisplayName: Enhanced Bullet
+LightRingProjectile.DisplayName: Light Ring Projectile
+CursedLaserFriendly.DisplayName: Cursed Laser Friendly
+CursedLaserSphereFriendly.DisplayName: Cursed Laser Sphere Friendly

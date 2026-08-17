@@ -39,6 +39,7 @@ public class ProjectileShaderRenderer : ModSystem
         LoadMiscShader("FireShader", "Common/Assets/Shaders/Projectiles/FireShader", BlendState.AlphaBlend);
         LoadMiscShader("LaserShader", "Common/Assets/Shaders/Projectiles/LaserShader", BlendState.AlphaBlend);
         LoadMiscShader("DreadlordLaserShader", "Common/Assets/Shaders/Projectiles/DreadlordLaserShader", BlendState.AlphaBlend);
+        LoadMiscShader("RingShader", "Common/Assets/Shaders/Projectiles/RingShader", BlendState.AlphaBlend);
         LoadMiscShader("LightningShader", "Common/Assets/Shaders/Projectiles/LightningShader", BlendState.AlphaBlend);
         LoadMiscShader("BigLightningShader", "Common/Assets/Shaders/Projectiles/BigLightningShader", BlendState.AlphaBlend);
         LoadMiscShader("SphereShader", "Common/Assets/Shaders/Projectiles/SphereShader", BlendState.AlphaBlend);

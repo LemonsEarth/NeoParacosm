@@ -6,6 +6,7 @@ namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class DualDragonfire : ModItem
 {
+    int cursedUseCounter = 0;
     public override void SetStaticDefaults()
     {
         ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
@@ -65,6 +66,21 @@ public class DualDragonfire : ModItem
             }
             else
             {
+                cursedUseCounter++;
+                if (cursedUseCounter >= 720)
+                {
+                    Projectile.NewProjectileDirect(
+                    source,
+                    player.Center + player.DirectionTo(Main.MouseWorld) * 90,
+                    Vector2.Zero,
+                    ProjectileType<CursedLaserSphereFriendly>(),
+                    damage * 4,
+                    knockback,
+                    player.whoAmI,
+                    ai0: 180
+                    );
+                    cursedUseCounter = 0;
+                }
                 Projectile.NewProjectileDirect(
                     source,
                     pos,

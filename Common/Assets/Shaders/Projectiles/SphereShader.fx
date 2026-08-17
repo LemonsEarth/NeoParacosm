@@ -23,7 +23,7 @@ float4 SphereShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, floa
     float4 baseColor = tex2D(uImage0, coords);
     
     float moveValue = moveSpeed * uTime;
-    float2 movedCoords = float2(coords.x, coords.y + moveValue);
+    float2 movedCoords = float2(coords.x, coords.y) + velocity * moveValue;
     float4 noiseColor = tex2D(uImage1, movedCoords);
     
     float2 centeredCoords = coords * 2.0 - 1.0;

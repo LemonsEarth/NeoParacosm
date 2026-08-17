@@ -1104,7 +1104,7 @@ CondensedCrystal: {
 		'''
 		Increases magic damage by {0}%
 		Disables magic critical strikes
-		Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+		Hits that would have been critical strikes give you Mana Regeneration and Magic Power
 		'''
 }
 
@@ -2267,7 +2267,7 @@ MysticCrystal: {
 		Increases magic damage by {0}%
 		Increases pure magic and ice spell damage and expertise by {1}%
 		Disables magic critical strikes
-		Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+		Hits that would have been critical strikes give you Mana Regeneration and Magic Power
 		'''
 }
 
@@ -2278,7 +2278,7 @@ MysticCrystalBrooch: {
 		Increases magic and summon damage by {0}%
 		Increases pure magic and ice spell damage and expertise by {1}%
 		Disables magic critical strikes
-		Hits that would have been critical strikes give you Mana Regeneration and Mana Power
+		Hits that would have been critical strikes give you Mana Regeneration and Magic Power
 		Your minions periodically spawn icicles
 		'''
 }
@@ -2752,4 +2752,14 @@ EmblemOfTheEnergy: {
 GravityTrapItem: {
 	DisplayName: Gravity Trap
 	Tooltip: When activated, pushes enemies downward in an area around it
+}
+
+LightRingSpell: {
+	DisplayName: Light Ring Spell
+	Tooltip: ""
+}
+
+EchoesOfLightSpell: {
+	DisplayName: Echoes Of Light Spell
+	Tooltip: ""
 }
