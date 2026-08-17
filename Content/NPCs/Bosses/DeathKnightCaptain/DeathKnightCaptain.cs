@@ -66,7 +66,7 @@ public partial class DeathKnightCaptain : ModNPC
     /// <summary>
     /// Attack durations indexed by Attack field
     /// </summary>
-    readonly int[] attackDurations = [540, 900, 750, 900, 360];
+    readonly int[] attackDurations = [540, 900, 600, 750, 900, 360];
     readonly int[] attackDurations2 = [720, 720, 1800, 2400, 960, 900, 360];
 
     /// <summary>
@@ -76,6 +76,7 @@ public partial class DeathKnightCaptain : ModNPC
     {
         SpearThrowing,
         BombsAndBallLightning,
+        LightRings,
         Dashing,
         LightningSpearsDirect,
         Tired
@@ -160,6 +161,9 @@ public partial class DeathKnightCaptain : ModNPC
                 case (int)Attacks.BombsAndBallLightning:
                     Attack_BombsAndBallLightning();
                     break;
+                case (int)Attacks.LightRings:
+                    Attack_LightRings();
+                    break;
                 case (int)Attacks.Dashing:
                     Attack_Dashing();
                     break;
@@ -209,6 +213,10 @@ public partial class DeathKnightCaptain : ModNPC
     void SwitchAttacks()
     {
         Attack++;
+        if (Phase == 0)
+        {
+            //Attack = 1;
+        }
         if (Phase == 1)
         {
             //Attack = 3;
@@ -552,6 +560,46 @@ public partial class DeathKnightCaptain : ModNPC
             case 0:
                 AttackTimer = 180;
                 AttackCount2++;
+                return;
+        }
+
+        AttackTimer--;
+    }
+
+    void Attack_LightRings()
+    {
+        switch (AttackTimer)
+        {
+            case 15:
+                if (AttackCount == 1)
+                {
+                    TeleportEffect(8, 6, 6);
+                    NPC.Center = player.Center - Vector2.UnitY * 400;
+                    TeleportEffect(8, 6, 6);
+                    SetFrame(ArmUpNormal2);
+                }
+                LookTowards(NPC.Center + Vector2.UnitX * LemonUtils.Sign(player.Center.X - NPC.Center.X, 1) * 100);
+                SetFrame(ArmUpNormal2);
+                SoundEngine.PlaySound(SFX.CrystalSerpent with { PitchRange = (0.3f, 0.5f) }, NPC.Center);
+                if (LemonUtils.NotClient())
+                {
+                    LemonUtils.QuickProj(
+                        NPC,
+                        NPC.Center - Vector2.UnitY * 128,
+                        Vector2.UnitY.RotatedByRandom(6.28f) * 25,
+                        ProjectileType<LightRingHostile>(),
+                        ai0: 240,
+                        ai1: 0.5f + LemonUtils.GetDifficulty() * 0.5f,
+                        ai2: 30
+                        );
+                }
+                break;
+            case > 0:
+                NPC.velocity = NPC.DirectionTo(player.Center) * NPC.Distance(player.Center) / 60f;
+                break;
+            case 0:
+                AttackTimer = 15;
+                AttackCount++;
                 return;
         }
 
