@@ -11,7 +11,7 @@ public class MagicOilOfFrostburn : ModItem
         Item.height = 38;
         Item.accessory = true;
         Item.value = Item.sellPrice(0, 1);
-        Item.rare = ItemRarityID.Green;
+        Item.rare = ItemRarityID.Orange;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)

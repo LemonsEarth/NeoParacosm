@@ -1330,10 +1330,7 @@ IchorSacks: {
 
 MagicSpores: {
 	DisplayName: Pocket Spores
-	Tooltip:
-		'''
-		You leave behind spore clouds while moving quickly
-		'''
+	Tooltip: You leave behind spore clouds while moving quickly
 }
 
 OrbsOfSteel: {
@@ -2050,7 +2047,7 @@ BlightOfTheMind: {
 	Tooltip:
 		'''
 		Getting hit inflicts you with Confused
-		While confused, increases damage by {0}% and attack speed {1}%
+		While confused, increases damage by {0}% and attack speed by {1}%
 		'''
 }
 
@@ -2754,16 +2751,41 @@ GravityTrapItem: {
 }
 
 LightRingSpell: {
-	DisplayName: Light Ring Spell
+	DisplayName: Light Ring
 	Tooltip: ""
 }
 
 EchoesOfLightSpell: {
-	DisplayName: Echoes Of Light Spell
+	DisplayName: Echoes of Light
 	Tooltip: ""
 }
 
 HandCannon: {
 	DisplayName: Hand Cannon
-	Tooltip: ""
+	Tooltip:
+	'''
+	Fires cannonballs
+	'''
+}
+
+MossHeart: {
+	DisplayName: Moss Heart
+	Tooltip:
+	'''
+	Increases maximum life by {0}
+	Poisoned and Venom deplete faster
+	Grants Regeneration, Magic Power and Mana Regeneration while in the jungle
+	Moving quickly leaves behind spores
+	Increased damage taken from fire-based debuffs
+	'''
+}
+
+PocketCross: {
+	DisplayName: Pocket Cross
+	Tooltip:
+	'''
+	Increases holy spell damage by {0}%
+	Increases holy spell expertise by {1}%
+	Increases damage reduction by {2}% while below half health
+	'''
 }
