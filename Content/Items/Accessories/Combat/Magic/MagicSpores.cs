@@ -15,7 +15,6 @@ public class MagicSpores : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.statManaMax2 += 20;
         if (Main.myPlayer == player.whoAmI && NPPlayer.Timer % 10 == 0 && player.velocity.LengthSquared() > 5 * 5)
         {
             Projectile.NewProjectileDirect(
@@ -33,8 +32,9 @@ public class MagicSpores : ModItem
     public override void AddRecipes()
     {
         Recipe recipe1 = CreateRecipe();
-        recipe1.AddIngredient(ItemID.ManaCrystal);
+        recipe1.AddIngredient(ItemID.FallenStar, 3);
         recipe1.AddIngredient(ItemID.JungleSpores, 5);
+        recipe1.AddIngredient(ItemID.Stinger, 6);
         recipe1.AddTile(TileID.WorkBenches);
         recipe1.Register();
     }

@@ -1329,10 +1329,9 @@ IchorSacks: {
 }
 
 MagicSpores: {
-	DisplayName: Magic Spores
+	DisplayName: Pocket Spores
 	Tooltip:
 		'''
-		Increases maximum mana by 20
 		You leave behind spore clouds while moving quickly
 		'''
 }
@@ -2761,5 +2760,10 @@ LightRingSpell: {
 
 EchoesOfLightSpell: {
 	DisplayName: Echoes Of Light Spell
+	Tooltip: ""
+}
+
+HandCannon: {
+	DisplayName: Hand Cannon
 	Tooltip: ""
 }
