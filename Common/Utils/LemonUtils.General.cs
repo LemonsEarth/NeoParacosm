@@ -1,4 +1,5 @@
-﻿using Terraria.Utilities;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.Utilities;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -176,5 +177,27 @@ public static partial class LemonUtils
     public static void NewText(this object o)
     {
         Main.NewText(o ?? "null");
+    }
+
+    /// <summary>
+    /// Returns a random frame from a vertical spritesheet.
+    /// </summary>
+    /// <param name="texture"></param>
+    /// <param name="verticalFrames"></param>
+    /// <returns></returns>
+    public static Rectangle RandomFrame(this Texture2D texture, int verticalFrames = 1)
+    {
+        return texture.Frame(1, verticalFrames, 0, Main.rand.Next(0, verticalFrames));
+    }
+
+    /// <summary>
+    /// Returns a random frame from a vertical spritesheet.
+    /// </summary>
+    /// <param name="texture"></param>
+    /// <param name="verticalFrames"></param>
+    /// <returns></returns>
+    public static Rectangle RandomFrame(this Asset<Texture2D> texture, int verticalFrames = 1)
+    {
+        return texture.Frame(1, verticalFrames, 0, Main.rand.Next(0, verticalFrames));
     }
 }

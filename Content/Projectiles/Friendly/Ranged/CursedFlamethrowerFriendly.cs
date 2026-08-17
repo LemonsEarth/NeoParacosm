@@ -1,4 +1,5 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Core.Systems.Particles;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
@@ -53,10 +54,12 @@ public class CursedFlamethrowerFriendly : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 
-        if (AITimer % 10 == 0)
+        if (Main.rand.NextBool(5))
         {
-            Dust.NewDustPerfect(Projectile.RandomPos(0, 0), DustID.CursedTorch, Projectile.velocity * 0.5f, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
+            //Dust.NewDustPerfect(Projectile.RandomPos(0, 0), DustID.CursedTorch, Projectile.velocity * 0.5f, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
+        ParticleSystem.SpawnParticle(ParticleID.Fire, Projectile.RandomPos(), Projectile.velocity * 0.2f, Color.LimeGreen);
         }
+
 
         Projectile.velocity *= SlowDownRate;
 

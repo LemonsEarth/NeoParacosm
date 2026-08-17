@@ -21,7 +21,7 @@ public class BiomeSystem : ModSystem
 
     public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
     {
-        if (ResearcherQuest.Progress == ResearcherQuest.ProgressState.DownedResearcher)
+        if (DarkCataclysmSystem.DarkCataclysmActive)
         {
             tileColor = new Color(90 / 255f, 6 / 255f, 82 / 255f, 1);
         }
