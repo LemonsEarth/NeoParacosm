@@ -48,7 +48,7 @@ public class DragonHunter : ModNPC
 
     public override float SpawnChance(NPCSpawnInfo spawnInfo)
     {
-        return spawnInfo.Player.ZoneOverworldHeight && NPC.downedBoss3 ? 0.01f : 0f;
+        return spawnInfo.Player.ZoneOverworldHeight && NPC.downedBoss3 ? 0.005f : 0f;
     }
 
     public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

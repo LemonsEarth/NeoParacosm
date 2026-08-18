@@ -2762,30 +2762,35 @@ EchoesOfLightSpell: {
 
 HandCannon: {
 	DisplayName: Hand Cannon
-	Tooltip:
-	'''
-	Fires cannonballs
-	'''
+	Tooltip: Fires cannonballs
 }
 
 MossHeart: {
 	DisplayName: Moss Heart
 	Tooltip:
-	'''
-	Increases maximum life by {0}
-	Poisoned and Venom deplete faster
-	Grants Regeneration, Magic Power and Mana Regeneration while in the jungle
-	Moving quickly leaves behind spores
-	Increased damage taken from fire-based debuffs
-	'''
+		'''
+		Increases maximum life by {0}
+		Poisoned and Venom deplete faster
+		Grants Regeneration, Magic Power and Mana Regeneration while in the jungle
+		Moving quickly leaves behind spores
+		Increased damage taken from fire-based debuffs
+		'''
 }
 
 PocketCross: {
 	DisplayName: Pocket Cross
 	Tooltip:
+		'''
+		Increases holy spell damage by {0}%
+		Increases holy spell expertise by {1}%
+		Increases damage reduction by {2}% while below half health
+		'''
+}
+
+GravityFinaleSpell: {
+	DisplayName: Gravity Finale
+	Tooltip:
 	'''
-	Increases holy spell damage by {0}%
-	Increases holy spell expertise by {1}%
-	Increases damage reduction by {2}% while below half health
+	"All will fall."
 	'''
 }
