@@ -11,11 +11,18 @@ public class FireParticle : ParticleType
         particle.frame = Texture.RandomFrame(7);
     }
 
+
     public override void Update(ref Particle particle)
     { // Calls every frame the particle is active
         particle.opacity -= 1 / 60f;
         particle.rotation += MathHelper.ToRadians(5);
-        particle.velocity *= 0.98f;
+        float risingSpeed = particle.data[0];
+        particle.velocity.Y -= risingSpeed;
+        particle.color = Color.Lerp(particle.color, Color.Black, 1 / 60f);
+        if (risingSpeed == 0f)
+        {
+            particle.velocity *= 0.98f;
+        }
         if (particle.opacity <= 0)
         {
             Kill(ref particle);

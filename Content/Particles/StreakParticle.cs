@@ -13,12 +13,10 @@ public class StreakParticle : ParticleType
         }
         particle.frame = new Rectangle(0, Main.rand.Next(0, 4) * 50, 50, 50);
         particle.scale *= 0.5f;
-        particle.velocity *= 1;
     }
 
     public override void Update(ref Particle particle)
     { // Calls every frame the dust is active
-        particle.position += particle.velocity;
         particle.rotation = particle.velocity.ToRotation() - MathHelper.PiOver2;
         particle.scale *= 0.97f;
         particle.velocity *= 0.94f;

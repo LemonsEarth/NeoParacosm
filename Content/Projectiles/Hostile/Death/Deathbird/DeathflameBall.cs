@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
@@ -58,8 +59,22 @@ public class DeathflameBall : ModProjectile
 
         for (float i = 0; i < 1 + Projectile.velocity.Length() / 3f; i++)
         {
-            Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
-            Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
+            ParticleSystem.SpawnParticle(
+                ParticleID.Fire,
+                Projectile.RandomPos(-8, -8),
+                Main.rand.NextVector2Circular(2, 2),
+                Color.Black,
+                scale: Main.rand.NextFloat(0.3f, 0.5f)
+                );
+            ParticleSystem.SpawnParticle(
+                ParticleID.Fire,
+                Projectile.RandomPos(-8, -8),
+                Main.rand.NextVector2Circular(2, 2),
+                Color.White,
+                scale: Main.rand.NextFloat(0.1f, 0.3f)
+                );
+            //Dust.NewDustPerfect(Projectile.RandomPos(-8, -8), DustID.Ash, Scale: Main.rand.NextFloat(2, 3), newColor: Color.Black).noGravity = true;
+            //Dust.NewDustPerfect(Projectile.RandomPos(4, 4), DustID.GemDiamond, Vector2.Zero, newColor: Color.White, Scale: 1.2f).noGravity = true;
         }
 
         Projectile.rotation = Projectile.velocity.ToRotation();

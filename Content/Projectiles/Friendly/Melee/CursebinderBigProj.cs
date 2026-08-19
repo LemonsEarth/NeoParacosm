@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 
@@ -53,7 +54,15 @@ public class CursebinderBigProj : ModProjectile
         {
             Vector2 pos = Projectile.Center + Projectile.Center.DirectionTo(topPoint).RotatedBy(i * angleBetween / 30) * Distance;
 
-            Dust.NewDustDirect(pos, 2, 2, DustType<StreakDust>(), newColor: Color.DarkRed, Scale: Main.rand.NextFloat(0.5f, 1f)).noGravity = true;
+            ParticleSystem.SpawnParticle(
+                ParticleID.Streak,
+                pos,
+                Main.rand.NextVector2Circular(2, 2),
+                Color.DarkRed,
+                1f,
+                Main.rand.NextFloat(0.5f, 1f)
+                );
+            //Dust.NewDustDirect(pos, 2, 2, DustType<StreakDust>(), newColor: Color.DarkRed, Scale: Main.rand.NextFloat(0.5f, 1f)).noGravity = true;
         }
 
         Distance += Projectile.velocity.Length();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;
 
@@ -73,7 +74,24 @@ public class LingeringDeathflame : ModProjectile
                     }
                 }
                 Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
-                Dust.NewDustPerfect(randomPos, DustType<FireDust>(), -Vector2.UnitY * 0, newColor: Color.Black, Scale: 0.5f);
+                ParticleSystem.SpawnParticle(
+                    ParticleID.Fire,
+                    randomPos,
+                    Vector2.Zero,
+                    Color.Black,
+                    scale: 0.5f,
+                    data0: Main.rand.NextFloat(0.05f, 0.15f)
+                    );
+                ParticleSystem.SpawnParticle(
+                    ParticleID.Fire,
+                    randomPos,
+                    Vector2.Zero,
+                    Color.Black,
+                    scale: 0.5f,
+                    data0: Main.rand.NextFloat(0.01f, 0.05f)
+                    );
+
+                //Dust.NewDustPerfect(randomPos, DustType<FireDust>(), -Vector2.UnitY * 0, newColor: Color.Black, Scale: 0.5f);
                 Dust.NewDustPerfect(randomPos, DustID.GemDiamond, -Vector2.UnitY * Main.rand.NextFloat(2f, 4f), Scale: 1.5f, newColor: Color.White).noGravity = true;
 
             }
