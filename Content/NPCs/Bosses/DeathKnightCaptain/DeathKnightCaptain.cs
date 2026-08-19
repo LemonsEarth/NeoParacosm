@@ -877,7 +877,7 @@ public partial class DeathKnightCaptain : ModNPC
                         Vector2 spawnPos = player.Center - basePosOffset.RotatedBy(i * PiOver2 / 6f);
                         Spawn_HolyLightningSpear(
                             spawnPos,
-                             30 + LemonUtils.GetDifficulty() * 10,
+                             25 + LemonUtils.GetDifficulty() * 10,
                              240,
                              waitTime
                              );

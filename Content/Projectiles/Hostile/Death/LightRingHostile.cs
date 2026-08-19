@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;
@@ -76,7 +77,14 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
         Projectile.rotation = MathHelper.ToRadians(AITimer * 6f);
         if (AITimer == 0)
         {
-
+            LemonUtils.ParticleBurst(
+                    12,
+                    Projectile.Center,
+                    ParticleID.Fire,
+                    5f, 5f,
+                    0.6f, 0.9f,
+                    Color.LightYellow
+                );
         }
         Dust.NewDustPerfect(Projectile.RandomPos(), DustID.GemTopaz, Vector2.Zero).noGravity = true;
 
@@ -91,7 +99,7 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
         else
         {
             int adjustedTimer = AITimer - (timeToReachTarget + stationaryDuration);
-            Projectile.Center = Vector2.Lerp(targetPos, startPos, (float)adjustedTimer / timeToReachTarget);
+            Projectile.Center = Vector2.Lerp(targetPos, startPos, MathF.Min((float)adjustedTimer / timeToReachTarget, 1));
         }
 
         if (AITimer > TimeLeft)
@@ -118,7 +126,14 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
 
     public override void OnKill(int timeLeft)
     {
-
+        LemonUtils.ParticleBurst(
+                    12,
+                    Projectile.Center,
+                    ParticleID.Fire,
+                    3f, 3f,
+                    0.6f, 0.9f,
+                    Color.LightYellow
+                );
     }
 
 

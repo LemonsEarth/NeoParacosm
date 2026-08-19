@@ -2789,8 +2789,5 @@ PocketCross: {
 
 GravityFinaleSpell: {
 	DisplayName: Gravity Finale
-	Tooltip:
-	'''
-	"All will fall."
-	'''
+	Tooltip: '''"All will fall."'''
 }

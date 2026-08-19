@@ -69,7 +69,7 @@ public class LightRingProjectile : ModProjectile, IShaderProjectile
         else
         {
             int adjustedTimer = AITimer - (timeToReachTarget + stationaryDuration);
-            Projectile.Center = Vector2.Lerp(targetPos, startPos, (float)adjustedTimer / timeToReachTarget);
+            Projectile.Center = Vector2.Lerp(targetPos, startPos, MathF.Min((float)adjustedTimer / timeToReachTarget, 1));
         }
 
         if (AITimer > TimeLeft)
