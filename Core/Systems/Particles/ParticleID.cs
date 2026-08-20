@@ -22,5 +22,9 @@ public abstract class ParticleID
     public static int TestParticle;
     public static int DeadForestPassiveParticle;
     public static int Streak;
+
+    /// <summary>
+    /// data[0] - Rising speed (how fast the dust moves upward per tick)
+    /// </summary>
     public static int Fire;
 }

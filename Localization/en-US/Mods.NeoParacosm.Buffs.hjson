@@ -236,3 +236,9 @@ StaffOfProtectionBuff: {
 	DisplayName: Staff Of Protection
 	Description: The shields do their thing...
 }
+
+ToxicDebuff: {
+	DisplayName: Toxic
+	Description: Treat it soon...
+	DeathReason: "{0} got too toxic"
+}

@@ -1,4 +1,6 @@
-﻿using NeoParacosm.Content.Dusts;
+﻿using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
@@ -39,7 +41,7 @@ public class PoisonGasProj : ModProjectile
 
         }
         Dust.NewDustPerfect(Projectile.RandomPos(), DustType<CircleDust>(), 
-            Vector2.UnitY.RotatedByRandom(6.28f) * 0.2f,
+            Projectile.velocity * Main.rand.NextFloat(0.05f, 0.5f),
             Scale: Main.rand.NextFloat(1f, 1.5f),
             newColor: new Color(0f, Main.rand.NextFloat(0.2f, 1f), 0f, 1f)).noGravity = true;
 
@@ -59,7 +61,8 @@ public class PoisonGasProj : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        target.AddBuff(BuffID.Poisoned, 180);
+        int amount = (int)(250 + 50 * Projectile.GetOwner().GetElementalExpertiseBoostMultiplied(SpellElement.Nature, 1.5f));
+        ToxicDebuff.AddToNPC(target, amount);
     }
 
     public override bool PreDraw(ref Color lightColor)

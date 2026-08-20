@@ -2029,7 +2029,11 @@ InfernoSpell: {
 
 PoisonGasSpell: {
 	DisplayName: Poison Gas
-	Tooltip: Fire a burst of poison gas
+	Tooltip:
+		'''
+		Fire a burst of poison gas that builds up Toxic
+		Toxic detonates after enough buildup, dealing heavy damage
+		'''
 }
 
 BlightOfTheDevourer: {
@@ -2790,4 +2794,18 @@ PocketCross: {
 GravityFinaleSpell: {
 	DisplayName: Gravity Finale
 	Tooltip: '''"All will fall."'''
+}
+
+ToxicArrow: {
+	DisplayName: Toxic Arrow
+	Tooltip:
+		'''
+		Builds up Toxic on hit
+		Toxic detonates after enough buildup, dealing heavy damage
+		'''
+}
+
+SharpBone: {
+	DisplayName: Sharp Bone
+	Tooltip: ""
 }

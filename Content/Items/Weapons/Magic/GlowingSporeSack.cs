@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Content.Items.Consumables;
+﻿using NeoParacosm.Content.Items.Ammo;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;

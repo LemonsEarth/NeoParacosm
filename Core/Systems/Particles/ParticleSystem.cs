@@ -133,6 +133,7 @@ public class ParticleSystem : ModSystem
     }
     /// <summary>
     /// Spawns a new particle into the world. Returns a reference to the newly spawned particle.
+    /// The data# params are custom data in the particle.data[] array. Their purpose depends on the particle type.
     /// </summary>
     /// <param name="type">The ParticleID of the particle.</param>
     /// <param name="position">World position of the particle.</param>

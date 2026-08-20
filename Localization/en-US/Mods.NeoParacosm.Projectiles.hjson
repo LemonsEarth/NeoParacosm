@@ -251,3 +251,6 @@ CursedLaserFriendly.DisplayName: Cursed Laser Friendly
 CursedLaserSphereFriendly.DisplayName: Cursed Laser Sphere Friendly
 LightRingHostile.DisplayName: Light Ring Hostile
 DeathflameExplosion.DisplayName: Deathflame Explosion
+ToxicArrowProjectile.DisplayName: Toxic Arrow Projectile
+SharpBoneProjectile.DisplayName: Sharp Bone Projectile
+DeathflameExplosionFriendly.DisplayName: Deathflame Explosion Friendly

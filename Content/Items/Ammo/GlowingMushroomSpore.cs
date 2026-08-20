@@ -1,6 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
-namespace NeoParacosm.Content.Items.Consumables;
+namespace NeoParacosm.Content.Items.Ammo;
 
 public class GlowingMushroomSpore : ModItem
 {

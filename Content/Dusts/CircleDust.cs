@@ -24,9 +24,9 @@ public class CircleDust : ModDust
     { // Calls every frame the dust is active
         dust.alpha += 4;
         dust.position += dust.velocity;
-       // dust.rotation += MathHelper.ToRadians(5);
+        dust.rotation += MathHelper.ToRadians(12);
         //dust.scale *= 0.94f;
-        dust.velocity *= 0.98f;
+        dust.velocity *= 0.9f;
         dust.color = Color.Lerp(dust.color, Color.Transparent, 1 / 90f);
         if (!dust.noGravity)
         {

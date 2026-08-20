@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Content.Items.Consumables;
+﻿using NeoParacosm.Content.Items.Ammo;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
 using Terraria.Audio;
 using Terraria.DataStructures;
