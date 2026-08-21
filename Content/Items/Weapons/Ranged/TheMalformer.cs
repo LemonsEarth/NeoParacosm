@@ -5,6 +5,25 @@ namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class TheMalformer : ModItem
 {
+    static Asset<Texture2D> glowTexture;
+
+    public override void SetStaticDefaults()
+    {
+        glowTexture = Request<Texture2D>(Texture + "Glow");
+    }
+
+    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+    {
+        LemonUtils.DrawDreadlordWeaponGlowInInventory(Type, glowTexture, position, scale, spriteBatch);
+        return false;
+    }
+
+    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+    {
+        LemonUtils.DrawDreadlordWeaponGlowInWorld(Item, glowTexture, rotation, scale, spriteBatch);
+        return false;
+    }
+
     public override void SetDefaults()
     {
         Item.damage = 80;
@@ -30,18 +49,6 @@ public class TheMalformer : ModItem
     public override bool CanUseItem(Player player)
     {
         return true;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        LemonUtils.DrawDreadlordWeaponGlowInInventory(Type, position, scale, spriteBatch);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        LemonUtils.DrawDreadlordWeaponGlowInWorld(Item, rotation, scale, spriteBatch);
-        return false;
     }
 
     public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

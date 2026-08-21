@@ -234,6 +234,14 @@ public class Herberus : ModNPC
         }
     }
 
+    public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+    {
+        if (stationary)
+        {
+            modifiers.DisableKnockback();
+        }
+    }
+
     public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
     {
 

@@ -2809,3 +2809,8 @@ SharpBone: {
 	DisplayName: Sharp Bone
 	Tooltip: ""
 }
+
+MawOfHerberus: {
+	DisplayName: Maw Of Herberus
+	Tooltip: ""
+}

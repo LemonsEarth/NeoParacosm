@@ -18,17 +18,8 @@ public static partial class LemonUtils
         Texture2D origTexture = TextureAssets.Item[originalItemID].Value;
         Texture2D glowTexture = TextureAssets.Item[item.type].Value;
         Vector2 drawPos = item.Center - Main.screenPosition;
+        spriteBatch.Draw(glowTexture, drawPos, null, color, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.Draw(origTexture, drawPos, null, Color.White, rotation, origTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        shader.Shader.Parameters["color"].SetValue(color.ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        shader.UseImage1(ParacosmTextures.NoiseTexture);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        shader.Apply();
-        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public static void DrawAscendedWeaponGlowInInventory(Item item, int originalItemID, Vector2 position, float scale, Rectangle frame, SpriteBatch spriteBatch, Color color)
@@ -36,52 +27,27 @@ public static partial class LemonUtils
         Main.instance.LoadItem(originalItemID);
         Texture2D origTexture = TextureAssets.Item[originalItemID].Value;
         Texture2D glowTexture = TextureAssets.Item[item.type].Value;
+        spriteBatch.Draw(glowTexture, position, null, color, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
         spriteBatch.Draw(origTexture, position, null, Color.White, 0f, origTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        shader.Shader.Parameters["color"].SetValue(color.ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        shader.UseImage1(ParacosmTextures.NoiseTexture);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
-        shader.Apply();
-        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        spriteBatch.End();
-        spriteBatch.Begin(default, default, default, default, default, default, Main.UIScaleMatrix);
     }
 
-    public static void DrawDreadlordWeaponGlowInInventory(int itemType, Vector2 position, float scale, SpriteBatch spriteBatch)
+    public static void DrawDreadlordWeaponGlowInInventory(int itemType, Asset<Texture2D> glowTexture, Vector2 position, float scale, SpriteBatch spriteBatch)
     {
-        Texture2D glowTexture = TextureAssets.Item[itemType].Value;
-        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
+        Texture2D texture = TextureAssets.Item[itemType].Value;
         float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
-        shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.UIScaleMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        spriteBatch.Draw(glowTexture, position, null, Color.White, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.UIScaleMatrix);
+        Color glowColor = Color.Lerp(Color.Gold, Color.Purple, colorT);
+        spriteBatch.Draw(glowTexture.Value, position, null, glowColor, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
+        spriteBatch.Draw(texture, position, null, Color.White, 0f, texture.Size() * 0.5f, scale, SpriteEffects.None, 0);
     }
 
-    public static void DrawDreadlordWeaponGlowInWorld(Item item, float rotation, float scale, SpriteBatch spriteBatch)
+    public static void DrawDreadlordWeaponGlowInWorld(Item item, Asset<Texture2D> glowTexture, float rotation, float scale, SpriteBatch spriteBatch)
     {
-        Texture2D glowTexture = TextureAssets.Item[item.type].Value;
+        float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
+        Color glowColor = Color.Lerp(Color.Gold, Color.Purple, colorT);
+        Texture2D origTexture = TextureAssets.Item[item.type].Value;
         Vector2 drawPos = item.Center - Main.screenPosition;
-        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        var shader = GameShaders.Misc["NeoParacosm:AscendedWeaponGlow"];
-        float colorT = (MathF.Sin((float)Main.timeForVisualEffects / 20f) + 1) * 0.5f;
-        shader.Shader.Parameters["color"].SetValue(Color.Lerp(Color.Gold, Color.Purple, colorT).ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.5f);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        spriteBatch.Draw(glowTexture, drawPos, null, Color.White, rotation, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
-        spriteBatch.End();
-        spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Main.GameViewMatrix.TransformationMatrix);
+        spriteBatch.Draw(glowTexture.Value, drawPos, null, glowColor, 0f, glowTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
+        spriteBatch.Draw(origTexture, drawPos, null, Color.White, 0f, origTexture.Size() * 0.5f, scale, SpriteEffects.None, 0);
     }
 
     public static string GetSpellBonusTooltip(SpellElement element, SpellBoostType boostType)

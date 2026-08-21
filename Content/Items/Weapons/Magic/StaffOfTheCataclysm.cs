@@ -6,11 +6,27 @@ namespace NeoParacosm.Content.Items.Weapons.Magic;
 
 public class StaffOfTheCataclysm : ModItem
 {
-    public static float Range { get; set; } = 800;
+    static Asset<Texture2D> glowTexture;
+
     public override void SetStaticDefaults()
     {
         Item.staff[Type] = true;
+        glowTexture = Request<Texture2D>(Texture + "Glow");
     }
+
+    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+    {
+        LemonUtils.DrawDreadlordWeaponGlowInInventory(Type, glowTexture, position, scale, spriteBatch);
+        return false;
+    }
+
+    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+    {
+        LemonUtils.DrawDreadlordWeaponGlowInWorld(Item, glowTexture, rotation, scale, spriteBatch);
+        return false;
+    }
+
+    public static float Range { get; set; } = 800;
 
     public override void SetDefaults()
     {
@@ -32,18 +48,6 @@ public class StaffOfTheCataclysm : ModItem
         Item.noMelee = true;
         Item.channel = true;
         Item.noUseGraphic = true;
-    }
-
-    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        LemonUtils.DrawDreadlordWeaponGlowInInventory(Type, position, scale, spriteBatch);
-        return false;
-    }
-
-    public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-    {
-        LemonUtils.DrawDreadlordWeaponGlowInWorld(Item, rotation, scale, spriteBatch);
-        return false;
     }
 
     public override bool CanUseItem(Player player)
