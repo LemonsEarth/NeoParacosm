@@ -33,6 +33,15 @@ public static partial class LemonUtils
         NPCID.Sets.NeverDropsResourcePickups[npc.type] = true;
     }
 
+    public static void HideFromBestiary(this NPC npc)
+    {
+        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
+        {
+            Hide = true
+        };
+        NPCID.Sets.NPCBestiaryDrawOffset.Add(npc.type, value);
+    }
+
     /// <summary>
     /// Returns true if the NPC's target is below the NPC's bottom point + bottomMargin, false if not. Returns null if the NPC has no target.
     /// </summary>

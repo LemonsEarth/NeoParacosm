@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Projectiles.Hostile.Jungle;
 using System.IO;
 using Terraria.Audio;
 
@@ -22,6 +23,8 @@ public class HerberusHead : ModNPC
         Main.npcFrameCount[NPC.type] = 2;
         NPCID.Sets.TrailCacheLength[NPC.type] = 10;
         NPCID.Sets.TrailingMode[NPC.type] = 3;
+        NPC.DontDropAnything();
+        NPC.HideFromBestiary();
     }
 
     public override void SetDefaults()
@@ -40,6 +43,7 @@ public class HerberusHead : ModNPC
         NPC.dontTakeDamage = true;
         NPC.noTileCollide = true;
         NPC.noGravity = true;
+        NPC.ShowNameOnHover = false;
     }
 
     Vector2 GetDefaultPosition()
@@ -76,8 +80,12 @@ public class HerberusHead : ModNPC
             NPC.active = false;
             return;
         }
-        NPC.Center = Vector2.Lerp(NPC.Center, GetDefaultPosition(), 1 / 4f);
-
+        //NPC.Center = Vector2.Lerp(NPC.Center, GetDefaultPosition(), 1 / 4f);
+        NPC.MoveToPos(GetDefaultPosition(), 0.5f, 0.4f, 0.3f, 0.4f);
+        if (AITimer % (90 + HeadNum * 30) == 0)
+        {
+            NPC.velocity.Y -= 8;
+        }
         NPC.target = bodyNPC.target;
         if (!NPC.HasValidTarget)
         {
@@ -86,10 +94,115 @@ public class HerberusHead : ModNPC
             return;
         }
         Player player = NPC.GetTarget();
-        float targetRot = NPC.Center.DirectionTo(player.Center).ToRotation() + MathHelper.Pi;
+        Vector2 toPlayer = NPC.Center.DirectionTo(player.Center);
+        float targetRot = toPlayer.ToRotation() + MathHelper.Pi;
         NPC.rotation = Utils.AngleLerp(NPC.rotation, targetRot, 1 / 20f);
 
+        if (Mode == 0)
+        {
+            EyeAttackMode(player, toPlayer);
+        }
+        else
+        {
+            MouthAttackMode(player, toPlayer);
+        }
+
         AITimer++;
+    }
+
+    void EyeAttackMode(Player player, Vector2 toPlayer)
+    {
+        if (bodyNPC.GetLifePercent() > 0.6f)
+        {
+            float range = (300 + LemonUtils.GetDifficulty() * 150);
+            bool rangeCond = NPC.DistanceSQ(player.Center) < range * range;
+            if (rangeCond && AITimer % (120 + HeadNum * 15) == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item46 with { PitchRange = (0.4f, 0.6f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Item28 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, NPC.Center);
+                if (LemonUtils.NotClient())
+                {
+                    LemonUtils.QuickProj(
+                        NPC,
+                        NPC.Center,
+                        toPlayer * Main.rand.NextFloat(7, 10),
+                        ProjectileType<HerberusSpore>(),
+                        ai0: NPC.target
+                        );
+                }
+            }
+        }
+        else
+        {
+            float range = (350 + LemonUtils.GetDifficulty() * 200);
+            bool rangeCond = NPC.DistanceSQ(player.Center) < range * range;
+            if (rangeCond && AITimer % (60 + HeadNum * 15) == 0)
+            {
+                SoundEngine.PlaySound(SoundID.Item46 with { PitchRange = (0.4f, 0.6f) }, NPC.Center);
+                SoundEngine.PlaySound(SoundID.Item45 with { PitchRange = (0.1f, 0.3f) }, NPC.Center);
+                if (LemonUtils.NotClient())
+                {
+                    LemonUtils.QuickProj(
+                        NPC,
+                        NPC.Center,
+                        toPlayer * Main.rand.NextFloat(9, 12),
+                        ProjectileType<HerberusSporeFire>(),
+                        ai0: NPC.target
+                        );
+                }
+            }
+        }
+    }
+
+    void MouthAttackMode(Player player, Vector2 toPlayer)
+    {
+        if (bodyNPC.GetLifePercent() > 0.6f)
+        {
+            float range = (300 + LemonUtils.GetDifficulty() * 150);
+            bool rangeCond = NPC.DistanceSQ(player.Center) < range * range;
+            if (rangeCond && AITimer % (180 + HeadNum * 30) == 0)
+            {
+                for (int i = -4; i <= 4; i++)
+                {
+                    SoundEngine.PlaySound(SoundID.Item45 with { PitchRange = (-0.5f, -0.1f) }, NPC.Center);
+                    SoundEngine.PlaySound(SoundID.Item28 with { PitchRange = (0.2f, 0.4f), Volume = 0.5f }, NPC.Center);
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                        NPC,
+                        NPC.Center,
+                        toPlayer.RotatedBy(i * MathHelper.Pi / 8f) * Main.rand.NextFloat(30, 40),
+                        ProjectileType<HerberusSporeBig>(),
+                        ai0: 10
+                        );
+                    }
+                }
+            }
+        }
+        else
+        {
+            float range = (350 + LemonUtils.GetDifficulty() * 150);
+            bool rangeCond = NPC.DistanceSQ(player.Center) < range * range;
+            if (rangeCond && AITimer % (150 + HeadNum * 30) == 0)
+            {
+                for (int i = -4; i <= 4; i++)
+                {
+                    SoundEngine.PlaySound(SoundID.Item45 with { PitchRange = (-0.5f, -0.1f) }, NPC.Center);
+                    SoundEngine.PlaySound(SoundID.DD2_BetsyFireballShot with { PitchRange = (-0.2f, 0.1f), Volume = 0.7f, MaxInstances = 3 }, NPC.Center);
+                    //SoundEngine.PlaySound(SoundID.Item28 with { PitchRange = (-0.4f, -0.2f), Volume = 0.5f }, NPC.Center);
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                        NPC,
+                        NPC.Center,
+                        toPlayer.RotatedBy(i * MathHelper.Pi / 8f) * Main.rand.NextFloat(40, 50),
+                        ProjectileType<HerberusSporeBigFire>(),
+                        ai0: 30
+                        );
+                    }
+                }
+            }
+        }
     }
 
     public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -140,7 +253,7 @@ public class HerberusHead : ModNPC
             drawPos += startToEndDir * 10;
             segmentsDrawn++;
         }
-        
+
         return true;
     }
 

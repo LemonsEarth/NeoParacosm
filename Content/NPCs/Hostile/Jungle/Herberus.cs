@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 using System.IO;
 using Terraria.Audio;
 
@@ -9,6 +11,8 @@ public class Herberus : ModNPC
 {
     int AITimer = 0;
     bool stationary = false;
+
+    bool reachedPhase2 = false;
 
     public override void SetStaticDefaults()
     {
@@ -69,6 +73,29 @@ public class Herberus : ModNPC
             }
         }
 
+        if (NPC.GetLifePercent() <= 0.6f && !reachedPhase2)
+        {
+            reachedPhase2 = true;
+            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.5f, -0.3f)}, NPC.Center);
+            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.1f, 0.1f)}, NPC.Center);
+            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (0.2f, 0.4f)}, NPC.Center);
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 randVector = Main.rand.NextVector2Circular(10, 10);
+                Vector2 randVector2 = Main.rand.NextVector2Circular(3, 3);
+                Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.OrangeStainedGlass, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
+                Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.GemTopaz, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
+            }
+        }
+
+        if (reachedPhase2)
+        {
+            Vector2 randVector = Main.rand.NextVector2Circular(4, 4);
+            Vector2 randVector2 = Main.rand.NextVector2Circular(1, 1);
+            Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.OrangeStainedGlass, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
+            Dust.NewDustDirect(NPC.RandomPos(), 2, 2, DustID.GemTopaz, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
+        }
+
         AITimer++;
     }
 
@@ -102,7 +129,43 @@ public class Herberus : ModNPC
 
     public override void HitEffect(NPC.HitInfo hit)
     {
-        LemonUtils.DustBurst(10, NPC.Center, DustID.JungleGrass, 3, 3, 0.6f, 1f);
+        LemonUtils.DustBurst(5, NPC.Center, DustID.RuneWizard, 3, 3, 0.6f, 1f);
+        if (NPC.life <= 0)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                ParticleSystem.SpawnParticle(
+                ParticleID.Fire,
+                NPC.RandomPos(),
+                Main.rand.NextVector2Circular(6, 6),
+                Color.GreenYellow,
+                scale: Main.rand.NextFloat(0.6f, 1f),
+                data0: 0.2f
+                );
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                ParticleSystem.SpawnParticle(
+                ParticleID.Fire,
+                NPC.RandomPos(),
+                Main.rand.NextVector2Circular(6, 6),
+                Color.Orange,
+                scale: Main.rand.NextFloat(0.6f, 1f),
+                data0: 0.2f
+                );
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                ParticleSystem.SpawnParticle(
+                ParticleID.Fire,
+                NPC.RandomPos(),
+                Main.rand.NextVector2Circular(6, 6),
+                Color.OrangeRed,
+                scale: Main.rand.NextFloat(0.6f, 1f),
+                data0: 0.2f
+                );
+            }
+        }
     }
 
     public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
