@@ -31,7 +31,7 @@ public class Crossblade : ModItem
         Item.rare = ItemRarityID.Green;
         Item.UseSound = SoundID.Item1;
         Item.autoReuse = true;
-        Item.useTurn = true;
+        Item.useTurn = false;
         Item.shoot = ProjectileID.PurificationPowder;
         Item.shootSpeed = 10;
         Item.useAmmo = AmmoID.Arrow;

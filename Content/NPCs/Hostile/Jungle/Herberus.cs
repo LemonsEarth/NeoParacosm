@@ -2,7 +2,9 @@
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Jungle;
@@ -11,8 +13,26 @@ public class Herberus : ModNPC
 {
     int AITimer = 0;
     bool stationary = false;
+    int stationaryTimer = 0;
+    List<NPC> heads = new List<NPC>();
 
     bool reachedPhase2 = false;
+
+    public override void SendExtraAI(BinaryWriter writer)
+    {
+        for (int i = 0; i < heads.Count; i++)
+        {
+            writer.Write(heads[i].whoAmI);
+        }
+    }
+
+    public override void ReceiveExtraAI(BinaryReader reader)
+    {
+        for (int i = 0; i < heads.Count; i++)
+        {
+            heads[i] = Main.npc[reader.ReadInt32()];
+        }
+    }
 
     public override void SetStaticDefaults()
     {
@@ -25,7 +45,7 @@ public class Herberus : ModNPC
     {
         NPC.width = 64;
         NPC.height = 48;
-        NPC.lifeMax = 300;
+        NPC.lifeMax = 500;
         NPC.defense = 8;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
@@ -36,11 +56,73 @@ public class Herberus : ModNPC
         NPC.knockBackResist = 0.8f;
     }
 
+    void SpawnHeads()
+    {
+        if (LemonUtils.NotClient())
+        {
+            heads.Clear();
+            for (int i = 1; i <= 3; i++)
+            {
+                NPC npc = NPC.NewNPCDirect(
+                    NPC.GetSource_FromAI(),
+                    NPC.Center,
+                    NPCType<HerberusHead>()
+                    );
+
+                if (npc.ModNPC is HerberusHead head)
+                {
+                    head.BodyWhoAmI = NPC.whoAmI;
+                    head.HeadNum = i;
+                }
+                heads.Add(npc);
+            }
+        }
+        NPC.netUpdate = true;
+    }
+
+    void GoStationary()
+    {
+        stationary = true;
+        stationaryTimer = 0;
+    }
+
+
     public override bool PreAI()
     {
         if (AITimer == 0)
         {
+            SpawnHeads();
+        }
+        if (heads.All(npc => !npc.active || npc.life == 0 || npc.type != NPCType<HerberusHead>()) && !stationary)
+        {
+            GoStationary();
+        }
 
+        if (stationary)
+        {
+            NPC.velocity.X *= 0.8f;
+            int stationaryDuration = 480;
+            int dustCD = (stationaryDuration - stationaryTimer) / 10 + 1;
+            for (int i = 0; i < stationaryTimer / 60; i++)
+            {
+                Dust.NewDustPerfect(NPC.RandomPos(), DustID.RuneWizard, -Vector2.UnitY * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1, 2f)).noGravity = true;
+            }
+
+            if (stationaryTimer >= stationaryDuration)
+            {
+                SpawnHeads();
+                stationary = false;
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDustPerfect(NPC.RandomPos(), DustID.RuneWizard, -Vector2.UnitY * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1, 2f)).noGravity = true;
+                }
+                SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.5f, -0.3f) }, NPC.Center);
+                SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.1f, 0.1f) }, NPC.Center);
+                SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (0.2f, 0.4f) }, NPC.Center);
+            }
+            stationaryTimer++;
+            AITimer++;
+            return false;
         }
 
         NPC.TargetClosest();
@@ -54,31 +136,15 @@ public class Herberus : ModNPC
         //Main.NewText(NPC.spriteDirection);
         if (AITimer == 0)
         {
-            if (LemonUtils.NotClient())
-            {
-                for (int i = 1; i <= 3; i++)
-                {
-                    NPC npc = NPC.NewNPCDirect(
-                        NPC.GetSource_FromAI(),
-                        NPC.Center,
-                        NPCType<HerberusHead>()
-                        );
 
-                    if (npc.ModNPC is HerberusHead head)
-                    {
-                        head.BodyWhoAmI = NPC.whoAmI;
-                        head.HeadNum = i;
-                    }
-                }
-            }
         }
 
-        if (NPC.GetLifePercent() <= 0.6f && !reachedPhase2)
+        if (NPC.GetLifePercent() <= 0.6f && !reachedPhase2 && !stationary)
         {
             reachedPhase2 = true;
-            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.5f, -0.3f)}, NPC.Center);
-            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.1f, 0.1f)}, NPC.Center);
-            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (0.2f, 0.4f)}, NPC.Center);
+            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.5f, -0.3f) }, NPC.Center);
+            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (-0.1f, 0.1f) }, NPC.Center);
+            SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { PitchRange = (0.2f, 0.4f) }, NPC.Center);
             for (int i = 0; i < 20; i++)
             {
                 Vector2 randVector = Main.rand.NextVector2Circular(10, 10);
@@ -88,7 +154,7 @@ public class Herberus : ModNPC
             }
         }
 
-        if (reachedPhase2)
+        if (reachedPhase2 && !stationary)
         {
             Vector2 randVector = Main.rand.NextVector2Circular(4, 4);
             Vector2 randVector2 = Main.rand.NextVector2Circular(1, 1);
@@ -175,7 +241,10 @@ public class Herberus : ModNPC
 
     public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
     {
-
+        if (!stationary)
+        {
+            modifiers.FinalDamage *= 0.5f;
+        }
     }
 
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

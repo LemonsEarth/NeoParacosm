@@ -31,7 +31,7 @@ public class HerberusHead : ModNPC
     {
         NPC.width = 36;
         NPC.height = 36;
-        NPC.lifeMax = 300;
+        NPC.lifeMax = 120;
         NPC.defense = 8;
         NPC.damage = 40;
         NPC.HitSound = SoundID.NPCHit1;
@@ -40,7 +40,7 @@ public class HerberusHead : ModNPC
         NPC.aiStyle = NPCAIStyleID.Fighter;
         //AIType = NPCID.DesertBeast;
         NPC.knockBackResist = 0.8f;
-        NPC.dontTakeDamage = true;
+        NPC.dontTakeDamage = false;
         NPC.noTileCollide = true;
         NPC.noGravity = true;
         NPC.ShowNameOnHover = false;
@@ -61,6 +61,8 @@ public class HerberusHead : ModNPC
             return bodyNPC.Center + new Vector2(48 * bodyNPC.spriteDirection, 0);
         }
     }
+
+    bool IsPhaseTwo => bodyNPC.GetLifePercent() <= 0.6f;
 
     public override void AI()
     {
@@ -98,6 +100,11 @@ public class HerberusHead : ModNPC
         float targetRot = toPlayer.ToRotation() + MathHelper.Pi;
         NPC.rotation = Utils.AngleLerp(NPC.rotation, targetRot, 1 / 20f);
 
+        if (IsPhaseTwo)
+        {
+            NPC.AddBuff(BuffID.OnFire3, 2);
+        }
+
         if (Mode == 0)
         {
             EyeAttackMode(player, toPlayer);
@@ -112,7 +119,7 @@ public class HerberusHead : ModNPC
 
     void EyeAttackMode(Player player, Vector2 toPlayer)
     {
-        if (bodyNPC.GetLifePercent() > 0.6f)
+        if (!IsPhaseTwo)
         {
             float range = (300 + LemonUtils.GetDifficulty() * 150);
             bool rangeCond = NPC.DistanceSQ(player.Center) < range * range;
@@ -156,7 +163,7 @@ public class HerberusHead : ModNPC
 
     void MouthAttackMode(Player player, Vector2 toPlayer)
     {
-        if (bodyNPC.GetLifePercent() > 0.6f)
+        if (!IsPhaseTwo)
         {
             float range = (300 + LemonUtils.GetDifficulty() * 150);
             bool rangeCond = NPC.DistanceSQ(player.Center) < range * range;
@@ -218,7 +225,11 @@ public class HerberusHead : ModNPC
 
     public override void HitEffect(NPC.HitInfo hit)
     {
-
+        LemonUtils.DustBurst(8, NPC.Center, DustID.GemEmerald, 3, 3, 1f, 2f);
+        if (NPC.life <= 0)
+        {
+            LemonUtils.DustBurst(16, NPC.Center, DustID.GemEmerald, 6, 6, 1f, 2f);
+        }
     }
 
     public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
@@ -227,6 +238,11 @@ public class HerberusHead : ModNPC
     }
 
     public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+    {
+
+    }
+
+    public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
     {
 
     }
