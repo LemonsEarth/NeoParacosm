@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Items.Accessories.Combat.Magic;
 using NeoParacosm.Content.Items.Accessories.Misc;
+using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Core.Players;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
@@ -61,9 +62,10 @@ public class MossHeart : ModItem
         recipe.AddIngredient(ItemType<StoneHeart>(), 1);
         recipe.AddIngredient(ItemType<MagicMossball>(), 1);
         recipe.AddIngredient(ItemType<MagicSpores>(), 1);
-        recipe.AddIngredient(ItemID.Vine, 3);
-        recipe.AddIngredient(ItemID.Stinger, 3);
-        recipe.AddIngredient(ItemID.JungleSpores, 3);
+        recipe.AddIngredient(ItemID.Vine, 2);
+        recipe.AddIngredient(ItemID.Stinger, 5);
+        recipe.AddIngredient(ItemID.JungleSpores, 6);
+        recipe.AddIngredient(ItemType<PureLifeEnergy>(), 2);
         recipe.AddTile(TileID.TinkerersWorkbench);
         recipe.Register();
     }

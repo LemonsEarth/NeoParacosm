@@ -2807,10 +2807,38 @@ ToxicArrow: {
 
 SharpBone: {
 	DisplayName: Sharp Bone
-	Tooltip: ""
+	Tooltip:
+		'''
+		Can be used as a dart
+		Sticks to enemies, before exploding in deathflame
+		'''
 }
 
 MawOfHerberus: {
-	DisplayName: Maw Of Herberus
+	DisplayName: Maw of Herberus
+	Tooltip:
+		'''
+		Spin to charge
+		Once fully charged, spews poisonous gas
+		If the user is below 50% life, spews more powerful fire instead
+		'''
+}
+
+ToxicSpikes: {
+	DisplayName: Toxic Spikes
+	Tooltip:
+		'''
+		Lays spikes on the ground that inflict Toxic
+		Toxic detonates after enough buildup, dealing heavy damage
+		'''
+}
+
+PureLifeEnergy: {
+	DisplayName: Pure Life Energy
+	Tooltip: '''"Continous growth and connections, eternal warmth and light, together..."'''
+}
+
+LeafTornadoSpell: {
+	DisplayName: Leaf Tornado Spell
 	Tooltip: ""
 }

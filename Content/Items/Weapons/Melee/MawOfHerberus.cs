@@ -5,6 +5,7 @@ using Terraria.Audio;
 using NeoParacosm.Core.Systems.Assets;
 using Microsoft.Build.Framework;
 using Terraria.GameContent.ItemDropRules;
+using NeoParacosm.Content.Items.Materials;
 
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
@@ -35,5 +36,16 @@ public class MawOfHerberus : ModItem
         Item.DamageType = DamageClass.MeleeNoSpeed; // Deals melee damage
         Item.channel = true;
         Item.noMelee = true; // This makes sure the item does not deal damage from the swinging animation
+    }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemID.Vine, 3);
+        recipe.AddIngredient(ItemID.JungleSpores, 7);
+        recipe.AddIngredient(ItemID.Stinger, 9);
+        recipe.AddIngredient(ItemType<PureLifeEnergy>(), 2);
+        recipe.AddTile(TileID.Anvils);
+        recipe.Register();
     }
 }

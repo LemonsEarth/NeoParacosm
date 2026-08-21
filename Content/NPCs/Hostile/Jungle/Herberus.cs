@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Jungle;
 
@@ -271,9 +273,14 @@ public class Herberus : ModNPC
         return false;
     }
 
+    public override float SpawnChance(NPCSpawnInfo spawnInfo)
+    {
+        return spawnInfo.Player.ZoneJungle && spawnInfo.Player.ZoneOverworldHeight ? 0.02f : 0f;
+    }
+
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-        //npcLoot.Add(ItemDropRule.Common(ItemType<EclipseGreatshield>(), 10, minimumDropped: 1, maximumDropped: 1));
+        npcLoot.Add(ItemDropRule.Common(ItemType<PureLifeEnergy>(), 1, minimumDropped: 2, maximumDropped: 4));
     }
 
     public override bool? CanFallThroughPlatforms()
