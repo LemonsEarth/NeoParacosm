@@ -52,6 +52,18 @@ public class SpellSlot : ItemSlotWrapper
     public override void Draw(SpriteBatch spriteBatch)
     {
         base.Draw(spriteBatch);
+        if (itemSlot.Item == null || itemSlot.Item.IsAir)
+        {
+            //Main.NewText(Main.inventoryScale);
+            float scale = 0.6f * 1.2f;
+            var dims = itemSlot.GetDimensions().ToRectangle();
+
+            // Match ItemSlot.Draw behavior: center the texture in the slot
+            Vector2 position = dims.TopLeft() + new Vector2(dims.Width, dims.Height) * 0.5f;
+            Vector2 origin = spellIconTexture.Size() * 0.5f;
+
+            spriteBatch.Draw(spellIconTexture.Value, position, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+        }
     }
 
     protected override void DrawChildren(SpriteBatch spriteBatch)
