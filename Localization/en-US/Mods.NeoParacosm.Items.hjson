@@ -2839,6 +2839,26 @@ PureLifeEnergy: {
 }
 
 LeafTornadoSpell: {
-	DisplayName: Leaf Tornado Spell
+	DisplayName: Leaf Tornado
+	Tooltip: Summons a leaf tornado to shred through enemies
+}
+
+GiantSpikedBall: {
+	DisplayName: Giant Spiked Ball
+	Tooltip: Heavier spiked balls can hit more enemies and light them on fire!
+}
+
+CursedMine: {
+	DisplayName: Cursed Mine
+	Tooltip: Inflicts cursed inferno and bursts into cursed flames upon being destroyed
+}
+
+GrassBladestormSpell: {
+	DisplayName: Grass Bladestorm Spell
+	Tooltip: Summons a grass bladestorm to turn enemies into compost
+}
+
+SpellIcon: {
+	DisplayName: Spell Icon
 	Tooltip: ""
 }

@@ -43,6 +43,7 @@ public class LingeringDeathflameFriendly : ModProjectile
         return false;
     }
 
+    float yScale = 1f;
     public override void AI()
     {
         if (AITimer == 0)
@@ -50,10 +51,13 @@ public class LingeringDeathflameFriendly : ModProjectile
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
             SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown with { PitchRange = (0f, 0.2f) }, Projectile.Center);
             if (height == 0) height = 0.5f;
+            yScale = 1f;
         }
 
         if (Projectile.velocity.Y == 0)
         {
+            Projectile.rotation = MathHelper.Lerp(Projectile.rotation, 0f + MathHelper.Pi, 1 / 10f);
+            yScale = MathHelper.Lerp(yScale, 1f, 1 / 20f);
             if (AITimer % 2 == 0)
             {
                 foreach (var projectile in Main.ActiveProjectiles) // killing oldest Lingering Deathflame on the same (ish) position
@@ -95,6 +99,8 @@ public class LingeringDeathflameFriendly : ModProjectile
         }
         else
         {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            yScale = 2 + Projectile.velocity.Y * 0.2f;
             if (AITimer % 8 == 0)
             {
                 Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ash, 0, 0, Scale: 1.5f, newColor: Color.Black).noGravity = true;
@@ -114,20 +120,19 @@ public class LingeringDeathflameFriendly : ModProjectile
             Projectile.velocity.Y += 0.1f;
         }
 
-        Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
         Projectile.StandardAnimation(6, 4);
         AITimer++;
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        if (Projectile.velocity.Y == 0)
+        /*if (Projectile.velocity.Y == 0)
         {
             return false;
-        }
+        }*/
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(16, 0);
-        Vector2 scale = new Vector2(1, 2 + Projectile.velocity.Y * 0.2f);
+        Vector2 scale = new Vector2(1, yScale);
         Main.EntitySpriteDraw(texture, Projectile.Bottom - Main.screenPosition, texture.Frame(1, 4, 0, Projectile.frame), Color.White, Projectile.rotation, drawOrigin, scale, SpriteEffects.None);
         return false;
     }

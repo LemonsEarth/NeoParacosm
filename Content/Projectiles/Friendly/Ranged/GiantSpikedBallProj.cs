@@ -3,7 +3,7 @@ using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
-public class ToxicSpikesProj : ModProjectile
+public class GiantSpikedBallProj : ModProjectile
 {
     int AITimer = 0;
 
@@ -17,10 +17,15 @@ public class ToxicSpikesProj : ModProjectile
     public override void SetDefaults()
     {
         Projectile.CloneDefaults(ProjectileID.SpikyBall);
+        Projectile.width = 38;
+        Projectile.height = 38;
+        Projectile.penetrate = 10;
+        Projectile.idStaticNPCHitCooldown = 20;
+        Projectile.usesIDStaticNPCImmunity = true;
         Projectile.hostile = false;
         Projectile.friendly = true;
         Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
-        AIType = ProjectileID.SpikyBall;
+        Projectile.timeLeft = 1200;
     }
 
     public override bool OnTileCollide(Vector2 oldVelocity)
@@ -31,12 +36,11 @@ public class ToxicSpikesProj : ModProjectile
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
-        ToxicDebuff.AddToNPC(target, 45);
+        target.AddBuff(BuffID.OnFire, 180);
     }
 
     public override void AI()
     {
-
         AITimer++;
     }
 
@@ -48,7 +52,8 @@ public class ToxicSpikesProj : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-
+        LemonUtils.DustBurst(16, Projectile.Center, DustID.Torch, 5, 5, 3f, 3.4f);
+        //LemonUtils.DustBurst(7, Projectile.Center, DustID.GemTopaz, 5, 5, 1f, 1.2f);
     }
 
     public override bool PreDraw(ref Color lightColor)

@@ -4,7 +4,7 @@ using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic
 {
-    public class LeafTornado : ModProjectile
+    public class GrassBladestorm : ModProjectile
     {
         int AITimer;
         ref float TimeLeft => ref Projectile.ai[0];
@@ -62,6 +62,21 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
                         Projectile.Center + Projectile.velocity * 30,
                         Projectile.velocity,
                         ProjectileID.BladeOfGrass,
+                        ai0: 0.08f
+                        );
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        Projectile.Center + Projectile.velocity * 10,
+                        Projectile.velocity,
+                        ProjectileID.BladeOfGrass,
+                        ai0: -0.08f
+                        );
+
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        Projectile.Center + Projectile.velocity * 30,
+                        Projectile.velocity,
+                        ProjectileID.BladeOfGrass,
                         ai0: 0.15f
                         );
                     LemonUtils.QuickProj(
@@ -70,6 +85,36 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
                         Projectile.velocity,
                         ProjectileID.BladeOfGrass,
                         ai0: -0.15f
+                        );
+
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        Projectile.Center + Projectile.velocity * 30,
+                        Projectile.velocity,
+                        ProjectileID.BladeOfGrass,
+                        ai0: 0.2f
+                        );
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        Projectile.Center + Projectile.velocity * 10,
+                        Projectile.velocity,
+                        ProjectileID.BladeOfGrass,
+                        ai0: -0.2f
+                        );
+
+                    LemonUtils.QuickProj(
+                       Projectile,
+                       Projectile.Center + Projectile.velocity * 30,
+                       Projectile.velocity,
+                       ProjectileID.BladeOfGrass,
+                       ai0: 0.3f
+                       );
+                    LemonUtils.QuickProj(
+                        Projectile,
+                        Projectile.Center + Projectile.velocity * 10,
+                        Projectile.velocity,
+                        ProjectileID.BladeOfGrass,
+                        ai0: -0.3f
                         );
 
                 }
@@ -106,21 +151,30 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
             Vector2 drawOrigin = new Vector2(sourceRect.Width, sourceRect.Height) * 0.5f;
             Color color1 = Color.White * Projectile.Opacity;
             Color color2 = Color.White * Projectile.Opacity * 0.5f;
-            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-            {
-                Vector2 drawPosAI = Projectile.oldPos[k] + new Vector2(Projectile.width, Projectile.height) * 0.5f - Main.screenPosition;
-                Color color = (color2 * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length));
-                Main.EntitySpriteDraw(texture, drawPosAI, sourceRect, color, Projectile.oldRot[k], drawOrigin, Projectile.scale, SpriteEffects.None, 0);
-            }
-            Main.EntitySpriteDraw(texture, drawPos, sourceRect, color2, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
 
             for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
             {
                 Vector2 drawPosAI = Projectile.oldPos[k] + new Vector2(Projectile.width, Projectile.height) * 0.5f - Main.screenPosition;
                 Color color = (color1 * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length));
-                Main.EntitySpriteDraw(texture, drawPosAI, sourceRect, color, -Projectile.oldRot[k] + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, drawPosAI, sourceRect, color, -Projectile.oldRot[k] * 0.5f, drawOrigin, Projectile.scale * 1.5f, SpriteEffects.None, 0);
             }
-            Main.EntitySpriteDraw(texture, drawPos, sourceRect, color1, -Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.FlipHorizontally, 0);
+            Main.EntitySpriteDraw(texture, drawPos, sourceRect, color1, -Projectile.rotation * 0.5f, drawOrigin, Projectile.scale * 1.5f, SpriteEffects.FlipHorizontally, 0);
+
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+            {
+                Vector2 drawPosAI = Projectile.oldPos[k] + new Vector2(Projectile.width, Projectile.height) * 0.5f - Main.screenPosition;
+                Color color = (color2 * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length));
+                Main.EntitySpriteDraw(texture, drawPosAI, sourceRect, color, Projectile.oldRot[k], drawOrigin, Projectile.scale * 1.25f, SpriteEffects.None, 0);
+            }
+            Main.EntitySpriteDraw(texture, drawPos, sourceRect, color2, Projectile.rotation, drawOrigin, Projectile.scale * 1.25f, SpriteEffects.None, 0);
+
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
+            {
+                Vector2 drawPosAI = Projectile.oldPos[k] + new Vector2(Projectile.width, Projectile.height) * 0.5f - Main.screenPosition;
+                Color color = (color1 * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length));
+                Main.EntitySpriteDraw(texture, drawPosAI, sourceRect, color, -Projectile.oldRot[k] + MathHelper.PiOver4, drawOrigin, Projectile.scale * 0.5f, SpriteEffects.None, 0);
+            }
+            Main.EntitySpriteDraw(texture, drawPos, sourceRect, color1, -Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale * 0.5f, SpriteEffects.FlipHorizontally, 0);
             return true;
         }
 

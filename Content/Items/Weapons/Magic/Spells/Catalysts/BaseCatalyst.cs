@@ -70,7 +70,7 @@ public abstract class BaseCatalyst : ModItem
         TooltipLine spellsLine = new TooltipLine(Mod, "NeoParacosm:Spells", Language.GetTextValue("Mods.NeoParacosm.Items.CatalystTemplate.EquippedSpells", Main.LocalPlayer.NPCatalystPlayer().maxSpellSlots));
         tooltips.Add(spellsLine);
 
-        if (Main.LocalPlayer.NPCatalystPlayer().EquippedSpells.Count == 0)
+        if (Main.LocalPlayer.NPCatalystPlayer().EquippedSpells.Length == 0)
         {
             TooltipLine noneSpellsLine = new TooltipLine(Mod, "NeoParacosm:NoSpells", Language.GetTextValue("Mods.NeoParacosm.Items.CatalystTemplate.None"));
             tooltips.Add(noneSpellsLine);
@@ -79,7 +79,10 @@ public abstract class BaseCatalyst : ModItem
         string equippedSpells = "";
         foreach (var spell in Main.LocalPlayer.NPCatalystPlayer().EquippedSpells)
         {
-            equippedSpells += $"[i:NeoParacosm/{spell.GetType().Name}] ";
+            if (spell != null)
+            {
+                equippedSpells += $"[i:NeoParacosm/{spell.GetType().Name}] ";
+            }
         }
         TooltipLine spellsLine2 = new TooltipLine(Mod, "NeoParacosm:EquippedSpells", equippedSpells);
         tooltips.Add(spellsLine2);

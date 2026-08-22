@@ -35,7 +35,7 @@ public class RoarOfDreadlordSpell : BaseSpell
         Item.width = 40;
         Item.height = 38;
         Item.value = Item.sellPrice(gold: 1);
-        Item.rare = ItemRarityID.LightRed;
+        Item.rare = ItemRarityID.Yellow;
         SpellElements = [SpellElement.Fire, SpellElement.Dark];
     }
 

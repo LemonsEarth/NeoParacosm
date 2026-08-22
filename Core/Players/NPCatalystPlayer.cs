@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Content.Projectiles.EffectProjectiles;
 using NeoParacosm.Core.Systems.Misc;
+using NeoParacosm.Core.UI.Spells;
 using System.Collections.Generic;
 using Terraria.ModLoader.IO;
 namespace NeoParacosm.Core.Players;
@@ -30,74 +31,60 @@ public class NPCatalystPlayer : ModPlayer
     public override void Initialize()
     {
         maxSpellSlots = BASE_SPELL_SLOTS;
+        EquippedSpells = new BaseSpell[3];
     }
 
     public override void SaveData(TagCompound tag)
     {
         tag[nameof(maxSpellSlots)] = maxSpellSlots;
+        Item[] equippedSpellsItems = new Item[EquippedSpells.Length];
+        for (int i = 0; i < equippedSpellsItems.Length; i++)
+        {
+            equippedSpellsItems[i] = EquippedSpells[i] == null ? new Item() : EquippedSpells[i].Item;
+        }
+        tag[nameof(EquippedSpells)] = equippedSpellsItems;
     }
 
     public override void LoadData(TagCompound tag)
     {
         maxSpellSlots = tag.GetInt(nameof(maxSpellSlots));
-    }
-
-    public List<BaseSpell> EquippedSpells { get; private set; } = new List<BaseSpell>();
-    public BaseSpell SelectedSpell => (SelectedSpellIndex < 0) ? null : EquippedSpells[SelectedSpellIndex];
-    public int SelectedSpellIndex { get; private set; } = -1;
-
-    public void AddSpell(BaseSpell spell)
-    {
-        int foundSpell = EquippedSpells.IndexOf(EquippedSpells.Find(sp => sp.Type == spell.Type));
-        if (foundSpell == -1)
+        Item[] equippedSpellsItems = tag.Get<Item[]>(nameof(EquippedSpells));
+        for (int i = 0; i < equippedSpellsItems.Length; i++)
         {
-            if (EquippedSpells.Count < maxSpellSlots)
-            {
-                EquippedSpells.Add(spell);
-            }
-            else
-            {
-                RemoveSpell(EquippedSpells[0]);
-                EquippedSpells.Add(spell);
-            }
-            SelectedSpellIndex = EquippedSpells.Count - 1;
-        }
-        else
-        {
-            EquippedSpells[foundSpell] = spell;
-            SelectedSpellIndex = foundSpell;
+            EquippedSpells[i] = equippedSpellsItems[i].ModItem as BaseSpell;
         }
     }
 
-    public void RemoveSpell(BaseSpell spell)
+    public BaseSpell[] EquippedSpells { get; private set; } = new BaseSpell[3];
+    public BaseSpell SelectedSpell => EquippedSpells[SelectedSpellIndex];
+    public int SelectedSpellIndex { get; private set; } = 0;
+
+    public void SetSpell(int index, BaseSpell spell)
     {
-        EquippedSpells.RemoveAll(sp => sp.Type == spell.Type);
-        if (EquippedSpells.Count == 0)
-        {
-            SelectedSpellIndex = -1;
-        }
-        else
-        {
-            SelectedSpellIndex = 0;
-        }
+        EquippedSpells[index] = spell;
     }
 
     public void CycleSpells(int direction = 1)
     {
-        if (EquippedSpells.Count == 0)
+        if (SelectedSpellIndex == -1)
         {
-            SelectedSpellIndex = -1;
             return;
         }
-        SelectedSpellIndex += direction;
-        if (SelectedSpellIndex >= EquippedSpells.Count)
+
+        do
         {
-            SelectedSpellIndex = 0;
+            SelectedSpellIndex += direction;
+            if (SelectedSpellIndex >= EquippedSpells.Length)
+            {
+                SelectedSpellIndex = 0;
+            }
+            else if (SelectedSpellIndex < 0)
+            {
+                SelectedSpellIndex = EquippedSpells.Length - 1;
+            }
         }
-        else if (SelectedSpellIndex < 0)
-        {
-            SelectedSpellIndex = EquippedSpells.Count - 1;
-        }
+        while (EquippedSpells[SelectedSpellIndex] == null);
+
         if (Main.myPlayer == Player.whoAmI)
         {
             Projectile.NewProjectile(Player.GetSource_FromAI(), Player.Center, Vector2.Zero, ProjectileType<SpellSwapProjectile>(), 0, 0, Player.whoAmI);
@@ -122,6 +109,26 @@ public class NPCatalystPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        /*foreach(var spell in EquippedSpells)
+        {
+            spell.NewText();
+        }*/
+        SpellUISystem system = GetInstance<SpellUISystem>();
+        if (Main.playerInventory)
+        {
+            if (system.userInterface.CurrentState == null)
+            {
+                system.ShowUI();
+            }
+        }
+        else
+        {
+            if (system.userInterface.CurrentState != null)
+            {
+                system.HideUI();
+            }
+        }
+
         if (KeybindSystem.CycleSpellsForward.JustReleased)
         {
             CycleSpells(1);
@@ -139,24 +146,6 @@ public class NPCatalystPlayer : ModPlayer
         foreach (var spellElement in ElementalDamageBoosts.Keys)
         {
             ElementalDamageBoosts[spellElement] *= (1 - Player.manaSickReduction);
-        }
-        //PrintElementalExpertiseBoosts();
-        RemoveBuggedSpells();
-    }
-
-    void RemoveBuggedSpells()
-    {
-        BaseSpell spellToRemove = null;
-        foreach (var spell in EquippedSpells)
-        {
-            if (!spell.Item.active)
-            {
-                spellToRemove = spell;
-            }
-        }
-        if (spellToRemove != null)
-        {
-            RemoveSpell(spellToRemove);
         }
     }
 }

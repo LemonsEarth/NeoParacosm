@@ -40,7 +40,7 @@ public abstract class BaseSpell : ModItem
 
     public override bool AltFunctionUse(Player player)
     {
-        return true;
+        return false;
     }
 
     public override void SetDefaults()
@@ -54,7 +54,7 @@ public abstract class BaseSpell : ModItem
 
     public override bool? UseItem(Player player)
     {
-        if (player.altFunctionUse == 2)
+        /*if (player.altFunctionUse == 2)
         {
             player.NPCatalystPlayer().RemoveSpell(this);
             SoundEngine.PlaySound(SoundID.Item74 with { Volume = 0.5f, PitchRange = (-0.5f, -0.35f) }, player.Center);
@@ -63,7 +63,7 @@ public abstract class BaseSpell : ModItem
         {
             player.NPCatalystPlayer().AddSpell(this);
             SoundEngine.PlaySound(SoundID.Item74 with { Volume = 0.5f, PitchRange = (0.35f, 0.5f) }, player.Center);
-        }
+        }*/
         return true;
     }
 

@@ -4,6 +4,7 @@ using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
@@ -46,16 +47,20 @@ public class LingeringDeathflame : ModProjectile
         return false;
     }
 
+    float yScale = 1f;
     public override void AI()
     {
         if (AITimer == 0)
         {
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.GemDiamond, 1f);
             SoundEngine.PlaySound(SoundID.DD2_WyvernDiveDown with { PitchRange = (0f, 0.2f), MaxInstances = 8 }, Projectile.Center);
+            yScale = 1f;
         }
 
         if (Projectile.velocity.Y == 0)
         {
+            Projectile.rotation = MathHelper.Lerp(Projectile.rotation, 0f + MathHelper.Pi, 1 / 10f);
+            yScale = MathHelper.Lerp(yScale, 1f, 1 / 20f);
             landed = true;
             if (AITimer % 2 == 0)
             {
@@ -99,6 +104,8 @@ public class LingeringDeathflame : ModProjectile
         }
         else
         {
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+            yScale = 2 + Projectile.velocity.Y * 0.2f;
             if (AITimer % 3 == 0)
             {
                 Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.Ash, 0, 0, Scale: 1.5f, newColor: Color.Black).noGravity = true;
@@ -115,7 +122,6 @@ public class LingeringDeathflame : ModProjectile
 
         Projectile.velocity.Y += 0.1f;
 
-        Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
         Projectile.StandardAnimation(6, 4);
         AITimer++;
     }
@@ -124,7 +130,7 @@ public class LingeringDeathflame : ModProjectile
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(16, 0);
-        Vector2 scale = new Vector2(1, 1 + Projectile.velocity.Y * 0.2f);
+        Vector2 scale = new Vector2(1, yScale);
         Main.EntitySpriteDraw(texture, Projectile.Bottom - Main.screenPosition, texture.Frame(1, 4, 0, Projectile.frame), Color.White, Projectile.rotation, drawOrigin, scale, SpriteEffects.None);
         return false;
     }
