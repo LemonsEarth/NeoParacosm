@@ -7,7 +7,7 @@ namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 public class AscendedShadowGreaves : AscendedGlowItem
 {
     public override int OriginalItemID => ItemID.ShadowGreaves;
-    public override Color Color => Color.Purple;
+    public override Color Color => Color.Magenta;
     static readonly float moveSpeedBoost = 16;
     static readonly float critBoost = 8;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(moveSpeedBoost, critBoost);

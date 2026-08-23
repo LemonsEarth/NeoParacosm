@@ -7,7 +7,7 @@ namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 public class AscendedShadowScalemail : AscendedGlowItem
 {
     public override int OriginalItemID => ItemID.ShadowScalemail;
-    public override Color Color => Color.Purple;
+    public override Color Color => Color.Magenta;
     static readonly float damageBoost = 8;
     static readonly int drBoost = 8;
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(damageBoost, drBoost);

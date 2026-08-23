@@ -8,7 +8,7 @@ namespace NeoParacosm.Content.Items.Weapons.Melee;
 public class AscendedLightsBane : AscendedGlowItem
 {
     public override int OriginalItemID => ItemID.LightsBane;
-    public override Color Color => Color.Purple;
+    public override Color Color => Color.Magenta;
     int altFireCD = 0;
 
     public static HashSet<NPC> hitNPCs { get; set; } = new();

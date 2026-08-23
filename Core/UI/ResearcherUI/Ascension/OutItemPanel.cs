@@ -1,37 +1,59 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using System.Linq;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Ascension;
 
 internal class OutItemPanel : ItemSlotWrapper
 {
-    public ItemSlotWrapper itemSlot;
-
+    int timer = 0;
+    int index = 0;
     public override void OnInitialize()
     {
-        itemSlot = new ItemSlotWrapper(ItemSlot.Context.BankItem, 0.85f)
-        {
-            ValidItemFunc = item => item.IsAir
-        };
-
-        itemSlot.HAlign = 0.5f;
-        itemSlot.VAlign = 0.5f;
-
-        // Here we limit the items that can be placed in the slot. We are fine with placing an empty item in or a non-empty item that can be prefixed. Calling Prefix(-3) is the way to know if the item in question can take a prefix or not.
-        Append(itemSlot);
+        ValidItemFunc = item => item.IsAir;
     }
 
     public override void OnDeactivate()
     {
-        if (itemSlot.Item.IsAir) return;
+        if (Item.IsAir) return;
 
-        Main.LocalPlayer.QuickSpawnItem(new EntitySource_DropAsItem(itemSlot.Item), itemSlot.Item, itemSlot.Item.stack);
-        itemSlot.Item.TurnToAir();
+        Main.LocalPlayer.QuickSpawnItem(new EntitySource_DropAsItem(Item), Item, Item.stack);
+        Item.TurnToAir();
+    }
+
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        int time = (int)(Main.GlobalTimeWrappedHourly * 100);
+        if (time % 60 == 0)
+        {
+            index = (index + 1) % Researcher.AscendableItems.Count;
+        }
+        timer++;
+        base.Draw(spriteBatch);
+        if (Item == null || Item.IsAir)
+        {
+            //Main.NewText(Main.inventoryScale);
+            float scale = 0.6f * 1.2f;
+            var dims = GetDimensions().ToRectangle();
+
+            // Match ItemSlot.Draw behavior: center the texture in the slot
+            Vector2 position = dims.TopLeft() + new Vector2(dims.Width, dims.Height) * 0.5f;
+            var ascendedItems = Researcher.AscendableItems.Values.ToList();
+            Main.instance.LoadItem(ascendedItems[index]);
+            Texture2D texture = TextureAssets.Item[ascendedItems[index]].Value;
+            Vector2 origin = texture.Size() * 0.5f;
+
+            spriteBatch.Draw(texture, position, null, Color.White * 0.5f, 0f, origin, scale, SpriteEffects.None, 0f);
+        }
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
     {
+        base.DrawSelf(spriteBatch);
+
         if (ContainsPoint(Main.MouseScreen))
         {
             Main.LocalPlayer.mouseInterface = true;

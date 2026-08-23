@@ -11,6 +11,7 @@ public class ParacosmTextures : ModSystem
     public static string TrueMagicPixelPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/Misc/TrueMagicPixel";
     public static string Empty100TexPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
     public static string FadingIndicatorPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/Misc/FadingIndicator";
+    public static string UIArrowPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/UI/UIArrow";
 
     public static Asset<Texture2D> NoiseTexture { get; private set; }
     public static Asset<Texture2D> TransparentNoiseTexture { get; private set; }
@@ -18,6 +19,7 @@ public class ParacosmTextures : ModSystem
     public static Asset<Texture2D> TrueMagicPixel { get; private set; }
     public static Asset<Texture2D> Empty100Tex { get; private set; }
     public static Asset<Texture2D> FadingIndicator { get; private set; }
+    public static Asset<Texture2D> UIArrow { get; private set; }
     public override void Load()
     {
         NoiseTexture = Request<Texture2D>(NoiseTexturePath);
@@ -26,5 +28,6 @@ public class ParacosmTextures : ModSystem
         TrueMagicPixel = Request<Texture2D>(TrueMagicPixelPath);
         Empty100Tex = Request<Texture2D>(Empty100TexPath);
         FadingIndicator = Request<Texture2D>(FadingIndicatorPath);
+        UIArrow = Request<Texture2D>(UIArrowPath);
     }
 }

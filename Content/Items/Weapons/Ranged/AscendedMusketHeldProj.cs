@@ -77,8 +77,8 @@ public class AscendedMusketHeldProj : ModProjectile
         }
 
 
-        SetPositionRotationDirection(player, player.Center.DirectionTo(Main.MouseWorld).ToRotation());
-        //Projectile.Center = player.Center + player.Center.DirectionTo(Main.MouseWorld) * 5;
+        SetPositionRotationDirection(player, player.MountedCenter.DirectionTo(Main.MouseWorld).ToRotation());
+        //Projectile.Center = player.MountedCenter + player.MountedCenter.DirectionTo(Main.MouseWorld) * 5;
         if (AITimer > 90) Projectile.Kill();
 
         AITimer++;
@@ -99,13 +99,13 @@ public class AscendedMusketHeldProj : ModProjectile
     float oppRot = MathHelper.Pi;
     void SetPositionRotationDirection(Player player, float movedRotation = 0)
     {
-        Vector2 dir = player.Center.DirectionTo(Main.MouseWorld);
+        Vector2 dir = player.MountedCenter.DirectionTo(Main.MouseWorld);
         float goalRot = dir.ToRotation();
         rot = Utils.AngleLerp(rot, goalRot, 1f / 10f);
         player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rot + -MathHelper.PiOver2);
         float spriteRot = player.direction == 1 ? 0 : MathHelper.Pi;
         Projectile.rotation = rot + spriteRot;
-        Projectile.Center = player.Center + dir;
+        Projectile.Center = player.MountedCenter + dir;
         Projectile.spriteDirection = player.direction;
         if (!dir.HasNaNs())
         {

@@ -9,7 +9,7 @@ namespace NeoParacosm.Content.Items.Armor.Ranged.AscendedShadow;
 public class AscendedShadowHelmet : AscendedGlowItem
 {
     public override int OriginalItemID => ItemID.ShadowHelmet;
-    public override Color Color => Color.Purple;
+    public override Color Color => Color.Magenta;
     static readonly float damageBoost = 4;
     static readonly float critBoost = 6;
 
