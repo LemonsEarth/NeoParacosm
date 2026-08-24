@@ -220,7 +220,7 @@ public partial class DeathKnightCaptain : ModNPC
         }
         if (Phase == 1)
         {
-            Attack = 0;
+            //Attack = 0;
         }
 
         if (Phase == 0)

@@ -1,4 +1,4 @@
-﻿using NeoParacosm.Core.Globals.GlobalNPCs.Misc;
+﻿using NeoParacosm.Content.NPCs.Friendly.Special;
 using System.Linq;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
@@ -30,16 +30,12 @@ public class Deathseeder : ModProjectile
         closestEnemy = GetClosestNPC(1000);
 
         Projectile.velocity.Y = 10f;
-        if (AITimer % 300 == 0 && AITimer > 0)
+        if (AITimer % 240 == 0 && AITimer > 0)
         {
             LemonUtils.DustCircle(Projectile.Top, 16, 8, DustID.Shadowflame, 2f);
             if (LemonUtils.NotClient())
             {
-                NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, Main.rand.NextFromCollection(DeathseederNPC.PossibleNPCs.ToList()));
-                npc.damage = Projectile.damage;
-                npc.lifeMax = Projectile.GetOwner().statLifeMax2 / 2;
-                npc.defense = Projectile.GetOwner().statDefense / 2;
-                NetMessage.SendData(MessageID.SyncNPC);
+                NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromAI("DeathseederSpawn"), Projectile.Top, NPCType<FriendlySkeleton>(), ai0: 600);
             }
         }
 

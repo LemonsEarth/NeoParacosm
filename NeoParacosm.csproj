@@ -17,6 +17,10 @@
 	  </Reference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Core\Globals\GlobalNPCs\Misc\" />
+	</ItemGroup>
+
 	<!-- References -->
 
 </Project>

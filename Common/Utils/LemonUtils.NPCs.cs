@@ -21,6 +21,11 @@ public static partial class LemonUtils
         return npc.GetGlobalNPC<NPGlobalNPC>();
     }
 
+    public static bool IsAlive(this NPC npc)
+    {
+        return npc.life > 0;
+    }
+
     /// <summary>
     /// Prevents the NPC from dropping anything.
     /// Should be used in SetStaticDefaults().

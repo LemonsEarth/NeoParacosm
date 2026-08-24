@@ -12,6 +12,7 @@ public class ParacosmTextures : ModSystem
     public static string Empty100TexPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
     public static string FadingIndicatorPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/Misc/FadingIndicator";
     public static string UIArrowPath { get; private set; } = "NeoParacosm/Common/Assets/Textures/UI/UIArrow";
+    public static string UIEyePath { get; private set; } = "NeoParacosm/Common/Assets/Textures/UI/EyeIcon";
 
     public static Asset<Texture2D> NoiseTexture { get; private set; }
     public static Asset<Texture2D> TransparentNoiseTexture { get; private set; }
@@ -20,6 +21,7 @@ public class ParacosmTextures : ModSystem
     public static Asset<Texture2D> Empty100Tex { get; private set; }
     public static Asset<Texture2D> FadingIndicator { get; private set; }
     public static Asset<Texture2D> UIArrow { get; private set; }
+    public static Asset<Texture2D> UIEye { get; private set; }
     public override void Load()
     {
         NoiseTexture = Request<Texture2D>(NoiseTexturePath);
@@ -29,5 +31,6 @@ public class ParacosmTextures : ModSystem
         Empty100Tex = Request<Texture2D>(Empty100TexPath);
         FadingIndicator = Request<Texture2D>(FadingIndicatorPath);
         UIArrow = Request<Texture2D>(UIArrowPath);
+        UIEye = Request<Texture2D>(UIEyePath);
     }
 }

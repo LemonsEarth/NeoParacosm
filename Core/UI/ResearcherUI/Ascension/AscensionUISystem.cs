@@ -33,7 +33,7 @@ public class AscensionUISystem : ModSystem
 
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
     {
-        int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+        int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Wire Selection"));
         if (mouseTextIndex != -1)
         {
             LegacyGameInterfaceLayer UILayer = new LegacyGameInterfaceLayer(
