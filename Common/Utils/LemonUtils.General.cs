@@ -53,6 +53,11 @@ public static partial class LemonUtils
         return rand.NextBool(consequent).ToDirectionInt();
     }
 
+    public static float NextRotation(this UnifiedRandom rand)
+    {
+        return Main.rand.NextFloat(0, MathHelper.TwoPi);
+    }
+
     /// <summary>
     /// Spawns ruby dust at point
     /// </summary>

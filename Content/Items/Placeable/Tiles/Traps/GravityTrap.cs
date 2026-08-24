@@ -47,7 +47,6 @@ public class GravityTrap : ModTile
         if (Wiring.CheckMech(x, y, 180))
         {
             Tile tile = Main.tile[x, y];
-            Main.NewText($"{x}, {y}");
             Vector2 spawnPosition = new Vector2(x * 16 + 16, y * 16 + 16);
 
             Projectile.NewProjectile(

@@ -43,6 +43,7 @@ public class ProjectileShaderRenderer : ModSystem
         LoadMiscShader("LightningShader", "Common/Assets/Shaders/Projectiles/LightningShader", BlendState.AlphaBlend);
         LoadMiscShader("BigLightningShader", "Common/Assets/Shaders/Projectiles/BigLightningShader", BlendState.AlphaBlend);
         LoadMiscShader("SphereShader", "Common/Assets/Shaders/Projectiles/SphereShader", BlendState.AlphaBlend);
+        LoadMiscShader("OutlineShader", "Common/Assets/Shaders/Projectiles/OutlineShader", BlendState.AlphaBlend);
         LoadMiscShader("AscendedWeaponGlow", "Common/Assets/Shaders/Items/AscendedWeaponGlow", BlendState.Additive);
         LoadMiscShader("DeathbirdWingShader", "Common/Assets/Shaders/NPCs/DeathbirdWingShader", BlendState.Additive);
 

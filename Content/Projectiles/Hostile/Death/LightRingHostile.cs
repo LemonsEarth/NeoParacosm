@@ -53,6 +53,14 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
         {
             if (PreAITimer == 0)
             {
+                LemonUtils.ParticleBurst(
+                    12,
+                    Projectile.Center,
+                    ParticleID.Fire,
+                    5f, 5f,
+                    0.6f, 0.9f,
+                    Color.LightYellow
+                );
                 startPos = Projectile.Center;
                 targetPos = Projectile.Center + Projectile.velocity * timeToReachTarget;
                 Projectile.velocity = Vector2.Zero;

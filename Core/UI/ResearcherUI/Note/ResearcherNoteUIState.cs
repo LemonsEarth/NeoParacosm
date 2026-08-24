@@ -59,6 +59,7 @@ public class ResearcherNoteUIState : UIState
 
     public override void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         MainImage.Height.Set(noteTexture.Width() * 1f, 0);
         MainImage.Width.Set(noteTexture.Width() * 1f, 0);
         MessageText.SetText(Language.GetTextValue($"Mods.NeoParacosm.NPCs.Researcher.ResearcherNoteMessage"), 0.45f, true);

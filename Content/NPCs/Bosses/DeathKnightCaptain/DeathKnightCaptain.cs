@@ -215,11 +215,12 @@ public partial class DeathKnightCaptain : ModNPC
         Attack++;
         if (Phase == 0)
         {
-            //Attack = 1;
+            //if (Attack > 3)
+            //    Attack = 2;
         }
         if (Phase == 1)
         {
-            //Attack = 3;
+            Attack = 0;
         }
 
         if (Phase == 0)
@@ -378,6 +379,20 @@ public partial class DeathKnightCaptain : ModNPC
                 SoundEngine.PlaySound(ParacosmSFX.FireBurst, NPC.Center);
                 break;
             case < 350:
+                if (phaseTransitionTimer % 5 == 0)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            NPC.RandomPos(250, 250),
+                            Vector2.Zero,
+                            ProjectileType<DeathflameExplosion>(),
+                            ai0: 24,
+                            ai1: 1f + 0.25f * LemonUtils.GetDifficulty()
+                        );
+                    }
+                }
                 int dustCount2 = phaseTransitionTimer / 60;
                 for (int i = 0; i < dustCount2; i++)
                 {
@@ -570,7 +585,7 @@ public partial class DeathKnightCaptain : ModNPC
     {
         switch (AttackTimer)
         {
-            case 15:
+            case 60:
                 if (AttackCount == 1)
                 {
                     TeleportEffect(8, 6, 6);
@@ -581,25 +596,33 @@ public partial class DeathKnightCaptain : ModNPC
                 LookTowards(NPC.Center + Vector2.UnitX * LemonUtils.Sign(player.Center.X - NPC.Center.X, 1) * 100);
                 SetFrame(ArmUpNormal2);
                 SoundEngine.PlaySound(SFX.CrystalSerpent with { PitchRange = (0.3f, 0.5f) }, NPC.Center);
-                if (LemonUtils.NotClient())
+                for (int i = 0; i < 16; i++)
                 {
-                    LemonUtils.QuickProj(
-                        NPC,
-                        NPC.Center - Vector2.UnitY * 128,
-                        Vector2.UnitY.RotatedByRandom(6.28f) * 25,
-                        ProjectileType<LightRingHostile>(),
-                        ai0: 240,
-                        ai1: 0.5f + LemonUtils.GetDifficulty() * 0.5f,
-                        ai2: 30
-                        );
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 pos = player.Center - Vector2.UnitY.RotatedBy(i * TwoPi / 16f + (AttackCount % 6) * ToRadians(30)) * (400 + AttackCount * 64f);
+                        LemonUtils.QuickProj(
+                            NPC,
+                            pos,
+                            pos.DirectionTo(player.Center) * 10,
+                            ProjectileType<LightRingHostile>(),
+                            ai0: 300,
+                            ai1: 0.25f + LemonUtils.GetDifficulty() * 0.5f,
+                            ai2: 240 - AttackCount * 60
+                            );
+                    }
                 }
                 break;
             case > 0:
-                NPC.velocity = NPC.DirectionTo(player.Center) * NPC.Distance(player.Center) / 60f;
+
                 break;
             case 0:
-                AttackTimer = 15;
+                AttackTimer = 60;
                 AttackCount++;
+                if (AttackCount >= 5)
+                {
+                    AttackCount = 1;
+                }
                 return;
         }
 
@@ -816,6 +839,20 @@ public partial class DeathKnightCaptain : ModNPC
                         Spawn_Lightning(NPC.Center + new Vector2(Main.rand.NextFloat(-48, 48), -600), 1800);
                     }
                 }
+                if (AttackTimer % 2 == 0 && LemonUtils.IsHard())
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            NPC.Center,
+                            Vector2.Zero,
+                            ProjectileType<DeathflameExplosion>(),
+                            ai0: 24,
+                            ai1: 2.5f
+                        );
+                    }
+                }
                 NPC.Center = Vector2.Lerp(targetPosition, targetPosition2, AttackCount2 / 15f);
                 SpawnDust();
                 AttackCount2++;
@@ -826,6 +863,17 @@ public partial class DeathKnightCaptain : ModNPC
                 //GoVisible();
                 if (LemonUtils.NotClient())
                 {
+                    if (LemonUtils.IsHard())
+                    {
+                        LemonUtils.QuickProj(
+                            NPC,
+                            NPC.Center,
+                            Vector2.Zero,
+                            ProjectileType<DeathflameExplosion>(),
+                            ai0: 24,
+                            ai1: 4f
+                        );
+                    }
                     for (int i = 0; i < 8; i++)
                     {
                         Spawn_LightningWarning(NPC.Center + new Vector2(-AttackCount * 100 * (i + 1), -1200), 10 * i, 2400);

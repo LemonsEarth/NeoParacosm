@@ -12,7 +12,7 @@ namespace NeoParacosm.Core.UI.Spells;
 
 public class SpellUIState : UIState
 {
-    UIPanel MainPanel;
+    DraggableUIPanel MainPanel;
     UIText text;
     SpellSlot[] SpellSlots = new SpellSlot[3];
     NPCatalystPlayer Player => Main.LocalPlayer.NPCatalystPlayer();
@@ -22,7 +22,7 @@ public class SpellUIState : UIState
     {
         panelBG = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellPanelBackground");
         panelBorder = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellPanelBorder");
-        MainPanel = new UIPanel(panelBG, panelBorder);
+        MainPanel = new DraggableUIPanel(panelBG, panelBorder);
         MainPanel.Width.Set(0, 0.15f);
         MainPanel.Height.Set(0, 0.15f);
         MainPanel.HAlign = 0.05f;
@@ -72,6 +72,7 @@ public class SpellUIState : UIState
 
     public override void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         MainPanel.Width.Set(0, 0.15f * Main.UIScale);
         MainPanel.Height.Set(0, 0.15f * Main.UIScale);
         MainPanel.Recalculate();

@@ -196,6 +196,7 @@ public class ResearcherDialogueUIState : UIState
     int charInterval = 3;
     public override void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         SpecialButtonDisplay();
         //Main.NewText(talkAmount);
         DialogueText.SetText(TextToDisplay[..charIndex], CalculateTextSize(), true);

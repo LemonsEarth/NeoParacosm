@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;
 
@@ -10,13 +11,11 @@ public class DeathflameExplosion : ModProjectile
     ref float TimeLeft => ref Projectile.ai[0];
     ref float Scale => ref Projectile.ai[1];
 
-    public override string Texture => ParacosmTextures.Empty100TexPath;
-
     public override void SetStaticDefaults()
     {
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
-        Main.projFrames[Type] = 1;
+        Main.projFrames[Type] = 6;
     }
 
     public override void SetDefaults()
@@ -27,7 +26,7 @@ public class DeathflameExplosion : ModProjectile
 
         Projectile.friendly = false;
         Projectile.hostile = true;
-        Projectile.penetrate = 1;
+        Projectile.penetrate = -1;
 
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 60;
@@ -41,23 +40,18 @@ public class DeathflameExplosion : ModProjectile
         if (AITimer == 0)
         {
             Projectile.Resize(128 * Scale, 128 * Scale);
+            SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion with { PitchRange = (-0.4f, -0.3f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode with { PitchRange = (-0.4f, -0.3f) }, Projectile.Center);
+            Projectile.rotation = Main.rand.NextRotation();
         }
-
-        for (int i = 0; i < Scale * 3; i++)
-        {
-            ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
-                Projectile.Center,
-                Main.rand.NextVector2Circular(2, 2) * Scale,
-                Color.Black,
-                scale: Main.rand.NextFloat(0.5f, 1.5f)
-                );
-        }
-
+        Projectile.scale = Scale;
         if (AITimer > TimeLeft)
         {
             Projectile.Kill();
         }
+
+        Projectile.StandardAnimation((int)(TimeLeft / Main.projFrames[Type]), 6, false);
+
         AITimer++;
     }
 
@@ -78,7 +72,8 @@ public class DeathflameExplosion : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        return true;
+        Projectile.DrawProjectile(Color.White);
+        return false;
     }
 
     public override void PostDraw(Color lightColor)

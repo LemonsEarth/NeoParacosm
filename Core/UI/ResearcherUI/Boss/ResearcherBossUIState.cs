@@ -62,6 +62,7 @@ public class ResearcherBossUIState : UIState
     bool paused = false;
     public override void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         if (Main.gameInactive || Main.gamePaused)
         {
             return;

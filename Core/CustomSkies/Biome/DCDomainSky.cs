@@ -9,7 +9,7 @@ public class DCDomainSky : CustomSky
 
     public override void Update(GameTime gameTime)
     {
-
+        
     }
 
     public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth)

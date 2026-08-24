@@ -113,6 +113,7 @@ public class AscensionUIState : UIState
 
     public override void Update(GameTime gameTime)
     {
+        base.Update(gameTime);
         float lerpT = (MathF.Sin(Main.GlobalTimeWrappedHourly / 3f) + 1) * 0.5f;
         MainPanel.BackgroundColor = Color.Lerp(panelBG1, panelBG2, lerpT);
         MainPanel.BorderColor = Color.Lerp(panelBorder1, panelBorder2, lerpT);

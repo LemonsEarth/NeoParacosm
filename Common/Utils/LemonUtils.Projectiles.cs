@@ -231,8 +231,12 @@ public static partial class LemonUtils
     /// <param name="proj"></param>
     /// <param name="frameDuration"></param>
     /// <param name="maxFrames"></param>
-    public static void StandardAnimation(this Projectile proj, int frameDuration, int maxFrames)
+    public static void StandardAnimation(this Projectile proj, int frameDuration, int maxFrames, bool loop = true)
     {
+        if (!loop && proj.frame >= maxFrames - 1)
+        {
+            return;
+        }
         proj.frameCounter++;
         if (proj.frameCounter == frameDuration)
         {

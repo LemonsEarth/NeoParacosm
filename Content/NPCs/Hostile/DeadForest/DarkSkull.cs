@@ -70,7 +70,7 @@ public class DarkSkull : ModNPC
             NPC.Center,
             Vector2.Zero,
             ProjectileType<DeathflameExplosion>(),
-            ai0: 3,
+            ai0: 24,
             ai1: 1.5f + 0.5f * LemonUtils.GetDifficulty()
             );
     }
@@ -88,7 +88,7 @@ public class DarkSkull : ModNPC
                 8,
                 NPC.Center,
                 ParticleID.Fire,
-                3f, 3f,
+                6f, 6f,
                 0.6f, 0.9f,
                 Color.Black
                 );
