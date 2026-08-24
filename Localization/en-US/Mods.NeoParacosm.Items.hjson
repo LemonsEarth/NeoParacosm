@@ -2854,11 +2854,20 @@ CursedMine: {
 }
 
 GrassBladestormSpell: {
-	DisplayName: Grass Bladestorm Spell
+	DisplayName: Grass Bladestorm
 	Tooltip: Summons a grass bladestorm to turn enemies into compost
 }
 
 SpellIcon: {
 	DisplayName: Spell Icon
 	Tooltip: ""
+}
+
+GoblinHutItem: {
+	DisplayName: Goblin Hut
+	Tooltip:
+	'''
+	Periodically spawns friendly goblins
+	One hut can spawn up to 5 goblins
+	'''
 }
