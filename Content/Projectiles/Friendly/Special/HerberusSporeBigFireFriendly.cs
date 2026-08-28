@@ -43,7 +43,7 @@ public class HerberusSporeBigFireFriendly : ModProjectile
 
         Color randColor = Main.rand.NextFromList(Color.Orange, Color.OrangeRed, Color.Red, Color.Gold);
         ParticleSystem.SpawnParticle(
-            ParticleID.Fire,
+            ParticleID.Gas,
             Projectile.RandomPos(),
             Main.rand.NextVector2Circular(3, 3),
             randColor,

@@ -2866,8 +2866,38 @@ SpellIcon: {
 GoblinHutItem: {
 	DisplayName: Goblin Hut
 	Tooltip:
+		'''
+		Periodically spawns friendly goblins
+		One hut can spawn up to 5 goblins
+		A maximum of 20 goblins can be present in the world at once
+		'''
+}
+
+HolyBarrier: {
+	DisplayName: Holy Barrier
+	Tooltip:
+		'''
+		Slowly builds up damage reduction over time, up to {0}% after {1} seconds
+		When fully build up, getting hit emits a shockwave that repels nearby enemies
+		'''
+}
+
+BloodArtistSkull: {
+	DisplayName: Blood Artist's Skull
+	Tooltip:
 	'''
-	Periodically spawns friendly goblins
-	One hut can spawn up to 5 goblins
+	Killed enemies may spawn homing lost souls
+	Increases life regeneration
+	'''
+}
+
+ArcaneShell: {
+	DisplayName: Arcane Shell
+	Tooltip:
+	'''
+	Your minions may explode, dealing 4x their damage to nearby enemies
+	When a minion dies, it spawns a lost soul and you briefly gain increased damage and life regeneration
+	Killed enemies may spawn homing lost souls
+	Increases max minions by {0}
 	'''
 }

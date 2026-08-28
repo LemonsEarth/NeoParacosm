@@ -87,7 +87,7 @@ public class DarkSkull : ModNPC
             LemonUtils.ParticleBurst(
                 8,
                 NPC.Center,
-                ParticleID.Fire,
+                ParticleID.Gas,
                 6f, 6f,
                 0.6f, 0.9f,
                 Color.Black
@@ -129,7 +129,7 @@ public class DarkSkull : ModNPC
                 LemonUtils.ParticleBurst(
                     12,
                     NPC.Center,
-                    ParticleID.Fire,
+                    ParticleID.Gas,
                     5f, 5f,
                     0.6f, 0.9f,
                     Color.Black
@@ -162,7 +162,7 @@ public class DarkSkull : ModNPC
         }
 
         ParticleSystem.SpawnParticle(
-            ParticleID.Fire,
+            ParticleID.Gas,
             NPC.RandomPos(),
             -Vector2.UnitY * Main.rand.NextFloat(1f, 3f),
             Color.Black,

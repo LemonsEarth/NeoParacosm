@@ -105,7 +105,7 @@ public class CrimsonInfectionForm : ModNPC
         }
         else
         {
-            return (spawnInfo.Player.ZoneOverworldHeight) ? 0.15f : 0f;
+            return (spawnInfo.Player.ZoneOverworldHeight) ? 0.04f : 0f;
         }
 
     }

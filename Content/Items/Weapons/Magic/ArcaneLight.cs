@@ -62,16 +62,3 @@ public class ArcaneLight : ModItem
         return false;
     }
 }
-
-public class ArcaneLightDropNPC : GlobalNPC
-{
-    public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
-    {
-        return entity.type == NPCID.GoblinShark;
-    }
-
-    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-    {
-        npcLoot.Add(ItemDropRule.Common(ItemType<ArcaneLight>(), 3, 1, 1));
-    }
-}

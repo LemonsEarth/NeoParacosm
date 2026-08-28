@@ -92,7 +92,7 @@ public class CrimsonCarrier : ModNPC
         }
         else
         {
-            return (spawnInfo.Player.ZoneOverworldHeight) ? 0.15f : 0f;
+            return (spawnInfo.Player.ZoneOverworldHeight) ? 0.025f : 0f;
         }
 
     }

@@ -15,7 +15,8 @@ public abstract class ParticleID
         TestParticle = ParticleSystem.RegisterParticle(new TestParticle());
         DeadForestPassiveParticle = ParticleSystem.RegisterParticle(new DeadForestPassiveParticle());
         Streak = ParticleSystem.RegisterParticle(new StreakParticle());
-        Fire = ParticleSystem.RegisterParticle(new FireParticle());
+        Gas = ParticleSystem.RegisterParticle(new GasParticle());
+        Circle = ParticleSystem.RegisterParticle(new CircleParticle());
     }
 
     public static int Count => ParticleSystem.TypesByID.Count;
@@ -26,5 +27,11 @@ public abstract class ParticleID
     /// <summary>
     /// data[0] - Rising speed (how fast the dust moves upward per tick)
     /// </summary>
-    public static int Fire;
+    public static int Gas;
+
+    /// <summary>
+    /// data[0] - Minimum scale multiplier (0 => 0.5f)
+    /// data[1] - Maximum scale multiplier (0 => 1f)
+    /// </summary>
+    public static int Circle;
 }

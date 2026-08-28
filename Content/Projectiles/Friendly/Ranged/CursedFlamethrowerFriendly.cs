@@ -57,7 +57,7 @@ public class CursedFlamethrowerFriendly : ModProjectile
         if (Main.rand.NextBool(5))
         {
             //Dust.NewDustPerfect(Projectile.RandomPos(0, 0), DustID.CursedTorch, Projectile.velocity * 0.5f, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
-        ParticleSystem.SpawnParticle(ParticleID.Fire, Projectile.RandomPos(), Projectile.velocity * 0.2f, Color.LimeGreen);
+        ParticleSystem.SpawnParticle(ParticleID.Gas, Projectile.RandomPos(), Projectile.velocity * 0.2f, Color.LimeGreen);
         }
 
 

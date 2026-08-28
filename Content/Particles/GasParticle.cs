@@ -4,7 +4,7 @@ using ReLogic.Content;
 
 namespace NeoParacosm.Content.Particles;
 
-public class FireParticle : ParticleType
+public class GasParticle : ParticleType
 {
     public override void OnSpawn(ref Particle particle)
     {

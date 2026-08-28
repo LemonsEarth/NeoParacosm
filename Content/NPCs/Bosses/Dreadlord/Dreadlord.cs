@@ -559,7 +559,7 @@ public partial class Dreadlord : ModNPC
                             NPC,
                             player.Center + new Vector2(Main.rand.NextFloat(-800, 800), 800),
                             -Vector2.UnitY * 5,
-                            ProjectileType<CrimsonLostSoul>(),
+                            ProjectileType<LostSoulHostile>(),
                             ai0: 60,
                             ai1: 180
                             );
@@ -3355,7 +3355,7 @@ public partial class Dreadlord : ModNPC
                             NPC,
                             pos,
                             velocity,
-                            ProjectileType<CrimsonLostSoul>(),
+                            ProjectileType<LostSoulHostile>(),
 
                             ai0: waitTime,
                             ai1: duration

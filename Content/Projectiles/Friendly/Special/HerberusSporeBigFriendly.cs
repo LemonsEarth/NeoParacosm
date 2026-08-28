@@ -42,7 +42,7 @@ public class HerberusSporeBigFriendly : ModProjectile
         }
 
         ParticleSystem.SpawnParticle(
-            ParticleID.Fire,
+            ParticleID.Gas,
             Projectile.RandomPos(),
             Main.rand.NextVector2Circular(3, 3),
             new Color(Main.rand.Next(60, 190) / 255f, Main.rand.Next(180, 255) / 255f, Main.rand.Next(10, 80) / 255f),

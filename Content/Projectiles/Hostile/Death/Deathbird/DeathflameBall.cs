@@ -60,14 +60,14 @@ public class DeathflameBall : ModProjectile
         for (float i = 0; i < 1 + Projectile.velocity.Length() / 3f; i++)
         {
             ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 Projectile.RandomPos(-8, -8),
                 Main.rand.NextVector2Circular(2, 2),
                 Color.Black,
                 scale: Main.rand.NextFloat(0.3f, 0.5f)
                 );
             ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 Projectile.RandomPos(-8, -8),
                 Main.rand.NextVector2Circular(2, 2),
                 Color.White,

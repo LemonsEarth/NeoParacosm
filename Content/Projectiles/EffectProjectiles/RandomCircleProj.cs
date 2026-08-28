@@ -14,8 +14,6 @@ public class RandomCircleProj : ModProjectile
 
     public Color PulseColor { get; set; } = Color.White;
     public Entity EntityToFollow { get; set; } = null;
-    int entityType = -1;
-    int entityID = -1;
 
     public override void SetStaticDefaults()
     {

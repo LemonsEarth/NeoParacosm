@@ -267,3 +267,6 @@ GiantSpikedBallProj.DisplayName: Giant Spiked Ball Proj
 CursedMineProj.DisplayName: Cursed Mine Proj
 GrassBladestorm.DisplayName: Grass Bladestorm
 RandomCircleProj.DisplayName: Random Circle Proj
+HolyRepelProjFriendly.DisplayName: Holy Repel Proj Friendly
+LostSoulFriendly.DisplayName: Lost Soul Friendly
+LostSoulHostile.DisplayName: Lost Soul Hostile

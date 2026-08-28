@@ -1,6 +1,6 @@
 ﻿namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class CrimsonLostSoul : ModProjectile
+public class LostSoulHostile : ModProjectile
 {
     int AITimer = 0;
     ref float WaitTime => ref Projectile.ai[0];

@@ -76,7 +76,7 @@ public class LingeringCursedFlameFriendly : ModProjectile
             }
             Vector2 randomPos = Projectile.Bottom + new Vector2(Main.rand.NextFloat(-Projectile.width, Projectile.width), 0);
             ParticleSystem.SpawnParticle(
-                    ParticleID.Fire,
+                    ParticleID.Gas,
                     randomPos,
                     Vector2.Zero,
                     Color.Lime,
@@ -84,7 +84,7 @@ public class LingeringCursedFlameFriendly : ModProjectile
                     data0: Main.rand.NextFloat(0.05f, 0.15f)
                     );
             ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 randomPos,
                 Vector2.Zero,
                 Color.Lime,
@@ -100,7 +100,7 @@ public class LingeringCursedFlameFriendly : ModProjectile
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             yScale = 2 + Projectile.velocity.Y * 0.2f;
             ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 Projectile.RandomPos(),
                 Vector2.Zero,
                 Color.Lime,

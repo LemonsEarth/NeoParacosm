@@ -56,7 +56,7 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
                 LemonUtils.ParticleBurst(
                     12,
                     Projectile.Center,
-                    ParticleID.Fire,
+                    ParticleID.Gas,
                     5f, 5f,
                     0.6f, 0.9f,
                     Color.LightYellow
@@ -88,7 +88,7 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
             LemonUtils.ParticleBurst(
                     12,
                     Projectile.Center,
-                    ParticleID.Fire,
+                    ParticleID.Gas,
                     5f, 5f,
                     0.6f, 0.9f,
                     Color.LightYellow
@@ -137,7 +137,7 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
         LemonUtils.ParticleBurst(
                     12,
                     Projectile.Center,
-                    ParticleID.Fire,
+                    ParticleID.Gas,
                     3f, 3f,
                     0.6f, 0.9f,
                     Color.LightYellow

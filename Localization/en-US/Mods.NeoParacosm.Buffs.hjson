@@ -242,3 +242,8 @@ ToxicDebuff: {
 	Description: Treat it soon...
 	DeathReason: "{0} got too toxic"
 }
+
+Bloodboil: {
+	DisplayName: Bloodboil
+	Description: Maximum life reduced as your blood boils...
+}

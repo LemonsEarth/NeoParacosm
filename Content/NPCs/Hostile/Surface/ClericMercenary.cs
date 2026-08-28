@@ -1,4 +1,5 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Generic;
+﻿using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
+using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Content.Items.Currencies;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Lightning;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
@@ -176,7 +177,7 @@ public class ClericMercenary : ModNPC
 
     public override void ModifyNPCLoot(NPCLoot npcLoot)
     {
-
+        npcLoot.Add(ItemDropRule.Common(ItemType<HolyBarrier>(), 20));
     }
 
     public override bool? CanFallThroughPlatforms()

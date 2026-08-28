@@ -26,6 +26,21 @@ public static partial class LemonUtils
         return npc.life > 0;
     }
 
+    public static void StandardAnimation(this NPC NPC, int frameDuration, int frameHeight, int maxFrame = -1)
+    {
+        if (maxFrame == -1) maxFrame = Main.npcFrameCount[NPC.type];
+        NPC.frameCounter += 1;
+        if (NPC.frameCounter > frameDuration)
+        {
+            NPC.frame.Y += frameHeight;
+            NPC.frameCounter = 0;
+            if (NPC.frame.Y >= maxFrame * frameHeight)
+            {
+                NPC.frame.Y = 0;
+            }
+        }
+    }
+
     /// <summary>
     /// Prevents the NPC from dropping anything.
     /// Should be used in SetStaticDefaults().

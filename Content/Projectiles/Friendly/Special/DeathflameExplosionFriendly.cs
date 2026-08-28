@@ -46,7 +46,7 @@ public class DeathflameExplosionFriendly : ModProjectile
         for (int i = 0; i < Scale * 5; i++)
         {
             ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 Projectile.Center,
                 Main.rand.NextVector2Circular(6, 6) * Scale,
                 Color.Black,

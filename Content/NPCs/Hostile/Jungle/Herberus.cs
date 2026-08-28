@@ -203,7 +203,7 @@ public class Herberus : ModNPC
             for (int i = 0; i < 20; i++)
             {
                 ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 NPC.RandomPos(),
                 Main.rand.NextVector2Circular(6, 6),
                 Color.GreenYellow,
@@ -214,7 +214,7 @@ public class Herberus : ModNPC
             for (int i = 0; i < 10; i++)
             {
                 ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 NPC.RandomPos(),
                 Main.rand.NextVector2Circular(6, 6),
                 Color.Orange,
@@ -225,7 +225,7 @@ public class Herberus : ModNPC
             for (int i = 0; i < 10; i++)
             {
                 ParticleSystem.SpawnParticle(
-                ParticleID.Fire,
+                ParticleID.Gas,
                 NPC.RandomPos(),
                 Main.rand.NextVector2Circular(6, 6),
                 Color.OrangeRed,
