@@ -77,7 +77,11 @@ Researcher: {
 
 	TalkDialogue: {
 		Progress: {
-			P0.T0: I'm not supposed to be here
+			P0.T0:
+				'''
+				Hello there!
+				I'm afraid I am quite busy right now. We can talk later!
+				'''
 
 			P1: {
 				T0:

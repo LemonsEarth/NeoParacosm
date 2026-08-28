@@ -8,6 +8,7 @@ using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Terraria.GameInput;
 
 namespace NeoParacosm.Core.Players;
 
@@ -38,6 +39,19 @@ public class NPPlayer : ModPlayer
         }
         Grabbed = false;
         FastFall = false;
+    }
+
+    public override void ProcessTriggers(TriggersSet triggersSet)
+    {
+        base.ProcessTriggers(triggersSet);
+    }
+
+    public override void SetControls()
+    {
+        if (Grabbed)
+        {
+
+        }
     }
 
     public override bool CanUseItem(Item item)
@@ -137,75 +151,19 @@ public class NPPlayer : ModPlayer
         }
     }
 
-    public override void PostUpdate()
+    public void CloseResearcherUIIfTooFar()
     {
-        //Main.NewText(DarkCataclysmSystem.DarkCataclysmActive);
-        /*if (Main.mouseLeft && Main.mouseLeftRelease)
-        {
-            Stopwatch watch = Stopwatch.StartNew();
-            for (int i = 0; i < 1; i++)
-            {
-                //Dust.NewDustPerfect(Main.MouseWorld, DustID.GemDiamond, Main.rand.NextVector2Circular(5, 5)).noGravity = true;
-                ParticleSystem.SpawnParticle(ParticleID.DeadForestPassiveParticle, Main.MouseWorld, Main.rand.NextVector2Circular(5, 5), Color.White);
-            }
-            watch.Stop();
-            Main.NewText("Time:" + watch.Elapsed.TotalMilliseconds);
-            Main.NewText("Count:" + ParticleSystem.ActiveParticleCount);
-        }*/
-        /*int c = 0;
-        foreach (var dust in Main.dust)
-        {
-            if (dust.active)
-            {
-                c++;
-            }
-        }
-        Main.NewText(c);*/
-        /*counter1.NewText();
-        counter2.NewText();
-        if (Main.keyState.IsKeyDown(Keys.U) && !Main.oldKeyState.IsKeyDown(Keys.U))
-        {
-            for (int i = 0; i < 500; i++)
-            {
-                Projectile.NewProjectileDirect(
-                    Player.GetSource_FromThis(),
-                    Player.Center + Main.rand.NextVector2Circular(500, 500),
-                    Vector2.Zero,
-                    ProjectileType<GiantCursedFlameSphere>(),
-                    0, 0, ai2: 300
-                    );
-            }
-        }
-        if (Main.keyState.IsKeyDown(Keys.I) && !Main.oldKeyState.IsKeyDown(Keys.I))
-        {
-            for (int i = 0; i < 500; i++)
-            {
-                Projectile.NewProjectileDirect(
-                    Player.GetSource_FromThis(),
-                    Player.Center + Main.rand.NextVector2Circular(500, 500),
-                    Vector2.Zero,
-                    ProjectileType<GiantCursedFlameSphereFriendly>(),
-                    0, 0, ai2: 300
-                    );
-            }
-        }*/
-        //Dust.NewDustPerfect(Main.MouseWorld, DustType<FireDust>(), Vector2.Zero, newColor: Color.Red);
-        //Player.stickyBreak = 100;
-        //var c = Main.MouseWorld.ToTileCoordinates16();
-        //Main.NewText(Main.tile[c].TileFrameX);
-        /*int c = 0;
-        foreach (var p in Main.ActiveProjectiles)
-        {
-            c++;
-        }
-        Main.NewText(c);*/
-        //Dust.QuickDust(new Point(Main.dungeonX, Main.dungeonY), Color.White);
         int researcherIndex = NPC.FindFirstNPC(NPCType<Researcher>());
         if (researcherIndex >= 0 && Main.npc[researcherIndex].Distance(Player.Center) > 500)
         {
             AscensionUISystem UISystem = GetInstance<AscensionUISystem>();
             UISystem.HideUI();
         }
+    }
+
+    public override void PostUpdate()
+    {
+        CloseResearcherUIIfTooFar();
         Timer++;
     }
 

@@ -75,15 +75,6 @@ public class DeathbirdGrab : ModProjectile
         {
             LemonUtils.DustCircle(Projectile.Center, 8, 4, DustID.GemRuby, 2);
         }
-        /*foreach (var player in Main.ActivePlayers)
-        {
-            if (hitPlayers.Contains(player)) return;
-            if (Projectile.Colliding(Projectile.Hitbox, player.Hitbox))
-            {
-                hitPlayers.Add(player);
-                Projectile.timeLeft = 180;
-            }
-        }*/
 
         AITimer++;
     }
