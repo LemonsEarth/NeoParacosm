@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using static Microsoft.Xna.Framework.MathHelper;
 
@@ -251,8 +252,14 @@ public partial class Dreadlord : ModNPC
                 Vector2 dustPos = ArenaCenter + new Vector2(Main.rand.NextFloat(-baseArenaDistance, baseArenaDistance), baseArenaDistance * Main.rand.NextFloat(0f, 0.9f));
                 Color dustColor = Main.rand.NextBool() ? Color.Lime : Color.Gold;
 
-                var dust = Dust.NewDustPerfect(dustPos, DustType<FireDust>(), -Vector2.UnitY * Main.rand.NextFloat(10, 20), Alpha: 160, newColor: dustColor, Scale: Main.rand.NextFloat(1f, 2f));
-                dust.customData = 2;
+                ParticleSystem.SpawnParticle(
+                    ParticleID.Gas,
+                    dustPos,
+                    -Vector2.UnitY * Main.rand.NextFloat(10, 20),
+                    opacity: 0.4f,
+                    color: dustColor,
+                    scale: Main.rand.NextFloat(1f, 2f)
+                    );
             }
             switch (Attack)
             {
@@ -2620,7 +2627,7 @@ public partial class Dreadlord : ModNPC
                         }
                     }
                 }
-                if (AttackTimer % 30 == 0)
+                if (AttackTimer % 30 == 0 && LemonUtils.IsHard())
                 {
                     if (LemonUtils.NotClient())
                     {
@@ -3086,14 +3093,14 @@ public partial class Dreadlord : ModNPC
                                 }
                             }
 
-                            if (AttackTimer % 10 == 0)
+                            /*if (AttackTimer % 10 == 0)
                             {
                                 for (int i = 0; i < 6; i++)
                                 {
                                     Vector2 pos = HeadCrimson.MiscPosition1 + Main.rand.NextVector2Circular(72, 72);
                                     Spawn_IchorSpheres(pos, Vector2.UnitY * 10, 60 + i * 5, 120, 1.01f);
                                 }
-                            }
+                            }*/
                         }
                         break;
                     case 6:

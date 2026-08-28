@@ -2885,19 +2885,19 @@ HolyBarrier: {
 BloodArtistSkull: {
 	DisplayName: Blood Artist's Skull
 	Tooltip:
-	'''
-	Killed enemies may spawn homing lost souls
-	Increases life regeneration
-	'''
+		'''
+		Killed enemies may spawn homing lost souls
+		Increases life regeneration
+		'''
 }
 
 ArcaneShell: {
 	DisplayName: Arcane Shell
 	Tooltip:
-	'''
-	Your minions may explode, dealing 4x their damage to nearby enemies
-	When a minion dies, it spawns a lost soul and you briefly gain increased damage and life regeneration
-	Killed enemies may spawn homing lost souls
-	Increases max minions by {0}
-	'''
+		'''
+		Your minions may explode, dealing 4x their damage to nearby enemies
+		When a minion dies, it spawns a lost soul and you briefly gain increased damage and life regeneration
+		Killed enemies may spawn homing lost souls
+		Increases max minions by {0}
+		'''
 }
