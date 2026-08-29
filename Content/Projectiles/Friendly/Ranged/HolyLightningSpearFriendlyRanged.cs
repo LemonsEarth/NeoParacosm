@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
-namespace NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
+namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
-public class HolyLightningSpear : ModProjectile
+public class HolyLightningSpearFriendlyRanged : ModProjectile
 {
     public override string Texture => ParacosmTextures.Empty100TexPath;
     int AITimer = 0;
@@ -25,14 +24,15 @@ public class HolyLightningSpear : ModProjectile
     {
         Projectile.width = 32;
         Projectile.height = 32;
-        Projectile.friendly = false;
-        Projectile.hostile = true;
+        Projectile.friendly = true;
+        Projectile.hostile = false;
         Projectile.timeLeft = 600;
-        Projectile.penetrate = -1;
+        Projectile.penetrate = 3;
         Projectile.Opacity = 1f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
         Projectile.tileCollide = false;
+        Projectile.DamageType = DamageClass.Ranged;
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
@@ -43,12 +43,11 @@ public class HolyLightningSpear : ModProjectile
     Color color = Color.LightYellow;
     float random = 0;
     Vector2 savedVelocity;
-    Player closestPlayer;
     public override void AI()
     {
         if (AITimer == 0)
         {
-            LemonUtils.ParticleBurst(20, Projectile.Center, ParticleID.Streak, 10, 10, 0.5f, 2f, Color.LightYellow);
+            LemonUtils.DustBurst(10, Projectile.Center, DustType<StreakDust>(), 5, 5, 0.5f, 2f, Color.LightYellow);
 
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
@@ -59,19 +58,11 @@ public class HolyLightningSpear : ModProjectile
 
         if (AITimer < WaitTime)
         {
-            if (closestPlayer == null || !closestPlayer.IsAlive())
-            {
-                closestPlayer = LemonUtils.GetClosestPlayer(Projectile.Center);
-            }
-
-            if (closestPlayer != null && closestPlayer.IsAlive())
-            {
-                Projectile.rotation = Projectile.Center.DirectionTo(closestPlayer.Center).ToRotation();
-            }
+            Projectile.rotation = savedVelocity.ToRotation();
         }
         else if (AITimer == WaitTime)
         {
-            Projectile.velocity = Vector2.UnitX.RotatedBy(Projectile.rotation) * savedVelocity.Length();
+            Projectile.velocity = savedVelocity;
             SoundEngine.PlaySound(ParacosmSFX.Thunder with { PitchRange = (0.5f, 0.8f), MaxInstances = 10, Volume = 0.6f }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_LightningBugZap with { PitchRange = (1f, 1.2f), Volume = 0.5f }, Projectile.Center);
         }
@@ -94,7 +85,7 @@ public class HolyLightningSpear : ModProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.DustBurst(20, Projectile.Center, DustType<StreakDust>(), 10, 10, 0.5f, 2f, Color.LightYellow);
+        LemonUtils.DustBurst(10, Projectile.Center, DustType<StreakDust>(), 5, 5, 0.5f, 2f, Color.LightYellow);
 
         //LemonUtils.DustCircle(Projectile.Center, 8, 10, DustID.TintableDustLighted, 5f, color: Color.Orange);
     }

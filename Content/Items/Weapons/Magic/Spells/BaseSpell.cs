@@ -46,10 +46,7 @@ public abstract class BaseSpell : ModItem
     public override void SetDefaults()
     {
         Item.DamageType = DamageClass.Default;
-        Item.useStyle = ItemUseStyleID.HoldUp;
         Item.noMelee = true;
-        Item.useTime = 30;
-        Item.useAnimation = 30;
     }
 
     public override bool? UseItem(Player player)

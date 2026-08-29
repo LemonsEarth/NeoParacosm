@@ -518,7 +518,7 @@ SpellTemplate: {
 		'''
 		[c/FFC400:This item is a Spell.]
 		[c/FFC400:Catalysts are used to cast Spells.]
-		[c/FFC400:Use this item to equip the spell. Right click to remove it.]
+		[c/FFC400:You can equip spells in the Spells menu.]
 		'''
 	Elements: "[c/FFC400:Elements: ]"
 }
@@ -655,7 +655,7 @@ LightningStrikeSpell: {
 
 MagicStarsSpell: {
 	DisplayName: Magic Stars
-	Tooltip: Summons 3 magic stars that follow you and attack nearby enemies
+	Tooltip: Summons magic stars that follow you and attack nearby enemies
 	NPLore:
 		'''
 		[c/78ACFF:A basic spell taught to novice sorcerers.]
@@ -1344,12 +1344,12 @@ DeathflameBallSpell: {
 }
 
 MerchantsBlessingSpell: {
-	DisplayName: Merchants Blessing
+	DisplayName: Merchant's Blessing
 	Tooltip: Chance for enemies to drop additional money on death
 }
 
 MinersBlessingSpell: {
-	DisplayName: Miners Blessing
+	DisplayName: Miner's Blessing
 	Tooltip: Increases mining and block placement speed
 }
 
@@ -2858,11 +2858,6 @@ GrassBladestormSpell: {
 	Tooltip: Summons a grass bladestorm to turn enemies into compost
 }
 
-SpellIcon: {
-	DisplayName: Spell Icon
-	Tooltip: ""
-}
-
 GoblinHutItem: {
 	DisplayName: Goblin Hut
 	Tooltip:
@@ -2900,4 +2895,9 @@ ArcaneShell: {
 		Killed enemies may spawn homing lost souls
 		Increases max minions by {0}
 		'''
+}
+
+TheStorm: {
+	DisplayName: The Storm
+	Tooltip: ""
 }

@@ -10,7 +10,7 @@ namespace NeoParacosm.Core.UI.Spells;
 public class SpellSlot : ItemSlotWrapper
 {
     public int slotID;
-    static Asset<Texture2D> spellIconTexture;
+    static Asset<Texture2D> SpellIconInactiveTexture;
     int context = 3;
     float scale = 1f;
 
@@ -22,7 +22,7 @@ public class SpellSlot : ItemSlotWrapper
 
     public override void OnInitialize()
     {
-        spellIconTexture = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellIcon");
+        SpellIconInactiveTexture = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellIconInactive");
         ValidItemFunc = item => item.IsAir || item.ModItem is BaseSpell;
     }
 
@@ -48,9 +48,9 @@ public class SpellSlot : ItemSlotWrapper
 
             // Match ItemSlot.Draw behavior: center the texture in the slot
             Vector2 position = dims.TopLeft() + new Vector2(dims.Width, dims.Height) * 0.5f;
-            Vector2 origin = spellIconTexture.Size() * 0.5f;
+            Vector2 origin = SpellIconInactiveTexture.Size() * 0.5f;
 
-            spriteBatch.Draw(spellIconTexture.Value, position, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(SpellIconInactiveTexture.Value, position, null, Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
         }
     }
 

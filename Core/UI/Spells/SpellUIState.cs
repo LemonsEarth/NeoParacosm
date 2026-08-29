@@ -21,8 +21,12 @@ public class SpellUIState : UIState
     static Asset<Texture2D> panelBG;
     static Asset<Texture2D> panelBorder;
     bool mainPanelVisible = true;
+    static Asset<Texture2D> SpellIconInactive;
+    static Asset<Texture2D> SpellIconActive;
     public override void OnInitialize()
     {
+        SpellIconInactive = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellIconInactive");
+        SpellIconActive = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellIconActive");
         panelBG = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellPanelBackground");
         panelBorder = Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellPanelBorder");
         MainPanel = new DraggableUIPanel(panelBG, panelBorder);
@@ -67,7 +71,7 @@ public class SpellUIState : UIState
             MainPanel.Append(SpellSlots[i]);
         }
 
-        EyeButton = new UIImageButton(Request<Texture2D>("NeoParacosm/Core/UI/Spells/SpellIcon"));
+        EyeButton = new UIImageButton(SpellIconInactive);
         EyeButton.Width.Set(40, 0f);
         EyeButton.Height.Set(40, 0f);
         EyeButton.HAlign = 0.88f;
@@ -79,6 +83,14 @@ public class SpellUIState : UIState
     private void EyeButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
     {
         mainPanelVisible = !mainPanelVisible;
+        if (mainPanelVisible)
+        {
+            EyeButton.SetImage(SpellIconActive);
+        }
+        else
+        {
+            EyeButton.SetImage(SpellIconInactive);
+        }
     }
 
     public override void OnActivate()
