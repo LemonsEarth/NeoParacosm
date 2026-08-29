@@ -7,6 +7,9 @@
 	<PropertyGroup>
     	<Nullable>disable</Nullable>
     </PropertyGroup>
+	<ItemGroup>
+	  <AdditionalFiles Include="Content\NPCs\Bosses\Grimstagg\Grimstagg.png" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <Reference Include="StructureHelper">
