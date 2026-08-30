@@ -71,7 +71,7 @@ public class SpellUIState : UIState
             MainPanel.Append(SpellSlots[i]);
         }
 
-        EyeButton = new UIImageButton(SpellIconInactive);
+        EyeButton = new UIImageButton(SpellIconActive);
         EyeButton.Width.Set(40, 0f);
         EyeButton.Height.Set(40, 0f);
         EyeButton.HAlign = 0.88f;

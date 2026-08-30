@@ -26,6 +26,11 @@ public partial class Grimstagg : ModNPC
         SoundEngine.PlaySound(ParacosmSFX.DragonRoar with { Pitch = bonusPitch, Volume = 0.5f, MaxInstances = 5 }, NPC.Center);
     }
 
+    public override void DrawBehind(int index)
+    {
+        Main.instance.DrawCacheNPCsMoonMoon.Add(index);
+    }
+
     public override void HitEffect(NPC.HitInfo hit)
     {
         if (Main.dedServ) return;
@@ -80,7 +85,6 @@ public partial class Grimstagg : ModNPC
         Left = 0, Front = 1, Right = 2
     }
     HeadFrame CurrentHeadFrame { get; set; } = HeadFrame.Left;
-    float HeadRotation { get; set; } = 0;
     void DrawHead(SpriteBatch sb, Vector2 screenPos, Color drawColor)
     {
         Rectangle frame = HeadTex.Frame(1, 3, 0, (int)CurrentHeadFrame);
@@ -91,7 +95,7 @@ public partial class Grimstagg : ModNPC
             headPos - screenPos,
             frame,
             drawColor,
-            HeadRotation,
+            headPos.DirectionTo(headLookAtPos).ToRotation(),
             frame.Size() * 0.5f,
             NPC.scale,
             LemonUtils.SpriteDirectionToSpriteEffects(NPC.spriteDirection),
@@ -99,37 +103,10 @@ public partial class Grimstagg : ModNPC
             );
     }
 
-    void DrawBalls(SpriteBatch sb, Vector2 screenPos, Color drawColor)
-    {
-        for (int i = -6; i <= 6; i++)
-        {
-            for (int j = 0; j < 15; j++)
-            {
-                Vector2 drawPos = NPC.Bottom;
-                drawPos += Vector2.UnitY.RotatedBy(-NPC.spriteDirection * MathHelper.Pi / 8f + i * MathHelper.Pi / 24f) * (j + 1) * 40;
-                int frameValue = (drawPos.ToTileCoordinates().X * drawPos.ToTileCoordinates().Y) % 5;
-                Rectangle frame = GrimBallTex.Frame(1, 5, 0, frameValue);
-                Color color = Color.Lerp(drawColor, Color.Black, j / 10f);
-                sb.Draw(
-                    GrimBallTex.Value,
-                    drawPos - screenPos,
-                    frame,
-                    color,
-                    0f,
-                    frame.Size() * 0.5f,
-                    NPC.scale,
-                    LemonUtils.SpriteDirectionToSpriteEffects(NPC.spriteDirection),
-                    0
-                    );
-            }
-        }
-    }
-
     public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
     {
         DrawBody(spriteBatch, screenPos, drawColor);
         DrawHead(spriteBatch, screenPos, drawColor);
-        DrawBalls(spriteBatch, screenPos, drawColor);
         return false;
     }
 

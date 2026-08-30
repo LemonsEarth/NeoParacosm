@@ -88,24 +88,44 @@ public partial class Grimstagg : ModNPC
     int phaseTransitionTimer = 0;
     #endregion
 
+    NPC MassNPC;
+    GrimstaggMass Mass => MassNPC.ModNPC as GrimstaggMass;
+
     Vector2 targetPosition = Vector2.Zero;
     Vector2 targetPosition2 = Vector2.Zero;
+
+    Vector2 headLookAtPos;
 
 #pragma warning disable IDE1006 // Naming Styles
     public Player player { get; private set; }
 #pragma warning restore IDE1006 // Naming Styles
 
+    void SpawnMass()
+    {
+        if (LemonUtils.NotClient())
+        {
+            MassNPC = NPC.NewNPCDirect(NPC.GetSource_FromAI(), NPC.Center, NPCType<GrimstaggMass>(), 0, ai1: NPC.whoAmI);
+            MassNPC.realLife = NPC.whoAmI;
+            NetMessage.SendData(MessageID.SyncTalkNPC, number: MassNPC.whoAmI);
+        }
+    }
+
     public override void AI()
     {
         NPC.rotation = 0;
-        HeadRotation = NPC.rotation;
-        //attackDurations2[3] = 2400;
-        //Main.NewText(AttackTimer);
+        NPC.spriteDirection = -1;
+        NPC.velocity.X = 1;
+        if (MassNPC == null || !MassNPC.active || MassNPC.type != NPCType<GrimstaggMass>())
+        {
+            SpawnMass();
+        }
+
         if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead || !Main.player[NPC.target].active)
         {
             NPC.TargetClosest(false);
         }
         player = Main.player[NPC.target];
+        headLookAtPos = player.Center;
 
         if (AITimer < INTRO_DURATION)
         {
@@ -116,16 +136,10 @@ public partial class Grimstagg : ModNPC
 
         DespawnCheck();
 
-        if (doPhaseTransition)
-        {
-            PhaseTransition();
-            return;
-        }
-
-
         AttackControl();
         AITimer++;
     }
+
 
     void AttackControl()
     {
