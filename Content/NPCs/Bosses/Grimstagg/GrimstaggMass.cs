@@ -15,17 +15,25 @@ public partial class GrimstaggMass : ModNPC
 {
     ref float AITimer => ref NPC.ai[0];
     ref float GrimstaggWhoAmI => ref NPC.ai[1];
+
+    public Vector2 MassTarget { get; private set; }
+
     NPC grimstagg;
 
     public override void AI()
     {
+        if (AITimer == 0)
+        {
+            MassTarget = NPC.Center;
+        }
         if (DespawnCheck())
         {
             return;
         }
 
         grimstagg = Main.npc[(int)GrimstaggWhoAmI];
-        NPC.Center = grimstagg.Center;
+        MassTarget = grimstagg.Center;
+        NPC.Center = grimstagg.Center + new Vector2(MathF.Sin(AITimer / 40f) * 100, 800);
         NPC.spriteDirection = -1;
         AITimer++;
     }

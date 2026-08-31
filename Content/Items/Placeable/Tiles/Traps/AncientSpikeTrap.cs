@@ -73,7 +73,7 @@ public class AncientSpikeTrap : ModTile
 
             // In a real mod you should be spawning projectiles that are both hostile and friendly to do damage to both players and NPC, as Terraria traps do.
             // Make sure to change velocity, projectile, damage, and knockback.
-            Projectile.NewProjectile(Wiring.GetProjectileSource(i, j), spawnPosition, new Vector2(horizontalDirection, verticalDirection) * 2f, ProjectileID.SpikyBallTrap, 20, 2f, -1);
+            Projectile.NewProjectile(Wiring.GetProjectileSource(i, j), spawnPosition, new Vector2(horizontalDirection + Main.rand.NextFloat(-1f, 1f), verticalDirection) * 2f, ProjectileID.SpikyBallTrap, 20, 2f, -1);
         }
     }
 }

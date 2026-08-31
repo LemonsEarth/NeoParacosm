@@ -16,6 +16,7 @@ public partial class GrimstaggMass : ModNPC
 {
     Asset<Texture2D> Tex => TextureAssets.Npc[Type];
     const int MAX_FRAMES = 8;
+    float BallWidth => 80f;
 
     public override void DrawBehind(int index)
     {
@@ -44,38 +45,49 @@ public partial class GrimstaggMass : ModNPC
     Vector2 GetBallPosition(int i, int j)
     {
         int iSign = LemonUtils.Sign(i, 1);
-        Vector2 startPos = NPC.Bottom;
-        Vector2 direction = Vector2.UnitY.RotatedBy(i * (Pi / 24f));
-        direction = direction.RotatedBy(Pi / 8f * -NPC.spriteDirection); // offsetting
+        Vector2 startPos = MassTarget + Vector2.UnitY * 64;
+        Vector2 direction = startPos.DirectionTo(NPC.Center).RotatedBy(i * (Pi / 24f));
+        //direction = direction.RotatedBy(Pi / 8f * -NPC.spriteDirection); // offsetting
 
-        float length = (j + 0.25f) * 40;
+        float length = (j + 0.25f) * (BallWidth * 0.5f);
 
         Vector2 bezierPointA = startPos;
         Vector2 bezierPointB = bezierPointA + direction * length;
 
         Vector2 bezierControlPoint = bezierPointA + direction * length * 0.8f;
-        Vector2 controlPointNormal = direction.RotatedBy(-iSign * PiOver2) * 150;
+
+        float normalLength = 150 * MathF.Min(RowCount / 15f, 2f);
+        Vector2 controlPointNormal = direction.RotatedBy(-iSign * PiOver2) * normalLength;
         bezierControlPoint += controlPointNormal;
 
-        float bezierT = j / 15f;
+        float bezierT = j / 14f;
         Vector2 drawPos = LemonUtils.BezierCurve(bezierPointA, bezierPointB, bezierControlPoint, bezierT);
-        drawPos += Main.rand.NextVector2Circular((j+1) * 0.5f, (j + 1) * 0.5f);
+        /*if (i == -7)
+        {
+            Dust.NewDustPerfect(drawPos, DustID.GemDiamond, Vector2.Zero).noGravity = true;
+        }*/
+        drawPos += Main.rand.NextVector2Circular((j + 1) * 0.5f, (j + 1) * 0.5f);
         return drawPos;
     }
 
+    int ColumnCount => 14;
+    int RowCount => (int)((NPC.Distance(MassTarget) / BallWidth) * 3f);
+
     void DrawBalls(SpriteBatch sb, Vector2 screenPos, Color drawColor)
     {
-        for (int i = -7; i <= 7; i++)
+        int columnCount = ColumnCount;
+        int rowCount = RowCount;
+        for (int i = -columnCount / 2; i <= columnCount / 2; i++)
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < rowCount; j++)
             {
                 Vector2 drawPos = GetBallPosition(i, j);
                 int frameValue = (int)MathF.Abs((i + j) % MAX_FRAMES);
                 Rectangle frame = Tex.Frame(1, MAX_FRAMES, 0, frameValue);
-                Color color = Color.Lerp(drawColor, Color.Black, j / 10f);
+                Color color = Color.Lerp(Color.White, Color.Black, j / (rowCount - 9f));
                 float rotationDeg = (i * j * j) % 360;
                 float rotation = ToRadians(rotationDeg);
-                float scaleMul =  1 + (j / 30f);
+                float scaleMul = 1 + (j / 30f);
                 sb.Draw(
                     Tex.Value,
                     drawPos - screenPos,

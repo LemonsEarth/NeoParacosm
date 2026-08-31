@@ -9,6 +9,8 @@ namespace NeoParacosm.Content.Items.Placeable.Special.Spawners;
 
 public abstract class SpawnerTile : ModTile
 {
+    public virtual float MineResistance => 8f;
+    public virtual int MinPickPower => 55;
     /// <summary>
     /// Should be GetInstance<YourSpawnerTileEntity>()
     /// </summary>
@@ -20,8 +22,8 @@ public abstract class SpawnerTile : ModTile
         //TileID.Sets.DontDrawTileSliced[Type] = true;
         TileID.Sets.IgnoresNearbyHalfbricksWhenDrawn[Type] = true;
         DustType = DustID.Stone;
-        MineResist = 8f;
-        MinPick = 55;
+        MineResist = MineResistance;
+        MinPick = MinPickPower;
 
         Main.tileSolid[Type] = false;
         Main.tileBlockLight[Type] = false;
