@@ -114,7 +114,7 @@ public partial class Grimstagg : ModNPC
     {
         NPC.rotation = 0;
         NPC.spriteDirection = -1;
-        NPC.velocity.X = 1;
+
         if (MassNPC == null || !MassNPC.active || MassNPC.type != NPCType<GrimstaggMass>())
         {
             SpawnMass();
@@ -133,7 +133,7 @@ public partial class Grimstagg : ModNPC
             AITimer++;
             return;
         }
-
+        NPC.MoveToPos(player.Center, 0.2f, 0.2f, 0.3f, 0.3f);
         DespawnCheck();
 
         AttackControl();

@@ -42,25 +42,30 @@ public partial class GrimstaggMass : ModNPC
 
     #region Drawing
 
+    float DistanceToTarget => NPC.Distance(MassTarget);
+
     Vector2 GetBallPosition(int i, int j)
     {
+        float distanceFactor = MathF.Min(DistanceToTarget / 1000f, 1f);
         int iSign = LemonUtils.Sign(i, 1);
         Vector2 startPos = MassTarget + Vector2.UnitY * 64;
-        Vector2 direction = startPos.DirectionTo(NPC.Center).RotatedBy(i * (Pi / 24f));
+        float rowCountFactor = MathF.Min(RowCount / 16f, 1f);
+        float rotUnit = 24f * (distanceFactor * 0.5f + 1);
+        Vector2 direction = startPos.DirectionTo(NPC.Center).RotatedBy(i * (Pi / rotUnit));
         //direction = direction.RotatedBy(Pi / 8f * -NPC.spriteDirection); // offsetting
 
-        float length = (j + 0.25f) * (BallWidth * 0.5f);
+        float length = (j + 0.25f) * (BallWidth * 0.5f) * distanceFactor;
 
         Vector2 bezierPointA = startPos;
         Vector2 bezierPointB = bezierPointA + direction * length;
 
-        Vector2 bezierControlPoint = bezierPointA + direction * length * 0.8f;
+        Vector2 bezierControlPoint = bezierPointA + direction * length * 0.75f * distanceFactor;
 
-        float normalLength = 150 * MathF.Min(RowCount / 15f, 2f);
+        float normalLength = 150;
         Vector2 controlPointNormal = direction.RotatedBy(-iSign * PiOver2) * normalLength;
         bezierControlPoint += controlPointNormal;
 
-        float bezierT = j / 14f;
+        float bezierT = j * 0.5f / 14f;
         Vector2 drawPos = LemonUtils.BezierCurve(bezierPointA, bezierPointB, bezierControlPoint, bezierT);
         /*if (i == -7)
         {
@@ -71,7 +76,7 @@ public partial class GrimstaggMass : ModNPC
     }
 
     int ColumnCount => 14;
-    int RowCount => (int)((NPC.Distance(MassTarget) / BallWidth) * 3f);
+    int RowCount => (int)((1000f / BallWidth) * 3f);
 
     void DrawBalls(SpriteBatch sb, Vector2 screenPos, Color drawColor)
     {

@@ -33,7 +33,7 @@ public partial class GrimstaggMass : ModNPC
 
         grimstagg = Main.npc[(int)GrimstaggWhoAmI];
         MassTarget = grimstagg.Center;
-        NPC.Center = grimstagg.Center + new Vector2(MathF.Sin(AITimer / 40f) * 100, 800);
+        NPC.MoveToPos(grimstagg.Center + Vector2.UnitY * 600, 0.2f, 0.2f, 0.2f, 0.2f);
         NPC.spriteDirection = -1;
         AITimer++;
     }
