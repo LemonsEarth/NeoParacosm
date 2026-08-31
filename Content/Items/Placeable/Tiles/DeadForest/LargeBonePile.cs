@@ -25,7 +25,7 @@ public class LargeBonePile : ModTile
         TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16 };
         TileObjectData.newTile.CoordinatePadding = 2;
         TileObjectData.newTile.LavaDeath = false;
-        TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.None | AnchorType.Platform, 6, 0);
+        TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Platform, 6, 0);
         TileObjectData.addTile(Type);
 
         AddMapEntry(new Color(100, 100, 100));

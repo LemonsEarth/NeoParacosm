@@ -2901,3 +2901,13 @@ TheStorm: {
 	DisplayName: The Storm
 	Tooltip: ""
 }
+
+GoblinScoutSpawnerTileItem: {
+	DisplayName: Goblin Scout Spawner Tile Item
+	Tooltip: ""
+}
+
+GoblinScoutWatchtowerSpawnerTileItem: {
+	DisplayName: Goblin Scout Watchtower Spawner Tile Item
+	Tooltip: ""
+}

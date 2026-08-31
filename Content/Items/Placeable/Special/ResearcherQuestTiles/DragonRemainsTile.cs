@@ -32,7 +32,7 @@ public class DragonRemainsTile : ModTile
         TileObjectData.newTile.CoordinatePadding = 2;
         TileObjectData.newTile.Origin = new Point16(7, 5);
         TileObjectData.newTile.LavaDeath = false;
-        TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.None | AnchorType.Platform, 15, 0);
+        TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Platform, 15, 0);
         TileObjectData.newTile.HookPostPlaceMyPlayer = GetInstance<DragonRemainsTileEntity>().Generic_HookPostPlaceMyPlayer;
         TileObjectData.addTile(Type);
 
