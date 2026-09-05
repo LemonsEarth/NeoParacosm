@@ -20,7 +20,9 @@ float4 DCEffect(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
     float2 normalizedPixelCoords = (uScreenResolution / uScreenResolution.y);
     float4 color = tex2D(uImage0, coords);
-    float4 noiseColor0 = tex2D(useImage1, (coords + float2(time / 25, 0) + (screenPos / (worldSize * 0.25))));
+    float2 noiseAdjustCoords = (coords + float2(time / 10, 0) + (screenPos / (worldSize * 0.25)));
+    noiseAdjustCoords.x *= 0.5;
+    float4 noiseColor0 = tex2D(useImage1, noiseAdjustCoords);
     float4 noiseColor = tex2D(useImage1, (coords + float2(time / 100, 0) + (screenPos / (worldSize * 0.1) + float2(noiseColor0.r, noiseColor0.r))));
     float2 centeredCoords = coords * 2.0 - 1.0;
     

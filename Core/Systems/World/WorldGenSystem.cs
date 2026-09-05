@@ -38,7 +38,6 @@ public class WorldGenSystem : ModSystem
 
     public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
     {
-        //InsertAfterTask(tasks, "Tile Cleanup", new CrimsonVillageGenPass("Building bloody settlement", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFleshBallGenPass("Amassing Corpses Into a Ball", 100f));
         InsertAfterTask(tasks, "Remove Broken Traps", new CrimsonBunkerGenPass("Constructing a Bunker from the Red Mist", 100f));
         InsertAfterTask(tasks, "Tile Cleanup", new CrimsonFireplaceHouseGenPass("Crimson Ruined Home", 100f));

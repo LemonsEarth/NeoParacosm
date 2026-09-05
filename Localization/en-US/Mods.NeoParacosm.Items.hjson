@@ -2903,11 +2903,25 @@ TheStorm: {
 }
 
 GoblinScoutSpawnerTileItem: {
-	DisplayName: Goblin Scout Spawner Tile Item
+	DisplayName: Goblin Scout Spawner
 	Tooltip: ""
 }
 
 GoblinScoutWatchtowerSpawnerTileItem: {
-	DisplayName: Goblin Scout Watchtower Spawner Tile Item
+	DisplayName: Goblin Scout Watchtower Spawner
 	Tooltip: ""
+}
+
+ExpeditionBoardItem: {
+	DisplayName: Expedition Board
+	Tooltip: ""
+}
+
+PaladinsHolyBarrier: {
+	DisplayName: Paladin's Holy Barrier
+	Tooltip:
+		'''
+		Slowly builds up damage reduction over time, up to {0}% after {1} seconds
+		When fully build up, getting hit emits a shockwave that repels nearby enemies and permanently reduces their defense by 3
+		'''
 }

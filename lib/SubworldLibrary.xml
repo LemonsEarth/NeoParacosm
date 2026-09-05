@@ -243,6 +243,11 @@
             Starts a subserver for the subworld with the specified ID, if one is not running already.
             </summary>
         </member>
+        <member name="M:SubworldLibrary.SubworldSystem.PreloadSubserver">
+            <summary>
+            Preloads an additional subserver. Most mods do not require more than the one preloaded by default, USE CAREFULLY!
+            </summary>
+        </member>
         <member name="M:SubworldLibrary.SubworldSystem.StopSubserver(System.Int32)">
             <summary>
             Stops a subserver for the subworld with the specified ID, if one is running.

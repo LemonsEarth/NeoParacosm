@@ -32,7 +32,7 @@ public class ResearcherQuest : ModSystem
 
     public override void PostUpdateWorld()
     {
-        if (Progress == ProgressState.NotDownedEvilBoss && NPC.downedBoss2)
+        if (Progress == ProgressState.NotDownedEvilBoss && NPC.downedBoss2 && DragonRemainsTileEntityPos != Point16.Zero)
         {
             Vector2 remainsPos = DragonRemainsTileEntityPos.ToWorldCoordinates();
             NPC.NewNPCDirect(new EntitySource_Misc("ResearcherEvilBossSpawn"), remainsPos + new Vector2(500, 0), NPCType<Researcher>());

@@ -3,6 +3,7 @@ using NeoParacosm.Content.Items.Placeable.Tiles.Depths;
 using NeoParacosm.Core.Globals.GlobalNPCs.Evil;
 using NeoParacosm.Core.Systems.Data;
 using Terraria.GameContent.Bestiary;
+using static Terraria.GameContent.Bestiary.BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 
 namespace NeoParacosm.Core.Systems.World;
 
@@ -33,18 +34,19 @@ public class BiomeSystem : ModSystem
         for (int i = 0; i < NPCLoader.NPCCount; i++)
         {
             BestiaryEntry entry = BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(i);
+
             foreach (var item in entry.Info)
             {
-                if (item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCorruption ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CorruptDesert ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CorruptUndergroundDesert ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CorruptIce ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundCrimson ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CrimsonDesert ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CrimsonUndergroundDesert ||
-                    item == BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.CrimsonIce)
+                if (item == Biomes.TheCorruption ||
+                    item == Biomes.UndergroundCorruption ||
+                    item == Biomes.CorruptDesert ||
+                    item == Biomes.CorruptUndergroundDesert ||
+                    item == Biomes.CorruptIce ||
+                    item == Biomes.TheCrimson ||
+                    item == Biomes.UndergroundCrimson ||
+                    item == Biomes.CrimsonDesert ||
+                    item == Biomes.CrimsonUndergroundDesert ||
+                    item == Biomes.CrimsonIce)
                 {
                     if (!AdaptsToDamageTypeNPC.EvilEnemiesBonus.Contains(i))
                     {

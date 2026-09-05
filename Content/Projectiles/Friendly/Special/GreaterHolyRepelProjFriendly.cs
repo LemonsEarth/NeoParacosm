@@ -8,7 +8,7 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public class HolyRepelProjFriendly : ModProjectile
+public class GreaterHolyRepelProjFriendly : ModProjectile
 {
     public override string Texture => "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
 
@@ -22,6 +22,11 @@ public class HolyRepelProjFriendly : ModProjectile
         ProjectileID.Sets.TrailCacheLength[Projectile.type] = 2;
         ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
         Main.projFrames[Type] = 1;
+    }
+
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+
     }
 
     public override void SetDefaults()
@@ -60,6 +65,10 @@ public class HolyRepelProjFriendly : ModProjectile
                     float distanceRatioClamped = MathHelper.Clamp(Distance / npc.Distance(Projectile.Center), 0, 1);
                     float force = distanceRatioClamped * Strength * npc.knockBackResist;
                     npc.velocity += dirFromProjectile * force;
+                    if (npc.defense >= 1)
+                    {
+                        npc.defense -= 1;
+                    }
                 }
             }
         }

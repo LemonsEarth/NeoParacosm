@@ -5,33 +5,41 @@ using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 
-public class HolyBarrier : ModItem
+public class PaladinsHolyBarrier : ModItem
 {
-    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(HolyBarrierPlayer.MaxDR, HolyBarrierPlayer.MaxTimer / 60);
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(PaladinsHolyBarrierPlayer.MaxDR, PaladinsHolyBarrierPlayer.MaxTimer / 60);
     public override void SetDefaults()
     {
         Item.width = 48;
         Item.height = 48;
         Item.accessory = true;
         Item.value = Item.buyPrice(0, 1);
-        Item.rare = ItemRarityID.Green;
+        Item.rare = ItemRarityID.Yellow;
         Item.defense = 3;
     }
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-        player.GetModPlayer<HolyBarrierPlayer>().Active = true;
+        player.GetModPlayer<PaladinsHolyBarrierPlayer>().Active = true;
     }
 
-    //override hold
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemType<HolyBarrier>(), 1);
+        recipe.AddIngredient(ItemID.PaladinsShield, 1);
+        recipe.AddIngredient(ItemID.Ectoplasm, 5);
+        recipe.AddTile(TileID.TinkerersWorkbench);
+        recipe.Register();
+    }
 }
 
-public class HolyBarrierPlayer : ModPlayer
+public class PaladinsHolyBarrierPlayer : ModPlayer
 {
     public bool Active { get; set; } = false;
     public int Timer { get; set; } = 0;
     public static int MaxTimer { get; set; } = 600;
-    public static float MaxDR { get; set; } = 12;
+    public static float MaxDR { get; set; } = 16;
     public override void ResetEffects()
     {
         Active = false;
@@ -55,7 +63,8 @@ public class HolyBarrierPlayer : ModPlayer
                         Player.RandomPos(8, 8),
                         -Vector2.UnitY * Main.rand.NextFloat(0.5f, 3),
                         Color.LightYellow,
-                        data0: 0.2f, data1: 0.25f);
+                        scale: 0.8f,
+                        data0: 0.1f, data1: 0.2f);
                 }
             }
 
@@ -75,21 +84,13 @@ public class HolyBarrierPlayer : ModPlayer
                     Player.GetSource_FromThis(),
                     Player.Center,
                     Vector2.Zero,
-                    ProjectileType<HolyRepelProjFriendly>(),
+                    ProjectileType<GreaterHolyRepelProjFriendly>(),
                     0, 0,
-                    ai0: 200,
+                    ai0: 250,
                     ai1: 10,
                     ai2: 3
                     );
         }
         Timer = 0;
-    }
-}
-
-public class HolyBarrierChestItem : ModSystem
-{
-    public override void PostWorldGen()
-    {
-        LemonUtils.GenerateItemInChest(ItemType<HolyBarrier>(), 2, 10, true);
     }
 }

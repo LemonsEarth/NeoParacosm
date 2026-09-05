@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using Terraria.UI;
 
-namespace NeoParacosm.Core.UI.Spells;
+namespace NeoParacosm.Core.UI.Expeditions;
 
-public class SpellUISystem : ModSystem
+public class ExpeditionUISystem : ModSystem
 {
     internal UserInterface userInterface;
-    internal SpellUIState UI;
+    internal ExpeditionUIState UI;
 
     GameTime lastUpdateGameTime;
 
@@ -16,7 +16,7 @@ public class SpellUISystem : ModSystem
         if (!Main.dedServ)
         {
             userInterface = new UserInterface();
-            UI = new SpellUIState();
+            UI = new ExpeditionUIState();
         }
     }
 
@@ -31,10 +31,6 @@ public class SpellUISystem : ModSystem
 
     public override void UpdateUI(GameTime gameTime)
     {
-        if (Main.gamePaused)
-        {
-            HideUI();
-        }
         lastUpdateGameTime = gameTime;
         if (userInterface?.CurrentState != null) userInterface.Update(gameTime);
     }
@@ -45,7 +41,7 @@ public class SpellUISystem : ModSystem
         if (mouseTextIndex != -1)
         {
             LegacyGameInterfaceLayer UILayer = new LegacyGameInterfaceLayer(
-                "NeoParacosm:SpellUI",
+                "NeoParacosm:ExpeditionUI",
                 () =>
                 {
                     if (lastUpdateGameTime != null && userInterface?.CurrentState != null)

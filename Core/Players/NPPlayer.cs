@@ -43,7 +43,7 @@ public class NPPlayer : ModPlayer
 
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
-        base.ProcessTriggers(triggersSet);
+
     }
 
     public override void SetControls()
@@ -163,6 +163,7 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
+        //WorldGen.PlaceTile(Player.Center.ToTileCoordinates().X + 10, Player.Center.ToTileCoordinates().Y, TileID.Grass);
         CloseResearcherUIIfTooFar();
         Timer++;
     }
