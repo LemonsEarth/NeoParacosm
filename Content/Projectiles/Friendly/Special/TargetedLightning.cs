@@ -137,6 +137,7 @@ public abstract class TargetedLightning : ModProjectile, IShaderProjectile
         ShaderData.Shader.Parameters["amplitudeMult"].SetValue(0.2f);
         ShaderData.UseOpacity(Projectile.Opacity);
         ShaderData.UseColor(currentColor * Projectile.Opacity);
+        ShaderData.Apply();
 
         Vector2 lightningScale = new(lightningLength, 1);
         Main.EntitySpriteDraw(

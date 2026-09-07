@@ -68,9 +68,11 @@ public class FireTestProj : ModProjectile, IShaderProjectile
         ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
         ShaderData.UseColor(Color.Green);
         ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1);
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
         ShaderData.UseColor(Color.White);
         ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1f);
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale * 0.5f, SpriteEffects.None, 0);
     }
 
