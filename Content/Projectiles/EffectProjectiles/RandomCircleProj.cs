@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.IO;
 using System.Linq;
 using Terraria.GameContent;
@@ -8,12 +10,14 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
-public class RandomCircleProj : ModProjectile
+public class RandomCircleProj : ModProjectile, IShaderProjectile
 {
     int AITimer = 0;
 
     public Color PulseColor { get; set; } = Color.White;
     public Entity EntityToFollow { get; set; } = null;
+
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("OutlineShader");
 
     public override void SetStaticDefaults()
     {
@@ -45,23 +49,20 @@ public class RandomCircleProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public void DrawProjectile()
+    {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        var shader = GameShaders.Misc["NeoParacosm:OutlineShader"];
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
         Main.EntitySpriteDraw(texture, drawPos - Vector2.UnitX * 30, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
         Main.EntitySpriteDraw(texture, drawPos + Vector2.UnitX * 30, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

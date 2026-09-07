@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Items.BossBags;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Items.Placeable.Relics;
+using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Data;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ public partial class Dreadlord : ModNPC
         NeckTextureCrimson = Request<Texture2D>("NeoParacosm/Content/NPCs/Bosses/Dreadlord/DreadlordNeckCrimson");
     }
 
+    static HashSet<int> ProjectileTypesToDestroy = new HashSet<int>();
     public override void SetStaticDefaults()
     {
         Main.npcFrameCount[NPC.type] = 1;
@@ -64,6 +66,10 @@ public partial class Dreadlord : ModNPC
             PortraitPositionYOverride = -150
         };*/
         NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+        ProjectileTypesToDestroy = [
+            ProjectileType<CursedFlameSphere>(), ProjectileType<IchorSphere>(), ProjectileType<IchorSpirit>(), ProjectileType<CursedFlameSpirit>(),
+            ProjectileType<GiantCursedFlameSphere>(), ProjectileType<LostSoulHostile>(), ProjectileType<CirclingCursedFlameSphere>(),
+            ProjectileType<CirclingIchorSphere>(),ProjectileType<CorruptPillar>(), ProjectileType<GiantMeatball>(), ProjectileType<ExplodingIchorSphere>()];
     }
 
     public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

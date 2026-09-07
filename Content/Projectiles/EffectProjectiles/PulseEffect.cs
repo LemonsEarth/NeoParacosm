@@ -1,6 +1,8 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.IO;
 using System.Linq;
 using Terraria.GameContent;
@@ -8,8 +10,10 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
-public class PulseEffect : ModProjectile
+public class PulseEffect : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("ShieldPulseShader");
+
     public override string Texture => "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
 
     int AITimer = 0;
@@ -108,27 +112,24 @@ public class PulseEffect : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public void DrawProjectile()
+    {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Shader.Parameters["time"].SetValue(AITimer / 60f);
-        shader.Shader.Parameters["alwaysVisible"].SetValue(false);
-        shader.Shader.Parameters["speed"].SetValue(Speed);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(ColorMult);
-        shader.Shader.Parameters["color"].SetValue(PulseColor.ToVector4());
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        shader.Apply();
+        ShaderData.Shader.Parameters["time"].SetValue(AITimer / 60f);
+        ShaderData.Shader.Parameters["alwaysVisible"].SetValue(false);
+        ShaderData.Shader.Parameters["speed"].SetValue(Speed);
+        ShaderData.Shader.Parameters["colorMultiplier"].SetValue(ColorMult);
+        ShaderData.Shader.Parameters["color"].SetValue(PulseColor.ToVector4());
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

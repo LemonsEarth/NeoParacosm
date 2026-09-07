@@ -1,14 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.Collections.Generic;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class MushroomGas : ModProjectile
+public class MushroomGas : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("GasShader");
     ref float AITimer => ref Projectile.ai[0];
     ref float RandomRot => ref Projectile.ai[1];
     int despawnTimer = 0;
@@ -85,32 +88,27 @@ public class MushroomGas : ModProjectile
         return false;
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public void DrawProjectile()
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = texture.Size() / 2;
-        Vector2 drawPos = Projectile.Center;
+        Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
-        //Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
-        var shader = GameShaders.Misc["NeoParacosm:GasShader"];
-        shader.Shader.Parameters["distance"].SetValue(1);
-        shader.Shader.Parameters["color"].SetValue(new Vector4(0, 0, 1, Projectile.Opacity));
-        shader.Shader.Parameters["velocity"].SetValue(new Vector2(0, 0.5f));
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        ShaderData.Shader.Parameters["distance"].SetValue(1);
+        ShaderData.Shader.Parameters["color"].SetValue(new Vector4(0, 0, 1, Projectile.Opacity));
+        ShaderData.Shader.Parameters["velocity"].SetValue(new Vector2(0, 0.5f));
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(Projectile.scale * 2, Projectile.scale), SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(Projectile.scale * 2, Projectile.scale), SpriteEffects.None, 0);
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
         return false;
     }
 
-
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)

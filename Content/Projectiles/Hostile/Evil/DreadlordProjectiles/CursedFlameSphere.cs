@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Players;
+using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Content.Projectiles;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
@@ -60,6 +64,15 @@ public class CursedFlameSphere : PrimProjectile
         Projectile.velocity *= SpeedUP;
         var dust = Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, Scale: 2f);
         dust.noGravity = true;
+        if (AITimer % 4 == 0)
+        {
+            ParticleSystem.SpawnParticle(
+                ParticleID.Gas,
+                Projectile.RandomPos(),
+                Vector2.Zero,
+                Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen)
+                );
+        }
         Projectile.rotation = MathHelper.ToRadians(AITimer * 12);
         AITimer++;
     }
@@ -83,8 +96,6 @@ public class CursedFlameSphere : PrimProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)

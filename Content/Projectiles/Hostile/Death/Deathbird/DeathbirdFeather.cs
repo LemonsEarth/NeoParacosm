@@ -1,14 +1,18 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 
-public class DeathbirdFeather : ModProjectile
+public class DeathbirdFeather : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("DeathbirdWingShader");
+
     int AITimer = 0;
     ref float TimeToFire => ref Projectile.ai[0];
     ref float IndicatorLength => ref Projectile.ai[1];
@@ -59,6 +63,27 @@ public class DeathbirdFeather : ModProjectile
 
     }
 
+    public void DrawProjectile()
+    {
+        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        ShaderData.Shader.Parameters["uTime"].SetValue(AITimer);
+        ShaderData.Shader.Parameters["tolerance"].SetValue(0.5f);
+        ShaderData.Shader.Parameters["darkColorBoost"].SetValue(0f);
+        ShaderData.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+
+        // First the "outline"/afterimage/effect wings
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.75f);
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.2f, SpriteEffects.None, 0);
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.2f, SpriteEffects.None, 0);
+
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.75f);
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
+        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
+    }
+
     public override bool PreDraw(ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
@@ -69,37 +94,11 @@ public class DeathbirdFeather : ModProjectile
         float indicatorScale = indicatorPercentComplete * 5 * IndicatorLength;
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White * indicatorPercentComplete * 0.35f, Projectile.rotation, indicatorOrigin, new Vector2(1, indicatorScale), SpriteEffects.None, 0);
 
-        var shader = GameShaders.Misc["NeoParacosm:DeathbirdWingShader"];
-        shader.Shader.Parameters["uTime"].SetValue(AITimer);
-        shader.Shader.Parameters["tolerance"].SetValue(0.5f);
-        shader.Shader.Parameters["darkColorBoost"].SetValue(0f);
-        shader.Shader.Parameters["color"].SetValue(Color.White.ToVector4());
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.75f);
-
-        // First the "outline"/afterimage/effect wings
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
-        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.2f, SpriteEffects.None, 0);
-        shader.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
-        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.2f, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Shader.Parameters["moveSpeed"].SetValue(0.75f);
-        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
-        shader.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
-        Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        this.QueueToShaderRenderer();
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

@@ -1,19 +1,21 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.IO;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.EffectProjectiles;
 
-public class FireTestProj : ModProjectile
+public class FireTestProj : ModProjectile, IShaderProjectile
 {
-    public override string Texture => ParacosmTextures.Empty100TexPath;
-
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("FireShader");
     int AITimer = 0;
     ref float Timeleft => ref Projectile.ai[0];
     ref float Scale => ref Projectile.ai[1];
+    public override string Texture => ParacosmTextures.Empty100TexPath;
 
     public override void SendExtraAI(BinaryWriter writer)
     {
@@ -55,30 +57,24 @@ public class FireTestProj : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        // The flame is comprised of two flames
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public void DrawProjectile()
+    {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        var shader = GameShaders.Misc["NeoParacosm:FireShader"];
-        shader.UseImage1(ParacosmTextures.NoiseTexture);
-        shader.UseColor(Color.Green);
-        shader.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        shader.Apply();
+        ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
+        ShaderData.UseColor(Color.Green);
+        ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1);
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale, SpriteEffects.None, 0);
-        shader.UseColor(Color.White);
-        shader.Shader.Parameters["flameHeightDownward"].SetValue(1f);
-        shader.Apply();
+        ShaderData.UseColor(Color.White);
+        ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1f);
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Scale * 0.5f, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-        return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        //LemonUtils.DrawGlow(Projectile.Center, Color.Black, Projectile.Opacity, Projectile.scale);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

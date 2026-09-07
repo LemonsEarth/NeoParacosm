@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles;
+using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using ReLogic.Content;
 using System.IO;
 using Terraria.Audio;
@@ -8,8 +11,10 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Researcher;
 
-public class SavLaser : ModProjectile
+public class SavLaser : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("LaserShader");
+
     int AITimer = 0;
     ref float Size => ref Projectile.ai[0];
     const string NoisePath = "NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture";
@@ -92,27 +97,24 @@ public class SavLaser : ModProjectile
 
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public void DrawProjectile()
     {
-        if (AITimer < 2) return false;
+        if (AITimer < 2) return;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(texture.Size().X / 2, 0f);
-        Vector2 drawPos = Projectile.Center;
+        Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
-        //Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
-        var shader = GameShaders.Misc["NeoParacosm:LaserShader"];
-        shader.Shader.Parameters["moveSpeed"].SetValue(-2f);
-        shader.Shader.Parameters["time"].SetValue(AITimer / 30f);
-        shader.Shader.Parameters["centerColor"].SetValue(Color.LightBlue.ToVector4());
-        shader.Shader.Parameters["endColor"].SetValue(Color.Blue.ToVector4());
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(-2f);
+        ShaderData.Shader.Parameters["time"].SetValue(AITimer / 30f);
+        ShaderData.Shader.Parameters["centerColor"].SetValue(Color.LightBlue.ToVector4());
+        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Blue.ToVector4());
         Main.instance.GraphicsDevice.Textures[1] = Noise.Value;
-        shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Color.Blue, Projectile.rotation, drawOrigin, new Vector2(scale, laserLength * MathHelper.Clamp(Size, 1, 10)), SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.Blue, Projectile.rotation, drawOrigin, new Vector2(scale, laserLength * MathHelper.Clamp(Size, 1, 10)), SpriteEffects.None, 0);
+    }
 
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
         return false;
     }
 

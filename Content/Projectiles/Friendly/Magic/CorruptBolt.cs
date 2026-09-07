@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Projectiles;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
+using Terraria.Graphics.Shaders;
+
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
 public class CorruptBolt : PrimProjectile
@@ -64,7 +68,5 @@ public class CorruptBolt : PrimProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

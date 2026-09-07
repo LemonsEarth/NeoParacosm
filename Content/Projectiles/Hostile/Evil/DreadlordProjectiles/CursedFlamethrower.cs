@@ -1,4 +1,5 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Core.Systems.Particles;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
@@ -54,6 +55,16 @@ public class CursedFlamethrower : ModProjectile
         if (AITimer % 10 == 0)
         {
             Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.CursedTorch, Scale: Main.rand.NextFloat(2.5f, 4f)).noGravity = true;
+        }
+
+        if (Main.rand.NextBool(10))
+        {
+            ParticleSystem.SpawnParticle(
+                ParticleID.Gas,
+                Projectile.RandomPos(),
+                Vector2.Zero,
+                Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen)
+                );
         }
 
         Projectile.velocity *= SlowDownRate;

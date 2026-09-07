@@ -1,14 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class CursedLaserSphere : PrimProjectile
+public class CursedLaserSphere : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("SphereShader");
     int AITimer = 0;
     ref float TimeLeft => ref Projectile.ai[0];
     ref float StartRotation => ref Projectile.ai[1];
@@ -88,20 +91,21 @@ public class CursedLaserSphere : PrimProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        //Main.NewText(Main.GlobalTimeWrappedHourly);
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public void DrawProjectile()
+    {
         Texture2D texture = ParacosmTextures.NoiseTexture.Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;
 
-        var shader = GameShaders.Misc["NeoParacosm:SphereShader"];
-        shader.Shader.Parameters["moveSpeed"].SetValue(-2f);
-        shader.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
-        shader.Shader.Parameters["endColor"].SetValue(Color.Lime.ToVector4());
-        Main.spriteBatch.End();
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.2f);
+        ShaderData.Shader.Parameters["velocity"].SetValue(Vector2.UnitX.RotatedBy(Projectile.rotation - MathHelper.Pi));
+        ShaderData.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
+        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Lime.ToVector4());
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
-        shader.Apply();
         Main.EntitySpriteDraw(
             texture,
             Projectile.Center - Main.screenPosition,
@@ -112,16 +116,10 @@ public class CursedLaserSphere : PrimProjectile
             Projectile.scale,
             SpriteEffects.None
             );
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
-        //LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
-        return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)

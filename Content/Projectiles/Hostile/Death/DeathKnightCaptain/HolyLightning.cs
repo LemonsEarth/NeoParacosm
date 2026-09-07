@@ -1,16 +1,20 @@
-﻿using NeoParacosm.Content.Dusts;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
 
-public class HolyLightning : ModProjectile
+public class HolyLightning : ModProjectile, IShaderProjectile
 {
     public override string Texture => ParacosmTextures.Empty100TexPath;
     ref float AITimer => ref Projectile.ai[0];
     ref float Length => ref Projectile.ai[1];
+
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("BigLightningShader");
 
     public override void SetStaticDefaults()
     {
@@ -98,24 +102,18 @@ public class HolyLightning : ModProjectile
 
     float lightningLength => Length / 100f;
 
-    void DrawLightning(float randomMul = 1, float segCountMul = 1)
+    void DrawLightningShader(float randomMul = 1, float segCountMul = 1)
     {
-        LemonUtils.DrawGlow(Projectile.Center, Color.Gold, Projectile.Opacity + 0.3f, Projectile.scale * 2);
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity + 0.3f, Projectile.scale);
-
-        var shader = GameShaders.Misc["NeoParacosm:BigLightningShader"];
-        shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
-        shader.Shader.Parameters["segmentCount"].SetValue(3);
-        shader.Shader.Parameters["time"].SetValue(random * randomMul);
-        shader.Shader.Parameters["tolerance"].SetValue(0.04f);
-        shader.Shader.Parameters["amplitudeMult"].SetValue(0.2f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
-        shader.UseOpacity(Projectile.Opacity);
-        shader.UseColor(color * Projectile.Opacity);
-        shader.Apply();
+        ShaderData.Shader.Parameters["lightningLength"].SetValue(lightningLength);
+        ShaderData.Shader.Parameters["segmentCount"].SetValue(3);
+        ShaderData.Shader.Parameters["time"].SetValue(random * randomMul);
+        ShaderData.Shader.Parameters["tolerance"].SetValue(0.04f);
+        ShaderData.Shader.Parameters["amplitudeMult"].SetValue(0.2f);
+        ShaderData.UseOpacity(Projectile.Opacity);
+        ShaderData.UseColor(color * Projectile.Opacity);
+        ShaderData.Apply();
 
         Vector2 lightningScale = new(lightningLength, 1);
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
         Main.EntitySpriteDraw(
             ParacosmTextures.Empty100Tex.Value,
             Projectile.Center - Main.screenPosition,
@@ -125,13 +123,6 @@ public class HolyLightning : ModProjectile
             Vector2.UnitY * ParacosmTextures.Empty100Tex.Height() * 0.5f,
             lightningScale,
             LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
-
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
-
-        LemonUtils.DrawGlow(targetPos, Color.Gold, Projectile.Opacity + 0.3f, Projectile.scale * 2);
-        LemonUtils.DrawGlow(targetPos, Color.White, Projectile.Opacity + 0.3f, Projectile.scale);
-
     }
 
     public override bool PreDraw(ref Color lightColor)
@@ -140,13 +131,21 @@ public class HolyLightning : ModProjectile
         {
             return false;
         }
-        DrawLightning(1f, 1);
+        LemonUtils.DrawGlow(Projectile.Center, Color.Gold, Projectile.Opacity + 0.3f, Projectile.scale * 2);
+        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity + 0.3f, Projectile.scale);
+        this.QueueToShaderRenderer();
         return false;
+    }
+
+    public void DrawProjectile()
+    {
+        DrawLightningShader(1f, 1);
+
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
+        LemonUtils.DrawGlow(targetPos, Color.Gold, Projectile.Opacity + 0.3f, Projectile.scale * 2);
+        LemonUtils.DrawGlow(targetPos, Color.White, Projectile.Opacity + 0.3f, Projectile.scale);
     }
 }

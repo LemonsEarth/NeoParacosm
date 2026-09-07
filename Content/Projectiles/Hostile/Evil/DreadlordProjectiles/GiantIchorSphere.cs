@@ -1,13 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class GiantIchorSphere : PrimProjectile
+public class GiantIchorSphere : PrimProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("SphereShader");
     int AITimer = 0;
     ref float Angle => ref Projectile.ai[0];
     ref float SpeedUP => ref Projectile.ai[1];
@@ -79,20 +82,18 @@ public class GiantIchorSphere : PrimProjectile
         AITimer++;
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public void DrawProjectile()
     {
         PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
         Texture2D texture = ParacosmTextures.NoiseTexture.Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;
 
-        var shader = GameShaders.Misc["NeoParacosm:SphereShader"];
-        shader.UseImage1(ParacosmTextures.NoiseTexture);
-        shader.Shader.Parameters["distance"].SetValue(0.7f);
-        shader.Shader.Parameters["borderWidth"].SetValue(0.3f);
-        shader.Shader.Parameters["uTime"].SetValue(AITimer);
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.2f);
+        ShaderData.Shader.Parameters["velocity"].SetValue(Vector2.UnitX.RotatedBy(Projectile.rotation - MathHelper.Pi));
+        ShaderData.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
+        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Lime.ToVector4());
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         Main.spriteBatch.Draw(texture,
             new Rectangle((int)(Projectile.Center.X - Main.screenPosition.X), (int)(Projectile.Center.Y - Main.screenPosition.Y), (int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale)),
             null,
@@ -101,16 +102,17 @@ public class GiantIchorSphere : PrimProjectile
             drawOrigin,
             SpriteEffects.None,
             0);
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        ProjectileShaderRenderer.Instance.Queue(this);
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)

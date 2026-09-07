@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;
@@ -9,8 +11,9 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
-public class IchorLaser : ModProjectile
+public class IchorLaser : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("DreadlordLaserShader");
     public override string Texture => ParacosmTextures.Empty100TexPath;
 
     int AITimer = 0;
@@ -110,33 +113,28 @@ public class IchorLaser : ModProjectile
 
     }
 
-    public override bool PreDraw(ref Color lightColor)
+    public void DrawProjectile()
     {
-        if (AITimer < 2) return false;
+        if (AITimer < 2) return;
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = new Vector2(texture.Size().X / 2, 0f);
         Vector2 drawPos = Projectile.Center;
 
-        //Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
-        var shader = GameShaders.Misc["NeoParacosm:DreadlordLaserShader"];
-        shader.Shader.Parameters["moveSpeed"].SetValue(-2f);
-        shader.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
-        shader.Shader.Parameters["endColor"].SetValue(Color.Gold.ToVector4());
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(-2f);
+        ShaderData.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
+        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Gold.ToVector4());
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
         Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(scale, laserLength * MathHelper.Clamp(Size, 1, 10)), SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+    }
 
+    public override bool PreDraw(ref Color lightColor)
+    {
+        ProjectileShaderRenderer.Instance.Queue(this);
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)

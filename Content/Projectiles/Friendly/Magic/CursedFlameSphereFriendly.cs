@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Common.Utils.Prim;
+using NeoParacosm.Content.Projectiles;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -73,8 +76,6 @@ public class CursedFlameSphereFriendly : PrimProjectile
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
     }
 
 

@@ -1,13 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
-public class HolyLightningSpearFriendlyRanged : ModProjectile
+public class HolyLightningSpearFriendlyRanged : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("BigLightningShader");
+
     public override string Texture => ParacosmTextures.Empty100TexPath;
     int AITimer = 0;
     ref float TimeLeft => ref Projectile.ai[0];
@@ -94,19 +98,16 @@ public class HolyLightningSpearFriendlyRanged : ModProjectile
 
     void DrawLightning(float randomMul = 1, float segCountMul = 1)
     {
-        var shader = GameShaders.Misc["NeoParacosm:BigLightningShader"];
-        shader.Shader.Parameters["lightningLength"].SetValue(lightningLength);
-        shader.Shader.Parameters["segmentCount"].SetValue(6);
-        shader.Shader.Parameters["time"].SetValue(random * randomMul + AITimer * 10);
-        shader.Shader.Parameters["tolerance"].SetValue(0.02f);
-        shader.Shader.Parameters["amplitudeMult"].SetValue(0.15f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
-        shader.UseOpacity(Projectile.Opacity);
-        shader.UseColor(color * Projectile.Opacity);
-        shader.Apply();
+        ShaderData.Shader.Parameters["lightningLength"].SetValue(lightningLength);
+        ShaderData.Shader.Parameters["segmentCount"].SetValue(6);
+        ShaderData.Shader.Parameters["time"].SetValue(random * randomMul + AITimer * 10);
+        ShaderData.Shader.Parameters["tolerance"].SetValue(0.02f);
+        ShaderData.Shader.Parameters["amplitudeMult"].SetValue(0.15f); // empty texture is much larger than weapon sprite, so we're making the lightning smaller
+        ShaderData.UseOpacity(Projectile.Opacity);
+        ShaderData.UseColor(color * Projectile.Opacity);
+        ShaderData.Apply();
 
         Vector2 lightningScale = new(lightningLength, 1);
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile(effect: shader.Shader);
         for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
         {
             Vector2 drawPos = Projectile.oldPos[k] + new Vector2(Projectile.width, Projectile.height) * 0.5f - Main.screenPosition;
@@ -123,24 +124,23 @@ public class HolyLightningSpearFriendlyRanged : ModProjectile
             lightningScale,
             LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
 
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
+
+    }
+
+    public void DrawProjectile()
+    {
+        if (AITimer <= 2) return;
+        DrawLightning(Main.rand.NextFloat(0.5f, 5f), Main.rand.NextFloat(0.5f, 5f));
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        if (AITimer <= 2)
-        {
-            return false;
-        }
         LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity * 0.5f, Projectile.scale);
-        DrawLightning(Main.rand.NextFloat(0.5f, 5f), Main.rand.NextFloat(0.5f, 5f));
+        ProjectileShaderRenderer.Instance.Queue(this);
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        LemonUtils.BeginSpriteBatchProjectile();
     }
 }

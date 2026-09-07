@@ -1801,15 +1801,21 @@ public partial class Dreadlord : ModNPC
                 LerpScale(0.5f, 1 / 30f);
                 NPC.MoveToPos(targetPosition, 0.7f, 0.7f, 0.5f, 0.5f);
                 break;
-            case > 120: // enable lasers, grow to normal size
+            case > 150:
                 EnableLasers(true);
                 LerpScale(1f, 1 / 10f);
-                NPC.MoveToPos(targetPosition, 0.7f, 0.7f, 0.5f, 0.5f);
+                break;
+            case 150:
+                NPC.velocity = -NPC.DirectionTo(player.Center) * 30;
+                break;
+            case > 120: // enable lasers, grow to normal size
+                LerpScale(1f, 1 / 10f);
+                NPC.velocity *= 0.96f;
                 break;
             case 120: // Dash
                 EnableLasers(false);
                 PlayRoar();
-                NPC.velocity = NPC.DirectionTo(player.Center) * 30;
+                NPC.velocity = NPC.DirectionTo(player.Center) * 50;
                 break;
             case > 90: // Open mouth depending on AttackCount
                 if (AttackCount % 2 == 0)
@@ -2392,7 +2398,8 @@ public partial class Dreadlord : ModNPC
                 shaderIsActive = true;
                 break;
             case > 540: // Move up and fade out
-                NPC.velocity = -Vector2.UnitY * 10;
+                NPC.velocity.X *= 0.9f;
+                NPC.velocity.Y -= 0.2f;
                 LerpScale(0.1f, 1 / 30f);
                 NPC.Opacity = Lerp(NPC.Opacity, 0f, 1 / 30f);
                 break;
@@ -2421,10 +2428,13 @@ public partial class Dreadlord : ModNPC
                 targetPosition = player.Center;
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 20f);
                 break;
+            case 480:
+                NPC.velocity = -NPC.DirectionTo(targetPosition) * 10;
+                break;
             case > 450: // Keep fading in, move away from player
                 LerpScale(1f, 1 / 20f);
                 NPC.Opacity = Lerp(NPC.Opacity, 1f, 1 / 20f);
-                NPC.velocity = -NPC.DirectionTo(targetPosition) * 5;
+                NPC.velocity *= 0.92f;
                 break;
             case 450: // Dash
                 NPC.velocity = NPC.DirectionTo(targetPosition) * 50;
@@ -2439,7 +2449,6 @@ public partial class Dreadlord : ModNPC
                 }
                 break;
             case 420: // Teleport around player again
-                NPC.velocity = Vector2.Zero;
                 PlayRoar();
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 if (LemonUtils.NotClient())
@@ -2449,13 +2458,14 @@ public partial class Dreadlord : ModNPC
                 NPC.netUpdate = true;
                 AuraBurst(100, Vector2.UnitY * Main.rand.NextFloat(-20, -10));
                 targetPosition = player.Center;
+                NPC.velocity = -NPC.DirectionTo(targetPosition) * 20;
                 break;
             case > 405: // Move away from player, track via targetPosition
                 targetPosition = player.Center;
-                NPC.velocity = -NPC.DirectionTo(targetPosition) * 5;
+                NPC.velocity *= 0.96f;
                 break;
             case > 380: // Move away from saved target position
-                NPC.velocity = -NPC.DirectionTo(targetPosition) * 5;
+                NPC.velocity *= 0.96f;
                 break;
             case 380: // Dash
                 NPC.velocity = NPC.DirectionTo(targetPosition) * 50;
@@ -2575,6 +2585,7 @@ public partial class Dreadlord : ModNPC
         switch (AttackTimer)
         {
             case 960:
+                KillProjectiles();
                 LemonUtils.DustBurst(150, NPC.Center, DustID.GreenTorch, 40, 40, 2.5f, 3.5f);
                 LemonUtils.DustBurst(150, NPC.Center, DustID.GemTopaz, 40, 40, 2.5f, 3.5f);
                 if (LemonUtils.NotClient())
@@ -3153,9 +3164,9 @@ public partial class Dreadlord : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-        if (Phase == 2)
+        if (Phase == 1)
         {
-            //Attack = 5;
+            //Attack = 3;
         }
         if (Phase == 0 && NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
@@ -3469,6 +3480,17 @@ public partial class Dreadlord : ModNPC
             NPC.active = false;
             NPC.life = 0;
             NetMessage.SendData(MessageID.SyncNPC, number: NPC.whoAmI);
+        }
+    }
+
+    void KillProjectiles()
+    {
+        foreach (var proj in Main.ActiveProjectiles)
+        {
+            if (ProjectileTypesToDestroy.Contains(proj.type))
+            {
+                proj.Kill();
+            }
         }
     }
 }

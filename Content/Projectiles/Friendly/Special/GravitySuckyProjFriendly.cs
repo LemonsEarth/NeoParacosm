@@ -1,21 +1,24 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Special;
 
-public class GravitySuckyProjFriendly : ModProjectile
+public class GravitySuckyProjFriendly : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("ShieldPulseShader");
     public override string Texture => "NeoParacosm/Common/Assets/Textures/Misc/Empty100Tex";
 
     int AITimer = 0;
-    ref float distance => ref Projectile.ai[0];
-    ref float strengthDenominator => ref Projectile.ai[1];
-    ref float duration => ref Projectile.ai[2];
+    ref float Distance => ref Projectile.ai[0];
+    ref float StrengthDenominator => ref Projectile.ai[1];
+    ref float Duration => ref Projectile.ai[2];
 
     public override void SetStaticDefaults()
     {
@@ -40,23 +43,23 @@ public class GravitySuckyProjFriendly : ModProjectile
     {
         if (AITimer == 0)
         {
-            for (int i = 0; i < distance / 20f; i++)
+            for (int i = 0; i < Distance / 20f; i++)
             {
-                Vector2 dustPos = Projectile.Center + Main.rand.NextVector2CircularEdge(distance, distance);
+                Vector2 dustPos = Projectile.Center + Main.rand.NextVector2CircularEdge(Distance, Distance);
                 Vector2 dir = dustPos.DirectionTo(Projectile.Center);
-                Dust.NewDustPerfect(dustPos, DustType<StreakDust>(), dir * Main.rand.NextFloat(distance / 20f, distance / 15f)).noGravity = true;
+                Dust.NewDustPerfect(dustPos, DustType<StreakDust>(), dir * Main.rand.NextFloat(Distance / 20f, Distance / 15f)).noGravity = true;
             }
             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen with { PitchRange = (-0.9f, -0.8f), Volume = 0.7f, MaxInstances = 3 }, Projectile.Center);
             SoundEngine.PlaySound(SoundID.DD2_EtherianPortalOpen with { PitchRange = (0.8f, 0.9f), Volume = 0.7f, MaxInstances = 3 }, Projectile.Center);
         }
 
-        if (AITimer <= duration)
+        if (AITimer <= Duration)
         {
             foreach (var npc in Main.ActiveNPCs)
             {
-                if (npc.CanBeChasedBy() && npc.knockBackResist > 0f && npc.Distance(Projectile.Center) < distance)
+                if (npc.CanBeChasedBy() && npc.knockBackResist > 0f && npc.Distance(Projectile.Center) < Distance)
                 {
-                    float force = (npc.Distance(Projectile.Center) / strengthDenominator) * npc.knockBackResist;
+                    float force = (npc.Distance(Projectile.Center) / StrengthDenominator) * npc.knockBackResist;
                     Vector2 dirToProjectile = (Projectile.Center - npc.Center).SafeNormalize(Vector2.Zero);
                     npc.velocity += dirToProjectile * force;
                 }
@@ -73,33 +76,31 @@ public class GravitySuckyProjFriendly : ModProjectile
     float speed = -2f;
     float cycleDuration = 100f;
     Color color = new Color(0.7f, 0.0f, 1f, 1f);
-    public override bool PreDraw(ref Color lightColor)
+
+    public void DrawProjectile()
     {
         if (AITimer > cycleDuration / Math.Abs(speed))
         {
-            return false;
+            return;
         }
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        var shader = GameShaders.Misc["NeoParacosm:ShieldPulseShader"];
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Shader.Parameters["time"].SetValue(AITimer / cycleDuration);
-        shader.Shader.Parameters["alwaysVisible"].SetValue(false);
-        shader.Shader.Parameters["speed"].SetValue(speed);
-        shader.Shader.Parameters["colorMultiplier"].SetValue(5f);
-        shader.Shader.Parameters["color"].SetValue(color.ToVector4());
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
-        shader.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, distance / 50f, SpriteEffects.None, 0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+        ShaderData.Shader.Parameters["time"].SetValue(AITimer / cycleDuration);
+        ShaderData.Shader.Parameters["alwaysVisible"].SetValue(false);
+        ShaderData.Shader.Parameters["speed"].SetValue(speed);
+        ShaderData.Shader.Parameters["colorMultiplier"].SetValue(5f);
+        ShaderData.Shader.Parameters["color"].SetValue(color.ToVector4());
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Distance / 50f, SpriteEffects.None, 0);
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
         return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 }

@@ -153,7 +153,7 @@ public class SupremeBallOHurtHeldProj : ModProjectile
             Projectile.damage = (Projectile.originalDamage / 2) * (chargeCount + 1);
 
             Vector2 controlPos = playerCenter + (savedMousePos - playerCenter) / 2 - playerCenter.DirectionTo(savedMousePos).RotatedBy(MathHelper.PiOver2 * player.direction) * controlPointOffset;
-            Projectile.Center = LemonUtils.BezierCurve(playerCenter, savedMousePos, controlPos, lerpValue * player.GetAttackSpeed(DamageClass.Melee) / (releasedDuration / 2));
+            Projectile.Center = LemonUtils.BezierCurve(playerCenter, savedMousePos, controlPos, lerpValue / (releasedDuration / 2));
 
             if (releasedTimer > releasedDuration || (Projectile.Center.Distance(playerCenter) < 16))
             {

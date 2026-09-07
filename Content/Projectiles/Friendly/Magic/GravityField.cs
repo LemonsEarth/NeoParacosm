@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Dusts;
+using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -9,8 +11,9 @@ using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class GravityField : ModProjectile
+public class GravityField : ModProjectile, IShaderProjectile
 {
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("GravityForceShader");
     public override string Texture => ParacosmTextures.Empty100TexPath;
     int AITimer = 0;
     ref float Duration => ref Projectile.ai[0];
@@ -107,20 +110,19 @@ public class GravityField : ModProjectile
     Color color = new Color(0.7f, 0.0f, 1f, 0);
     public override bool PreDraw(ref Color lightColor)
     {
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public void DrawProjectile()
+    {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawOrigin = texture.Size() / 2;
         Vector2 drawPos = Projectile.Center;
         color.A = (byte)(Projectile.Opacity * 255);
-        //Main.EntitySpriteDraw(texture, drawPos - Main.screenPosition, texture.Frame(1, 3, 0, 0), Color.White, Projectile.rotation, drawOrigin, Projectile.scale, SpriteEffects.None);
-        var shader = GameShaders.Misc["NeoParacosm:GravityForceShader"];
-        shader.Shader.Parameters["color"].SetValue(color.ToVector4());
-        //shader.Shader.Parameters["distance"].SetValue(1);
-        //shader.Shader.Parameters["color"].SetValue(new Vector4(1, 0, 0, Projectile.Opacity));
-        //shader.Shader.Parameters["velocity"].SetValue(new Vector2(0, 0.5f));
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+
+        ShaderData.Shader.Parameters["color"].SetValue(color.ToVector4());
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
-        shader.Apply();
         Main.EntitySpriteDraw(
             texture,
             drawPos - Main.screenPosition,
@@ -131,16 +133,10 @@ public class GravityField : ModProjectile
             new Vector2((Projectile.width / 100f), (Projectile.height / 100f)) * Projectile.scale * 0.5f,
             SpriteEffects.None,
             0);
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
-
-        return false;
     }
 
     public override void PostDraw(Color lightColor)
     {
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
     }
 
     public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)

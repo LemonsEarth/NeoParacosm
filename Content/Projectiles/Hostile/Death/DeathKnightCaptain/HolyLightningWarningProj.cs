@@ -55,9 +55,9 @@ public class HolyLightningWarningProj : ModProjectile
             //Old: Dust.NewDustDirect(Projectile.RandomPos(-32), 2, 2, DustType<StreakDust>()).velocity = Vector2.UnitY * 60;
             ParticleSystem.SpawnParticle(ParticleID.Streak, Projectile.RandomPos(-32), Vector2.UnitY * 60);
         }
-        Projectile.scale = AITimer / Duration * MathHelper.Clamp(Length / 2000f, 1, 5);
+        Projectile.scale = 5;
         Projectile.height = (int)(64 * Length / 128);
-
+        Projectile.Opacity = (MathF.Sin(AITimer / 24f) + 1) * 0.5f;
         Projectile.velocity = Vector2.Zero;
         if (AITimer > Duration)
         {

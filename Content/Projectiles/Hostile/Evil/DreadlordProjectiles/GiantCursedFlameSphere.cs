@@ -91,8 +91,8 @@ public class GiantCursedFlameSphere : ModProjectile, IShaderProjectile
         ShaderData.Shader.Parameters["moveVector"].SetValue(Vector2.UnitY); // Higher number lowers the height of the flame
         ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.75f, SpriteEffects.None, 0);
-        ShaderData.UseColor(Color.White * Projectile.Opacity);
         ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1f);
+        ShaderData.UseColor(Color.White * Projectile.Opacity);
         ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.7f * 0.5f, SpriteEffects.None, 0);
     }

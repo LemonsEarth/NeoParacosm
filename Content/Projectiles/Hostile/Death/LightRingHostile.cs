@@ -158,7 +158,6 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
             float afterImgOpacity = Projectile.Opacity * (1 - ((float)k / Projectile.oldPos.Length));
             ShaderData.UseOpacity(afterImgOpacity);
             ShaderData.UseColor(Color.LightYellow with { A = (byte)(afterImgOpacity * 255) } * afterImgOpacity);
-            ShaderData.Apply();
             Vector2 afterimageDrawPos = Projectile.oldPos[k] + drawOffset - Main.screenPosition;
             Main.EntitySpriteDraw(texture, afterimageDrawPos, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale * 1f, SpriteEffects.None, 0);
         }
@@ -166,7 +165,7 @@ public class LightRingHostile : ModProjectile, IShaderProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        ProjectileShaderRenderer.Instance.Queue(this);
+        this.QueueToShaderRenderer();
         return false;
     }
 
