@@ -163,7 +163,8 @@ public class NPPlayer : ModPlayer
 
     public override void PostUpdate()
     {
-        //WorldGen.PlaceTile(Player.Center.ToTileCoordinates().X + 10, Player.Center.ToTileCoordinates().Y, TileID.Grass);
+        //Main.NewText(LemonUtils.TileIsExposedToAir(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y));
+        //WorldGen.PlaceTile(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y, TileID.Grass);
         CloseResearcherUIIfTooFar();
         Timer++;
     }

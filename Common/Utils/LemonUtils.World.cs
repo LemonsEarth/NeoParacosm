@@ -30,6 +30,28 @@ public static partial class LemonUtils
         }
     }
 
+    public static Point GetMouseTile()
+    {
+        return Main.MouseWorld.ToTileCoordinates();
+    }
+
+    public static bool TileIsExposedToAir(int i, int j)
+    {
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0) continue;
+                if (!WorldGen.InWorld(i + x, j + y)) continue;
+                if (!Main.tile[i + x, j + y].HasTile)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public static bool SafeGenerateStructure(string path, Point16 pos, Rectangle structureRect)
     {
         if (!GenVars.structures.CanPlace(structureRect))

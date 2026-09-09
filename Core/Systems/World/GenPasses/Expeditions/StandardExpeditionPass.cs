@@ -1,4 +1,7 @@
 ﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+using NeoParacosm.Core.Systems.World.TerrainTypes.Caves;
+using NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
+using SubworldLibrary;
 using Terraria.IO;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
@@ -11,22 +14,31 @@ public class StandardExpeditionPass : GenPass
     static int AverageSurfaceLevel => (int)Main.worldSurface - 50;
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
-        /*NeoParacosm.Instance.Logger.Info($"Rock layer: {Main.rockLayer}");
-        NeoParacosm.Instance.Logger.Info($"Rock layer high: {GenVars.rockLayerHigh}");
-        NeoParacosm.Instance.Logger.Info($"Rock layer low: {GenVars.rockLayerLow}");
-        NeoParacosm.Instance.Logger.Info($"World surface: {Main.worldSurface}");
-        NeoParacosm.Instance.Logger.Info($"World surface high: {GenVars.worldSurfaceHigh}");
-        NeoParacosm.Instance.Logger.Info($"World surface low: {GenVars.worldSurfaceLow}");*/
-        GenerateDirt();
+        try
+        {
 
-        GenerateMountains();
-        FixSingleHolesAndBulges();
+            /*NeoParacosm.Instance.Logger.Info($"Rock layer: {Main.rockLayer}");
+            NeoParacosm.Instance.Logger.Info($"Rock layer high: {GenVars.rockLayerHigh}");
+            NeoParacosm.Instance.Logger.Info($"Rock layer low: {GenVars.rockLayerLow}");
+            NeoParacosm.Instance.Logger.Info($"World surface: {Main.worldSurface}");
+            NeoParacosm.Instance.Logger.Info($"World surface high: {GenVars.worldSurfaceHigh}");
+            NeoParacosm.Instance.Logger.Info($"World surface low: {GenVars.worldSurfaceLow}");*/
+            GenerateDirt();
 
-        GrowGrassOnSurface();
+            GenerateMountains();
+            FixSingleHolesAndBulges();
 
 
-        GenerateStone();
-        GenerateAsh();
+            GenerateStone();
+            GenerateAsh();
+            GrowGrassOnSurface();
+            GenerateCaves();
+        }
+        catch (Exception e)
+        {
+            SubworldSystem.Exit();
+            NeoParacosm.Instance.Logger.Error(e.StackTrace);
+        }
     }
 
     void PlaceGrass(int i, int j)
@@ -64,79 +76,36 @@ public class StandardExpeditionPass : GenPass
             postMountainsSurfaceHeights[i] = surfaceHeights[i];
         }
 
-        for (int c = 0; c < 5; c++)
+        for (int c = 0; c < 4; c++)
+        {
+            Random rand = new Random();
+            int startTileX = rand.Next((int)(Main.maxTilesX * 0.1f), (int)(Main.maxTilesX * 0.9f));
+            int mountainWidth = rand.Next(350, 500);
+            int mountainHeight = rand.Next(180, 240);
+            int peakWidth = rand.Next(60, (mountainWidth * 3) / 4);
+            MountainGenerator.GenerateNormalMountain(
+                startTileX,
+                mountainWidth,
+                mountainHeight,
+                peakWidth,
+                surfaceHeights,
+                postMountainsSurfaceHeights
+                );
+        }
+
+        for (int c = 0; c < 6; c++)
         {
             Random rand = new Random();
             int startTileX = rand.Next((int)(Main.maxTilesX * 0.1f), (int)(Main.maxTilesX * 0.9f));
             int mountainWidth = rand.Next(120, 180);
-            int mountainHeight = rand.Next(60, 90);
-            int peakTileX = startTileX + (mountainWidth / 2);
-            int endTileX = startTileX + mountainWidth;
-            int currentMountainHeight = 0;
-            int peakWidth = rand.Next(20, (mountainWidth * 3) / 4);
-            int leftPeakTileX = peakTileX - peakWidth / 2;
-            int rightPeakTileX = peakTileX + peakWidth / 2;
-
-            for (int i = startTileX; i < rightPeakTileX; i++)
-            {
-                int surfaceY = surfaceHeights[i];
-                int y = surfaceY + currentMountainHeight;
-                if (!WorldGen.InWorld(i, y))
-                {
-                    continue;
-                }
-                if (y < postMountainsSurfaceHeights[i])
-                {
-                    postMountainsSurfaceHeights[i] = y;
-                }
-                for (int j = y; j < surfaceY; j++)
-                {
-                    WorldGen.PlaceTile(i, j, TileID.Dirt, true);
-                }
-
-                float heightPercent = MathHelper.Clamp(MathF.Abs(currentMountainHeight) / mountainHeight, 0, 1);
-                float heightMul = (1 - heightPercent) + 0.5f;
-                if (i < leftPeakTileX)
-                {
-                    currentMountainHeight -= rand.Next((int)(1 * heightMul), (int)(4 * heightMul));
-                }
-                else
-                {
-                    if (rand.Next(4) == 0)
-                    {
-                        currentMountainHeight += rand.Next(-1, 1 + 1);
-                    }
-                }
-            }
-            int fallOffStart = rightPeakTileX;
-            int fallOffTileX = fallOffStart;
-            while (currentMountainHeight < 0)
-            {
-                int surfaceY = surfaceHeights[fallOffTileX];
-                int y = surfaceY + currentMountainHeight;
-                if (!WorldGen.InWorld(fallOffTileX, y))
-                {
-                    continue;
-                }
-                if (y < postMountainsSurfaceHeights[fallOffTileX])
-                {
-                    postMountainsSurfaceHeights[fallOffTileX] = y;
-                }
-                for (int j = y; j < surfaceY; j++)
-                {
-                    WorldGen.PlaceTile(fallOffTileX, j, TileID.Dirt, true);
-                }
-
-                float heightPercent = MathHelper.Clamp(MathF.Abs(currentMountainHeight) / mountainHeight, 0, 1);
-                float heightMul = (1 - heightPercent) + 0.5f;
-                currentMountainHeight += rand.Next((int)(1 * heightMul), (int)(4 * heightMul));
-                fallOffTileX++;
-            }
-            /*WorldGen.PlaceTile(startTileX, surfaceHeights[startTileX], TileID.SapphireGemspark, forced: true);
-            WorldGen.PlaceTile(endTileX, surfaceHeights[endTileX], TileID.RubyGemspark, forced: true);
-            WorldGen.PlaceTile(peakTileX, surfaceHeights[peakTileX], TileID.EmeraldGemspark, forced: true);
-            WorldGen.PlaceTile(leftPeakTileX, surfaceHeights[leftPeakTileX], TileID.EmeraldGemspark, forced: true);
-            WorldGen.PlaceTile(rightPeakTileX, surfaceHeights[rightPeakTileX], TileID.EmeraldGemspark, forced: true);*/
+            int mountainHeight = rand.Next(60, 180);
+            MountainGenerator.GenerateSharpMountain(
+                startTileX,
+                mountainWidth,
+                mountainHeight,
+                surfaceHeights,
+                postMountainsSurfaceHeights
+                );
         }
     }
 
@@ -164,24 +133,65 @@ public class StandardExpeditionPass : GenPass
         }
     }
 
+    void GenerateCave()
+    {
+
+    }
+
+    void GenerateCaves()
+    {
+        for (int c = 0; c < 10; c++)
+        {
+            int x = Main.rand.Next(0, Main.maxTilesX);
+
+            int y = postMountainsSurfaceHeights[x];
+            int baseWidth = Main.rand.Next(4, 8);
+            int length = Main.rand.Next(80, 120);
+            CaveGenerator.GenerateCave(
+                x, y,
+                Vector2.UnitY,
+                length,
+                (i) => baseWidth + Main.rand.Next(-2, 3),
+                (i) => CaveGenerator.LinearCaveAngleFuncWithRandomSharpTurn(i, length, MathHelper.Pi / 4f, MathHelper.Pi / 3f, 20));
+
+        }
+
+        for (int c = 0; c < 40; c++)
+        {
+            int x = Main.rand.Next(0, Main.maxTilesX);
+
+            int y = Main.rand.Next(surfaceHeights[x], Main.maxTilesY);
+            int baseWidth = Main.rand.Next(4, 6);
+            int length = Main.rand.Next(80, 150);
+            CaveGenerator.GenerateCave(
+                x, y,
+                new Vector2(Main.rand.Next(-1, 1 + 1), Main.rand.Next(-1, 1 + 1)),
+                length,
+                (i) => baseWidth + Main.rand.Next(-3, 3),
+                (i) => CaveGenerator.LinearCaveAngleFuncWithRandomSharpTurn(i, length, MathHelper.Pi / 4f, MathHelper.Pi / 2f, 12));
+
+        }
+    }
+
     void GrowGrassOnSurface()
     {
         for (int i = 0; i < Main.maxTilesX; i++)
         {
-            WorldGen.PlaceTile(i, postMountainsSurfaceHeights[i], TileID.Grass);
-        }
-        /*for (int i = 0; i < Main.maxTilesX; i++)
-        {
-            for (int j = 0; j < surfaceHeights[i]; j++)
+            for (int j = 0; j < Main.worldSurface; j++)
             {
-                if (Main.tile[i, j].HasTile) break;
-                if (Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].TileType == TileID.Dirt)
+                if (Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.Dirt)
                 {
-                    WorldGen.PlaceTile(i, j + 1, TileID.Grass);
-                    break;
+                    if (LemonUtils.TileIsExposedToAir(i, j))
+                    {
+                        WorldGen.PlaceTile(i, j, TileID.Grass);
+                    }
+                    else
+                    {
+                        Main.tile[i,j].WallType = WallID.Dirt;
+                    }
                 }
             }
-        }*/
+        }
     }
 
     void GenerateStoneSpikyMountains()
