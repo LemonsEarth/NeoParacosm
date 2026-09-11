@@ -1,13 +1,22 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
-public class GreatFireball : ModProjectile
+public class GreatFireball : ModProjectile, IShaderProjectile
 {
     ref float AITimer => ref Projectile.ai[0];
     bool released = false;
     Vector2 savedVelocity = Vector2.Zero;
+    public override string Texture => ParacosmTextures.GlowBallTexturePath;
+
+
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("FireballShader");
 
     public override void SetStaticDefaults()
     {
@@ -26,6 +35,7 @@ public class GreatFireball : ModProjectile
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 30;
         Projectile.extraUpdates = 2;
+        Projectile.Opacity = 0f;
     }
 
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -88,6 +98,7 @@ public class GreatFireball : ModProjectile
         {
             Projectile.velocity = Vector2.Zero;
             Projectile.Center = player.Center;
+            Projectile.Opacity += 0.05f;
             player.SetDummyItemTime(player.NPCatalystPlayer().SelectedSpell.AttackCooldown);
         }
         else
@@ -107,5 +118,31 @@ public class GreatFireball : ModProjectile
     public override void OnKill(int timeLeft)
     {
         LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<GreatFireballExplosion>());
+    }
+
+    public void DrawProjectile()
+    {
+        Texture2D texture = TextureAssets.Projectile[Type].Value;
+        Vector2 drawPos = Projectile.Center - Main.screenPosition;
+        ShaderData.Shader.Parameters["velocity"].SetValue(-Projectile.velocity.SafeNormalize(Vector2.Zero));
+        ShaderData.UseColor(Color.Red);
+        ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
+        ShaderData.UseOpacity(Projectile.Opacity);
+        ShaderData.Apply();
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 2f, SpriteEffects.None, 0);
+        ShaderData.UseColor(Color.Yellow);
+        ShaderData.Apply();
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1f, SpriteEffects.None, 0);
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+
     }
 }

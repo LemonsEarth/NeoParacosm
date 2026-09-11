@@ -32,7 +32,8 @@ public class StandardExpeditionPass : GenPass
             GenerateStone();
             GenerateAsh();
             GrowGrassOnSurface();
-            GenerateCaves();
+            //GenerateCaves();
+            GenerateCave();
         }
         catch (Exception e)
         {
@@ -135,7 +136,9 @@ public class StandardExpeditionPass : GenPass
 
     void GenerateCave()
     {
-
+        Point p1 = new Point(Main.maxTilesX / 3, Main.maxTilesY * 2 / 3);
+        Point p2 = new Point(Main.maxTilesX * 2 / 3, Main.maxTilesY / 3);
+        CaveGenerator.GenerateCaveBetweenPoints(p1.X, p1.Y, p2.X, p2.Y, (i) => Main.rand.Next(3, 6));
     }
 
     void GenerateCaves()
@@ -187,7 +190,7 @@ public class StandardExpeditionPass : GenPass
                     }
                     else
                     {
-                        Main.tile[i,j].WallType = WallID.Dirt;
+                        Main.tile[i, j].WallType = WallID.Dirt;
                     }
                 }
             }

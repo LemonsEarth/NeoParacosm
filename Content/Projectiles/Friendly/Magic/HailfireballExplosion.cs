@@ -38,10 +38,7 @@ public class HailfireballExplosion : ModProjectile
         {
             SoundEngine.PlaySound(SoundID.Item74 with { Volume = 0.4f}, Projectile.Center);
         }
-        for (int i = 0; i < 5; i++)
-        {
-            Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.IceTorch, Main.rand.NextFloat(-5, 5), Main.rand.NextFloat(-5, 5), Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
-        }
+        LemonUtils.DustBurst(3, Projectile.Center, DustID.IceTorch, 5, 5, 2, 3);
 
         Projectile.velocity = Vector2.Zero;
 
