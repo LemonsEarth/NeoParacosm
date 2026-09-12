@@ -88,8 +88,8 @@ public static partial class LemonUtils
         for (int i = 0; i < count; i++)
         {
             ParticleSystem.SpawnParticle(
-                particleID, 
-                pos, 
+                particleID,
+                pos,
                 new Vector2(Main.rand.NextFloat(-randXSpeed, randXSpeed), Main.rand.NextFloat(-randYSpeed, randYSpeed)),
                 color: color,
                 scale: Main.rand.NextFloat(minScale, maxScale)

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Terraria.DataStructures;
-
-namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
 public class DeadShortPlants : ModTile
 {

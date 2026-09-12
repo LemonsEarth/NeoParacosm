@@ -1,11 +1,8 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Items.Accessories.Misc;
+﻿using NeoParacosm.Content.Items.Accessories.Misc;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells.Earth;
 using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using System.Collections.Generic;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 

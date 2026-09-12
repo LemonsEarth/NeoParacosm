@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.Chat;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;

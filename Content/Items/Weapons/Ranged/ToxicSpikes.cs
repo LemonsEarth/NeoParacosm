@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Content.Projectiles.Friendly.Ranged;
-using Terraria.Audio;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Ranged;

@@ -1,7 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using Terraria.Audio;
-
-namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
+﻿namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
 public class GiantSpikedBallProj : ModProjectile
 {

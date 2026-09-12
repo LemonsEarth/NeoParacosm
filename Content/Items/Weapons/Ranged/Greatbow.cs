@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Common.RecipeGroups;
-using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 using Terraria.DataStructures;

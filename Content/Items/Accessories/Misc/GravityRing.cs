@@ -1,7 +1,4 @@
-﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
-
-namespace NeoParacosm.Content.Items.Accessories.Misc;
+﻿namespace NeoParacosm.Content.Items.Accessories.Misc;
 
 public class GravityRing : ModItem
 {

@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
-using System.Collections.Generic;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
-using ReLogic.Content;
 using Terraria.DataStructures;
 using Terraria.Map;
 using Terraria.UI;

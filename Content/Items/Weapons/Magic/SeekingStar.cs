@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Friendly.Special;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;

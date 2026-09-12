@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 

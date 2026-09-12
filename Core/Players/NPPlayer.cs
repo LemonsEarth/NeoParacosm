@@ -1,13 +1,9 @@
-﻿using Microsoft.Xna.Framework.Input;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
+﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
-using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Terraria.GameInput;
 
 namespace NeoParacosm.Core.Players;
@@ -165,6 +161,11 @@ public class NPPlayer : ModPlayer
     {
         //Main.NewText(LemonUtils.TileIsExposedToAir(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y));
         //WorldGen.PlaceTile(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y, TileID.Grass);
+        if (Timer % 60== 0)
+        {
+
+        ParticleSystem.SpawnParticle(ParticleID.Glowy, Main.MouseWorld, Vector2.Zero, Color.White, data0: 10, data1:3, data2: 3);
+        }
         CloseResearcherUIIfTooFar();
         Timer++;
     }

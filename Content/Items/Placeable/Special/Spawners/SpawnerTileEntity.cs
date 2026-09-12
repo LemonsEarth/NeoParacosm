@@ -1,8 +1,4 @@
-﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Items.Accessories.Combat.Generic;
-using NeoParacosm.Core.Globals.GlobalNPCs;
-using NeoParacosm.Core.Systems.Data;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Items.Placeable.Special.Spawners;
 

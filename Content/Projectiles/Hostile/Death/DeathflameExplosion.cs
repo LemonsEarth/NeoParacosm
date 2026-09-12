@@ -1,6 +1,4 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Death;

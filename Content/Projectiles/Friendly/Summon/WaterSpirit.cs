@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Accessories.Combat.Summon;
 using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 using System.Collections.Generic;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Summon;
 

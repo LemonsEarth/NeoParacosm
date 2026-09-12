@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.Spells;

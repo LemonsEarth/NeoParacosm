@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;

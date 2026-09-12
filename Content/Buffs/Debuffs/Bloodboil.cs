@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-namespace NeoParacosm.Content.Buffs.Debuffs;
+﻿namespace NeoParacosm.Content.Buffs.Debuffs;
 
 public class Bloodboil : ModBuff
 {

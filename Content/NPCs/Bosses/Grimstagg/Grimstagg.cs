@@ -1,12 +1,4 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Projectiles.Hostile.Death;
-using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
-using NeoParacosm.Core.Systems.Assets;
-using System.Linq;
-using Terraria.Audio;
-using static Microsoft.Xna.Framework.MathHelper;
-
-namespace NeoParacosm.Content.NPCs.Bosses.Grimstagg;
+﻿namespace NeoParacosm.Content.NPCs.Bosses.Grimstagg;
 
 // This boss is spread across multiple files
 // This file contains primarily AI and Attack logic

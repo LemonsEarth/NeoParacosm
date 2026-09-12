@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Core.Systems.Assets;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;

@@ -1,8 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Dusts;
-using System.IO;
-
-namespace NeoParacosm.Content.NPCs.Friendly.Special;
+﻿namespace NeoParacosm.Content.NPCs.Friendly.Special;
 
 public class FriendlyGoblin : FriendlyPatrolNPC
 {

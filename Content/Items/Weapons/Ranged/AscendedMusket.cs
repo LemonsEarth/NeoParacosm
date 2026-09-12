@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Ranged;
 
 public class AscendedMusket : AscendedGlowItem

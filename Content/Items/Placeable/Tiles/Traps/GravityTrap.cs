@@ -1,6 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.Projectiles.Friendly.Magic;
-using System.Collections.Generic;
+﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using Terraria.Localization;
 using Terraria.ObjectData;
 

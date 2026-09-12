@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Special;
-using System.Linq;
 
 namespace NeoParacosm.Content.Items.Weapons.Summon;
 

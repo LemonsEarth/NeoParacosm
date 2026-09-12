@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Particles;
-using System.Collections.Generic;
+﻿using NeoParacosm.Content.Particles;
 
 namespace NeoParacosm.Core.Systems.Particles;
 
@@ -17,6 +15,7 @@ public abstract class ParticleID
         Streak = ParticleSystem.RegisterParticle(new StreakParticle());
         Gas = ParticleSystem.RegisterParticle(new GasParticle());
         Circle = ParticleSystem.RegisterParticle(new CircleParticle());
+        Glowy = ParticleSystem.RegisterParticle(new GlowyParticle());
     }
 
     public static int Count => ParticleSystem.TypesByID.Count;
@@ -34,4 +33,6 @@ public abstract class ParticleID
     /// data[1] - Maximum scale multiplier (0 => 1f)
     /// </summary>
     public static int Circle;
+
+    public static int Glowy;
 }

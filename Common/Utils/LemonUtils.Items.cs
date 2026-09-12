@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Core.Systems.Assets;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 
 namespace NeoParacosm.Common.Utils;

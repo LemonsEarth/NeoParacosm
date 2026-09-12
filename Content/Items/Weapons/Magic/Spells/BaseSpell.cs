@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Terraria.Audio;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells;

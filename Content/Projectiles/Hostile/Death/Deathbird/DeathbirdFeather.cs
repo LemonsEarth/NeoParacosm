@@ -1,6 +1,5 @@
 ﻿
 using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
@@ -55,7 +54,7 @@ public class DeathbirdFeather : ModProjectile, IShaderProjectile
 
     public override void OnKill(int timeLeft)
     {
-        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<DeathLaser>(), ai0: 0.1f, ai1: Projectile.velocity.ToRotation() - MathHelper.PiOver2);
+        LemonUtils.QuickProj(Projectile, Projectile.Center, Vector2.Zero, ProjectileType<DeathLaser>(), ai0: 0.25f, ai1: Projectile.velocity.ToRotation() - MathHelper.PiOver2);
     }
 
     public override void OnHitPlayer(Player target, Player.HurtInfo info)
@@ -74,15 +73,19 @@ public class DeathbirdFeather : ModProjectile, IShaderProjectile
 
         // First the "outline"/afterimage/effect wings
         ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.75f);
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.2f, SpriteEffects.None, 0);
         ShaderData.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.2f, SpriteEffects.None, 0);
 
         ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.75f);
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
         ShaderData.Shader.Parameters["moveSpeed"].SetValue(-0.75f);
+        ShaderData.Apply();
         Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);
-    }
+
+        }
 
     public override bool PreDraw(ref Color lightColor)
     {

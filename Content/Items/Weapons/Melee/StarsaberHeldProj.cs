@@ -2,7 +2,6 @@
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.GameContent;
 

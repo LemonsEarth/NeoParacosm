@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Core.Systems.Particles;
-using Terraria.GameContent.Events;
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 

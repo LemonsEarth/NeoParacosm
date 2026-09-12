@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;

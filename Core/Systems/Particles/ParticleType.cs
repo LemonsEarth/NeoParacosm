@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace NeoParacosm.Core.Systems.Particles;
 
@@ -8,7 +7,9 @@ public abstract class ParticleType : ILoadable
     /// <summary>
     /// The particle's texture.
     /// </summary>
-    public Asset<Texture2D> Texture { get; protected set; }
+    public Asset<Texture2D> Texture { get; protected set; } = null;
+
+    public virtual string TexturePath { get; } = null;
 
     /// <summary>
     /// Kills the particle.
@@ -59,7 +60,7 @@ public abstract class ParticleType : ILoadable
 
     public void Load(Mod mod)
     {
-        string path = $"{GetType().Namespace}/{GetType().Name}".Replace(".", "/");
+        string path = TexturePath ?? $"{GetType().Namespace}/{GetType().Name}".Replace(".", "/");
         Texture = Request<Texture2D>(path);
     }
 

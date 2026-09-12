@@ -1,5 +1,4 @@
 ﻿using Terraria.Chat;
-using Terraria.GameContent.Creative;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Generic;

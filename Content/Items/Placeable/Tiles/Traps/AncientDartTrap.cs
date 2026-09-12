@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Terraria.Localization;
+﻿using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles.Traps;
 

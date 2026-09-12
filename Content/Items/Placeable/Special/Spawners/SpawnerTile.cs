@@ -1,8 +1,5 @@
-﻿using NeoParacosm.Content.Items.Placeable.Machines;
-using System.Collections.Generic;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Localization;
 using Terraria.ObjectData;
 
 namespace NeoParacosm.Content.Items.Placeable.Special.Spawners;

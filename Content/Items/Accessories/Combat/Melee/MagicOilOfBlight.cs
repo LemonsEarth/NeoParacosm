@@ -1,7 +1,4 @@
-﻿using Terraria.GameContent.ItemDropRules;
-using Terraria.Localization;
-
-namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
+﻿namespace NeoParacosm.Content.Items.Accessories.Combat.Melee;
 
 public class MagicOilOfBlight : ModItem
 {

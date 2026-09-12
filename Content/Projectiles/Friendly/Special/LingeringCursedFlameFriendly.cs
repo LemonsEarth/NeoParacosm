@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;

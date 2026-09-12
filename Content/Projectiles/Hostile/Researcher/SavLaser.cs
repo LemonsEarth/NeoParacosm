@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
-using ReLogic.Content;
 using System.IO;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -13,27 +11,58 @@ namespace NeoParacosm.Content.Projectiles.Hostile.Researcher;
 
 public class SavLaser : ModProjectile, IShaderProjectile
 {
+    string NoisePath = "NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture";
+    int MaxProjectileRange = 5000;
+    float LaserLength = 20f;
+    float CollisionWidth = 0.7f;
+
+    int InitialDuration = 1200;
+    int FadeOutDuration = 15;
+    int ScaleRampUpFrames = 5;
+
+    int DustSpawnRadius = 16;
+    float DustAshSpeedMin = 3f;
+    float DustAshSpeedMax = 6f;
+    float DustDiamondSpeedMin = 9f;
+    float DustDiamondSpeedMax = 15f;
+    float DustScaleMin = 2f;
+    float DustScaleMax = 3f;
+
+    float ShaderMoveSpeed = -2f;
+
+    static Asset<Texture2D> NoiseTexture;
+
     public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("LaserShader");
+    public override string Texture => ParacosmTextures.Empty100TexPath;
 
     int AITimer = 0;
-    ref float Size => ref Projectile.ai[0];
-    const string NoisePath = "NeoParacosm/Common/Assets/Textures/Noise/NoiseTexture";
-    static Asset<Texture2D> Noise;
-    float scale = 1f;
-    float laserLength = 9f;
+    float currentScale = 1f;
 
+    ref float SizeMultiplier => ref Projectile.ai[0];
     ref float Rotation => ref Projectile.ai[1];
-    ref float RotPerSecond => ref Projectile.ai[2];
+    ref float RotationPerSecond => ref Projectile.ai[2];
 
     public override void Load()
     {
-        Noise = Request<Texture2D>(NoisePath);
+        NoiseTexture = Request<Texture2D>(NoisePath);
     }
 
     public override void SetStaticDefaults()
     {
         Main.projFrames[Type] = 1;
-        ProjectileID.Sets.DrawScreenCheckFluff[Type] = 5000;
+        ProjectileID.Sets.DrawScreenCheckFluff[Type] = MaxProjectileRange;
+    }
+
+    public override void SetDefaults()
+    {
+        Projectile.width = 100;
+        Projectile.height = 100;
+        Projectile.hostile = true;
+        Projectile.friendly = false;
+        Projectile.ignoreWater = true;
+        Projectile.tileCollide = false;
+        Projectile.timeLeft = InitialDuration;
+        Projectile.penetrate = -1;
     }
 
     public override void SendExtraAI(BinaryWriter writer)
@@ -46,71 +75,72 @@ public class SavLaser : ModProjectile, IShaderProjectile
         Projectile.timeLeft = reader.ReadInt32();
     }
 
-    public override void SetDefaults()
+    public override void AI()
     {
-        Projectile.width = 280;
-        Projectile.height = 280;
-        Projectile.hostile = true;
-        Projectile.friendly = false;
-        Projectile.ignoreWater = true;
-        Projectile.tileCollide = false;
-        Projectile.timeLeft = 360;
-        Projectile.penetrate = -1;
+        // Initialize on first frame
+        if (AITimer == 0)
+        {
+            SoundEngine.PlaySound(SoundID.Item92 with { MaxInstances = 0, PitchRange = (-0.5f, -0.3f) }, Projectile.Center);
+            SoundEngine.PlaySound(SoundID.Zombie103 with { MaxInstances = 0 }, Projectile.Center);
+            if (SizeMultiplier == 0)
+                SizeMultiplier = 1;
+        }
+
+        Projectile.velocity = Vector2.Zero;
+        Projectile.rotation = Rotation;
+        Rotation += RotationPerSecond;
+
+        currentScale = MathHelper.Clamp(AITimer / (float)ScaleRampUpFrames * SizeMultiplier, 0, SizeMultiplier);
+
+        if (Projectile.timeLeft < FadeOutDuration)
+            currentScale = Projectile.timeLeft * SizeMultiplier / (float)ScaleRampUpFrames;
+
+        DustEffects();
+
+        AITimer++;
+    }
+
+    void DustEffects()
+    {
+        Vector2 laserDirection = Vector2.UnitY.RotatedBy(Rotation);
+        Vector2 baseSpawnPos = Projectile.Center - laserDirection * DustSpawnRadius;
+        Vector2 spawnOffset = Main.rand.NextVector2Circular(DustSpawnRadius, DustSpawnRadius);
+        Vector2 dustSpawnPos = baseSpawnPos + spawnOffset;
+
+        Dust ashDust = Dust.NewDustPerfect(dustSpawnPos, DustID.Ash,
+            laserDirection * Main.rand.NextFloat(DustAshSpeedMin, DustAshSpeedMax),
+            Scale: Main.rand.NextFloat(DustScaleMin, DustScaleMax),
+            newColor: Color.Black);
+        ashDust.noGravity = true;
+
+        Dust diamondDust = Dust.NewDustPerfect(dustSpawnPos, DustID.GemDiamond,
+            laserDirection * Main.rand.NextFloat(DustDiamondSpeedMin, DustDiamondSpeedMax),
+            Scale: Main.rand.NextFloat(DustScaleMin, DustScaleMax),
+            newColor: Color.White);
+        diamondDust.noGravity = true;
     }
 
     public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
     {
-        float _ = float.NaN;
-        return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Vector2.UnitY.RotatedBy(Rotation) * laserLength * MathHelper.Clamp(Size, 1, 10) * Projectile.height, Projectile.width * 0.7f * Size, ref _);
+        Vector2 laserDirection = Vector2.UnitY.RotatedBy(Rotation);
+        Vector2 laserEnd = Projectile.Center + laserDirection
+            * LaserLength * MathHelper.Clamp(SizeMultiplier, 1, 10) * Projectile.height;
+
+        float laserWidth = Projectile.width * CollisionWidth * SizeMultiplier;
+        float unused = float.NaN;
+
+        return Collision.CheckAABBvLineCollision(
+            targetHitbox.TopLeft(),
+            targetHitbox.Size(),
+            Projectile.Center,
+            laserEnd,
+            laserWidth,
+            ref unused);
     }
 
-    public override void OnSpawn(IEntitySource source)
-    {
+    public override void OnSpawn(IEntitySource source) { }
 
-    }
-
-    public override void AI()
-    {
-        if (AITimer == 0)
-        {
-            SoundEngine.PlaySound(SoundID.Item67 with { MaxInstances = 0, PitchRange = (0.3f, 0.6f), Volume = 0.8f }, Projectile.Center);
-            SoundEngine.PlaySound(SoundID.Zombie103 with { MaxInstances = 1, PitchRange = (0.3f, 0.6f), Volume = 0.4f }, Projectile.Center);
-            if (Size == 0) Size = 1;
-        }
-        Projectile.velocity = Vector2.Zero;
-        scale = AITimer / 5f * Size;
-        Projectile.rotation = Rotation;
-        Rotation += RotPerSecond;
-        Vector2 dustPos = Projectile.Center + -Vector2.UnitY.RotatedBy(Rotation) * 16 + Main.rand.NextVector2Circular(16, 16);
-        Dust.NewDustPerfect(dustPos, DustID.Electric, Vector2.UnitY.RotatedBy(Rotation) * Main.rand.NextFloat(3, 6), Scale: Main.rand.NextFloat(2f, 3f), newColor: Color.Black).noGravity = true;
-  
-        if (Projectile.timeLeft < 15)
-        {
-            scale = Projectile.timeLeft * Size / 5f;
-        }
-        scale = MathHelper.Clamp(scale, 0f, Size);
-        AITimer++;
-    }
-
-    public override void OnKill(int timeLeft)
-    {
-
-    }
-
-    public void DrawProjectile()
-    {
-        if (AITimer < 2) return;
-        Texture2D texture = TextureAssets.Projectile[Type].Value;
-        Vector2 drawOrigin = new Vector2(texture.Size().X / 2, 0f);
-        Vector2 drawPos = Projectile.Center - Main.screenPosition;
-
-        ShaderData.Shader.Parameters["moveSpeed"].SetValue(-2f);
-        ShaderData.Shader.Parameters["time"].SetValue(AITimer / 30f);
-        ShaderData.Shader.Parameters["centerColor"].SetValue(Color.LightBlue.ToVector4());
-        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Blue.ToVector4());
-        Main.instance.GraphicsDevice.Textures[1] = Noise.Value;
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.Blue, Projectile.rotation, drawOrigin, new Vector2(scale, laserLength * MathHelper.Clamp(Size, 1, 10)), SpriteEffects.None, 0);
-    }
+    public override void OnKill(int timeLeft) { }
 
     public override bool PreDraw(ref Color lightColor)
     {
@@ -118,8 +148,29 @@ public class SavLaser : ModProjectile, IShaderProjectile
         return false;
     }
 
-    public override void PostDraw(Color lightColor)
-    {
+    public override void PostDraw(Color lightColor) { }
 
+    public void DrawProjectile()
+    {
+        Texture2D texture = ParacosmTextures.Empty100Tex.Value;
+        Vector2 drawOrigin = new Vector2(texture.Width / 2f, 0f);
+        Vector2 drawPosition = Projectile.Center - Main.screenPosition;
+
+        // Setup shader parameters
+        SetupShader();
+
+        // Draw laser
+        Vector2 laserScale = new Vector2(currentScale, LaserLength * MathHelper.Clamp(SizeMultiplier, 1, 10));
+        Main.EntitySpriteDraw(texture, drawPosition, null, Color.Blue, Projectile.rotation, drawOrigin, laserScale, SpriteEffects.None, 0);
+    }
+
+    void SetupShader()
+    {
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(ShaderMoveSpeed);
+        ShaderData.Shader.Parameters["time"].SetValue(AITimer / 60f);
+        ShaderData.Shader.Parameters["centerColor"].SetValue(Color.LightBlue.ToVector4());
+        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Blue.ToVector4());
+        Main.instance.GraphicsDevice.Textures[1] = NoiseTexture.Value;
+        ShaderData.Apply();
     }
 }

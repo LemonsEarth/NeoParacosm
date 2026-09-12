@@ -1,11 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Core.Players;
-using NeoParacosm.Core.Systems.Assets;
-using NeoParacosm.Core.Systems.Data;
-using NeoParacosm.Core.UI.ResearcherUI.Ascension;
-using System.Collections.Generic;
-using Terraria.Audio;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;

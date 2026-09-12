@@ -49,7 +49,7 @@ public class SavDrone : ModProjectile
             LemonUtils.DustCircle(Projectile.Center, 8, 8, DustID.Electric, 3);
             if (LemonUtils.NotClient())
             {
-                LemonUtils.QuickProj(Projectile, Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 24, Vector2.Zero, ProjectileType<SavLaser>(), ai0: 0.1f, ai1: Projectile.velocity.ToRotation() - MathHelper.PiOver2);
+                LemonUtils.QuickProj(Projectile, Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 24, Vector2.Zero, ProjectileType<SavLaser>(), ai0: 0.25f, ai1: Projectile.velocity.ToRotation() - MathHelper.PiOver2);
             }
             Projectile.velocity += -Projectile.velocity.SafeNormalize(Vector2.Zero) * 2;
         }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Projectiles.Friendly.Special;
-using ReLogic.Content;
 using Terraria.Audio;
 using Terraria.GameContent;
 

@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Dusts;
-using NeoParacosm.Core.Systems.Assets;
+﻿using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;

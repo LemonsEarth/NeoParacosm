@@ -4,7 +4,6 @@ using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.UI.ResearcherUI.Boss;
 using NeoParacosm.Core.UI;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent;

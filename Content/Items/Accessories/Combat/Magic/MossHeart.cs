@@ -1,8 +1,6 @@
-﻿using NeoParacosm.Content.Items.Accessories.Combat.Magic;
-using NeoParacosm.Content.Items.Accessories.Misc;
+﻿using NeoParacosm.Content.Items.Accessories.Misc;
 using NeoParacosm.Content.Items.Materials;
 using NeoParacosm.Core.Players;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;

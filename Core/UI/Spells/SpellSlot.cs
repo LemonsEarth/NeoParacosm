@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
-using NeoParacosm.Core.Systems.Data;
-using Terraria.DataStructures;
 using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.Spells;

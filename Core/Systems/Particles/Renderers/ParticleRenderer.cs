@@ -1,0 +1,180 @@
+﻿using Microsoft.Xna.Framework.Graphics;
+
+namespace NeoParacosm.Core.Systems.Particles.Renderers;
+
+public abstract class ParticleRenderer : ModSystem
+{
+    public const int MAX_PARTICLES = 50000;
+    /// <summary>
+    /// Contains all particles in the world, active or inactive.<br></br>
+    /// Active particles are always at the beginning of the array.
+    /// </summary>
+    public Particle[] Particles { get; private set; } = new Particle[MAX_PARTICLES];
+
+    /// <summary>
+    /// Keeps track of how many active particles there are.
+    /// </summary>
+    public int ActiveParticleCount { get; private set; } = 0;
+
+    /// <summary>
+    /// Index of the next particle to be replaced in case of the cap being reached.
+    /// </summary>
+    static int ReplacementIndex = 0;
+
+    public override void SetStaticDefaults()
+    {
+        InitializeParticles();
+    }
+
+    public override void ClearWorld()
+    {
+        ActiveParticleCount = 0;
+        InitializeParticles();
+    }
+
+
+    /// <summary>
+    /// Populates the particles list with empty particles.
+    /// </summary>
+    public void InitializeParticles()
+    {
+        for (int i = 0; i < MAX_PARTICLES; i++)
+        {
+            Particles[i] = new Particle();
+        }
+    }
+
+    public static void BeginDefaultParticleSpriteBatch()
+    {
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.Default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
+    }
+
+    /// <summary>
+    /// Draws all active particles.<br></br>
+    /// See ParticleSystem.BeginDefaultParticleSpriteBatch() to view spriteBatch state.
+    /// </summary>
+    public void DrawParticles()
+    {
+        BeginDefaultParticleSpriteBatch();
+        for (int i = 0; i < ActiveParticleCount; i++)
+        {
+            ParticleSystem.TypesByID[Particles[i].type].Draw(Particles[i]);
+        }
+        Main.spriteBatch.End();
+    }
+
+    public override void PostUpdateDusts()
+    {
+        UpdateParticles();
+    }
+
+    /// <summary>
+    /// Calls ParticleType.Update() on all active particles,
+    /// adjusts their position by their velocity,
+    /// increases their timers and kills particles that shouldDie.
+    /// </summary>
+    public void UpdateParticles()
+    {
+        for (int i = 0; i < ActiveParticleCount; i++)
+        {
+            ref Particle particle = ref Particles[i];
+            ParticleSystem.TypesByID[particle.type].Update(ref particle);
+            particle.position += particle.velocity;
+            particle.timer++;
+            if (particle.shouldDie)
+            {
+                KillParticle(i);
+                i--;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Spawns a new particle into the world. Returns a reference to the newly spawned particle.
+    /// The data# params are custom data in the particle.data[] array. Their purpose depends on the particle type.
+    /// </summary>
+    /// <param name="type">The ParticleID of the particle.</param>
+    /// <param name="position">World position of the particle.</param>
+    /// <param name="velocity"></param>
+    /// <param name="color">Color to draw the particle in. Default is Color.White.<br></br>
+    /// Change the opacity param if you only want to change visibility.</param>
+    /// <param name="opacity">Opacity of the particle.</param>
+    /// <param name="scale"></param>
+    /// <returns>A reference to the newly spawned particle.</returns>
+    public ref Particle SpawnParticle(int type, Vector2 position, Vector2 velocity, Color color = default, float opacity = 1f, float scale = 1f, float data0 = 0f, float data1 = 0f, float data2 = 0f, float data3 = 0f)
+    {
+        if (color == default)
+        {
+            color = Color.White;
+        }
+
+        // Replacing "old" particles
+        if (ActiveParticleCount >= MAX_PARTICLES)
+        {
+            ref Particle particle1 = ref Particles[ReplacementIndex];
+            particle1.active = true;
+            particle1.type = type;
+            particle1.position = position;
+            particle1.velocity = velocity;
+            particle1.color = color;
+            particle1.opacity = opacity;
+            particle1.scale = scale;
+            particle1.shouldDie = false;
+            particle1.timer = 0;
+            particle1.frame = null;
+            particle1.rotation = 0f;
+            particle1.data[0] = data0;
+            particle1.data[1] = data1;
+            particle1.data[2] = data2;
+            particle1.data[3] = data3;
+            ParticleSystem.TypesByID[particle1.type].OnSpawn(ref particle1);
+            ReplacementIndex++;
+            if (ReplacementIndex >= MAX_PARTICLES)
+            {
+                ReplacementIndex = 0;
+            }
+            return ref particle1;
+        }
+        ReplacementIndex = 0;
+
+        ref Particle particle = ref Particles[ActiveParticleCount];
+        particle.active = true;
+        particle.type = type;
+        particle.position = position;
+        particle.velocity = velocity;
+        particle.color = color;
+        particle.opacity = opacity;
+        particle.scale = scale;
+        particle.shouldDie = false;
+        particle.timer = 0;
+        particle.frame = null;
+        particle.rotation = 0f;
+        particle.data[0] = data0;
+        particle.data[1] = data1;
+        particle.data[2] = data2;
+        particle.data[3] = data3;
+        ParticleSystem.TypesByID[particle.type].OnSpawn(ref particle);
+        ActiveParticleCount++;
+        return ref particle;
+    }
+
+    /// <summary>
+    /// Kills the particle at index. 
+    /// Switches the spots of that particle and the last active particle to make sure all active particles are next to each other in the array.
+    /// </summary>
+    /// <param name="index"></param>
+    public void KillParticle(int index)
+    {
+        if (ActiveParticleCount == 1)
+        {
+            Particles[index].active = false;
+        }
+        else
+        {
+            int lastActiveParticleIDX = ActiveParticleCount - 1;
+            Particles[index] = Particles[lastActiveParticleIDX];
+            Particles[lastActiveParticleIDX].active = false;
+        }
+        ActiveParticleCount--;
+    }
+}

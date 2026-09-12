@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.World.GenPasses;
-using NeoParacosm.Core.Systems.World.GenPasses.Expeditions;
-using ReLogic.Content;
+﻿using NeoParacosm.Core.Systems.World.GenPasses.Expeditions;
 using SubworldLibrary;
 using System.Collections.Generic;
 using Terraria.WorldBuilding;

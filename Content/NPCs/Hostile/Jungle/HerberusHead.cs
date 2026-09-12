@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Projectiles.Hostile.Jungle;
-using System.IO;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.NPCs.Hostile.Jungle;

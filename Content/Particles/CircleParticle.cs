@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Particles;
-using ReLogic.Content;
+﻿using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Particles;
 

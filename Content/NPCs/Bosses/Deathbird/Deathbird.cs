@@ -158,6 +158,7 @@ public partial class Deathbird : ModNPC
         Terraria.Graphics.Effects.Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
 
         Attack++;
+        Attack = 2;
         if (phase == 1) attackDuration = attackDurations[(int)Attack];
         else attackDuration = attackDurations2[(int)Attack];
         //Attack = 2;
@@ -677,7 +678,7 @@ public partial class Deathbird : ModNPC
 
     void DespawnCheck()
     {
-        if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 2500)
+        if (player.dead || !player.active || NPC.Center.Distance(player.MountedCenter) > 25000)
         {
             NPC.active = false;
             NPC.life = 0;

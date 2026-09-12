@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;

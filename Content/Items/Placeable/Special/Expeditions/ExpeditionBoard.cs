@@ -1,8 +1,6 @@
-﻿using NeoParacosm.Content.NPCs.Friendly.Special;
-using NeoParacosm.Core.UI.Expeditions;
+﻿using NeoParacosm.Core.UI.Expeditions;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ObjectData;
 
 namespace NeoParacosm.Content.Items.Placeable.Special.Expeditions;

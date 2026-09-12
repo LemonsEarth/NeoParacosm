@@ -1,7 +1,5 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Summon;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Summon;

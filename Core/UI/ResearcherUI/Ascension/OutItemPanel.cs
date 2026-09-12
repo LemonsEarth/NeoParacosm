@@ -3,7 +3,6 @@ using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
 using System.Linq;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Ascension;
 

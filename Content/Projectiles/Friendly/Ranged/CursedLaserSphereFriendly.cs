@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Content.Items.Weapons.Ranged;
-using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
-using NeoParacosm.Core.Systems.Particles;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.Graphics.Shaders;

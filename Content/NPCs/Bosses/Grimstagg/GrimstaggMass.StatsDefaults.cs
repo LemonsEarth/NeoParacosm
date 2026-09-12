@@ -1,16 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Biomes.DeadForest;
-using NeoParacosm.Content.Items.Armor.Generic.DeathKnight;
-using NeoParacosm.Content.Items.BossBags;
-using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Projectiles.Hostile.Death;
-using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
-using NeoParacosm.Content.Projectiles.Hostile.Death.DeathKnightCaptain;
-using NeoParacosm.Core.Systems.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Bosses.Grimstagg;
 

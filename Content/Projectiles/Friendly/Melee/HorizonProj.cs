@@ -1,8 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.IO;
-using Terraria.Audio;
-using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Melee;
 

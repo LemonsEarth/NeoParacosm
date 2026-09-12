@@ -3,7 +3,6 @@ using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Gores;
 using NeoParacosm.Content.Items.Accessories.Combat.Generic;
 using NeoParacosm.Core.Systems.Data;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;

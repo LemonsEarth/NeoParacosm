@@ -2,10 +2,8 @@
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird.DeathbirdMini;
 using NeoParacosm.Content.NPCs.Bosses.DeathKnightCaptain;
-using NeoParacosm.Content.NPCs.Hostile.DeadForest;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.World;
-using ReLogic.Content;
 using System.Collections.Generic;
 
 namespace NeoParacosm.Content.Biomes.DeadForest;

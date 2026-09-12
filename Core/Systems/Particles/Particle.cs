@@ -1,6 +1,4 @@
-﻿using XPT.Core.Audio.MP3Sharp.Decoding.Decoders.LayerIII;
-
-namespace NeoParacosm.Core.Systems.Particles;
+﻿namespace NeoParacosm.Core.Systems.Particles;
 
 public struct Particle
 {

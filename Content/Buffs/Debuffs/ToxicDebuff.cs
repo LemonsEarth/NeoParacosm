@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Players;
 using Terraria.DataStructures;
-using Terraria.Localization;
 
 namespace NeoParacosm.Content.Buffs.Debuffs;
 

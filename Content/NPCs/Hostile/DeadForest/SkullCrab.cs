@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Items.Accessories.Combat.Defensive;
-using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
 using NeoParacosm.Core.Systems.Data;
 using System.Collections.Generic;
 using System.IO;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.NPCs.Hostile.DeadForest;
 

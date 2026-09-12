@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Dusts;
-using System.IO;
+﻿using NeoParacosm.Content.Dusts;
 
 namespace NeoParacosm.Content.NPCs.Friendly.Special;
 

@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Particles;
-using System.Collections.Generic;
-using System.Threading;
+﻿using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Particles;
 

@@ -1,7 +1,4 @@
-﻿using Microsoft.Build.Tasks;
-using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
-using System.Collections.Generic;
-using Terraria.Localization;
+﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
 namespace NeoParacosm.Content.Items.Placeable.Tiles.Traps;
 

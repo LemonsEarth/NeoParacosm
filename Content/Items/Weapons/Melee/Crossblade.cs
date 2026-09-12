@@ -1,9 +1,6 @@
 ﻿using Terraria.DataStructures;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
-using NeoParacosm.Content.Dusts;
 using Terraria.Audio;
 using NeoParacosm.Core.Systems.Assets;
-using Microsoft.Build.Framework;
 using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Melee;

@@ -1,5 +1,4 @@
 ﻿using NeoParacosm.Core.Systems.Assets;
-using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Jungle
 {

@@ -1,9 +1,7 @@
-﻿using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
-using NeoParacosm.Core.Systems.World.TerrainTypes.Caves;
+﻿using NeoParacosm.Core.Systems.World.TerrainTypes.Caves;
 using NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
 using SubworldLibrary;
 using Terraria.IO;
-using Terraria.Utilities;
 using Terraria.WorldBuilding;
 
 namespace NeoParacosm.Core.Systems.World.GenPasses.Expeditions;

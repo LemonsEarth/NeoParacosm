@@ -1,13 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Core.Systems.Assets;
-using System.Collections.Generic;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.GameContent;
-using Terraria.ObjectData;
-using Terraria.Utilities;
-
-namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
+﻿namespace NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
 
 public class WornChain : ModTile
 {

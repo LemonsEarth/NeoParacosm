@@ -1,7 +1,6 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Core.Systems.Assets;
 using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic;
 

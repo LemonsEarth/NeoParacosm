@@ -2,7 +2,6 @@
 using NeoParacosm.Content.Biomes.DeadForest;
 using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
-using NeoParacosm.Content.Projectiles.Hostile.Misc;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Data;
 using NeoParacosm.Core.Systems.Particles;

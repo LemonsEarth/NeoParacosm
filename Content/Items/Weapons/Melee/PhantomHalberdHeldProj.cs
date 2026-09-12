@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.Audio;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 

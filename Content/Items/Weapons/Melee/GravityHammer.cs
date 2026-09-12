@@ -1,5 +1,4 @@
-﻿using NeoParacosm.Content.Items.Weapons.Magic;
-using Terraria.DataStructures;
+﻿using Terraria.DataStructures;
 namespace NeoParacosm.Content.Items.Weapons.Melee;
 
 public class GravityHammer : ModItem

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.Localization;

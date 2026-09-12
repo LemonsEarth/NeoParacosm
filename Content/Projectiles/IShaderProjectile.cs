@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.Graphics.Shaders;
+﻿using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles;
 

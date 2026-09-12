@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.NPCs.Bosses.Deathbird;
 using NeoParacosm.Content.Projectiles.Hostile.Death.Deathbird;
-using ReLogic.Content;
 using System.IO;
 using Terraria.Audio;
 using Terraria.GameContent;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
+﻿namespace NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
 
 /// <summary>
 /// Base class for all mountain types. Contains common properties shared across all mountains.

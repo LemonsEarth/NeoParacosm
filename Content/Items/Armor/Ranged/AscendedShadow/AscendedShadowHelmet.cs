@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.NPCs.Misc;
+﻿using NeoParacosm.Content.NPCs.Misc;
 using System.Linq;
 using Terraria.Localization;
 

@@ -2,11 +2,8 @@
 using NeoParacosm.Common.Utils.Prim;
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Particles;
-using NeoParacosm.Content.Projectiles;
-using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 

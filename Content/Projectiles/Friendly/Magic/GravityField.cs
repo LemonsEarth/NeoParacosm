@@ -1,7 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Buffs.Debuffs;
-using NeoParacosm.Content.Dusts;
-using NeoParacosm.Content.Projectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
 using System.Collections.Generic;

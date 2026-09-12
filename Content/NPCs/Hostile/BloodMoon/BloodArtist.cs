@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Content.Buffs.Debuffs;
 using NeoParacosm.Content.Items.Weapons.Magic;
-using NeoParacosm.Content.Projectiles.Hostile.Evil;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;

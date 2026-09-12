@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using NeoParacosm.Content.Projectiles;
-using NeoParacosm.Core.Players;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria.Graphics.Shaders;
 

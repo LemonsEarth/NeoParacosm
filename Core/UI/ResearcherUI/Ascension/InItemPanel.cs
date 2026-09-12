@@ -4,7 +4,6 @@ using NeoParacosm.Core.Systems.Data;
 using System.Linq;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.UI;
 
 namespace NeoParacosm.Core.UI.ResearcherUI.Ascension;
 

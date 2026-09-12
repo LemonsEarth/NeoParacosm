@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using NeoParacosm.Content.Items.Misc;
-using NeoParacosm.Content.Items.Placeable.Tiles.DeadForest;
-using ReLogic.Content;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.GameContent.Drawing;
+﻿using NeoParacosm.Content.Items.Misc;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Localization;
 using Terraria.ObjectData;

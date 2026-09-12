@@ -1,10 +1,4 @@
-﻿using System.Collections.Generic;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.Localization;
-using Terraria.ObjectData;
-
-namespace NeoParacosm.Content.Items.Placeable.Special.Spawners.Goblins;
+﻿namespace NeoParacosm.Content.Items.Placeable.Special.Spawners.Goblins;
 
 public class GoblinScoutWatchtowerSpawnerTile : SpawnerTile
 {

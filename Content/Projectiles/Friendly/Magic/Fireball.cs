@@ -1,11 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using JetBrains.Annotations;
+using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
-using static Terraria.GameContent.Animations.Actions.Sprites;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -118,7 +118,7 @@ public class Fireball : ModProjectile, IShaderProjectile
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        ShaderData.Shader.Parameters["velocity"].SetValue(-Projectile.velocity.SafeNormalize(Vector2.Zero));
+        ShaderData.Shader.Parameters["velocity"].SetValue(Vector2.UnitX.RotatedBy(Projectile.rotation));
         ShaderData.UseColor(Color.Red);
         ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
         ShaderData.UseOpacity(Projectile.Opacity);
