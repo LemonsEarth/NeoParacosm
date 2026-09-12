@@ -1,4 +1,6 @@
 ﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
@@ -42,6 +44,17 @@ public class GreatFireballExplosion : ModProjectile
         {
             Vector2 randVector = Main.rand.NextVector2Circular(10, 10);
             Vector2 randVector2 = Main.rand.NextVector2Circular(3, 3);
+            ParticleSystem.SpawnParticle(
+             ParticleID.Glowy,
+             Projectile.RandomPos(8, 8),
+              Main.rand.NextVector2Circular(6, 6),
+             Main.rand.NextFromList(Color.OrangeRed),
+             0f,
+             scale: 1.5f,
+             data0: 30,
+             data1: 5,
+             data2: 5,
+             data3: 0.93f);
             Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.OrangeStainedGlass, randVector.X, randVector.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
             Dust.NewDustDirect(Projectile.RandomPos(-Projectile.width / 2, -Projectile.height / 2), 2, 2, DustID.GemTopaz, randVector2.X, randVector2.Y, Scale: Main.rand.NextFloat(1.5f, 2.5f)).noGravity = true;
         }

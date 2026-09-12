@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -58,6 +59,17 @@ public class Fireball : ModProjectile, IShaderProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeStainedGlass, Scale: 2f, newColor: Color.OrangeRed).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, Scale: 1f, newColor: Color.Yellow).noGravity = true;
 
+        ParticleSystem.SpawnParticle(
+                ParticleID.Glowy,
+                Projectile.RandomPos(8, 8),
+                Main.rand.NextVector2Circular(2, 2),
+                Main.rand.NextFromList(Color.OrangeRed),
+                0f,
+                scale: 1.5f,
+                data0: 30,
+                data1: 5,
+                data2: 5,
+                data3: 0.93f);
         Player player = Projectile.GetOwner();
 
         if (!player.IsAlive() && !released)
@@ -119,7 +131,7 @@ public class Fireball : ModProjectile, IShaderProjectile
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         ShaderData.Shader.Parameters["velocity"].SetValue(Vector2.UnitX.RotatedBy(Projectile.rotation));
-        ShaderData.UseColor(Color.Red);
+        ShaderData.UseColor(Color.OrangeRed);
         ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
         ShaderData.UseOpacity(Projectile.Opacity);
         ShaderData.Apply();

@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -40,10 +41,20 @@ public class PoisonGasProj : ModProjectile
         {
 
         }
-        Dust.NewDustPerfect(Projectile.RandomPos(), DustType<CircleDust>(), 
-            Projectile.velocity * Main.rand.NextFloat(0.05f, 0.5f),
-            Scale: Main.rand.NextFloat(1f, 1.5f),
-            newColor: new Color(0f, Main.rand.NextFloat(0.2f, 1f), 0f, 1f)).noGravity = true;
+        for (int i = 0; i < 3; i++)
+        {
+            ParticleSystem.SpawnParticle(
+                ParticleID.Glowy,
+                Projectile.RandomPos(16, 16),
+                Main.rand.NextVector2Circular(5, 5),
+                Main.rand.NextFromList(new Color(0, 30, 0, 255) * 1f),
+                0f,
+                scale: 3f,
+                data0: 60,
+                data1: 10,
+                data2: 10,
+                data3: 0.95f);
+        }
 
         if (AITimer > TimeLeft)
         {

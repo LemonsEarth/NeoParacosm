@@ -21,14 +21,7 @@ public class GlowyParticle : ParticleType
         float duration = particle.data[0];
         float fadeInDuration = particle.data[1];
         float fadeOutDuration = particle.data[2];
-        if (duration == 0)
-        {
-            Main.NewText("hhh");
-        }
-        else
-        {
-            Main.NewText("mimimimi");
-        }
+        float slowDownMul = particle.data[3];
         if (particle.timer < fadeInDuration)
         {
             particle.opacity += 1f / fadeInDuration;
@@ -37,6 +30,8 @@ public class GlowyParticle : ParticleType
         {
             particle.opacity -= 1f / fadeOutDuration;
         }
+
+        particle.velocity *= slowDownMul;
 
         if (particle.timer > duration)
         {

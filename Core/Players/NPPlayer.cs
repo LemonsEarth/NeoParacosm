@@ -161,11 +161,7 @@ public class NPPlayer : ModPlayer
     {
         //Main.NewText(LemonUtils.TileIsExposedToAir(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y));
         //WorldGen.PlaceTile(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y, TileID.Grass);
-        if (Timer % 60== 0)
-        {
 
-        ParticleSystem.SpawnParticle(ParticleID.Glowy, Main.MouseWorld, Vector2.Zero, Color.White, data0: 10, data1:3, data2: 3);
-        }
         CloseResearcherUIIfTooFar();
         Timer++;
     }

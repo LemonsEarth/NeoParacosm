@@ -123,6 +123,7 @@ public abstract class ParticleRenderer : ModSystem
             particle1.timer = 0;
             particle1.frame = null;
             particle1.rotation = 0f;
+            particle1.data = new float[Particle.DATA_LENGTH];
             particle1.data[0] = data0;
             particle1.data[1] = data1;
             particle1.data[2] = data2;
@@ -138,6 +139,7 @@ public abstract class ParticleRenderer : ModSystem
         ReplacementIndex = 0;
 
         ref Particle particle = ref Particles[ActiveParticleCount];
+
         particle.active = true;
         particle.type = type;
         particle.position = position;
@@ -149,6 +151,7 @@ public abstract class ParticleRenderer : ModSystem
         particle.timer = 0;
         particle.frame = null;
         particle.rotation = 0f;
+        particle.data = new float[Particle.DATA_LENGTH];
         particle.data[0] = data0;
         particle.data[1] = data1;
         particle.data[2] = data2;

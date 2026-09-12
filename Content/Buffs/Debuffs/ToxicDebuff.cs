@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Players;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Buffs.Debuffs;
@@ -35,13 +36,20 @@ public class ToxicDebuff : ModBuff
         int dustCD = 5 - (int)(npc.buffTime[buffIndex] / 1000f);
         if (NPPlayer.Timer % dustCD == 0)
         {
-            Dust.NewDustPerfect(
-                npc.RandomPos(),
-                DustType<CircleDust>(),
-                -Vector2.UnitY * Main.rand.NextFloat(0.4f, 2f),
-                newColor: new Color(0f, Main.rand.NextFloat(0.2f, 1f), 0f, 1f),
-                Scale: Main.rand.NextFloat(0.3f, 0.6f)
-                );
+            for (int i = 0; i < 3; i++)
+            {
+                ParticleSystem.SpawnParticle(
+                    ParticleID.Glowy,
+                    npc.RandomPos(4, 4),
+                    Main.rand.NextVector2Circular(1, 1),
+                    Main.rand.NextFromList(new Color(0, 30, 0, 255) * 1f),
+                    0f,
+                    scale: 1f,
+                    data0: 60,
+                    data1: 10,
+                    data2: 10,
+                    data3: 0.98f);
+            }
         }
 
         if (npc.buffTime[buffIndex] >= SecondsToDetonateNPC * 60)
@@ -49,7 +57,17 @@ public class ToxicDebuff : ModBuff
             npc.SimpleStrikeNPC(200, 1);
             for (int i = 0; i < 20; i++)
             {
-                Dust.NewDustPerfect(npc.Center, DustType<CircleDust>(), new Vector2(Main.rand.NextFloat(-10, 10), Main.rand.NextFloat(-10, 10)), Scale: Main.rand.NextFloat(0.8f, 1.2f), newColor: new Color(0f, Main.rand.NextFloat(0.2f, 0.6f), 0f, 1f)).noGravity = true;
+                ParticleSystem.SpawnParticle(
+                    ParticleID.Glowy,
+                    npc.RandomPos(4, 4),
+                    Main.rand.NextVector2Circular(3, 3),
+                    Main.rand.NextFromList(new Color(0, 30, 0, 255) * 1f),
+                    0f,
+                    scale: 3f,
+                    data0: 60,
+                    data1: 10,
+                    data2: 10,
+                    data3: 0.98f);
             }
             npc.DelBuff(buffIndex);
             buffIndex--;
@@ -58,13 +76,20 @@ public class ToxicDebuff : ModBuff
 
     public override void Update(Player player, ref int buffIndex)
     {
-        Dust.NewDustPerfect(
-           player.RandomPos(),
-           DustType<CircleDust>(),
-           -Vector2.UnitY * Main.rand.NextFloat(0.4f, 2f),
-           newColor: new Color(0f, Main.rand.NextFloat(0.2f, 0.6f), 0f, 1f),
-           Scale: Main.rand.NextFloat(0.3f, 0.6f)
-           );
+        for (int i = 0; i < 1; i++)
+        {
+            ParticleSystem.SpawnParticle(
+                ParticleID.Glowy,
+                player.RandomPos(16, 16),
+                -Vector2.UnitY * Main.rand.NextFloat(1, 3),
+                Main.rand.NextFromList(new Color(0, 30, 0, 255) * 1f),
+                0f,
+                scale: 1f,
+                data0: 60,
+                data1: 10,
+                data2: 10,
+                data3: 0.95f);
+        }
 
         if (player.buffTime[buffIndex] >= SecondsToDetonatePlayer * 60)
         {
