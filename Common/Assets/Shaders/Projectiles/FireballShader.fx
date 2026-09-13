@@ -15,6 +15,7 @@ float4 color;
 float2 velocity;
 float distance;
 float tolerance;
+float noiseStepThreshold;
 
 float4 FireballShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, float4 position : SV_Position) : COLOR0
 {
@@ -22,8 +23,9 @@ float4 FireballShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, fl
     float distanceToCenter = length(centeredCoords);
 
     float4 glowballColor = tex2D(uImage0, coords);
-    float4 noiseColor = tex2D(uImage1, coords + uTime * -velocity);
-    float4 finalColor = noiseColor + glowballColor;
+    float2 vel = any(velocity) == false ? float2(0, -1) : velocity;
+    float4 noiseColor = tex2D(uImage1, coords + uTime / 4 * -velocity);
+    float4 finalColor = step(noiseColor.r, noiseStepThreshold) + glowballColor;
     finalColor.a = glowballColor.r * 2;
     finalColor.rgb *= uColor.rgb;
     return finalColor * uOpacity;

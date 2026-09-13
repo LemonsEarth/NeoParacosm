@@ -38,4 +38,32 @@ public class SurfaceTerrainGenerator
         }
         return surface;
     }
+
+    public static void GrowGrassOnSurface(int highestSurfacePoint)
+    {
+        GrowGrass(0, highestSurfacePoint, Main.maxTilesX, (int)Main.worldSurface);
+    }
+
+    public static void GrowGrass(int startTileX = 0, int startTileY = 0, int? endTileX = null, int? endTileY = null)
+    {
+        int endTileXValue = endTileX ?? Main.maxTilesX;
+        int endTileYValue = endTileY ?? (int)Main.worldSurface;
+        for (int i = startTileX; i < endTileXValue; i++)
+        {
+            for (int j = startTileY; j < endTileYValue; j++)
+            {
+                if (Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.Dirt)
+                {
+                    if (LemonUtils.TileIsExposedToAir(i, j))
+                    {
+                        WorldGen.PlaceTile(i, j, TileID.Grass);
+                    }
+                    else
+                    {
+                        Main.tile[i, j].WallType = WallID.Dirt;
+                    }
+                }
+            }
+        }
+    }
 }

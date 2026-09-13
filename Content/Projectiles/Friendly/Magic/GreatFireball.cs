@@ -137,7 +137,6 @@ public class GreatFireball : ModProjectile, IShaderProjectile
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        ShaderData.Shader.Parameters["velocity"].SetValue(-Projectile.velocity.SafeNormalize(Vector2.Zero));
         ShaderData.UseColor(Color.OrangeRed);
         ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
         ShaderData.UseOpacity(Projectile.Opacity);

@@ -97,7 +97,6 @@ public class Fireball : ModProjectile, IShaderProjectile
 
             }
             Projectile.netUpdate = true;
-            Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
         if (!released)
@@ -130,15 +129,14 @@ public class Fireball : ModProjectile, IShaderProjectile
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
-        ShaderData.Shader.Parameters["velocity"].SetValue(Vector2.UnitX.RotatedBy(Projectile.rotation));
         ShaderData.UseColor(Color.OrangeRed);
         ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
         ShaderData.UseOpacity(Projectile.Opacity);
         ShaderData.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.25f, SpriteEffects.None, 0);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, 0, texture.Size() * 0.5f, Projectile.scale * 1.25f, SpriteEffects.None, 0);
         ShaderData.UseColor(Color.Yellow);
         ShaderData.Apply();
-        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 0.5f, SpriteEffects.None, 0);
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, 0, texture.Size() * 0.5f, Projectile.scale * 0.5f, SpriteEffects.None, 0);
     }
 
     public override bool PreDraw(ref Color lightColor)

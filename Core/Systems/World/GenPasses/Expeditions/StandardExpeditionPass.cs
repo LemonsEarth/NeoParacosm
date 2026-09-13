@@ -2,6 +2,7 @@
 using NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
 using NeoParacosm.Core.Systems.World.TerrainTypes.SurfaceTerrain;
 using SubworldLibrary;
+using System.Linq;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
@@ -34,8 +35,8 @@ public class StandardExpeditionPass : GenPass
 
             GenerateStone();
             GenerateAsh();
-            GrowGrassOnSurface();
-            //GenerateCaves();
+            SurfaceTerrainGenerator.GrowGrassOnSurface(postMountainsSurface.SurfaceHeights.Min());
+            GenerateCaves();
             GenerateCave();
         }
         catch (Exception e)
@@ -43,12 +44,6 @@ public class StandardExpeditionPass : GenPass
             SubworldSystem.Exit();
             NeoParacosm.Instance.Logger.Error(e.StackTrace);
         }
-    }
-
-    void PlaceGrass(int i, int j)
-    {
-        WorldGen.PlaceTile(i, j, TileID.Dirt, true);
-        WorldGen.PlaceTile(i, j, TileID.Grass, true);
     }
 
     void GenerateDirt()
@@ -137,8 +132,8 @@ public class StandardExpeditionPass : GenPass
 
     void GenerateCave()
     {
-        Point p1 = new Point(Main.maxTilesX / 3, Main.maxTilesY * 2 / 3);
-        Point p2 = new Point(Main.maxTilesX * 2 / 3, Main.maxTilesY / 3);
+        Point p1 = new Point(0, (int)Main.worldSurface);
+        Point p2 = new Point(Main.maxTilesX, (int)Main.worldSurface);
         CaveGenerator.GenerateCaveBetweenPoints(p1.X, p1.Y, p2.X, p2.Y, (i) => Main.rand.Next(3, 6));
     }
 
@@ -174,27 +169,6 @@ public class StandardExpeditionPass : GenPass
                 (i) => baseWidth + Main.rand.Next(-3, 3),
                 (i) => CaveGenerator.LinearCaveAngleFuncWithRandomSharpTurn(i, length, MathHelper.Pi / 4f, MathHelper.Pi / 2f, 12));
 
-        }
-    }
-
-    void GrowGrassOnSurface()
-    {
-        for (int i = 0; i < Main.maxTilesX; i++)
-        {
-            for (int j = 0; j < Main.worldSurface; j++)
-            {
-                if (Main.tile[i, j].HasTile && Main.tile[i, j].TileType == TileID.Dirt)
-                {
-                    if (LemonUtils.TileIsExposedToAir(i, j))
-                    {
-                        WorldGen.PlaceTile(i, j, TileID.Grass);
-                    }
-                    else
-                    {
-                        Main.tile[i, j].WallType = WallID.Dirt;
-                    }
-                }
-            }
         }
     }
 
