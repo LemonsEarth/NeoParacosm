@@ -2,11 +2,12 @@
 
 public class SurfaceTerrain
 {
-    public SurfaceTerrain(int maxTilesX)
+    public SurfaceTerrain(int maxTilesX, int initialSurfaceLevel)
     {
-        SurfaceHeights = new int[maxTilesX];
+        InitialLevel = initialSurfaceLevel;
+        Heights = new int[maxTilesX];
     }
 
-    public int[] SurfaceHeights { get; set; }
-    public int SurfaceLevel { get; set; }
+    public int[] Heights { get; set; }
+    public int InitialLevel { get; set; }
 }

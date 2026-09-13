@@ -22,7 +22,7 @@ public class SurfaceTerrainGenerator
         int currentY = surfaceLevel ?? AverageSurfaceLevel;
 
         int maxTilesXValue = endTileX ?? Main.maxTilesX;
-        SurfaceTerrain surface = new SurfaceTerrain(maxTilesXValue);
+        SurfaceTerrain surface = new SurfaceTerrain(maxTilesXValue - startTileX, currentY);
 
         for (int i = startTileX; i < maxTilesXValue; i++)
         {
@@ -30,7 +30,7 @@ public class SurfaceTerrainGenerator
             {
                 WorldGen.PlaceTile(i, j, TileID.Dirt, true);
             }
-            surface.SurfaceHeights[i] = currentY;
+            surface.Heights[i - startTileX] = currentY;
             if (Main.rand.NextBool(elevationChangeChanceDenominator))
             {
                 currentY += Main.rand.Next(-elevationChangeMin, elevationChangeMax + 1);

@@ -28,16 +28,16 @@ public class StandardExpeditionPass : GenPass
             NeoParacosm.Instance.Logger.Info($"World surface high: {GenVars.worldSurfaceHigh}");
             NeoParacosm.Instance.Logger.Info($"World surface low: {GenVars.worldSurfaceLow}");*/
             GenerateDirt();
-
             GenerateMountains();
             FixSingleHolesAndBulges();
 
 
-            GenerateStone();
-            GenerateAsh();
-            SurfaceTerrainGenerator.GrowGrassOnSurface(postMountainsSurface.SurfaceHeights.Min());
-            GenerateCaves();
-            GenerateCave();
+            //GenerateStone();
+            //GenerateAsh();
+            SurfaceTerrainGenerator.GrowGrassOnSurface(postMountainsSurface.Heights.Min());
+            //GenerateCaves();
+            //GenerateCave();
+            GenerateTrees();
         }
         catch (Exception e)
         {
@@ -46,31 +46,52 @@ public class StandardExpeditionPass : GenPass
         }
     }
 
-    void GenerateDirt()
+    void GenerateTrees()
     {
-        int currentY = AverageSurfaceLevel;
-        initialSurface = new SurfaceTerrain(Main.maxTilesX);
         for (int i = 0; i < Main.maxTilesX; i++)
         {
-            //PlaceGrass(i, currentY);
-            for (int j = currentY; j < Main.worldSurface; j++)
+            if (Main.rand.NextBool(10))
             {
-                WorldGen.PlaceTile(i, j, TileID.Dirt, true);
-            }
-            initialSurface.SurfaceHeights[i] = currentY;
-            if (Main.rand.NextBool(4))
-            {
-                currentY += Main.rand.Next(-1, 1 + 1);
+
+                int y = postMountainsSurface.Heights[i];
+                WorldGen.GrowEpicTree(i, y);
             }
         }
     }
 
+    void GenerateDirt()
+    {
+        initialSurface = new SurfaceTerrain(0, AverageSurfaceLevel);
+        int surfaceLevel = AverageSurfaceLevel;
+        Random rand = new Random();
+        for (int i = 0; i < 7; i++)
+        {
+            int minrand = rand.Next(1, 3);
+            int maxrand = 1;
+            if (minrand == 1)
+            {
+                maxrand = rand.Next(1, 3);
+            }
+            SurfaceTerrain surface = SurfaceTerrainGenerator.GenerateDirtSurface(
+                surfaceLevel,
+                0 + i * Main.maxTilesX / 7,
+                Main.maxTilesX * (i + 1) / 7,
+                4,
+                minrand,
+                maxrand
+                );
+            surfaceLevel = surface.Heights.Last();
+            initialSurface.Heights = initialSurface.Heights.Concat(surface.Heights).ToArray();
+        }
+
+    }
+
     void GenerateMountains()
     {
-        postMountainsSurface = new SurfaceTerrain(Main.maxTilesX);
+        postMountainsSurface = new SurfaceTerrain(Main.maxTilesX, AverageSurfaceLevel);
         for (int i = 0; i < Main.maxTilesX; i++)
         {
-            postMountainsSurface.SurfaceHeights[i] = initialSurface.SurfaceHeights[i];
+            postMountainsSurface.Heights[i] = initialSurface.Heights[i];
         }
 
         for (int c = 0; c < 4; c++)
@@ -78,15 +99,15 @@ public class StandardExpeditionPass : GenPass
             Random rand = new Random();
             int startTileX = rand.Next((int)(Main.maxTilesX * 0.1f), (int)(Main.maxTilesX * 0.9f));
             int mountainWidth = rand.Next(350, 500);
-            int mountainHeight = rand.Next(180, 240);
+            int mountainHeight = rand.Next(100, 180);
             int peakWidth = rand.Next(60, (mountainWidth * 3) / 4);
             MountainGenerator.GenerateNormalMountain(
                 startTileX,
                 mountainWidth,
                 mountainHeight,
                 peakWidth,
-                initialSurface.SurfaceHeights,
-                postMountainsSurface.SurfaceHeights
+                initialSurface.Heights,
+                postMountainsSurface.Heights
                 );
         }
 
@@ -100,8 +121,8 @@ public class StandardExpeditionPass : GenPass
                 startTileX,
                 mountainWidth,
                 mountainHeight,
-                initialSurface.SurfaceHeights,
-                postMountainsSurface.SurfaceHeights
+                initialSurface.Heights,
+                postMountainsSurface.Heights
                 );
         }
     }
@@ -111,20 +132,20 @@ public class StandardExpeditionPass : GenPass
         // Slightly smooth out terrain
         for (int i = 1; i < Main.maxTilesX - 1; i++)
         {
-            int current = postMountainsSurface.SurfaceHeights[i];
-            int prev = postMountainsSurface.SurfaceHeights[i - 1];
-            int next = postMountainsSurface.SurfaceHeights[i + 1];
+            int current = postMountainsSurface.Heights[i];
+            int prev = postMountainsSurface.Heights[i - 1];
+            int next = postMountainsSurface.Heights[i + 1];
             if (prev > current && next > current)
             {
                 WorldGen.KillTile(i, current);
                 current++;
-                postMountainsSurface.SurfaceHeights[i]++;
+                postMountainsSurface.Heights[i]++;
                 //WorldGen.PlaceTile(i, current, TileID.Grass, true);
             }
             else if (prev < current && next < current)
             {
                 current--;
-                postMountainsSurface.SurfaceHeights[i]--;
+                postMountainsSurface.Heights[i]--;
                 WorldGen.PlaceTile(i, current, TileID.Dirt, true);
             }
         }
@@ -143,7 +164,7 @@ public class StandardExpeditionPass : GenPass
         {
             int x = Main.rand.Next(0, Main.maxTilesX);
 
-            int y = postMountainsSurface.SurfaceHeights[x];
+            int y = postMountainsSurface.Heights[x];
             int baseWidth = Main.rand.Next(4, 8);
             int length = Main.rand.Next(80, 120);
             CaveGenerator.GenerateCave(
@@ -159,7 +180,7 @@ public class StandardExpeditionPass : GenPass
         {
             int x = Main.rand.Next(0, Main.maxTilesX);
 
-            int y = Main.rand.Next(initialSurface.SurfaceHeights[x], Main.maxTilesY);
+            int y = Main.rand.Next(initialSurface.Heights[x], Main.maxTilesY);
             int baseWidth = Main.rand.Next(4, 6);
             int length = Main.rand.Next(80, 150);
             CaveGenerator.GenerateCave(
@@ -186,7 +207,7 @@ public class StandardExpeditionPass : GenPass
             {
                 break;
             }
-            int surfaceY = initialSurface.SurfaceHeights[i];
+            int surfaceY = initialSurface.Heights[i];
             int y = surfaceY + currentMountainHeight;
             WorldGen.PlaceTile(i, y, TileID.Stone, true);
             for (int j = y; j < surfaceY; j++)

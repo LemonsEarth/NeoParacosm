@@ -87,6 +87,8 @@ public static class MountainGenerator
             // Skip if the generated position is outside the world bounds
             if (!WorldGen.InWorld(fallOffTileX, y))
             {
+                y++;
+                currentMountainHeight++;
                 continue;
             }
 
@@ -178,6 +180,8 @@ public static class MountainGenerator
             // Skip if the generated position is outside the world bounds
             if (!WorldGen.InWorld(fallOffTileX, y))
             {
+                y++;
+                currentMountainHeight++;
                 continue;
             }
 

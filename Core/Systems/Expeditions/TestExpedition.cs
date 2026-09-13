@@ -16,7 +16,8 @@ public class TestExpedition : Subworld
 
     public override List<GenPass> Tasks => new List<GenPass>()
     {
-        new StandardExpeditionPass("StandardExpeditionPass")
+        new StandardExpeditionPass("StandardExpeditionPass"),
+        
     };
 
     public override void Load()
