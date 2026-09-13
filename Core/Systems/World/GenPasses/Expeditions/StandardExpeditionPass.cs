@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Core.Systems.World.TerrainTypes.Caves;
 using NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
+using NeoParacosm.Core.Systems.World.TerrainTypes.SurfaceTerrain;
 using SubworldLibrary;
 using Terraria.IO;
 using Terraria.WorldBuilding;
@@ -10,6 +11,10 @@ public class StandardExpeditionPass : GenPass
 {
     public StandardExpeditionPass(string name) : base(name, 100) { }
     static int AverageSurfaceLevel => (int)Main.worldSurface - 50;
+
+    SurfaceTerrain initialSurface;
+    SurfaceTerrain postMountainsSurface;
+
     protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
     {
         try
@@ -46,11 +51,10 @@ public class StandardExpeditionPass : GenPass
         WorldGen.PlaceTile(i, j, TileID.Grass, true);
     }
 
-    int[] surfaceHeights = new int[Main.maxTilesX];
     void GenerateDirt()
     {
         int currentY = AverageSurfaceLevel;
-        surfaceHeights = new int[Main.maxTilesX];
+        initialSurface = new SurfaceTerrain(Main.maxTilesX);
         for (int i = 0; i < Main.maxTilesX; i++)
         {
             //PlaceGrass(i, currentY);
@@ -58,7 +62,7 @@ public class StandardExpeditionPass : GenPass
             {
                 WorldGen.PlaceTile(i, j, TileID.Dirt, true);
             }
-            surfaceHeights[i] = currentY;
+            initialSurface.SurfaceHeights[i] = currentY;
             if (Main.rand.NextBool(4))
             {
                 currentY += Main.rand.Next(-1, 1 + 1);
@@ -66,13 +70,12 @@ public class StandardExpeditionPass : GenPass
         }
     }
 
-    int[] postMountainsSurfaceHeights = new int[Main.maxTilesX];
     void GenerateMountains()
     {
-        postMountainsSurfaceHeights = new int[Main.maxTilesX];
+        postMountainsSurface = new SurfaceTerrain(Main.maxTilesX);
         for (int i = 0; i < Main.maxTilesX; i++)
         {
-            postMountainsSurfaceHeights[i] = surfaceHeights[i];
+            postMountainsSurface.SurfaceHeights[i] = initialSurface.SurfaceHeights[i];
         }
 
         for (int c = 0; c < 4; c++)
@@ -87,8 +90,8 @@ public class StandardExpeditionPass : GenPass
                 mountainWidth,
                 mountainHeight,
                 peakWidth,
-                surfaceHeights,
-                postMountainsSurfaceHeights
+                initialSurface.SurfaceHeights,
+                postMountainsSurface.SurfaceHeights
                 );
         }
 
@@ -102,8 +105,8 @@ public class StandardExpeditionPass : GenPass
                 startTileX,
                 mountainWidth,
                 mountainHeight,
-                surfaceHeights,
-                postMountainsSurfaceHeights
+                initialSurface.SurfaceHeights,
+                postMountainsSurface.SurfaceHeights
                 );
         }
     }
@@ -113,20 +116,20 @@ public class StandardExpeditionPass : GenPass
         // Slightly smooth out terrain
         for (int i = 1; i < Main.maxTilesX - 1; i++)
         {
-            int current = postMountainsSurfaceHeights[i];
-            int prev = postMountainsSurfaceHeights[i - 1];
-            int next = postMountainsSurfaceHeights[i + 1];
+            int current = postMountainsSurface.SurfaceHeights[i];
+            int prev = postMountainsSurface.SurfaceHeights[i - 1];
+            int next = postMountainsSurface.SurfaceHeights[i + 1];
             if (prev > current && next > current)
             {
                 WorldGen.KillTile(i, current);
                 current++;
-                postMountainsSurfaceHeights[i]++;
+                postMountainsSurface.SurfaceHeights[i]++;
                 //WorldGen.PlaceTile(i, current, TileID.Grass, true);
             }
             else if (prev < current && next < current)
             {
                 current--;
-                postMountainsSurfaceHeights[i]--;
+                postMountainsSurface.SurfaceHeights[i]--;
                 WorldGen.PlaceTile(i, current, TileID.Dirt, true);
             }
         }
@@ -145,7 +148,7 @@ public class StandardExpeditionPass : GenPass
         {
             int x = Main.rand.Next(0, Main.maxTilesX);
 
-            int y = postMountainsSurfaceHeights[x];
+            int y = postMountainsSurface.SurfaceHeights[x];
             int baseWidth = Main.rand.Next(4, 8);
             int length = Main.rand.Next(80, 120);
             CaveGenerator.GenerateCave(
@@ -161,7 +164,7 @@ public class StandardExpeditionPass : GenPass
         {
             int x = Main.rand.Next(0, Main.maxTilesX);
 
-            int y = Main.rand.Next(surfaceHeights[x], Main.maxTilesY);
+            int y = Main.rand.Next(initialSurface.SurfaceHeights[x], Main.maxTilesY);
             int baseWidth = Main.rand.Next(4, 6);
             int length = Main.rand.Next(80, 150);
             CaveGenerator.GenerateCave(
@@ -209,7 +212,7 @@ public class StandardExpeditionPass : GenPass
             {
                 break;
             }
-            int surfaceY = surfaceHeights[i];
+            int surfaceY = initialSurface.SurfaceHeights[i];
             int y = surfaceY + currentMountainHeight;
             WorldGen.PlaceTile(i, y, TileID.Stone, true);
             for (int j = y; j < surfaceY; j++)

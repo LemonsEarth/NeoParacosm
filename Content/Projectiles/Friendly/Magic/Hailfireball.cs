@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
+using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -54,6 +55,18 @@ public class Hailfireball : ModProjectile, IShaderProjectile
         }
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch, Scale: 2f).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemSapphire, Scale: 1f).noGravity = true;
+
+        ParticleSystem.SpawnParticle(
+                ParticleID.Glowy,
+                Projectile.RandomPos(8, 8),
+                Main.rand.NextVector2Circular(2, 2),
+                Main.rand.NextFromList(Color.LightBlue),
+                0f,
+                scale: 0.5f,
+                data0: 30,
+                data1: 5,
+                data2: 5,
+                data3: 0.93f);
 
         Player player = Projectile.GetOwner();
 
