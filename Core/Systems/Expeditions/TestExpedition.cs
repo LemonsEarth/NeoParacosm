@@ -74,9 +74,9 @@ public class TestExpedition : Subworld
 
     public override void Update()
     {
-        Main.NewText($"Player Coords: {Main.LocalPlayer.Center.ToTileCoordinates()}");
+        //Main.NewText($"Player Coords: {Main.LocalPlayer.Center.ToTileCoordinates()}");
+        //Main.NewText($"d: {Main.MouseWorld.Y - GenVars.rockLayerLow}");
         //Main.NewText($"World Surface: {Main.worldSurface}");
-
         /*if (Main.mouseLeft && Main.mouseLeftRelease && Main.LocalPlayer.HeldItem.type == ItemID.None)
         {
             GenerateCavePoints(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y, new Vector2(1, 0), 10, 100, MathHelper.PiOver4);
