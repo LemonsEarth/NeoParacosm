@@ -20,6 +20,7 @@ public class PaladinsHolyBarrier : ModItem
 
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
+        player.noKnockback = true;
         player.GetModPlayer<PaladinsHolyBarrierPlayer>().Active = true;
     }
 
@@ -59,12 +60,15 @@ public class PaladinsHolyBarrierPlayer : ModPlayer
                 for (int i = 0; i < Timer / 150f; i++)
                 {
                     ParticleSystem.SpawnParticle(
-                        ParticleID.Circle,
+                        ParticleID.Glowy,
                         Player.RandomPos(8, 8),
                         -Vector2.UnitY * Main.rand.NextFloat(0.5f, 3),
                         Color.LightYellow,
-                        scale: 0.8f,
-                        data0: 0.1f, data1: 0.2f);
+                        scale: 1f,
+                        data0: 30,
+                        data1: 5,
+                        data2: 20,
+                        data3: 0.93f);
                 }
             }
 

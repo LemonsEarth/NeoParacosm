@@ -32,7 +32,7 @@ public class HolyRepelProjFriendly : ModProjectile, IShaderProjectile
         Projectile.width = 120;
         Projectile.height = 120;
         Projectile.hostile = false;
-        Projectile.friendly = false;
+        Projectile.friendly = true;
         Projectile.ignoreWater = true;
         Projectile.tileCollide = false;
         Projectile.penetrate = -1;
@@ -65,6 +65,10 @@ public class HolyRepelProjFriendly : ModProjectile, IShaderProjectile
                     npc.velocity += dirFromProjectile * force;
                 }
             }
+        }
+        else
+        {
+            Projectile.damage = 0;
         }
         if (AITimer / cycleDuration >= 1)
         {

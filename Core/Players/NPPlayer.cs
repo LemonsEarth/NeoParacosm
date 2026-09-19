@@ -161,7 +161,8 @@ public class NPPlayer : ModPlayer
     {
         //Main.NewText(LemonUtils.TileIsExposedToAir(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y));
         //WorldGen.PlaceTile(LemonUtils.GetMouseTile().X, LemonUtils.GetMouseTile().Y, TileID.Grass);
-
+        //Player.fullRotation = Player.DirectionTo(Main.MouseWorld).ToRotation();
+        //Player.fullRotationOrigin = new Vector2(Player.width, Player.height) / 2;
         CloseResearcherUIIfTooFar();
         Timer++;
     }

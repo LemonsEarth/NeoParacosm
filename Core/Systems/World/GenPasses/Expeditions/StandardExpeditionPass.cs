@@ -3,6 +3,7 @@ using NeoParacosm.Core.Systems.World.TerrainTypes.Mountains;
 using NeoParacosm.Core.Systems.World.TerrainTypes.SurfaceTerrain;
 using SubworldLibrary;
 using System.Linq;
+using Terraria.GameContent.Generation;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 using static tModPorter.ProgressUpdate;
@@ -30,17 +31,28 @@ public class StandardExpeditionPass : GenPass
             NeoParacosm.Instance.Logger.Info($"World surface low: {GenVars.worldSurfaceLow}");*/
             GenerateDirt();
             GenerateMountains();
+
             FixSingleHolesAndBulges();
+
             GenerateStone();
             GenerateDirtInStone();
             GenerateAsh();
+
             SurfaceTerrainGenerator.GrowGrassOnSurface(postMountainsSurface.Heights.Min());
+
             GenerateCaves();
             GenerateCave();
+
             GenerateStoneInDirt(0, (int)Main.worldSurface, 4, 15, 5, 30, 0.001f);
+            GenerateClayInDirt(0, (int)Main.worldSurface, 4, 10, 5, 20, 0.0003f);
+
+            PlaceLargePilesUnderground();
             PlaceSmallPilesUnderground();
+
             GenerateTrees();
+
             SlopeTiles();
+
             //GenerateSplotches(TileID.Sand, (int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh, 4, 10, 5, 30, 0.0025f);
             //GenerateSplotches(TileID.Mud, (int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh, 4, 10, 5, 30, 0.0025f);
             //GenerateSplotches(TileID.Pearlstone, (int)GenVars.worldSurfaceHigh, (int)GenVars.rockLayerHigh, 4, 10, 5, 30, 0.0005f);
@@ -58,9 +70,9 @@ public class StandardExpeditionPass : GenPass
     {
         for (int i = 1; i < Main.maxTilesX - 1; i++)
         {
-            for (int j = postMountainsSurface.Heights[i]; j < Main.maxTilesY - 1; j++)
+            for (int j = postMountainsSurface.Heights[i] - 1; j < Main.maxTilesY - 1; j++)
             {
-                if (!Main.rand.NextBool(4))
+                if (!Main.rand.NextBool(2))
                 {
                     continue;
                 }
@@ -88,44 +100,52 @@ public class StandardExpeditionPass : GenPass
                 {
                     if (belowTile.HasTile)
                     {
-                        if (Main.rand.NextBool(4))
+                        if (Main.rand.NextBool(2))
                         {
                             WorldGen.PoundTile(i, j);
                         }
                         else
                         {
-
                             WorldGen.SlopeTile(i, j, (int)SlopeType.SlopeDownLeft);
                         }
 
                     }
                     else if (aboveTile.HasTile)
                     {
-
                         WorldGen.SlopeTile(i, j, (int)SlopeType.SlopeUpLeft);
-
                     }
                 }
                 else if (rightTile.HasTile)
                 {
                     if (belowTile.HasTile)
                     {
-                        if (Main.rand.NextBool(4))
+                        if (Main.rand.NextBool(2))
                         {
                             WorldGen.PoundTile(i, j);
                         }
                         else
                         {
-
                             WorldGen.SlopeTile(i, j, (int)SlopeType.SlopeDownRight);
                         }
                     }
                     else if (aboveTile.HasTile)
                     {
-
                         WorldGen.SlopeTile(i, j, (int)SlopeType.SlopeUpRight);
-
                     }
+                }
+            }
+        }
+    }
+
+    void PlaceLargePilesUnderground()
+    {
+        for (int i = 0; i < Main.maxTilesX; i++)
+        {
+            for (int j = postMountainsSurface.Heights[i] + 1; j < Main.maxTilesY; j++)
+            {
+                if (Main.rand.NextBool(10))
+                {
+                    PlaceLargePile(i, j);
                 }
             }
         }
@@ -175,6 +195,37 @@ public class StandardExpeditionPass : GenPass
             default:
                 x = Main.rand.Next(12, 35 + 1);
                 WorldGen.PlaceSmallPile(i, j, x, y);
+                break;
+        }
+    }
+
+    void PlaceLargePile(int i, int j)
+    {
+        if (Main.tile[i, j].HasTile || Main.tile[i + 1, j].HasTile || Main.tile[i - 1, j].HasTile)
+        {
+            return;
+        }
+
+        if (!Main.tile[i, j + 1].HasTile || !Main.tile[i + 1, j + 1].HasTile || !Main.tile[i - 1, j + 1].HasTile)
+        {
+            return;
+        }
+
+        Tile tileBelow = Main.tile[i, j + 1];
+        int x = 0;
+        switch (tileBelow.TileType)
+        {
+            case TileID.Stone:
+                if (Main.rand.NextBool(5))
+                {
+                    goto default;
+                }
+                x = Main.rand.Next(7, 15 + 1);
+                WorldGen.PlaceTile(i, j, TileID.LargePiles, style: x);
+                break;
+            default:
+                x = Main.rand.Next(0, 25 + 1);
+                WorldGen.PlaceTile(i, j, TileID.LargePiles, style: x);
                 break;
         }
     }
@@ -297,7 +348,11 @@ public class StandardExpeditionPass : GenPass
     void GenerateStoneInDirt(int minY, int maxY, int strengthMin, int strengthMax, int stepsMin, int stepsMax, float stoneCountMultiplier)
     {
         GenerateSplotches(TileID.Stone, minY, maxY, strengthMin, strengthMax, stepsMin, stepsMax, stoneCountMultiplier);
-        int surfaceRockCount = (int)(Main.maxTilesX * Main.maxTilesY * stoneCountMultiplier);
+    }
+
+    void GenerateClayInDirt(int minY, int maxY, int strengthMin, int strengthMax, int stepsMin, int stepsMax, float stoneCountMultiplier)
+    {
+        GenerateSplotches(TileID.ClayBlock, minY, maxY, strengthMin, strengthMax, stepsMin, stepsMax, stoneCountMultiplier);
     }
 
     void FixSingleHolesAndBulges()

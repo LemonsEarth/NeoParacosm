@@ -52,7 +52,7 @@ public class StoneSwordspearHeldProj : ModProjectile
 
         float rotation = 0;
         float startRotation = MathHelper.ToRadians(-75f);
-        float goalRotation = MathHelper.ToRadians(150f);
+        float goalRotation = MathHelper.ToRadians(210f);
         if (!released)
         {
             if (ChargeAmount < 180)
