@@ -2942,8 +2942,5 @@ LionsHolyShield: {
 
 FurnaceSpell: {
 	DisplayName: Furnace
-	Tooltip:
-	'''
-	Hold left click to charge, release to fire
-	'''
+	Tooltip: Hold left click to charge, release to fire
 }

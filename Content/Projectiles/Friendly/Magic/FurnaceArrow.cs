@@ -67,10 +67,10 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
                         Main.rand.NextFromList(Color.OrangeRed),
                         0f,
                         scale: Main.rand.NextFloat(2f * (1 + ChargeAmount / 120f), 4f * (1 + ChargeAmount / 120f)),
-                        data0: 90,
-                        data1: 20,
-                        data2: 20,
-                        data3: 0.95f
+                        data0: Main.rand.Next(70, 100),
+                        data1: Main.rand.Next(10, 30),
+                        data2: Main.rand.Next(10, 30),
+                        data3: Main.rand.NextFloat(0.93f, 0.96f)
                     );
                 }
                 Projectile.Resize(400 + Power, 400 + Power);
