@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Particles;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -42,7 +43,18 @@ public class FlameStaffFlames : ModProjectile
             Projectile.Kill();
         }
 
-        Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Torch, Scale: 2f).noGravity = true;
+        ParticleSystem.SpawnParticle(
+                ParticleID.Glowy,
+                Projectile.Center,
+                Main.rand.NextVector2Circular(0.2f, 0.2f),
+                Main.rand.NextFromList(Color.OrangeRed),
+                0f,
+                scale: 1f,
+                data0: 10,
+                data1: 4,
+                data2: 4,
+                data3: 0.93f);
+        //Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Torch, Scale: 2f).noGravity = true;
         AITimer++;
     }
 

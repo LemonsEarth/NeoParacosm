@@ -1,10 +1,12 @@
 ﻿using NeoParacosm.Content.NPCs.Friendly.Quest.Researcher;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
 using NeoParacosm.Content.Projectiles.Hostile.Death;
 using NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
 using Terraria.GameInput;
+using static Terraria.ModLoader.BackupIO;
 
 namespace NeoParacosm.Core.Players;
 

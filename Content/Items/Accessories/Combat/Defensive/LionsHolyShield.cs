@@ -2,12 +2,15 @@
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Particles;
 using Terraria.Audio;
+using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
 
 [AutoloadEquip(EquipType.Shield)]
 public class LionsHolyShield : ModItem
 {
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(PaladinsHolyBarrierPlayer.MaxDR, PaladinsHolyBarrierPlayer.MaxTimer / 60);
+
     public override void SetDefaults()
     {
         Item.width = 86;
@@ -135,17 +138,17 @@ public class LionsHolyShieldPlayer : ModPlayer
         if (DashTimer > 0 && !alreadyHit)
         {
             alreadyHit = true;
-            SoundEngine.PlaySound(SoundID.DD2_BetsyHurt with { PitchRange = (-0.2f, 0.2f)}, Player.Center);
-             Projectile.NewProjectileDirect(
-                    Player.GetSource_FromThis(),
-                    Player.Center,
-                    Vector2.Zero,
-                    ProjectileType<HolyRepelProjFriendly>(),
-                    100, 0,
-                    ai0: 200,
-                    ai1: 6,
-                    ai2: 3
-                    );
+            SoundEngine.PlaySound(SoundID.DD2_BetsyHurt with { PitchRange = (-0.2f, 0.2f) }, Player.Center);
+            Projectile.NewProjectileDirect(
+                   Player.GetSource_FromThis(),
+                   Player.Center,
+                   Vector2.Zero,
+                   ProjectileType<HolyRepelProjFriendly>(),
+                   100, 0,
+                   ai0: 200,
+                   ai1: 6,
+                   ai2: 3
+                   );
         }
     }
 

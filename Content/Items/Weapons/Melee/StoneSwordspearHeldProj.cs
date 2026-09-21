@@ -152,7 +152,7 @@ public class StoneSwordspearHeldProj : ModProjectile
     {
         Texture2D texture = TextureAssets.Projectile[Type].Value;
 
-        Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(0, Projectile.gfxOffY) - Main.screenPosition, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
+        Main.EntitySpriteDraw(texture, Projectile.Center + new Vector2(0, Projectile.gfxOffY) - Main.screenPosition, null, lightColor, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, LemonUtils.SpriteDirectionToSpriteEffects(Projectile.spriteDirection));
         return false;
     }
 
