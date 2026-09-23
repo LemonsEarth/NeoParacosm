@@ -4,7 +4,9 @@ using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
 using NeoParacosm.Core.UI;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
+using Terraria.UI.Chat;
 
 namespace NeoParacosm.Common.Utils;
 
@@ -49,6 +51,21 @@ public static partial class LemonUtils
                 Vector2.Zero
                 ).noGravity = true;
         }
+    }
+
+    public static void DrawText(string text, Vector2 screenPos, Color? color = null, float rotation = 0f, Vector2? origin = null, Vector2? scale = null)
+    {
+        color ??= Color.White;
+        origin ??= Vector2.Zero;
+        scale ??= Vector2.One;
+        ChatManager.DrawColorCodedString(Main.spriteBatch, FontAssets.MouseText.Value, text, screenPos, color.Value, rotation, origin.Value, scale.Value);
+    }
+
+    public static void DrawText(string text, Vector2 screenPos, Color? color = null, float rotation = 0f, Vector2? origin = null, float scale = 1f)
+    {
+        color ??= Color.White;
+        origin ??= Vector2.Zero;
+        ChatManager.DrawColorCodedString(Main.spriteBatch, FontAssets.MouseText.Value, text, screenPos, color.Value, rotation, origin.Value, new Vector2(scale, scale));
     }
 
     /// <summary>
