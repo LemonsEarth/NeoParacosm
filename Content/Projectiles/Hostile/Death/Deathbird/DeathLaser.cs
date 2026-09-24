@@ -16,7 +16,7 @@ public class DeathLaser : ModProjectile, IShaderProjectile
     float LaserLength = 20f;
     float CollisionWidth = 0.7f;
 
-    int InitialDuration = 1200;
+    int InitialDuration = 120;
     int FadeOutDuration = 15;
     int ScaleRampUpFrames = 5;
 
@@ -93,10 +93,9 @@ public class DeathLaser : ModProjectile, IShaderProjectile
         currentScale = MathHelper.Clamp(AITimer / (float)ScaleRampUpFrames * SizeMultiplier, 0, SizeMultiplier);
 
         if (Projectile.timeLeft < FadeOutDuration)
-            currentScale = Projectile.timeLeft * SizeMultiplier / (float)ScaleRampUpFrames;
+            currentScale *= Projectile.timeLeft * SizeMultiplier / (float)ScaleRampUpFrames;
 
         DustEffects();
-
         AITimer++;
     }
 

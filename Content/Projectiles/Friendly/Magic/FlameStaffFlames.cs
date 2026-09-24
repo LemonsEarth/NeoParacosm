@@ -1,5 +1,6 @@
 ﻿using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -43,7 +44,7 @@ public class FlameStaffFlames : ModProjectile
             Projectile.Kill();
         }
 
-        ParticleSystem.SpawnParticle(
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
                 Projectile.Center,
                 Main.rand.NextVector2Circular(0.2f, 0.2f),

@@ -1,4 +1,7 @@
-﻿namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
+﻿using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
+
+namespace NeoParacosm.Content.Projectiles.Friendly.Summon.Sentries;
 
 public class ShadowBolt : ModProjectile
 {
@@ -28,6 +31,17 @@ public class ShadowBolt : ModProjectile
         var dust = Dust.NewDustDirect(Projectile.position, Projectile.width / 2, Projectile.height / 2, DustID.Shadowflame, Projectile.velocity.X, Projectile.velocity.Y);
         dust.noGravity = true;
         Lighting.AddLight(Projectile.Center, 2, 0, 2);
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+               ParticleID.Glowy,
+               Projectile.RandomPos(8, 8),
+               Main.rand.NextVector2Circular(2, 2),
+               Main.rand.NextFromList(new Color(60, 0, 120)),
+               0f,
+               scale: 1f,
+               data0: 30,
+               data1: 5,
+               data2: 15,
+               data3: 0.93f);
         AITimer++;
     }
 

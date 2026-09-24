@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Special;
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.Localization;
 
 namespace NeoParacosm.Content.Items.Accessories.Combat.Defensive;
@@ -59,7 +60,7 @@ public class PaladinsHolyBarrierPlayer : ModPlayer
             {
                 for (int i = 0; i < Timer / 150f; i++)
                 {
-                    ParticleSystem.SpawnParticle(
+                    ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                         ParticleID.Glowy,
                         Player.RandomPos(8, 8),
                         -Vector2.UnitY * Main.rand.NextFloat(0.5f, 3),

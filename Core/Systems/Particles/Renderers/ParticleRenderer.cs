@@ -53,7 +53,7 @@ public abstract class ParticleRenderer : ModSystem
     /// Draws all active particles.<br></br>
     /// See ParticleSystem.BeginDefaultParticleSpriteBatch() to view spriteBatch state.
     /// </summary>
-    public void DrawParticles()
+    public virtual void DrawParticles()
     {
         BeginDefaultParticleSpriteBatch();
         for (int i = 0; i < ActiveParticleCount; i++)

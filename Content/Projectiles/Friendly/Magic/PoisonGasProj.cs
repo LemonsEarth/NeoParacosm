@@ -3,6 +3,7 @@ using NeoParacosm.Content.Dusts;
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
 
@@ -43,7 +44,7 @@ public class PoisonGasProj : ModProjectile
         }
         for (int i = 0; i < 3; i++)
         {
-            ParticleSystem.SpawnParticle(
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
                 Projectile.RandomPos(16, 16),
                 Main.rand.NextVector2Circular(5, 5),

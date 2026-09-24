@@ -1,6 +1,7 @@
 ﻿using NeoParacosm.Content.Dusts;
 using NeoParacosm.Core.Players;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.DataStructures;
 
 namespace NeoParacosm.Content.Buffs.Debuffs;
@@ -38,7 +39,7 @@ public class ToxicDebuff : ModBuff
         {
             for (int i = 0; i < 3; i++)
             {
-                ParticleSystem.SpawnParticle(
+                ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                     ParticleID.Glowy,
                     npc.RandomPos(4, 4),
                     Main.rand.NextVector2Circular(1, 1),
@@ -57,7 +58,7 @@ public class ToxicDebuff : ModBuff
             npc.SimpleStrikeNPC(200, 1);
             for (int i = 0; i < 20; i++)
             {
-                ParticleSystem.SpawnParticle(
+                ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                     ParticleID.Glowy,
                     npc.RandomPos(4, 4),
                     Main.rand.NextVector2Circular(3, 3),
@@ -78,7 +79,7 @@ public class ToxicDebuff : ModBuff
     {
         for (int i = 0; i < 1; i++)
         {
-            ParticleSystem.SpawnParticle(
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
                 player.RandomPos(16, 16),
                 -Vector2.UnitY * Main.rand.NextFloat(1, 3),

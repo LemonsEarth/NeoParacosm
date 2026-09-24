@@ -2,6 +2,7 @@
 using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -88,7 +89,7 @@ public class FurnaceHeldProj : ModProjectile
 
                 for (int i = 0; i < 5; i++)
                 {
-                    ParticleSystem.SpawnParticle(
+                    ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                         ParticleID.Glowy,
                         Projectile.Center,
                         Main.rand.NextVector2Circular(4, 4),
@@ -115,7 +116,7 @@ public class FurnaceHeldProj : ModProjectile
         Vector2 playerToProj = player.DirectionTo(Projectile.Center);
         for (int i = -1; i <= 1; i += 2)
         {
-            ParticleSystem.SpawnParticle(
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
                 Projectile.Center + Main.rand.NextVector2Circular(8, 8),
                 -playerToProj.RotatedBy(MathHelper.Pi / 6f * i) * 5,
@@ -129,7 +130,7 @@ public class FurnaceHeldProj : ModProjectile
             );
         }
 
-        ParticleSystem.SpawnParticle(
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
             ParticleID.Glowy,
             Projectile.Center + Main.rand.NextVector2Circular(8, 8),
             -playerToProj * 10,

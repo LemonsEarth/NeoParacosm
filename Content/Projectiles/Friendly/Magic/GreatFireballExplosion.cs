@@ -44,7 +44,7 @@ public class GreatFireballExplosion : ModProjectile
         {
             Vector2 randVector = Main.rand.NextVector2Circular(10, 10);
             Vector2 randVector2 = Main.rand.NextVector2Circular(3, 3);
-            ParticleSystem.SpawnParticle(
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
              ParticleID.Glowy,
              Projectile.RandomPos(8, 8),
               Main.rand.NextVector2Circular(6, 6),

@@ -4,6 +4,7 @@ using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Drawing;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -59,7 +60,7 @@ public class Fireball : ModProjectile, IShaderProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeStainedGlass, Scale: 2f, newColor: Color.OrangeRed).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, Scale: 1f, newColor: Color.Yellow).noGravity = true;
 
-        ParticleSystem.SpawnParticle(
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
                 Projectile.RandomPos(8, 8),
                 Main.rand.NextVector2Circular(2, 2),

@@ -74,7 +74,7 @@ public class GreatFireball : ModProjectile, IShaderProjectile
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeStainedGlass, Scale: 2f, newColor: Color.OrangeRed).noGravity = true;
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GemTopaz, Scale: 1f, newColor: Color.Yellow).noGravity = true;
 
-        ParticleSystem.SpawnParticle<BeforeProjectilesParticleRenderer>(
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
                 Projectile.RandomPos(8, 8),
                 Main.rand.NextVector2Circular(2, 2),

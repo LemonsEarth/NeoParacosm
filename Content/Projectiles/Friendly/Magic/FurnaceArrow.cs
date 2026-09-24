@@ -1,6 +1,8 @@
 ﻿using NeoParacosm.Core.Systems.Assets;
 using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.Audio;
+using static Terraria.GameContent.Animations.Actions.Sprites;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Magic
 {
@@ -34,7 +36,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 5;
 
-            Projectile.ignoreWater = true;
+            Projectile.ignoreWater = false;
             Projectile.tileCollide = true;
 
             Projectile.extraUpdates = 10;
@@ -55,12 +57,15 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
             {
 
             }
-
+            if (Projectile.wet && ChargeAmount > 4)
+            {
+                ChargeAmount -= 4;
+            }
             if (exploding)
             {
-                for (int i = 0; i < 30 + ChargeAmount / 3; i++)
+                for (int i = 0; i < 10 + ChargeAmount / 8; i++)
                 {
-                    ParticleSystem.SpawnParticle(
+                    ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                         ParticleID.Glowy,
                         Projectile.Center,
                         Main.rand.NextVector2Circular(20 + ChargeAmount / 4, 20 + ChargeAmount / 4),
@@ -71,6 +76,17 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
                         data1: Main.rand.Next(10, 30),
                         data2: Main.rand.Next(10, 30),
                         data3: Main.rand.NextFloat(0.93f, 0.96f)
+                    );
+
+                }
+                for (int i = 0; i < 5 + ChargeAmount / 10; i++)
+                {
+                    ParticleSystem.SpawnParticle(
+                        ParticleID.Gas,
+                        Projectile.Center,
+                        Main.rand.NextVector2Circular(20 + ChargeAmount / 4, 20 + ChargeAmount / 4),
+                        Color.OrangeRed,
+                        scale: Main.rand.NextFloat(2f * (1 + ChargeAmount / 120f), 4f * (1 + ChargeAmount / 120f))
                     );
                 }
                 Projectile.Resize(400 + Power, 400 + Power);
@@ -85,7 +101,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
 
             for (int j = 0; j < 3; j++)
             {
-                ParticleSystem.SpawnParticle(
+                ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                         ParticleID.Glowy,
                         Projectile.Center + Main.rand.NextVector2Circular(2, 2),
                         Vector2.Zero,
@@ -99,7 +115,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
 
                 for (int i = -1; i <= 1; i += 2)
                 {
-                    ParticleSystem.SpawnParticle(
+                    ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                         ParticleID.Glowy,
                         Projectile.Center + Main.rand.NextVector2Circular(2, 2),
                         Projectile.velocity.RotatedBy(MathHelper.Pi / 8f * i).SafeNormalize(Vector2.Zero) * 10,
@@ -154,7 +170,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
 
         public override void OnKill(int timeLeft)
         {
-
+            
         }
 
         public override bool PreDraw(ref Color lightColor)

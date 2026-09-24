@@ -47,8 +47,6 @@ public class GlowyParticle : ParticleType
         shader.UseImage1(ParacosmTextures.NoiseTexture);
         shader.UseOpacity(particle.opacity);
         shader.Apply();
-        Main.spriteBatch.End();
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
         Main.spriteBatch.Draw(
             Texture.Value,
             particle.position - Main.screenPosition,
@@ -60,7 +58,5 @@ public class GlowyParticle : ParticleType
             SpriteEffects.None,
             0
             );
-        Main.spriteBatch.End();
-        ParticleRenderer.BeginDefaultParticleSpriteBatch();
     }
 }

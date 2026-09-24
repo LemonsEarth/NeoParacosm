@@ -158,7 +158,6 @@ public partial class Deathbird : ModNPC
         Terraria.Graphics.Effects.Filters.Scene.Deactivate("NeoParacosm:DeathbirdArenaShader");
 
         Attack++;
-        Attack = 2;
         if (phase == 1) attackDuration = attackDurations[(int)Attack];
         else attackDuration = attackDurations2[(int)Attack];
         //Attack = 2;

@@ -28,6 +28,7 @@ float4 FireballShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0, fl
     float4 finalColor = step(noiseColor.r, noiseStepThreshold) + glowballColor;
     finalColor.a = glowballColor.r * 2;
     finalColor.rgb *= uColor.rgb;
+    finalColor += (1 - distanceToCenter) * 0.1;
     return finalColor * uOpacity;
 
 }
