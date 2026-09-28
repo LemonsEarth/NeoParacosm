@@ -13,6 +13,7 @@ public class TheDarkOfNightSpell : BaseSpell
     public override void SpellAction(Player player)
     {
         SoundEngine.PlaySound(ParacosmSFX.DarkWhoosh with { PitchRange = (-0.2f, 0.2f) }, player.Center);
+        float attackInterval = MathHelper.Lerp(15, 5, MathHelper.Clamp((player.GetElementalDamageBoost(SpellElement.Dark) - 1f) / 0.5f, 0, 1f));
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(
@@ -22,7 +23,7 @@ public class TheDarkOfNightSpell : BaseSpell
                 GetDamage(player),
                 1f,
                 player.whoAmI,
-                player.GetElementalExpertiseBoostMultiplied(SpellElement.Dark, 2f), 10);
+                player.GetElementalExpertiseBoostMultiplied(SpellElement.Dark, 2f), attackInterval);
         }
     }
 

@@ -2947,8 +2947,5 @@ FurnaceSpell: {
 
 TheDarkOfNightSpell: {
 	DisplayName: The Dark of Night
-	Tooltip:
-	'''
-	Covers nearby area in darkness and summons homing projectiles to assault foes
-	'''
+	Tooltip: Covers nearby area in darkness and summons homing projectiles to assault foes
 }

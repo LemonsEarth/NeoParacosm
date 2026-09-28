@@ -46,6 +46,27 @@ public class TheDarkOfNightProjectile : ModProjectile
         player.velocity *= 0.9f;
         if (!player.channel && !released)
         {
+            if (spreadTimer >= 180 && player.GetElementalExpertiseBoost(SpellElement.Dark) > 1.4f)
+            {
+                SoundEngine.PlaySound(SoundID.NPCDeath52 with { PitchRange = (-0.6f, -0.3f), MaxInstances = 0}, player.Center);
+                for (int i = 0; i < 10; i++)
+                {
+                    if (LemonUtils.NotClient())
+                    {
+                        Vector2 pos = Projectile.Center;
+                        float speed = Main.rand.NextFloat(2f, 5f);
+                        LemonUtils.QuickProj(
+                            Projectile,
+                            pos,
+                            Vector2.UnitY.RotatedByRandom(Main.rand.NextRotation()) * speed,
+                            ProjectileType<TheDarkOfNightSmallProj>(),
+                            ai0: Main.rand.Next(30, 60),
+                            ai1: speed * 4,
+                            ai2: 400 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Dark, 2f)
+                            );
+                    }
+                }
+            }
             released = true;
         }
 
@@ -66,7 +87,7 @@ public class TheDarkOfNightProjectile : ModProjectile
     void ChannelingBehavior(Player player)
     {
         float size = MathHelper.Clamp(spreadTimer / 60f, 0f, 3f);
-        for (int i = 0; i < size *6; i++)
+        for (int i = 0; i < size * 6; i++)
         {
             ParticleSystem.SpawnParticle<BeforeDustParticleRenderer>(
                 ParticleID.Gas,
@@ -83,13 +104,13 @@ public class TheDarkOfNightProjectile : ModProjectile
             if (LemonUtils.NotClient())
             {
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(150 * size, 150 * size);
-                float speed = Main.rand.NextFloat(4f, 9f);
+                float speed = Main.rand.NextFloat(2f, 6f);
                 LemonUtils.QuickProj(
                     Projectile,
                     pos,
-                    Vector2.UnitY.RotatedByRandom(Main.rand.NextRotation()) * speed,
+                    Vector2.UnitY.RotatedByRandom(Main.rand.NextRotation()) * speed / 5f,
                     ProjectileType<TheDarkOfNightSmallProj>(),
-                    ai0: Main.rand.Next(30, 60),
+                    ai0: Main.rand.Next(90, 150),
                     ai1: speed * 2,
                     ai2: 400 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Dark, 2f)
                     );

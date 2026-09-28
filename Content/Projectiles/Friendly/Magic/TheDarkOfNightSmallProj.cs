@@ -25,38 +25,43 @@ public class TheDarkOfNightSmallProj : ModProjectile
         Projectile.width = 16;
         Projectile.height = 16;
         Projectile.friendly = true;
-        Projectile.timeLeft = 240;
-        Projectile.penetrate = 2;
+        Projectile.timeLeft = 300;
+        Projectile.penetrate = 6;
         Projectile.Opacity = 0f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 40;
+        Projectile.extraUpdates = 3;
     }
 
     float actualSpeed = 0f;
+    float turningDenominator = 30f;
     public override void AI()
     {
+        if (AITimer == 0)
+        {
+            turningDenominator = 30f;
+        }
         ParticleSystem.SpawnParticle(
             ParticleID.Gas,
             Projectile.RandomPos(),
-            Vector2.Zero,
+            Projectile.velocity,
             Color.Black,
-            scale: Main.rand.NextFloat(0.25f, 0.6f)
+            scale: Main.rand.NextFloat(0.4f, 0.8f)
             );
 
-        for (int i = 0; i < 2; i++)
-        {
-            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
-                ParticleID.Glowy,
-                Projectile.RandomPos(),
-                Vector2.Zero,
-                Main.rand.NextFromList(Color.DarkSlateBlue, Color.CornflowerBlue, Color.LightBlue, Color.SlateBlue),
-                scale: Main.rand.NextFloat(0.25f, 0.6f),
-                data0: 45,
-                data1: 10,
-                data2: 20,
-                data3: 0.95f
-                );
-        }
+
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+            ParticleID.Glowy,
+            Projectile.Center + Main.rand.NextVector2Circular(2, 2),
+            Projectile.velocity,
+            Main.rand.NextFromList(Color.DarkSlateBlue, Color.CornflowerBlue),
+            scale: Main.rand.NextFloat(0.4f, 0.7f),
+            data0: 30,
+            data1: 10,
+            data2: 15,
+            data3: 0.99f
+            );
+
 
         if (AITimer <= 0)
         {
@@ -64,12 +69,16 @@ public class TheDarkOfNightSmallProj : ModProjectile
             if (closestNPC != null)
             {
                 if (actualSpeed < Speed) actualSpeed += 0.1f;
-                Projectile.TurningMoveToPos(closestNPC.Center, 15, actualSpeed);
+                Projectile.TurningMoveToPos(closestNPC.Center, turningDenominator, actualSpeed);
+                if (turningDenominator > 5)
+                {
+                    turningDenominator -= 0.02f;
+                }
             }
         }
         else
         {
-            Projectile.velocity *= 0.98f;
+            Projectile.velocity *= 0.999f;
         }
         AITimer--;
     }
