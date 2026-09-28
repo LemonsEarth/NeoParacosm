@@ -34,5 +34,11 @@ public abstract class ParticleID
     /// </summary>
     public static int Circle;
 
+    /// <summary>
+    /// data[0] - Duration
+    /// data[1] - Fade in duration
+    /// data[2] - Fade out duration
+    /// data[3] - Slowdown multiplier
+    /// </summary>
     public static int Glowy;
 }

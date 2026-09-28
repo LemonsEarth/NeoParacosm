@@ -2944,3 +2944,11 @@ FurnaceSpell: {
 	DisplayName: Furnace
 	Tooltip: Hold left click to charge, release to fire
 }
+
+TheDarkOfNightSpell: {
+	DisplayName: The Dark of Night
+	Tooltip:
+	'''
+	Covers nearby area in darkness and summons homing projectiles to assault foes
+	'''
+}
