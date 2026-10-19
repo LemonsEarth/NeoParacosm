@@ -37,7 +37,7 @@ public class ShadowBolt : ModProjectile
                Main.rand.NextVector2Circular(2, 2),
                Main.rand.NextFromList(new Color(60, 0, 120)),
                0f,
-               scale: 1f,
+               scale: 0.5f,
                data0: 30,
                data1: 5,
                data2: 15,

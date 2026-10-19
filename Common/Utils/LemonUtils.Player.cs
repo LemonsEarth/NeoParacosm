@@ -25,6 +25,23 @@ public static partial class LemonUtils
         return player.GetModPlayer<NPPlayer>();
     }
 
+    public static void AddBuffWithStackingTime(this Player player, int buffType, int time, int maxTime = 99999999)
+    {
+        if (player.HasBuff(buffType))
+        {
+            int index = player.FindBuffIndex(buffType);
+            int currentTime = player.buffTime[index];
+            if (currentTime + time < maxTime)
+            {
+                player.AddBuff(buffType, currentTime + time);
+            }
+        }
+        else
+        {
+            player.AddBuff(buffType, time);
+        }
+    }
+
     /// <summary>
     /// Add to the player's elemental damage boost for the given element.
     /// Adding 0.2f would make the boost 1.2f.

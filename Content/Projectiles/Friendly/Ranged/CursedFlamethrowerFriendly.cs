@@ -1,4 +1,5 @@
 ﻿using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
@@ -54,13 +55,27 @@ public class CursedFlamethrowerFriendly : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 
-        if (Main.rand.NextBool(5))
+        /*if (Main.rand.NextBool(5))
         {
             //Dust.NewDustPerfect(Projectile.RandomPos(0, 0), DustID.CursedTorch, Projectile.velocity * 0.5f, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
             ParticleSystem.SpawnParticle(ParticleID.Gas, Projectile.RandomPos(), Projectile.velocity * 0.2f, Color.LimeGreen);
+        }*/
+
+        for (int i = 0; i < 10; i++)
+        {
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+                ParticleID.Glowy,
+                Projectile.RandomPos(-8, -8),
+                Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
+                Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen) * 0.5f,
+                1f,
+                1f,
+                data0: 30,
+                data1: 5f,
+                data2: 20f,
+                data3: 0.98f
+                );
         }
-
-
         Projectile.velocity *= SlowDownRate;
 
         if (AITimer > Duration)
@@ -78,8 +93,6 @@ public class CursedFlamethrowerFriendly : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        Projectile.DrawAfterimages(Color.White, 1f);
-        //LemonUtils.DrawGlow(Projectile.Center, Color.GreenYellow, Projectile.Opacity, 2f);
         return false;
     }
 

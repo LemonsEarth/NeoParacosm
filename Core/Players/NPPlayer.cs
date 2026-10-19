@@ -7,7 +7,6 @@ using NeoParacosm.Core.UI.ResearcherUI.Ascension;
 using System.Collections.Generic;
 using Terraria.DataStructures;
 using Terraria.GameInput;
-using static Terraria.ModLoader.BackupIO;
 
 namespace NeoParacosm.Core.Players;
 
@@ -152,7 +151,7 @@ public class NPPlayer : ModPlayer
 
     public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
     {
-        
+
     }
 
     public void CloseResearcherUIIfTooFar()

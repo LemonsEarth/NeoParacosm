@@ -68,11 +68,11 @@ public class TheDarkOfNightSmallProj : ModProjectile
             closestNPC = LemonUtils.GetClosestNPC(Projectile.Center, HomingRange);
             if (closestNPC != null)
             {
-                if (actualSpeed < Speed) actualSpeed += 0.1f;
-                Projectile.TurningMoveToPos(closestNPC.Center, turningDenominator, actualSpeed);
-                if (turningDenominator > 5)
+                if (actualSpeed < Speed) actualSpeed += 0.05f;
+                Projectile.TurningMoveToPos(closestNPC.Center, 60, actualSpeed);
+                if (turningDenominator > 15)
                 {
-                    turningDenominator -= 0.02f;
+                    turningDenominator -= 0.05f;
                 }
             }
         }

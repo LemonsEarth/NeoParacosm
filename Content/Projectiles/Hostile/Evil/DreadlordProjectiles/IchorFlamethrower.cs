@@ -1,4 +1,6 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
 
@@ -55,9 +57,21 @@ public class IchorFlamethrower : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 
-        if (AITimer % 10 == 0)
+
+        for (int i = 0; i < 15; i++)
         {
-            Dust.NewDustDirect(Projectile.RandomPos(0, 0), 2, 2, DustID.IchorTorch, Scale: Main.rand.NextFloat(2.5f, 4f)).noGravity = true;
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+                ParticleID.Glowy,
+                Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.height / 2),
+                Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
+                Main.rand.NextFromList(Color.Yellow, Color.Gold, Color.LightYellow),
+                1f,
+                1f,
+                data0: 30,
+                data1: 5f,
+                data2: 20f,
+                data3: 0.98f
+                );
         }
 
         Projectile.velocity *= SlowDownRate;

@@ -21,16 +21,16 @@ public class ExpeditionUIState : UIState
         Append(MainPanel);
 
 
-        ExpeditionButton = new ExpeditionButton(
-            Request<Texture2D>("NeoParacosm/Core/UI/Expeditions/TestExpeditionIcon"),
-            new LocalizedText("hh", "Test Expedition"),
-            new LocalizedText("hh", "Test Expedition Description")
-        );
-        ExpeditionButton.Width.Set(320, 0f);
-        ExpeditionButton.Height.Set(80, 0f);
-        ExpeditionButton.HAlign = 0.25f;
-        ExpeditionButton.VAlign = 0.15f;
-        Append(ExpeditionButton);
+        //ExpeditionButton = new ExpeditionButton(
+        //    Request<Texture2D>("NeoParacosm/Core/UI/Expeditions/TestExpeditionIcon"),
+        //    new LocalizedText("hh", "Test Expedition"),
+        //    new LocalizedText("hh", "Test Expedition Description")
+        //);
+        //ExpeditionButton.Width.Set(320, 0f);
+        //ExpeditionButton.Height.Set(80, 0f);
+        //ExpeditionButton.HAlign = 0.25f;
+        //ExpeditionButton.VAlign = 0.15f;
+        //Append(ExpeditionButton);
     }
 
     public override void LeftClick(UIMouseEvent evt)

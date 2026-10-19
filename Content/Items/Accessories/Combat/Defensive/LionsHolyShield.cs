@@ -204,7 +204,7 @@ public class LionsHolyShieldPlayer : ModPlayer
                         Player.RandomPos(8, 8),
                         -Vector2.UnitY * Main.rand.NextFloat(0.5f, 3),
                         Color.LightYellow,
-                        scale: 1f,
+                        scale: 0.5f,
                         data0: 30,
                         data1: 5,
                         data2: 20,

@@ -50,7 +50,7 @@ public class PoisonGasProj : ModProjectile
                 Main.rand.NextVector2Circular(5, 5),
                 Main.rand.NextFromList(new Color(0, 30, 0, 255) * 1f),
                 0f,
-                scale: 3f,
+                scale: 2f,
                 data0: 60,
                 data1: 10,
                 data2: 10,

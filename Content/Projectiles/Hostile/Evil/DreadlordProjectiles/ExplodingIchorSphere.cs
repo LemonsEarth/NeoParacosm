@@ -77,27 +77,25 @@ public class ExplodingIchorSphere : PrimProjectile, IShaderProjectile
 
     public void DrawProjectile()
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
         Texture2D texture = ParacosmTextures.Empty100Tex.Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
-
         Vector2 drawPos = Projectile.Center - Main.screenPosition;
         ShaderData.UseImage1(ParacosmTextures.NoiseTexture);
-        ShaderData.UseColor(Color.Gold * Projectile.Opacity);
+        ShaderData.UseColor(Color.Yellow * Projectile.Opacity);
         ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1); // Higher number lowers the height of the flame
         ShaderData.Shader.Parameters["moveVector"].SetValue(Vector2.UnitY); // Higher number lowers the height of the flame
         ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.75f, SpriteEffects.None, 0);
-        ShaderData.UseColor(Color.White * Projectile.Opacity);
         ShaderData.Shader.Parameters["flameHeightDownward"].SetValue(1f);
+        ShaderData.UseColor(Color.White * Projectile.Opacity);
         ShaderData.Apply();
         Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale * 1.7f * 0.5f, SpriteEffects.None, 0);
-        LemonUtils.DrawGlow(Projectile.Center, Color.White, Projectile.Opacity, Projectile.scale);
     }
 
     public override bool PreDraw(ref Color lightColor)
     {
-        ProjectileShaderRenderer.Instance.Queue(this);
+        this.QueueToShaderRenderer();
+
         return false;
     }
 

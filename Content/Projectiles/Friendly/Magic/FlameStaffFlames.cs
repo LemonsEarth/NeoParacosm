@@ -50,7 +50,7 @@ public class FlameStaffFlames : ModProjectile
                 Main.rand.NextVector2Circular(0.2f, 0.2f),
                 Main.rand.NextFromList(Color.OrangeRed),
                 0f,
-                scale: 1f,
+                scale: 0.5f,
                 data0: 10,
                 data1: 4,
                 data2: 4,

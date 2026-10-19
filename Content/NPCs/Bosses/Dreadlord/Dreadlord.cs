@@ -3163,10 +3163,7 @@ public partial class Dreadlord : ModNPC
     void SwitchAttacks()
     {
         Attack++;
-        if (Phase == 1)
-        {
-            //Attack = 3;
-        }
+
         if (Phase == 0 && NPC.GetLifePercent() <= 0.66f && !reachedSecondPhase)
         {
             reachedSecondPhase = true;

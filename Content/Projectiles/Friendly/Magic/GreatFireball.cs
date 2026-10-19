@@ -80,7 +80,7 @@ public class GreatFireball : ModProjectile, IShaderProjectile
                 Main.rand.NextVector2Circular(2, 2),
                 Main.rand.NextFromList(Color.OrangeRed),
                 0f,
-                scale: 1.5f,
+                scale: 1f,
                 data0: 30,
                 data1: 5,
                 data2: 5,

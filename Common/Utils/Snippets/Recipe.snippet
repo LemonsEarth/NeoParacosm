@@ -10,8 +10,8 @@
 				<![CDATA[public override void AddRecipes()
 				{
 					Recipe recipe = CreateRecipe();
-					recipe.AddIngredient(ItemID.StoneBlock, 25);
-					recipe.AddIngredient(ItemType<StoneBlock>(), 25);
+					recipe.AddIngredient(ItemID.SomeVanillaItem, 25);
+					recipe.AddIngredient(ItemType<SomeModItem>(), 25);
 					recipe.AddTile(TileID.Anvils);
 					recipe.Register();
 				}$end$]]>

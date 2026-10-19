@@ -63,13 +63,13 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
             }
             if (exploding)
             {
-                for (int i = 0; i < 10 + ChargeAmount / 8; i++)
+                for (int i = 0; i < (10 + ChargeAmount / 8); i++)
                 {
                     ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                         ParticleID.Glowy,
                         Projectile.Center,
                         Main.rand.NextVector2Circular(20 + ChargeAmount / 4, 20 + ChargeAmount / 4),
-                        Main.rand.NextFromList(Color.OrangeRed),
+                        Main.rand.NextFromList(Color.OrangeRed, new Color(1f, 0.5f, 0.2f, 1f)* 2),
                         0f,
                         scale: Main.rand.NextFloat(2f * (1 + ChargeAmount / 120f), 4f * (1 + ChargeAmount / 120f)),
                         data0: Main.rand.Next(70, 100),
@@ -107,7 +107,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
                         Vector2.Zero,
                         Main.rand.NextFromList(Color.OrangeRed),
                         0f,
-                        scale: 1f,
+                        scale: 0.5f,
                         data0: 15,
                         data1: 5,
                         data2: 5,
@@ -121,7 +121,7 @@ namespace NeoParacosm.Content.Projectiles.Friendly.Magic
                         Projectile.velocity.RotatedBy(MathHelper.Pi / 8f * i).SafeNormalize(Vector2.Zero) * 10,
                         Main.rand.NextFromList(Color.OrangeRed),
                         0f,
-                        scale: 1.2f,
+                        scale: 0.6f,
                         data0: 15,
                         data1: 5,
                         data2: 5,

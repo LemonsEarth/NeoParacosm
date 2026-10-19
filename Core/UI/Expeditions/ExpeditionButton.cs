@@ -61,8 +61,7 @@ public class ExpeditionButton : UIElement
 
     public override void Update(GameTime gameTime)
     {
-        ExpeditionNameText._textScale = 0.5f;
-        ExpeditionNameText._isLarge = true;
+        ExpeditionNameText.SetText(LocalizedText.Empty, 0.5f, true);
         ExpeditionNameText.HAlign = 1f;
         ExpeditionNameText.VAlign = 0.5f;
         ExpeditionNameText.TextOriginX = 0.75f;

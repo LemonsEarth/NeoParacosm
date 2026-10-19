@@ -47,8 +47,8 @@ public class AfterDustParticleRendererGlowy : ParticleRenderer
 
     public override void DrawParticles()
     {
-        var shader = GameShaders.Misc["NeoParacosm:FireballShader"];
-        Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, Main.Rasterizer, shader.Shader, Main.GameViewMatrix.TransformationMatrix);
+        //var shader = GameShaders.Misc["NeoParacosm:FireballShader"];
+        Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.Default, Main.Rasterizer, null, Main.GameViewMatrix.TransformationMatrix);
         for (int i = 0; i < ActiveParticleCount; i++)
         {
             ParticleSystem.TypesByID[Particles[i].type].Draw(Particles[i]);

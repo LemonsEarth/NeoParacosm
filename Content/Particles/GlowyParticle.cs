@@ -14,6 +14,7 @@ public class GlowyParticle : ParticleType
     public override void OnSpawn(ref Particle particle)
     {
         particle.opacity = 0f;
+        particle.scale *= 2;
     }
 
     public override void Update(ref Particle particle)
@@ -41,12 +42,12 @@ public class GlowyParticle : ParticleType
 
     public override void Draw(Particle particle)
     {
-        var shader = GameShaders.Misc["NeoParacosm:FireballShader"];
+        /*var shader = GameShaders.Misc["NeoParacosm:FireballShader"];
         shader.Shader.Parameters["noiseStepThreshold"].SetValue(0.3f);
         shader.UseColor(particle.color);
         shader.UseImage1(ParacosmTextures.NoiseTexture);
         shader.UseOpacity(particle.opacity);
-        shader.Apply();
+        shader.Apply();*/
         Main.spriteBatch.Draw(
             Texture.Value,
             particle.position - Main.screenPosition,

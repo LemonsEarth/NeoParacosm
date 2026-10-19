@@ -67,7 +67,10 @@ public class CursedFlameSphere : PrimProjectile
                 ParticleID.Gas,
                 Projectile.RandomPos(),
                 Vector2.Zero,
-                Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen)
+                Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen),
+                0.7f,
+                scale: Main.rand.NextFloat(0.5f, 1f),
+                data0: 0.2f
                 );
         }
         Projectile.rotation = MathHelper.ToRadians(AITimer * 12);

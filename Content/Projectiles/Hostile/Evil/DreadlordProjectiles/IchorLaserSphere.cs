@@ -88,16 +88,22 @@ public class IchorLaserSphere : PrimProjectile, IShaderProjectile
         AITimer++;
     }
 
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
     public void DrawProjectile()
     {
-        PrimHelper.DrawBasicProjectilePrimTrailTriangular(Projectile, Color.LightBlue, Color.Transparent, BasicEffect, topDistance: Projectile.height / 2, bottomDistance: Projectile.height / 2, positionOffset: new Vector2(Projectile.width / 2, Projectile.height / 2));
         Texture2D texture = ParacosmTextures.NoiseTexture.Value;
         Vector2 drawOrigin = texture.Size() * 0.5f;
         Color color = Color.White;
 
-        ShaderData.Shader.Parameters["moveSpeed"].SetValue(-2f);
+        ShaderData.Shader.Parameters["moveSpeed"].SetValue(0.2f);
+        ShaderData.Shader.Parameters["velocity"].SetValue(Vector2.UnitX.RotatedBy(Projectile.rotation - MathHelper.Pi));
         ShaderData.Shader.Parameters["centerColor"].SetValue(Color.White.ToVector4());
-        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Gold.ToVector4());
+        ShaderData.Shader.Parameters["endColor"].SetValue(Color.Yellow.ToVector4());
         Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
         Main.EntitySpriteDraw(
             texture,
@@ -109,12 +115,6 @@ public class IchorLaserSphere : PrimProjectile, IShaderProjectile
             Projectile.scale,
             SpriteEffects.None
             );
-    }
-
-    public override bool PreDraw(ref Color lightColor)
-    {
-        ProjectileShaderRenderer.Instance.Queue(this);
-        return false;
     }
 
     public override void PostDraw(Color lightColor)

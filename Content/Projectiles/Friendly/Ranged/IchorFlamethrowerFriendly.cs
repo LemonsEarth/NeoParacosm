@@ -1,4 +1,6 @@
-﻿using Terraria.Audio;
+﻿using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
+using Terraria.Audio;
 
 namespace NeoParacosm.Content.Projectiles.Friendly.Ranged;
 
@@ -50,6 +52,22 @@ public class IchorFlamethrowerFriendly : ModProjectile
             Projectile.Opacity -= 1 / 5f;
         }
 
+        for (int i = 0; i < 5; i++)
+        {
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+                ParticleID.Glowy,
+                Projectile.RandomPos(-8, -8),
+                Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
+                Main.rand.NextFromList(Color.Yellow, Color.Gold, Color.LightYellow),
+                1f,
+                1f,
+                data0: 20,
+                data1: 5f,
+                data2: 10f,
+                data3: 0.98f
+                );
+        }
+
         //if (AITimer > Duration * 0.5f)
         //{
         Projectile.velocity = Projectile.velocity.RotatedBy(TurningAngle);
@@ -57,10 +75,10 @@ public class IchorFlamethrowerFriendly : ModProjectile
 
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 
-        if (AITimer % 10 == 0)
+        /*if (AITimer % 10 == 0)
         {
             Dust.NewDustPerfect(Projectile.RandomPos(0, 0), DustID.IchorTorch, Projectile.velocity * 0.5f, Scale: Main.rand.NextFloat(2f, 3f)).noGravity = true;
-        }
+        }*/
 
         Projectile.velocity *= SlowDownRate;
 
@@ -79,6 +97,7 @@ public class IchorFlamethrowerFriendly : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        return false;
         Projectile.DrawAfterimages(Color.White, 1f);
         //LemonUtils.DrawGlow(Projectile.Center, Color.Yellow, Projectile.Opacity, 2f);
         return false;
