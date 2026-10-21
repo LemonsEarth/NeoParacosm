@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
@@ -42,12 +44,28 @@ public class IchorSpirit : ModProjectile
     {
         if (AITimer == 0)
         {
-            
+
         }
 
         if (AITimer > Duration)
         {
             Projectile.Kill();
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+                ParticleID.Glowy,
+                Projectile.RandomPos(),
+                Projectile.velocity,
+                Main.rand.NextFromList(Color.Gold, Color.OrangeRed, Color.IndianRed),
+                1f,
+                Main.rand.NextFloat(1f, 2f),
+                data0: 20,
+                data1: 5f,
+                data2: 10f,
+                data3: 0.98f
+                );
         }
 
         player = LemonUtils.GetClosestPlayer(Projectile.Center, 2000);
@@ -63,7 +81,7 @@ public class IchorSpirit : ModProjectile
 
         if (AITimer < 60)
         {
-            if (AITimer % 3 == 0)
+            if (AITimer % 10 == 0)
             {
                 if (LemonUtils.NotClient())
                 {
@@ -78,10 +96,6 @@ public class IchorSpirit : ModProjectile
             }
             Projectile.velocity = Vector2.Zero;
             Projectile.scale = MathHelper.Lerp(0, 1, AITimer / 60f);
-            for (int i = 0; i < 3; i++)
-            {
-                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.IchorTorch, 0, -10, Scale: 2f).noGravity = true;
-            }
             AITimer++;
             return;
         }
@@ -105,7 +119,7 @@ public class IchorSpirit : ModProjectile
         }
         else
         {
-            if (AITimer % 3 == 0)
+            if (AITimer % 10 == 0)
             {
                 if (LemonUtils.NotClient())
                 {
@@ -117,10 +131,6 @@ public class IchorSpirit : ModProjectile
                         ai0: 30
                         );
                 }
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.IchorTorch, 0, -10, Scale: 2f).noGravity = true;
             }
             Projectile.velocity = Vector2.Zero;
             Projectile.scale = MathHelper.Lerp(1, 0, despawnTimer / 60f);

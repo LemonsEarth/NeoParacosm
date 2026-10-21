@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
 using Terraria.GameContent;
 
 namespace NeoParacosm.Content.Projectiles.Hostile.Evil.DreadlordProjectiles;
@@ -50,6 +52,19 @@ public class CursedFlameSpirit : ModProjectile
         }
         //Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustType<StreakDust>());
 
+        ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+            ParticleID.Glowy,
+            Projectile.RandomPos(),
+            Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
+            Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen) * 1f,
+            1f,
+            Main.rand.NextFloat(1f, 2f),
+            data0: 30,
+            data1: 5f,
+            data2: 20f,
+            data3: 0.98f
+            );
+
         if (AITimer > Duration)
         {
             Projectile.Kill();
@@ -59,7 +74,7 @@ public class CursedFlameSpirit : ModProjectile
 
         if (AITimer < 60)
         {
-            if (AITimer % 3 == 0)
+            if (AITimer % 10 == 0)
             {
                 if (LemonUtils.NotClient())
                 {
@@ -73,10 +88,7 @@ public class CursedFlameSpirit : ModProjectile
                 }
             }
             Projectile.scale = MathHelper.Lerp(0, 1, AITimer / 60f);
-            for (int i = 0; i < 3; i++)
-            {
-                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, 0, -10, Scale: 2f).noGravity = true;
-            }
+
             AITimer++;
             return;
         }
@@ -102,7 +114,7 @@ public class CursedFlameSpirit : ModProjectile
         }
         else
         {
-            if (AITimer % 3 == 0)
+            if (AITimer % 10 == 0)
             {
                 if (LemonUtils.NotClient())
                 {
@@ -114,10 +126,6 @@ public class CursedFlameSpirit : ModProjectile
                         ai0: 30
                         );
                 }
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                Dust.NewDustDirect(Projectile.RandomPos(), 2, 2, DustID.CursedTorch, 0, -10, Scale: 2f).noGravity = true;
             }
             Projectile.scale = MathHelper.Lerp(1, 0, despawnTimer / 60f);
             Projectile.Opacity = MathHelper.Lerp(1, 0, despawnTimer / 60f);

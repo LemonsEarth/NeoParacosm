@@ -61,7 +61,7 @@ public class CursedFlamethrowerFriendly : ModProjectile
             ParticleSystem.SpawnParticle(ParticleID.Gas, Projectile.RandomPos(), Projectile.velocity * 0.2f, Color.LimeGreen);
         }*/
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 6; i++)
         {
             ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
@@ -69,7 +69,7 @@ public class CursedFlamethrowerFriendly : ModProjectile
                 Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
                 Main.rand.NextFromList(Color.Green, Color.Lime, Color.LightGreen) * 0.5f,
                 1f,
-                1f,
+                Main.rand.NextFloat(1f, 1.5f),
                 data0: 30,
                 data1: 5f,
                 data2: 20f,
@@ -93,6 +93,8 @@ public class CursedFlamethrowerFriendly : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
+        Projectile.DrawAfterimages(Color.White, 1f);
+        //LemonUtils.DrawGlow(Projectile.Center, Color.Yellow, Projectile.Opacity, 2f);
         return false;
     }
 

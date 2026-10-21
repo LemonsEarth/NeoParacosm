@@ -2941,7 +2941,7 @@ LionsHolyShield: {
 }
 
 FurnaceSpell: {
-	DisplayName: Furnace
+	DisplayName: All Shall Be Ashes
 	Tooltip: Hold left click to charge, release to fire
 }
 
@@ -2957,4 +2957,9 @@ PocketGrease: {
 		Using a melee weapon while grappling gives you a random flask effect
 		Duration increases the longer the weapon is used
 		'''
+}
+
+IcyMistSpell: {
+	DisplayName: Icy Mist
+	Tooltip: ""
 }

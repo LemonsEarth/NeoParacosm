@@ -58,7 +58,7 @@ public class IchorFlamethrower : ModProjectile
         Lighting.AddLight(Projectile.Center, 0, 5, 0);
 
 
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 2; i++)
         {
             ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,
@@ -66,7 +66,7 @@ public class IchorFlamethrower : ModProjectile
                 Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
                 Main.rand.NextFromList(Color.Yellow, Color.Gold, Color.LightYellow),
                 1f,
-                1f,
+                Main.rand.NextFloat(1f, 2f),
                 data0: 30,
                 data1: 5f,
                 data2: 20f,

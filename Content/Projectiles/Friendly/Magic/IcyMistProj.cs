@@ -1,0 +1,136 @@
+﻿using Microsoft.Xna.Framework.Graphics;
+using NeoParacosm.Content.Buffs.Debuffs;
+using NeoParacosm.Core.Systems.Assets;
+using NeoParacosm.Core.Systems.Drawing;
+using NeoParacosm.Core.Systems.Particles;
+using NeoParacosm.Core.Systems.Particles.Renderers;
+using System.Collections.Generic;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+
+namespace NeoParacosm.Content.Projectiles.Friendly.Magic;
+
+public class IcyMistProj : ModProjectile, IShaderProjectile
+{
+    public override string Texture => ParacosmTextures.Empty100TexPath;
+
+    public MiscShaderData ShaderData => ProjectileShaderRenderer.GetMiscShader("GasShader");
+    int AITimer = 0;
+    ref float TimeLeft => ref Projectile.ai[0];
+    ref float ScaleMul => ref Projectile.ai[1];
+    int despawnTimer = 0;
+
+    public override void SetStaticDefaults()
+    {
+        ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
+        ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+    }
+
+    public override void SetDefaults()
+    {
+        Projectile.width = 160;
+        Projectile.height = 160;
+        Projectile.friendly = true;
+        Projectile.timeLeft = 1800;
+        Projectile.penetrate = 10;
+        Projectile.Opacity = 0f;
+        Projectile.stopsDealingDamageAfterPenetrateHits = true;
+        Projectile.usesIDStaticNPCImmunity = true;
+        Projectile.idStaticNPCHitCooldown = 30;
+        Projectile.hide = true;
+        Projectile.scale = 1;
+    }
+
+    public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+    {
+        target.AddBuff(BuffType<EnemySlowed>(), 300);
+    }
+
+    public override void AI()
+    {
+        Projectile.knockBack = 0f;
+        /*if (AITimer % 10 == 0)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.RandomPos(), Vector2.UnitX.RotatedByRandom(6.28f) * Main.rand.NextFloat(1, 2), GoreType<RedSmokeGore>(), Main.rand.NextFloat(0.8f, 1.2f));
+            }
+        }*/
+
+        if (AITimer > TimeLeft)
+        {
+            Projectile.Kill();
+            return;
+        }
+
+        Projectile.velocity *= 0.98f;
+        if (TimeLeft - AITimer < 30)
+        {
+            despawnTimer++;
+            Projectile.Opacity = MathHelper.Lerp(1, 0, despawnTimer / 30f);
+        }
+
+        if (AITimer < 30)
+        {
+            Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
+                ParticleID.Glowy,
+                Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.height / 2),
+                Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
+                Main.rand.NextFromList(Color.LightBlue, Color.Blue, Color.Cyan) * 0.5f,
+                1f,
+                Main.rand.NextFloat(1f, 3f),
+                data0: 60,
+                data1: 5f,
+                data2: 30f,
+                data3: Main.rand.NextFloat(0.95f, 0.98f)
+                );
+        }
+        Projectile.scale = ScaleMul;
+        Projectile.Resize(160 * Projectile.scale, 160 * Projectile.scale);
+        AITimer++;
+    }
+
+    public override bool OnTileCollide(Vector2 oldVelocity)
+    {
+        Projectile.velocity *= 0.8f;
+        return false;
+    }
+
+    public void DrawProjectile()
+    {
+        /*Texture2D texture = TextureAssets.Projectile[Type].Value;
+        Vector2 drawOrigin = texture.Size() / 2;
+        Vector2 drawPos = Projectile.Center - Main.screenPosition;
+
+        ShaderData.Shader.Parameters["distance"].SetValue(1);
+        ShaderData.Shader.Parameters["color"].SetValue(new Vector4(0.5f, 0.5f, 1f, Projectile.Opacity));
+        ShaderData.Shader.Parameters["velocity"].SetValue(new Vector2(0, 0.5f));
+        Main.instance.GraphicsDevice.Textures[1] = ParacosmTextures.NoiseTexture.Value;
+        Main.EntitySpriteDraw(texture, drawPos, null, Color.White, Projectile.rotation, drawOrigin, new Vector2(Projectile.scale * 1, Projectile.scale), SpriteEffects.None, 0);*/
+    }
+
+    public override bool PreDraw(ref Color lightColor)
+    {
+        this.QueueToShaderRenderer();
+        return false;
+    }
+
+    public override void PostDraw(Color lightColor)
+    {
+    }
+
+    public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+    {
+        overPlayers.Add(index);
+    }
+
+    public override void OnKill(int timeLeft)
+    {
+
+    }
+}

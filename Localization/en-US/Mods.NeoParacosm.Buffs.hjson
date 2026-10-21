@@ -247,3 +247,8 @@ Bloodboil: {
 	DisplayName: Bloodboil
 	Description: Maximum life reduced as your blood boils...
 }
+
+EnemySlowed: {
+	DisplayName: Enemy Slowed
+	Description: Mods.NeoParacosm.Buffs.EnemySlowed.Description
+}

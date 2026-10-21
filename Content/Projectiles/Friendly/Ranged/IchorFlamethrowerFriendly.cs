@@ -58,7 +58,7 @@ public class IchorFlamethrowerFriendly : ModProjectile
                 ParticleID.Glowy,
                 Projectile.RandomPos(-8, -8),
                 Vector2.UnitY.RotatedBy(Main.rand.NextRotation()),
-                Main.rand.NextFromList(Color.Yellow, Color.Gold, Color.LightYellow),
+                Main.rand.NextFromList(Color.Gold, Color.OrangeRed, Color.IndianRed),
                 1f,
                 1f,
                 data0: 20,
@@ -97,7 +97,6 @@ public class IchorFlamethrowerFriendly : ModProjectile
 
     public override bool PreDraw(ref Color lightColor)
     {
-        return false;
         Projectile.DrawAfterimages(Color.White, 1f);
         //LemonUtils.DrawGlow(Projectile.Center, Color.Yellow, Projectile.Opacity, 2f);
         return false;
