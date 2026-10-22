@@ -2136,7 +2136,11 @@ FleshTwister: {
 
 FrozenHeartTablet: {
 	DisplayName: Frozen Heart Tablet
-	Tooltip: Increases healing potion healing by {0}
+	Tooltip:
+		'''
+		Increases healing potion healing by {0}
+		Healing releases a cold mist that slows down enemies
+		'''
 }
 
 HeartTablet: {
@@ -2960,6 +2964,6 @@ PocketGrease: {
 }
 
 IcyMistSpell: {
-	DisplayName: Icy Mist
-	Tooltip: ""
+	DisplayName: Cold Mist
+	Tooltip: Releases a cold mist that slows down enemies
 }

@@ -250,5 +250,10 @@ Bloodboil: {
 
 EnemySlowed: {
 	DisplayName: Enemy Slowed
-	Description: Mods.NeoParacosm.Buffs.EnemySlowed.Description
+	Description: Slowed
+}
+
+NoFallDamageBuff: {
+	DisplayName: No Fall Damage
+	Description: No Fall Damage
 }

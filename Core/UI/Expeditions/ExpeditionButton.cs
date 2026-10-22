@@ -25,7 +25,7 @@ public class ExpeditionButton : UIElement
     {
         base.LeftClick(evt);
 
-        Main.NewText(ExpeditionName);
+
     }
 
     public override void OnInitialize()

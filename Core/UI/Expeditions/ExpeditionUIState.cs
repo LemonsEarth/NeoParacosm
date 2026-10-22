@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using NeoParacosm.Core.Systems.Expeditions;
+using SubworldLibrary;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 using Terraria.UI;
@@ -21,22 +24,24 @@ public class ExpeditionUIState : UIState
         Append(MainPanel);
 
 
-        //ExpeditionButton = new ExpeditionButton(
-        //    Request<Texture2D>("NeoParacosm/Core/UI/Expeditions/TestExpeditionIcon"),
-        //    new LocalizedText("hh", "Test Expedition"),
-        //    new LocalizedText("hh", "Test Expedition Description")
-        //);
-        //ExpeditionButton.Width.Set(320, 0f);
-        //ExpeditionButton.Height.Set(80, 0f);
-        //ExpeditionButton.HAlign = 0.25f;
-        //ExpeditionButton.VAlign = 0.15f;
-        //Append(ExpeditionButton);
+        ExpeditionButton = new ExpeditionButton(
+            Request<Texture2D>("NeoParacosm/Core/UI/Expeditions/TestExpeditionIcon"),
+            new LocalizedText(LemonUtils.GetLocKey("Expeditions", "TestExpedition.DisplayName"), "hhDesc"),
+            new LocalizedText(LemonUtils.GetLocKey("Expeditions", "TestExpedition.Description"), "hhDesc")
+        );
+        ExpeditionButton.Width.Set(320, 0f);
+        ExpeditionButton.Height.Set(80, 0f);
+        ExpeditionButton.HAlign = 0.25f;
+        ExpeditionButton.VAlign = 0.15f;
+        ExpeditionButton.OnLeftDoubleClick += ExpeditionButton_OnLeftDoubleClick;
+        Append(ExpeditionButton);
     }
 
-    public override void LeftClick(UIMouseEvent evt)
+    private void ExpeditionButton_OnLeftDoubleClick(UIMouseEvent evt, UIElement listeningElement)
     {
-        base.LeftClick(evt);
-        Main.NewText("click");
+        ExpeditionUISystem system = GetInstance<ExpeditionUISystem>();
+        system.HideUI();
+        SubworldSystem.Enter<TestExpedition>();
     }
 
     public override void OnActivate()
@@ -47,6 +52,11 @@ public class ExpeditionUIState : UIState
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+        if (Main.keyState.IsKeyDown(Keys.Escape) && !Main.oldKeyState.IsKeyDown(Keys.Escape))
+        {
+            ExpeditionUISystem system = GetInstance<ExpeditionUISystem>();
+            system.HideUI();
+        }
     }
 
     protected override void DrawSelf(SpriteBatch spriteBatch)
