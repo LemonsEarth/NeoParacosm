@@ -63,12 +63,8 @@ public class GreatFireball : ModProjectile, IShaderProjectile
             Projectile.tileCollide = true;
         }
 
-        float dustScaleOR = 0.75f;
-        float dustScaleYel = 0.5f;
         if (released)
         {
-            dustScaleOR = 3f;
-            dustScaleYel = 2f;
             releasedTimer++;
         }
         Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.OrangeStainedGlass, Scale: 2f, newColor: Color.OrangeRed).noGravity = true;
