@@ -2967,3 +2967,17 @@ IcyMistSpell: {
 	DisplayName: Cold Mist
 	Tooltip: Releases a cold mist that slows down enemies
 }
+
+StarMagnet: {
+	DisplayName: Star Magnet
+	Tooltip: Increases pickup range for Fallen Stars
+}
+
+TwilightStarMagnet: {
+	DisplayName: Twilight Star Magnet
+	Tooltip:
+	'''
+	Greatly increases pickup range for Fallen Stars
+	Picking up a Fallen Star briefly increases your movement speed by 100%
+	'''
+}

@@ -106,6 +106,11 @@ public class NPPlayer : ModPlayer
         }
     }
 
+    public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+    {
+
+    }
+
     /// <summary>
     /// Checks if the player is standing or running into a projectile, handles snapping and movement.
     /// Used for "moving blocks".
@@ -149,6 +154,7 @@ public class NPPlayer : ModPlayer
             }
         }
     }
+
 
     public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
     {

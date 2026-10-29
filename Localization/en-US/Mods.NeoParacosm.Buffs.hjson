@@ -257,3 +257,8 @@ NoFallDamageBuff: {
 	DisplayName: No Fall Damage
 	Description: No Fall Damage
 }
+
+StarSpeedBuff: {
+	DisplayName: Star Speed
+	Description: Increased movement speed
+}
