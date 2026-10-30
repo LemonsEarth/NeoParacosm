@@ -1,0 +1,62 @@
+﻿using NeoParacosm.Common.RecipeGroups;
+using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using Terraria.Audio;
+using Terraria.GameContent.ItemDropRules;
+
+namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;
+
+public class FrozenLandscapeSpell : BaseSpell
+{
+    public override int AttackCooldown => 30;
+    public override int ManaCost => 80;
+    public override Vector2 GetTargetVector(Player player)
+    {
+        return player.Center - Vector2.UnitY * 100;
+    }
+
+    public override bool CanCastSpell(Player player)
+    {
+        return player.ownedProjectileCounts[ProjectileType<IcyMistProj>()] == 0;
+    }
+
+    public override void SpellAction(Player player)
+    {
+        SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.8f) }, player.Center);
+        SoundEngine.PlaySound(SoundID.Item28 with { PitchRange = (0.6f, 0.8f) }, player.Center);
+        if (LemonUtils.NotClient())
+        {
+            Projectile.NewProjectile(
+                Item.GetSource_FromAI(),
+                player.Center,
+                Vector2.Zero,
+                ProjectileType<IcyMistProj>(),
+                2,
+                1f,
+                player.whoAmI,
+                ai0: 300 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Ice, 2),
+                ai1: 10 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Ice, 2));
+
+        }
+    }
+
+    public override void SetDefaults()
+    {
+        base.SetDefaults();
+        Item.damage = 2;
+        Item.width = 40;
+        Item.height = 38;
+        Item.value = Item.sellPrice(gold: 8);
+        Item.rare = ItemRarityID.LightPurple;
+        SpellElements = [SpellElement.Ice];
+    }
+
+    public override void AddRecipes()
+    {
+        Recipe recipe = CreateRecipe();
+        recipe.AddIngredient(ItemType<IcyMistSpell>(), 25);
+        recipe.AddIngredient(ItemID.FrostCore, 3);
+        recipe.AddRecipeGroup(AnyRecipeGroups.AnyTitaniumBar, 8);
+        recipe.AddTile(TileID.CrystalBall);
+        recipe.Register();
+    }
+}

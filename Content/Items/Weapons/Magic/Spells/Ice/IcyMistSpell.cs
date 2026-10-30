@@ -1,5 +1,7 @@
 ﻿using NeoParacosm.Content.Projectiles.Friendly.Magic;
+using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader.Utilities;
 
 namespace NeoParacosm.Content.Items.Weapons.Magic.Spells.Ice;
 
@@ -19,6 +21,8 @@ public class IcyMistSpell : BaseSpell
 
     public override void SpellAction(Player player)
     {
+        SoundEngine.PlaySound(SoundID.Item29 with { PitchRange = (-1f, -0.8f) }, player.Center);
+        SoundEngine.PlaySound(SoundID.Item28 with { PitchRange = (0.6f, 0.8f) }, player.Center);
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(
@@ -26,7 +30,7 @@ public class IcyMistSpell : BaseSpell
                 player.Center,
                 player.Center.DirectionTo(Main.MouseWorld) * 10,
                 ProjectileType<IcyMistProj>(),
-                (int)(GetDamage(player)),
+                2,
                 1f,
                 player.whoAmI,
                 ai0: 200 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Ice, 4),

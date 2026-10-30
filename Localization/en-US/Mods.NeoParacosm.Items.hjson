@@ -2976,8 +2976,23 @@ StarMagnet: {
 TwilightStarMagnet: {
 	DisplayName: Twilight Star Magnet
 	Tooltip:
-	'''
-	Greatly increases pickup range for Fallen Stars
-	Picking up a Fallen Star briefly increases your movement speed by 100%
-	'''
+		'''
+		Greatly increases pickup range for Fallen Stars
+		Picking up a Fallen Star briefly increases your movement speed by 100%
+		'''
+}
+
+SorcerersOrbitSpell: {
+	DisplayName: Sorcerers Orbit Spell
+	Tooltip: ""
+}
+
+StarOrbitSpell: {
+	DisplayName: Star Orbit Spell
+	Tooltip: ""
+}
+
+FrozenLandscapeSpell: {
+	DisplayName: Frozen Landscape Spell
+	Tooltip: ""
 }

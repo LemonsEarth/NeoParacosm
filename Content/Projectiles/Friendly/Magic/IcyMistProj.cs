@@ -32,7 +32,7 @@ public class IcyMistProj : ModProjectile, IShaderProjectile
         Projectile.height = 160;
         Projectile.friendly = true;
         Projectile.timeLeft = 1800;
-        Projectile.penetrate = 10;
+        Projectile.penetrate = -1;
         Projectile.Opacity = 0f;
         Projectile.stopsDealingDamageAfterPenetrateHits = true;
         Projectile.usesIDStaticNPCImmunity = true;
@@ -44,6 +44,7 @@ public class IcyMistProj : ModProjectile, IShaderProjectile
     public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
     {
         target.AddBuff(BuffType<EnemySlowed>(), 300);
+        AITimer += 2;
     }
 
     public override void AI()
@@ -75,7 +76,7 @@ public class IcyMistProj : ModProjectile, IShaderProjectile
             Projectile.Opacity = MathHelper.Lerp(0, 1, AITimer / 30f);
         }
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5 + ScaleMul * 2; i++)
         {
             ParticleSystem.SpawnParticle<AfterDustParticleRendererGlowy>(
                 ParticleID.Glowy,

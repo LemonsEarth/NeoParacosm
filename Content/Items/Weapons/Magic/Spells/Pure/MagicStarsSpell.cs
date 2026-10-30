@@ -8,52 +8,36 @@ public class MagicStarsSpell : BaseSpell
 {
     public override int AttackCooldown => 60;
     public override int ManaCost => 120;
-      public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
+    public override Vector2 GetTargetVector(Player player) { return player.Center - Vector2.UnitY * 100; }
+
+    public override bool CanCastSpell(Player player)
+    {
+        return player.ownedProjectileCounts[ProjectileType<MagicStar>()] == 0;
+    }
 
     public override void SpellAction(Player player)
     {
-
         SoundEngine.PlaySound(SoundID.Item28, player.Center);
         if (LemonUtils.NotClient())
         {
-            Vector2 offposC = Vector2.UnitY * 64;
-            Vector2 offposL = Vector2.UnitY.RotatedBy(MathHelper.ToRadians(-30)) * 64;
-            Vector2 offposR = Vector2.UnitY.RotatedBy(MathHelper.ToRadians(30)) * 64;
             float scaledCount = (player.GetElementalExpertiseBoost(SpellElement.Pure) - 1) * 10;
-            float ceilingdCount = MathF.Ceiling(scaledCount);
+            float ceilingdCount = MathF.Floor(scaledCount);
             int count = (int)MathF.Max(ceilingdCount, 1);
             for (int i = 0; i < count; i++)
             {
-
-                Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center - offposC,
+                for (int j = -1; j <= 1; j++)
+                {
+                    Vector2 posOffset = Vector2.UnitY.RotatedBy(MathHelper.ToRadians(45 * j)) * (64 + i * 16);
+                    Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center - posOffset,
                     Vector2.Zero,
                     ProjectileType<MagicStar>(),
                     GetDamage(player),
                     1f,
                     player.whoAmI,
-                    ai0: 180 + 60 * i,
-                    ai1: offposC.X,
-                    ai2: offposC.Y);
-
-                Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center - offposL,
-                    Vector2.Zero,
-                    ProjectileType<MagicStar>(),
-                    GetDamage(player),
-                    1f,
-                    player.whoAmI,
-                    ai0: 90 + 60 * i,
-                    ai1: offposL.X,
-                    ai2: offposL.Y);
-
-                Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center - offposR,
-                    Vector2.Zero,
-                    ProjectileType<MagicStar>(),
-                    GetDamage(player),
-                    1f,
-                    player.whoAmI,
-                    ai0: 135 + 60 * i,
-                    ai1: offposR.X,
-                    ai2: offposR.Y);
+                    ai0: 180 + 30 * j + i * 15,
+                    ai1: posOffset.X,
+                    ai2: posOffset.Y);
+                }
             }
         }
     }
