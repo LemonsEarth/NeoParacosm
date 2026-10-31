@@ -9,6 +9,16 @@ namespace NeoParacosm.Core.Players;
 public class NPCatalystPlayer : ModPlayer
 {
     /// <summary>
+    /// The elemental damage boost added to all individual elemental damage boosts.
+    /// </summary>
+    public float GlobalElementalDamageBoost { get; set; } = 0f;
+
+    /// <summary>
+    /// The elemental expertise boost added to all individual elemental expertise boosts.
+    /// </summary>
+    public float GlobalElementalExpertiseBoost { get; set; } = 0f;
+
+    /// <summary>
     /// Damage boosts for each spell element type.
     /// Each is set to 1f at the start of every Update.
     /// Value is a percentage, so 1f would be a 100% damage increase.
@@ -94,6 +104,8 @@ public class NPCatalystPlayer : ModPlayer
     SpellElement[] elementsArray;
     public override void ResetEffects()
     {
+        GlobalElementalDamageBoost = 0f;
+        GlobalElementalExpertiseBoost = 0f;
         elementsArray ??= (SpellElement[])Enum.GetValues(typeof(SpellElement));
         foreach (SpellElement spellDamageType in elementsArray)
         {

@@ -2,8 +2,6 @@
 
 public class FriendlyGoblin : FriendlyPatrolNPC
 {
-    ref float TileEntityID => ref NPC.ai[1];
-
     public override void SetDefaults()
     {
         base.SetDefaults();

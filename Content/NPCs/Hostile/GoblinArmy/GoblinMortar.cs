@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using NeoParacosm.Content.Items.Accessories.Combat.Summon;
+using System.Collections.Generic;
 using System.IO;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -205,6 +206,7 @@ public class GoblinMortar : ModNPC
     {
         npcLoot.Add(ItemDropRule.Common(ItemID.Wood, minimumDropped: 20, maximumDropped: 40));
         npcLoot.Add(ItemDropRule.Common(ItemID.IronBar, 3, minimumDropped: 1, maximumDropped: 3));
+        npcLoot.Add(ItemDropRule.Common(ItemType<PocketHut>(), 50, minimumDropped: 1, maximumDropped: 1));
 
     }
 

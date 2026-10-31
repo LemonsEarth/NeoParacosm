@@ -66,7 +66,8 @@ public static partial class LemonUtils
     /// </summary>
     public static float GetElementalDamageBoost(this Player player, SpellElement element)
     {
-        return player.NPCatalystPlayer().ElementalDamageBoosts[element];
+        var npPlayer = player.NPCatalystPlayer();
+        return npPlayer.ElementalDamageBoosts[element] + npPlayer.GlobalElementalDamageBoost;
     }
 
     /// <summary>
@@ -78,7 +79,8 @@ public static partial class LemonUtils
     /// <returns></returns>
     public static float GetElementalExpertiseBoost(this Player player, SpellElement element)
     {
-        return player.NPCatalystPlayer().ElementalExpertiseBoosts[element];
+        var npPlayer = player.NPCatalystPlayer();
+        return npPlayer.ElementalExpertiseBoosts[element] + npPlayer.GlobalElementalExpertiseBoost;
     }
 
     /// <summary>
@@ -92,7 +94,8 @@ public static partial class LemonUtils
     /// <returns></returns>
     public static float GetElementalExpertiseBoostMultiplied(this Player player, SpellElement element, float mul)
     {
-        float dec = MathF.Max(player.NPCatalystPlayer().ElementalExpertiseBoosts[element] - 1, 0);
+        var npPlayer = player.NPCatalystPlayer();
+        float dec = MathF.Max(npPlayer.ElementalExpertiseBoosts[element] + npPlayer.GlobalElementalExpertiseBoost - 1, 0);
         dec *= mul;
         return 1 + dec;
     }

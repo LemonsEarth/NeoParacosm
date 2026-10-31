@@ -2983,16 +2983,44 @@ TwilightStarMagnet: {
 }
 
 SorcerersOrbitSpell: {
-	DisplayName: Sorcerers Orbit Spell
-	Tooltip: ""
+	DisplayName: Sorcerers Orbit
+	Tooltip:
+		'''
+		Summons many magic stars that follow you and attack nearby enemies
+		Summons additional magic stars to shred nearby enemies
+		'''
 }
 
 StarOrbitSpell: {
-	DisplayName: Star Orbit Spell
-	Tooltip: ""
+	DisplayName: Star Orbit
+	Tooltip: Summons many magic stars that follow you and attack nearby enemies
 }
 
 FrozenLandscapeSpell: {
-	DisplayName: Frozen Landscape Spell
+	DisplayName: Frozen Landscape
+	Tooltip: Slows down all nearby enemies
+}
+
+PocketHut: {
+	DisplayName: Pocket Hut
+	Tooltip:
+		'''
+		Periodically summons temporary friendly goblins to attack nearby enemies
+		Goblin damage scales with summon damage
+		'''
+}
+
+SecretsOfTheGoblins: {
+	DisplayName: Secrets Of The Goblins
+	Tooltip: ""
+}
+
+SecretsOfTheHexes: {
+	DisplayName: Secrets Of The Hexes
+	Tooltip: ""
+}
+
+SecretsOfTheShadows: {
+	DisplayName: Secrets Of The Shadows
 	Tooltip: ""
 }
