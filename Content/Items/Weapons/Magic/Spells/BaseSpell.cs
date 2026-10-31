@@ -31,7 +31,7 @@ public abstract class BaseSpell : ModItem
 
         foreach (SpellElement element in SpellElements)
         {
-            finalItemDamage += (int)(itemDamage * (player.NPCatalystPlayer().ElementalDamageBoosts.GetValueOrDefault(element, 1) - 1));
+            finalItemDamage += (int)(itemDamage * (player.GetElementalDamageBoost(element) - 1));
         }
 
         return (int)player.GetDamage(DamageClass.Magic).ApplyTo(player.HeldItem.damage + finalItemDamage);

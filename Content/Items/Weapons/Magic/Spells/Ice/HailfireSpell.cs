@@ -18,7 +18,7 @@ public class HailfireSpell : BaseSpell
             {
                 Vector2 dir = player.DirectionTo(Main.MouseWorld).RotatedBy(Main.rand.NextFloat(-MathHelper.PiOver4, MathHelper.PiOver4));
                 Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                    dir * Main.rand.NextFloat(3, 7) * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Ice] - Vector2.UnitY * 2,
+                    dir * Main.rand.NextFloat(3, 7) * player.GetElementalExpertiseBoost(SpellElement.Ice) - Vector2.UnitY * 2,
                     ProjectileType<Hailfireball>(),
                     (int)(GetDamage(player) * 0.25f),
                     1f,

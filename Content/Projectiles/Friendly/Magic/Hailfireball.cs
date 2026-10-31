@@ -77,7 +77,7 @@ public class Hailfireball : ModProjectile, IShaderProjectile
             return;
         }
         int baseTimeToFire = 60;
-        float iceSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Ice];
+        float iceSpeedBoost = player.GetElementalExpertiseBoost(SpellElement.Ice);
         int minTimeToFire = 20;
         int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (iceSpeedBoost - 1))), minTimeToFire);
         if ((!player.channel || AITimer >= timeAdjusted) && !released)

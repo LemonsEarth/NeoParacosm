@@ -100,6 +100,26 @@ public static partial class LemonUtils
         return 1 + dec;
     }
 
+    public static float GetGlobalElementalDamageBoost(this Player player)
+    {
+        return player.NPCatalystPlayer().GlobalElementalDamageBoost;
+    }
+
+    public static float GetGlobalElementalExpertiseBoost(this Player player)
+    {
+        return player.NPCatalystPlayer().GlobalElementalExpertiseBoost;
+    }
+
+    public static float AddGlobalElementalDamageBoost(this Player player, float value)
+    {
+        return player.NPCatalystPlayer().GlobalElementalDamageBoost += value;
+    }
+
+    public static float AddGlobalElementalExpertiseBoost(this Player player, float value)
+    {
+        return player.NPCatalystPlayer().GlobalElementalExpertiseBoost += value;
+    }
+
     /// <summary>
     /// Get player life as a float 0f-1f, where 1f means full hp.
     /// </summary>

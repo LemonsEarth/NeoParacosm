@@ -37,8 +37,8 @@ public class ManasapGlove : BaseCatalyst
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Pure] += magicDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Pure] += magicSpeedBoost / 100f;
+            player.AddElementalDamageBoost(SpellElement.Pure, magicDamageBoost / 100f);
+            player.AddElementalExpertiseBoost(SpellElement.Pure, magicSpeedBoost / 100f);
         }
     }
 

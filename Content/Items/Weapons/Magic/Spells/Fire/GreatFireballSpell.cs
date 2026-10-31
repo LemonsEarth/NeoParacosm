@@ -14,7 +14,7 @@ public class GreatFireballSpell : BaseSpell
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                player.DirectionTo(Main.MouseWorld) * 6 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire],
+                player.DirectionTo(Main.MouseWorld) * 6 * player.GetElementalExpertiseBoost(SpellElement.Fire),
                 ProjectileType<GreatFireball>(), GetDamage(player), 1f, player.whoAmI);
         }
     }

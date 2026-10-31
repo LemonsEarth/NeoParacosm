@@ -19,12 +19,12 @@ public class PoisonGasSpell : BaseSpell
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                player.DirectionTo(Main.MouseWorld) * 10 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature],
+                player.DirectionTo(Main.MouseWorld) * 10 * player.GetElementalExpertiseBoost(SpellElement.Nature),
                 ProjectileType<PoisonGasProj>(),
                 GetDamage(player),
                 1f,
                 player.whoAmI,
-                ai1: 20 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature]);
+                ai1: 20 * player.GetElementalExpertiseBoost(SpellElement.Nature));
         }
     }
 

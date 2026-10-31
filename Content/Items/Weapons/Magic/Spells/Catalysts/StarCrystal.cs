@@ -35,10 +35,10 @@ public class StarCrystal : BaseCatalyst
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Pure] += magicDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Pure] += magicSpeedBoost / 100f;
-            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Earth] += earthDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Earth] += earthSpeedBoost / 100f;
+            player.AddElementalDamageBoost(SpellElement.Pure, magicDamageBoost / 100f);
+            player.AddElementalExpertiseBoost(SpellElement.Pure, magicSpeedBoost / 100f);
+            player.AddElementalDamageBoost(SpellElement.Earth, earthDamageBoost / 100f);
+            player.AddElementalExpertiseBoost(SpellElement.Earth, earthSpeedBoost / 100f);
         }
     }
 

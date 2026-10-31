@@ -34,8 +34,8 @@ public class LightningRod : BaseCatalyst
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Lightning] += lightningDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Lightning] += lightningSpeedBoost / 100f;
+            player.AddElementalDamageBoost(SpellElement.Lightning, lightningDamageBoost / 100f);
+            player.AddElementalExpertiseBoost(SpellElement.Lightning, lightningSpeedBoost / 100f);
         }
     }
 

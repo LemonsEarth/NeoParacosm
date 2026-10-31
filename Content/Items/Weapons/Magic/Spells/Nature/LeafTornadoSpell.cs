@@ -17,12 +17,12 @@ public class LeafTornadoSpell : BaseSpell
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                player.DirectionTo(Main.MouseWorld) * 4 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature],
+                player.DirectionTo(Main.MouseWorld) * 4 * player.GetElementalExpertiseBoost(SpellElement.Nature),
                 ProjectileType<LeafTornado>(),
                 GetDamage(player),
                 1f,
                 player.whoAmI,
-                ai0: 180 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature],
+                ai0: 180 * player.GetElementalExpertiseBoost(SpellElement.Nature),
                 ai1: 10
                 );
         }

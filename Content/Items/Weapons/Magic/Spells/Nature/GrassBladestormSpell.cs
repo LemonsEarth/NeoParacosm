@@ -17,12 +17,12 @@ public class GrassBladestormSpell : BaseSpell
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                player.DirectionTo(Main.MouseWorld) * 2 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature],
+                player.DirectionTo(Main.MouseWorld) * 2 * player.GetElementalExpertiseBoost(SpellElement.Nature),
                 ProjectileType<GrassBladestorm>(),
                 GetDamage(player),
                 1f,
                 player.whoAmI,
-                ai0: 210 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature],
+                ai0: 210 * player.GetElementalExpertiseBoost(SpellElement.Nature),
                 ai1: 10
                 );
         }

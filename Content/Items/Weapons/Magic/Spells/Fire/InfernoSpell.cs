@@ -18,7 +18,7 @@ public class InfernoSpell : BaseSpell
         if (LemonUtils.NotClient())
         {
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                player.DirectionTo(Main.MouseWorld) * 10 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire],
+                player.DirectionTo(Main.MouseWorld) * 10 * player.GetElementalExpertiseBoost(SpellElement.Fire),
                 ProjectileType<InfernoProj>(),
                 GetDamage(player),
                 1f,

@@ -1,4 +1,6 @@
-﻿namespace NeoParacosm.Content.Items.Tools;
+﻿using NeoParacosm.Content.Items.Weapons.Magic.Spells;
+
+namespace NeoParacosm.Content.Items.Tools;
 
 public class MagicInspector : ModItem
 {
@@ -26,17 +28,17 @@ public class MagicInspector : ModItem
             if (player.altFunctionUse != 2)
             {
                 Main.NewText("Elemental Damage Boosts:");
-                foreach (var kvp in player.NPCatalystPlayer().ElementalDamageBoosts)
+                foreach (SpellElement element in Enum.GetValues<SpellElement>())
                 {
-                    Main.NewText($"{kvp.Key}: {(int)((kvp.Value - 1) * 100)}%");
+                    Main.NewText($"{element}: {(int)((player.GetElementalDamageBoost(element) - 1) * 100)}%");
                 }
             }
             else
             {
                 Main.NewText("Elemental Expertise Boosts:");
-                foreach (var kvp in player.NPCatalystPlayer().ElementalExpertiseBoosts)
+                foreach (SpellElement element in Enum.GetValues<SpellElement>())
                 {
-                    Main.NewText($"{kvp.Key}: {(int)((kvp.Value - 1) * 100)}%");
+                    Main.NewText($"{element}: {(int)((player.GetElementalExpertiseBoost(element) - 1) * 100)}%");
                 }
             }
         }

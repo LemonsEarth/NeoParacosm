@@ -53,7 +53,7 @@ public class DarkSpear : PrimProjectile
             return;
         }
         int baseTimeToFire = 540;
-        float darkSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Dark];
+        float darkSpeedBoost = player.GetElementalExpertiseBoost(SpellElement.Dark);
         int minTimeToFire = 180;
         int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (darkSpeedBoost - 1))), minTimeToFire);
         if ((!player.channel || AITimer >= timeAdjusted) && !released)

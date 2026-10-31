@@ -13,7 +13,7 @@ public class DeathflameBallSpell : BaseSpell
         
         if (LemonUtils.NotClient())
         {
-            float dirMul = 6 * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire] * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Dark];
+            float dirMul = 6 * player.GetElementalExpertiseBoost(SpellElement.Fire) * player.GetElementalExpertiseBoost(SpellElement.Dark);
             float duration = 120 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Dark, 4);
             float height = 2 * player.GetElementalExpertiseBoostMultiplied(SpellElement.Fire, 2);
             Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,

@@ -39,10 +39,10 @@ public class EnchantedTwig : BaseCatalyst
         if (BoostIsNotActive(player))
         {
             player.NPCatalystPlayer().CatalystBoostActive[Type] = true;
-            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Pure] += magicDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Pure] += magicSpeedBoost / 100f;
-            player.NPCatalystPlayer().ElementalDamageBoosts[SpellElement.Nature] += natureDamageBoost / 100f;
-            player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Nature] += natureSpeedBoost / 100f;
+            player.AddElementalDamageBoost(SpellElement.Pure, magicDamageBoost / 100f);
+            player.AddElementalExpertiseBoost(SpellElement.Pure, magicSpeedBoost / 100f);
+            player.AddElementalDamageBoost(SpellElement.Nature, natureDamageBoost / 100f);
+            player.AddElementalExpertiseBoost(SpellElement.Nature, natureSpeedBoost / 100f);
         }
     }
 

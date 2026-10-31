@@ -19,7 +19,7 @@ public class PebbleStrikeSpell : BaseSpell
             {
                 Vector2 dir = player.DirectionTo(Main.MouseWorld).RotatedBy(Main.rand.NextFloat(-MathHelper.Pi / 8, MathHelper.Pi / 8));
                 Projectile.NewProjectile(Item.GetSource_FromAI(), player.Center,
-                    dir * Main.rand.NextFloat(14, 16) * player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Earth],
+                    dir * Main.rand.NextFloat(14, 16) * player.GetElementalExpertiseBoost(SpellElement.Earth),
                     ProjectileType<Pebble>(),
                     (int)(GetDamage(player) * 0.5f),
                     1f,

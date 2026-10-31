@@ -90,7 +90,7 @@ public class GreatFireball : ModProjectile, IShaderProjectile
         }
 
         int baseTimeToFire = 300;
-        float fireSpeedBoost = player.NPCatalystPlayer().ElementalExpertiseBoosts[SpellElement.Fire];
+        float fireSpeedBoost = player.GetElementalExpertiseBoost(SpellElement.Fire);
         int minTimeToFire = 60;
         int timeAdjusted = Math.Max((int)(baseTimeToFire - (baseTimeToFire * (fireSpeedBoost - 1))), minTimeToFire);
         if ((!player.channel || AITimer >= timeAdjusted) && !released)
