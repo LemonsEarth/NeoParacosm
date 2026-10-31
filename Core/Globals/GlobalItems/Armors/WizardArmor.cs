@@ -11,6 +11,7 @@ public class WizardHatSpellBoost : SpellBoostArmorPiece
         (SpellElement.Fire, SpellBoostType.Both),
         (SpellElement.Ice, SpellBoostType.Both),
         (SpellElement.Lightning, SpellBoostType.Both),
+        (SpellElement.Nature, SpellBoostType.Both),
         (SpellElement.Earth, SpellBoostType.Both),
         (SpellElement.Holy, SpellBoostType.Both),
         (SpellElement.Dark, SpellBoostType.Both),
@@ -18,20 +19,8 @@ public class WizardHatSpellBoost : SpellBoostArmorPiece
 
     public override void UpdateEquip(Item item, Player player)
     {
-        player.AddElementalDamageBoost(SpellElement.Pure, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Pure, 0.20f);
-        player.AddElementalDamageBoost(SpellElement.Fire, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Fire, 0.20f);
-        player.AddElementalDamageBoost(SpellElement.Ice, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Ice, 0.20f);
-        player.AddElementalDamageBoost(SpellElement.Lightning, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Lightning, 0.20f);
-        player.AddElementalDamageBoost(SpellElement.Earth, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Earth, 0.20f);
-        player.AddElementalDamageBoost(SpellElement.Holy, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Holy, 0.20f);
-        player.AddElementalDamageBoost(SpellElement.Dark, 0.15f);
-        player.AddElementalExpertiseBoost(SpellElement.Dark, 0.20f);
+        player.AddGlobalElementalDamageBoost(0.15f);
+        player.AddGlobalElementalExpertiseBoost(0.20f);
     }
 }
 
@@ -44,6 +33,7 @@ public class MagicHatSpellBoost : SpellBoostArmorPiece
         (SpellElement.Fire, SpellBoostType.Both),
         (SpellElement.Ice, SpellBoostType.Both),
         (SpellElement.Lightning, SpellBoostType.Both),
+        (SpellElement.Nature, SpellBoostType.Both),
         (SpellElement.Earth, SpellBoostType.Both),
         (SpellElement.Holy, SpellBoostType.Both),
         (SpellElement.Dark, SpellBoostType.Both),
@@ -51,20 +41,8 @@ public class MagicHatSpellBoost : SpellBoostArmorPiece
 
     public override void UpdateEquip(Item item, Player player)
     {
-        player.AddElementalDamageBoost(SpellElement.Pure, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Pure, 0.15f);
-        player.AddElementalDamageBoost(SpellElement.Fire, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Fire, 0.15f);
-        player.AddElementalDamageBoost(SpellElement.Ice, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Ice, 0.15f);
-        player.AddElementalDamageBoost(SpellElement.Lightning, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Lightning, 0.15f);
-        player.AddElementalDamageBoost(SpellElement.Earth, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Earth, 0.15f);
-        player.AddElementalDamageBoost(SpellElement.Holy, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Holy, 0.15f);
-        player.AddElementalDamageBoost(SpellElement.Dark, 0.10f);
-        player.AddElementalExpertiseBoost(SpellElement.Dark, 0.15f);
+        player.AddGlobalElementalDamageBoost(0.10f);
+        player.AddGlobalElementalExpertiseBoost(0.15f);
     }
 }
 

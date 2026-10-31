@@ -1,6 +1,5 @@
 ﻿using NeoParacosm.Common.RecipeGroups;
 using NeoParacosm.Content.Items.Materials;
-using NeoParacosm.Content.Items.Weapons.Magic.Spells;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Localization;
 
@@ -26,14 +25,7 @@ public class SecretsOfTheShadows : ModItem
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         player.GetCritChance(DamageClass.Magic) += magicCritBoost;
-        player.AddElementalExpertiseBoost(SpellElement.Fire, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Ice, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Lightning, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Earth, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Nature, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Pure, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Holy, expertiseBoost / 100f);
-        player.AddElementalExpertiseBoost(SpellElement.Dark, expertiseBoost / 100f);
+        player.AddGlobalElementalExpertiseBoost(expertiseBoost / 100f);
         player.statDefense -= defenseReduction;
         player.GetModPlayer<SecretsOfTheShadowsPlayer>().Active = true;
     }
