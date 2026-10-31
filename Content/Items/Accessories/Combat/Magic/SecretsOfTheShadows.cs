@@ -7,12 +7,12 @@ namespace NeoParacosm.Content.Items.Accessories.Combat.Magic;
 
 public class SecretsOfTheShadows : ModItem
 {
+    readonly float magicDamageBoost = 15f;
     readonly float magicCritBoost = 15f;
-    readonly float expertiseBoost = 40f;
-    readonly int defenseReduction = 15;
-    public static readonly int lifeRegenReduction = 5;
+    readonly float expertiseBoost = 10f;
+    int defenseReduction = 10;
 
-    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(magicCritBoost, expertiseBoost, defenseReduction, lifeRegenReduction);
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(magicDamageBoost, magicCritBoost, expertiseBoost, defenseReduction);
     public override void SetDefaults()
     {
         Item.width = 74;
@@ -25,7 +25,8 @@ public class SecretsOfTheShadows : ModItem
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         player.GetCritChance(DamageClass.Magic) += magicCritBoost;
-        player.AddGlobalElementalExpertiseBoost(expertiseBoost / 100f);
+        float missingLifePercent = 1f - player.GetLifePercent();
+        player.AddGlobalElementalExpertiseBoost(missingLifePercent + expertiseBoost / 100f);
         player.statDefense -= defenseReduction;
         player.GetModPlayer<SecretsOfTheShadowsPlayer>().Active = true;
     }
@@ -34,6 +35,7 @@ public class SecretsOfTheShadows : ModItem
     {
         Recipe recipe = CreateRecipe();
         recipe.AddIngredient(ItemType<SecretsOfTheHexes>(), 1);
+        recipe.AddIngredient(ItemID.SorcererEmblem, 1);
         recipe.AddIngredient(ItemID.Ectoplasm, 10);
         recipe.AddIngredient(ItemType<KnightsLostSoul>(), 3);
         recipe.AddTile(TileID.CrystalBall);
@@ -54,14 +56,6 @@ public class SecretsOfTheShadowsPlayer : ModPlayer
         if (Active && proj.CountsAsClass(DamageClass.Magic))
         {
             target.AddBuff(BuffID.ShadowFlame, 300);
-        }
-    }
-
-    public override void UpdateBadLifeRegen()
-    {
-        if (Active)
-        {
-            Player.lifeRegen -= SecretsOfTheShadows.lifeRegenReduction * 2;
         }
     }
 }

@@ -3011,16 +3011,37 @@ PocketHut: {
 }
 
 SecretsOfTheGoblins: {
-	DisplayName: Secrets Of The Goblins
-	Tooltip: ""
+	DisplayName: Secrets of the Goblins
+	Tooltip:
+		'''
+		Increases magic critical strike chance by {0}%
+		Increases dark spell expertise by {1}%
+		Reduces defense by {2}
+		Magic critical strikes inflict Shadowflame
+		'''
 }
 
 SecretsOfTheHexes: {
-	DisplayName: Secrets Of The Hexes
-	Tooltip: ""
+	DisplayName: Secrets of the Hexes
+	Tooltip:
+		'''
+		Increases magic critical strike chance by {0}%
+		Increases dark spell damage by {1}%
+		Increases dark spell expertise by {2}%
+		Reduces defense by {3}
+		Magic critical strikes inflict Shadowflame
+		'''
 }
 
 SecretsOfTheShadows: {
-	DisplayName: Secrets Of The Shadows
-	Tooltip: ""
+	DisplayName: Secrets of the Shadows
+	Tooltip:
+		'''
+		Increases magic damage by {0}%
+		Increases magic critical strike chance by {1}%
+		Increases spell expertise by {2}%
+		Further increases spell expertise as health gets lower
+		Reduces defense by {3}
+		Magic critical strikes inflict Shadowflame
+		'''
 }
